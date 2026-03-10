@@ -1,0 +1,1087 @@
+
+SiteBuddy UI Police
+===================
+Total screens scanned: 59
+
+Screen: design_report_screen
+File: lib/features/design/presentation/screens/design_report_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 59
+  • Hardcoded Color → line 65
+  • Raw Spacing (SizedBox) → line 79
+  • Raw Spacing (SizedBox) → line 83
+  • Raw Spacing (SizedBox) → line 85
+  • Raw Spacing (SizedBox) → line 94
+  • Raw Spacing (SizedBox) → line 103
+  • Raw Spacing (EdgeInsets) → line 119
+  • Hardcoded Color → line 129
+  • Raw Spacing (SizedBox) → line 131
+  • Direct fontWeight → line 135
+  • Raw Spacing (SizedBox) → line 139
+  • Raw Spacing (SizedBox) → line 145
+  • Direct fontWeight → line 177
+  • Hardcoded Color → line 184
+  • Direct fontWeight → line 185
+  • Inline Decoration → line 193
+  • Hardcoded Color → line 194
+  • Hardcoded Color → line 197
+  • Raw Spacing (SizedBox) → line 201
+  • Raw Spacing (EdgeInsets) → line 203
+  • Inline Decoration → line 204
+  • Hardcoded Color → line 205
+  • Hardcoded Color → line 207
+  • Hardcoded Color → line 242
+  • Direct fontWeight → line 243
+  • Raw Spacing (SizedBox) → line 246
+  • Direct fontWeight → line 249
+  • Raw Spacing (EdgeInsets) → line 266
+  • Inline Decoration → line 275
+  • Hardcoded Color → line 276
+  • Radius Violation → line 277
+  • Raw Spacing (SizedBox) → line 280
+  • Direct fontWeight → line 284
+  • Raw Spacing (SizedBox) → line 290
+  • Raw Spacing (EdgeInsets) → line 292
+  • Hardcoded Color → line 293
+  • Hardcoded Color → line 303
+  • Direct fontWeight → line 336
+  • Hardcoded Color → line 339
+  • Hardcoded Color → line 340
+  • Hardcoded Color → line 340
+  • Raw Spacing (SizedBox) → line 345
+  • Hardcoded Color → line 349
+  • Hardcoded Color → line 367
+  • Raw Spacing (SizedBox) → line 368
+  • Hardcoded Color → line 372
+  • Hardcoded Color → line 379
+
+Screen: project_detail_screen
+File: lib/features/project/presentation/screens/project_detail_screen.dart
+Violations:
+  • Hardcoded Color → line 63
+  • Hardcoded Color → line 64
+  • Raw Spacing (EdgeInsets) → line 72
+  • Direct fontWeight → line 82
+  • Raw Spacing (EdgeInsets) → line 88
+  • Inline Decoration → line 92
+  • Direct fontWeight → line 99
+  • Hardcoded Color → line 100
+  • Raw Spacing (SizedBox) → line 106
+  • Direct fontWeight → line 110
+  • Raw Spacing (SizedBox) → line 113
+  • Inline Decoration → line 118
+  • Hardcoded Color → line 119
+  • Hardcoded Color → line 121
+  • Hardcoded Color → line 127
+  • Raw Spacing (SizedBox) → line 131
+  • Direct fontWeight → line 141
+  • Direct fontWeight → line 154
+  • Raw Spacing (SizedBox) → line 165
+  • Raw Spacing (SizedBox) → line 179
+  • Raw Spacing (SizedBox) → line 192
+  • Raw Spacing (SizedBox) → line 206
+  • Raw Spacing (SizedBox) → line 218
+  • Raw Spacing (SizedBox) → line 250
+  • Raw Spacing (SizedBox) → line 280
+  • Raw Spacing (SizedBox) → line 293
+  • Raw Spacing (SizedBox) → line 305
+  • Raw Spacing (EdgeInsets) → line 331
+  • Direct fontWeight → line 342
+  • Raw Spacing (SizedBox) → line 348
+  • Direct fontWeight → line 352
+  • Raw Spacing (SizedBox) → line 356
+  • Direct fontWeight → line 360
+  • Hardcoded Color → line 361
+
+Screen: brick_wall_estimator_screen
+File: lib/features/calculator/presentation/screens/brick_wall_estimator_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 33
+  • Raw Spacing (SizedBox) → line 41
+  • Raw Spacing (SizedBox) → line 49
+  • Raw Spacing (SizedBox) → line 58
+  • Raw Spacing (SizedBox) → line 62
+  • Raw Spacing (SizedBox) → line 72
+  • Raw Spacing (SizedBox) → line 83
+  • Direct fontWeight → line 87
+  • Hardcoded Color → line 94
+  • Raw Spacing (SizedBox) → line 117
+  • Direct fontWeight → line 123
+  • Raw Spacing (SizedBox) → line 128
+  • Raw Spacing (SizedBox) → line 141
+  • Raw Spacing (EdgeInsets) → line 147
+  • Raw Spacing (SizedBox) → line 155
+  • Raw Spacing (SizedBox) → line 161
+  • Raw Spacing (SizedBox) → line 172
+  • Hardcoded Color → line 180
+  • Direct fontWeight → line 200
+  • Direct fontWeight → line 225
+  • Raw Spacing (SizedBox) → line 229
+  • Hardcoded Color → line 238
+  • Direct fontWeight → line 246
+  • Raw Spacing (SizedBox) → line 269
+  • Direct fontWeight → line 286
+  • Raw Spacing (SizedBox) → line 306
+  • Hardcoded Color → line 315
+  • Direct fontWeight → line 323
+  • Raw Spacing (SizedBox) → line 332
+  • Hardcoded Color → line 341
+  • Direct fontWeight → line 356
+  • Raw Spacing (SizedBox) → line 385
+  • Direct fontWeight → line 390
+
+Screen: unit_converter_screen
+File: lib/features/unit_converter/presentation/screens/unit_converter_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 28
+  • Direct fontWeight → line 35
+  • Raw Spacing (SizedBox) → line 39
+  • Raw Spacing (SizedBox) → line 41
+  • Raw Spacing (SizedBox) → line 43
+  • Direct fontWeight → line 124
+  • Raw Spacing (SizedBox) → line 127
+  • Raw Spacing (SizedBox) → line 136
+  • Raw Spacing (SizedBox) → line 145
+  • Direct fontWeight → line 154
+  • Raw Spacing (SizedBox) → line 157
+  • Raw Spacing (SizedBox) → line 169
+  • Direct fontWeight → line 187
+  • Raw Spacing (SizedBox) → line 190
+  • Raw Spacing (EdgeInsets) → line 209
+  • Raw Spacing (EdgeInsets) → line 243
+  • Raw Spacing (SizedBox) → line 252
+  • Direct fontWeight → line 256
+  • Raw Spacing (SizedBox) → line 259
+  • Raw Spacing (SizedBox) → line 285
+  • Direct fontWeight → line 299
+  • Raw Spacing (SizedBox) → line 307
+  • Direct fontWeight → line 311
+  • Raw Spacing (SizedBox) → line 316
+  • Raw Spacing (EdgeInsets) → line 322
+  • Inline Decoration → line 326
+  • Raw Spacing (SizedBox) → line 347
+  • Direct fontWeight → line 351
+  • Raw Spacing (SizedBox) → line 355
+  • Direct fontWeight → line 378
+
+Screen: safety_check_screen
+File: lib/features/design/presentation/screens/column_design/safety_check_screen.dart
+Violations:
+  • Direct fontWeight → line 45
+  • Raw Spacing (SizedBox) → line 48
+  • Raw Spacing (EdgeInsets) → line 51
+  • Hardcoded Color → line 55
+  • Hardcoded Color → line 56
+  • Hardcoded Color → line 59
+  • Raw Spacing (SizedBox) → line 60
+  • Hardcoded Color → line 65
+  • Direct fontWeight → line 76
+  • Raw Spacing (SizedBox) → line 78
+  • Raw Spacing (SizedBox) → line 84
+  • Raw Spacing (SizedBox) → line 102
+  • Direct fontWeight → line 129
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (EdgeInsets) → line 138
+  • Raw Spacing (SizedBox) → line 151
+  • Raw Spacing (SizedBox) → line 168
+  • Raw Spacing (SizedBox) → line 191
+  • Direct fontWeight → line 194
+  • Raw Spacing (SizedBox) → line 196
+  • Raw Spacing (EdgeInsets) → line 199
+  • Hardcoded Color → line 201
+  • Hardcoded Color → line 206
+  • Raw Spacing (SizedBox) → line 209
+  • Raw Spacing (SizedBox) → line 218
+  • Raw Spacing (SizedBox) → line 231
+  • Raw Spacing (SizedBox) → line 245
+  • Raw Spacing (SizedBox) → line 258
+  • Raw Spacing (SizedBox) → line 266
+  • Raw Spacing (SizedBox) → line 271
+
+Screen: footing_safety_check_screen
+File: lib/features/design/presentation/screens/footing_design/footing_safety_check_screen.dart
+Violations:
+  • Hardcoded Color → line 54
+  • Raw Spacing (SizedBox) → line 56
+  • Hardcoded Color → line 61
+  • Hardcoded Color → line 62
+  • Hardcoded Color → line 65
+  • Hardcoded Color → line 65
+  • Raw Spacing (EdgeInsets) → line 69
+  • Hardcoded Color → line 77
+  • Hardcoded Color → line 77
+  • Raw Spacing (SizedBox) → line 80
+  • Direct fontWeight → line 84
+  • Hardcoded Color → line 85
+  • Hardcoded Color → line 85
+  • Raw Spacing (SizedBox) → line 93
+  • Raw Spacing (SizedBox) → line 113
+  • Raw Spacing (SizedBox) → line 139
+  • Raw Spacing (SizedBox) → line 152
+  • Raw Spacing (SizedBox) → line 155
+  • Raw Spacing (EdgeInsets) → line 163
+  • Raw Spacing (SizedBox) → line 175
+  • Raw Spacing (SizedBox) → line 193
+  • Raw Spacing (SizedBox) → line 219
+  • Hardcoded Color → line 221
+  • Hardcoded Color → line 222
+  • Raw Spacing (EdgeInsets) → line 224
+  • Hardcoded Color → line 229
+  • Raw Spacing (SizedBox) → line 232
+  • Raw Spacing (SizedBox) → line 244
+  • Raw Spacing (SizedBox) → line 259
+  • Raw Spacing (SizedBox) → line 272
+
+Screen: levelling_log_screen
+File: lib/features/levelling_log/presentation/screens/levelling_log_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 37
+  • Form Violation → line 40
+  • Raw Spacing (SizedBox) → line 48
+  • Form Violation → line 49
+  • Direct fontWeight → line 56
+  • Raw Spacing (SizedBox) → line 70
+  • Raw Spacing (EdgeInsets) → line 74
+  • Inline Decoration → line 75
+  • Radius Violation → line 77
+  • Shadow Violation → line 79
+  • Hardcoded Color → line 91
+  • Direct fontWeight → line 92
+  • Raw Spacing (SizedBox) → line 96
+  • Hardcoded Color → line 102
+  • Direct fontWeight → line 103
+  • Raw Spacing (SizedBox) → line 110
+  • Raw Spacing (SizedBox) → line 124
+  • Raw Spacing (EdgeInsets) → line 130
+  • Inline Decoration → line 131
+  • Radius Violation → line 133
+  • Direct fontWeight → line 141
+  • Raw Spacing (SizedBox) → line 146
+  • Direct fontWeight → line 150
+  • Raw Spacing (SizedBox) → line 158
+  • Direct fontWeight → line 165
+  • Raw Spacing (SizedBox) → line 168
+  • Raw Spacing (SizedBox) → line 178
+  • Raw Spacing (SizedBox) → line 188
+
+Screen: level_log_screen
+File: lib/features/level_log/presentation/screens/level_log_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 46
+  • Raw Spacing (SizedBox) → line 59
+  • Raw Spacing (SizedBox) → line 69
+  • Raw Spacing (EdgeInsets) → line 72
+  • Hardcoded Color → line 106
+  • Raw Spacing (SizedBox) → line 108
+  • Direct fontWeight → line 112
+  • Hardcoded Color → line 113
+  • Raw Spacing (SizedBox) → line 116
+  • Hardcoded Color → line 119
+  • Raw Spacing (EdgeInsets) → line 140
+  • Direct fontWeight → line 147
+  • Raw Spacing (SizedBox) → line 152
+  • Raw Spacing (SizedBox) → line 163
+  • Animation Duration → line 199
+  • Raw Spacing (EdgeInsets) → line 200
+  • Inline Decoration → line 201
+  • Direct fontWeight → line 217
+  • Inline Decoration → line 254
+  • Radius Violation → line 256
+  • Raw Spacing (SizedBox) → line 263
+  • Direct fontWeight → line 271
+  • Raw Spacing (SizedBox) → line 291
+  • Raw Spacing (SizedBox) → line 293
+  • Raw Spacing (SizedBox) → line 312
+  • Raw Spacing (SizedBox) → line 352
+  • Direct fontWeight → line 356
+
+Screen: plaster_material_estimator_screen
+File: lib/features/calculator/presentation/screens/plaster_material_estimator_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 38
+  • Raw Spacing (SizedBox) → line 46
+  • Raw Spacing (EdgeInsets) → line 56
+  • Hardcoded Color → line 60
+  • Raw Spacing (SizedBox) → line 66
+  • Direct fontWeight → line 73
+  • Raw Spacing (SizedBox) → line 78
+  • Raw Spacing (SizedBox) → line 91
+  • Raw Spacing (EdgeInsets) → line 97
+  • Raw Spacing (SizedBox) → line 105
+  • Raw Spacing (SizedBox) → line 111
+  • Raw Spacing (SizedBox) → line 122
+  • Hardcoded Color → line 128
+  • Direct fontWeight → line 149
+  • Direct fontWeight → line 177
+  • Raw Spacing (SizedBox) → line 181
+  • Direct fontWeight → line 198
+  • Raw Spacing (SizedBox) → line 218
+  • Hardcoded Color → line 227
+  • Direct fontWeight → line 235
+  • Raw Spacing (SizedBox) → line 244
+  • Hardcoded Color → line 253
+  • Direct fontWeight → line 268
+  • Raw Spacing (SizedBox) → line 303
+  • Direct fontWeight → line 308
+
+Screen: column_input_screen
+File: lib/features/design/presentation/screens/column_design/column_input_screen.dart
+Violations:
+  • Direct fontWeight → line 83
+  • Raw Spacing (SizedBox) → line 86
+  • Raw Spacing (EdgeInsets) → line 90
+  • Direct fontWeight → line 96
+  • Raw Spacing (SizedBox) → line 98
+  • Direct fontWeight → line 99
+  • Raw Spacing (SizedBox) → line 100
+  • Raw Spacing (SizedBox) → line 108
+  • Raw Spacing (SizedBox) → line 120
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (SizedBox) → line 135
+  • Direct fontWeight → line 136
+  • Raw Spacing (SizedBox) → line 137
+  • Raw Spacing (EdgeInsets) → line 153
+  • Direct fontWeight → line 159
+  • Raw Spacing (SizedBox) → line 161
+  • Direct fontWeight → line 170
+  • Raw Spacing (SizedBox) → line 172
+  • Raw Spacing (SizedBox) → line 190
+  • Direct fontWeight → line 197
+  • Raw Spacing (SizedBox) → line 199
+  • Raw Spacing (SizedBox) → line 213
+  • Raw Spacing (SizedBox) → line 222
+  • Raw Spacing (SizedBox) → line 225
+
+Screen: work_dashboard_screen
+File: lib/features/work/presentation/screens/work_dashboard_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (EdgeInsets) → line 58
+  • Inline Decoration → line 59
+  • Hardcoded Color → line 63
+  • Raw Spacing (EdgeInsets) → line 69
+  • Inline Decoration → line 75
+  • Radius Violation → line 77
+  • Raw Spacing (SizedBox) → line 80
+  • Raw Spacing (SizedBox) → line 91
+  • Raw Spacing (SizedBox) → line 101
+  • Raw Spacing (EdgeInsets) → line 103
+  • Inline Decoration → line 107
+  • Raw Spacing (EdgeInsets) → line 138
+  • Raw Spacing (SizedBox) → line 142
+  • Raw Spacing (SizedBox) → line 153
+  • Raw Spacing (SizedBox) → line 163
+  • Raw Spacing (EdgeInsets) → line 165
+  • Inline Decoration → line 169
+  • Hardcoded Color → line 212
+  • Hardcoded Color → line 220
+  • Raw Spacing (SizedBox) → line 227
+  • Raw Spacing (SizedBox) → line 245
+  • Raw Spacing (EdgeInsets) → line 256
+  • Raw Spacing (SizedBox) → line 261
+
+Screen: material_calculator_screen
+File: lib/features/calculator/presentation/screens/material_calculator_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Direct fontWeight → line 43
+  • Raw Spacing (SizedBox) → line 48
+  • Raw Spacing (SizedBox) → line 59
+  • Raw Spacing (SizedBox) → line 62
+  • Raw Spacing (SizedBox) → line 69
+  • Raw Spacing (SizedBox) → line 76
+  • Raw Spacing (SizedBox) → line 84
+  • Raw Spacing (SizedBox) → line 87
+  • Raw Spacing (SizedBox) → line 100
+  • Raw Spacing (SizedBox) → line 112
+  • Raw Spacing (EdgeInsets) → line 117
+  • Raw Spacing (SizedBox) → line 125
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (SizedBox) → line 135
+  • Direct fontWeight → line 161
+  • Direct fontWeight → line 186
+  • Direct fontWeight → line 214
+  • Hardcoded Color → line 253
+  • Direct fontWeight → line 261
+  • Hardcoded Color → line 262
+  • Raw Spacing (EdgeInsets) → line 275
+  • Hardcoded Color → line 297
+  • Direct fontWeight → line 344
+
+Screen: analysis_summary_screen
+File: lib/features/design/presentation/screens/beam_design/analysis_summary_screen.dart
+Violations:
+  • Direct fontWeight → line 35
+  • Raw Spacing (SizedBox) → line 38
+  • Raw Spacing (SizedBox) → line 63
+  • Direct fontWeight → line 72
+  • Hardcoded Color → line 78
+  • Raw Spacing (SizedBox) → line 83
+  • Raw Spacing (SizedBox) → line 91
+  • Raw Spacing (SizedBox) → line 98
+  • Raw Spacing (SizedBox) → line 110
+  • Raw Spacing (SizedBox) → line 115
+  • Raw Spacing (EdgeInsets) → line 139
+  • Inline Decoration → line 140
+  • Hardcoded Color → line 142
+  • Hardcoded Color → line 143
+  • Hardcoded Color → line 145
+  • Hardcoded Color → line 145
+  • Shadow Violation → line 147
+  • Hardcoded Color → line 148
+  • Hardcoded Color → line 159
+  • Hardcoded Color → line 159
+  • Hardcoded Color → line 160
+  • Hardcoded Color → line 160
+
+Screen: footing_geometry_screen
+File: lib/features/design/presentation/screens/footing_design/footing_geometry_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 89
+  • Direct fontWeight → line 98
+  • Raw Spacing (SizedBox) → line 101
+  • Direct fontWeight → line 111
+  • Raw Spacing (SizedBox) → line 114
+  • Raw Spacing (SizedBox) → line 123
+  • Raw Spacing (SizedBox) → line 132
+  • Hardcoded Color → line 136
+  • Raw Spacing (SizedBox) → line 142
+  • Direct fontWeight → line 152
+  • Raw Spacing (SizedBox) → line 155
+  • Raw Spacing (SizedBox) → line 164
+  • Raw Spacing (SizedBox) → line 173
+  • Raw Spacing (SizedBox) → line 182
+  • Raw Spacing (SizedBox) → line 191
+  • Hardcoded Color → line 195
+  • Hardcoded Color → line 200
+  • Raw Spacing (SizedBox) → line 203
+  • Hardcoded Color → line 208
+  • Raw Spacing (SizedBox) → line 216
+  • Raw Spacing (SizedBox) → line 222
+  • Raw Spacing (SizedBox) → line 227
+
+Screen: slab_design_screen
+File: lib/features/design/presentation/screens/slab_design_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 118
+  • Raw Spacing (SizedBox) → line 128
+  • Raw Spacing (SizedBox) → line 138
+  • Direct fontWeight → line 148
+  • Raw Spacing (SizedBox) → line 151
+  • Raw Spacing (SizedBox) → line 162
+  • Raw Spacing (SizedBox) → line 173
+  • Raw Spacing (SizedBox) → line 182
+  • Direct fontWeight → line 186
+  • Raw Spacing (SizedBox) → line 188
+  • Raw Spacing (SizedBox) → line 207
+  • Raw Spacing (SizedBox) → line 219
+  • Raw Spacing (SizedBox) → line 234
+  • Hardcoded Color → line 238
+  • Raw Spacing (SizedBox) → line 276
+  • Raw Spacing (SizedBox) → line 303
+  • Raw Spacing (SizedBox) → line 309
+  • Direct fontWeight → line 316
+  • Raw Spacing (SizedBox) → line 320
+  • Raw Spacing (SizedBox) → line 333
+  • Raw Spacing (SizedBox) → line 336
+  • Raw Spacing (SizedBox) → line 341
+
+Screen: design_calculation_screen
+File: lib/features/design/presentation/screens/column_design/design_calculation_screen.dart
+Violations:
+  • Direct fontWeight → line 83
+  • Raw Spacing (SizedBox) → line 86
+  • Raw Spacing (SizedBox) → line 107
+  • Raw Spacing (EdgeInsets) → line 111
+  • Direct fontWeight → line 117
+  • Raw Spacing (SizedBox) → line 119
+  • Hardcoded Color → line 123
+  • Raw Spacing (SizedBox) → line 126
+  • Raw Spacing (SizedBox) → line 134
+  • Direct fontWeight → line 144
+  • Hardcoded Color → line 150
+  • Raw Spacing (SizedBox) → line 164
+  • Raw Spacing (SizedBox) → line 186
+  • Raw Spacing (SizedBox) → line 205
+  • Direct fontWeight → line 212
+  • Raw Spacing (SizedBox) → line 216
+  • Raw Spacing (SizedBox) → line 230
+  • Raw Spacing (SizedBox) → line 233
+  • Raw Spacing (SizedBox) → line 238
+  • Raw Spacing (SizedBox) → line 246
+  • Raw Spacing (SizedBox) → line 251
+
+Screen: footing_reinforcement_screen
+File: lib/features/design/presentation/screens/footing_design/footing_reinforcement_screen.dart
+Violations:
+  • Hardcoded Color → line 59
+  • Raw Spacing (SizedBox) → line 61
+  • Raw Spacing (SizedBox) → line 86
+  • Raw Spacing (SizedBox) → line 103
+  • Direct fontWeight → line 110
+  • Raw Spacing (SizedBox) → line 114
+  • Raw Spacing (SizedBox) → line 129
+  • Raw Spacing (SizedBox) → line 131
+  • Raw Spacing (SizedBox) → line 136
+  • Raw Spacing (EdgeInsets) → line 141
+  • Raw Spacing (SizedBox) → line 146
+  • Hardcoded Color → line 151
+  • Raw Spacing (SizedBox) → line 154
+  • Raw Spacing (SizedBox) → line 169
+  • Raw Spacing (SizedBox) → line 185
+  • Hardcoded Color → line 190
+  • Raw Spacing (SizedBox) → line 193
+  • Raw Spacing (SizedBox) → line 208
+  • Raw Spacing (SizedBox) → line 232
+  • Raw Spacing (SizedBox) → line 238
+
+Screen: beam_safety_check_screen
+File: lib/features/design/presentation/screens/beam_design/beam_safety_check_screen.dart
+Violations:
+  • Hardcoded Color → line 53
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (SizedBox) → line 59
+  • Raw Spacing (SizedBox) → line 83
+  • Raw Spacing (SizedBox) → line 101
+  • Raw Spacing (SizedBox) → line 123
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (SizedBox) → line 151
+  • Raw Spacing (SizedBox) → line 193
+  • Raw Spacing (SizedBox) → line 204
+  • Raw Spacing (SizedBox) → line 210
+  • Raw Spacing (SizedBox) → line 219
+  • Hardcoded Color → line 262
+  • Hardcoded Color → line 263
+  • Raw Spacing (EdgeInsets) → line 266
+  • Inline Decoration → line 267
+  • Shadow Violation → line 272
+  • Hardcoded Color → line 273
+  • Raw Spacing (EdgeInsets) → line 282
+  • Inline Decoration → line 283
+
+Screen: reinforcement_design_screen
+File: lib/features/design/presentation/screens/beam_design/reinforcement_design_screen.dart
+Violations:
+  • Direct fontWeight → line 63
+  • Raw Spacing (SizedBox) → line 66
+  • Direct fontWeight → line 71
+  • Raw Spacing (SizedBox) → line 73
+  • Raw Spacing (SizedBox) → line 81
+  • Raw Spacing (SizedBox) → line 89
+  • Direct fontWeight → line 97
+  • Raw Spacing (SizedBox) → line 101
+  • Raw Spacing (SizedBox) → line 115
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (SizedBox) → line 122
+  • Direct fontWeight → line 131
+  • Raw Spacing (SizedBox) → line 133
+  • Direct fontWeight → line 137
+  • Raw Spacing (SizedBox) → line 160
+  • Raw Spacing (SizedBox) → line 183
+  • Raw Spacing (SizedBox) → line 206
+  • Raw Spacing (SizedBox) → line 215
+  • Raw Spacing (SizedBox) → line 220
+
+Screen: cement_screen
+File: lib/features/calculator/presentation/screens/cement_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Direct fontWeight → line 53
+  • Raw Spacing (EdgeInsets) → line 60
+  • Direct fontWeight → line 70
+  • Direct fontWeight → line 98
+  • Raw Spacing (SizedBox) → line 103
+  • Raw Spacing (SizedBox) → line 110
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (SizedBox) → line 125
+  • Direct fontWeight → line 131
+  • Raw Spacing (SizedBox) → line 136
+  • Raw Spacing (SizedBox) → line 146
+  • Raw Spacing (SizedBox) → line 153
+  • Raw Spacing (SizedBox) → line 163
+  • Raw Spacing (SizedBox) → line 174
+  • Raw Spacing (SizedBox) → line 185
+  • Raw Spacing (EdgeInsets) → line 190
+  • Raw Spacing (SizedBox) → line 198
+  • Raw Spacing (SizedBox) → line 203
+
+Screen: home_screen
+File: lib/features/home/presentation/screens/home_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 24
+  • Raw Spacing (SizedBox) → line 33
+  • Raw Spacing (SizedBox) → line 37
+  • Raw Spacing (SizedBox) → line 41
+  • Raw Spacing (SizedBox) → line 52
+  • Hardcoded Color → line 117
+  • Hardcoded Color → line 118
+  • Raw Spacing (EdgeInsets) → line 136
+  • Hardcoded Color → line 141
+  • Raw Spacing (SizedBox) → line 142
+  • Hardcoded Color → line 146
+  • Direct fontWeight → line 147
+  • Raw Spacing (SizedBox) → line 156
+  • Raw Spacing (EdgeInsets) → line 166
+  • Hardcoded Color → line 171
+  • Raw Spacing (SizedBox) → line 172
+  • Hardcoded Color → line 176
+  • Direct fontWeight → line 177
+
+Screen: create_meeting_screen
+File: lib/features/work/presentation/screens/create_meeting_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 104
+  • Raw Spacing (SizedBox) → line 111
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (SizedBox) → line 124
+  • Raw Spacing (SizedBox) → line 133
+  • Raw Spacing (SizedBox) → line 140
+  • Raw Spacing (SizedBox) → line 149
+  • Raw Spacing (SizedBox) → line 155
+  • Raw Spacing (SizedBox) → line 161
+  • Raw Spacing (SizedBox) → line 175
+  • Raw Spacing (SizedBox) → line 201
+  • Raw Spacing (SizedBox) → line 220
+  • Raw Spacing (SizedBox) → line 238
+  • Raw Spacing (SizedBox) → line 262
+  • Raw Spacing (EdgeInsets) → line 267
+  • Inline Decoration → line 268
+  • Raw Spacing (SizedBox) → line 279
+
+Screen: gradient_screen
+File: lib/features/calculator/presentation/screens/gradient_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Hardcoded Color → line 36
+  • Direct fontWeight → line 52
+  • Raw Spacing (SizedBox) → line 56
+  • Raw Spacing (SizedBox) → line 62
+  • Raw Spacing (SizedBox) → line 68
+  • Raw Spacing (EdgeInsets) → line 72
+  • Inline Decoration → line 76
+  • Radius Violation → line 78
+  • Direct fontWeight → line 85
+  • Raw Spacing (SizedBox) → line 112
+  • Direct fontWeight → line 117
+  • Raw Spacing (SizedBox) → line 123
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (SizedBox) → line 138
+  • Raw Spacing (EdgeInsets) → line 143
+  • Raw Spacing (SizedBox) → line 151
+  • Raw Spacing (SizedBox) → line 156
+
+Screen: level_calculator_screen
+File: lib/features/calculator/presentation/screens/level_calculator_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 51
+  • Direct fontWeight → line 56
+  • Raw Spacing (SizedBox) → line 60
+  • Raw Spacing (SizedBox) → line 66
+  • Raw Spacing (EdgeInsets) → line 70
+  • Inline Decoration → line 74
+  • Radius Violation → line 76
+  • Direct fontWeight → line 83
+  • Raw Spacing (SizedBox) → line 107
+  • Direct fontWeight → line 111
+  • Raw Spacing (SizedBox) → line 115
+  • Raw Spacing (SizedBox) → line 122
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (EdgeInsets) → line 135
+  • Raw Spacing (SizedBox) → line 143
+  • Raw Spacing (SizedBox) → line 148
+
+Screen: beam_input_screen
+File: lib/features/design/presentation/screens/beam_design/beam_input_screen.dart
+Violations:
+  • Direct fontWeight → line 114
+  • Raw Spacing (SizedBox) → line 117
+  • Direct fontWeight → line 124
+  • Raw Spacing (SizedBox) → line 125
+  • Direct fontWeight → line 127
+  • Raw Spacing (SizedBox) → line 139
+  • Raw Spacing (SizedBox) → line 147
+  • Raw Spacing (SizedBox) → line 162
+  • Raw Spacing (SizedBox) → line 179
+  • Direct fontWeight → line 186
+  • Raw Spacing (SizedBox) → line 187
+  • Raw Spacing (SizedBox) → line 201
+  • Raw Spacing (SizedBox) → line 214
+  • Raw Spacing (SizedBox) → line 225
+  • Raw Spacing (SizedBox) → line 232
+  • Direct fontWeight → line 248
+
+Screen: sand_screen
+File: lib/features/calculator/presentation/screens/sand_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Direct fontWeight → line 30
+  • Raw Spacing (SizedBox) → line 33
+  • Direct fontWeight → line 38
+  • Raw Spacing (SizedBox) → line 41
+  • Raw Spacing (EdgeInsets) → line 58
+  • Direct fontWeight → line 66
+  • Direct fontWeight → line 94
+  • Raw Spacing (SizedBox) → line 99
+  • Raw Spacing (SizedBox) → line 106
+  • Raw Spacing (SizedBox) → line 113
+  • Raw Spacing (SizedBox) → line 120
+  • Raw Spacing (SizedBox) → line 128
+  • Raw Spacing (EdgeInsets) → line 133
+  • Raw Spacing (SizedBox) → line 141
+  • Raw Spacing (SizedBox) → line 146
+
+Screen: project_share_screen
+File: lib/features/project/presentation/screens/project_share_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 48
+  • Raw Spacing (SizedBox) → line 59
+  • Raw Spacing (SizedBox) → line 67
+  • Raw Spacing (SizedBox) → line 75
+  • Raw Spacing (EdgeInsets) → line 101
+  • Raw Spacing (EdgeInsets) → line 105
+  • Inline Decoration → line 106
+  • Hardcoded Color → line 107
+  • Raw Spacing (SizedBox) → line 112
+  • Direct fontWeight → line 120
+  • Raw Spacing (SizedBox) → line 123
+  • Hardcoded Color → line 127
+  • Hardcoded Color → line 135
+
+Screen: rebar_screen
+File: lib/features/calculator/presentation/screens/rebar_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Direct fontWeight → line 32
+  • Direct fontWeight → line 49
+  • Direct fontWeight → line 76
+  • Raw Spacing (SizedBox) → line 81
+  • Raw Spacing (SizedBox) → line 88
+  • Raw Spacing (SizedBox) → line 95
+  • Raw Spacing (SizedBox) → line 106
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (EdgeInsets) → line 122
+  • Raw Spacing (SizedBox) → line 130
+  • Raw Spacing (SizedBox) → line 135
+
+Screen: footing_analysis_screen
+File: lib/features/design/presentation/screens/footing_design/footing_analysis_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 35
+  • Hardcoded Color → line 42
+  • Raw Spacing (SizedBox) → line 44
+  • Raw Spacing (SizedBox) → line 65
+  • Raw Spacing (SizedBox) → line 91
+  • Direct fontWeight → line 101
+  • Raw Spacing (SizedBox) → line 104
+  • Raw Spacing (SizedBox) → line 113
+  • Direct fontWeight → line 119
+  • Raw Spacing (SizedBox) → line 129
+  • Raw Spacing (SizedBox) → line 136
+  • Raw Spacing (SizedBox) → line 141
+
+Screen: load_definition_screen
+File: lib/features/design/presentation/screens/beam_design/load_definition_screen.dart
+Violations:
+  • Direct fontWeight → line 102
+  • Raw Spacing (SizedBox) → line 105
+  • Direct fontWeight → line 112
+  • Raw Spacing (SizedBox) → line 113
+  • Raw Spacing (SizedBox) → line 121
+  • Raw Spacing (SizedBox) → line 129
+  • Raw Spacing (SizedBox) → line 138
+  • Direct fontWeight → line 151
+  • Raw Spacing (SizedBox) → line 154
+  • Raw Spacing (SizedBox) → line 176
+  • Raw Spacing (SizedBox) → line 183
+  • Raw Spacing (SizedBox) → line 188
+
+Screen: reinforcement_detailing_screen
+File: lib/features/design/presentation/screens/column_design/reinforcement_detailing_screen.dart
+Violations:
+  • Hardcoded Color → line 29
+  • Raw Spacing (SizedBox) → line 31
+  • Raw Spacing (SizedBox) → line 40
+  • Raw Spacing (EdgeInsets) → line 42
+  • Raw Spacing (SizedBox) → line 50
+  • Hardcoded Color → line 54
+  • Raw Spacing (SizedBox) → line 57
+  • Raw Spacing (SizedBox) → line 71
+  • Raw Spacing (SizedBox) → line 94
+  • Raw Spacing (SizedBox) → line 112
+  • Raw Spacing (SizedBox) → line 119
+  • Raw Spacing (SizedBox) → line 124
+
+Screen: calculation_history_screen
+File: lib/features/history/presentation/screens/calculation_history_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 71
+  • Hardcoded Color → line 89
+  • Direct fontWeight → line 98
+  • Hardcoded Color → line 104
+  • Hardcoded Color → line 131
+  • Hardcoded Color → line 135
+  • Hardcoded Color → line 139
+  • Hardcoded Color → line 143
+  • Raw Spacing (EdgeInsets) → line 149
+  • Inline Decoration → line 150
+  • Radius Violation → line 152
+
+Screen: slenderness_check_screen
+File: lib/features/design/presentation/screens/column_design/slenderness_check_screen.dart
+Violations:
+  • Direct fontWeight → line 30
+  • Raw Spacing (SizedBox) → line 33
+  • Raw Spacing (SizedBox) → line 50
+  • Direct fontWeight → line 53
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (SizedBox) → line 65
+  • Raw Spacing (SizedBox) → line 87
+  • Raw Spacing (SizedBox) → line 94
+  • Raw Spacing (SizedBox) → line 99
+
+Screen: load_support_screen
+File: lib/features/design/presentation/screens/column_design/load_support_screen.dart
+Violations:
+  • Hardcoded Color → line 54
+  • Raw Spacing (SizedBox) → line 56
+  • Raw Spacing (EdgeInsets) → line 58
+  • Raw Spacing (SizedBox) → line 64
+  • Raw Spacing (SizedBox) → line 73
+  • Raw Spacing (SizedBox) → line 78
+  • Raw Spacing (SizedBox) → line 91
+  • Raw Spacing (SizedBox) → line 93
+  • Raw Spacing (SizedBox) → line 98
+
+Screen: design_home_screen
+File: lib/features/design/presentation/screens/design_home_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 24
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (EdgeInsets) → line 71
+  • Inline Decoration → line 72
+  • Shadow Violation → line 76
+  • Raw Spacing (SizedBox) → line 89
+  • Direct fontWeight → line 95
+  • Raw Spacing (SizedBox) → line 101
+  • Hardcoded Color → line 105
+
+Screen: create_task_screen
+File: lib/features/work/presentation/screens/create_task_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 86
+  • Raw Spacing (SizedBox) → line 93
+  • Raw Spacing (SizedBox) → line 99
+  • Raw Spacing (SizedBox) → line 106
+  • Raw Spacing (SizedBox) → line 115
+  • Raw Spacing (SizedBox) → line 121
+  • Raw Spacing (SizedBox) → line 134
+  • Raw Spacing (SizedBox) → line 160
+
+Screen: cracking_check_screen
+File: lib/features/design/presentation/screens/safety_check/cracking_check_screen.dart
+Violations:
+  • Animation Duration → line 58
+  • Hardcoded Color → line 107
+  • Raw Spacing (SizedBox) → line 110
+  • Raw Spacing (SizedBox) → line 129
+  • Raw Spacing (SizedBox) → line 137
+  • Raw Spacing (SizedBox) → line 140
+  • Raw Spacing (SizedBox) → line 147
+  • Raw Spacing (SizedBox) → line 149
+
+Screen: column_history_screen
+File: lib/features/design/presentation/screens/column_design/column_history_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 67
+  • Raw Spacing (EdgeInsets) → line 92
+  • Direct fontWeight → line 103
+  • Hardcoded Color → line 109
+  • Raw Spacing (SizedBox) → line 114
+  • Direct fontWeight → line 118
+  • Raw Spacing (SizedBox) → line 121
+  • Hardcoded Color → line 125
+
+Screen: task_detail_screen
+File: lib/features/work/presentation/screens/task_detail_screen.dart
+Violations:
+  • Missing layout width constraint (AppLayout.maxContentWidth) → line N/A
+  • Raw Spacing (SizedBox) → line 38
+  • Direct fontWeight → line 55
+  • Raw Spacing (SizedBox) → line 76
+  • Raw Spacing (SizedBox) → line 81
+  • Raw Spacing (SizedBox) → line 88
+  • Raw Spacing (SizedBox) → line 110
+  • Direct fontWeight → line 115
+
+Screen: ai_assistant_screen
+File: lib/features/ai/presentation/screens/ai_assistant_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 115
+  • Raw Spacing (SizedBox) → line 124
+  • Raw Spacing (EdgeInsets) → line 141
+  • Raw Spacing (EdgeInsets) → line 149
+  • Inline Decoration → line 150
+  • Hardcoded Color → line 153
+  • Hardcoded Color → line 154
+
+Screen: project_editor_screen
+File: lib/features/project/presentation/screens/project_editor_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 125
+  • Raw Spacing (SizedBox) → line 154
+  • Raw Spacing (SizedBox) → line 168
+  • Raw Spacing (SizedBox) → line 178
+  • Raw Spacing (SizedBox) → line 200
+  • Raw Spacing (SizedBox) → line 210
+
+Screen: meeting_detail_screen
+File: lib/features/work/presentation/screens/meeting_detail_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (SizedBox) → line 98
+  • Raw Spacing (SizedBox) → line 103
+  • Raw Spacing (SizedBox) → line 110
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (SizedBox) → line 132
+
+Screen: settings_screen
+File: lib/features/settings/presentation/screens/settings_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 89
+  • Raw Spacing (SizedBox) → line 117
+  • Raw Spacing (SizedBox) → line 148
+  • Raw Spacing (EdgeInsets) → line 157
+  • Hardcoded Color → line 161
+  • Direct fontWeight → line 162
+
+Screen: branding_settings_screen
+File: lib/features/settings/presentation/screens/branding_settings_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 100
+  • Direct fontWeight → line 107
+  • Hardcoded Color → line 108
+  • Hardcoded Color → line 115
+  • Direct fontWeight → line 155
+  • Hardcoded Color → line 156
+
+Screen: currency_converter_screen
+File: lib/features/currency/presentation/screens/currency_converter_screen.dart
+Violations:
+  • Direct fontWeight → line 36
+  • Direct fontWeight → line 45
+  • Direct fontWeight → line 82
+  • Raw Spacing (EdgeInsets) → line 100
+  • Raw Spacing (EdgeInsets) → line 120
+  • Raw Spacing (EdgeInsets) → line 128
+
+Screen: calculator_hub_screen
+File: lib/features/calculator/presentation/screens/calculator_hub_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 31
+  • Raw Spacing (SizedBox) → line 36
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (SizedBox) → line 66
+  • Raw Spacing (SizedBox) → line 77
+
+Screen: ai_history_screen
+File: lib/features/ai/presentation/screens/ai_history_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 61
+  • Raw Spacing (SizedBox) → line 66
+  • Raw Spacing (SizedBox) → line 73
+  • Raw Spacing (SizedBox) → line 91
+
+Screen: history_detail_screen
+File: lib/features/history/presentation/screens/history_detail_screen.dart
+Violations:
+  • Direct fontWeight → line 42
+  • Raw Spacing (SizedBox) → line 44
+  • Direct fontWeight → line 64
+
+Screen: footing_soil_load_screen
+File: lib/features/design/presentation/screens/footing_design/footing_soil_load_screen.dart
+Violations:
+  • Hardcoded Color → line 99
+  • Hardcoded Color → line 143
+
+Screen: terms_conditions_screen
+File: lib/features/settings/presentation/screens/terms_conditions_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 55
+  • Raw Spacing (EdgeInsets) → line 75
+
+Screen: privacy_policy_screen
+File: lib/features/settings/presentation/screens/privacy_policy_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 56
+  • Raw Spacing (EdgeInsets) → line 76
+
+Screen: deflection_check_screen
+File: lib/features/design/presentation/screens/safety_check/deflection_check_screen.dart
+Violations:
+  • Animation Duration → line 61
+  • Hardcoded Color → line 110
+
+Screen: shear_check_screen
+File: lib/features/design/presentation/screens/safety_check/shear_check_screen.dart
+Violations:
+  • Animation Duration → line 63
+  • Hardcoded Color → line 117
+
+Screen: footing_type_screen
+File: lib/features/design/presentation/screens/footing_design/footing_type_screen.dart
+Violations:
+  • Hardcoded Color → line 33
+
+Screen: ai_chat_screen
+File: lib/features/ai/presentation/screens/ai_chat_screen.dart
+Violations:
+  • Raw Spacing (EdgeInsets) → line 50
+
+Screen: reports_screen
+File: lib/features/reports/presentation/screens/reports_screen.dart
+Violations:
+  • Hardcoded Color → line 17
+
+Screen: project_list_screen
+File: lib/features/project/presentation/screens/project_list_screen.dart
+Violations:
+  • Raw Spacing (SizedBox) → line 36
+
+AGGREGATED METRICS
+------------------
+Hardcoded Colors         : 123
+Direct fontSize          : 133
+Raw Spacing              : 512
+Direct Buttons           : 0
+Inline Decorations       : 24
+Direct Scaffolds         : 0
+Radius Violations        : 8
+Shadow Violations        : 4
+Animation Violations     : 4
+Form Violations          : 2
+Missing Width Constraint : 12
+
+TOP 10 FILES WITH MOST ISSUES
+-----------------------------
+1 : design_report_screen.dart (48 violations)
+2 : project_detail_screen.dart (34 violations)
+3 : brick_wall_estimator_screen.dart (33 violations)
+4 : unit_converter_screen.dart (30 violations)
+5 : safety_check_screen.dart (30 violations)
+6 : footing_safety_check_screen.dart (30 violations)
+7 : levelling_log_screen.dart (28 violations)
+8 : level_log_screen.dart (27 violations)
+9 : plaster_material_estimator_screen.dart (26 violations)
+10: column_input_screen.dart (24 violations)
+
+PROJECT HEALTH SCORE: 58 / 100
+Rating: Major Governance Violations
+Total rule violations: 810
+Total screens with missing constraints: 12
+Scan completed in 111ms

@@ -1,0 +1,42 @@
+Analyzing site_buddy...                                         
+
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:2:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:3:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:4:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:5:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:6:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:7:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:8:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:9:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:10:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:11:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:12:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:13:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:14:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:15:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:16:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:17:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:18:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/application/home_application.dart:19:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:2:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:3:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:4:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:5:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:6:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:7:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:8:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:9:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:10:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:11:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:12:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:13:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:14:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:15:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:16:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:17:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:18:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/features/home/domain/home_domain.dart:19:1 • dangling_library_doc_comments
+
+38 issues found. (ran in 2.1s)

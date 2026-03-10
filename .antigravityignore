@@ -1,0 +1,9 @@
+build/
+.dart_tool/
+android/.gradle
+android/build
+ios/Pods
+ios/build
+linux/build
+macos/build
+windows/build

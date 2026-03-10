@@ -1,0 +1,23 @@
+# Antigravity & AI Indexing Rules for Site Buddy
+
+# Stop indexing heavy, generated, or binary folders to prevent crashes
+# These directories should be COMPLETELY ignored by the agent's background scanner.
+
+[indexing]
+ignore = [
+  ".dart_tool/**",
+  "build/**",
+  "android/.gradle/**",
+  "android/app/build/**",
+  "ios/Pods/**",
+  "ios/.symlinks/**",
+  "**/*.g.dart",
+  "**/*.freezed.dart",
+  "assets/audio/**",
+  "assets/images/**"
+ 
+]
+
+[agent]
+# Instruct the agent to focus on logic, not generated code
+rule = "Do not attempt to read or index files in .dart_tool or build folders. If you need to check dependencies, refer only to pubspec.yaml."

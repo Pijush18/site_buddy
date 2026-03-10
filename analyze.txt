@@ -1,0 +1,70 @@
+Analyzing site_buddy...                                         
+
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/beam_design/reinforcement_design_screen.dart:156:19 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/column_design/design_calculation_screen.dart:182:19 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/footing_design/footing_reinforcement_screen.dart:84:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/footing_design/footing_reinforcement_screen.dart:228:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/slab_design_screen.dart:272:21 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/screens/slab_design_screen.dart:305:21 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/deflection_input_section.dart:58:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/deflection_input_section.dart:94:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/design_advisor/design_advisor_card.dart:52:17 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/design_advisor/design_advisor_card.dart:67:17 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/column_interaction_diagram.dart:196:21 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:58:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:80:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:101:23 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:124:31 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:140:21 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:157:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:159:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart:167:17 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/optimization/optimization_card.dart:190:9 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/optimization/optimization_graph.dart:73:12 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/optimization/optimization_graph.dart:75:14 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/optimization/optimization_graph.dart:78:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/optimization/optimization_graph.dart:80:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/shear_input_section.dart:59:15 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/design/presentation/widgets/shear_input_section.dart:82:15 • prefer_const_constructors
+   info • Use 'package:' imports for files in the 'lib' directory • lib/features/home/domain/models/activity_item.dart:22:8 • always_use_package_imports
+   info • Use 'package:' imports for files in the 'lib' directory • lib/features/level_log/presentation/widgets/level_profile_graph.dart:3:8 • always_use_package_imports
+   info • Use 'package:' imports for files in the 'lib' directory • lib/features/levelling_log/widgets/levelling_row_widget.dart:10:8 • always_use_package_imports
+   info • Use 'package:' imports for files in the 'lib' directory • lib/features/levelling_log/widgets/levelling_table.dart:15:8 • always_use_package_imports
+   info • Use 'const' with the constructor to improve performance • lib/features/project/application/controllers/project_controller.dart:55:12 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/reports/presentation/screens/site_report_preview_screen.dart:43:14 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:13:12 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:15:14 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:17:16 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:21:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:28:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:35:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:43:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/privacy_policy_screen.dart:50:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:13:12 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:15:14 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:17:16 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:21:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:27:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:35:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:42:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/presentation/screens/terms_conditions_screen.dart:49:13 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:25:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:26:26 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:27:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:28:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:38:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:39:26 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:40:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:41:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:55:30 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:56:28 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:57:26 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:59:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:60:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:71:30 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:72:28 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:73:26 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:75:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/data/repositories/mock_work_repository.dart:76:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/work/presentation/screens/work_dashboard_screen.dart:256:32 • prefer_const_constructors
+

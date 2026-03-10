@@ -1,0 +1,51 @@
+import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:flutter/material.dart';
+
+class UserMessageWidget extends StatelessWidget {
+  final String query;
+
+  const UserMessageWidget({super.key, required this.query});
+
+  @override
+  Widget build(BuildContext context) {
+//     final theme = Theme.of(context);
+//     final colorScheme = theme.colorScheme;
+
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16.0, left: 48, right: 16.0),
+        padding: AppLayout.paddingMedium,
+
+        child: Text(
+          query,
+          style: SbTextStyles.body(context).copyWith(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class AiErrorWidget extends StatelessWidget {
+  final String error;
+
+  const AiErrorWidget({super.key, required this.error});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+      child: Center(
+        child: Text(
+          error,
+          style: SbTextStyles.body(context).copyWith(color: colorScheme.error),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}

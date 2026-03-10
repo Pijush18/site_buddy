@@ -1,0 +1,187 @@
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+
+import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:site_buddy/core/widgets/main_navigation_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
+import 'package:site_buddy/features/design/application/services/calculation_service.dart';
+import 'package:site_buddy/features/design/application/controllers/safety_check_controller.dart';
+import 'package:site_buddy/features/design/presentation/widgets/insight_card.dart';
+import 'package:site_buddy/features/design/presentation/widgets/shared_action_buttons.dart';
+import 'package:site_buddy/features/design/presentation/widgets/shared_safety_widgets.dart';
+import 'package:site_buddy/features/design/presentation/widgets/shear_input_section.dart';
+import 'package:site_buddy/features/design/presentation/widgets/shear_result_summary.dart';
+import 'package:site_buddy/features/design/presentation/widgets/shear_history_section.dart';
+
+/// SCREEN: Shear Check Screen
+/// PURPOSE: Professional Safety verification for Shear as per IS 456:2000.
+class ShearCheckScreen extends ConsumerStatefulWidget {
+  const ShearCheckScreen({super.key});
+
+  @override
+  ConsumerState<ShearCheckScreen> createState() => _ShearCheckScreenState();
+}
+
+class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  // Controllers for inputs
+  final TextEditingController _dController = TextEditingController();
+  final TextEditingController _bController = TextEditingController();
+  final TextEditingController _vuController = TextEditingController();
+  final TextEditingController _ptController = TextEditingController();
+
+  String _selectedConcrete = 'M25';
+  String _selectedSteel = 'Fe500';
+  bool _isLoading = false;
+
+  // Result State
+  ShearResult? _result;
+
+  @override
+  void dispose() {
+    _dController.dispose();
+    _bController.dispose();
+    _vuController.dispose();
+    _ptController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _calculate() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+    HapticFeedback.mediumImpact();
+
+    // Simulate calculation delay for UX
+    await Future.delayed(AppLayout.calculationDuration);
+
+    final double d = double.parse(_dController.text);
+    final double b = double.parse(_bController.text);
+    final double vu = double.parse(_vuController.text);
+    final double pt = double.parse(_ptController.text);
+
+    final result = CalculationService.calculateShear(
+      vu: vu,
+      b: b,
+      d: d,
+      pt: pt,
+      concreteGrade: _selectedConcrete,
+    );
+
+    // Save to history
+    ref.read(safetyCheckControllerProvider.notifier).saveCheck({
+      'type': 'Shear',
+      'date': DateTime.now().toIso8601String(),
+      'isSafe': result.isSafe,
+      'tv': result.tv,
+      'tc': result.tc,
+    });
+
+    setState(() {
+      _result = result;
+      _isLoading = false;
+    });
+  }
+
+  void _reset() {
+    setState(() {
+      _dController.clear();
+      _bController.clear();
+      _vuController.clear();
+      _ptController.clear();
+      _selectedConcrete = 'M25';
+      _result = null;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MainNavigationWrapper(
+      child: SbPage.detail(
+        title: 'Shear Check',
+        body: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'IS 456:2000 Structural Safety',
+                style: SbTextStyles.body(context).copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+              AppLayout.vGap24,
+              // Input Section
+              ShearInputSection(
+                dController: _dController,
+                bController: _bController,
+                vuController: _vuController,
+                ptController: _ptController,
+                selectedConcrete: _selectedConcrete,
+                selectedSteel: _selectedSteel,
+                onConcreteChanged: (v) {
+                  if (v != null) setState(() => _selectedConcrete = v);
+                },
+                onSteelChanged: (v) {
+                  if (v != null) setState(() => _selectedSteel = v);
+                },
+              ),
+              AppLayout.vGap24,
+              // Action Buttons
+              SharedActionButtons(
+                calculateLabel: 'Calculate Shear',
+                isLoading: _isLoading,
+                onCalculate: () => _calculate(),
+                onReset: _reset,
+                onShare: _shareResult,
+              ),
+              AppLayout.vGap24,
+              // Result Display
+              if (_result != null) ...[
+                ShearResultSummary(result: _result!),
+                AppLayout.vGap24,
+                InsightCard(insights: _result!.insights),
+              ] else
+                const PlaceholderCard(
+                  icon: SbIcons.analytics,
+                  message: 'Enter parameters to generate report',
+                ),
+              AppLayout.vGap32,
+              const ShearHistorySection(),
+              AppLayout.vGap32,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _shareResult() {
+    if (_result == null) return;
+    ref
+        .read(safetyCheckControllerProvider.notifier)
+        .shareResult(
+          title: 'Shear Check Report',
+          inputs: {
+            'Depth (d)': '${_dController.text} mm',
+            'Width (b)': '${_bController.text} mm',
+            'Vu': '${_vuController.text} kN',
+            'Steel (pt)': '${_ptController.text} %',
+            'Concrete': _selectedConcrete,
+          },
+          results: {
+            'τv': '${_result!.tv.toStringAsFixed(3)} N/mm²',
+            'τc': '${_result!.tc.toStringAsFixed(3)} N/mm²',
+          },
+          isSafe: _result!.isSafe,
+        );
+  }
+}

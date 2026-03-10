@@ -1,0 +1,78 @@
+import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:flutter/material.dart';
+import 'package:site_buddy/core/models/code_reference.dart';
+
+/// WIDGET: CodeReferenceCard
+/// PURPOSE: Displays a specific IS Code clause Reference for educational context.
+class CodeReferenceCard extends StatelessWidget {
+  final CodeReference reference;
+
+  const CodeReferenceCard({super.key, required this.reference});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    return Container(
+      margin: const EdgeInsets.only(top: AppLayout.pMedium),
+      padding: AppLayout.paddingMedium,
+      decoration: AppLayout.sbCommonDecoration(context).copyWith(
+        color: colorScheme.primaryContainer.withValues(alpha: 0.1),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.menu_book, size: 16, color: colorScheme.primary),
+              const SizedBox(width: AppLayout.pSmall),
+              Text(
+                'IS 456:2000 REFERENCE',
+                style: SbTextStyles.caption(context).copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.1,
+                  color: colorScheme.primary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppLayout.pSmall),
+          Text(
+            reference.title,
+            style: SbTextStyles.caption(context).copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppLayout.pTiny),
+          Text(
+            reference.description,
+            style: SbTextStyles.bodySecondary(context).copyWith(fontSize: 11, height: 1.4),
+          ),
+          if (reference.formula != null) ...[
+            const SizedBox(height: AppLayout.pMedium),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(AppLayout.pSmall),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.grey.withAlpha(50)),
+              ),
+              child: Center(
+                child: Text(
+                  reference.formula!,
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,59 @@
+## ----------------------------------------------------------------ing
+# Flutter/Dart
+# ----------------------------------------------------------------
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# ----------------------------------------------------------------
+# Android
+# ----------------------------------------------------------------
+android/app/build/
+android/local.properties
+android/GeneratedPluginRegistrant.java
+android/.gradle/
+android/app/src/main/res/drawable-*/
+android/app/src/main/res/mipmap-*/
+
+# ----------------------------------------------------------------
+# iOS
+# ----------------------------------------------------------------
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.h
+ios/Runner/GeneratedPluginRegistrant.m
+*.xcworkspace/
+
+# ----------------------------------------------------------------
+# IDEs & Editors
+# ----------------------------------------------------------------
+.idea/
+.vscode/
+*.iml
+*.iws
+.project
+.settings/
+.classpath
+
+# ----------------------------------------------------------------
+# Large Assets & Misc
+# ----------------------------------------------------------------
+*.log
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+node_modules/
+
+# Specifically for your audio book project
+assets/audio/
+assets/cache/
+
+# Environment / Secret Files
+.env*
