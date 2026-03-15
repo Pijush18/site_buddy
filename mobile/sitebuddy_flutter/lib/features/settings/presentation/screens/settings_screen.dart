@@ -280,7 +280,7 @@ class SettingsScreen extends StatelessWidget {
           padding: AppLayout.paddingLg,
           child: Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 60,
                 height: 60,
                 child: const Icon(
