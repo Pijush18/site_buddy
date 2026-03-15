@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:site_buddy/core/providers/shared_prefs_provider.dart';
+import 'package:site_buddy/features/settings/presentation/screens/settings_screen.dart';
+import 'package:site_buddy/core/localization/generated/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
+
+void main() {
+  testWidgets('SettingsScreen renders sections correctly', (WidgetTester tester) async {
+    // Setup Mock SharedPreferences
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
+    // Setup Mock Router for context.canPop()
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const SettingsScreen(),
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+        ],
+        child: MaterialApp.router(
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Verify presence of section headers
+    expect(find.text('APPEARANCE'), findsOneWidget);
+    expect(find.text('ENGINEERING STANDARDS'), findsOneWidget);
+    expect(find.text('LEGAL'), findsOneWidget);
+    expect(find.text('ABOUT'), findsOneWidget);
+  });
+}

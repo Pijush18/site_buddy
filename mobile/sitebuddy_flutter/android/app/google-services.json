@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293130141565",
+    "project_id": "site-buddy-fbf52",
+    "storage_bucket": "site-buddy-fbf52.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293130141565:android:7183981388cb77e982d614",
+        "android_client_info": {
+          "package_name": "com.pijush.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293130141565-q357j78975p7e8r5a7o78lftikaqljqs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pijush.pro",
+            "certificate_hash": "97e00cf0621f5be05eb99093f5e8c228eb31f552"
+          }
+        },
+        {
+          "client_id": "293130141565-gbter9e7scitim4er79c2sdl1g2hveai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2KxgnSqQV-Zi39nd-j392vmywz3mgsmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293130141565-gbter9e7scitim4er79c2sdl1g2hveai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
