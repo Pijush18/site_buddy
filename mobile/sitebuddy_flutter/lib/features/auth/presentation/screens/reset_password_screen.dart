@@ -112,7 +112,6 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 Text(
                   'SiteBuddy',
                   style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
                   ),
                 ),
@@ -133,9 +132,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     children: [
                       Text(
                         'Forgot Password?',
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: theme.textTheme.headlineSmall,
                       ),
                       AppLayout.vGap8,
                       Text(

@@ -8,7 +8,11 @@ import 'package:site_buddy/shared/domain/models/design/column_design_state.dart'
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/core/diagrams/column_diagram_engine.dart';
+import 'package:site_buddy/core/diagrams/beam_diagram_engine.dart';
+
+import 'package:site_buddy/core/diagrams/slab_diagram_engine.dart';
+import 'package:site_buddy/core/diagrams/footing_diagram_engine.dart';
 
 /// SERVICE: DesignReportService
 /// PURPOSE: Professional PDF report generation for structural design modules.
@@ -330,89 +334,33 @@ class DesignReportService {
       child: pw.CustomPaint(
         size: const PdfPoint(200, 200),
         painter: (canvas, size) {
-          final isCircular = state.type == ColumnType.circular;
-          const padding = 20.0;
-          final drawWidth = size.x - 2 * padding;
-          final drawHeight = size.y - 2 * padding;
+          final geom = ColumnDiagramEngine.generate(state, size.x, size.y);
 
           // Draw Section Outline
           canvas.setStrokeColor(PdfColors.black);
           canvas.setLineWidth(2);
-          if (isCircular) {
+          if (geom.isCircular && geom.circularOutline != null) {
             canvas.drawEllipse(
-              size.x / 2,
-              size.y / 2,
-              drawWidth / 2,
-              drawHeight / 2,
+              geom.circularOutline!.cx,
+              geom.circularOutline!.cy,
+              geom.circularOutline!.rx,
+              geom.circularOutline!.ry,
             );
-          } else {
-            // Rectangular
-            double aspect = state.b / state.d;
-            double w = drawWidth;
-            double h = drawHeight;
-            if (aspect > 1) {
-              h = w / aspect;
-            } else {
-              w = h * aspect;
-            }
-            canvas.drawRect(size.x / 2 - w / 2, size.y / 2 - h / 2, w, h);
+          } else if (!geom.isCircular && geom.rectangularOutline != null) {
+            canvas.drawRect(
+              geom.rectangularOutline!.x,
+              geom.rectangularOutline!.y,
+              geom.rectangularOutline!.width,
+              geom.rectangularOutline!.height,
+            );
           }
           canvas.strokePath();
 
           // Draw Rebar
           canvas.setFillColor(PdfColors.black);
-          const barRadius = 3.0;
-
-          if (isCircular) {
-            final radius = (drawWidth / 2) - 10;
-            final cx = size.x / 2;
-            final cy = size.y / 2;
-            for (int i = 0; i < state.numBars; i++) {
-              final angle = (2 * math.pi * i) / state.numBars;
-              final x = cx + radius * math.cos(angle);
-              final y = cy + radius * math.sin(angle);
-              canvas.drawEllipse(x, y, barRadius, barRadius);
-              canvas.fillPath();
-            }
-          } else {
-            // Rectangular
-            double aspect = state.b / state.d;
-            double w = drawWidth;
-            double h = drawHeight;
-            if (aspect > 1) {
-              h = w / aspect;
-            } else {
-              w = h * aspect;
-            }
-
-            final rectX = size.x / 2 - w / 2;
-            final rectY = size.y / 2 - h / 2;
-            final innerW = w - 10;
-            final innerH = h - 10;
-            final ix = rectX + 5;
-            final iy = rectY + 5;
-
-            // Simplified bar placement (4 corners + rest along edges)
-            final bars = <PdfPoint>[];
-            bars.add(PdfPoint(ix, iy));
-            bars.add(PdfPoint(ix + innerW, iy));
-            bars.add(PdfPoint(ix, iy + innerH));
-            bars.add(PdfPoint(ix + innerW, iy + innerH));
-
-            if (state.numBars > 4) {
-              int remaining = state.numBars - 4;
-              int perSideX = (remaining / 2).ceil();
-              for (int i = 1; i <= perSideX; i++) {
-                double xOffset = (innerW / (perSideX + 1)) * i;
-                bars.add(PdfPoint(ix + xOffset, iy));
-                bars.add(PdfPoint(ix + xOffset, iy + innerH));
-              }
-            }
-
-            for (var p in bars.take(state.numBars)) {
-              canvas.drawEllipse(p.x, p.y, barRadius, barRadius);
-              canvas.fillPath();
-            }
+          for (var rebar in geom.rebars) {
+            canvas.drawEllipse(rebar.cx, rebar.cy, rebar.rx, rebar.ry);
+            canvas.fillPath();
           }
         },
       ),
@@ -523,65 +471,42 @@ class DesignReportService {
       child: pw.CustomPaint(
         size: const PdfPoint(250, 180),
         painter: (canvas, size) {
-          const padding = 40.0;
-          final drawWidth = size.x - 2 * padding;
-          final drawHeight = size.y - 2 * padding;
-
-          final cx = size.x / 2;
-          final cy = size.y / 2;
+          final geom = BeamDiagramEngine.generate(state, size.x, size.y);
 
           // Draw Section
           canvas.setStrokeColor(PdfColors.black);
           canvas.setLineWidth(1.5);
           canvas.drawRect(
-            cx - drawWidth / 2,
-            cy - drawHeight / 2,
-            drawWidth,
-            drawHeight,
+            geom.outline.x,
+            geom.outline.y,
+            geom.outline.width,
+            geom.outline.height,
           );
           canvas.strokePath();
 
           // Stirrup
           canvas.setStrokeColor(PdfColors.grey700);
           canvas.setLineWidth(1);
-          const sPadding = 5.0;
           canvas.drawRect(
-            cx - drawWidth / 2 + sPadding,
-            cy - drawHeight / 2 + sPadding,
-            drawWidth - 2 * sPadding,
-            drawHeight - 2 * sPadding,
+            geom.stirrup.x,
+            geom.stirrup.y,
+            geom.stirrup.width,
+            geom.stirrup.height,
           );
           canvas.strokePath();
 
           // Main Bars (Bottom)
           canvas.setFillColor(PdfColors.black);
-          const barRadius = 2.5;
-          final rebarY = cy + drawHeight / 2 - 10;
-          final startX = cx - drawWidth / 2 + 10;
-          final endX = cx + drawWidth / 2 - 10;
-
-          for (int i = 0; i < state.numBars; i++) {
-            final x = state.numBars > 1
-                ? startX + (endX - startX) * (i / (state.numBars - 1))
-                : cx;
-            canvas.drawEllipse(x, rebarY, barRadius, barRadius);
+          for (var bar in geom.mainBars) {
+            canvas.drawEllipse(bar.cx, bar.cy, bar.rx, bar.ry);
             canvas.fillPath();
           }
 
           // Hanger Bars (Top)
-          canvas.drawEllipse(
-            startX,
-            cy - drawHeight / 2 + 10,
-            barRadius,
-            barRadius,
-          );
-          canvas.drawEllipse(
-            endX,
-            cy - drawHeight / 2 + 10,
-            barRadius,
-            barRadius,
-          );
-          canvas.fillPath();
+          for (var bar in geom.hangerBars) {
+            canvas.drawEllipse(bar.cx, bar.cy, bar.rx, bar.ry);
+            canvas.fillPath();
+          }
         },
       ),
     );
@@ -758,31 +683,26 @@ class DesignReportService {
       child: pw.CustomPaint(
         size: const PdfPoint(250, 150),
         painter: (canvas, size) {
-          final cx = size.x / 2;
-          final cy = size.y / 2;
-          final w = 180.0;
-          final h = 100.0;
+          final geom = SlabDiagramEngine.generate(state, size.x, size.y);
 
           // Slab Body
           canvas.setStrokeColor(PdfColors.black);
           canvas.setLineWidth(1.5);
-          canvas.drawRect(cx - w / 2, cy - h / 2, w, h);
+          canvas.drawRect(geom.outline.x, geom.outline.y, geom.outline.width, geom.outline.height);
           canvas.strokePath();
 
           // Main Rebar (Horizontal dashes)
           canvas.setStrokeColor(PdfColors.black);
           canvas.setLineWidth(1);
-          for (int i = 0; i < 5; i++) {
-            final y = cy - h / 2 + 15 + i * 18;
-            canvas.drawLine(cx - w / 2 + 5, y, cx + w / 2 - 5, y);
+          for (var line in geom.mainRebars) {
+            canvas.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
           }
           canvas.strokePath();
 
           // Distribution (Vertical dots/lines)
           canvas.setStrokeColor(PdfColors.grey600);
-          for (int i = 0; i < 8; i++) {
-            final x = cx - w / 2 + 20 + i * 20;
-            canvas.drawLine(x, cy - h / 2 + 5, x, cy + h / 2 - 5);
+          for (var line in geom.distributionRebars) {
+            canvas.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
           }
           canvas.strokePath();
         },
@@ -800,38 +720,23 @@ class DesignReportService {
       child: pw.CustomPaint(
         size: const PdfPoint(200, 200),
         painter: (canvas, size) {
-          final cx = size.x / 2;
-          final cy = size.y / 2;
-          final fSize = 150.0;
+          final geom = FootingDiagramEngine.generate(state, size.x, size.y);
 
           // Footing Outline
           canvas.setStrokeColor(PdfColors.black);
           canvas.setLineWidth(1.5);
-          canvas.drawRect(cx - fSize / 2, cy - fSize / 2, fSize, fSize);
+          canvas.drawRect(geom.footingOutline.x, geom.footingOutline.y, geom.footingOutline.width, geom.footingOutline.height);
           canvas.strokePath();
 
           // Column Outline
-          final cSize = 40.0;
-          canvas.drawRect(cx - cSize / 2, cy - cSize / 2, cSize, cSize);
+          canvas.drawRect(geom.columnOutline.x, geom.columnOutline.y, geom.columnOutline.width, geom.columnOutline.height);
           canvas.strokePath();
 
           // Rebar Grid
           canvas.setStrokeColor(PdfColors.grey500);
           canvas.setLineWidth(0.5);
-          for (int i = 0; i < 6; i++) {
-            final offset = -fSize / 2 + 20 + i * 22;
-            canvas.drawLine(
-              cx - fSize / 2 + 10,
-              cy + offset,
-              cx + fSize / 2 - 10,
-              cy + offset,
-            );
-            canvas.drawLine(
-              cx + offset,
-              cy - fSize / 2 + 10,
-              cx + offset,
-              cy + fSize / 2 - 10,
-            );
+          for (var line in geom.gridLines) {
+            canvas.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
           }
           canvas.strokePath();
         },

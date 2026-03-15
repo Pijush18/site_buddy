@@ -73,7 +73,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Text(
               'SiteBuddy',
               style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                
                 color: colorScheme.primary,
               ),
             ),

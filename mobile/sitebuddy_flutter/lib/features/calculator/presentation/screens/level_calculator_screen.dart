@@ -52,7 +52,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
               'RESULT SUMMARY',
               style: SbTextStyles.title(context).copyWith(
                 color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+                
                 letterSpacing: 1.2,
               ),
               textAlign: TextAlign.center,
@@ -64,7 +64,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
               '${result.difference.toStringAsFixed(2)} m',
               style: SbTextStyles.headlineLarge(context).copyWith(
                 color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+                
               ),
               textAlign: TextAlign.center,
             ),
@@ -74,15 +74,12 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 horizontal: AppLayout.md,
                 vertical: AppLayout.xs,
               ),
-              decoration: BoxDecoration(
-                color: directionColor.withValues(alpha: 0.1),
-                borderRadius: AppLayout.borderRadiusCard,
-              ),
+              
               child: Text(
                 directionLabel,
                 style: SbTextStyles.caption(context).copyWith(
                   color: directionColor,
-                  fontWeight: FontWeight.bold,
+                  
                 ),
                 textAlign: TextAlign.center,
               ),

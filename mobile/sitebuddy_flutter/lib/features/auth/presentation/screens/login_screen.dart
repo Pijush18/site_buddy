@@ -168,7 +168,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Text(
                         'SiteBuddy',
                         style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
                           color: colorScheme.primary,
                         ),
                       ),
@@ -189,9 +188,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           children: [
                             Text(
                               'Sign In',
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: theme.textTheme.headlineSmall,
                             ),
                             AppLayout.vGap8,
                             Text(
@@ -317,7 +314,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               "Create account",
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: colorScheme.primary,
-                                fontWeight: FontWeight.bold,
+                                
                               ),
                             ),
                           ),

@@ -157,7 +157,7 @@ class _ResultCard extends StatelessWidget {
             'RESULT SUMMARY',
             style: SbTextStyles.title(context).copyWith(
               color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+              
               letterSpacing: 1.2,
             ),
             textAlign: TextAlign.center,
@@ -170,7 +170,7 @@ class _ResultCard extends StatelessWidget {
               '${result.areaM2.toStringAsFixed(2)} m²',
               style: SbTextStyles.title(context).copyWith(
                 color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+                
               ),
             ),
           ),

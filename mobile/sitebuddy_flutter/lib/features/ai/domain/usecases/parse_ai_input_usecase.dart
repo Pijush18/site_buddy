@@ -6,14 +6,17 @@ library;
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/features/ai/domain/entities/parsed_ai_input.dart';
 import 'package:site_buddy/features/unit_converter/application/usecases/parse_ai_query_usecase.dart';
-import 'package:site_buddy/core/data/knowledge_base.dart';
+import 'package:site_buddy/core/services/knowledge_service.dart';
 import 'package:site_buddy/features/ai/domain/usecases/ai_intent_router_usecase.dart';
 
 class ParseAiInputUseCase {
   final ParseAiQueryUseCase _legacyParser;
+  final KnowledgeService _knowledgeService;
   final AiIntentRouterUseCase _router = AiIntentRouterUseCase();
 
-  ParseAiInputUseCase(this._legacyParser);
+  ParseAiInputUseCase(this._legacyParser, this._knowledgeService);
+
+
 
   ParsedAiInput execute(String query) {
     if (query.trim().isEmpty) {
@@ -73,9 +76,10 @@ class ParseAiInputUseCase {
         lower.startsWith('meaning of') ||
         lower.startsWith('tell me about') ||
         lower.contains('rule') ||
-        KnowledgeBase.findTopic(lower) != null) {
+        _knowledgeService.findTopic(lower) != null) {
       return ParsedAiInput(intent: AiIntent.knowledge, rawQuery: query);
     }
+
 
     // 4. Handle other router intents (projects, leveling) if they match
     if (routerResult.intent != AiIntent.unknown && routerResult.intent != AiIntent.calculation) {

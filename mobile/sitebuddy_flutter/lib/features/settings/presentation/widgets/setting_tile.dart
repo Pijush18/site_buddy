@@ -51,7 +51,7 @@ class SettingTile extends StatelessWidget {
                       title,
                       style: SbTextStyles.title(context).copyWith(
                         color: colorScheme.onSurface,
-                        fontWeight: FontWeight.w600,
+                        
                       ),
                     ),
                   ),

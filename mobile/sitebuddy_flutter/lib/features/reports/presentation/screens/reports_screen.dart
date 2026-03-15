@@ -32,9 +32,7 @@ class ReportsScreen extends StatelessWidget {
                   AppLayout.vGap24,
                   Text(
                     "No Reports Yet",
-                    style: SbTextStyles.headline(context).copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: SbTextStyles.headline(context),
                     textAlign: TextAlign.center,
                   ),
                   AppLayout.vGap16,
@@ -46,13 +44,7 @@ class ReportsScreen extends StatelessWidget {
                   AppLayout.vGap24,
                   Container(
                     padding: const EdgeInsets.all(AppLayout.md),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer.withValues(alpha: 0.1),
-                      borderRadius: AppLayout.borderRadiusCard,
-                      border: Border.all(
-                        color: colorScheme.primaryContainer.withValues(alpha: 0.2),
-                      ),
-                    ),
+                    
                     child: Text(
                       "Use the Export PDF option in any calculator or design module to create your first report.",
                       style: SbTextStyles.bodySecondary(context).copyWith(

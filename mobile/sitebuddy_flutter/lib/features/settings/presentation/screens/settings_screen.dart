@@ -280,27 +280,9 @@ class SettingsScreen extends StatelessWidget {
           padding: AppLayout.paddingLg,
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: 60,
                 height: 60,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      colorScheme.primary,
-                      colorScheme.primary.withValues(alpha: 0.8),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.primary.withValues(alpha: 0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: const Icon(
                   SbIcons.account,
                   size: 30,
@@ -315,7 +297,7 @@ class SettingsScreen extends StatelessWidget {
                     Text(
                       "Er. Pijush Debbarma",
                       style: SbTextStyles.title(context).copyWith(
-                        fontWeight: FontWeight.bold,
+                        
                         letterSpacing: -0.2,
                       ),
                     ),
@@ -331,20 +313,15 @@ class SettingsScreen extends StatelessWidget {
                         horizontal: 8,
                         vertical: 3,
                       ),
-                      decoration: BoxDecoration(
-                        color: isPremium 
-                            ? colorScheme.primary 
-                            : colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      
                       child: Text(
                         (isPremium ? "Premium Plan" : "Free Plan").toUpperCase(),
                         style: SbTextStyles.caption(context).copyWith(
                           color: isPremium 
                               ? colorScheme.onPrimary 
                               : colorScheme.onSurfaceVariant,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 9,
+                          
+                          
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -399,7 +376,7 @@ class SettingsScreen extends StatelessWidget {
         style: SbTextStyles.caption(context).copyWith(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
           letterSpacing: 1.2,
-          fontWeight: FontWeight.bold,
+          
         ),
       ),
     );
@@ -421,15 +398,12 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSmallErrorState(String message) {
     return Container(
       padding: const EdgeInsets.all(AppLayout.pMedium),
-      decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppLayout.smallRadius),
-      ),
+      
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),
           AppLayout.hGap12,
-          Text(message, style: const TextStyle(color: Colors.red, fontSize: 12)),
+          Text(message, style: const TextStyle(color: Colors.red, )),
         ],
       ),
     );

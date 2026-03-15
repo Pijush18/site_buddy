@@ -266,16 +266,10 @@ class _HighlightBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(AppLayout.md),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: isDark ? 0.2 : 0.05),
-        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
-        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
-      ),
+      
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

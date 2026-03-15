@@ -59,7 +59,7 @@ class GradientScreen extends ConsumerWidget {
                   'RESULT SUMMARY',
                   style: SbTextStyles.title(context).copyWith(
                     color: colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                    
                     letterSpacing: 1.2,
                   ),
                   textAlign: TextAlign.center,
@@ -72,7 +72,7 @@ class GradientScreen extends ConsumerWidget {
                     '${result.percentage.toStringAsFixed(2)}%',
                     style: SbTextStyles.body(context).copyWith(
                       color: colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+                      
                     ),
                   ),
                 ),
@@ -89,18 +89,14 @@ class GradientScreen extends ConsumerWidget {
                 const Divider(height: AppLayout.lg),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    color: classificationColor.withValues(alpha: 0.1),
-                    borderRadius: AppLayout.borderRadiusCard,
-                    border: Border.all(color: classificationColor.withValues(alpha: 0.2)),
-                  ),
+                  
                   child: Column(
                     children: [
                       Text(
                         'CLASSIFICATION',
                         style: SbTextStyles.caption(context).copyWith(
                           color: classificationColor.withValues(alpha: 0.6),
-                          fontWeight: FontWeight.bold,
+                          
                         ),
                       ),
                       AppLayout.vGap4,
@@ -108,7 +104,7 @@ class GradientScreen extends ConsumerWidget {
                         classificationLabel,
                         style: SbTextStyles.title(context).copyWith(
                           color: classificationColor,
-                          fontWeight: FontWeight.bold,
+                          
                         ),
                       ),
                     ],

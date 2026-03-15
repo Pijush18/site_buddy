@@ -1,0 +1,788 @@
+{
+  "engineering_terms": [],
+  "construction_rules": [
+    {
+      "id": "piling",
+      "title": "Piling",
+      "definition": "The physical driving or boring of deep vertical columns of concrete, steel, or timber deep into the earth.",
+      "keyPoints": [
+        "Bored piles have soil excavated first, then steel inserted, then poured.",
+        "Driven piles are precast and hammered violently into the ground."
+      ],
+      "types": ["End Bearing Pile", "Friction Pile", "Sheet Pile"],
+      "thumbRules": [
+        "For a bored cast-in-situ pile, allow the tremie pipe to be embedded at least 1-2 meters into the wet concrete to prevent soil-mixing."
+      ],
+      "relatedTopics": ["Deep Foundation", "Tremie Pour"],
+      "keywords": ["piling", "rig", "driven", "bored", "friction", "end-bearing"],
+      "siteTip": "Always chisel down the top 1 meter of a bored pile after it cures (Pile Head Breaking) to remove the contaminated/muddy top concrete layer before casting the pile cap."
+    },
+    {
+      "id": "compaction",
+      "title": "Soil Compaction",
+      "definition": "Mechanically forcing soil particles closer together, expelling air to increase density and lock-in strength.",
+      "keyPoints": [
+        "Prevents massive future sinking of floors or pavements.",
+        "Requires watering to an Optimal Moisture Content (OMC) prior to rolling."
+      ],
+      "types": ["Vibratory", "Impact (Rammer)", "Kneading (Sheepfoot)"],
+      "thumbRules": [
+        "Never compact soil in layers thicker than 150mm - 200mm at a time.",
+        "Target at least 95% Modified Proctor density."
+      ],
+      "relatedTopics": ["Soil Mechanics", "Backfill"],
+      "keywords": ["compaction", "density", "roller", "rammer", "omc", "voids"],
+      "siteTip": "If the roller bounces aggressively and the soil trembles extensively like jelly, it is over-saturated (pumping). Let it dry before rolling further."
+    },
+    {
+      "id": "backfill",
+      "title": "Backfill",
+      "definition": "The material used to refill an excavated trench or the void around a foundation once construction is complete.",
+      "keyPoints": [
+        "Should ideally be granular/sandy material for drainage, not expanding clay.",
+        "Must be compacted in strict lifts, or it acts as a water sponge wrapping the foundation."
+      ],
+      "types": ["Granular Fill", "Controlled Low-Strength Material (CLSM)"],
+      "thumbRules": [
+        "Add roughly 10% to 15% to your volume estimates to account for shrinkage during compaction."
+      ],
+      "relatedTopics": ["Compaction", "Foundation", "Retaining Wall"],
+      "keywords": ["backfill", "fill", "trench", "void", "granular"],
+      "siteTip": "Do not use heavy vibratory rollers right next to a freshly built retaining wall or basement. The lateral compaction forces can shatter the green concrete wall."
+    },
+    {
+      "id": "slump test",
+      "title": "Slump Test",
+      "definition": "A visual, empirical test using an iron cone to gauge the workability and water consistency of fresh concrete batches.",
+      "keyPoints": [
+        "Requires a standard Abrams cone, filled in 3 compacted layers of 25 rod strokes each.",
+        "Quickest way to instantly reject a watery, flawed transit mixer batch."
+      ],
+      "types": ["True Slump", "Zero Slump", "Shear Slump", "Collapse (Reject)"],
+      "thumbRules": [
+        "Normal RCC slab/beam slump: 75mm to 100mm.",
+        "Pumped concrete slump: 100mm to 150mm."
+      ],
+      "relatedTopics": ["Concrete", "Water Cement Ratio"],
+      "keywords": ["slump", "cone", "workability", "consistency", "test"],
+      "siteTip": "Measure the slump from the highest point of the displaced center, not the sides. If the cone shears sideways completely, the mix lacks cohesion—reject it."
+    },
+    {
+      "id": "curing",
+      "title": "Concrete Curing",
+      "definition": "Deliberately trapping or applying moisture and temp-control to concrete immediately after casting to facilitate prolonged hydration.",
+      "keyPoints": [
+        "Cement does not 'dry' into rock; it hydrates. If water evaporates too fast, hydration violently stops forever.",
+        "Dramatically reduces surface dusting and plastic shrinkage webbing cracks."
+      ],
+      "types": [
+        "Ponding / Wet Gummy Bags",
+        "Curing Compounds (Chemical spray)",
+        "Steam Curing"
+      ],
+      "thumbRules": [
+        "Minimum curing duration: 7 to 10 days for standard OPC cement.",
+        "Strength reaches 50% in 3 days, 65% in 7 days, 99% in 28 days under proper curing."
+      ],
+      "relatedTopics": ["Concrete", "Formwork"],
+      "keywords": [
+        "curing",
+        "water",
+        "hydration",
+        "ponding",
+        "moisture",
+        "strength"
+      ],
+      "siteTip": "For slabs, construct tiny mud or mortar ridges (ponding) and flood them with 1-2 inches of water. It is infinitely superior to occasional hose spraying."
+    },
+    {
+      "id": "formwork",
+      "title": "Formwork (Shuttering)",
+      "definition": "The temporary structural molds constructed to contain poured wet concrete until it hardens enough to support itself.",
+      "keyPoints": [
+        "Must be violently rigid to resist the massive hydrostatic blowout pressure of wet concrete.",
+        "Defective formwork causes bulging beams, honeycomb concrete, or lethal collapses."
+      ],
+      "types": ["Timber / Plywood", "Steel Pans", "Aluminium (Mivan)", "Plastic"],
+      "thumbRules": [
+        "Stripping time for vertical column forms: 16 to 24 hours.",
+        "Stripping time for beam soffits (props left intact under): 7 days.",
+        "Total removal of props for slabs spanning over 4.5m: 14 days."
+      ],
+      "relatedTopics": ["Concrete", "Slab", "Column"],
+      "keywords": ["formwork", "shuttering", "mold", "strip", "stripping", "props"],
+      "siteTip": "Always coat the inner faces thoroughly with shuttering oil (release agent) BEFORE tying the steel rebars. Oiling after steel is in place contaminates the rebars and kills the bond."
+    },
+    {
+      "id": "lap splice",
+      "title": "Lap Splice (Lapping)",
+      "definition": "The overlapping of two separate steel modifier rebars side-by-side to transfer stress continuously when a single bar isn’t long enough.",
+      "keyPoints": [
+        "Relies entirely on the concrete gripping both bars to transfer load between them.",
+        "Bars should ideally be staggered so not all splices occur at the exact same critical cross-section."
+      ],
+      "types": [
+        "Contact Lap",
+        "Non-contact Lap",
+        "Mechanical Coupler",
+        "Welded Splice"
+      ],
+      "thumbRules": [
+        "Compression lap length is generally 40 × Bar Diameter (40d).",
+        "Tension lap length is generally 50 × Bar Diameter (50d).",
+        "Lapping is absolutely prohibited for bars larger than 36mm diameter; mechanical couplers must be used."
+      ],
+      "relatedTopics": ["Steel Reinforcement", "Beam", "Column"],
+      "keywords": [
+        "lap",
+        "splice",
+        "overlap",
+        "stagger",
+        "coupler",
+        "joint",
+        "length"
+      ],
+      "siteTip": "Never lap beam bottom tension steel exactly in the middle of a room span where bending is highest. Lap it near the supporting columns instead."
+    },
+    {
+      "id": "cover block",
+      "title": "Clear Cover (Cover Blocks)",
+      "definition": "Minimal distance between the absolute outer edge of the concrete and the closest embedded steel reinforcement piece.",
+      "keyPoints": [
+        "Maintained physically by tying small precast concrete biscuits or plastic wheels (Cover Blocks) to the steel cage.",
+        "Acts as the primary fire protection and anti-corrosion barrier for the steel core."
+      ],
+      "types": ["Concrete Block", "PVC Wheel", "Steel Chairs (Internal)"],
+      "thumbRules": [
+        "Standard Clear Covers: Slabs = 20mm.",
+        "Beams = 25mm to 30mm.",
+        "Columns = 40mm.",
+        "Footings (Resting on earth) = 50mm to 75mm."
+      ],
+      "relatedTopics": ["Steel Reinforcement", "Footing", "Column"],
+      "keywords": [
+        "cover",
+        "block",
+        "clear cover",
+        "fire protection",
+        "corrosion",
+        "biscuit"
+      ],
+      "siteTip": "Using brick bats or wood scraps as cover blocks is amateur and destructive. Wood rots and expands; bricks absorb water and transfer it directly to the steel."
+    },
+    {
+      "id": "surveying",
+      "title": "Surveying",
+      "definition": "The mathematical science of determining terrestrial 3D spatial positions, establishing the cardinal grid orientation of the entire superstructure.",
+      "keyPoints": [
+        "Generates topographic layouts, property boundaries, and critical foundation corner alignments (setting out).",
+        "Uses highly calibrated optic/laser instruments (Total Stations, Dumpy Levels, Theodolites)."
+      ],
+      "types": [
+        "Topographic",
+        "Cadastral (Boundary)",
+        "Engineering/Construction Setting Out"
+      ],
+      "thumbRules": [
+        "Always establish at least three permanent TBMs (Temporary Bench Marks) far away from excavator tracks."
+      ],
+      "relatedTopics": ["Leveling", "Layouts"],
+      "keywords": [
+        "surveying",
+        "grid",
+        "total station",
+        "theodolite",
+        "boundary",
+        "setting out",
+        "topography"
+      ],
+      "siteTip": "Check the surveyor’s established diagonals! If corner-to-corner lengths of a rectangular floor plan are not flawlessly identical, the entire multi-million dollar building is a parallelogram."
+    },
+    {
+      "id": "leveling",
+      "title": "Leveling",
+      "definition": "A specific physical surveying operation calculating relative height elevations between points to establish slopes or pure flatness.",
+      "keyPoints": [
+        "Identifies the crucial +/- gradients for plumbing networks and surface drainage.",
+        "Tied definitively to a master Mean Sea Level (MSL) or an arbitrary localized 100.0m datum point."
+      ],
+      "types": ["Differential Leveling", "Profile Leveling", "Fly Leveling"],
+      "thumbRules": [
+        "Water seeks absolute true level. Basic water-tube levels are perfectly accurate for short interior spans if absolutely zero air bubbles are present."
+      ],
+      "relatedTopics": ["Surveying", "Plumbing"],
+      "keywords": [
+        "leveling",
+        "elevation",
+        "gradient",
+        "slope",
+        "datum",
+        "msl",
+        "dumpy"
+      ],
+      "siteTip": "When moving the theodolite/auto-level instrument, always secure the pendulum lock if it has one. Throwing it carelessly into a truck bed shatters the high-precision internal compensator."
+    },
+    {
+      "id": "scaffolding",
+      "title": "Scaffolding",
+      "definition": "Interlocking temporary framework erected externally to support labor crews and material drops high in the air safely.",
+      "keyPoints": [
+        "A critical safety asset heavily regulated by OSHA and civil codes.",
+        "Must withstand extreme wind-loading (sail effect) when wrapped with safety netting."
+      ],
+      "types": [
+        "Cuplock",
+        "Tube & Coupler",
+        "Suspended Platform (Gondola)",
+        "Mobile Tower"
+      ],
+      "thumbRules": [
+        "Standard working platform width should never be less than 600mm (three standard planks).",
+        "Tie-ins rigidly locking the scaffold to the main building should be placed at least every 4 meters vertically and horizontally."
+      ],
+      "relatedTopics": ["Formwork"],
+      "keywords": [
+        "scaffolding",
+        "framework",
+        "working platform",
+        "cuplock",
+        "safety",
+        "guardrail"
+      ],
+      "siteTip": "Inspect the base plates daily. A beautiful 10-story scaffold will collapse entirely if rain washes away the mud beneath just one un-plated base pole."
+    },
+    {
+      "id": "excavation",
+      "title": "Excavation & Trenching",
+      "definition": "The aggressive removal of mass earth/rock segments to establish a subterranean footprint or utility highway.",
+      "keyPoints": [
+        "Trenching is statistically one of the absolute deadliest construction operations due to silent, instant soil wall collapse.",
+        "Requires intensive pre-planning for massive displaced dirt management (spoil)."
+      ],
+      "types": [
+        "Bulk Basement Excavation",
+        "Trenching",
+        "Dredging",
+        "Rock Blasting"
+      ],
+      "thumbRules": [
+        "Any trench deeper than 1.5 meters (5 feet) MUST be sloped, benched, or heavily shored continuously.",
+        "Spoil piles must be kept back a minimum of 0.6 meters (2 feet) from the edge of the pit to prevent surcharge collapse."
+      ],
+      "relatedTopics": ["Shoring", "Soil Mechanics", "Backfill"],
+      "keywords": [
+        "excavation",
+        "digging",
+        "trenching",
+        "spoil",
+        "collapse",
+        "pit",
+        "earth moving"
+      ],
+      "siteTip": "When excavating near property lines, constantly monitor neighbors' boundary walls for hairline cracks daily. Undermining their foundation happens silently right until their wall falls into your pit."
+    },
+    {
+      "id": "shoring",
+      "title": "Shoring & Shielding",
+      "definition": "Heavy-duty engineered temporary support installed to prevent the collapse of excavated earth walls or unstable adjacent superstructures.",
+      "keyPoints": [
+        "Used extensively when site constraints prevent safe angled sloping of dirt walls.",
+        "Shields (Trench Boxes) do not prevent collapse; they merely protect the worker inside if a collapse occurs."
+      ],
+      "types": [
+        "Timber Shoring",
+        "Hydraulic Rams",
+        "Sheet Pile Walls",
+        "Soldier Piles"
+      ],
+      "thumbRules": [
+        "Walers (horizontal support beams) must be placed directly opposite the highest calculated soil pressure zones based on the specific soil type."
+      ],
+      "relatedTopics": ["Excavation", "Retaining Wall"],
+      "keywords": [
+        "shoring",
+        "shielding",
+        "struts",
+        "trench box",
+        "support",
+        "collapse prevention"
+      ],
+      "siteTip": "Do not remove bottom shoring struts to 'make room for the pipe'. It immediately redistributes thousands of tons of dirt pressure onto the remaining jacks, snapping them instantly."
+    }
+  ],
+  "design_guidelines": [
+    {
+      "id": "slab",
+      "title": "Slab",
+      "definition": "A flat, horizontal structural element used in floors and roof decks to transfer loads to supporting beams, columns, or walls.",
+      "keyPoints": [
+        "Transfers active floor loads to intermediate beams.",
+        "Typically spans between 3 to 6 meters in residential buildings.",
+        "Designed to resist bending moments and shear forces."
+      ],
+      "types": [
+        "One-way Slab",
+        "Two-way Slab",
+        "Cantilever Slab",
+        "Flat Slab",
+        "Waffle Slab"
+      ],
+      "thumbRules": [
+        "Thickness ≈ span (ft) in cm (e.g., 12 ft span ≈ 12 cm or 120 mm minimum).",
+        "Cantilever thickness ≈ span / 10 for safe deflection limits.",
+        "Minimum steel reinforcement for mild steel is 0.15% of gross cross-sectional area."
+      ],
+      "relatedTopics": ["Beam", "Column", "Load Distribution", "Reinforcement"],
+      "keywords": [
+        "slab",
+        "floor",
+        "roof",
+        "one-way",
+        "two-way",
+        "cantilever",
+        "thickness",
+        "span"
+      ],
+      "siteTip": "Ensure proper chair placement underneath continuous top reinforcement mesh. Stepping on the mesh crushes it to the bottom, rendering the negative moment steel useless."
+    },
+    {
+      "id": "beam",
+      "title": "Beam",
+      "definition": "A horizontal structural element primarily resisting lateral loads (bending). Beams transfer slab loads down into the vertical columns.",
+      "keyPoints": [
+        "Tension occurs at the bottom (requiring steel), while compression happens at the top.",
+        "Continuous beams span over multiple supports, reducing mid-span moments.",
+        "Shear links (stirrups) are densest near the supports (columns) where shear stress is highest."
+      ],
+      "types": [
+        "Simply Supported",
+        "Continuous",
+        "Cantilever",
+        "Fixed",
+        "Overhanging"
+      ],
+      "thumbRules": [
+        "Depth = span (m) × (7 to 8 cm) (e.g., 6m span ≈ 420mm to 480mm deep).",
+        "Width ≈ 1/2 to 2/3 of the depth (e.g., 450mm deep ≈ 230mm wide).",
+        "Minimum longitudinal bars: 2 on top, 2 on bottom."
+      ],
+      "relatedTopics": ["Slab", "Column", "Load Distribution", "Shear"],
+      "keywords": [
+        "beam",
+        "strut",
+        "girder",
+        "bending",
+        "stirrups",
+        "depth",
+        "width",
+        "size"
+      ],
+      "siteTip": "Strictly check lap splice locations. Never splice bottom tension bars in the middle of a beam span; splice them near the supports instead."
+    },
+    {
+      "id": "column",
+      "title": "Column",
+      "definition": "A rigorous vertical structural element responsible for carrying compressive axial loads from beams and slabs down to the foundation.",
+      "keyPoints": [
+        "Maintains the lateral stability of the overall framework.",
+        "Failure in a column is catastrophic, causing global collapse, unlike a localized slab failure.",
+        "Lateral ties confine the concrete core, significantly boosting load capacity and ductility."
+      ],
+      "types": [
+        "Tied Column",
+        "Spiral Column",
+        "Composite Column",
+        "Short Column",
+        "Long/Slender Column"
+      ],
+      "thumbRules": [
+        "Standard minimum size: 9\" x 9\" (230mm x 230mm) for single-story (avoid less).",
+        "Longitudinal steel should be between 0.8% and 6% of the gross cross-sectional area.",
+        "Clear cover must be strictly 40mm minimum to protect the primary vertical steel."
+      ],
+      "relatedTopics": ["Beam", "Foundation", "Footing", "Load Distribution"],
+      "keywords": [
+        "column",
+        "pillar",
+        "vertical",
+        "compression",
+        "buckling",
+        "ties",
+        "slender"
+      ],
+      "siteTip": "Use a plumb bob to guarantee absolute verticality (plumb) before and during the concrete pour. A column leaning even 1 inch significantly induces accidental bending moments."
+    },
+    {
+      "id": "footing",
+      "title": "Footing",
+      "definition": "The expanded base of a column or wall that sits directly on the earth, safely distributing upper structural weight across a wider area of soil.",
+      "keyPoints": [
+        "Must rest on virgin, undisturbed soil with adequate bearing capacity, never placed on loose backfill.",
+        "A sub-layer of plain cement concrete (PCC) is always poured to provide a clean, level working surface.",
+        "Depth depends on reaching firm strata and staying beneath the local frost line."
+      ],
+      "types": [
+        "Isolated Pad Footing",
+        "Combined Footing",
+        "Strip/Wall Footing",
+        "Strap Footing"
+      ],
+      "thumbRules": [
+        "Minimum depth of footing below Natural Ground Level (NGL) should be 1.5 meters.",
+        "Minimum thickness at the edges for an isolated pad should not be less than 150mm on resting soil.",
+        "Minimum clear cover for footing reinforcement resting on earth is 50mm."
+      ],
+      "relatedTopics": ["Foundation", "Column", "Soil Mechanics"],
+      "keywords": [
+        "footing",
+        "pad",
+        "combined",
+        "strip",
+        "base",
+        "spread",
+        "cover"
+      ],
+      "siteTip": "Keep footing pits completely de-watered during pouring. Throwing dry cement indiscriminately into a muddy pit permanently ruins the water-cement ratio and foundation strength."
+    },
+    {
+      "id": "foundation",
+      "title": "Foundation",
+      "definition": "The lowest engineered division of a superstructure, typically below ground level, responsible for transferring all structural building weight into the earth.",
+      "keyPoints": [
+        "Prevents uneven or differential structural settlement.",
+        "Divided broadly into Shallow (surface resting) and Deep (friction or bedrock resting) categories.",
+        "Must withstand entirely unpredictable lateral soil movements and seismic tremors."
+      ],
+      "types": ["Shallow Foundation", "Deep Foundation", "Machine Foundation"],
+      "thumbRules": [
+        "Foundation footprint area = Total Load / Safe Bearing Capacity (SBC) of soil.",
+        "Ensure a 1 meter operational gap around the foundation perimeter for construction workspace and backfilling."
+      ],
+      "relatedTopics": [
+        "Footing",
+        "Shallow Foundation",
+        "Deep Foundation",
+        "Soil Mechanics"
+      ],
+      "keywords": [
+        "foundation",
+        "base",
+        "basement",
+        "shallow",
+        "deep",
+        "settlement",
+        "load"
+      ],
+      "siteTip": "Perform a core penetration or standard penetration test (SPT) before designing. Never guess Safe Bearing Capacity; a bad guess guarantees structural failure."
+    },
+    {
+      "id": "load distribution",
+      "title": "Load Distribution Path",
+      "definition": "The sequential transfer of gravitational and lateral forces through the interconnected skeleton of a structural framework until it dissipates into the ground.",
+      "keyPoints": [
+        "The primary path: Slab → Beam → Column → Footing → Earth.",
+        "Gravity loads (Dead/Live) flow strictly downwards.",
+        "Lateral loads (Wind/Seismic) induce sheer and bending forces requiring horizontal bracing or shear walls."
+      ],
+      "types": ["Gravity Load Path", "Lateral Load Path", "Tributary Area Method"],
+      "thumbRules": [
+        "Slab dead load ≈ 2.4 kN/sqm per 100mm of concrete thickness.",
+        "Live load for standard residential slabs ≈ 2.0 to 3.0 kN/sqm.",
+        "Brick wall load on a beam ≈ 18 kN/cum to 20 kN/cum of brickwork volume."
+      ],
+      "relatedTopics": ["Slab", "Beam", "Column", "Foundation"],
+      "keywords": [
+        "load",
+        "distribution",
+        "path",
+        "tributary",
+        "gravity",
+        "transfer",
+        "dead load",
+        "live load"
+      ],
+      "siteTip": "Unplanned, heavy localized loads (like moving a multi-ton water tank onto a mid-span slab) breaks the intended path. Always position heavy equipment directly over column supports."
+    },
+    {
+      "id": "shallow foundation",
+      "title": "Shallow Foundation",
+      "definition": "A foundation that transfers building loads to the earth very near the surface, usually where depth is less than width.",
+      "keyPoints": [
+        "Economical for low-rise buildings with good hard strata near the surface.",
+        "Highly susceptible to scour from aggressive surface water runoff or frost heave."
+      ],
+      "types": ["Isolated", "Combined", "Strip", "Raft (Mat)"],
+      "thumbRules": [
+        "Depth of foundation = (Safe Bearing Capacity / Density of soil) × [ (1-sinΦ)/(1+sinΦ) ]² (Rankine’s formula)."
+      ],
+      "relatedTopics": ["Foundation", "Footing", "Raft Foundation"],
+      "keywords": ["shallow", "surface", "footing", "mat", "scour"],
+      "siteTip": "Ensure the bottom is bone dry. Even a minor layer of loose mud turns into a sliding paste under building weight."
+    },
+    {
+      "id": "deep foundation",
+      "title": "Deep Foundation",
+      "definition": "A foundation transferring loads far below the surface, piercing weak soil to reach bedrock or utilizing immense skin friction.",
+      "keyPoints": [
+        "Essential for skyscrapers, bridge piers, or structures over marsh/marine clay.",
+        "Installed using heavy piling rigs (bored or driven)."
+      ],
+      "types": ["Pile", "Pier", "Caisson"],
+      "thumbRules": [
+        "Spacing between friction piles should be minimum 3 times the pile diameter."
+      ],
+      "relatedTopics": ["Foundation", "Piling"],
+      "keywords": ["deep", "pile", "rig", "bedrock", "friction", "pier"],
+      "siteTip": "If driving a pile hitting early refusal (stops moving), do not over-hammer. It will shatter the concrete pile underground."
+    },
+    {
+      "id": "raft foundation",
+      "title": "Raft Foundation (Mat)",
+      "definition": "A thick continuous concrete slab resting on a large area of soil lined with steel, supporting multiple columns and walls.",
+      "keyPoints": [
+        "Used when soil SBC is very low and individual footings would overlap.",
+        "Effectively bridges over erratic, soft soil patches to minimize dangerous differential settlement."
+      ],
+      "types": ["Flat Plate", "Plate with Drops", "Ribbed Raft"],
+      "thumbRules": [
+        "Recommended if total isolated footing area exceeds 50% of the entire building footprint area."
+      ],
+      "relatedTopics": ["Shallow Foundation", "Slab", "Load Distribution"],
+      "keywords": ["raft", "mat", "continuous slab", "differential settlement"],
+      "siteTip": "Pouring a massive raft requires a continuous, calculated concrete supply. Missing a supply truck can cause a cold joint, splitting the raft permanently."
+    },
+    {
+      "id": "retaining wall",
+      "title": "Retaining Wall",
+      "definition": "A heavy rigid structure constructed to perpetually hold back massive horizontal lateral earth pressures from sliding.",
+      "keyPoints": [
+        "Hydrostatic water buildup behind the wall is its greatest enemy, drastically multiplying lateral collapse pressure.",
+        "Strictly requires continuous drainage pathways via weeping systems."
+      ],
+      "types": ["Gravity Wall", "Cantilever Wall", "Sheet Piling", "Gabion Basket"],
+      "thumbRules": [
+        "The base width of a cantilever retaining wall is roughly 0.5 to 0.7 times the height of the wall.",
+        "Provide PVC weep holes at 1 to 1.5-meter staggered intervals horizontally and vertically."
+      ],
+      "relatedTopics": ["Backfill", "Load Distribution"],
+      "keywords": [
+        "retaining",
+        "wall",
+        "lateral",
+        "earth pressure",
+        "weep hole",
+        "drainage",
+        "cantilever"
+      ],
+      "siteTip": "Wrap the backside (earth side) of weep holes heavily with geotextile fabric and gravel. Otherwise, fine clay clogs the pipes in a week, turning the wall into a ticking dam."
+    },
+    {
+      "id": "shear",
+      "title": "Shear Force",
+      "definition": "An unaligned structural tearing force pushing one part of a body in one direction, and another part in the opposite direction.",
+      "keyPoints": [
+        "In beams, shear causes catastrophic diagonal cracking near the column supports.",
+        "Counteracted primarily by wrapping the internal cage in tightly spaced closed loops called Stirrups (or Ties in columns)."
+      ],
+      "types": ["One-way Shear", "Two-way Shear (Punching Shear)"],
+      "thumbRules": [
+        "Spacing of stirrups is always tighter (closer together) near the column supports and wider at the center of the beam span."
+      ],
+      "relatedTopics": ["Beam", "Punching Shear", "Stirrups"],
+      "keywords": [
+        "shear",
+        "force",
+        "tearing",
+        "diagonal crack",
+        "stirrups",
+        "ties"
+      ],
+      "siteTip": "Ensure the hooks of the stirrups are bent to a full 135 degrees, tucking into the concrete core. 90-degree outer bends simply pop open under severe earthquake shear."
+    },
+    {
+      "id": "punching shear",
+      "title": "Punching Shear (Two-Way)",
+      "definition": "A concentrated shear force that causes a heavily loaded column to physically punch a hole straight through a flat slab or footing base.",
+      "keyPoints": [
+        "The most critical failure check for Flat Slabs (slabs lacking intermediary beams).",
+        "Resisted by increasing local slab thickness (Drop Panels) or widening the column head (Capitals)."
+      ],
+      "types": ["Flat Slab Penetration", "Footing Penetration"],
+      "thumbRules": [
+        "The critical punching shear perimeter is evaluated exactly at a distance of d/2 away from the column face."
+      ],
+      "relatedTopics": ["Shear", "Slab", "Footing"],
+      "keywords": [
+        "punching",
+        "shear",
+        "two-way",
+        "flat slab",
+        "penetration",
+        "drop panel"
+      ],
+      "siteTip": "If a footing excavation is flooded and poured hastily, the weakened base concrete loses shear strength, allowing the column above to punch through and sink the building."
+    }
+  ],
+  "material_properties": [
+    {
+      "id": "concrete",
+      "title": "Concrete",
+      "definition": "An artificial rock composite composed of aggregate, cement, and water that cures via chemical hydration.",
+      "keyPoints": [
+        "Extreme compressive strength, negligible tensile strength.",
+        "Curing relies on retained moisture, not just 'drying out'."
+      ],
+      "types": ["PCC", "RCC", "Pre-stressed", "Lightweight"],
+      "thumbRules": [
+        "Standard M20 mix ratio is roughly 1:1.5:3 (Cement:Sand:Aggregate).",
+        "Weight of 1 cubic meter of plain concrete ≈ 2400 kg; RCC ≈ 2500 kg."
+      ],
+      "relatedTopics": ["Water Cement Ratio", "Curing", "Slump Test"],
+      "keywords": ["concrete", "cement", "rock", "pcc", "rcc", "aggregate"],
+      "siteTip": "Dropping concrete from a height exceeding 1.5 meters causes rapid segregation; heavy rocks fall first, paste stays on top, ruining the structural integrity."
+    },
+    {
+      "id": "steel reinforcement",
+      "title": "Steel Reinforcement (Rebar)",
+      "definition": "Deformed bars providing the critical tension resistance that concrete naturally lacks.",
+      "keyPoints": [
+        "Deformations (ribs) ensure a high mechanical grip/bond with the concrete paste.",
+        "Thermal expansion perfectly matches concrete, preventing internal snapping."
+      ],
+      "types": ["Mild Steel", "HYSD", "TMT (Thermo-Mechanically Treated)"],
+      "thumbRules": [
+        "Weight of steel bar per meter = D² / 162 (where D is diameter in mm).",
+        "Standard manufactured bar length on site is 12 meters (40 feet)."
+      ],
+      "relatedTopics": ["Lap Splice", "Cover Block", "Slab", "Beam"],
+      "keywords": ["steel", "rebar", "tension", "tmt", "bar", "iron"],
+      "siteTip": "Surface rust is acceptable and actually enhances bonding roughness. Flaking, deep-scale rust is unacceptable and must be wire-brushed off."
+    },
+    {
+      "id": "soil mechanics",
+      "title": "Soil Mechanics",
+      "definition": "The physics of analyzing earth materials, sheer strength, and settlement behavior before structural design.",
+      "keyPoints": [
+        "Clay expands violently when wet; Sand drains quickly but washes away.",
+        "Safe Bearing Capacity is derived from these tests to size footings."
+      ],
+      "types": ["Cohesive (Clay)", "Cohesionless (Sand)"],
+      "thumbRules": [
+        "Density of normal compacted soil is roughly 1600 - 1800 kg/cum."
+      ],
+      "relatedTopics": ["Compaction", "Bearing Capacity"],
+      "keywords": ["soil", "mechanics", "earth", "bearing", "clay", "sand", "sbc"],
+      "siteTip": "Never trust topsoil (the dark, organic first layer). It decays over time causing massive settlement. Excavate past it entirely."
+    },
+    {
+      "id": "bearing capacity",
+      "title": "Safe Bearing Capacity (SBC)",
+      "definition": "The maximum average contact pressure between the foundation and the soil which should not produce shear failure in the soil.",
+      "keyPoints": [
+        "Directly dictates the physical LxW dimensions of any foundation.",
+        "Tested using Plate Load Tests or Standard Penetration Tests (SPT)."
+      ],
+      "types": ["Ultimate Bearing Capacity", "Net Safe Bearing Capacity"],
+      "thumbRules": ["Hard rock SBC ≈ 3300 kN/sqm. Soft clay SBC ≈ 100 kN/sqm."],
+      "relatedTopics": ["Soil Mechanics", "Foundation"],
+      "keywords": ["sbc", "bearing", "capacity", "pressure", "shear failure"],
+      "siteTip": "If you encounter unexpected soft pockets or old filled-in wells during footing excavation, halt work immediately. SBC assumes uniform strata."
+    },
+    {
+      "id": "water cement ratio",
+      "title": "Water-Cement Ratio (W/C)",
+      "definition": "The precise physical mass ratio of water to cement in a mix. The undisputed god of concrete strength laws.",
+      "keyPoints": [
+        "Lower ratio = massive strength, horrible flowability.",
+        "Higher ratio = super flowability, horrible strength and cracking."
+      ],
+      "types": ["Mix Design Parameter"],
+      "thumbRules": [
+        "Standard acceptable W/C range is 0.40 to 0.60.",
+        "Every 0.05 increase in W/C reduces compressive strength by roughy 10% to 15%."
+      ],
+      "relatedTopics": ["Concrete", "Admixtures", "Slump Test"],
+      "keywords": ["w/c", "water", "cement", "ratio", "strength", "mix"],
+      "siteTip": "A transit mixer driver adding arbitrary hose-water on site to make the pour 'flow faster' is actively destroying your building’s structural integrity. Stop them."
+    },
+    {
+      "id": "admixtures",
+      "title": "Admixtures",
+      "definition": "Chemical additions thrown into the concrete mix besides cement, water, and rocks to manipulate its natural behavior.",
+      "keyPoints": [
+        "Can make concrete flow like water without adding actual water (Plasticizers).",
+        "Can drastically slow down setting time for long-distance transit (Retarders)."
+      ],
+      "types": ["Superplasticizers", "Accelerators", "Retarders", "Air-entraining"],
+      "thumbRules": [
+        "Dosage is usually tiny, strictly capped around 0.5% to 2% by weight of cement."
+      ],
+      "relatedTopics": ["Water Cement Ratio", "Concrete"],
+      "keywords": [
+        "chemicals",
+        "plasticizer",
+        "accelerator",
+        "retarder",
+        "admixture"
+      ],
+      "siteTip": "Always request the manufacturer mix trial batches. Chemical clash between certain superplasticizers and specific local cements can cause flash-setting in the truck."
+    },
+    {
+      "id": "masonry",
+      "title": "Masonry Construction",
+      "definition": "The systematic assembly of individual interlocking blocks or bricks, permanently fused together by a cement-sand mortar matrix.",
+      "keyPoints": [
+        "Excels at handling direct downward compressive weight.",
+        "Extremely weak at handling lateral wind or seismic snapping forces."
+      ],
+      "types": [
+        "Burnt Clay Brickwork",
+        "Concrete Block (CMU)",
+        "Fly Ash Block",
+        "Stone Masonry"
+      ],
+      "thumbRules": [
+        "Standard Mortar mix ratio for main load-bearing brickwork is 1:4 (Cement:Sand).",
+        "For half-brick (partition) walls, the mix is usually tighter at 1:3.",
+        "Bricks consume roughly 25% to 30% of standard mortar volume per cubic meter of wall."
+      ],
+      "relatedTopics": ["Load Distribution", "Plastering"],
+      "keywords": [
+        "masonry",
+        "brick",
+        "block",
+        "cmu",
+        "mortar",
+        "wall",
+        "assembly"
+      ],
+      "siteTip": "Drop a clay brick from a height of 1-meter onto another brick. It should emit a sharp metallic clink and NOT shatter. A dull thud means it is under-baked and weak."
+    },
+    {
+      "id": "plastering",
+      "title": "Plastering",
+      "definition": "Coating rough or uneven masonry and concrete surfaces with a plastic protective mortar layer to provide a smooth, aesthetic, waterproof finish.",
+      "keyPoints": [
+        "Acts as the final sacrificial shield against weathering before painting.",
+        "Applied via a heavy base coat followed quickly by a finer finishing layer."
+      ],
+      "types": ["Cement Plaster", "Gypsum (POP)", "Lime Plaster"],
+      "thumbRules": [
+        "Standard thickness for internal wall plaster is 12mm.",
+        "External plaster is usually thicker at 18mm to 20mm (often applied in two coats) to block rain.",
+        "Ceiling plaster must never exceed 6mm to 10mm to prevent heavy ceiling spalling/falling over time."
+      ],
+      "relatedTopics": ["Masonry", "Curing"],
+      "keywords": [
+        "plastering",
+        "render",
+        "finish",
+        "coat",
+        "gypsum",
+        "pop",
+        "thickness"
+      ],
+      "siteTip": "For RCC column surfaces meeting brickwork walls, strictly staple Chicken Wire Mesh across the joint before plastering. Due to differential expansion, that exact line will ALWAYS crack without mesh."
+    }
+  ]
+}

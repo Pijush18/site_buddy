@@ -3,7 +3,7 @@
 /// ----------------------------------------------
 library;
 
-import 'package:site_buddy/core/data/knowledge_base.dart';
+
 import 'package:site_buddy/features/ai/domain/entities/parsed_ai_input.dart';
 import 'package:site_buddy/features/ai/domain/usecases/get_knowledge_usecase.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_material_usecase.dart';
@@ -93,7 +93,7 @@ class ProcessAiRequestUseCase {
 
     // 4. Knowledge Base
     if (parsed.intent == AiIntent.knowledge) {
-      final topic = KnowledgeBase.findTopic(parsed.rawQuery);
+      final topic = getKnowledgeUseCase.execute(parsed.rawQuery);
       if (topic != null) {
         return AiResponse(
           intent: AiIntent.knowledge,
@@ -101,6 +101,7 @@ class ProcessAiRequestUseCase {
           knowledge: topic,
         );
       } else {
+
         // Fallback for getting topic by title if direct search fails
         try {
           final topicByTitle = getKnowledgeUseCase.getTopicByTitle(parsed.rawQuery);

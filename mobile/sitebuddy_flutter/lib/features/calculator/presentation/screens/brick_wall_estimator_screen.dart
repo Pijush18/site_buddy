@@ -241,7 +241,7 @@ class _ResultSection extends StatelessWidget {
             'RESULT SUMMARY',
             style: SbTextStyles.title(context).copyWith(
               color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+              
               letterSpacing: 1.2,
             ),
             textAlign: TextAlign.center,
@@ -256,7 +256,7 @@ class _ResultSection extends StatelessWidget {
               result.numberOfBricks.toString(),
               style: SbTextStyles.body(context).copyWith(
                 color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+                
               ),
             ),
           ),
@@ -277,7 +277,7 @@ class _ResultSection extends StatelessWidget {
               '${result.cementBags.toStringAsFixed(0)} bags',
               style: SbTextStyles.body(context).copyWith(
                 color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+                
               ),
             ),
           ),
@@ -296,7 +296,7 @@ class _ResultSection extends StatelessWidget {
             title: 'Wall Volume',
             trailing: Text(
               '${result.wallVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context).copyWith(fontWeight: FontWeight.bold),
+              style: SbTextStyles.body(context),
             ),
           ),
           Row(

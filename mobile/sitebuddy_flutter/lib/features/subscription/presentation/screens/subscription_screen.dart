@@ -47,7 +47,7 @@ class SubscriptionScreen extends ConsumerWidget {
                         AppLayout.vGap16,
                         Text(
                           'You are a Premium User',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle( ),
                         ),
                         AppLayout.vGap8,
                         Text(
@@ -81,18 +81,12 @@ class SubscriptionScreen extends ConsumerWidget {
         subtitle: Text(status.plan.toUpperCase()),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          decoration: BoxDecoration(
-            color: status.status == 'active' ? Colors.green.withValues(alpha: 0.1) : Colors.orange.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: status.status == 'active' ? Colors.green : Colors.orange,
-            ),
-          ),
+          
           child: Text(
             status.status.toUpperCase(),
             style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
+              
+              
               color: status.status == 'active' ? Colors.green : Colors.orange,
             ),
           ),
@@ -114,12 +108,12 @@ class SubscriptionScreen extends ConsumerWidget {
               children: [
                 Text(
                   'PREMIUM LOGIC',
-                  style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
+                  style: TextStyle( letterSpacing: 1.2),
                 ),
                 AppLayout.vGap8,
                 Text(
                   '\$9.99 / Month',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+                  style: TextStyle( ),
                 ),
               ],
             ),
@@ -181,7 +175,7 @@ class SubscriptionScreen extends ConsumerWidget {
         children: [
           Expanded(child: Text(feature)),
           Icon(free ? Icons.check_circle : Icons.cancel, color: free ? Colors.green : Colors.grey, size: 20),
-          const SizedBox(width: 48),
+          const SizedBox(width: AppLayout.xl),
           Icon(premium ? Icons.check_circle : Icons.cancel, color: premium ? Colors.amber : Colors.grey, size: 20),
         ],
       ),

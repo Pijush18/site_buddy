@@ -7,9 +7,13 @@ import 'package:site_buddy/features/ai/data/repositories/knowledge_repository_im
 import 'package:site_buddy/features/unit_converter/application/providers/unit_usecase_providers.dart';
 import 'package:site_buddy/features/calculator/application/providers/calculator_usecase_providers.dart';
 
+import 'package:site_buddy/core/services/knowledge_service.dart';
+
 final knowledgeRepositoryProvider = Provider<KnowledgeRepository>((ref) {
-  return KnowledgeRepositoryImpl();
+  final service = ref.watch(knowledgeServiceProvider);
+  return KnowledgeRepositoryImpl(service);
 });
+
 
 final getKnowledgeUseCaseProvider = Provider<GetKnowledgeUseCase>((ref) {
   final repo = ref.watch(knowledgeRepositoryProvider);
@@ -18,8 +22,10 @@ final getKnowledgeUseCaseProvider = Provider<GetKnowledgeUseCase>((ref) {
 
 final parseAiInputUseCaseProvider = Provider<ParseAiInputUseCase>((ref) {
   final legacyParser = ref.watch(parseAiQueryUseCaseProvider);
-  return ParseAiInputUseCase(legacyParser);
+  final knowledgeService = ref.watch(knowledgeServiceProvider);
+  return ParseAiInputUseCase(legacyParser, knowledgeService);
 });
+
 
 final processAiRequestUseCaseProvider = Provider<ProcessAiRequestUseCase>((
   ref,

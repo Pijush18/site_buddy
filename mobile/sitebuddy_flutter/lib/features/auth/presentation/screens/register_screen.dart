@@ -149,7 +149,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       Text(
                         'SiteBuddy',
                         style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
                           color: colorScheme.primary,
                         ),
                       ),
@@ -170,9 +169,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           children: [
                             Text(
                               'Join SiteBuddy',
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: theme.textTheme.headlineSmall,
                             ),
                             AppLayout.vGap8,
                             Text(

@@ -49,16 +49,12 @@ class DesignResultCard extends StatelessWidget {
                   horizontal: AppLayout.md,
                   vertical: AppLayout.xs,
                 ),
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.1),
-                  borderRadius: AppLayout.borderRadiusCard,
-                  border: Border.all(color: statusColor.withValues(alpha: 0.2)),
-                ),
+                
                 child: Text(
                   isSafe ? 'SAFE' : 'UNSAFE',
                   style: SbTextStyles.caption(context).copyWith(
                     color: statusColor,
-                    fontWeight: FontWeight.bold,
+                    
                   ),
                 ),
               ),

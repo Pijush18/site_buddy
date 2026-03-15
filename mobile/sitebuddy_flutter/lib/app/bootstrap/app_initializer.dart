@@ -10,6 +10,8 @@ import 'package:site_buddy/features/level_log/data/models/level_method_model.dar
 import 'package:site_buddy/features/level_log/data/models/level_log_session_model.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/core/backend/backend_client.dart';
+import 'package:site_buddy/core/services/knowledge_service.dart';
+
 
 /// Provider to track the initialization state of the application.
 final initializationProvider = StateProvider<bool>((ref) => false);
@@ -41,8 +43,12 @@ class AppInitializer {
     // 5. Initialize Backend Client
     container.read(backendClientProvider);
 
-    // 6. Run Legacy SharedPreferences to Hive Migration
+    // 6. Initialize Knowledge Service
+    await container.read(knowledgeServiceProvider).loadKnowledge();
+
+    // 7. Run Legacy SharedPreferences to Hive Migration
     await container.read(dataMigrationServiceProvider).runMigration();
+
 
     // Mark initialization as complete
     container.read(initializationProvider.notifier).state = true;
