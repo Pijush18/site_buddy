@@ -121,7 +121,7 @@ class AppTheme {
         ), // Monospace for numbers
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
+      backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,
         centerTitle: false,
@@ -149,7 +149,7 @@ class AppTheme {
         ),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
+      backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
         selectedItemColor: const Color(0xFF2563EB),
         unselectedItemColor: isDark
             ? const Color(0xFF94A3B8)
