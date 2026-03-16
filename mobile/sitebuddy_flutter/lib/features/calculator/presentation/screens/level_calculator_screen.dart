@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -50,63 +51,71 @@ class LevelCalculatorScreen extends ConsumerWidget {
           children: [
             Text(
               'RESULT SUMMARY',
-              style: SbTextStyles.title(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
                 letterSpacing: 1.2,
               ),
               textAlign: TextAlign.center,
             ),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             Text(
               '${result.difference.toStringAsFixed(2)} m',
-              style: SbTextStyles.headlineLarge(context).copyWith(
+              style: TextStyle(
+                fontSize: 32, // Preserving headlineLarge-like size
+                fontWeight: FontWeight.bold,
                 color: colorScheme.primary,
-                
               ),
               textAlign: TextAlign.center,
             ),
-            AppLayout.vGap8,
+            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppLayout.md,
-                vertical: AppLayout.xs,
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4px)
               ),
-              
               child: Text(
                 directionLabel,
-                style: SbTextStyles.caption(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
                   color: directionColor,
-                  
+                  fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
             SbListItem(
               title: 'Absolute Difference',
-              trailing: Text('${result.absoluteDifference.toStringAsFixed(2)} m'),
+              trailing: Text(
+                '${result.absoluteDifference.toStringAsFixed(2)} m',
+                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              ),
             ),
           ],
         ),
       );
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Level Calculator',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          AppLayout.vGap16,
-          Text(
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const Text(
             'Field Level Comparison',
-            style: SbTextStyles.title(context),
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           AppNumberField(
             label: 'Start Level (m)',
@@ -114,7 +123,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'End Level (m)',
@@ -123,7 +132,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             errorText: eError,
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -141,24 +150,25 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: SbTextStyles.body(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
         ],
       ),

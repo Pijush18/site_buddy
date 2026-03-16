@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -9,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/core/widgets/educational_toggle.dart';
 import 'package:site_buddy/core/widgets/code_reference_card.dart';
@@ -52,19 +52,21 @@ class _DesignCalculationScreenState
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Design Calculation',
-      appBarActions: const [EducationalToggle()],
-      body: Column(
+      actions: const [EducationalToggle()],
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 4 of 6: Structural Design',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Design Settings & Properties
           DesignResultCard(
@@ -84,25 +86,29 @@ class _DesignCalculationScreenState
             ],
           ),
 
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Design Controls Card
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Design Configuration',
-                  style: SbTextStyles.title(context),
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                AppLayout.vGap12,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12 (closest standard)
                 Text(
                   'Design Method',
-                  style: SbTextStyles.caption(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
-                AppLayout.vGap8,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbDropdown<DesignMethod>(
                   value: state.designMethod,
                   items: DesignMethod.values,
@@ -110,20 +116,24 @@ class _DesignCalculationScreenState
                   onChanged: (v) =>
                       v != null ? notifier.updateDesignMethod(v) : null,
                 ),
-                AppLayout.vGap24,
+                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                 Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Auto-calculate Steel %',
-                            style: SbTextStyles.body(context),
+                            style: TextStyle(
+                              fontSize: AppFontSizes.subtitle,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                           Text(
                             'Automatically find minimum steel',
-                            style: SbTextStyles.caption(context).copyWith(
+                            style: TextStyle(
+                              fontSize: AppFontSizes.tab,
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -138,7 +148,7 @@ class _DesignCalculationScreenState
                   ],
                 ),
                 if (!state.isAutoSteel) ...[
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                   AppNumberField(
                     label: 'Manual Steel (%)',
                     hint: 'e.g. 1.20',
@@ -160,7 +170,7 @@ class _DesignCalculationScreenState
               reference: IS456References.minReinforcementColumn,
             ),
 
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Required Steel Area (Asc)
           DesignResultCard(
@@ -179,8 +189,7 @@ class _DesignCalculationScreenState
                 : 'IS 456 Annex B',
           ),
 
-
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,13 +200,14 @@ class _DesignCalculationScreenState
                   context.push('/column/detailing');
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );

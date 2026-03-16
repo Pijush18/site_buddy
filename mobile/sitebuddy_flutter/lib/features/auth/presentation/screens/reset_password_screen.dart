@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
 import 'package:go_router/go_router.dart';
@@ -95,91 +97,93 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: AppLayout.paddingLarge,
+    return AppScreenWrapper(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing
+          Icon(
+            SbIcons.engineering,
+            size: 64,
+            color: colorScheme.primary,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          Text(
+            'SiteBuddy',
+            style: TextStyle(
+              fontSize: 32, // Preserving headline-like size
+              fontWeight: FontWeight.bold,
+              color: colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            'Professional Structural Design Suite',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+
+          Align(
+            alignment: Alignment.centerLeft,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  SbIcons.engineering,
-                  size: 64,
-                  color: colorScheme.primary,
-                ),
-                AppLayout.vGap16,
-                Text(
-                  'SiteBuddy',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    color: colorScheme.primary,
+                const Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    fontSize: 24, // Preserving headlineSmall
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                AppLayout.vGap8,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 Text(
-                  'Professional Structural Design Suite',
-                  style: theme.textTheme.bodyMedium?.copyWith(
+                  'Enter your email to receive a reset link',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
                     color: colorScheme.onSurfaceVariant,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                AppLayout.vGap48,
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      AppLayout.vGap8,
-                      Text(
-                        'Enter your email to receive a reset link',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                AppLayout.vGap32,
-
-                // Auth Card
-                SbCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SbInput(
-                        controller: _emailController,
-                        focusNode: _emailFocusNode,
-                        label: 'Email',
-                        hint: 'your@email.com',
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (_) => _resetPassword(),
-                        prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                      ),
-                      AppLayout.vGap24,
-                      SbButton.primary(
-                        label: 'Send Reset Link',
-                        onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
-                        isLoading: isLoading,
-                        width: double.infinity,
-                      ),
-                    ],
-                  ),
-                ),
-                AppLayout.vGap24,
-                SbButton.ghost(
-                  label: 'Back to Sign In',
-                  onPressed: () => context.go('/login'),
                 ),
               ],
             ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32 (approx)
+
+          // Auth Card
+          SbCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  controller: _emailController,
+                  focusNode: _emailFocusNode,
+                  label: 'Email',
+                  hint: 'your@email.com',
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _resetPassword(),
+                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                ),
+                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                SbButton.primary(
+                  label: 'Send Reset Link',
+                  onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
+                  isLoading: isLoading,
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          SbButton.ghost(
+            label: 'Back to Sign In',
+            onPressed: () => context.go('/login'),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Bottom padding
+        ],
       ),
     );
   }

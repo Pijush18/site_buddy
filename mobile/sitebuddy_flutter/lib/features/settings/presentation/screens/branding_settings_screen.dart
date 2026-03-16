@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -77,56 +78,55 @@ class _BrandingSettingsScreenState
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Report Branding',
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: AppLayout.paddingLarge,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Enterprise Profile',
-                style: SbTextStyles.headline(context).copyWith(
-                  color: colorScheme.primary,
-                ),
-              ),
-              AppLayout.vGap8,
-              Text(
-                'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
-                style: SbTextStyles.body(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-              AppLayout.vGap24,
-              _buildInputLabel(context, 'Company / Enterprise Name'),
-              AppLayout.vGap8,
-              SbInput(
-                controller: _companyController,
-                hint: 'e.g., ABC Infra Pvt Ltd',
-                keyboardType: TextInputType.text,
-              ),
-              AppLayout.vGap16,
-              _buildInputLabel(context, 'Lead Engineer Name'),
-              AppLayout.vGap8,
-              SbInput(
-                controller: _engineerController,
-                hint: 'e.g., Er. Pijush Debbarma',
-                keyboardType: TextInputType.name,
-              ),
-              AppLayout.vGap24,
-              SbButton.primary(
-                label: 'Save Branding Profile',
-                onPressed: _saveBranding,
-              ),
-              AppLayout.vGap16,
-              SbButton.ghost(
-                label: 'Reset to Site Buddy Defaults',
-                onPressed: _resetBranding,
-              ),
-            ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Enterprise Profile',
+            style: TextStyle(
+              fontSize: AppFontSizes.title, // headline-like
+              fontWeight: FontWeight.bold,
+              color: colorScheme.primary,
+            ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          _buildInputLabel(context, 'Company / Enterprise Name'),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          SbInput(
+            controller: _companyController,
+            hint: 'e.g., ABC Infra Pvt Ltd',
+            keyboardType: TextInputType.text,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          _buildInputLabel(context, 'Lead Engineer Name'),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          SbInput(
+            controller: _engineerController,
+            hint: 'e.g., Er. Pijush Debbarma',
+            keyboardType: TextInputType.name,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          SbButton.primary(
+            label: 'Save Branding Profile',
+            onPressed: _saveBranding,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          SbButton.ghost(
+            label: 'Reset to Site Buddy Defaults',
+            onPressed: _resetBranding,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Added for consistency
+        ],
       ),
     );
   }
@@ -134,8 +134,9 @@ class _BrandingSettingsScreenState
   Widget _buildInputLabel(BuildContext context, String label) {
     return Text(
       label,
-      style: SbTextStyles.button(context).copyWith(
-        color: Theme.of(context).colorScheme.onSurface,
+      style: const TextStyle(
+        fontSize: AppFontSizes.tab, // Button text style equiv
+        fontWeight: FontWeight.w600,
       ),
     );
   }

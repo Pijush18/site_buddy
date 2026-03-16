@@ -1,18 +1,15 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
-
 
 /// CLASS: ProjectDetailScreen
 /// PURPOSE: Deep-dive view into a specific project.
@@ -32,9 +29,9 @@ class ProjectDetailScreen extends ConsumerWidget {
         .getProjectById(projectId);
 
     if (proj == null) {
-      return const SbPage.detail(
+      return const AppScreenWrapper(
         title: 'Project Not Found',
-        body: Center(child: Text('The requested project could not be found.')),
+        child: Center(child: Text('The requested project could not be found.')),
       );
     }
 
@@ -71,16 +68,14 @@ class ProjectDetailScreen extends ConsumerWidget {
     final logItems = detailState.logs;
     final formattedDate = DateFormat('dd MMM yyyy').format(proj.createdAt);
 
-
-
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: proj.name,
-      appBarActions: [
+      actions: [
         Consumer(
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
-              margin: const EdgeInsets.only(right: AppLayout.md),
+              margin: const EdgeInsets.only(right: AppSpacing.md), // Replaced AppLayout.md
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
@@ -90,11 +85,11 @@ class ProjectDetailScreen extends ConsumerWidget {
           },
         ),
       ],
-      body: Column(
+      child: Column(
         children: [
           // Status Header
           SbCard(
-            padding: AppLayout.paddingLg,
+            padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -103,35 +98,42 @@ class ProjectDetailScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'STATUS',
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
                         color: colorScheme.primary,
+                        fontWeight: FontWeight.w600,
                         letterSpacing: 1.2,
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: AppLayout.md, // 16
-                        vertical: AppLayout.xs,   // 4
+                        horizontal: AppSpacing.md, // 16
+                        vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4)
                       ),
-                      
                       child: Text(
                         proj.status.label.toUpperCase(),
-                        style: SbTextStyles.caption(context).copyWith(
-                          color: colorScheme.onPrimary,
-                          
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
+                          color: colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ],
                 ),
-                AppLayout.vGap16,
-                Text(proj.name, style: SbTextStyles.title(context)),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                Text(
+                  proj.name,
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 // Cover Image Mock
                 SizedBox(
                   height: 120,
                   width: double.infinity,
-
                   child: Center(
                     child: Icon(
                       SbIcons.terrain,
@@ -142,7 +144,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -151,11 +153,16 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           'CREATED',
-                          style: SbTextStyles.caption(context).copyWith(
+                          style: TextStyle(
+                            fontSize: AppFontSizes.tab,
+                            color: colorScheme.onSurfaceVariant,
                             letterSpacing: 1.2,
                           ),
                         ),
-                        Text(formattedDate, style: SbTextStyles.body(context)),
+                        Text(
+                          formattedDate,
+                          style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                        ),
                       ],
                     ),
                     Column(
@@ -163,7 +170,9 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           'LOCATION',
-                          style: SbTextStyles.caption(context).copyWith(
+                          style: TextStyle(
+                            fontSize: AppFontSizes.tab,
+                            color: colorScheme.onSurfaceVariant,
                             letterSpacing: 1.2,
                           ),
                         ),
@@ -174,10 +183,10 @@ class ProjectDetailScreen extends ConsumerWidget {
                               size: 20,
                               color: colorScheme.primary,
                             ),
-                            AppLayout.hGap8,
+                            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
                             Text(
                               proj.location,
-                              style: SbTextStyles.body(context),
+                              style: const TextStyle(fontSize: AppFontSizes.subtitle),
                             ),
                           ],
                         ),
@@ -188,7 +197,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               ],
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty) ...[
@@ -197,11 +206,14 @@ class ProjectDetailScreen extends ConsumerWidget {
               child: SbCard(
                 child: Text(
                   proj.description!,
-                  style: SbTextStyles.body(context).copyWith(height: 1.5),
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    height: 1.5,
+                  ),
                 ),
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           // Stats grid
@@ -215,7 +227,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   subtext: 'Total Entries',
                 ),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
               Expanded(
                 child: _StatCard(
                   icon: SbIcons.calculator,
@@ -227,7 +239,7 @@ class ProjectDetailScreen extends ConsumerWidget {
             ],
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           SbSection(
             title: 'Structural Calculations',
@@ -261,7 +273,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Level Log History
           SbSection(
@@ -295,7 +307,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           SbSection(
             title: 'Action Zone',
@@ -308,7 +320,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     context.push('/projects/$projectId/level-log');
                   },
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 SbButton(
                   label: 'Edit Project',
                   icon: SbIcons.editSquare,
@@ -320,6 +332,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: AppSpacing.lg), // Added for consistency
         ],
       ),
     );
@@ -345,7 +358,7 @@ class _StatCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SbCard(
-      padding: AppLayout.paddingLg,
+      padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -355,23 +368,28 @@ class _StatCard extends StatelessWidget {
               Icon(icon, color: colorScheme.primary, size: 20),
               Text(
                 label,
-                style: SbTextStyles.caption(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
+                  color: colorScheme.onSurfaceVariant,
                   letterSpacing: -0.5,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.md),
+          const SizedBox(height: AppSpacing.md),
           Text(
             value,
-            style: SbTextStyles.headline(context).copyWith(
-              fontFeatures: const [FontFeature.tabularFigures()],
+            style: const TextStyle(
+              fontSize: 24, // Preserving headline-like size
+              fontWeight: FontWeight.bold,
+              fontFeatures: [FontFeature.tabularFigures()],
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             subtext,
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
             ),
           ),

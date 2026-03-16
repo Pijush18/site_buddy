@@ -1,12 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 /// CLASS: ProjectShareScreen
@@ -37,52 +35,50 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
     final proj = state.selectedProject;
 
     if (state.isLoading || proj == null) {
-      return const SbPage.detail(
+      return const AppScreenWrapper(
         title: 'Share Project',
-        body: Center(child: CircularProgressIndicator()),
+        child: Center(child: CircularProgressIndicator()),
       );
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Share: ${proj.name}',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppLayout.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildShareOption(
-              context,
-              icon: SbIcons.pdf,
-              title: 'Export as PDF',
-              subtitle: 'Generate a formatted daily report',
-              onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
-            ),
-            AppLayout.vGap16,
-            _buildShareOption(
-              context,
-              icon: SbIcons.message,
-              title: 'Share via Text',
-              subtitle: 'Send a quick text summary link',
-              onTap: () => debugPrint('Sharing Text for ${proj.name}'),
-            ),
-            AppLayout.vGap16,
-            _buildShareOption(
-              context,
-              icon: SbIcons.copy,
-              title: 'Copy Summary',
-              subtitle: 'Copy project stats to clipboard',
-              onTap: () => debugPrint('Copying data for ${proj.name}'),
-            ),
-            AppLayout.vGap16,
-            _buildShareOption(
-              context,
-              icon: SbIcons.table,
-              title: 'Export Data (CSV)',
-              subtitle: 'Download raw calculations and logs',
-              onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildShareOption(
+            context,
+            icon: SbIcons.pdf,
+            title: 'Export as PDF',
+            subtitle: 'Generate a formatted daily report',
+            onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          _buildShareOption(
+            context,
+            icon: SbIcons.message,
+            title: 'Share via Text',
+            subtitle: 'Send a quick text summary link',
+            onTap: () => debugPrint('Sharing Text for ${proj.name}'),
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          _buildShareOption(
+            context,
+            icon: SbIcons.copy,
+            title: 'Copy Summary',
+            subtitle: 'Copy project stats to clipboard',
+            onTap: () => debugPrint('Copying data for ${proj.name}'),
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          _buildShareOption(
+            context,
+            icon: SbIcons.table,
+            title: 'Export Data (CSV)',
+            subtitle: 'Download raw calculations and logs',
+            onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Added for consistency
+        ],
       ),
     );
   }
@@ -99,24 +95,30 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
 
     return SbCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppLayout.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.lg
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(AppLayout.sm),
-
+            padding: const EdgeInsets.all(AppSpacing.sm), // Replaced AppLayout.sm
             child: Icon(icon, color: colorScheme.primary),
           ),
-          AppLayout.hGap16,
+          const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: SbTextStyles.title(context)),
-                AppLayout.vGap4,
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                 Text(
                   subtitle,
-                  style: SbTextStyles.bodySecondary(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),

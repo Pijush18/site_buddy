@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -86,28 +87,36 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
     final state = ref.watch(beamDesignControllerProvider);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Load Definition',
-      body: Form(
+      child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Step 2 of 5: Applied Loads',
-              style: SbTextStyles.title(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
             // Loads Card
             SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Vertical Loads', style: SbTextStyles.title(context)),
-                  AppLayout.vGap16,
+                  const Text(
+                    'Vertical Loads',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.title,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _dlController,
@@ -115,7 +124,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Dead Load'),
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _llController,
@@ -123,7 +132,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Live Load'),
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _plController,
@@ -132,7 +141,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
             // Load Factor Toggle Card
             SbCard(
@@ -142,14 +151,18 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Design Limit State',
-                        style: SbTextStyles.title(context),
+                        style: TextStyle(
+                          fontSize: AppFontSizes.title,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      AppLayout.vGap4,
+                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap4
                       Text(
                         state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -166,7 +179,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            AppLayout.vGap32,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest match)
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -176,14 +189,14 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                   onPressed: _onNext,
                   icon: SbIcons.analytics,
                 ),
-                AppLayout.vGap12,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
                 SbButton.outline(
                   label: 'Back',
                   onPressed: () => context.pop(),
                 ),
               ],
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -21,9 +22,9 @@ class ColumnHistoryScreen extends ConsumerWidget {
     final selectedProject = ref.watch(activeProjectProvider);
 
     if (selectedProject == null) {
-      return const SbPage.detail(
+      return const AppScreenWrapper(
         title: 'Column History',
-        body: SbEmptyState(
+        child: SbEmptyState(
           icon: SbIcons.projectOff,
           title: 'No Project Selected',
           subtitle:
@@ -32,9 +33,9 @@ class ColumnHistoryScreen extends ConsumerWidget {
       );
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Column History',
-      body: FutureBuilder<List<CalculationHistoryEntry>>(
+      child: FutureBuilder<List<CalculationHistoryEntry>>(
         future: historyRepo.getEntriesByProject(selectedProject.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,7 +67,7 @@ class ColumnHistoryScreen extends ConsumerWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: columnHistory.length,
-            separatorBuilder: (context, index) => AppLayout.vGap16,
+            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             itemBuilder: (context, index) {
               final entry = columnHistory[index];
               return _HistoryCard(entry: entry);
@@ -100,24 +101,31 @@ class _HistoryCard extends StatelessWidget {
             children: [
               Text(
                 'COLUMN DESIGN',
-                style: SbTextStyles.caption(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
                   color: colorScheme.primary,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 dateStr,
-                style: SbTextStyles.bodySecondary(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
-          AppLayout.vGap8,
-          Text(entry.resultSummary, style: SbTextStyles.body(context)),
-          AppLayout.vGap4,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            entry.resultSummary,
+            style: const TextStyle(fontSize: AppFontSizes.subtitle),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap4 (closest standard)
           Text(
             'ID: ${entry.id.substring(0, 8)}...',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
             ),
           ),

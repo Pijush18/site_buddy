@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,54 +47,60 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Load & Support',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 2 of 6: Loading Conditions',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Axial Loading',
-                    style: SbTextStyles.body(context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Axial Loading',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w500,
                   ),
-                  AppLayout.vGap16,
-                  AppNumberField(
-                    label: 'Factored Load Pu (kN)',
-                    controller: _loadController,
-                    onChanged: (v) {
-                      final val = double.tryParse(v);
-                      if (val != null) notifier.updateLoads(pu: val);
-                    },
-                    suffixIcon: SbIcons.arrowDown,
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                AppNumberField(
+                  label: 'Factored Load Pu (kN)',
+                  controller: _loadController,
+                  onChanged: (v) {
+                    final val = double.tryParse(v);
+                    if (val != null) notifier.updateLoads(pu: val);
+                  },
+                  suffixIcon: SbIcons.arrowDown,
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const Text(
+                  'End Support Condition',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                   ),
-                  AppLayout.vGap16,
-                  Text(
-                    'End Support Condition',
-                    style: SbTextStyles.caption(context),
-                  ),
-                  AppLayout.vGap8,
-                  SbDropdown<EndCondition>(
-                    value: state.endCondition,
-                    items: EndCondition.values,
-                    itemLabelBuilder: (c) => c.label,
-                    onChanged: (v) => v != null
-                        ? notifier.updateInput(endCondition: v)
-                        : null,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                SbDropdown<EndCondition>(
+                  value: state.endCondition,
+                  items: EndCondition.values,
+                  itemLabelBuilder: (c) => c.label,
+                  onChanged: (v) => v != null
+                      ? notifier.updateInput(endCondition: v)
+                      : null,
+                ),
+              ],
             ),
-          AppLayout.vGap32,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest match)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -102,14 +109,14 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                 onPressed: _onNext,
                 icon: SbIcons.analytics,
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         ],
       ),
     );

@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -26,24 +27,32 @@ class ReinforcementDesignScreen extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
     final state = ref.watch(beamDesignControllerProvider);
     final notifier = ref.read(beamDesignControllerProvider.notifier);
-    return SbPage.detail(
-      title: 'Reinforcement',
 
-      appBarActions: const [EducationalToggle()],
-      body: Column(
+    return AppScreenWrapper(
+      title: 'Reinforcement',
+      actions: const [EducationalToggle()],
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 4 of 5: Steel Detailing',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // DETALLING PREVIEW
-          Text('Cross-Section Arrangement', style: SbTextStyles.title(context)),
-          AppLayout.vGap16,
+          const Text(
+            'Cross-Section Arrangement',
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           BeamCrossSectionDiagram(
             width: state.width,
             depth: state.overallDepth,
@@ -51,7 +60,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             barDia: state.mainBarDia,
             stirrupSpacing: state.stirrupSpacing,
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // SMART SUGGESTIONS
           if (state.suggestions.isNotEmpty) ...[
@@ -59,21 +68,33 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               suggestions: state.suggestions,
               onOptimize: () => notifier.optimize(),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Detailing Controls Card
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Steel Specification', style: SbTextStyles.title(context)),
-                AppLayout.vGap16,
+                const Text(
+                  'Steel Specification',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
-                Text('Main Bar Diameter', style: SbTextStyles.title(context)),
-                AppLayout.vGap8,
+                const Text(
+                  'Main Bar Diameter',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbDropdown<double>(
                   value: state.mainBarDia,
                   items: const [12, 16, 20, 25, 32],
@@ -94,7 +115,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               reference: IS456References.tensionReinforcement,
             ),
 
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // RESULTS: FLEXURE
           DesignResultCard(
@@ -117,7 +138,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Annex G',
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // RESULTS: SHEAR
           DesignResultCard(
@@ -140,7 +161,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Cl. 40',
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest match)
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -152,14 +173,14 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   context.push('/beam/safety');
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         ],
       ),
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -10,7 +11,6 @@ import 'package:site_buddy/features/design/presentation/widgets/design_advisor/d
 import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/core/services/design_advisor_service.dart';
-// Remove optimization_result import if unused, it is often matched by design_providers.dart in this file context
 
 class SlabSafetyScreen extends ConsumerWidget {
   const SlabSafetyScreen({super.key});
@@ -21,9 +21,9 @@ class SlabSafetyScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     if (state.result == null) {
-      return const SbPage.scaffold(
+      return const AppScreenWrapper(
         title: 'Safety Check',
-        body: Center(child: CircularProgressIndicator()),
+        child: Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -33,23 +33,27 @@ class SlabSafetyScreen extends ConsumerWidget {
       optimizationResult: optimizationResult,
     );
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Safety Check',
-      appBarActions: [
+      actions: [
         SbButton.icon(
           icon: SbIcons.share,
           tooltip: 'Share Report',
           onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
         ),
       ],
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Final Step: Engineering Validation',
-            style: SbTextStyles.title(context).copyWith(color: colorScheme.primary),
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
+            ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           DesignResultCard(
             title: 'Critical Safety Status',
@@ -71,14 +75,20 @@ class SlabSafetyScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Cl. 23.2.1',
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           DesignAdvisorCard(advisorResult: advisorResult),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           if (optimizationResult.options.isNotEmpty) ...[
-            Text('ECONOMICAL ALTERNATIVES', style: SbTextStyles.title(context)),
-            AppLayout.vGap16,
+            const Text(
+              'ECONOMICAL ALTERNATIVES',
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             OptimizationList(
               options: optimizationResult.options,
               onOptionSelected: (opt) {
@@ -87,7 +97,7 @@ class SlabSafetyScreen extends ConsumerWidget {
                 ref.read(slabDesignControllerProvider.notifier).calculate();
               },
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           Column(
@@ -98,14 +108,14 @@ class SlabSafetyScreen extends ConsumerWidget {
                 onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
                 icon: SbIcons.pdf,
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );

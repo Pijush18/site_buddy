@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -45,8 +46,6 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final models.ReportData? reportData =
         widget.data ??
         ModalRoute.of(context)?.settings.arguments as models.ReportData?;
@@ -55,38 +54,37 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
       return const _ReportErrorState();
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: reportData.title,
-      appBarActions: [
+      actions: [
         if (_isExporting)
-          Padding(
-            padding: AppLayout.paddingMedium,
+          const Padding(
+            padding: EdgeInsets.all(AppSpacing.md),
             child: SizedBox(
-              width: AppLayout.md,
-              height: AppLayout.md,
+              width: 16,
+              height: 16,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: theme.colorScheme.onPrimary,
               ),
             ),
           )
         else
-          SbButton.icon(
-            icon: SbIcons.share,
+          IconButton(
+            icon: const Icon(SbIcons.share),
             onPressed: () => _handleShare(reportData),
           ),
       ],
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ReportDocumentHeader(data: reportData),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ...reportData.sections.map(
             (section) => _ReportSectionWidget(section: section),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           const _ReportFooter(),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
           if (_isExporting)
             const Center(child: CircularProgressIndicator())
           else ...[
@@ -95,16 +93,16 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
               icon: SbIcons.share,
               onPressed: () => _handleShare(reportData),
             ),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             SbButton.primary(
               label: 'Download PDF',
               icon: SbIcons.download,
               onPressed: () => _handleShare(
                 reportData,
-              ), // In this context, both trigger the same share/save logic
+              ), 
             ),
           ],
-          const SizedBox(height: AppLayout.xl + AppLayout.sm),
+          const SizedBox(height: AppSpacing.lg * 2), // Buffer space
         ],
       ),
     );
@@ -117,13 +115,13 @@ class _ReportErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Design Report',
-      body: Center(
+      child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppLayout.lg,
-            vertical: AppLayout.md,
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.md,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -133,19 +131,22 @@ class _ReportErrorState extends StatelessWidget {
                 size: 64,
                 color: theme.colorScheme.error,
               ),
-              AppLayout.vGap24,
-              Text(
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const Text(
                 'Report data unavailable.',
-                style: SbTextStyles.title(context),
+                style: TextStyle(
+                  fontSize: AppFontSizes.title,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
-              AppLayout.vGap8,
-              Text(
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const Text(
                 'Please try recalculating the design.',
-                style: SbTextStyles.body(context),
+                style: TextStyle(fontSize: AppFontSizes.subtitle),
                 textAlign: TextAlign.center,
               ),
-              AppLayout.vGap24,
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
               SbButton.primary(
                 label: 'Go Back',
                 width: 200,
@@ -179,13 +180,16 @@ class _ReportDocumentHeader extends StatelessWidget {
               children: [
                 Text(
                   data.title.toUpperCase(),
-                  style: SbTextStyles.title(context).copyWith(
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
                     letterSpacing: 1.2,
                   ),
                 ),
                 Text(
                   'ENGINEERING COMPUTATION SHEET',
-                  style: SbTextStyles.caption(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                     color: colorScheme.primary,
                   ),
                 ),
@@ -193,23 +197,29 @@ class _ReportDocumentHeader extends StatelessWidget {
             ),
             // Logo/Badge
             Container(
-              padding: const EdgeInsets.all(AppLayout.xs),
-              
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Icon(SbIcons.architecture, color: colorScheme.onPrimary, size: 24),
             ),
           ],
         ),
-        AppLayout.vGap24,
+        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         Container(
-          padding: AppLayout.paddingMedium,
-
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Row(
             children: [
                Expanded(
                 child: _HeaderField(label: 'PROJECT', value: data.projectName),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 child: Container(
                   width: 1,
                   height: 32,
@@ -243,14 +253,15 @@ class _HeaderField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: SbTextStyles.caption(context).copyWith(
+          style: TextStyle(
+            fontSize: AppFontSizes.tab,
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        AppLayout.vGap8,
+        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
         Text(
           value,
-          style: SbTextStyles.body(context),
+          style: const TextStyle(fontSize: AppFontSizes.subtitle),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -269,26 +280,34 @@ class _ReportSectionWidget extends StatelessWidget {
     final isResult = section.type == models.ReportSectionType.result;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppLayout.lg),
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const SizedBox(
-                width: AppLayout.spaceXS,
-                height: AppLayout.spaceL,
+              Container(
+                width: 4,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: isResult ? colorScheme.primary : colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
               Text(
                 section.heading.toUpperCase(),
-                style: SbTextStyles.body(context).copyWith(letterSpacing: 1.1),
+                style: const TextStyle(
+                  fontSize: AppFontSizes.subtitle,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.1,
+                ),
               ),
             ],
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbCard(
-            padding: const EdgeInsets.all(AppLayout.pMedium),
+            padding: const EdgeInsets.all(AppSpacing.md),
             color: isResult
                 ? colorScheme.primaryContainer.withValues(alpha: 0.1)
                 : null,
@@ -300,7 +319,7 @@ class _ReportSectionWidget extends StatelessWidget {
                     isCheck: section.type == models.ReportSectionType.check,
                   ),
                   if (i < section.items.length - 1)
-                    Divider(color: colorScheme.outlineVariant, height: AppLayout.vGap16.height),
+                    Divider(color: colorScheme.outlineVariant, height: 16),
                 ],
               ],
             ),
@@ -327,7 +346,7 @@ class _CalculationItemRow extends StatelessWidget {
     Color? statusColor;
     if (isCheck) {
       if (isSafe) {
-        statusColor = colorScheme.primary; // Using primary for "Safe" consistent with system
+        statusColor = colorScheme.primary; 
       } else if (isFail) {
         statusColor = colorScheme.error;
       } else {
@@ -343,13 +362,18 @@ class _CalculationItemRow extends StatelessWidget {
         children: [
           Text(
             item.value,
-            style: SbTextStyles.body(context).copyWith(color: statusColor),
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: statusColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           if (item.unit != null) ...[
-            const SizedBox(width: AppLayout.xs),
+            const SizedBox(width: AppSpacing.sm / 2),
             Text(
               item.unit!,
-              style: SbTextStyles.caption(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.tab,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
@@ -374,17 +398,19 @@ class _ReportFooter extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             'DESIGN VERIFIED BY SITE BUDDY PRO',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: theme.colorScheme.onSurfaceVariant,
               letterSpacing: 2,
             ),
           ),
           Text(
             'Structural Engineering Computation Suite v2.0',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: 10,
               color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
           ),

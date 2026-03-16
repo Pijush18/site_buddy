@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -126,134 +128,127 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: AppLayout.paddingLarge,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight - (AppLayout.pLarge * 2),
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        SbIcons.engineering,
-                        size: 64,
-                        color: colorScheme.primary,
-                      ),
-                      AppLayout.vGap16,
-                      Text(
-                        'SiteBuddy',
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                      AppLayout.vGap8,
-                      Text(
-                        'Professional Structural Design Suite',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      AppLayout.vGap48,
+    return AppScreenWrapper(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing
+          Icon(
+            SbIcons.engineering,
+            size: 64,
+            color: colorScheme.primary,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          Text(
+            'SiteBuddy',
+            style: TextStyle(
+              fontSize: 32, // Preserving headline-like size
+              fontWeight: FontWeight.bold,
+              color: colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            'Professional Structural Design Suite',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Join SiteBuddy',
-                              style: theme.textTheme.headlineSmall,
-                            ),
-                            AppLayout.vGap8,
-                            Text(
-                              'Start your professional design journey',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppLayout.vGap32,
-
-                      // Register Card
-                      SbCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SbInput(
-                              controller: _emailController,
-                              focusNode: _emailFocusNode,
-                              label: 'Email',
-                              hint: 'your@email.com',
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                              prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                            ),
-                            AppLayout.vGap16,
-                            SbInput(
-                              controller: _passwordController,
-                              focusNode: _passwordFocusNode,
-                              label: 'Password',
-                              hint: '••••••••',
-                              obscureText: _obscurePassword,
-                              textInputAction: TextInputAction.next,
-                              onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
-                              prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
-                                  color: colorScheme.outline,
-                                ),
-                                onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                              ),
-                            ),
-                            AppLayout.vGap16,
-                            SbInput(
-                              controller: _confirmPasswordController,
-                              focusNode: _confirmPasswordFocusNode,
-                              label: 'Confirm Password',
-                              hint: '••••••••',
-                              obscureText: _obscurePassword,
-                              textInputAction: TextInputAction.done,
-                              onFieldSubmitted: (_) => _register(),
-                              prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                            ),
-                            AppLayout.vGap24,
-                            SbButton.primary(
-                              label: 'Register',
-                              onPressed: (isLoading ||
-                                      _emailController.text.isEmpty ||
-                                      _passwordController.text.isEmpty ||
-                                      _confirmPasswordController.text.isEmpty)
-                                  ? null
-                                  : _register,
-                              isLoading: isLoading,
-                              width: double.infinity,
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppLayout.vGap24,
-                      SbButton.ghost(
-                        label: 'Already have an account? Sign In',
-                        onPressed: () => context.go('/login'),
-                      ),
-                    ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Join SiteBuddy',
+                  style: TextStyle(
+                    fontSize: 24, // Preserving headlineSmall
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-            );
-          },
-        ),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                Text(
+                  'Start your professional design journey',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+
+          // Register Card
+          SbCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  controller: _emailController,
+                  focusNode: _emailFocusNode,
+                  label: 'Email',
+                  hint: 'your@email.com',
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
+                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                SbInput(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  label: 'Password',
+                  hint: '••••••••',
+                  obscureText: _obscurePassword,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
+                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
+                      color: colorScheme.outline,
+                    ),
+                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                SbInput(
+                  controller: _confirmPasswordController,
+                  focusNode: _confirmPasswordFocusNode,
+                  label: 'Confirm Password',
+                  hint: '••••••••',
+                  obscureText: _obscurePassword,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _register(),
+                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                ),
+                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                SbButton.primary(
+                  label: 'Register',
+                  onPressed: (isLoading ||
+                          _emailController.text.isEmpty ||
+                          _passwordController.text.isEmpty ||
+                          _confirmPasswordController.text.isEmpty)
+                      ? null
+                      : _register,
+                  isLoading: isLoading,
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          SbButton.ghost(
+            label: 'Already have an account? Sign In',
+            onPressed: () => context.go('/login'),
+          ),
+          const SizedBox(height: AppSpacing.lg), // Bottom padding
+        ],
       ),
     );
   }

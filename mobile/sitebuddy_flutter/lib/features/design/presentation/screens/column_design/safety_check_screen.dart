@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,6 @@ import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
 import 'package:printing/printing.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: SafetyCheckScreen
 /// PURPOSE: Final summary and safety checks (Step 6).
@@ -37,32 +37,35 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
     final colorScheme = theme.colorScheme;
     final state = ref.watch(columnDesignControllerProvider);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Safety Check',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 6 of 6: Final Verification',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           if (state.errorMessage != null) ...[
             Padding(
-              padding: const EdgeInsets.only(bottom: AppLayout.md),
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: AppCard(
                 color: colorScheme.error.withValues(alpha: 0.1),
                 border: BorderSide(color: colorScheme.error, width: 1),
                 child: Row(
                   children: [
                     Icon(SbIcons.error, color: colorScheme.error),
-                    AppLayout.hGap16,
+                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                     Expanded(
                       child: Text(
                         state.errorMessage!,
-                        style: SbTextStyles.bodySecondary(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: colorScheme.error,
                         ),
                       ),
@@ -72,14 +75,20 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ),
             ),
           ],
-          Text('Interaction Visualization', style: SbTextStyles.title(context)),
-          AppLayout.vGap8,
+          const Text(
+            'Interaction Visualization',
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           ColumnInteractionDiagram(
             pu: state.pu,
             mu: max(state.mx, state.my),
             interactionRatio: state.interactionRatio,
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           DesignResultCard(
             title: 'Capacity Verification',
             isSafe: state.isCapacitySafe,
@@ -97,7 +106,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 39.6',
           ),
-          AppLayout.vGap12,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
           DesignResultCard(
             title: 'Stability & Detailing',
             isSafe: state.isSlendernessSafe && state.isReinforcementSafe,
@@ -124,8 +133,14 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 26.5.3',
           ),
-          Text('Reinforcement Detail', style: SbTextStyles.title(context)),
-          AppLayout.vGap12,
+          const Text(
+            'Reinforcement Detail',
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
           AppCard(
             child: Column(
               children: [
@@ -133,7 +148,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   key: _drawingKey,
                   child: Container(
                     color: theme.cardColor,
-                    padding: AppLayout.paddingLarge,
+                    padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLarge
                     child: ColumnRebarDrawing(
                       width: state.b,
                       depth: state.d,
@@ -146,7 +161,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     ),
                   ),
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,7 +182,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                           }
                         },
                       ),
-                      AppLayout.vGap8,
+                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: SbIcons.pdf,
@@ -195,15 +210,18 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ],
             ),
           ),
-          AppLayout.vGap24,
-          Text(
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const Text(
             'Smart Engineering Insights',
-            style: SbTextStyles.title(context),
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          AppLayout.vGap12,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
           ...ColumnInsightService.getSuggestions(state).map(
             (s) => Padding(
-              padding: const EdgeInsets.only(bottom: AppLayout.sm),
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: AppCard(
                 color: colorScheme.primary.withValues(alpha: 0.05),
                 child: Row(
@@ -213,14 +231,19 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       color: colorScheme.primary,
                       size: 20,
                     ),
-                    AppLayout.hGap16,
-                    Expanded(child: Text(s, style: SbTextStyles.bodySecondary(context))),
+                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    Expanded(
+                      child: Text(
+                        s,
+                        style: const TextStyle(fontSize: AppFontSizes.tab),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -232,9 +255,9 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       .optimizeDesign();
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.primary(
-                label: 'Export PDF',
+                label: 'Export PDF Report',
                 icon: SbIcons.pdf,
                 onPressed: () {
                   ref
@@ -242,9 +265,10 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       .generateReport();
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.primary(
-                label: 'Save History',
+                label: 'Save to History',
+                icon: SbIcons.history,
                 onPressed: () {
                   ref
                       .read(columnDesignControllerProvider.notifier)
@@ -255,14 +279,15 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   );
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.primary(
                 label: 'New Design',
+                icon: SbIcons.add,
                 onPressed: () {
                   ref.read(columnDesignControllerProvider.notifier).reset();
                   context.go('/');
@@ -270,7 +295,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );

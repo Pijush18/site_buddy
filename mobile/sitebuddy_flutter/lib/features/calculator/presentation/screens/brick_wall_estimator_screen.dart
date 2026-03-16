@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -36,14 +37,14 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
     final isValid = state.lengthInput.isNotEmpty && state.heightInput.isNotEmpty && state.thicknessInput.isNotEmpty;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Brick Wall Estimator',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // ── Dimensions section ─────────────────────────────────────────
           const _SectionLabel(label: 'Wall Dimensions'),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'Wall Length (m)',
@@ -52,7 +53,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'Wall Height (m)',
@@ -61,7 +62,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             onChanged: controller.updateHeight,
             errorText: hError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'Wall Thickness (m)',
@@ -71,35 +72,37 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             errorText: tError,
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // ── Brick & mortar section ─────────────────────────────────────
           const _SectionLabel(label: 'Brick & Mortar'),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           SbCard(
             child: Row(
               children: [
                 Icon(SbIcons.crop, size: 20, color: colorScheme.onSurfaceVariant),
-                AppLayout.hGap8,
+                const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Brick Size',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      AppLayout.vGap4,
-                      Text(
+                      const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+                      const Text(
                         '190 × 90 × 90 mm  (IS modular standard)',
-                        style: SbTextStyles.body(context),
+                        style: TextStyle(fontSize: AppFontSizes.subtitle),
                       ),
                       Text(
                         'With 10 mm mortar joint: 200 × 100 × 100 mm',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: colorScheme.onSurfaceVariant,
                           fontStyle: FontStyle.italic,
                         ),
@@ -123,17 +126,19 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             ),
           ),
 
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           Text(
             'MORTAR RATIO',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
               letterSpacing: 1.1,
             ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           SbDropdown<MortarRatio>(
             value: state.selectedRatio,
@@ -146,9 +151,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             },
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          AppLayout.vGap24,
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -164,29 +168,30 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // ── Error banner ───────────────────────────────────────────────
           if (state.failure != null) ...[
             SbCard(
               child: Padding(
-                padding: AppLayout.paddingMd,
+                padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.paddingMd
                 child: Text(
                   state.failure!.message,
-                  style: SbTextStyles.body(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
                     color: colorScheme.error,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           // ── Result cards ───────────────────────────────────────────────
           if (state.result != null) ...[
             _ResultSection(result: state.result!),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           // ── IS code reference note ─────────────────────────────────────
@@ -194,12 +199,14 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             'Calculations per IS 2212:1991 (Brick masonry code of practice).\n'
             'IS modular brick: 190 × 90 × 90 mm · Joint: 10 mm · Wastage: 5%.\n'
             'Mortar dry volume factor: 1.30 · Cement density: 1440 kg/m³.',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
               fontStyle: FontStyle.italic,
             ),
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );
@@ -215,7 +222,9 @@ class _SectionLabel extends StatelessWidget {
     final theme = Theme.of(context);
     return Text(
       label.toUpperCase(),
-      style: SbTextStyles.title(context).copyWith(
+      style: TextStyle(
+        fontSize: AppFontSizes.title,
+        fontWeight: FontWeight.w600,
         color: theme.colorScheme.primary,
         letterSpacing: 1.1,
       ),
@@ -239,14 +248,15 @@ class _ResultSection extends StatelessWidget {
         children: [
           Text(
             'RESULT SUMMARY',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
-              
               letterSpacing: 1.2,
             ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
 
           // Bricks
@@ -254,9 +264,10 @@ class _ResultSection extends StatelessWidget {
             title: 'Number of Bricks',
             trailing: Text(
               result.numberOfBricks.toString(),
-              style: SbTextStyles.body(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
               ),
             ),
           ),
@@ -264,20 +275,22 @@ class _ResultSection extends StatelessWidget {
             title: 'Brick Volume',
             trailing: Text(
               '${result.brickVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
 
-          const Divider(height: AppLayout.lg),
+          const Divider(),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
 
           // Cement & Sand
           SbListItem(
             title: 'Cement Bags (50 kg)',
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} bags',
-              style: SbTextStyles.body(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
               ),
             ),
           ),
@@ -285,25 +298,32 @@ class _ResultSection extends StatelessWidget {
             title: 'Sand Volume',
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
 
-          const Divider(height: AppLayout.lg),
+          const Divider(),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
 
           // Totals
           SbListItem(
             title: 'Wall Volume',
             trailing: Text(
               '${result.wallVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mortar Ratio:', style: SbTextStyles.caption(context)),
-              Text(result.mortarRatio, style: SbTextStyles.bodySecondary(context)),
+              const Text('Mortar Ratio:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              Text(
+                result.mortarRatio,
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ],
@@ -311,4 +331,3 @@ class _ResultSection extends StatelessWidget {
     );
   }
 }
-

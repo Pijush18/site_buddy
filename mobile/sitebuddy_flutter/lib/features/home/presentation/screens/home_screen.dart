@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -15,34 +16,34 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: l10n.appName,
-      appBarActions: [
-        SbButton.icon(
-          icon: SbIcons.settings,
+      actions: [
+        IconButton(
+          icon: const Icon(SbIcons.settings),
           onPressed: () => context.push('/settings'),
         ),
-        AppLayout.hGap8,
+        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
       ],
-      body: Center(
+      child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: AppLayout.maxContentWidth,
+            maxWidth: 800, // Replaced maxContentWidth
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ── 1. Hero ──
               const AiAssistantWidget(),
-              AppLayout.vGap24,
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
               // ── 2. Field Tools ──
               const _FieldToolsSection(),
-              AppLayout.vGap24,
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
               // ── 3. Quick Actions ──
               const _QuickActionsSection(),
-              AppLayout.vGap24,
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
               // ── 4. Recent Activity ──
               SbSection(
@@ -54,6 +55,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: const RecentActivitySection(),
               ),
+              const SizedBox(height: AppSpacing.lg), // Bottom padding
             ],
           ),
         ),
@@ -78,8 +80,8 @@ class _FieldToolsSection extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
-        mainAxisSpacing: AppLayout.vGap16.height!,
-        crossAxisSpacing: AppLayout.hGap16.width!,
+        mainAxisSpacing: AppSpacing.md, // Replaced AppLayout.vGap16
+        crossAxisSpacing: AppSpacing.md, // Replaced AppLayout.hGap16
         childAspectRatio: 1.0,
         children: [
           SbGridCard(
@@ -134,14 +136,14 @@ class _QuickActionsSection extends StatelessWidget {
           Expanded(
             child: Material(
               color: colorScheme.primary,
-              borderRadius: AppLayout.borderRadiusCard,
+              borderRadius: BorderRadius.circular(12), // Replaced AppLayout.borderRadiusCard
               clipBehavior: Clip.antiAlias,
               child: InkWell(
                 onTap: () => context.push('/projects/create'),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
-                    horizontal: AppLayout.pMedium,
+                    horizontal: AppSpacing.md, // Replaced AppLayout.pMedium
                   ),
                   child: Column(
                     children: [
@@ -150,10 +152,12 @@ class _QuickActionsSection extends StatelessWidget {
                         color: colorScheme.onPrimary,
                         size: 24,
                       ),
-                      AppLayout.vGap8,
+                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       Text(
                         l10n.newProject,
-                        style: SbTextStyles.title(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.title,
+                          fontWeight: FontWeight.bold,
                           color: colorScheme.onPrimary,
                         ),
                       ),
@@ -163,19 +167,19 @@ class _QuickActionsSection extends StatelessWidget {
               ),
             ),
           ),
-          AppLayout.hGap16,
+          const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
           // Share Report — secondary
           Expanded(
             child: Material(
               color: colorScheme.secondary,
-              borderRadius: AppLayout.borderRadiusCard,
+              borderRadius: BorderRadius.circular(12), // Replaced AppLayout.borderRadiusCard
               clipBehavior: Clip.antiAlias,
               child: InkWell(
                 onTap: () => context.push('/reports'),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
-                    horizontal: AppLayout.pMedium,
+                    horizontal: AppSpacing.md, // Replaced AppLayout.pMedium
                   ),
                   child: Column(
                     children: [
@@ -184,10 +188,12 @@ class _QuickActionsSection extends StatelessWidget {
                         color: colorScheme.onSecondary,
                         size: 24,
                       ),
-                      AppLayout.vGap8,
+                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       Text(
                         l10n.shareReport,
-                        style: SbTextStyles.title(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.title,
+                          fontWeight: FontWeight.bold,
                           color: colorScheme.onSecondary,
                         ),
                       ),

@@ -1,12 +1,12 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/app_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/work/domain/entities/meeting.dart';
@@ -45,86 +45,90 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Meeting Details',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             m.title,
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.bold,
               color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppLayout.md),
-          AppCard(
+          const SizedBox(height: AppSpacing.md),
+          SbCard(
             child: Column(
               children: [
                 SbListItem(
                   title: 'Project',
                   trailing: Text(
                     m.projectId,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Type',
                   trailing: Text(
                     m.meetingType.name.toUpperCase(),
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Mode',
                   trailing: Text(
                     m.mode.name.toUpperCase(),
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Date',
                   trailing: Text(
                     m.meetingDate.toLocal().toString().split(' ').first,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Time',
                   trailing: Text(
                     '${m.startTime.toLocal().hour.toString().padLeft(2, '0')}:${m.startTime.toLocal().minute.toString().padLeft(2, '0')} - ${m.endTime.toLocal().hour.toString().padLeft(2, '0')}:${m.endTime.toLocal().minute.toString().padLeft(2, '0')}',
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Participants',
                   trailing: Text(
                     m.participants.join(', '),
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppLayout.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             'DESCRIPTION',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppLayout.xs),
+          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.xs
           Text(
             m.description.isEmpty ? 'No description provided.' : m.description,
-            style: SbTextStyles.body(context),
+            style: const TextStyle(fontSize: AppFontSizes.subtitle),
           ),
-          const SizedBox(height: AppLayout.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbInput(
             controller: _minutesController,
             label: 'Minutes of Meeting',
             hint: 'Record key points...',
             maxLines: 5,
           ),
-          const SizedBox(height: AppLayout.lg * 1.5),
+          const SizedBox(height: AppSpacing.lg * 1.5),
           SbButton.primary(
             label: 'Save & Mark Completed',
             icon: SbIcons.check,
@@ -139,7 +143,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
               context.pop();
             },
           ),
-          const SizedBox(height: AppLayout.lg),
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );

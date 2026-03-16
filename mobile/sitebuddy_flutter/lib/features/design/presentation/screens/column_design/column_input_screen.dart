@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -64,146 +65,176 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Column Input',
-
-      appBarActions: [
+      actions: [
         SbButton.icon(
           icon: SbIcons.history,
           onPressed: () => context.push('/design/column/input/history'),
         ),
       ],
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 1 of 6: Geometry & Materials',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Geometry Card
           SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Geometry', style: SbTextStyles.title(context)),
-                  AppLayout.vGap16,
-                  Text('Column Type', style: SbTextStyles.body(context)),
-                  AppLayout.vGap8,
-                  SbDropdown<ColumnType>(
-                    value: state.type,
-                    items: ColumnType.values,
-                    itemLabelBuilder: (t) => t.label,
-                    onChanged: (v) =>
-                        v != null ? notifier.updateInput(type: v) : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Geometry',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
                   ),
-                  AppLayout.vGap16,
-                  Row(
-                    children: [
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const Text(
+                  'Column Type',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                SbDropdown<ColumnType>(
+                  value: state.type,
+                  items: ColumnType.values,
+                  itemLabelBuilder: (t) => t.label,
+                  onChanged: (v) =>
+                      v != null ? notifier.updateInput(type: v) : null,
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppNumberField(
+                        label: state.type == ColumnType.circular
+                            ? 'Diameter [mm]'
+                            : 'Width (b) [mm]',
+                        controller: _widthController,
+                      ),
+                    ),
+                    if (state.type == ColumnType.rectangular) ...[
+                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                       Expanded(
                         child: AppNumberField(
-                          label: state.type == ColumnType.circular
-                              ? 'Diameter [mm]'
-                              : 'Width (b) [mm]',
-                          controller: _widthController,
+                          label: 'Depth (D) (mm)',
+                          controller: _depthController,
                         ),
                       ),
-                      if (state.type == ColumnType.rectangular) ...[
-                        AppLayout.hGap16,
-                        Expanded(
-                          child: AppNumberField(
-                            label: 'Depth (D) (mm)',
-                            controller: _depthController,
-                          ),
-                        ),
-                      ],
                     ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                AppNumberField(
+                  label: 'Unsupported Length (L) (mm)',
+                  controller: _lengthController,
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const Text(
+                  'End Condition',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w500,
                   ),
-                  AppLayout.vGap16,
-                  AppNumberField(
-                    label: 'Unsupported Length (L) (mm)',
-                    controller: _lengthController,
-                  ),
-                  AppLayout.vGap16,
-                  Text('End Condition', style: SbTextStyles.body(context)),
-                  AppLayout.vGap8,
-                  SbDropdown<EndCondition>(
-                    value: state.endCondition,
-                    items: EndCondition.values,
-                    itemLabelBuilder: (e) => e.label,
-                    onChanged: (v) => v != null
-                        ? notifier.updateInput(endCondition: v)
-                        : null,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                SbDropdown<EndCondition>(
+                  value: state.endCondition,
+                  items: EndCondition.values,
+                  itemLabelBuilder: (e) => e.label,
+                  onChanged: (v) => v != null
+                      ? notifier.updateInput(endCondition: v)
+                      : null,
+                ),
+              ],
             ),
-          AppLayout.vGap24,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Materials Card
           SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Materials', style: SbTextStyles.title(context)),
-                  AppLayout.vGap16,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Concrete Grade',
-                              style: SbTextStyles.body(context),
-                            ),
-                            AppLayout.vGap8,
-                            SbDropdown<String>(
-                              value: state.concreteGrade,
-                              items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
-                              itemLabelBuilder: (s) => s,
-                              onChanged: (v) => v != null
-                                  ? notifier.updateInput(concreteGrade: v)
-                                  : null,
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppLayout.hGap16,
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Steel Grade',
-                              style: SbTextStyles.body(context),
-                            ),
-                            AppLayout.vGap8,
-                            SbDropdown<String>(
-                              value: state.steelGrade,
-                              items: const ['Fe415', 'Fe500', 'Fe550'],
-                              itemLabelBuilder: (s) => s,
-                              onChanged: (v) => v != null
-                                  ? notifier.updateInput(steelGrade: v)
-                                  : null,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Materials',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
                   ),
-                  AppLayout.vGap16,
-                  AppNumberField(
-                    label: 'Clear Cover (mm)',
-                    controller: _coverController,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Concrete Grade',
+                            style: TextStyle(
+                              fontSize: AppFontSizes.subtitle,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                          SbDropdown<String>(
+                            value: state.concreteGrade,
+                            items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
+                            itemLabelBuilder: (s) => s,
+                            onChanged: (v) => v != null
+                                ? notifier.updateInput(concreteGrade: v)
+                                : null,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Steel Grade',
+                            style: TextStyle(
+                              fontSize: AppFontSizes.subtitle,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                          SbDropdown<String>(
+                            value: state.steelGrade,
+                            items: const ['Fe415', 'Fe500', 'Fe550'],
+                            itemLabelBuilder: (s) => s,
+                            onChanged: (v) => v != null
+                                ? notifier.updateInput(steelGrade: v)
+                                : null,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                AppNumberField(
+                  label: 'Clear Cover (mm)',
+                  controller: _coverController,
+                ),
+              ],
             ),
-          AppLayout.vGap24,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -212,14 +243,14 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                 label: 'Next: Load Definition',
                 onPressed: _onNext,
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         ],
       ),
     );

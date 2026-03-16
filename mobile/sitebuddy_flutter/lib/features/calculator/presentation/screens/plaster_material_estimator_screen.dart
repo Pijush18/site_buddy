@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -25,107 +26,103 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
     final aError = state.failure?.message.contains('Area') == true ? state.failure?.message : null;
     final tError = state.failure?.message.contains('Thickness') == true ? state.failure?.message : null;
 
-    return SbPage.scaffold(
+    return AppScreenWrapper(
       title: l10n.plasterEstimator,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: AppLayout.maxContentWidth,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _SectionLabel(label: l10n.plasterArea),
-                AppLayout.vGap16,
-                AppNumberField(
-                  label: l10n.wallArea,
-                  hint: 'e.g. 80.0',
-                  suffixIcon: SbIcons.area,
-                  onChanged: controller.updateArea,
-                  errorText: aError,
-                ),
-                AppLayout.vGap8,
-                AppNumberField(
-                  label: l10n.plasterThickness,
-                  hint: 'e.g. 12',
-                  suffixIcon: SbIcons.layers,
-                  onChanged: controller.updateThickness,
-                  errorText: tError,
-                ),
-                AppLayout.vGap4,
-                Text(
-                  l10n.typicalThicknessNote,
-                  style: SbTextStyles.caption(context).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                AppLayout.vGap24,
-                Text(
-                  l10n.mortarRatio,
-                  style: SbTextStyles.title(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                AppLayout.vGap16,
-                SbDropdown<PlasterRatio>(
-                  value: state.selectedRatio,
-                  items: PlasterRatio.values,
-                  itemLabelBuilder: (r) => r.label,
-                  onChanged: (val) {
-                    if (val != null) {
-                      controller.updateRatio(val);
-                    }
-                  },
-                ),
-                AppLayout.vGap24,
-                if (state.failure != null) ...[
-                  SbCard(
-                    child: Text(
-                      state.failure!.message,
-                      style: SbTextStyles.body(context).copyWith(
-                        color: colorScheme.error,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  AppLayout.vGap24,
-                ],
-                if (state.result != null) ...[
-                  _ResultSection(result: state.result!),
-                  AppLayout.vGap24,
-                ],
-                ActionButtonsGroup(
-                  children: [
-                    SbButton.outline(
-                      label: l10n.reset,
-                      icon: SbIcons.refresh,
-                      onPressed: controller.reset,
-                    ),
-                    SbButton.primary(
-                      label: state.isLoading ? l10n.calculating : l10n.calculateMaterials,
-                      icon: SbIcons.calculator,
-                      isLoading: state.isLoading,
-                      onPressed: controller.calculate,
-                    ),
-                  ],
-                ),
-                AppLayout.vGap24,
-                Text(
-                  l10n.isCodeNote,
-                  style: SbTextStyles.caption(context).copyWith(
-                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    fontStyle: FontStyle.italic,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SectionLabel(label: l10n.plasterArea),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          AppNumberField(
+            label: l10n.wallArea,
+            hint: 'e.g. 80.0',
+            suffixIcon: SbIcons.area,
+            onChanged: controller.updateArea,
+            errorText: aError,
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          AppNumberField(
+            label: l10n.plasterThickness,
+            hint: 'e.g. 12',
+            suffixIcon: SbIcons.layers,
+            onChanged: controller.updateThickness,
+            errorText: tError,
+          ),
+          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+          Text(
+            l10n.typicalThicknessNote,
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              color: colorScheme.onSurfaceVariant,
+              fontStyle: FontStyle.italic,
             ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          Text(
+            l10n.mortarRatio,
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          SbDropdown<PlasterRatio>(
+            value: state.selectedRatio,
+            items: PlasterRatio.values,
+            itemLabelBuilder: (r) => r.label,
+            onChanged: (val) {
+              if (val != null) {
+                controller.updateRatio(val);
+              }
+            },
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          if (state.failure != null) ...[
+            SbCard(
+              child: Text(
+                state.failure!.message,
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
+                  color: colorScheme.error,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          ],
+          if (state.result != null) ...[
+            _ResultSection(result: state.result!),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          ],
+          ActionButtonsGroup(
+            children: [
+              SbButton.outline(
+                label: l10n.reset,
+                icon: SbIcons.refresh,
+                onPressed: controller.reset,
+              ),
+              SbButton.primary(
+                label: state.isLoading ? l10n.calculating : l10n.calculateMaterials,
+                icon: SbIcons.calculator,
+                isLoading: state.isLoading,
+                onPressed: controller.calculate,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          Text(
+            l10n.isCodeNote,
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              fontStyle: FontStyle.italic,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+        ],
       ),
     );
   }
@@ -140,7 +137,9 @@ class _SectionLabel extends StatelessWidget {
     final theme = Theme.of(context);
     return Text(
       label.toUpperCase(),
-      style: SbTextStyles.title(context).copyWith(
+      style: TextStyle(
+        fontSize: AppFontSizes.title,
+        fontWeight: FontWeight.w600,
         color: theme.colorScheme.primary,
       ),
       textAlign: TextAlign.center,
@@ -163,23 +162,25 @@ class _ResultSection extends StatelessWidget {
         children: [
           Text(
             'RESULT SUMMARY',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
-              
               letterSpacing: 1.2,
             ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
 
           SbListItem(
             title: 'Cement Bags (50 kg)',
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} bags',
-              style: SbTextStyles.body(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
               ),
             ),
           ),
@@ -187,29 +188,42 @@ class _ResultSection extends StatelessWidget {
             title: 'Sand Volume',
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
-          const Divider(height: AppLayout.lg),
+          const Divider(),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
           SbListItem(
             title: 'Dry Mortar Volume',
             trailing: Text(
               '${result.dryVolume.toStringAsFixed(3)} m³',
-              style: SbTextStyles.body(context),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mix Ratio:', style: SbTextStyles.caption(context)),
-              Text(result.mortarRatio, style: SbTextStyles.bodySecondary(context)),
+              const Text('Mix Ratio:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              Text(
+                result.mortarRatio,
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Thickness:', style: SbTextStyles.caption(context)),
-              Text('${(result.thickness * 1000).toStringAsFixed(0)} mm', style: SbTextStyles.bodySecondary(context)),
+              const Text('Thickness:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              Text(
+                '${(result.thickness * 1000).toStringAsFixed(0)} mm',
+                style: TextStyle(
+                  fontSize: AppFontSizes.tab,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ],
@@ -217,4 +231,3 @@ class _ResultSection extends StatelessWidget {
     );
   }
 }
-

@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,16 +29,16 @@ class LevelLogScreen extends ConsumerWidget {
     final state = ref.watch(levelLogControllerProvider);
     final notifier = ref.read(levelLogControllerProvider.notifier);
 
-    return SbPage.form(
+    return AppScreenWrapper(
       title: l10n.levelLogSession,
-      appBarActions: [
-        SbButton.icon(
-          icon: SbIcons.add,
+      actions: [
+        IconButton(
+          icon: const Icon(SbIcons.add),
           tooltip: l10n.addStation,
           onPressed: notifier.addEntry,
         ),
       ],
-      primaryAction: Column(
+      footer: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -46,7 +47,7 @@ class LevelLogScreen extends ConsumerWidget {
             icon: SbIcons.locationAdd,
             onPressed: notifier.addEntry,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbButton.outline(
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
@@ -54,12 +55,12 @@ class LevelLogScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // ── Method selector ──────────────────────────────
           _MethodSelectorCard(state: state, notifier: notifier),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // ── Station list OR empty state ──────────
           if (state.entries.isEmpty)
@@ -67,9 +68,10 @@ class LevelLogScreen extends ConsumerWidget {
           else
             ListView.separated(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.entries.length,
-              separatorBuilder: (_, index) => AppLayout.vGap16,
+              separatorBuilder: (_, index) => const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
               itemBuilder: (context, i) => SbCard(
                 child: _StationCardContent(
                   entry: state.entries[i],
@@ -94,33 +96,37 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            SbIcons.list,
-            size: 64,
-            color: colorScheme.outlineVariant,
-          ),
-          AppLayout.vGap16,
-          Text(
-            l10n.noLevelingLogsYet,
-            style: SbTextStyles.title(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              SbIcons.list,
+              size: 64,
+              color: colorScheme.outlineVariant,
             ),
-          ),
-          AppLayout.vGap8,
-          Text(
-            l10n.tapAddStationToStart,
-            style: SbTextStyles.body(context).copyWith(
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            Text(
+              l10n.noLevelingLogsYet,
+              style: const TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            Text(
+              l10n.tapAddStationToStart,
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -135,8 +141,7 @@ class _MethodSelectorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SbCard(
       child: Column(
@@ -144,12 +149,14 @@ class _MethodSelectorCard extends StatelessWidget {
         children: [
           Text(
             l10n.calculationMethod.toUpperCase(),
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              fontWeight: FontWeight.bold,
               color: colorScheme.primary,
               letterSpacing: 1.2,
             ),
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Row(
             children: [
               Expanded(
@@ -158,16 +165,14 @@ class _MethodSelectorCard extends StatelessWidget {
                   isActive: state.method == LevelMethod.heightOfInstrument,
                   onTap: () =>
                       notifier.setMethod(LevelMethod.heightOfInstrument),
-                  colorScheme: colorScheme,
                 ),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
               Expanded(
                 child: _MethodToggle(
                   label: l10n.riseFall,
                   isActive: state.method == LevelMethod.riseFall,
                   onTap: () => notifier.setMethod(LevelMethod.riseFall),
-                  colorScheme: colorScheme,
                 ),
               ),
             ],
@@ -182,28 +187,34 @@ class _MethodToggle extends StatelessWidget {
   final String label;
   final bool isActive;
   final VoidCallback onTap;
-  final ColorScheme colorScheme;
 
   const _MethodToggle({
     required this.label,
     required this.isActive,
     required this.onTap,
-    required this.colorScheme,
   });
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: AppLayout.animationDuration,
-        padding: const EdgeInsets.symmetric(vertical: AppLayout.pMedium),
-
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isActive ? colorScheme.primary : colorScheme.surface,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isActive ? colorScheme.primary : colorScheme.outlineVariant,
+          ),
+        ),
         child: Center(
           child: Text(
             label,
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              fontWeight: FontWeight.bold,
               color: isActive ? colorScheme.onPrimary : colorScheme.primary,
             ),
           ),
@@ -231,17 +242,19 @@ class _StationCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-//     final theme = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            SizedBox(
+            Container(
               width: 36,
               height: 36,
-
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
               child: Center(
                 child: Icon(
                   SbIcons.location,
@@ -250,16 +263,23 @@ class _StationCardContent extends StatelessWidget {
                 ),
               ),
             ),
-            AppLayout.hGap16,
+            const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(entry.station, style: SbTextStyles.title(context)),
+                  Text(
+                    entry.station,
+                    style: const TextStyle(
+                      fontSize: AppFontSizes.subtitle,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   if (entry.chainage != null)
                     Text(
-                      'Ch: ${entry.chainage != null ? UiFormatters.chainage(entry.chainage!) : '-'}',
-                      style: SbTextStyles.caption(context).copyWith(
+                      'Ch: ${UiFormatters.chainage(entry.chainage!)}',
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -267,12 +287,15 @@ class _StationCardContent extends StatelessWidget {
               ),
             ),
             if (onDelete != null)
-              SbButton.icon(icon: SbIcons.delete, onPressed: onDelete),
+              IconButton(
+                icon: const Icon(SbIcons.delete, size: 20),
+                onPressed: onDelete,
+              ),
           ],
         ),
-        AppLayout.vGap16,
-        const Divider(),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+        Divider(color: colorScheme.outlineVariant),
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
         Row(
           children: [
@@ -307,10 +330,11 @@ class _StationCardContent extends StatelessWidget {
         ),
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
             entry.remark!,
-            style: SbTextStyles.bodySecondary(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
               fontStyle: FontStyle.italic,
             ),
@@ -336,21 +360,24 @@ class _ReadingPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
     return Expanded(
       child: Column(
         children: [
           Text(
             label,
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
               color: colorScheme.onSurfaceVariant,
               letterSpacing: 0.8,
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap8
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
-            style: SbTextStyles.body(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              fontWeight: highlight ? FontWeight.bold : FontWeight.normal,
               color: highlight
                   ? colorScheme.primary
                   : (value != null ? null : colorScheme.outlineVariant),

@@ -12,14 +12,14 @@ import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/shared/domain/models/ai_response.dart';
 import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
 import 'package:site_buddy/core/utils/ui_formatters.dart';
-import 'package:site_buddy/features/levelling_log/domain/usecases/levelling_calculator.dart';
-import 'package:site_buddy/features/levelling_log/domain/entities/levelling_entry.dart';
+import 'package:site_buddy/features/level_log/domain/usecases/level_calculation_service.dart';
+import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 
 class ProcessAiRequestUseCase {
   final GetKnowledgeUseCase getKnowledgeUseCase;
   final CalculateMaterialUseCase calculateMaterialUseCase;
   final ConvertUnitUseCase convertUnitUseCase;
-  final _levelingService = LevellingCalculator();
+  final _levelingService = LevelCalculationService();
 
   ProcessAiRequestUseCase({
     required this.getKnowledgeUseCase,
@@ -183,13 +183,15 @@ class ProcessAiRequestUseCase {
     final fs = fsMatch != null ? double.parse(fsMatch.group(1)!) : null;
 
     try {
-      final res = _levelingService.calculate(
-        benchmarkRL: currentRL,
-        entries: [
-          LevellingEntry(station: 'AI_Q1', bs: bs, fs: fs, isReading: 0.0),
-        ],
-      );
-      final newRL = res.updatedEntries.last.rl ?? currentRL;
+      final updatedEntries = _levelingService.calculateHISeries([
+        LevelEntry(
+          station: 'AI_Q1',
+          bs: bs,
+          fs: fs,
+          rl: currentRL,
+        ),
+      ]);
+      final newRL = updatedEntries.last.rl ?? currentRL;
 
       final text = '''
 **Leveling Computation Complete**

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -55,45 +56,58 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Slab Loading',
-      body: Form(
+      child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Step 2 of 5: Load Definition',
-              style: SbTextStyles.title(context).copyWith(color: colorScheme.primary),
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
+                color: colorScheme.primary,
+              ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
             SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                   Text('Loads (kN/m²)', style: SbTextStyles.title(context)),
-                   AppLayout.vGap16,
-                   AppNumberField(
-                     controller: _dlController,
-                     label: 'Dead Load (inc. Finishes)',
-                     validator: (v) => ValidationHelper.validatePositive(v, 'Dead Load'),
-                   ),
-                   AppLayout.vGap16,
-                   AppNumberField(
-                     controller: _llController,
-                     label: 'Live Load',
-                     validator: (v) => ValidationHelper.validatePositive(v, 'Live Load'),
-                   ),
-                   AppLayout.vGap8,
-                   Text(
-                     'Note: Load factor of 1.5 will be applied automatically.',
-                     style: SbTextStyles.caption(context),
-                   ),
+                  const Text(
+                    'Loads (kN/m²)',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.title,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  AppNumberField(
+                    controller: _dlController,
+                    label: 'Dead Load (inc. Finishes)',
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Dead Load'),
+                  ),
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  AppNumberField(
+                    controller: _llController,
+                    label: 'Live Load',
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Live Load'),
+                  ),
+                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const Text(
+                    'Note: Load factor of 1.5 will be applied automatically.',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.tab,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ],
               ),
             ),
-            AppLayout.vGap32,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -103,13 +117,14 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                   onPressed: _onCalculate,
                   icon: SbIcons.calculator,
                 ),
-                AppLayout.vGap12,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
                 SbButton.outline(
                   label: 'Back',
                   onPressed: () => context.pop(),
                 ),
               ],
             ),
+            const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,7 +17,6 @@ import 'package:go_router/go_router.dart';
 
 /// SCREEN: SettingsScreen
 /// PURPOSE: Standardized global app settings (Theming, Language, Professional Profile).
-/// V10: StatelessWidget + Clean Rule 6 structure (now possible due to shell constraint fixes).
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -24,16 +24,15 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // RULE 1: Root must be SbPage.scaffold
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: l10n.settings,
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // --- SECTION 1: ACCOUNT ---
           _buildSectionHeader(context, "Account"),
           _buildAccountSection(context),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APPEARANCE ---
           _buildSectionHeader(context, l10n.appearance),
@@ -96,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ENGINEERING STANDARDS ---
           _buildSectionHeader(context, l10n.engineeringStandards),
@@ -128,7 +127,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APP BEHAVIOR ---
           _buildSectionHeader(context, "App Behavior"),
@@ -171,7 +170,7 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: LEGAL ---
           _buildSectionHeader(context, "Legal"),
@@ -201,7 +200,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ABOUT ---
           _buildSectionHeader(context, "About"),
@@ -233,6 +232,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: AppSpacing.lg), // Bottom padding
         ],
       ),
     );
@@ -243,7 +243,6 @@ class SettingsScreen extends StatelessWidget {
       builder: (context, ref, _) {
         final authAsync = ref.watch(authStateProvider);
         final subscriptionAsync = ref.watch(subscriptionStatusProvider);
-        final colorScheme = Theme.of(context).colorScheme;
 
         return authAsync.when(
           data: (user) {
@@ -255,7 +254,6 @@ class SettingsScreen extends StatelessWidget {
                 user,
                 subscription.plan,
                 subscription.isPremium,
-                colorScheme,
               ),
               loading: () => _buildSmallLoadingState(),
               error: (e, _) => _buildSmallErrorState("Sync error"),
@@ -274,51 +272,54 @@ class SettingsScreen extends StatelessWidget {
     SiteUser user,
     String plan,
     bool isPremium,
-    ColorScheme colorScheme,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
         SbCard(
-          padding: AppLayout.paddingLg,
+          padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
           child: Row(
             children: [
               const SizedBox(
                 width: 60,
                 height: 60,
-                child: Icon(SbIcons.account, size: 30, color: Colors.white),
+                child: Icon(SbIcons.account, size: 30, color: Colors.grey),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Er. Pijush Debbarma",
-                      style: SbTextStyles.title(
-                        context,
-                      ).copyWith(letterSpacing: -0.2),
+                      style: TextStyle(
+                        fontSize: AppFontSizes.title,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: -0.2,
+                      ),
                     ),
                     Text(
                       user.email.isEmpty ? "No Email Registered" : user.email,
-                      style: SbTextStyles.caption(
-                        context,
-                      ).copyWith(color: colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
+                        horizontal: AppSpacing.sm,
                         vertical: 3,
                       ),
-
                       child: Text(
                         (isPremium ? "Premium Plan" : "Free Plan")
                             .toUpperCase(),
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: isPremium
-                              ? colorScheme.onPrimary
+                              ? colorScheme.primary
                               : colorScheme.onSurfaceVariant,
-
+                          fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -329,7 +330,7 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
         SbCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -365,13 +366,15 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: AppLayout.pSmall,
-        bottom: AppLayout.pSmall,
+        left: AppSpacing.sm, // Replaced AppLayout.pSmall
+        bottom: AppSpacing.sm, // Replaced AppLayout.pSmall
       ),
       child: Text(
         title.toUpperCase(),
-        style: SbTextStyles.caption(context).copyWith(
+        style: TextStyle(
+          fontSize: AppFontSizes.tab,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontWeight: FontWeight.bold,
           letterSpacing: 1.2,
         ),
       ),
@@ -381,7 +384,7 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSmallLoadingState() {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.all(AppLayout.pMedium),
+        padding: EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
         child: SizedBox(
           width: 24,
           height: 24,
@@ -393,12 +396,11 @@ class SettingsScreen extends StatelessWidget {
 
   Widget _buildSmallErrorState(String message) {
     return Container(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
-
+      padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),
-          AppLayout.hGap12,
+          const SizedBox(width: 12), // Replaced AppLayout.hGap12
           Text(message, style: const TextStyle(color: Colors.red)),
         ],
       ),

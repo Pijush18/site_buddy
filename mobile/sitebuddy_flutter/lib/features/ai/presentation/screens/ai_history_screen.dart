@@ -1,17 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-// FILE HEADER
-// ----------------------------------------------
-// File: ai_history_screen.dart
-// Feature: ai_assistant
-// Layer: presentation/screens
-//
-// PURPOSE:
-// Presents a historical timeline of all AI queries and outputs.
-//
-// ----------------------------------------------
-
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,9 +17,10 @@ class AiHistoryScreen extends ConsumerWidget {
     final state = ref.watch(aiHistoryControllerProvider);
     final controller = ref.read(aiHistoryControllerProvider.notifier);
 
-    return SbPage.list(
+    return AppScreenWrapper(
       title: 'AI Interaction History',
-      body: _buildBody(context, ref, state, controller),
+      isScrollable: false,
+      child: _buildBody(context, ref, state, controller),
     );
   }
 
@@ -51,7 +41,7 @@ class AiHistoryScreen extends ConsumerWidget {
       return Center(
         child: Text(
           state.error!,
-          style: SbTextStyles.body(context).copyWith(color: colorScheme.error),
+          style: TextStyle(color: colorScheme.error),
           textAlign: TextAlign.center,
         ),
       );
@@ -70,7 +60,7 @@ class AiHistoryScreen extends ConsumerWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: state.chats.length,
       separatorBuilder: (context, index) =>
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
       itemBuilder: (context, index) {
         final chat = state.chats[index];
         return ChatCard(

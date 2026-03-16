@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -34,34 +35,34 @@ class ShutteringScreen extends ConsumerWidget {
 
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Shuttering Area Estimator',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: 'Element Dimensions'),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
             label: 'Length (m)',
             hint: 'e.g. 5.0',
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
             label: 'Width (m)',
             hint: 'e.g. 0.3',
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
             label: 'Depth (m)',
             hint: 'e.g. 0.6',
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           SbListItem(
             title: 'Include Bottom Area?',
             trailing: Switch(
@@ -70,7 +71,7 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -86,22 +87,24 @@ class ShutteringScreen extends ConsumerWidget {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
           Text(
             'Estimation for simple beams, slabs, or footings.\n'
             'Area = 2 × (Length + Width) × Depth + Optional Bottom.',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
               fontStyle: FontStyle.italic,
             ),
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );
@@ -116,7 +119,9 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label.toUpperCase(),
-      style: SbTextStyles.title(context).copyWith(
+      style: TextStyle(
+        fontSize: AppFontSizes.title,
+        fontWeight: FontWeight.w600,
         color: Theme.of(context).colorScheme.primary,
         letterSpacing: 1.1,
       ),
@@ -131,12 +136,19 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
-      color: Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.1),
-      child: Text(
-        message,
-        style: SbTextStyles.body(context).copyWith(color: Theme.of(context).colorScheme.error),
-        textAlign: TextAlign.center,
+      color: colorScheme.errorContainer.withValues(alpha: 0.1),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Text(
+          message,
+          style: TextStyle(
+            fontSize: AppFontSizes.subtitle,
+            color: colorScheme.error,
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -155,32 +167,40 @@ class _ResultCard extends StatelessWidget {
         children: [
           Text(
             'RESULT SUMMARY',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
-              
               letterSpacing: 1.2,
             ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
           SbListItem(
             title: 'Total Shuttering Area',
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
-              style: SbTextStyles.title(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
               ),
             ),
           ),
           SbListItem(
             title: 'Perimeter',
-            trailing: Text('${(2 * (result.length + result.width)).toStringAsFixed(2)} m'),
+            trailing: Text(
+              '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            ),
           ),
           SbListItem(
             title: 'Depth',
-            trailing: Text('${result.depth} m'),
+            trailing: Text(
+              '${result.depth} m',
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            ),
           ),
         ],
       ),

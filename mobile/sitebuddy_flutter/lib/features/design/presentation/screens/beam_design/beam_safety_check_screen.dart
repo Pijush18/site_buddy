@@ -1,6 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_radius.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,6 @@ import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
 import 'package:printing/printing.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: BeamSafetyCheckScreen
 /// PURPOSE: Final safety status and report generation (Step 5).
@@ -35,7 +36,6 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
     final state = ref.watch(beamDesignControllerProvider);
 
     // Derive overall status
@@ -44,21 +44,23 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         ? SafetyStatus.safe
         : SafetyStatus.fail;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Safety Verification',
-
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Step 5 of 5: Engineering Validation',
-            style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              color: Colors.grey,
+            ),
           ),
-          const SizedBox(height: AppLayout.pLarge),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.pLarge
 
           // Overall Safety Status Display
           _OverallStatusBadge(status: overallStatus),
-          const SizedBox(height: AppLayout.pLarge),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.pLarge
 
           DesignResultCard(
             title: 'Limit State of Flexure',
@@ -82,7 +84,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 38.1',
           ),
-          const SizedBox(height: AppLayout.pMedium),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.pMedium
 
           DesignResultCard(
             title: 'Limit State of Shear',
@@ -100,7 +102,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 40.0',
           ),
-          const SizedBox(height: AppLayout.pMedium),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.pMedium
 
           DesignResultCard(
             title: 'Control of Deflection',
@@ -118,14 +120,17 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 23.2.1',
           ),
-          const SizedBox(height: AppLayout.pLarge),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.pLarge
 
           // Reinforcement Detail
-          Text(
+          const Text(
             'Reinforcement Cross-Section',
-            style: SbTextStyles.body(context),
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          const SizedBox(height: AppLayout.pMedium),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.pMedium
           AppCard(
             child: Column(
               children: [
@@ -133,7 +138,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   key: _drawingKey,
                   child: Container(
                     color: Theme.of(context).cardColor,
-                    padding: AppLayout.paddingMedium,
+                    padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.paddingMedium
                     child: BeamRebarDrawing(
                       width: state.width,
                       depth: state.overallDepth,
@@ -146,7 +151,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppLayout.pMedium),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.pMedium
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,7 +172,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                           }
                         },
                       ),
-                      AppLayout.vGap8,
+                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: SbIcons.pdf,
@@ -195,7 +200,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppLayout.pHuge),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.pHuge (closest standard)
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -207,18 +212,18 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   ref.read(beamDesignControllerProvider.notifier).generateReport();
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.primary(
                 label: 'Save to Design History',
                 icon: SbIcons.history,
                 onPressed: () => _saveDesign(context, ref),
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.primary(
                 label: 'New Design',
                 icon: SbIcons.add,
@@ -229,7 +234,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.pLarge),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.pLarge
         ],
       ),
     );
@@ -271,34 +276,43 @@ class _OverallStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
     final color = SafetyUtils.getColor(status);
-//     final bgColor = SafetyUtils.getBackgroundColor(status);
 
     return Container(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
-
+      padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+      ),
       child: Row(
         children: [
           Container(
-            padding: AppLayout.paddingMedium,
-
+            padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.paddingMedium
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.2),
+              shape: BoxShape.circle,
+            ),
             child: Icon(SafetyUtils.getIcon(status), color: color, size: 24),
           ),
-          AppLayout.hGap16,
+          const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   SafetyUtils.getLabel(status).toUpperCase(),
-                  style: SbTextStyles.body(context),
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 Text(
                   status == SafetyStatus.safe
                       ? 'Verified as per IS 456 code standards'
                       : 'Fails to meet safety requirements',
-                  style: SbTextStyles.caption(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                     color: color.withValues(alpha: 0.7),
                   ),
                 ),

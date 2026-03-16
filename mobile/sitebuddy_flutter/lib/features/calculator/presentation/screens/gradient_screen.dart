@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -57,22 +58,24 @@ class GradientScreen extends ConsumerWidget {
               children: [
                 Text(
                   'RESULT SUMMARY',
-                  style: SbTextStyles.title(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
                     color: colorScheme.primary,
-                    
                     letterSpacing: 1.2,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 const Divider(),
                 SbListItem(
                   title: 'Percentage',
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
-                    style: SbTextStyles.body(context).copyWith(
+                    style: TextStyle(
+                      fontSize: AppFontSizes.subtitle,
                       color: colorScheme.primary,
-                      
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -80,31 +83,36 @@ class GradientScreen extends ConsumerWidget {
                   title: 'Ratio',
                   trailing: Text(
                     result.ratio == double.infinity ? 'Vertical' : '1 : ${result.ratio.toStringAsFixed(2)}',
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Angle',
-                  trailing: Text('${result.angle.toStringAsFixed(2)}°'),
+                  trailing: Text(
+                    '${result.angle.toStringAsFixed(2)}°',
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                  ),
                 ),
-                const Divider(height: AppLayout.lg),
+                const Divider(),
+                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  
                   child: Column(
                     children: [
                       Text(
                         'CLASSIFICATION',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.tab,
                           color: classificationColor.withValues(alpha: 0.6),
-                          
                         ),
                       ),
-                      AppLayout.vGap4,
+                      const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                       Text(
                         classificationLabel,
-                        style: SbTextStyles.title(context).copyWith(
+                        style: TextStyle(
+                          fontSize: AppFontSizes.title,
+                          fontWeight: FontWeight.w600,
                           color: classificationColor,
-                          
                         ),
                       ),
                     ],
@@ -113,16 +121,20 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'SLOPE VISUALIZATION',
-                  style: SbTextStyles.title(context).copyWith(color: colorScheme.primary),
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.primary,
+                  ),
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 SizedBox(
                   height: 120,
                   width: double.infinity,
@@ -141,25 +153,28 @@ class GradientScreen extends ConsumerWidget {
       );
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Gradient Tool',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(SbIcons.trendingUp, size: 48, color: colorScheme.primary),
-              AppLayout.hGap12,
-              Flexible(
+              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
+              const Flexible(
                 child: Text(
                   'Slope & Gradient Calculator',
-                  style: SbTextStyles.title(context),
+                  style: TextStyle(
+                    fontSize: AppFontSizes.title,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           AppNumberField(
             label: 'Vertical Rise (m)',
@@ -167,7 +182,7 @@ class GradientScreen extends ConsumerWidget {
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          AppLayout.vGap12,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
 
           AppNumberField(
             label: 'Horizontal Run (m)',
@@ -176,7 +191,7 @@ class GradientScreen extends ConsumerWidget {
             errorText: runError,
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -193,24 +208,25 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: SbTextStyles.body(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
           const _FieldReference(),
@@ -231,10 +247,14 @@ class _FieldReference extends StatelessWidget {
       children: [
         Text(
           'FIELD REFERENCE',
-          style: SbTextStyles.title(context).copyWith(color: colorScheme.primary),
+          style: TextStyle(
+            fontSize: AppFontSizes.title,
+            fontWeight: FontWeight.w600,
+            color: colorScheme.primary,
+          ),
           textAlign: TextAlign.center,
         ),
-        AppLayout.vGap12,
+        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
         const SbCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -249,7 +269,7 @@ class _FieldReference extends StatelessWidget {
             ],
           ),
         ),
-        AppLayout.vGap24,
+        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
       ],
     );
   }

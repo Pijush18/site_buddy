@@ -1,15 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-
-import 'package:site_buddy/core/theme/app_layout.dart';
-
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:site_buddy/core/widgets/main_navigation_wrapper.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
 import 'package:site_buddy/features/design/application/controllers/safety_check_controller.dart';
@@ -20,8 +15,6 @@ import 'package:site_buddy/features/design/presentation/widgets/shear_input_sect
 import 'package:site_buddy/features/design/presentation/widgets/shear_result_summary.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shear_history_section.dart';
 
-/// SCREEN: Shear Check Screen
-/// PURPOSE: Professional Safety verification for Shear as per IS 456:2000.
 class ShearCheckScreen extends ConsumerStatefulWidget {
   const ShearCheckScreen({super.key});
 
@@ -32,7 +25,6 @@ class ShearCheckScreen extends ConsumerStatefulWidget {
 class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Controllers for inputs
   final TextEditingController _dController = TextEditingController();
   final TextEditingController _bController = TextEditingController();
   final TextEditingController _vuController = TextEditingController();
@@ -42,7 +34,6 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
   String _selectedSteel = 'Fe500';
   bool _isLoading = false;
 
-  // Result State
   ShearResult? _result;
 
   @override
@@ -60,8 +51,7 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
     setState(() => _isLoading = true);
     HapticFeedback.mediumImpact();
 
-    // Simulate calculation delay for UX
-    await Future.delayed(AppLayout.calculationDuration);
+    await Future.delayed(const Duration(milliseconds: 500));
 
     final double d = double.parse(_dController.text);
     final double b = double.parse(_bController.text);
@@ -76,7 +66,6 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
       concreteGrade: _selectedConcrete,
     );
 
-    // Save to history
     ref.read(safetyCheckControllerProvider.notifier).saveCheck({
       'type': 'Shear',
       'date': DateTime.now().toIso8601String(),
@@ -102,68 +91,6 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MainNavigationWrapper(
-      child: SbPage.detail(
-        title: 'Shear Check',
-        body: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'IS 456:2000 Structural Safety',
-                style: SbTextStyles.body(context).copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              AppLayout.vGap24,
-              // Input Section
-              ShearInputSection(
-                dController: _dController,
-                bController: _bController,
-                vuController: _vuController,
-                ptController: _ptController,
-                selectedConcrete: _selectedConcrete,
-                selectedSteel: _selectedSteel,
-                onConcreteChanged: (v) {
-                  if (v != null) setState(() => _selectedConcrete = v);
-                },
-                onSteelChanged: (v) {
-                  if (v != null) setState(() => _selectedSteel = v);
-                },
-              ),
-              AppLayout.vGap24,
-              // Action Buttons
-              SharedActionButtons(
-                calculateLabel: 'Calculate Shear',
-                isLoading: _isLoading,
-                onCalculate: () => _calculate(),
-                onReset: _reset,
-                onShare: _shareResult,
-              ),
-              AppLayout.vGap24,
-              // Result Display
-              if (_result != null) ...[
-                ShearResultSummary(result: _result!),
-                AppLayout.vGap24,
-                InsightCard(insights: _result!.insights),
-              ] else
-                const PlaceholderCard(
-                  icon: SbIcons.analytics,
-                  message: 'Enter parameters to generate report',
-                ),
-              AppLayout.vGap32,
-              const ShearHistorySection(),
-              AppLayout.vGap32,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   void _shareResult() {
     if (_result == null) return;
     ref
@@ -183,5 +110,65 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
           },
           isSafe: _result!.isSafe,
         );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return AppScreenWrapper(
+      title: 'Shear Check',
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'IS 456:2000 Structural Safety',
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            ShearInputSection(
+              dController: _dController,
+              bController: _bController,
+              vuController: _vuController,
+              ptController: _ptController,
+              selectedConcrete: _selectedConcrete,
+              selectedSteel: _selectedSteel,
+              onConcreteChanged: (v) {
+                if (v != null) setState(() => _selectedConcrete = v);
+              },
+              onSteelChanged: (v) {
+                if (v != null) setState(() => _selectedSteel = v);
+              },
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            SharedActionButtons(
+              calculateLabel: 'Calculate Shear',
+              isLoading: _isLoading,
+              onCalculate: () => _calculate(),
+              onReset: _reset,
+              onShare: _shareResult,
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            if (_result != null) ...[
+              ShearResultSummary(result: _result!),
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              InsightCard(insights: _result!.insights),
+            ] else
+              const PlaceholderCard(
+                icon: SbIcons.analytics,
+                message: 'Enter parameters to generate report',
+              ),
+            const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
+            const ShearHistorySection(),
+            const SizedBox(height: AppSpacing.lg),
+          ],
+        ),
+      ),
+    );
   }
 }

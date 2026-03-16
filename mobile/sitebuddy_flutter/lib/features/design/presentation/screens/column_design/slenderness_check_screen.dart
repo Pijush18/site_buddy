@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,28 +10,31 @@ import 'package:site_buddy/features/design/application/controllers/column_design
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/slenderness_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: SlendernessCheckScreen
 /// PURPOSE: Slenderness classification (Step 3).
 class SlendernessCheckScreen extends ConsumerWidget {
   const SlendernessCheckScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(columnDesignControllerProvider);
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Slenderness Check',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 3 of 6: Slenderness Classification',
-            style: SbTextStyles.title(context).copyWith(
-              color: Theme.of(context).colorScheme.primary,
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           DesignResultCard(
             title: 'Column Classification',
             isSafe: state.isShort,
@@ -47,12 +51,15 @@ class SlendernessCheckScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.elementGap),
-          Text(
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const Text(
             'Geometric Visualization',
-            style: SbTextStyles.title(context),
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
           SlendernessDiagram(
             slendernessX: state.slendernessX,
             slendernessY: state.slendernessY,
@@ -62,7 +69,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
             d: state.d,
             isCircular: state.type == ColumnType.circular,
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           DesignResultCard(
             title: 'Effective Length Parameters',
             isSafe: true,
@@ -84,7 +91,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -94,14 +101,14 @@ class SlendernessCheckScreen extends ConsumerWidget {
                   context.push('/column/design');
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
         ],
       ),
     );

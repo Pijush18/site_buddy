@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
@@ -24,14 +25,14 @@ class CalculationHistoryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historyAsync = ref.watch(projectHistoryProvider(projectId));
 
-    return SbPage.list(
+    return AppScreenWrapper(
       title: 'Calculation History',
-      body: historyAsync.when(
+      child: historyAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
           child: Text(
             'Error loading history: $err',
-            style: SbTextStyles.body(context),
+            style: const TextStyle(fontSize: AppFontSizes.subtitle),
           ),
         ),
         data: (entries) {
@@ -69,7 +70,7 @@ class _HistoryEntryCard extends StatelessWidget {
     final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppLayout.md),
+      padding: const EdgeInsets.only(bottom: AppSpacing.md), // Replaced AppLayout.md
       child: SbCard(
         onTap: () {
           context.push('/history-detail', extra: entry);
@@ -83,7 +84,8 @@ class _HistoryEntryCard extends StatelessWidget {
                 _TypeChip(type: entry.calculationType),
                 Text(
                   dateStr,
-                  style: SbTextStyles.caption(context).copyWith(
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
                     color: theme.colorScheme.onSurfaceVariant.withValues(
                       alpha: 0.7,
                     ),
@@ -91,12 +93,19 @@ class _HistoryEntryCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppLayout.md),
-            Text(entry.resultSummary, style: SbTextStyles.title(context)),
-            const SizedBox(height: AppLayout.sm),
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.md
+            Text(
+              entry.resultSummary,
+              style: const TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.sm
             Text(
               'ID: ${entry.id}',
-              style: SbTextStyles.caption(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.tab,
                 color: theme.colorScheme.onSurfaceVariant.withValues(
                   alpha: 0.5,
                 ),
@@ -145,15 +154,15 @@ class _TypeChip extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppLayout.sm,
-        vertical: AppLayout.xs,
+        horizontal: AppSpacing.sm, // 8
+        vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4)
       ),
-      
       child: Text(
         label,
-        style: SbTextStyles.caption(context).copyWith(
+        style: TextStyle(
+          fontSize: AppFontSizes.tab,
           color: chipColor,
-          
+          fontWeight: FontWeight.bold,
           letterSpacing: 1.1,
         ),
       ),

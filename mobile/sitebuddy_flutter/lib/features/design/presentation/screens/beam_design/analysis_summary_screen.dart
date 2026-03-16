@@ -1,5 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_radius.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -9,7 +11,6 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/design/presentation/widgets/beam_diagram_painter.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
@@ -22,26 +23,27 @@ class AnalysisSummaryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(beamDesignControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Analysis Summary',
-
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 3 of 5: Engineering Analysis',
-            style: SbTextStyles.title(context).copyWith(
-              color: Theme.of(context).colorScheme.primary,
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
 
           // Design Result Card for Principal Forces
           DesignResultCard(
             title: 'Principal Design Forces',
-            isSafe:
-                true, // Analysis results are just facts, not safety checks yet
+            isSafe: true, 
             items: [
               DesignResultItem(
                 label: 'Bending Moment (Mu)',
@@ -60,23 +62,29 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456:2000 Cl. 38',
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
 
           // Diagrams Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Engineering Diagrams',
-                style: SbTextStyles.title(context),
+                style: TextStyle(
+                  fontSize: AppFontSizes.title,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
                 'L = ${(state.span / 1000).toStringAsFixed(2)}m',
-                style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+                style: const TextStyle(
+                  fontSize: AppFontSizes.tab,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
 
           _DiagramCard(
             label: 'Shear Force Diagram (SFD)',
@@ -84,14 +92,14 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             isBMD: false,
             isDark: isDark,
           ),
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
           _DiagramCard(
             label: 'Bending Moment Diagram (BMD)',
             points: state.bmdPoints,
             isBMD: true,
             isDark: isDark,
           ),
-          const SizedBox(height: AppLayout.sectionGap * 1.5),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap * 1.5
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,14 +114,14 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   context.push('/beam/rebar');
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
         ],
       ),
     );
@@ -135,10 +143,25 @@ class _DiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       height: 180,
-      padding: const EdgeInsets.all(AppLayout.cardPadding),
-      decoration: AppLayout.sbCommonDecoration(context),
+      padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.cardPadding
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(AppRadius.md), // Replaced AppLayout.cardRadius
+        border: Border.all(
+          color: theme.colorScheme.outline,
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.30 : 0.12),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: CustomPaint(
         painter: BeamDiagramPainter(
           points: points,

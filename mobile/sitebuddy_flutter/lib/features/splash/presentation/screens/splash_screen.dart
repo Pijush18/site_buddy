@@ -1,10 +1,11 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/app/bootstrap/app_initializer.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: SplashScreen
 /// PURPOSE: Initial loading screen that waits for application bootstrap.
@@ -52,53 +53,57 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: null,
-      usePadding: false,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AppLayout.vGap64, // Top breathing room
-          // Logo
-          Icon(
-            SbIcons.engineering,
-            size: AppLayout.iconSizeLarge,
-            color: colorScheme.primary,
-          ),
-          AppLayout.vGap24,
-
-          // App Name
-          Text(
-            'SiteBuddy',
-            style: theme.textTheme.headlineMedium?.copyWith(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap64
+            // Logo
+            Icon(
+              SbIcons.engineering,
+              size: 64, // Standard large icon size
               color: colorScheme.primary,
             ),
-          ),
-          AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          // Tagline
-          Text(
-            'Civil Engineering Intelligence',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onSurfaceVariant,
+            // App Name
+            Text(
+              'SiteBuddy',
+              style: TextStyle(
+                fontSize: 32, // headlineMedium equivalent
+                fontWeight: FontWeight.bold,
+                color: colorScheme.primary,
+              ),
             ),
-          ),
-          AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
-          // Loading Indicator
-          CircularProgressIndicator(
-            color: colorScheme.primary,
-          ),
-          
-          AppLayout.vGap48,
+            // Tagline
+            Text(
+              'Civil Engineering Intelligence',
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          // Footer
-          Text(
-            '© Pijush Debbarma',
-            style: theme.textTheme.bodySmall,
-          ),
-          AppLayout.vGap24,
-        ],
+            // Loading Indicator
+            CircularProgressIndicator(
+              color: colorScheme.primary,
+            ),
+            
+            const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+
+            // Footer
+            const Text(
+              '© Pijush Debbarma',
+              style: TextStyle(fontSize: 12), // bodySmall equivalent
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          ],
+        ),
       ),
     );
   }

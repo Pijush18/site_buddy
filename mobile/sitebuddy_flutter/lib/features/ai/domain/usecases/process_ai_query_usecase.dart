@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/features/ai/domain/usecases/ai_intent_router_usecase.dart';
 import 'package:site_buddy/core/utils/ui_formatters.dart';
-import 'package:site_buddy/features/levelling_log/domain/usecases/levelling_calculator.dart';
-import 'package:site_buddy/features/levelling_log/domain/entities/levelling_entry.dart';
+import 'package:site_buddy/features/level_log/domain/usecases/level_calculation_service.dart';
+import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/features/ai/domain/repositories/assistant_repository.dart';
 import 'package:site_buddy/features/ai/data/repositories/assistant_repository_impl.dart';
@@ -20,7 +20,7 @@ final processAiQueryUseCaseProvider = Provider<ProcessAiQueryUseCase>((ref) {
 class ProcessAiQueryUseCase {
   final ConnectivityService _connectivity;
   final AssistantRepository _assistantRepo;
-  final _levelingService = LevellingCalculator();
+  final _levelingService = LevelCalculationService();
   final _routerUseCase = AiIntentRouterUseCase();
 
   ProcessAiQueryUseCase(this._connectivity, this._assistantRepo);
@@ -108,13 +108,15 @@ class ProcessAiQueryUseCase {
     final fs = fsMatch != null ? double.parse(fsMatch.group(1)!) : null;
 
     try {
-      final res = _levelingService.calculate(
-        benchmarkRL: currentRL,
-        entries: [
-          LevellingEntry(station: 'AI_Q1', bs: bs, fs: fs, isReading: 0.0),
-        ],
-      );
-      final newRL = res.updatedEntries.last.rl ?? currentRL;
+      final updatedEntries = _levelingService.calculateHISeries([
+        LevelEntry(
+          station: 'AI_Q1',
+          bs: bs,
+          fs: fs,
+          rl: currentRL,
+        ),
+      ]);
+      final newRL = updatedEntries.last.rl ?? currentRL;
 
       final text = '''
 **Leveling Computation Complete**

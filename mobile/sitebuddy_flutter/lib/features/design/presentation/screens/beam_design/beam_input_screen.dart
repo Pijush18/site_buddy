@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -116,9 +117,9 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
       }
     });
 
-    return SbPage.form(
+    return AppScreenWrapper(
       title: 'Beam Input',
-      primaryAction: Column(
+      footer: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -127,36 +128,50 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
-          AppLayout.vGap12,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
           SbButton.outline(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
         ],
       ),
-      body: Form(
+      child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Step 1 of 5: Geometry & Materials',
-              style: SbTextStyles.title(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
             // Geometry Card
             SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Geometry', style: SbTextStyles.title(context)),
-                  AppLayout.vGap16,
+                  const Text(
+                    'Geometry',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.title,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
-                  Text('Beam Type', style: SbTextStyles.button(context)),
-                  AppLayout.vGap8,
+                  const Text(
+                    'Beam Type',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.tab,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                   SbDropdown<BeamType>(
                     value: state.type,
                     items: BeamType.values,
@@ -167,7 +182,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       }
                     },
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _spanController,
@@ -175,7 +190,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Span'),
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   Row(
                     children: [
@@ -187,7 +202,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                               ValidationHelper.validatePositive(v, 'Width'),
                         ),
                       ),
-                      AppLayout.hGap16,
+                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                       Expanded(
                         child: AppNumberField(
                           controller: _depthController,
@@ -201,15 +216,21 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 ],
               ),
             ),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
             // Materials Card
             SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Materials', style: SbTextStyles.title(context)),
-                  AppLayout.vGap16,
+                  const Text(
+                    'Materials',
+                    style: TextStyle(
+                      fontSize: AppFontSizes.title,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   Row(
                     children: [
@@ -223,7 +244,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                               .updateInputs(concrete: v),
                         ),
                       ),
-                      AppLayout.hGap16,
+                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                       Expanded(
                         child: _buildGradeDropdown(
                           'Steel Grade',
@@ -236,7 +257,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       ),
                     ],
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _coverController,
@@ -247,7 +268,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 ],
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
         ),
       ),
@@ -260,12 +281,17 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
     List<String> items,
     Function(String) onChanged,
   ) {
-//     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: SbTextStyles.button(context)),
-        AppLayout.vGap8,
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: AppFontSizes.tab,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
         SbDropdown<String>(
           value: value,
           items: items,

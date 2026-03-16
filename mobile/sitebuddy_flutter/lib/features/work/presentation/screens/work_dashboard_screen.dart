@@ -1,8 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_surface.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -58,8 +58,12 @@ class WorkDashboardScreen extends ConsumerWidget {
         },
         background: Container(
           alignment: Alignment.centerRight,
-          padding: AppLayout.paddingLarge,
-          child: Icon(SbIcons.checkFilled, color: SbSurface.card(context)),
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: colorScheme.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(SbIcons.checkFilled, color: colorScheme.primary),
         ),
         child: SbCard(
           onTap: () {
@@ -68,36 +72,48 @@ class WorkDashboardScreen extends ConsumerWidget {
           child: Row(
             children: [
               Container(width: 4, height: 40, color: priorityColor),
-              AppLayout.hGap8,
+              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       t.title,
-                      style: SbTextStyles.title(context),
+                      style: const TextStyle(
+                        fontSize: AppFontSizes.subtitle,
+                        fontWeight: FontWeight.bold,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    AppLayout.vGap4,
+                    const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                     Text(
                       'Project ${t.projectId} • Due ${t.dueDate.toLocal().toString().split(' ').first}',
-                      style: SbTextStyles.bodySecondary(context).copyWith(
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
                 ),
               ),
-              AppLayout.hGap8,
-              Padding(
+              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+              Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppLayout.pSmall,
+                  horizontal: AppSpacing.sm,
                   vertical: 2,
+                ),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   t.status.name.toUpperCase(),
-                  style: SbTextStyles.caption(context),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -125,37 +141,48 @@ class WorkDashboardScreen extends ConsumerWidget {
         child: Row(
           children: [
             Icon(icon, color: colorScheme.primary, size: 20),
-            AppLayout.hGap8,
+            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     m.title,
-                    style: SbTextStyles.title(context),
+                    style: const TextStyle(
+                      fontSize: AppFontSizes.subtitle,
+                      fontWeight: FontWeight.bold,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  AppLayout.vGap4,
+                  const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                   Text(
                     '${m.meetingDate.toLocal().toString().split(' ').first} • ${m.mode.name}',
-                    style: SbTextStyles.bodySecondary(context).copyWith(
+                    style: TextStyle(
+                      fontSize: AppFontSizes.tab,
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
               ),
             ),
-            AppLayout.hGap8,
+            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppLayout.pSmall,
+                horizontal: AppSpacing.sm,
                 vertical: 2,
               ),
-              
+              decoration: BoxDecoration(
+                color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(4),
+              ),
               child: Text(
                 m.status.name.toUpperCase(),
-                style: SbTextStyles.caption(context),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.secondary,
+                ),
               ),
             ),
           ],
@@ -180,11 +207,12 @@ class WorkDashboardScreen extends ConsumerWidget {
         break;
     }
 
-    return SbPage.list(
+    return AppScreenWrapper(
       title: 'Work Management',
-      appBarActions: [
-        SbButton.icon(
-          icon: SbIcons.add,
+      isScrollable: false,
+      actions: [
+        IconButton(
+          icon: const Icon(SbIcons.add),
           onPressed: () {
             SbFeedback.showBottomSheet(
               context: context,
@@ -210,35 +238,42 @@ class WorkDashboardScreen extends ConsumerWidget {
                       context.push('/meetings/create');
                     },
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 ],
               ),
             );
           },
         ),
       ],
-      header: SbDropdown<WorkTab>(
-        items: WorkTab.values,
-        value: state.selectedTab,
-        itemLabelBuilder: (tab) => tab.name.toUpperCase(),
-        onChanged: (val) {
-          if (val != null) controller.selectTab(val);
-        },
+      child: Column(
+        children: [
+          SbDropdown<WorkTab>(
+            items: WorkTab.values,
+            value: state.selectedTab,
+            itemLabelBuilder: (tab) => tab.name.toUpperCase(),
+            onChanged: (val) {
+              if (val != null) controller.selectTab(val);
+            },
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Expanded(
+            child: state.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : bodyItems.isEmpty
+                    ? const SbEmptyState(
+                        icon: SbIcons.task,
+                        title: 'No Items Yet',
+                        subtitle: 'Tap the "+" icon to create one.',
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.zero,
+                        itemCount: bodyItems.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                        itemBuilder: (context, index) => bodyItems[index],
+                      ),
+          ),
+        ],
       ),
-      body: state.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : bodyItems.isEmpty
-              ? const SbEmptyState(
-                  icon: SbIcons.task,
-                  title: 'No Items Yet',
-                  subtitle: 'Tap the "+" icon to create one.',
-                )
-              : ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: bodyItems.length,
-                  separatorBuilder: (context, index) => AppLayout.vGap8,
-                  itemBuilder: (context, index) => bodyItems[index],
-                ),
     );
   }
 }

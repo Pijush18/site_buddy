@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,9 +42,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.form(
+    return AppScreenWrapper(
       title: 'Create Task',
-      primaryAction: SbButton.primary(
+      footer: SbButton.primary(
         label: 'Create Task',
         icon: SbIcons.addTask,
         onPressed: () async {
@@ -74,7 +75,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
           context.pop();
         },
       ),
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SbInput(
@@ -82,27 +83,29 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             label: 'Title',
             hint: 'Task title',
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbInput(
             controller: _descriptionController,
             label: 'Description',
             hint: 'Brief description of the task',
             maxLines: 3,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbInput(
             controller: _projectController,
             label: 'Project ID',
             hint: 'e.g., PRJ-001',
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'PRIORITY',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           SbDropdown<TaskPriority>(
             value: _priority,
             items: TaskPriority.values,
@@ -111,13 +114,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
               if (v != null) setState(() => _priority = v);
             },
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbInput(
             controller: _assignedController,
             label: 'Assigned To',
             hint: 'User name or ID',
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Row(
             children: [
               Expanded(
@@ -126,11 +129,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                   children: [
                     Text(
                       'DUE DATE',
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
                         color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                     Text(
                       _dueDate == null
                           ? 'Not set'
@@ -139,7 +144,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                                 .toString()
                                 .split(' ')
                                 .first,
-                      style: SbTextStyles.body(context),
+                      style: const TextStyle(fontSize: AppFontSizes.subtitle),
                     ),
                   ],
                 ),
@@ -160,7 +165,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Buffer space before footer
         ],
       ),
     );

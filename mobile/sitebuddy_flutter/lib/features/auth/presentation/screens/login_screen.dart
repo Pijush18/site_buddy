@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -128,7 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 }
               } catch (e) {
                 if (context.mounted) {
-                  SbFeedback.showToast(context: context, message: 'Failed to send: $e');
+                   SbFeedback.showToast(context: context, message: 'Failed to send: $e');
                 }
               }
             },
@@ -145,187 +147,184 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: AppLayout.paddingLarge,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight - (AppLayout.pLarge * 2),
+    return AppScreenWrapper(
+      // Login screen doesn't traditionally have an AppBar title
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing for login layout
+          Icon(
+            SbIcons.engineering,
+            size: 64,
+            color: colorScheme.primary,
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          Text(
+            'SiteBuddy',
+            style: TextStyle(
+              fontSize: 32, // Preserving headline-like size
+              fontWeight: FontWeight.bold,
+              color: colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            'Professional Structural Design Suite',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48 (approx)
+          
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Sign In',
+                  style: TextStyle(
+                    fontSize: 24, // Preserving headlineSmall
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        SbIcons.engineering,
-                        size: 64,
-                        color: colorScheme.primary,
-                      ),
-                      AppLayout.vGap16,
-                      Text(
-                        'SiteBuddy',
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                      AppLayout.vGap8,
-                      Text(
-                        'Professional Structural Design Suite',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      AppLayout.vGap48,
-                      
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Sign In',
-                              style: theme.textTheme.headlineSmall,
-                            ),
-                            AppLayout.vGap8,
-                            Text(
-                              'Welcome back to your workspace',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppLayout.vGap32,
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                Text(
+                  'Welcome back to your workspace',
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32 (approx)
 
-                      // Login Card
-                      SbCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SbInput(
-                              controller: _emailController,
-                              focusNode: _emailFocusNode,
-                              label: "Email",
-                              hint: "your@email.com",
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                              prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                            ),
-                            AppLayout.vGap16,
-                            SbInput(
-                              controller: _passwordController,
-                              focusNode: _passwordFocusNode,
-                              label: "Password",
-                              hint: "••••••••",
-                              obscureText: _obscurePassword,
-                              textInputAction: TextInputAction.done,
-                              onFieldSubmitted: (_) => _login(),
-                              prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
-                                  color: colorScheme.outline,
-                                ),
-                                onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () => context.go('/reset-password'),
-                                child: const Text("Forgot password?"),
-                              ),
-                            ),
-                            AppLayout.vGap16,
-                            SbButton.primary(
-                              label: "Sign In",
-                              onPressed: (isLoading ||
-                                      _emailController.text.isEmpty ||
-                                      _passwordController.text.isEmpty)
-                                  ? null
-                                  : _login,
-                              isLoading: isLoading,
-                              width: double.infinity,
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppLayout.vGap32,
+          // Login Card
+          SbCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  controller: _emailController,
+                  focusNode: _emailFocusNode,
+                  label: "Email",
+                  hint: "your@email.com",
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
+                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                SbInput(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  label: "Password",
+                  hint: "••••••••",
+                  obscureText: _obscurePassword,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _login(),
+                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
+                      color: colorScheme.outline,
+                    ),
+                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => context.go('/reset-password'),
+                    child: const Text("Forgot password?"),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                SbButton.primary(
+                  label: "Sign In",
+                  onPressed: (isLoading ||
+                          _emailController.text.isEmpty ||
+                          _passwordController.text.isEmpty)
+                      ? null
+                      : _login,
+                  isLoading: isLoading,
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
-                      // Divider
-                      Row(
-                        children: [
-                          const Expanded(child: Divider()),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AppLayout.md),
-                            child: Text(
-                              'OR CONTINUE WITH',
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: colorScheme.outline,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                          ),
-                          const Expanded(child: Divider()),
-                        ],
-                      ),
-                      AppLayout.vGap32,
-
-                      // OAuth Buttons
-                      Column(
-                        children: [
-                          SbButton.outline(
-                            label: 'Continue with Google',
-                            icon: SbIcons.google,
-                            onPressed: isLoading ? null : _loginWithGoogle,
-                            width: double.infinity,
-                          ),
-                          if (Platform.isIOS) ...[
-                            AppLayout.vGap16,
-                            const SbButton.outline(
-                              label: 'Continue with Apple',
-                              icon: SbIcons.apple,
-                              onPressed: null, // Placeholder for future implementation
-                              width: double.infinity,
-                            ),
-                          ],
-                        ],
-                      ),
-                      AppLayout.vGap48,
-
-                      // Register Link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          GestureDetector(
-                            onTap: () => context.go('/register'),
-                            child: Text(
-                              "Create account",
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.primary,
-                                
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+          // Divider
+          Row(
+            children: [
+              const Expanded(child: Divider()),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: Text(
+                  'OR CONTINUE WITH',
+                  style: TextStyle(
+                    fontSize: 10, // Preserving labelSmall
+                    color: colorScheme.outline,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            );
-          },
-        ),
+              const Expanded(child: Divider()),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+
+          // OAuth Buttons
+          Column(
+            children: [
+              SbButton.outline(
+                label: 'Continue with Google',
+                icon: SbIcons.google,
+                onPressed: isLoading ? null : _loginWithGoogle,
+                width: double.infinity,
+              ),
+              if (Platform.isIOS) ...[
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SbButton.outline(
+                  label: 'Continue with Apple',
+                  icon: SbIcons.apple,
+                  onPressed: null, // Placeholder for future implementation
+                  width: double.infinity,
+                ),
+              ],
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+
+          // Register Link
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Don't have an account? ",
+                style: TextStyle(fontSize: AppFontSizes.subtitle),
+              ),
+              GestureDetector(
+                onTap: () => context.go('/register'),
+                child: Text(
+                  "Create account",
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg), // Bottom padding
+        ],
       ),
     );
   }

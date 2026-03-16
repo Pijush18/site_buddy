@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 /// FILE HEADER
 /// ----------------------------------------------
@@ -38,49 +39,47 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
   @override
   Widget build(BuildContext context) {
     if (widget.report.isEmpty) {
-      return const SbPage.detail(
+      return const AppScreenWrapper(
         title: 'Report Preview',
-        body: Center(child: Text('Cannot generate report: Empty data source.')),
+        child: Center(child: Text('Cannot generate report: Empty data source.')),
       );
     }
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Report Preview',
-      body: SafeArea(
-        child: PreviewableCard(
-          previewKey: _previewKey,
-          title: widget.report.projectName,
-          actions: [
-            PreviewAction(
-              icon: SbIcons.image,
-              label: 'Share Image',
-              onPressed: () {
-                SiteReportImageGenerator.generateAndShareImage(
-                  _previewKey,
-                  widget.report.projectName,
-                );
-              },
-            ),
-            PreviewAction(
-              icon: SbIcons.pdf,
-              label: 'Export PDF',
-              onPressed: () {
-                SiteReportPdfGenerator.generateAndShare(widget.report);
-              },
-            ),
-            PreviewAction(
-              icon: SbIcons.bookmarkAdd,
-              label: 'Save',
-              onPressed: () {
-                SbFeedback.showToast(
-                  context: context,
-                  message: 'Generated report copied to clipboard!',
-                );
-              },
-            ),
-          ],
-          child: SiteReportCard(report: widget.report),
-        ),
+      child: PreviewableCard(
+        previewKey: _previewKey,
+        title: widget.report.projectName,
+        actions: [
+          PreviewAction(
+            icon: SbIcons.image,
+            label: 'Share Image',
+            onPressed: () {
+              SiteReportImageGenerator.generateAndShareImage(
+                _previewKey,
+                widget.report.projectName,
+              );
+            },
+          ),
+          PreviewAction(
+            icon: SbIcons.pdf,
+            label: 'Export PDF',
+            onPressed: () {
+              SiteReportPdfGenerator.generateAndShare(widget.report);
+            },
+          ),
+          PreviewAction(
+            icon: SbIcons.bookmarkAdd,
+            label: 'Save',
+            onPressed: () {
+              SbFeedback.showToast(
+                context: context,
+                message: 'Generated report copied to clipboard!',
+              );
+            },
+          ),
+        ],
+        child: SiteReportCard(report: widget.report),
       ),
     );
   }

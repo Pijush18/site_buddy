@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 // Sections
 import 'package:site_buddy/dev/ui_lab/sections/colors_lab_section.dart';
@@ -36,16 +36,16 @@ class _UiLabScreenState extends State<UiLabScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SbPage.scaffold(
+    return AppScreenWrapper(
       title: 'SiteBuddy UI Laboratory',
-      appBarActions: [
+      actions: [
         IconButton(
           icon: const Icon(SbIcons.refresh),
           onPressed: () => setState(() {}),
           tooltip: 'Refresh Lab',
         ),
       ],
-      body: Column(
+      child: Column(
         children: [
           TabBar(
             controller: _tabController,
@@ -56,7 +56,8 @@ class _UiLabScreenState extends State<UiLabScreen>
               Tab(text: 'Layout & Grid'),
             ],
           ),
-          Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.7, // Basic height to contain TabBarView
             child: TabBarView(
               controller: _tabController,
               children: [_DesignTokensTab(), _ComponentsTab(), _LayoutTab()],
@@ -72,14 +73,14 @@ class _DesignTokensTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
+      padding: const EdgeInsets.all(AppSpacing.md),
       children: const [
         ColorsLabSection(),
-        AppLayout.vGap32,
+        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
         TypographyLabSection(),
-        AppLayout.vGap32,
+        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
         SpacingLabSection(),
-        AppLayout.vGap32,
+        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
         RadiusLabSection(),
       ],
     );
@@ -90,10 +91,10 @@ class _ComponentsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
+      padding: const EdgeInsets.all(AppSpacing.md),
       children: const [
         ComponentLabSection(),
-        AppLayout.vGap32,
+        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
         EngineeringWidgetsSection(),
       ],
     );
@@ -104,7 +105,7 @@ class _LayoutTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
+      padding: const EdgeInsets.all(AppSpacing.md),
       children: const [LayoutLabSection()],
     );
   }

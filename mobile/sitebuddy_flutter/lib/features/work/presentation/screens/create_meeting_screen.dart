@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,14 +83,14 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.form(
+    return AppScreenWrapper(
       title: 'Schedule Meeting',
-      primaryAction: SbButton.primary(
+      footer: SbButton.primary(
         label: 'Schedule Meeting',
         icon: SbIcons.calendar,
         onPressed: () => _submit(context),
       ),
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SbInput(
@@ -97,27 +98,29 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
             label: 'Title',
             hint: 'Meeting title',
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbInput(
             controller: _descriptionController,
             label: 'Description',
             hint: 'Brief agenda or summary',
             maxLines: 3,
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbInput(
             controller: _projectController,
             label: 'Project ID',
             hint: 'Associated project',
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'MEETING TYPE',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           SbDropdown<MeetingType>(
             value: _type,
             items: MeetingType.values,
@@ -126,14 +129,16 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               if (v != null) setState(() => _type = v);
             },
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'MODE',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           SbDropdown<MeetingMode>(
             value: _mode,
             items: MeetingMode.values,
@@ -142,19 +147,19 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               if (v != null) setState(() => _mode = v);
             },
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbInput(
             controller: _locationController,
             label: 'Location / Link',
             hint: 'Where is it happening?',
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbInput(
             controller: _participantsController,
             label: 'Participants',
             hint: 'Comma separated names',
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           // Date Picker
           Row(
             children: [
@@ -164,16 +169,18 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   children: [
                     Text(
                       'DATE',
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: TextStyle(
+                        fontSize: AppFontSizes.tab,
                         color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                     Text(
                       _date == null
                           ? 'Not set'
                           : _date!.toLocal().toString().split(' ').first,
-                      style: SbTextStyles.body(context),
+                      style: const TextStyle(fontSize: AppFontSizes.subtitle),
                     ),
                   ],
                 ),
@@ -194,7 +201,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               ),
             ],
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           // Time Pickers
           Row(
             children: [
@@ -213,7 +220,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   },
                 ),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
               Expanded(
                 child: _buildTimePicker(
                   context,
@@ -231,7 +238,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Buffer
         ],
       ),
     );
@@ -250,18 +257,24 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
       children: [
         Text(
           label,
-          style: SbTextStyles.caption(context).copyWith(
+          style: TextStyle(
+            fontSize: AppFontSizes.tab,
             color: colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        AppLayout.vGap8,
+        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
         InkWell(
           onTap: onTap,
-          borderRadius: AppLayout.borderRadiusCard,
+          borderRadius: BorderRadius.circular(8),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.pMedium,
+              horizontal: AppSpacing.md,
               vertical: 10,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: colorScheme.outlineVariant),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
@@ -270,11 +283,11 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   size: 20,
                   color: colorScheme.onSurfaceVariant,
                 ),
-                AppLayout.hGap8,
+                const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
                 Expanded(
                   child: Text(
                     value,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

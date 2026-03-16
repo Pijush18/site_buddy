@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -20,6 +21,7 @@ class RebarScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final state = ref.watch(rebarControllerProvider);
     final controller = ref.read(rebarControllerProvider.notifier);
+    final colorScheme = theme.colorScheme;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -28,7 +30,6 @@ class RebarScreen extends ConsumerWidget {
         controller.initializeWithPrefill(extra);
       }
     });
-    final colorScheme = theme.colorScheme;
 
     final lError = state.failure?.message.toLowerCase().contains('length') == true ? state.failure?.message : null;
     final sError = state.failure?.message.toLowerCase().contains('spacing') == true ? state.failure?.message : null;
@@ -42,20 +43,23 @@ class RebarScreen extends ConsumerWidget {
           children: [
             Text(
               'RESULT SUMMARY',
-              style: SbTextStyles.title(context).copyWith(
+              style: TextStyle(
+                fontSize: AppFontSizes.title,
+                fontWeight: FontWeight.w600,
                 color: colorScheme.primary,
-                
                 letterSpacing: 1.2,
               ),
               textAlign: TextAlign.center,
             ),
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
             SbListItem(
               title: 'Number of Bars',
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
-                style: SbTextStyles.body(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
+                  fontWeight: FontWeight.w600,
                   color: colorScheme.primary,
                 ),
               ),
@@ -64,14 +68,16 @@ class RebarScreen extends ConsumerWidget {
               title: 'Total Length',
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
-                style: SbTextStyles.body(context),
+                style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
               title: 'Total Weight',
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
-                style: SbTextStyles.body(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
+                  fontWeight: FontWeight.w600,
                   color: colorScheme.primary,
                 ),
               ),
@@ -83,20 +89,22 @@ class RebarScreen extends ConsumerWidget {
 
     final bool isValid = state.memberLength != null && state.spacing != null && state.diameter != null;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Rebar Estimator',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'STRUCTURAL REBAR REQUIREMENTS',
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
               letterSpacing: 1.1,
             ),
             textAlign: TextAlign.center,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'Member Length (m)',
@@ -104,7 +112,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
             label: 'Spacing (m)',
@@ -112,11 +120,11 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           Wrap(
-            spacing: AppLayout.md,
-            runSpacing: AppLayout.md,
+            spacing: AppSpacing.md, // Replaced AppLayout.md
+            runSpacing: AppSpacing.md, // Replaced AppLayout.md
             children: [
               SizedBox(
                 width: 160,
@@ -138,7 +146,7 @@ class RebarScreen extends ConsumerWidget {
             ],
           ),
 
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -155,22 +163,26 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: SbTextStyles.body(context).copyWith(
+                style: TextStyle(
+                  fontSize: AppFontSizes.subtitle,
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            AppLayout.vGap24,
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
 
-          if (state.result != null) ...[buildResultCard(), AppLayout.vGap24],
+          if (state.result != null) ...[
+            buildResultCard(),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          ],
         ],
       ),
     );

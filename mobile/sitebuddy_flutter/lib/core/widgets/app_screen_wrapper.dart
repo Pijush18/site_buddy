@@ -32,12 +32,28 @@ class AppScreenWrapper extends StatelessWidget {
   /// Optional actions displayed in the AppBar.
   final List<Widget>? actions;
 
+  /// Optional footer widget displayed at the bottom of the screen.
+  /// Typically used for primary actions or buttons.
+  final Widget? footer;
+
+  /// Whether the screen content should be scrollable.
+  /// Defaults to true for standard content screens.
+  /// Set to false for screens that manage their own scrolling (e.g., Chat, Lists).
+  final bool isScrollable;
+
+  /// Whether to apply standard [AppSpacing.md] padding to the body.
+  /// Defaults to true.
+  final bool usePadding;
+
   const AppScreenWrapper({
     super.key,
     required this.child,
     this.title,
     this.backgroundColor,
     this.actions,
+    this.footer,
+    this.isScrollable = true,
+    this.usePadding = true,
   });
 
   @override
@@ -68,12 +84,25 @@ class AppScreenWrapper extends StatelessWidget {
               surfaceTintColor: Colors.transparent,
             )
           : null,
+      bottomNavigationBar: footer != null
+          ? SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: footer,
+              ),
+            )
+          : null,
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(AppSpacing.md),
-          child: child,
-        ),
+        child: isScrollable
+            ? SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: usePadding ? const EdgeInsets.all(AppSpacing.md) : EdgeInsets.zero,
+                child: child,
+              )
+            : Padding(
+                padding: usePadding ? const EdgeInsets.all(AppSpacing.md) : EdgeInsets.zero,
+                child: child,
+              ),
       ),
     );
   }

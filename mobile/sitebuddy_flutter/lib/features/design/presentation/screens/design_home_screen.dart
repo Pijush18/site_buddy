@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -17,13 +17,13 @@ class DesignHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(designControllerProvider);
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Structural Design',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _DesignInfoBanner(),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Header Section
           SbSection(
@@ -34,8 +34,8 @@ class DesignHomeScreen extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: AppLayout.verticalSpace,
-                crossAxisSpacing: AppLayout.horizontalSpace,
+                mainAxisSpacing: AppSpacing.md, // Replaced AppLayout.verticalSpace
+                crossAxisSpacing: AppSpacing.md, // Replaced AppLayout.horizontalSpace
                 childAspectRatio: 1.0,
               ),
               itemCount: state.items.length,
@@ -54,7 +54,7 @@ class DesignHomeScreen extends ConsumerWidget {
               },
             ),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
         ],
       ),
     );
@@ -67,7 +67,6 @@ class _DesignInfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return const SbModuleHero(
       icon: SbIcons.architecture,
       title: 'Structural Reference',

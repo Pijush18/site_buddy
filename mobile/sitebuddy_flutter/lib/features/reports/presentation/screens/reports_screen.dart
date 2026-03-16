@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: ReportsScreen
@@ -13,14 +14,14 @@ class ReportsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Reports',
-      body: Center(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SbCard(
-              padding: const EdgeInsets.all(AppLayout.lg),
+              padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.lg
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -29,32 +30,35 @@ class ReportsScreen extends StatelessWidget {
                     size: 64,
                     color: colorScheme.primary.withValues(alpha: 0.5),
                   ),
-                  AppLayout.vGap24,
-                  Text(
+                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const Text(
                     "No Reports Yet",
-                    style: SbTextStyles.headline(context),
+                    style: TextStyle(
+                      fontSize: AppFontSizes.title,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
-                  AppLayout.vGap16,
-                  Text(
+                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const Text(
                     "Reports generated from calculations and design tools will appear here.",
-                    style: SbTextStyles.body(context),
+                    style: TextStyle(fontSize: AppFontSizes.subtitle),
                     textAlign: TextAlign.center,
                   ),
-                  AppLayout.vGap24,
+                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                   Container(
-                    padding: const EdgeInsets.all(AppLayout.md),
-                    
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(
                       "Use the Export PDF option in any calculator or design module to create your first report.",
-                      style: SbTextStyles.bodySecondary(context).copyWith(
+                      style: TextStyle(
+                        fontSize: AppFontSizes.subtitle,
                         color: colorScheme.primary,
                         fontStyle: FontStyle.italic,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  AppLayout.vGap32,
+                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
                   Row(
                     children: [
                       Expanded(
@@ -63,7 +67,7 @@ class ReportsScreen extends StatelessWidget {
                           onPressed: () => context.go('/calculator'),
                         ),
                       ),
-                      const SizedBox(width: AppLayout.md),
+                      const SizedBox(width: AppSpacing.md),
                       Expanded(
                         child: SbButton.primary(
                           label: "Design Tools",

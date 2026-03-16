@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,6 @@ import 'package:site_buddy/core/widgets/app_card.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/rebar_layout_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: ReinforcementDetailingScreen
 /// PURPOSE: Bar arrangement and ties (Step 5).
@@ -21,16 +21,19 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Reinforcement Detailing',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Step 5 of 6: Steel Arrangement',
-            style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
+              color: Colors.grey,
+            ),
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           RebarLayoutDiagram(
             type: state.type,
             width: state.b,
@@ -39,22 +42,28 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             mainBarDia: state.mainBarDia,
             ast: state.astProvided,
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           AppCard(
-            padding: const EdgeInsets.all(AppLayout.cardPadding),
+            padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.cardPadding
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Main Longitudinal Bars',
-                  style: SbTextStyles.body(context),
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                const SizedBox(height: AppLayout.md),
-                Text(
+                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.md
+                const Text(
                   'Select Bar Diameter',
-                  style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: AppFontSizes.tab,
+                    color: Colors.grey,
+                  ),
                 ),
-                const SizedBox(height: AppLayout.xs),
+                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.xs (4.0) with sm (8.0) for better spacing
                 SbDropdown<double>(
                   value: state.mainBarDia,
                   items: const [12, 16, 20, 25, 32],
@@ -68,7 +77,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
           DesignResultCard(
             title: 'Longitudinal Results',
             isSafe: state.astProvided >= state.astRequired,
@@ -91,7 +100,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.elementGap),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
           DesignResultCard(
             title: 'Transverse Ties (Links)',
             isSafe: true,
@@ -109,7 +118,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -119,14 +128,14 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
                   context.push('/column/safety');
                 },
               ),
-              AppLayout.vGap12,
+              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
               SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.sectionGap),
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
         ],
       ),
     );

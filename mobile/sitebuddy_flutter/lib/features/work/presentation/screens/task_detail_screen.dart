@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -21,18 +22,20 @@ class TaskDetailScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Task Details',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             task.title,
-            style: SbTextStyles.title(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.bold,
               color: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           SbCard(
             child: Column(
               children: [
@@ -40,26 +43,28 @@ class TaskDetailScreen extends ConsumerWidget {
                   title: 'Project',
                   trailing: Text(
                     task.projectId,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Assigned To',
                   trailing: Text(
                     task.assignedTo,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Priority',
                   trailing: Text(
                     task.priority.name.toUpperCase(),
-                    style: SbTextStyles.body(context).copyWith(
+                    style: TextStyle(
+                      fontSize: AppFontSizes.subtitle,
+                      fontWeight: FontWeight.bold,
                       color:
                           (task.priority == TaskPriority.critical ||
                               task.priority == TaskPriority.high)
                           ? colorScheme.error
-                          : null,
+                          : colorScheme.primary,
                     ),
                   ),
                 ),
@@ -67,34 +72,36 @@ class TaskDetailScreen extends ConsumerWidget {
                   title: 'Status',
                   trailing: Text(
                     task.status.name.toUpperCase(),
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
                   title: 'Due Date',
                   trailing: Text(
                     task.dueDate.toLocal().toString().split(' ').first,
-                    style: SbTextStyles.body(context),
+                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
               ],
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'DESCRIPTION',
-            style: SbTextStyles.caption(context).copyWith(
+            style: TextStyle(
+              fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          AppLayout.vGap4,
+          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
           Text(
             task.description.isEmpty
                 ? 'No description provided.'
                 : task.description,
-            style: SbTextStyles.body(context),
+            style: const TextStyle(fontSize: AppFontSizes.subtitle),
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
           if (task.status != TaskStatus.completed) ...[
             SbButton.primary(
               label: 'Mark as Completed',
@@ -116,10 +123,12 @@ class TaskDetailScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   Icon(SbIcons.checkFilled, color: colorScheme.primary),
-                  AppLayout.hGap16,
+                  const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                   Text(
                     'Task Completed',
-                    style: SbTextStyles.title(context).copyWith(
+                    style: TextStyle(
+                      fontSize: AppFontSizes.subtitle,
+                      fontWeight: FontWeight.bold,
                       color: colorScheme.primary,
                     ),
                   ),

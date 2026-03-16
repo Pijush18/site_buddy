@@ -1,14 +1,9 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-
-import 'package:site_buddy/core/theme/app_layout.dart';
-
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:site_buddy/core/widgets/main_navigation_wrapper.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
 import 'package:site_buddy/features/design/application/controllers/safety_check_controller.dart';
@@ -19,8 +14,6 @@ import 'package:site_buddy/features/design/presentation/widgets/shared_action_bu
 import 'package:site_buddy/features/design/presentation/widgets/deflection_result_summary.dart';
 import 'package:site_buddy/features/design/presentation/widgets/deflection_history_section.dart';
 
-/// SCREEN: Deflection Check Screen
-/// PURPOSE: Professional Safety verification for Deflection as per IS 456:2000.
 class DeflectionCheckScreen extends ConsumerStatefulWidget {
   const DeflectionCheckScreen({super.key});
 
@@ -31,7 +24,6 @@ class DeflectionCheckScreen extends ConsumerStatefulWidget {
 
 class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
   final _formKey = GlobalKey<FormState>();
-  // Controllers
   final TextEditingController _dController = TextEditingController();
   final TextEditingController _spanController = TextEditingController();
   final TextEditingController _ptController = TextEditingController();
@@ -40,7 +32,6 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
   String _selectedSpanType = 'Simply Supported';
   bool _isLoading = false;
 
-  // Result State
   DeflectionResult? _result;
 
   @override
@@ -58,7 +49,7 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
     setState(() => _isLoading = true);
     HapticFeedback.lightImpact();
 
-    await Future.delayed(AppLayout.calculationDuration);
+    await Future.delayed(const Duration(milliseconds: 500));
 
     final double d = double.parse(_dController.text);
     final double span = double.parse(_spanController.text);
@@ -94,61 +85,6 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MainNavigationWrapper(
-      child: SbPage.detail(
-        title: 'Deflection Check',
-        body: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'IS 456:2000 Serviceability Limit State',
-                style: SbTextStyles.body(context).copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              AppLayout.vGap24,
-              DeflectionInputSection(
-                dController: _dController,
-                spanController: _spanController,
-                ptController: _ptController,
-                pcController: _pcController,
-                selectedSpanType: _selectedSpanType,
-                onSpanTypeChanged: (v) {
-                  if (v != null) setState(() => _selectedSpanType = v);
-                },
-              ),
-              AppLayout.vGap24,
-              SharedActionButtons(
-                calculateLabel: 'Check Deflection',
-                isLoading: _isLoading,
-                onCalculate: () => _calculate(),
-                onReset: _reset,
-                onShare: _shareResult,
-              ),
-              AppLayout.vGap24,
-              if (_result != null) ...[
-                DeflectionResultSummary(result: _result!),
-                AppLayout.vGap24,
-                InsightCard(insights: _result!.insights),
-              ] else
-                const PlaceholderCard(
-                  icon: Icons.query_stats,
-                  message: 'Calculate ratio to check safety',
-                ),
-              AppLayout.vGap32,
-              const DeflectionHistorySection(),
-              AppLayout.vGap32,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   void _shareResult() {
     if (_result == null) return;
     ref
@@ -166,5 +102,61 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
           },
           isSafe: _result!.isSafe,
         );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return AppScreenWrapper(
+      title: 'Deflection Check',
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'IS 456:2000 Serviceability Limit State',
+              style: TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            DeflectionInputSection(
+              dController: _dController,
+              spanController: _spanController,
+              ptController: _ptController,
+              pcController: _pcController,
+              selectedSpanType: _selectedSpanType,
+              onSpanTypeChanged: (v) {
+                if (v != null) setState(() => _selectedSpanType = v);
+              },
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            SharedActionButtons(
+              calculateLabel: 'Check Deflection',
+              isLoading: _isLoading,
+              onCalculate: () => _calculate(),
+              onReset: _reset,
+              onShare: _shareResult,
+            ),
+            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            if (_result != null) ...[
+              DeflectionResultSummary(result: _result!),
+              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              InsightCard(insights: _result!.insights),
+            ] else
+              const PlaceholderCard(
+                icon: Icons.query_stats,
+                message: 'Calculate ratio to check safety',
+              ),
+            const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
+            const DeflectionHistorySection(),
+            const SizedBox(height: AppSpacing.lg),
+          ],
+        ),
+      ),
+    );
   }
 }

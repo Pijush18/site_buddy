@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -26,57 +27,78 @@ class HistoryDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
-//     final theme = Theme.of(context);
 
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'History Detail',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context, dateStr),
-          AppLayout.vGap24,
-          Text('Input Parameters', style: SbTextStyles.title(context)),
-          AppLayout.vGap16,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const Text(
+            'Input Parameters',
+            style: TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           _buildParametersList(context),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
           SbButton.primary(
             onPressed: () => _restoreVersion(context, ref),
             label: 'Restore this Version',
           ),
-          AppLayout.vGap32,
+          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
         ],
       ),
     );
   }
 
   Widget _buildHeader(BuildContext context, String dateStr) {
-//     final theme = Theme.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
       child: Column(
         children: [
           Text(
             entry.calculationType.name.toUpperCase(),
-            style: SbTextStyles.body(context).copyWith(letterSpacing: 1.2),
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.primary,
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          const Divider(height: 16),
-          AppLayout.vGap8,
+          const Divider(height: AppSpacing.md), // Replaced Divider(16)
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             entry.resultSummary,
             textAlign: TextAlign.center,
-            style: SbTextStyles.title(context),
+            style: const TextStyle(
+              fontSize: AppFontSizes.title,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          AppLayout.vGap8,
-          Text(dateStr, style: SbTextStyles.body(context)),
+          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          Text(
+            dateStr,
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildParametersList(BuildContext context) {
-//     final theme = Theme.of(context);
     final params = entry.inputParameters;
     if (params.isEmpty) {
-      return Text('No parameters recorded.', style: SbTextStyles.body(context));
+      return const Text(
+        'No parameters recorded.',
+        style: TextStyle(fontSize: AppFontSizes.subtitle),
+      );
     }
 
     return SbCard(
@@ -91,7 +113,10 @@ class HistoryDetailScreen extends ConsumerWidget {
           final value = params.values.elementAt(index);
           return SbListItem(
             title: key,
-            trailing: Text(value.toString(), style: SbTextStyles.body(context)),
+            trailing: Text(
+              value.toString(),
+              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            ),
           );
         },
       ),

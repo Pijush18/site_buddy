@@ -1,39 +1,32 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: CalculatorHubScreen
 /// PURPOSE: Central navigation hub for all calculator and estimator tools.
-///
-/// MATERIAL ESTIMATION TOOLS (as of this update):
-///   1. Concrete Material Estimator
-///   2. Brick Wall Material Estimator
-///   3. Plaster Material Estimator
-///   4. Rebar Length Estimator
-///
-/// NOTE: Cement Bag Calculator and Sand Quantity Estimator have been removed
-/// from the menu (their screen files are preserved on disk).
 class CalculatorHubScreen extends StatelessWidget {
   const CalculatorHubScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SbPage.detail(
+    return AppScreenWrapper(
       title: 'Engineering Toolbox',
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SbSection(
             title: 'Quantity Tools',
             child: _buildQuantityToolsSection(context),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Field Surveying',
             child: _buildFieldToolsSection(context),
           ),
+          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );
@@ -52,7 +45,7 @@ class CalculatorHubScreen extends StatelessWidget {
           icon: SbIcons.calculator,
           onTap: () => context.push('/calculator/material'),
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
         // 2 — Brick Wall Material Estimator
         _buildToolCard(
@@ -63,7 +56,7 @@ class CalculatorHubScreen extends StatelessWidget {
           icon: SbIcons.gridView,
           onTap: () => context.push('/calculator/brick-wall'),
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
         // 3 — Steel Weight Estimator
         _buildToolCard(
@@ -73,7 +66,7 @@ class CalculatorHubScreen extends StatelessWidget {
           icon: SbIcons.rebar,
           onTap: () => context.push('/calculator/rebar'),
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
         // 4 — Excavation Volume
         _buildToolCard(
@@ -83,7 +76,7 @@ class CalculatorHubScreen extends StatelessWidget {
           icon: SbIcons.terrain,
           onTap: () => context.push('/calculator/excavation'),
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
         // 5 — Shuttering Area
         _buildToolCard(
@@ -100,8 +93,8 @@ class CalculatorHubScreen extends StatelessWidget {
   Widget _buildFieldToolsSection(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      mainAxisSpacing: AppLayout.pMedium,
-      crossAxisSpacing: AppLayout.pMedium,
+      mainAxisSpacing: AppSpacing.md, // Replaced AppLayout.pMedium
+      crossAxisSpacing: AppSpacing.md, // Replaced AppLayout.pMedium
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -115,7 +108,7 @@ class CalculatorHubScreen extends StatelessWidget {
         _buildGridToolCard(
           context,
           title: 'Gradient Tool',
-          icon: SbIcons.trendingDown,
+          icon: SbIcons.trendingUp,
           onTap: () => context.push('/calculator/gradient'),
         ),
         _buildGridToolCard(
