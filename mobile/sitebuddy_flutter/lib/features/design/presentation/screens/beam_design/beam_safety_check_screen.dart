@@ -18,7 +18,7 @@ import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
 import 'package:printing/printing.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: BeamSafetyCheckScreen
 /// PURPOSE: Final safety status and report generation (Step 5).
@@ -148,7 +148,8 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                 ),
                 const SizedBox(height: AppLayout.pMedium),
                 Center(
-                  child: ActionButtonsGroup(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SbButton.ghost(
                         label: 'Save Image',
@@ -166,6 +167,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                           }
                         },
                       ),
+                      AppLayout.vGap8,
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: SbIcons.pdf,
@@ -195,27 +197,37 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           ),
           const SizedBox(height: AppLayout.pHuge),
 
-          SbButton.primary(
-            label: 'Export PDF Report',
-            icon: SbIcons.pdf,
-            onPressed: () {
-              ref.read(beamDesignControllerProvider.notifier).generateReport();
-            },
-          ),
-          const SizedBox(height: AppLayout.pMedium),
-          SbButton.primary(
-            label: 'Save to Design History',
-            icon: SbIcons.history,
-            onPressed: () => _saveDesign(context, ref),
-          ),
-          const SizedBox(height: AppLayout.pMedium),
-          SbButton.primary(
-            label: 'New Design',
-            icon: SbIcons.add,
-            onPressed: () {
-              ref.read(beamDesignControllerProvider.notifier).reset();
-              context.go('/');
-            },
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Export PDF Report',
+                icon: SbIcons.pdf,
+                onPressed: () {
+                  ref.read(beamDesignControllerProvider.notifier).generateReport();
+                },
+              ),
+              AppLayout.vGap12,
+              SbButton.primary(
+                label: 'Save to Design History',
+                icon: SbIcons.history,
+                onPressed: () => _saveDesign(context, ref),
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+              AppLayout.vGap12,
+              SbButton.primary(
+                label: 'New Design',
+                icon: SbIcons.add,
+                onPressed: () {
+                  ref.read(beamDesignControllerProvider.notifier).reset();
+                  context.go('/');
+                },
+              ),
+            ],
           ),
           const SizedBox(height: AppLayout.pLarge),
         ],

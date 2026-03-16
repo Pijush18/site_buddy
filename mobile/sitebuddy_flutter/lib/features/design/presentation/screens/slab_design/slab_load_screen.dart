@@ -95,10 +95,20 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             ),
             AppLayout.vGap32,
 
-            SbButton.primary(
-              label: 'Next: Analysis Summary',
-              onPressed: _onCalculate,
-              icon: SbIcons.calculator,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbButton.primary(
+                  label: 'Next: Analysis Summary',
+                  onPressed: _onCalculate,
+                  icon: SbIcons.calculator,
+                ),
+                AppLayout.vGap12,
+                SbButton.outline(
+                  label: 'Back',
+                  onPressed: () => context.pop(),
+                ),
+              ],
             ),
           ],
         ),

@@ -30,5 +30,5 @@ abstract class AuthRepository {
   Future<void> sendPasswordResetEmail(String email);
   Future<void> sendEmailVerification();
   Future<void> logout();
-  Future<String?> getIdToken();
+  Future<String?> getIdToken({bool forceRefresh = false});
 }

@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/core/widgets/educational_toggle.dart';
 import 'package:site_buddy/core/widgets/code_reference_card.dart';
@@ -179,11 +179,11 @@ class _DesignCalculationScreenState
                 : 'IS 456 Annex B',
           ),
 
-          AppLayout.vGap32,
 
           AppLayout.vGap24,
 
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Detailing',
@@ -191,13 +191,13 @@ class _DesignCalculationScreenState
                   context.push('/column/detailing');
                 },
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),
             ],
           ),
-          AppLayout.vGap24,
         ],
       ),
     );

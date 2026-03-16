@@ -127,7 +127,7 @@ class SbPage extends StatelessWidget {
 
   // ── Form ──────────────────────────────────────────────────────────────────
   Widget _buildFormPage(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
+    const bottomInset = 0.0;
     
     return AppScaffold(
       title: title,
@@ -147,7 +147,7 @@ class SbPage extends StatelessWidget {
 
   // ── List ──────────────────────────────────────────────────────────────────
   Widget _buildListPage(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
+    const bottomInset = 0.0;
 
     return AppScaffold(
       title: title,
@@ -174,7 +174,7 @@ class SbPage extends StatelessWidget {
 
   // ── Detail ────────────────────────────────────────────────────────────────
   Widget _buildDetailPage(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
+    const bottomInset = 0.0;
 
     return AppScaffold(
       title: title,
@@ -193,7 +193,7 @@ class SbPage extends StatelessWidget {
 
   // ── Scaffold ──────────────────────────────────────────────────────────────
   Widget _buildScaffoldPage(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
+    const bottomInset = 0.0;
 
     return AppScaffold(
       title: title,

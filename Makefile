@@ -1,7 +1,7 @@
 .PHONY: analyze ui-check ui-fix arch-check guardian
 
 analyze:
-	flutter analyze
+	cd mobile/sitebuddy_flutter && flutter analyze
 
 ui-check:
 	dart tools/ui_police/ui_police.dart
@@ -16,6 +16,6 @@ guardian:
 	dart tools/project_guardian.dart
 
 clean-code:
-	dart format .
-	dart fix --apply
-	flutter analyze
+	cd mobile/sitebuddy_flutter && dart format .
+	cd mobile/sitebuddy_flutter && dart fix --apply
+	cd mobile/sitebuddy_flutter && flutter analyze

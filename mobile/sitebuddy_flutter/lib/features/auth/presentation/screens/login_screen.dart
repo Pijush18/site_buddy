@@ -297,7 +297,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ],
                         ],
                       ),
-                      const Spacer(),
                       AppLayout.vGap48,
 
                       // Register Link

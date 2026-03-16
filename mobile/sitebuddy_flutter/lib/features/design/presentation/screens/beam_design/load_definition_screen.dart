@@ -168,13 +168,21 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             ),
             AppLayout.vGap32,
 
-            SbButton.primary(
-              label: 'Calculate & View Analysis',
-              onPressed: _onNext,
-              icon: SbIcons.analytics,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbButton.primary(
+                  label: 'Calculate & View Analysis',
+                  onPressed: _onNext,
+                  icon: SbIcons.analytics,
+                ),
+                AppLayout.vGap12,
+                SbButton.outline(
+                  label: 'Back',
+                  onPressed: () => context.pop(),
+                ),
+              ],
             ),
-            AppLayout.vGap16,
-            SbButton.primary(label: 'Back', onPressed: () => context.pop()),
             AppLayout.vGap24,
           ],
         ),

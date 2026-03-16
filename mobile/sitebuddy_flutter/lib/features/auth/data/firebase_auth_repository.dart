@@ -66,7 +66,7 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<String?> getIdToken() async {
-    return await _auth.currentUser?.getIdToken();
+  Future<String?> getIdToken({bool forceRefresh = false}) async {
+    return await _auth.currentUser?.getIdToken(forceRefresh);
   }
 }

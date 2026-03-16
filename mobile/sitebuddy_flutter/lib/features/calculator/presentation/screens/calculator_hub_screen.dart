@@ -34,7 +34,6 @@ class CalculatorHubScreen extends StatelessWidget {
             title: 'Field Surveying',
             child: _buildFieldToolsSection(context),
           ),
-          AppLayout.vGap24,
         ],
       ),
     );

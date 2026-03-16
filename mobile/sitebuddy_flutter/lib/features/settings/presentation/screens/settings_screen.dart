@@ -143,7 +143,8 @@ class SettingsScreen extends StatelessWidget {
                       isVertical: true,
                       icon: SbIcons.refresh,
                       title: "Restore Last Screen on Launch",
-                      subtitle: "Continue where you left off when reopening the app.",
+                      subtitle:
+                          "Continue where you left off when reopening the app.",
                       onTap: () => ref
                           .read(settingsProvider.notifier)
                           .setRestoreLastScreen(!settings.restoreLastScreen),
@@ -191,7 +192,9 @@ class SettingsScreen extends StatelessWidget {
                   icon: SbIcons.description,
                   title: "Terms of Service",
                   onTap: () async {
-                    final url = Uri.parse("https://pijush.com/terms-of-service/");
+                    final url = Uri.parse(
+                      "https://pijush.com/terms-of-service/",
+                    );
                     await launchUrl(url, mode: LaunchMode.externalApplication);
                   },
                 ),
@@ -230,7 +233,6 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          AppLayout.vGap48,
         ],
       ),
     );
@@ -267,12 +269,12 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _buildProfileCard(
-    BuildContext context, 
+    BuildContext context,
     WidgetRef ref,
-    SiteUser user, 
+    SiteUser user,
     String plan,
-    bool isPremium, 
-    ColorScheme colorScheme
+    bool isPremium,
+    ColorScheme colorScheme,
   ) {
     return Column(
       children: [
@@ -283,11 +285,7 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(
                 width: 60,
                 height: 60,
-                child: const Icon(
-                  SbIcons.account,
-                  size: 30,
-                  color: Colors.white,
-                ),
+                child: Icon(SbIcons.account, size: 30, color: Colors.white),
               ),
               AppLayout.hGap16,
               Expanded(
@@ -296,16 +294,15 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Er. Pijush Debbarma",
-                      style: SbTextStyles.title(context).copyWith(
-                        
-                        letterSpacing: -0.2,
-                      ),
+                      style: SbTextStyles.title(
+                        context,
+                      ).copyWith(letterSpacing: -0.2),
                     ),
                     Text(
                       user.email.isEmpty ? "No Email Registered" : user.email,
-                      style: SbTextStyles.caption(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: SbTextStyles.caption(
+                        context,
+                      ).copyWith(color: colorScheme.onSurfaceVariant),
                     ),
                     AppLayout.vGap8,
                     Container(
@@ -313,15 +310,15 @@ class SettingsScreen extends StatelessWidget {
                         horizontal: 8,
                         vertical: 3,
                       ),
-                      
+
                       child: Text(
-                        (isPremium ? "Premium Plan" : "Free Plan").toUpperCase(),
+                        (isPremium ? "Premium Plan" : "Free Plan")
+                            .toUpperCase(),
                         style: SbTextStyles.caption(context).copyWith(
-                          color: isPremium 
-                              ? colorScheme.onPrimary 
+                          color: isPremium
+                              ? colorScheme.onPrimary
                               : colorScheme.onSurfaceVariant,
-                          
-                          
+
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -376,7 +373,6 @@ class SettingsScreen extends StatelessWidget {
         style: SbTextStyles.caption(context).copyWith(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
           letterSpacing: 1.2,
-          
         ),
       ),
     );
@@ -398,12 +394,12 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSmallErrorState(String message) {
     return Container(
       padding: const EdgeInsets.all(AppLayout.pMedium),
-      
+
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),
           AppLayout.hGap12,
-          Text(message, style: const TextStyle(color: Colors.red, )),
+          Text(message, style: const TextStyle(color: Colors.red)),
         ],
       ),
     );
@@ -425,7 +421,9 @@ class SettingsScreen extends StatelessWidget {
           TextButton(
             onPressed: () {
               ref.read(settingsProvider.notifier).setTheme(ThemeMode.system);
-              ref.read(settingsProvider.notifier).setUnitSystem(UnitSystem.metric);
+              ref
+                  .read(settingsProvider.notifier)
+                  .setUnitSystem(UnitSystem.metric);
               ref.read(settingsProvider.notifier).setLocale('en');
               ref.read(settingsProvider.notifier).setRestoreLastScreen(false);
               Navigator.pop(context);

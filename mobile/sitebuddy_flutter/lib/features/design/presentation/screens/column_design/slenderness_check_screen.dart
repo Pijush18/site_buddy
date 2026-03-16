@@ -9,7 +9,7 @@ import 'package:site_buddy/features/design/application/controllers/column_design
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/slenderness_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: SlendernessCheckScreen
 /// PURPOSE: Slenderness classification (Step 3).
@@ -85,7 +85,8 @@ class SlendernessCheckScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppLayout.sectionGap),
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Design Calculation',
@@ -93,7 +94,8 @@ class SlendernessCheckScreen extends ConsumerWidget {
                   context.push('/column/design');
                 },
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

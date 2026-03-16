@@ -18,7 +18,7 @@ import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
 import 'package:printing/printing.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: SafetyCheckScreen
 /// PURPOSE: Final summary and safety checks (Step 6).
@@ -148,7 +148,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                 ),
                 AppLayout.vGap16,
                 Center(
-                  child: ActionButtonsGroup(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SbButton.ghost(
                         label: 'Save Image',
@@ -166,6 +167,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                           }
                         },
                       ),
+                      AppLayout.vGap8,
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: SbIcons.pdf,
@@ -219,7 +221,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
             ),
           ),
           AppLayout.vGap24,
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Optimize Section',
@@ -229,6 +232,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       .optimizeDesign();
                 },
               ),
+              AppLayout.vGap12,
               SbButton.primary(
                 label: 'Export PDF',
                 icon: SbIcons.pdf,
@@ -238,6 +242,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       .generateReport();
                 },
               ),
+              AppLayout.vGap12,
               SbButton.primary(
                 label: 'Save History',
                 onPressed: () {
@@ -250,16 +255,18 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   );
                 },
               ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+              AppLayout.vGap12,
               SbButton.primary(
                 label: 'New Design',
                 onPressed: () {
                   ref.read(columnDesignControllerProvider.notifier).reset();
                   context.go('/');
                 },
-              ),
-              SbButton.primary(
-                label: 'Back',
-                onPressed: () => context.pop(),
               ),
             ],
           ),

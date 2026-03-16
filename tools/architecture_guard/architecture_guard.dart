@@ -6,7 +6,7 @@ void main() {
   print('--- SiteBuddy Architecture Map Generator ---');
 
   final scanner = ArchitectureScanner();
-  scanner.scan(Directory('lib'));
+  scanner.scan(Directory('mobile/sitebuddy_flutter/lib'));
 
   final generator = MapGenerator(scanner);
   generator.generateMarkdown('docs/architecture_map.md');
@@ -145,7 +145,7 @@ class ArchitectureScanner {
   void _scanRouteModule(String moduleName) {
     // Attempt to find the file for the route module
     final fileName = '${moduleName.replaceAll('Routes', '_routes')}.dart';
-    final file = File('lib/app/routes/$fileName');
+    final file = File('mobile/sitebuddy_flutter/lib/app/routes/$fileName');
     if (file.existsSync()) {
       final content = file.readAsStringSync();
       final routeRegex = RegExp(

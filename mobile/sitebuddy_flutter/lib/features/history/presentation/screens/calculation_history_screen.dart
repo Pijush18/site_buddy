@@ -24,7 +24,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historyAsync = ref.watch(projectHistoryProvider(projectId));
 
-    return SbPage.detail(
+    return SbPage.list(
       title: 'Calculation History',
       body: historyAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -39,8 +39,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
             return const SbEmptyState(
               icon: SbIcons.history,
               title: 'No Calculations Yet',
-              subtitle:
-                  'Run a structural calculation to see results here.',
+              subtitle: 'Run a structural calculation to see results here.',
             );
           }
 
@@ -48,14 +47,10 @@ class CalculationHistoryScreen extends ConsumerWidget {
           final sortedEntries = List<CalculationHistoryEntry>.from(entries)
             ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-          return ListView.builder(
-            padding: AppLayout.paddingMd,
-            shrinkWrap: true,
-            itemCount: sortedEntries.length,
-            itemBuilder: (context, index) {
-              final entry = sortedEntries[index];
-              return _HistoryEntryCard(entry: entry);
-            },
+          return Column(
+            children: sortedEntries
+                .map((entry) => _HistoryEntryCard(entry: entry))
+                .toList(),
           );
         },
       ),

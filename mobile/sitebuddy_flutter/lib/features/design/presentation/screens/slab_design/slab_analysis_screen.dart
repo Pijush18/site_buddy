@@ -73,10 +73,20 @@ class SlabAnalysisScreen extends ConsumerWidget {
           ),
           AppLayout.vGap32,
 
-          SbButton.primary(
-            label: 'Next: Reinforcement Design',
-            onPressed: () => context.push('/slab/reinforcement'),
-            icon: SbIcons.engineering,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Next: Reinforcement Design',
+                onPressed: () => context.push('/slab/reinforcement'),
+                icon: SbIcons.engineering,
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+            ],
           ),
         ],
       ),

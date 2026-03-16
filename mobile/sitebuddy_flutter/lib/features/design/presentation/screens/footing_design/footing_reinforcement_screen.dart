@@ -179,9 +179,19 @@ class FootingReinforcementScreen extends ConsumerWidget {
               ),
 
             AppLayout.vGap16,
-            SbButton.primary(
-              label: 'Next: Final Safety Checks',
-              onPressed: () => context.push('/footing/safety'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbButton.primary(
+                  label: 'Next: Final Safety Checks',
+                  onPressed: () => context.push('/footing/safety'),
+                ),
+                AppLayout.vGap12,
+                SbButton.outline(
+                  label: 'Back',
+                  onPressed: () => context.pop(),
+                ),
+              ],
             ),
             AppLayout.vGap24,
           ],

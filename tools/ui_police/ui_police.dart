@@ -3,7 +3,7 @@ import 'dart:io';
 
 void main() async {
   final stopwatch = Stopwatch()..start();
-  final featuresDir = Directory('lib/features');
+  final featuresDir = Directory('mobile/sitebuddy_flutter/lib/features');
 
   if (!featuresDir.existsSync()) {
     print('Error: lib/features directory not found.');

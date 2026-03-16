@@ -58,28 +58,24 @@ class ProjectListScreen extends ConsumerWidget {
               subtitle:
                   'Create your first civil engineering project to get started.',
               actionLabel: 'New Project',
-              onAction:
-                  null, // Should probably be a real action but keeping simple for now
             )
-          : ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: projects.length,
-              separatorBuilder: (_, _) => AppLayout.vGap16,
-              itemBuilder: (context, index) {
-                final project = projects[index];
-                final formattedDate = DateFormat(
-                  'MMM dd, yyyy',
-                ).format(project.createdAt);
-                return ProjectCard(
-                  name: project.name,
-                  date: formattedDate,
-                  location: project.location,
-                  logsCount: 0,
-                  calcsCount: 0,
-                  onTap: () => context.push('/projects/detail', extra: project),
+          : Column(
+              children: projects.map((project) {
+                final formattedDate =
+                    DateFormat('MMM dd, yyyy').format(project.createdAt);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: AppLayout.md),
+                  child: ProjectCard(
+                    name: project.name,
+                    date: formattedDate,
+                    location: project.location,
+                    logsCount: 0,
+                    calcsCount: 0,
+                    onTap: () =>
+                        context.push('/projects/detail', extra: project),
+                  ),
                 );
-              },
+              }).toList(),
             ),
     );
   }

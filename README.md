@@ -1,17 +1,22 @@
-# site_buddy
+# SiteBuddy
 
-A new Flutter project.
+SiteBuddy is a professional structural engineering SaaS platform.
 
-## Getting Started
+## Architecture
 
-This project is a starting point for a Flutter application.
+- **Mobile**: Flutter (with Riverpod, GoRouter, and Dio)
+- **Backend**: Laravel 11 API (PHP)
+- **Database**: PostgreSQL
+- **Auth**: Firebase Authentication
 
-A few resources to get you started if this is your first Flutter project:
+## Project Structure
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- `mobile/sitebuddy_flutter/`: Main Flutter application.
+- `backend_laravel/`: Core API service.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Core Features
+
+- **Engineering Assistant**: AI-powered structural suggestions.
+- **Sync Engine**: Offline-first calculation synchronization.
+- **Subscription System**: Manage Free and Pro tier access.
+- **Level Log**: High-precision engineering leveling tools.

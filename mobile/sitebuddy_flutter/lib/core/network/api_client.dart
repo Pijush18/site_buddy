@@ -1,17 +1,8 @@
-// FILE HEADER
-// ----------------------------------------------
-// File: api_client.dart
-// Feature: core (network)
-// Layer: infrastructure/network
-//
-// PURPOSE:
-// Centralized Dio-based HTTP client for all backend communication.
-// ----------------------------------------------
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/network/network_exceptions.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
+import 'package:site_buddy/core/network/auth_interceptor.dart';
 import 'package:site_buddy/core/backend/backend_config.dart';
 import 'package:site_buddy/features/auth/domain/auth_repository.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
@@ -36,6 +27,8 @@ class ApiResponse<T> {
   ApiResponse({this.data, this.statusCode, this.message});
 }
 
+/// CLASS: ApiClient
+/// PURPOSE: Standardized Dio HTTP client for SiteBuddy backend communication.
 class ApiClient {
   final ConnectivityService _connectivity;
   final AuthRepository _authRepository;
@@ -50,9 +43,9 @@ class ApiClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl ?? '',
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
-        sendTimeout: const Duration(seconds: 15),
+        connectTimeout: BackendConfig.timeout,
+        receiveTimeout: BackendConfig.timeout,
+        sendTimeout: BackendConfig.timeout,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -60,24 +53,18 @@ class ApiClient {
       ),
     );
 
-    // 1. Auth Interceptor to attach Firebase ID Token
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final token = await _authRepository.getIdToken();
-          if (token != null) {
-            options.headers['Authorization'] = 'Bearer $token';
-          }
-          return handler.next(options);
-        },
-      ),
-    );
+    // 1. Auth Interceptor for security
+    _dio.interceptors.add(AuthInterceptor(_authRepository));
 
-    // 2. Logging Interceptor
+    // 2. Logging Interceptor (Enabled in development only if needed)
     _dio.interceptors.add(
       LogInterceptor(
+        request: true,
+        requestHeader: true,
         requestBody: true,
+        responseHeader: false,
         responseBody: true,
+        error: true,
       ),
     );
   }
@@ -129,11 +116,11 @@ class ApiClient {
     );
   }
 
-  /// Internal request handler with error wrapping.
+  /// Internal request handler with network pre-checks and error mapping.
   Future<ApiResponse<T>> _request<T>(Future<Response> Function() call) async {
-    // 1. Check connectivity first
+    // Pre-flight check: Is the device online?
     if (!await _connectivity.isOnline) {
-      throw const NetworkUnavailableException();
+      throw const ConnectionException();
     }
 
     try {
@@ -145,32 +132,35 @@ class ApiClient {
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e) {
-      throw InvalidResponseException(e.toString());
+      throw ServerException(message: e.toString());
     }
   }
 
-  /// Maps Dio errors to custom SiteBuddy NetworkExceptions.
+  /// Maps Dio exceptions to structured domain-level NetworkExceptions.
   NetworkException _handleDioError(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return const ApiTimeoutException();
+        return const TimeoutException();
       case DioExceptionType.badResponse:
         final status = e.response?.statusCode;
-        if (status != null && status >= 500) {
-          return ApiServerException(statusCode: status);
+        if (status == 401) {
+          return const UnauthorizedException();
         }
-        return ApiClientException(
-          message: e.response?.data?['message'] ?? 'Client error occurred.',
+        if (status != null && status >= 500) {
+          return ServerException(statusCode: status);
+        }
+        return ClientException(
+          message: e.response?.data?['message'] ?? 'API request failed.',
           statusCode: status,
         );
       case DioExceptionType.cancel:
-        return const ApiClientException(message: 'Request cancelled.');
+        return const ClientException(message: 'Request manually cancelled.');
       case DioExceptionType.connectionError:
-        return const NetworkUnavailableException();
+        return const ConnectionException();
       default:
-        return InvalidResponseException(e.message ?? 'Unknown network error.');
+        return ServerException(message: e.message ?? 'Unknown network error.');
     }
   }
 }

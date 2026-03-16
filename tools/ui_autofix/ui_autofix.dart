@@ -1,11 +1,14 @@
 import 'dart:io';
 
 void main(List<String> args) async {
-  print('\\n=========================================');
+  print('\n=========================================');
   print('SiteBuddy UI Consistency Auto-Fixer');
-  print('=========================================\\n');
+  print('=========================================\n');
 
-  final featuresDir = Directory('lib/features');
+  final dryRun = args.contains('--dry-run');
+  if (dryRun) print('DRY RUN MODE: No files will be modified\n');
+
+  final featuresDir = Directory('mobile/sitebuddy_flutter/lib/features');
   if (!featuresDir.existsSync()) {
     print('Error: lib/features directory not found.');
     return;
@@ -19,7 +22,7 @@ void main(List<String> args) async {
       )
       .toList();
 
-  print('Scanning \${files.length} UI files...\\n');
+  print('Scanning ${files.length} UI files...\n');
 
   int totalFilesModified = 0;
   int spacingReplaced = 0;
@@ -119,7 +122,7 @@ void main(List<String> args) async {
         return '';
       },
     );
-    content = content.replaceAll(RegExp(r'\.copyWith\s*\(\s*\)'), '');
+    content = content.replaceAll(RegExp(r'\??\.copyWith\s*\(\s*\)'), '');
 
     // 4. Fix Cards (Container -> SbCard)
     while (true) {
@@ -146,8 +149,8 @@ void main(List<String> args) async {
           int sliceEnd = endIdx + 1;
           while (sliceEnd < content.length &&
               (content[sliceEnd] == ' ' ||
-                  content[sliceEnd] == '\\n' ||
-                  content[sliceEnd] == '\\t')) {
+                  content[sliceEnd] == '\n' ||
+                  content[sliceEnd] == '\t')) {
             sliceEnd++;
           }
           if (sliceEnd < content.length && content[sliceEnd] == ',') {
@@ -160,7 +163,7 @@ void main(List<String> args) async {
             'package:site_buddy/core/widgets/sb_widgets.dart',
           )) {
             content =
-                "import 'package:site_buddy/core/widgets/sb_widgets.dart';\\n" +
+                "import 'package:site_buddy/core/widgets/sb_widgets.dart';\n" +
                 content;
           }
           continue;
@@ -170,8 +173,8 @@ void main(List<String> args) async {
       int sliceEnd = endIdx + 1;
       while (sliceEnd < content.length &&
           (content[sliceEnd] == ' ' ||
-              content[sliceEnd] == '\\n' ||
-              content[sliceEnd] == '\\t')) {
+              content[sliceEnd] == '\n' ||
+              content[sliceEnd] == '\t')) {
         sliceEnd++;
       }
       if (sliceEnd < content.length && content[sliceEnd] == ',') {
@@ -206,8 +209,8 @@ void main(List<String> args) async {
       int sliceEnd = endIdx + 1;
       while (sliceEnd < content.length &&
           (content[sliceEnd] == ' ' ||
-              content[sliceEnd] == '\\n' ||
-              content[sliceEnd] == '\\t')) {
+              content[sliceEnd] == '\n' ||
+              content[sliceEnd] == '\t')) {
         sliceEnd++;
       }
       bool hasComma = false;
@@ -225,7 +228,7 @@ void main(List<String> args) async {
         'package:site_buddy/core/constants/ui_elevation.dart',
       )) {
         content =
-            "import 'package:site_buddy/core/constants/ui_elevation.dart';\\n" +
+            "import 'package:site_buddy/core/constants/ui_elevation.dart';\n" +
             content;
       }
     }
@@ -251,21 +254,25 @@ void main(List<String> args) async {
       if (!content.contains('site_buddy/core/theme/app_layout.dart') &&
           content.contains('AppLayout')) {
         content =
-            "import 'package:site_buddy/core/theme/app_layout.dart';\\n" +
+            "import 'package:site_buddy/core/theme/app_layout.dart';\n" +
             content;
       }
 
-      final backupFile = File('\${file.path}.bak');
+      final backupFile = File('${file.path}.bak');
       backupFile.writeAsStringSync(originalContent);
 
-      file.writeAsStringSync(content);
-      totalFilesModified++;
       final fileName = file.path.split('/').last;
-      print('Fixed => $fileName');
+      if (!dryRun) {
+        file.writeAsStringSync(content);
+        print('Fixed => $fileName');
+      } else {
+        print('Would Fix => $fileName');
+      }
+      totalFilesModified++;
     }
   }
 
-  print('\\n=========================================');
+  print('\n=========================================');
   print('AUTO-FIX SUMMARY');
   print('=========================================');
   print('Total Files Modified: $totalFilesModified');
@@ -275,9 +282,9 @@ void main(List<String> args) async {
   print('Card Containers Fixed: $cardsReplaced');
   print('Shadow Lists Flattened: $shadowsReplaced');
   print('Icons Tagged: $iconsReplaced');
-  print('=========================================\\n');
+  print('=========================================\n');
   print('Backup files (.bak) have been generated for safety.');
-  print('Run \\`flutter analyze\\` to verify integrity.');
+  print('Run \`flutter analyze\` to verify integrity.');
 }
 
 int _findClosingParen(String text, int start) {

@@ -10,7 +10,7 @@ import 'package:site_buddy/core/widgets/app_number_field.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: FootingSoilLoadScreen
 /// PURPOSE: Soil parameters and column loads (Step 2).
@@ -202,14 +202,16 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           ),
 
           AppLayout.vGap32,
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Geometry Design',
                 icon: SbIcons.area,
                 onPressed: _onNext,
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

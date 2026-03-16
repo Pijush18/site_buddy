@@ -90,10 +90,20 @@ class SlabSafetyScreen extends ConsumerWidget {
             AppLayout.vGap24,
           ],
 
-          SbButton.primary(
-            label: 'Export PDF Design Report',
-            onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
-            icon: SbIcons.pdf,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Export PDF Design Report',
+                onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
+                icon: SbIcons.pdf,
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
           ),
           AppLayout.vGap24,
         ],

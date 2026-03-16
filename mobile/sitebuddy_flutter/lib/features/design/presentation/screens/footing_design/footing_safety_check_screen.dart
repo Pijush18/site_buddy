@@ -17,7 +17,7 @@ import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
 import 'package:printing/printing.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: FootingSafetyCheckScreen
 /// PURPOSE: Final dashboard for all engineering safety checks (Step 6).
@@ -166,7 +166,8 @@ class _FootingSafetyCheckScreenState
                   ),
                   AppLayout.vGap16,
                   Center(
-                    child: ActionButtonsGroup(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SbButton.ghost(
                           label: 'Save Image',
@@ -180,10 +181,11 @@ class _FootingSafetyCheckScreenState
                                 bytes: bytes,
                                 name: 'Footing_Reinforcement.png',
                                 mimeType: 'image/png',
-                              );
+                                );
                             }
                           },
                         ),
+                        AppLayout.vGap8,
                         SbButton.ghost(
                           label: 'Save PDF',
                           icon: SbIcons.pdf,
@@ -239,7 +241,8 @@ class _FootingSafetyCheckScreenState
 
             AppLayout.vGap32,
 
-            ActionButtonsGroup(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SbButton.primary(
                   label: 'Calculation Sheet',
@@ -250,11 +253,25 @@ class _FootingSafetyCheckScreenState
                         .generateReport();
                   },
                 ),
+                AppLayout.vGap12,
                 SbButton.primary(
                   label: 'Save Design',
                   icon: SbIcons.download,
                   onPressed: () {
                     context.go('/design');
+                  },
+                ),
+                AppLayout.vGap12,
+                SbButton.outline(
+                  label: 'Back',
+                  onPressed: () => context.pop(),
+                ),
+                AppLayout.vGap12,
+                SbButton.primary(
+                  label: 'New Design',
+                  icon: SbIcons.add,
+                  onPressed: () {
+                    context.go('/');
                   },
                 ),
               ],

@@ -20,7 +20,7 @@ class NavigationShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      extendBody: false,
       body: navigationShell,
 
       // ── Reusable themed bottom navigation ─────────────────────────────────

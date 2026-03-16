@@ -110,8 +110,11 @@ class AppScaffold extends ConsumerWidget {
       },
       body: SafeArea(
         top: title == null,
-        bottom: true,
-        child: body,
+        bottom: bottomNavigationBar == null,
+        child: Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: body,
+        ),
       ),
     );
 

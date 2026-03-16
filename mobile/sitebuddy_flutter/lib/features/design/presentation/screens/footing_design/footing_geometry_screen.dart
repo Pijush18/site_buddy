@@ -11,7 +11,7 @@ import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 class FootingGeometryScreen extends ConsumerStatefulWidget {
   const FootingGeometryScreen({super.key});
@@ -198,14 +198,16 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
             ),
           ),
           AppLayout.vGap32,
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Soil Analysis',
                 icon: SbIcons.analytics,
                 onPressed: _onNext,
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

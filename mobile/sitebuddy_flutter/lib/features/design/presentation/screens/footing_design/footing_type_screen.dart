@@ -39,32 +39,36 @@ class FootingTypeScreen extends ConsumerWidget {
             ),
           ),
           AppLayout.vGap24,
-          Expanded(
-            child: GridView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: AppLayout.pMedium,
-                mainAxisSpacing: AppLayout.pMedium,
-                childAspectRatio: 0.95,
-              ),
-              itemCount: FootingType.values.length,
-              itemBuilder: (context, index) {
-                final type = FootingType.values[index];
-                return FootingCard(
-                  title: type.label,
-                  description: type.description,
-                  icon: _getIcon(type),
-                  onTap: () {
-                    ref
-                        .read(footingDesignControllerProvider.notifier)
-                        .updateType(type);
-                    context.push('/footing/soil-load');
-                  },
-                );
-              },
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: AppLayout.pMedium,
+              mainAxisSpacing: AppLayout.pMedium,
+              childAspectRatio: 0.95,
             ),
+            itemCount: FootingType.values.length,
+            itemBuilder: (context, index) {
+              final type = FootingType.values[index];
+              return FootingCard(
+                title: type.label,
+                description: type.description,
+                icon: _getIcon(type),
+                onTap: () {
+                  ref
+                      .read(footingDesignControllerProvider.notifier)
+                      .updateType(type);
+                  context.push('/footing/soil-load');
+                },
+              );
+            },
+          ),
+          AppLayout.vGap24,
+          SbButton.outline(
+            label: 'Back',
+            onPressed: () => context.pop(),
           ),
           AppLayout.vGap24,
         ],

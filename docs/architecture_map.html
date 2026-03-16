@@ -31,15 +31,117 @@
     <div class="container">
         <h1>SiteBuddy Architecture Map</h1>
         <div class="stats">
-            <div class="stat-card"><b>Features:</b> 0</div>
-            <div class="stat-card"><b>Screens:</b> 0</div>
-            <div class="stat-card"><b>Shared/Core Widgets:</b> 0</div>
+            <div class="stat-card"><b>Features:</b> 17</div>
+            <div class="stat-card"><b>Screens:</b> 70</div>
+            <div class="stat-card"><b>Shared/Core Widgets:</b> 42</div>
         </div>
         
         <h2>Module Hierarchy</h2>
         <div class="mermaid">
 graph LR
 
+    subgraph "LEVELLING LOG"
+    LevellingLogScreen
+    end
+    subgraph "CURRENCY"
+    CurrencyConverterScreen
+    end
+    subgraph "HISTORY"
+    HistoryDetailScreen
+    CalculationHistoryScreen
+    end
+    subgraph "SPLASH"
+    SplashScreen
+    end
+    subgraph "REPORTS"
+    ReportsScreen
+    SiteReportPreviewScreen
+    end
+    subgraph "AI"
+    AiSharePreviewScreen
+    AiChatScreen
+    AiAssistantScreen
+    AiHistoryScreen
+    end
+    subgraph "UNIT CONVERTER"
+    UnitConverterScreen
+    end
+    subgraph "SETTINGS"
+    PrivacyPolicyScreen
+    SettingsScreen
+    BrandingSettingsScreen
+    TermsConditionsScreen
+    end
+    subgraph "SUBSCRIPTION"
+    SubscriptionScreen
+    end
+    subgraph "DESIGN"
+    DesignReportScreen
+    DesignHomeScreen
+    LoadDefinitionScreen
+    BeamSafetyCheckScreen
+    AnalysisSummaryScreen
+    ReinforcementDesignScreen
+    BeamInputScreen
+    ReinforcementDetailingScreen
+    DesignCalculationScreen
+    LoadSupportScreen
+    ColumnHistoryScreen
+    SafetyCheckScreen
+    SlendernessCheckScreen
+    ColumnInputScreen
+    SlabSafetyScreen
+    SlabAnalysisScreen
+    SlabInputScreen
+    SlabReinforcementScreen
+    SlabLoadScreen
+    ShearCheckScreen
+    DeflectionCheckScreen
+    CrackingCheckScreen
+    FootingSafetyCheckScreen
+    FootingTypeScreen
+    FootingAnalysisScreen
+    FootingSoilLoadScreen
+    FootingGeometryScreen
+    FootingReinforcementScreen
+    end
+    subgraph "CALCULATOR"
+    CalculatorHubScreen
+    GradientScreen
+    BrickWallEstimatorScreen
+    CementScreen
+    SandScreen
+    MaterialCalculatorScreen
+    RebarScreen
+    ShutteringScreen
+    ExcavationScreen
+    PlasterMaterialEstimatorScreen
+    LevelCalculatorScreen
+    end
+    subgraph "PROJECT"
+    ProjectDetailScreen
+    ProjectEditorScreen
+    ProjectListScreen
+    ProjectShareScreen
+    end
+    subgraph "AUTH"
+    LoginScreen
+    ResetPasswordScreen
+    RegisterScreen
+    end
+    subgraph "LEVEL LOG"
+    LevelLogScreen
+    end
+    subgraph "WORK"
+    TaskDetailScreen
+    CreateMeetingScreen
+    CreateTaskScreen
+    MeetingDetailScreen
+    WorkDashboardScreen
+    end
+    subgraph "HOME"
+    HomeScreen
+    end
         </div>
 
         <h2>Interactive Navigation Flow</h2>
@@ -47,6 +149,87 @@ graph LR
 graph TD
     ROOT(("Start"))
 
+    ROOT --> SplashScreen
+    ROOT --> RegisterScreen
+    ROOT --> ResetPasswordScreen
+    ROOT --> SubscriptionScreen
+    ROOT --> LevellingLogScreen
+    ROOT --> ReportsScreen
+    ROOT --> BrandingSettingsScreen
+    ROOT --> SettingsScreen
+    ROOT --> PrivacyPolicyScreen
+    ROOT --> TermsConditionsScreen
+    ROOT --> AiChatScreen
+    ROOT --> AiAssistantScreen
+    ROOT --> AiHistoryScreen
+    ROOT --> AiSharePreviewScreen
+    ROOT --> UnitConverterScreen
+    ROOT --> CurrencyConverterScreen
+    ROOT --> ProjectListScreen
+    ROOT --> ProjectEditorScreen
+    ROOT --> WorkDashboardScreen
+    ROOT --> CreateTaskScreen
+    ROOT --> CreateMeetingScreen
+    ROOT --> CalculatorHubScreen
+    ROOT --> MaterialCalculatorScreen
+    ROOT --> LevelCalculatorScreen
+    ROOT --> GradientScreen
+    ROOT --> CementScreen
+    ROOT --> SandScreen
+    ROOT --> RebarScreen
+    ROOT --> BrickWallEstimatorScreen
+    ROOT --> PlasterMaterialEstimatorScreen
+    ROOT --> ExcavationScreen
+    ROOT --> ShutteringScreen
+    ROOT --> DesignHomeScreen
+    ROOT --> SlabInputScreen
+    ROOT --> SlabLoadScreen
+    ROOT --> SlabAnalysisScreen
+    ROOT --> SlabReinforcementScreen
+    ROOT --> SlabSafetyScreen
+    ROOT --> BeamInputScreen
+    ROOT --> LoadDefinitionScreen
+    ROOT --> AnalysisSummaryScreen
+    ROOT --> ReinforcementDesignScreen
+    ROOT --> BeamSafetyCheckScreen
+    ROOT --> ColumnInputScreen
+    ROOT --> ColumnHistoryScreen
+    ROOT --> LoadSupportScreen
+    ROOT --> SlendernessCheckScreen
+    ROOT --> DesignCalculationScreen
+    ROOT --> ReinforcementDetailingScreen
+    ROOT --> SafetyCheckScreen
+    ROOT --> FootingTypeScreen
+    ROOT --> FootingSoilLoadScreen
+    ROOT --> FootingGeometryScreen
+    ROOT --> FootingAnalysisScreen
+    ROOT --> FootingReinforcementScreen
+    ROOT --> FootingSafetyCheckScreen
+    ROOT --> ShearCheckScreen
+    ROOT --> DeflectionCheckScreen
+    ROOT --> CrackingCheckScreen
+    SplashScreen --> LevellingLogScreen
+    ReportsScreen --> CalculatorHubScreen
+    ReportsScreen --> DesignHomeScreen
+    SettingsScreen --> SubscriptionScreen
+    SettingsScreen --> RegisterScreen
+    BeamSafetyCheckScreen --> LevellingLogScreen
+    SafetyCheckScreen --> LevellingLogScreen
+    FootingSafetyCheckScreen --> DesignHomeScreen
+    CalculatorHubScreen --> LevelCalculatorScreen
+    CalculatorHubScreen --> UnitConverterScreen
+    CalculatorHubScreen --> CurrencyConverterScreen
+    LoginScreen --> LevellingLogScreen
+    LoginScreen --> ResetPasswordScreen
+    ResetPasswordScreen --> RegisterScreen
+    RegisterScreen --> RegisterScreen
+    WorkDashboardScreen --> CreateTaskScreen
+    WorkDashboardScreen --> CreateMeetingScreen
+    HomeScreen --> ProjectListScreen
+    HomeScreen --> LevelCalculatorScreen
+    HomeScreen --> UnitConverterScreen
+    HomeScreen --> CurrencyConverterScreen
+    HomeScreen --> ReportsScreen
         </div>
         <div class="legend">Tip: You can zoom and pan using browser controls. Click and hold to drag if interactive mode is enabled.</div>
     </div>

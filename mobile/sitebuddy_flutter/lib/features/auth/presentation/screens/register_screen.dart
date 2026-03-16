@@ -242,7 +242,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ],
                         ),
                       ),
-                      const Spacer(),
                       AppLayout.vGap24,
                       SbButton.ghost(
                         label: 'Already have an account? Sign In',

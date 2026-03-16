@@ -14,7 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Screens
 import 'package:site_buddy/features/home/presentation/screens/home_screen.dart';
-import 'package:site_buddy/features/levelling_log/presentation/screens/levelling_log_screen.dart';
 import 'package:site_buddy/features/level_log/presentation/screens/level_log_screen.dart';
 import 'package:site_buddy/features/reports/presentation/screens/reports_screen.dart';
 import 'package:site_buddy/features/settings/presentation/screens/branding_settings_screen.dart';
@@ -137,7 +136,7 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   path: 'level',
-                  builder: (context, state) => const LevellingLogScreen(),
+                  builder: (context, state) => const LevelLogScreen(projectId: 'default'),
                 ),
                 GoRoute(
                   path: 'reports',

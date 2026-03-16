@@ -1,10 +1,16 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Union
 import os
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "SiteBuddy Backend"
     API_V1_STR: str = "/api/v1"
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
+    DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
     
     # DATABASE
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "postgres")
@@ -12,6 +18,10 @@ class Settings(BaseSettings):
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", "localhost")
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", "5432")
     POSTGRES_DB: str = os.getenv("POSTGRES_DB", "sitebuddy")
+    
+    # POOL SETTINGS
+    DB_POOL_SIZE: int = int(os.getenv("DB_POOL_SIZE", "20"))
+    DB_MAX_OVERFLOW: int = int(os.getenv("DB_MAX_OVERFLOW", "10"))
     
     @property
     def DATABASE_URL(self) -> str:
@@ -31,6 +41,9 @@ class Settings(BaseSettings):
     
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
+
+    # LOGGING
+    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
     class Config:
         case_sensitive = True

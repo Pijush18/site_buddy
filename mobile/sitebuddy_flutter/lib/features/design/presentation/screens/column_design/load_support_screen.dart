@@ -9,7 +9,6 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: LoadSupportScreen
 /// PURPOSE: Load definition and end conditions (Step 2).
@@ -95,14 +94,16 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
               ),
             ),
           AppLayout.vGap32,
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Slenderness Check',
                 onPressed: _onNext,
                 icon: SbIcons.analytics,
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

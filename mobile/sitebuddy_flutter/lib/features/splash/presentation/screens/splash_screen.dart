@@ -55,53 +55,50 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     return SbPage.detail(
       title: null,
       usePadding: false,
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            // Logo
-            Icon(
-              SbIcons.engineering,
-              size: AppLayout.iconSizeLarge,
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppLayout.vGap64, // Top breathing room
+          // Logo
+          Icon(
+            SbIcons.engineering,
+            size: AppLayout.iconSizeLarge,
+            color: colorScheme.primary,
+          ),
+          AppLayout.vGap24,
+
+          // App Name
+          Text(
+            'SiteBuddy',
+            style: theme.textTheme.headlineMedium?.copyWith(
               color: colorScheme.primary,
             ),
-            AppLayout.vGap24,
+          ),
+          AppLayout.vGap16,
 
-            // App Name
-            Text(
-              'SiteBuddy',
-              style: theme.textTheme.headlineMedium?.copyWith(
-                
-                color: colorScheme.primary,
-              ),
+          // Tagline
+          Text(
+            'Civil Engineering Intelligence',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurfaceVariant,
             ),
-            AppLayout.vGap16,
+          ),
+          AppLayout.vGap24,
 
-            // Tagline
-            Text(
-              'Civil Engineering Intelligence',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
-            AppLayout.vGap24,
+          // Loading Indicator
+          CircularProgressIndicator(
+            color: colorScheme.primary,
+          ),
+          
+          AppLayout.vGap48,
 
-            // Loading Indicator
-            CircularProgressIndicator(
-              color: colorScheme.primary,
-            ),
-            const Spacer(),
-
-            // Footer
-            Text(
-              '© Pijush Debbarma',
-              style: theme.textTheme.bodySmall,
-            ),
-            AppLayout.vGap24,
-          ],
-        ),
+          // Footer
+          Text(
+            '© Pijush Debbarma',
+            style: theme.textTheme.bodySmall,
+          ),
+          AppLayout.vGap24,
+        ],
       ),
     );
   }

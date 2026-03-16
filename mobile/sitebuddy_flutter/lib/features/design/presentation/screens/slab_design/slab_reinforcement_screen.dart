@@ -83,10 +83,20 @@ class SlabReinforcementScreen extends ConsumerWidget {
           ),
           AppLayout.vGap32,
 
-          SbButton.primary(
-            label: 'Next: Safety Check',
-            onPressed: () => context.push('/slab/safety'),
-            icon: SbIcons.shield,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Next: Safety Check',
+                onPressed: () => context.push('/slab/safety'),
+                icon: SbIcons.shield,
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+            ],
           ),
         ],
       ),

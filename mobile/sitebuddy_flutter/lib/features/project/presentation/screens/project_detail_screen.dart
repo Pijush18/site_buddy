@@ -320,7 +320,6 @@ class ProjectDetailScreen extends ConsumerWidget {
               ],
             ),
           ),
-          AppLayout.vGap24,
         ],
       ),
     );

@@ -14,29 +14,38 @@ abstract class NetworkException extends Equatable implements Exception {
   String toString() => '$runtimeType: $message (Status: $statusCode)';
 }
 
-/// Thrown when no internet connection is detected.
-class NetworkUnavailableException extends NetworkException {
-  const NetworkUnavailableException([super.message = 'No internet connection available.']);
+/// Thrown when the server returns a 5xx error.
+class ServerException extends NetworkException {
+  const ServerException({
+    String message = 'Internal server error. Please try again later.',
+    super.statusCode,
+  }) : super(message);
+}
+
+/// Thrown when the server returns a 401 error.
+class UnauthorizedException extends NetworkException {
+  const UnauthorizedException({
+    String message = 'Session expired or unauthorized. Please sign in again.',
+    super.statusCode = 401,
+  }) : super(message);
 }
 
 /// Thrown when an API request times out.
-class ApiTimeoutException extends NetworkException {
-  const ApiTimeoutException([super.message = 'Request timed out. Please try again.']);
+class TimeoutException extends NetworkException {
+  const TimeoutException([
+    super.message = 'Request timed out. Please check your internet and try again.',
+  ]);
 }
 
-/// Thrown when the server returns a 5xx error.
-class ApiServerException extends NetworkException {
-  const ApiServerException({String message = 'Internal server error.', int? statusCode})
-      : super(message, statusCode: statusCode);
+/// Thrown when no internet connection is detected.
+class ConnectionException extends NetworkException {
+  const ConnectionException([
+    super.message = 'No internet connection detected.',
+  ]);
 }
 
-/// Thrown when the response format is unexpected or cannot be parsed.
-class InvalidResponseException extends NetworkException {
-  const InvalidResponseException([super.message = 'Invalid response received from server.']);
-}
-
-/// Thrown when the server returns 4xx error (Unauthorized, Forbidden, etc).
-class ApiClientException extends NetworkException {
-  const ApiClientException({required String message, int? statusCode})
-      : super(message, statusCode: statusCode);
+/// Generic client-side exception (4xx excluding 401).
+class ClientException extends NetworkException {
+  const ClientException({required String message, super.statusCode})
+      : super(message);
 }

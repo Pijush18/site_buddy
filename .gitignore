@@ -56,4 +56,6 @@ assets/audio/
 assets/cache/
 
 # Environment / Secret Files
-.env*
+.env*backend/.venv/
+__pycache__/
+*.pyc

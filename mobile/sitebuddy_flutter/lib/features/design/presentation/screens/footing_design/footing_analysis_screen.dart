@@ -12,7 +12,7 @@ import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: FootingAnalysisScreen
 /// PURPOSE: Bearing pressure and area analysis (Step 4).
@@ -126,14 +126,16 @@ class FootingAnalysisScreen extends ConsumerWidget {
             ),
 
             AppLayout.vGap32,
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Reinforcement',
                 icon: SbIcons.gridView,
                 onPressed: () => context.push('/footing/reinforcement'),
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

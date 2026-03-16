@@ -142,15 +142,23 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           ),
           AppLayout.vGap32,
 
-          SbButton.primary(
-            label: 'Next: Safety Checks',
-            icon: Icons.verified_user_outlined,
-            onPressed: () {
-              context.push('/beam/safety');
-            },
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Next: Safety Checks',
+                icon: Icons.verified_user_outlined,
+                onPressed: () {
+                  context.push('/beam/safety');
+                },
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+            ],
           ),
-          AppLayout.vGap16,
-          SbButton.outline(label: 'Back', onPressed: () => context.pop()),
           AppLayout.vGap24,
         ],
       ),

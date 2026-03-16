@@ -118,10 +118,21 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
 
     return SbPage.form(
       title: 'Beam Input',
-      primaryAction: SbButton.primary(
-        label: 'Next: Load Definition',
-        onPressed: _onNext,
-        icon: SbIcons.arrowForward,
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: 'Next: Load Definition',
+            onPressed: _onNext,
+            icon: SbIcons.arrowForward,
+          ),
+          AppLayout.vGap12,
+          SbButton.outline(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
       ),
       body: Form(
         key: _formKey,

@@ -10,7 +10,7 @@ import 'package:site_buddy/core/widgets/app_card.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/rebar_layout_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 /// SCREEN: ReinforcementDetailingScreen
 /// PURPOSE: Bar arrangement and ties (Step 5).
@@ -110,7 +110,8 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppLayout.sectionGap),
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Safety Checks',
@@ -118,7 +119,8 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
                   context.push('/column/safety');
                 },
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

@@ -2,9 +2,9 @@ import 'dart:io';
 
 void main() {
   final targetDirs = [
-    'lib/core/widgets',
-    'lib/core/ui',
-    'lib/features',
+    'mobile/sitebuddy_flutter/lib/core/widgets',
+    'mobile/sitebuddy_flutter/lib/core/ui',
+    'mobile/sitebuddy_flutter/lib/features',
   ];
 
   final skipPatterns = [

@@ -1,9 +1,11 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.database import get_db
-from app.db.models import User
+from app.core.database import get_db
+from app.models.user import User
 from sqlalchemy.future import select
+from app.repositories.user_repository import UserRepository
+from datetime import datetime
 import firebase_admin
 from firebase_admin import auth, credentials
 import os
@@ -33,14 +35,16 @@ async def get_current_user(
         email = decoded_token.get('email')
         
         # 2. Check if user exists in DB, if not create
-        result = await db.execute(select(User).where(User.id == uid))
-        user = result.scalars().first()
+        user_repo = UserRepository(db)
+        user = await user_repo.get(uid)
         
         if not user:
-            user = User(id=uid, email=email)
-            db.add(user)
-            await db.commit()
-            await db.refresh(user)
+            user_data = {
+                "id": uid,
+                "email": email,
+                "created_at": datetime.utcnow()
+            }
+            user = await user_repo.create(obj_in=user_data)
             
         return user
     except Exception as e:

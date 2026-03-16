@@ -9,7 +9,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+// import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/design/presentation/widgets/beam_diagram_painter.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
@@ -93,7 +93,8 @@ class AnalysisSummaryScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppLayout.sectionGap * 1.5),
 
-          ActionButtonsGroup(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SbButton.primary(
                 label: 'Next: Reinforcement Design',
@@ -105,7 +106,8 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   context.push('/beam/rebar');
                 },
               ),
-              SbButton.primary(
+              AppLayout.vGap12,
+              SbButton.outline(
                 label: 'Back',
                 onPressed: () => context.pop(),
               ),

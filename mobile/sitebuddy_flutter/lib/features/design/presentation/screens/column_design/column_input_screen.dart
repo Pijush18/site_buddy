@@ -205,7 +205,20 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
             ),
           AppLayout.vGap24,
 
-          SbButton.primary(label: 'Next: Load Definition', onPressed: _onNext),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SbButton.primary(
+                label: 'Next: Load Definition',
+                onPressed: _onNext,
+              ),
+              AppLayout.vGap12,
+              SbButton.outline(
+                label: 'Back',
+                onPressed: () => context.pop(),
+              ),
+            ],
+          ),
           AppLayout.vGap24,
         ],
       ),
