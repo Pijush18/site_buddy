@@ -1,13 +1,12 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/footing_card.dart';
@@ -22,11 +21,11 @@ class FootingTypeScreen extends ConsumerWidget {
     return AppScreenWrapper(
       title: 'Footing Design',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.share,
+        IconButton(
+          icon: const Icon(Icons.share_outlined),
           onPressed: () => debugPrint('ACTION: share footing design'),
         ),
-        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+        const SizedBox(width: AppSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,9 +65,10 @@ class FootingTypeScreen extends ConsumerWidget {
             },
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          SbButton.outline(
+          SBButton.secondary(
             label: 'Back',
             onPressed: () => context.pop(),
+            fullWidth: true,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         ],
@@ -79,17 +79,17 @@ class FootingTypeScreen extends ConsumerWidget {
   IconData _getIcon(FootingType type) {
     switch (type) {
       case FootingType.isolated:
-        return SbIcons.isolatedFooting;
+        return Icons.foundation;
       case FootingType.combined:
-        return SbIcons.combinedFooting;
+        return Icons.grid_view;
       case FootingType.strap:
-        return SbIcons.link;
+        return Icons.link;
       case FootingType.strip:
-        return SbIcons.level;
+        return Icons.view_headline;
       case FootingType.raft:
-        return SbIcons.raftFooting;
+        return Icons.layers;
       case FootingType.pile:
-        return SbIcons.pileFooting;
+        return Icons.vertical_align_bottom;
     }
   }
 }

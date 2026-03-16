@@ -1,10 +1,10 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/models/design_advisor_result.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
-import 'package:site_buddy/core/constants/app_sizes.dart';
 
 /// WIDGET: DesignAdvisorCard
 /// PURPOSE: Displays engineering advice, warnings, and suggestions for a selected design option.
@@ -20,53 +20,41 @@ class DesignAdvisorCard extends StatelessWidget {
       children: [
         Text(
           'ENGINEERING ADVISOR',
-          style: AppTextStyles.bodySmall.copyWith(
+          style: TextStyle(
+            fontSize: 12,
             letterSpacing: 1.2,
             color: Colors.grey,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        AppSizes.gap8,
-        AppCard(
+        const SizedBox(height: AppSpacing.sm),
+        SBCard(
+          title: advisorResult.recommendedOption != null
+              ? 'Recommendation'
+              : 'Action Required',
+          titleStyle: TextStyle(
+            color: advisorResult.recommendedOption != null
+                ? Colors.blue
+                : Colors.red,
+          ),
+          showDivider: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Recommendation Header
-              Row(
-                children: [
-                  Icon(
-                    advisorResult.recommendedOption != null
-                        ? SbIcons.brain
-                        : SbIcons.warning,
-                    color: advisorResult.recommendedOption != null
-                        ? Colors.blue
-                        : Colors.red,
-                  ),
-                  AppLayout.hGap8,
-                  Text(
-                    advisorResult.recommendedOption != null
-                        ? 'Recommendation'
-                        : 'Action Required',
-                    style: AppTextStyles.titleMedium.copyWith(
-                      color: advisorResult.recommendedOption != null
-                          ? Colors.blue
-                          : Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-              AppSizes.gap12,
+              const SizedBox(height: AppSpacing.md),
 
               // Explanation
-              Text(advisorResult.explanation, style: AppTextStyles.bodyMedium),
+              Text(advisorResult.explanation,
+                  style: const TextStyle(fontSize: AppFontSizes.tab)),
 
               if (advisorResult.warnings.isNotEmpty) ...[
-                AppSizes.gap16,
+                const SizedBox(height: AppSpacing.md),
                 const _SectionHeader(
                   title: 'Engineering Warnings',
-                  icon: SbIcons.warning,
+                  icon: Icons.warning_amber_rounded,
                   color: Colors.orange,
                 ),
-                AppSizes.gap8,
+                const SizedBox(height: AppSpacing.sm),
                 Column(
                   children: advisorResult.warnings
                       .map((w) => _AdvisoryItem(text: w, isWarning: true))
@@ -75,13 +63,13 @@ class DesignAdvisorCard extends StatelessWidget {
               ],
 
               if (advisorResult.suggestions.isNotEmpty) ...[
-                AppSizes.gap16,
+                const SizedBox(height: AppSpacing.md),
                 const _SectionHeader(
                   title: 'Improvement Suggestions',
                   icon: Icons.tips_and_updates_outlined,
                   color: Colors.green,
                 ),
-                AppSizes.gap8,
+                const SizedBox(height: AppSpacing.sm),
                 Column(
                   children: advisorResult.suggestions
                       .map((s) => _AdvisoryItem(text: s, isWarning: false))
@@ -112,8 +100,13 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, size: 16, color: color),
-        AppLayout.hGap8,
-        Text(title, style: AppTextStyles.bodySmall.copyWith(color: color)),
+        const SizedBox(width: AppSpacing.sm),
+        Text(title,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.bold,
+            )),
       ],
     );
   }
@@ -129,7 +122,7 @@ class _AdvisoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: AppLayout.spaceXS,
+        vertical: AppSpacing.sm / 2,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +134,10 @@ class _AdvisoryItem extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.bodySmall.copyWith(height: 1.4),
+              style: const TextStyle(
+                fontSize: 13,
+                height: 1.4,
+              ),
             ),
           ),
         ],

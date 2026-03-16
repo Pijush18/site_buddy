@@ -4,6 +4,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -36,8 +38,8 @@ class SlabSafetyScreen extends ConsumerWidget {
     return AppScreenWrapper(
       title: 'Safety Check',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.share,
+        IconButton(
+          icon: const Icon(Icons.share_outlined),
           tooltip: 'Share Report',
           onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
         ),
@@ -103,15 +105,17 @@ class SlabSafetyScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Export PDF Design Report',
                 onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
-                icon: SbIcons.pdf,
+                icon: Icons.picture_as_pdf_outlined,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => Navigator.of(context).pop(),
+                fullWidth: true,
               ),
             ],
           ),

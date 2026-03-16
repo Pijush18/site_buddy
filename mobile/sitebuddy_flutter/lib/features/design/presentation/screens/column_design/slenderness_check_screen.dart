@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -91,24 +93,25 @@ class SlendernessCheckScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Design Calculation',
                 onPressed: () {
                   context.push('/column/design');
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );

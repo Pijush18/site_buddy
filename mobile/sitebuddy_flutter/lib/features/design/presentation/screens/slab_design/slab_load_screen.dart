@@ -5,6 +5,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -73,18 +75,13 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-            SbCard(
+            SBCard(
+              title: 'Loads (kN/m²)',
+              showDivider: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Loads (kN/m²)',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
                   AppNumberField(
                     controller: _dlController,
                     label: 'Dead Load (inc. Finishes)',
@@ -112,15 +109,17 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SbButton.primary(
+                SBButton.primary(
                   label: 'Next: Analysis Summary',
                   onPressed: _onCalculate,
-                  icon: SbIcons.calculator,
+                  icon: Icons.calculate_outlined,
+                  fullWidth: true,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-                SbButton.outline(
+                const SizedBox(height: AppSpacing.sm),
+                SBButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
+                  fullWidth: true,
                 ),
               ],
             ),

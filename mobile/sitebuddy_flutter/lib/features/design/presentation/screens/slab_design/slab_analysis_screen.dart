@@ -5,6 +5,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -55,7 +57,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
                 isCritical: true,
               ),
               DesignResultItem(
-                label: 'Slab Type',
+                label: 'Slab behavior',
                 value: state.type.label,
               ),
             ],
@@ -63,11 +65,12 @@ class SlabAnalysisScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SbCard(
+          SBCard(
             child: Column(
               children: [
-                Icon(SbIcons.analytics, size: 64, color: colorScheme.primary.withValues(alpha: 0.5)),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                Icon(Icons.analytics_outlined,
+                    size: 64, color: colorScheme.primary.withValues(alpha: 0.5)),
+                const SizedBox(height: AppSpacing.sm),
                 const Text(
                   'Maximum moment occurs at the midspan for a simply supported slab.',
                   style: TextStyle(fontSize: AppFontSizes.tab),
@@ -81,15 +84,17 @@ class SlabAnalysisScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Reinforcement Design',
                 onPressed: () => context.push('/slab/reinforcement'),
-                icon: SbIcons.engineering,
+                icon: Icons.engineering_outlined,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

@@ -5,6 +5,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -100,18 +102,12 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-            SbCard(
+            SBCard(
+              title: 'Geometry',
+              showDivider: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Geometry',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                   const Text(
                     'Slab Behavior',
                     style: TextStyle(
@@ -157,18 +153,12 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
-            SbCard(
+            SBCard(
+              title: 'Materials',
+              showDivider: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Materials',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                   Row(
                     children: [
                       Expanded(
@@ -204,15 +194,17 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SbButton.primary(
+                SBButton.primary(
                   label: 'Next: Load Definition',
                   onPressed: _onNext,
-                  icon: SbIcons.arrowForward,
+                  icon: Icons.arrow_forward,
+                  fullWidth: true,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-                SbButton.outline(
+                const SizedBox(height: AppSpacing.sm),
+                SBButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
+                  fullWidth: true,
                 ),
               ],
             ),

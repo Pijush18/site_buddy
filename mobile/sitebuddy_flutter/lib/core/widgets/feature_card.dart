@@ -1,8 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
 
 /// WIDGET: FeatureCard
 /// PURPOSE: Standardized card for feature selection grids across the app.
@@ -26,23 +28,25 @@ class FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final titleStyle =
-        SbTextStyles.title(context).copyWith(
-          fontWeight: FontWeight.w600,
-          color: colorScheme.onSurface,
-        );
+    final titleStyle = TextStyle(
+      fontSize: AppFontSizes.subtitle,
+      fontWeight: FontWeight.w600,
+      color: colorScheme.onSurface,
+    );
 
-    final descriptionStyle =
-        SbTextStyles.bodySecondary(context).copyWith(color: colorScheme.onSurfaceVariant);
+    final descriptionStyle = TextStyle(
+      fontSize: AppFontSizes.tab,
+      color: colorScheme.onSurfaceVariant,
+    );
 
     if (isHorizontal) {
-      return SbCard(
+      return SBCard(
         onTap: onTap,
-        padding: const EdgeInsets.all(AppLayout.lg),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(
           children: [
             _buildIconContainer(colorScheme),
-            const SizedBox(width: AppLayout.lg),
+            const SizedBox(width: AppSpacing.md),
             Expanded(
               child: _buildTextContent(
                 titleStyle,
@@ -56,9 +60,9 @@ class FeatureCard extends StatelessWidget {
       );
     }
 
-    return SbCard(
+    return SBCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppLayout.lg),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -76,10 +80,10 @@ class FeatureCard extends StatelessWidget {
 
   Widget _buildIconContainer(ColorScheme colorScheme) {
     return Container(
-      padding: const EdgeInsets.all(AppLayout.sm),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: colorScheme.primary.withValues(alpha: 0.1),
-        borderRadius: AppLayout.borderRadiusCard,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
       child: Icon(icon, color: colorScheme.primary, size: 24),
     );

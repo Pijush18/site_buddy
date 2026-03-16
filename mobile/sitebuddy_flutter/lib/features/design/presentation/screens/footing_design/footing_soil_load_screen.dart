@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
@@ -87,11 +88,11 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
     return AppScreenWrapper(
       title: 'Soil & Load',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.help,
+        IconButton(
+          icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Soil & Load'),
         ),
-        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+        const SizedBox(width: AppSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -103,9 +104,9 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
               color: colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: AppSpacing.lg),
           // Column Load Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -183,9 +184,9 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+          const SizedBox(height: AppSpacing.sm),
           // Soil Parameters Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -216,15 +217,17 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Geometry Design',
-                icon: SbIcons.area,
+                icon: Icons.square_foot,
                 onPressed: _onNext,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

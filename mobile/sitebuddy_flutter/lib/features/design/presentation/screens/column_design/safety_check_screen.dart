@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/application/services/column_insight_service.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/column_interaction_diagram.dart';
@@ -54,13 +55,12 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           if (state.errorMessage != null) ...[
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: AppCard(
-                color: colorScheme.error.withValues(alpha: 0.1),
-                border: BorderSide(color: colorScheme.error, width: 1),
+              child: SBCard(
+                backgroundColor: colorScheme.error.withValues(alpha: 0.1),
                 child: Row(
                   children: [
-                    Icon(SbIcons.error, color: colorScheme.error),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    Icon(Icons.error_outline, color: colorScheme.error),
+                    const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
                         state.errorMessage!,
@@ -140,8 +140,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-          AppCard(
+          const SizedBox(height: AppSpacing.sm),
+          SBCard(
             child: Column(
               children: [
                 RepaintBoundary(
@@ -166,9 +166,9 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SbButton.ghost(
+                      SBButton.ghost(
                         label: 'Save Image',
-                        icon: SbIcons.image,
+                        icon: Icons.image_outlined,
                         onPressed: () async {
                           final bytes = await WidgetCaptureHelper.capture(
                             _drawingKey,
@@ -182,10 +182,10 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                      SbButton.ghost(
+                      const SizedBox(height: AppSpacing.sm),
+                      SBButton.ghost(
                         label: 'Save PDF',
-                        icon: SbIcons.pdf,
+                        icon: Icons.picture_as_pdf_outlined,
                         onPressed: () async {
                           final bytes = await WidgetCaptureHelper.capture(
                             _drawingKey,
@@ -222,16 +222,16 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ...ColumnInsightService.getSuggestions(state).map(
             (s) => Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: AppCard(
-                color: colorScheme.primary.withValues(alpha: 0.05),
+              child: SBCard(
+                backgroundColor: colorScheme.primary.withValues(alpha: 0.05),
                 child: Row(
                   children: [
                     Icon(
-                      SbIcons.lightbulb,
+                      Icons.lightbulb_outline,
                       color: colorScheme.primary,
                       size: 20,
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
                         s,
@@ -247,28 +247,30 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Optimize Section',
                 onPressed: () {
                   ref
                       .read(columnDesignControllerProvider.notifier)
                       .optimizeDesign();
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.primary(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.primary(
                 label: 'Export PDF Report',
-                icon: SbIcons.pdf,
+                icon: Icons.picture_as_pdf_outlined,
                 onPressed: () {
                   ref
                       .read(columnDesignControllerProvider.notifier)
                       .generateReport();
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.primary(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.primary(
                 label: 'Save to History',
-                icon: SbIcons.history,
+                icon: Icons.history,
                 onPressed: () {
                   ref
                       .read(columnDesignControllerProvider.notifier)
@@ -278,20 +280,23 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     message: 'Design Saved to History',
                   );
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.primary(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.primary(
                 label: 'New Design',
-                icon: SbIcons.add,
+                icon: Icons.add,
                 onPressed: () {
                   ref.read(columnDesignControllerProvider.notifier).reset();
                   context.go('/');
                 },
+                fullWidth: true,
               ),
             ],
           ),

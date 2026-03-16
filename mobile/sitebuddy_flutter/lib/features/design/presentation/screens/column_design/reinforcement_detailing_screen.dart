@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/rebar_layout_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -42,28 +43,14 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             mainBarDia: state.mainBarDia,
             ast: state.astProvided,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
-          AppCard(
+          const SizedBox(height: AppSpacing.lg),
+          SBCard(
+            title: 'Main Longitudinal Bars',
+            showDivider: true,
             padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.cardPadding
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Main Longitudinal Bars',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.md
-                const Text(
-                  'Select Bar Diameter',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.xs (4.0) with sm (8.0) for better spacing
                 SbDropdown<double>(
                   value: state.mainBarDia,
                   items: const [12, 16, 20, 25, 32],
@@ -122,16 +109,18 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Safety Checks',
                 onPressed: () {
                   context.push('/column/safety');
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

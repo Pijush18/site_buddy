@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
@@ -58,15 +60,15 @@ class _FootingSafetyCheckScreenState
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Overall Status Card
-          SbCard(
-            color: overallSafe
+          SBCard(
+            backgroundColor: overallSafe
                 ? colorScheme.primaryContainer.withValues(alpha: 0.2)
-                : colorScheme.errorContainer,
+                : colorScheme.errorContainer.withValues(alpha: 0.2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  overallSafe ? SbIcons.verified : SbIcons.warning,
+                  overallSafe ? Icons.verified_user : Icons.warning_amber_rounded,
                   color: overallSafe ? colorScheme.primary : colorScheme.error,
                   size: 32,
                 ),
@@ -150,8 +152,8 @@ class _FootingSafetyCheckScreenState
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-          SbCard(
+          const SizedBox(height: AppSpacing.md),
+          SBCard(
             child: Column(
               children: [
                 RepaintBoundary(
@@ -175,9 +177,9 @@ class _FootingSafetyCheckScreenState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SbButton.ghost(
+                      SBButton.ghost(
                         label: 'Save Image',
-                        icon: SbIcons.image,
+                        icon: Icons.image_outlined,
                         onPressed: () async {
                           final bytes = await WidgetCaptureHelper.capture(
                             _drawingKey,
@@ -191,10 +193,10 @@ class _FootingSafetyCheckScreenState
                           }
                         },
                       ),
-                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                      SbButton.ghost(
+                      const SizedBox(height: AppSpacing.sm),
+                      SBButton.ghost(
                         label: 'Save PDF',
-                        icon: SbIcons.pdf,
+                        icon: Icons.picture_as_pdf_outlined,
                         onPressed: () async {
                           final bytes = await WidgetCaptureHelper.capture(
                             _drawingKey,
@@ -221,13 +223,13 @@ class _FootingSafetyCheckScreenState
           ),
 
           if (state.isSettlementWarning) ...[
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-            SbCard(
-              color: colorScheme.tertiaryContainer.withValues(alpha: 0.2),
+            const SizedBox(height: AppSpacing.md),
+            SBCard(
+              backgroundColor: colorScheme.tertiaryContainer.withValues(alpha: 0.2),
               child: Row(
                 children: [
                   Icon(
-                    SbIcons.info,
+                    Icons.info_outline,
                     color: colorScheme.tertiary,
                     size: 20,
                   ),
@@ -251,35 +253,39 @@ class _FootingSafetyCheckScreenState
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Calculation Sheet',
-                icon: SbIcons.description,
+                icon: Icons.description_outlined,
                 onPressed: () {
                   ref
                       .read(footingDesignControllerProvider.notifier)
                       .generateReport();
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.primary(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.primary(
                 label: 'Save Design',
-                icon: SbIcons.download,
+                icon: Icons.save_outlined,
                 onPressed: () {
                   context.go('/design');
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.primary(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.primary(
                 label: 'New Design',
-                icon: SbIcons.add,
+                icon: Icons.add,
                 onPressed: () {
                   context.go('/');
                 },
+                fullWidth: true,
               ),
             ],
           ),

@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 
@@ -83,11 +84,11 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
     return AppScreenWrapper(
       title: 'Geometry & Sizing',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.help,
+        IconButton(
+          icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Geometry'),
         ),
-        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+        const SizedBox(width: AppSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -103,7 +104,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Column Geometry Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -146,7 +147,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Main Geometry Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -195,8 +196,8 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Information Card
-          SbCard(
-            color: colorScheme.primary.withValues(alpha: 0.05),
+          SBCard(
+            backgroundColor: colorScheme.primary.withValues(alpha: 0.05),
             child: Row(
               children: [
                 Icon(SbIcons.info, color: colorScheme.primary, size: 20),
@@ -217,15 +218,17 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Soil Analysis',
-                icon: SbIcons.analytics,
+                icon: Icons.analytics_outlined,
                 onPressed: _onNext,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

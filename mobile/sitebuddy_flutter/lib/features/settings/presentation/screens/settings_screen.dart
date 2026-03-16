@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
+import 'package:site_buddy/core/widgets/components/sb_loading.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
@@ -30,13 +33,13 @@ class SettingsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // --- SECTION 1: ACCOUNT ---
-          _buildSectionHeader(context, "Account"),
+          const SBSectionHeader(title: "Account"),
           _buildAccountSection(context),
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APPEARANCE ---
-          _buildSectionHeader(context, l10n.appearance),
-          SbCard(
+          const SBSectionHeader(title: "Appearance"), // Standardized title
+          SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
@@ -98,8 +101,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ENGINEERING STANDARDS ---
-          _buildSectionHeader(context, l10n.engineeringStandards),
-          SbCard(
+          const SBSectionHeader(title: "Engineering Standards"),
+          SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
@@ -130,8 +133,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APP BEHAVIOR ---
-          _buildSectionHeader(context, "App Behavior"),
-          SbCard(
+          const SBSectionHeader(title: "App Behavior"),
+          SBCard(
             padding: EdgeInsets.zero,
             child: Consumer(
               builder: (context, ref, _) {
@@ -173,8 +176,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: LEGAL ---
-          _buildSectionHeader(context, "Legal"),
-          SbCard(
+          const SBSectionHeader(title: "Legal"),
+          SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
@@ -203,8 +206,8 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ABOUT ---
-          _buildSectionHeader(context, "About"),
-          SbCard(
+          const SBSectionHeader(title: "About"),
+          SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
@@ -276,7 +279,7 @@ class SettingsScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
-        SbCard(
+        SBCard(
           padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
           child: Row(
             children: [
@@ -331,7 +334,7 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-        SbCard(
+        SBCard(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -363,34 +366,12 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: AppSpacing.sm, // Replaced AppLayout.pSmall
-        bottom: AppSpacing.sm, // Replaced AppLayout.pSmall
-      ),
-      child: Text(
-        title.toUpperCase(),
-        style: TextStyle(
-          fontSize: AppFontSizes.tab,
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
-      ),
-    );
-  }
+  // Removed _buildSectionHeader as it is replaced by SBSectionHeader
 
   Widget _buildSmallLoadingState() {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
-        child: SizedBox(
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        ),
-      ),
+    return const Padding(
+      padding: EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
+      child: SBLoading(),
     );
   }
 

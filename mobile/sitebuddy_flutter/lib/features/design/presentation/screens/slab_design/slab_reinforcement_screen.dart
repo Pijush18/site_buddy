@@ -5,6 +5,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -73,15 +75,16 @@ class SlabReinforcementScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SbCard(
+          SBCard(
             child: Column(
               children: [
-                Icon(SbIcons.rebar, size: 64, color: colorScheme.secondary.withValues(alpha: 0.5)),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                Icon(Icons.layers_outlined,
+                    size: 64, color: colorScheme.secondary.withValues(alpha: 0.5)),
+                const SizedBox(height: AppSpacing.sm),
                 const Text(
-                   'Rebar spacing should not exceed 3d or 300mm for main rebar.',
-                   style: TextStyle(fontSize: AppFontSizes.tab),
-                   textAlign: TextAlign.center,
+                  'Rebar spacing should not exceed 3d or 300mm for main rebar.',
+                  style: TextStyle(fontSize: AppFontSizes.tab),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -91,15 +94,17 @@ class SlabReinforcementScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Safety Check',
                 onPressed: () => context.push('/slab/safety'),
-                icon: SbIcons.shield,
+                icon: Icons.security_outlined,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

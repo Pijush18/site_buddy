@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
@@ -68,8 +70,8 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
     return AppScreenWrapper(
       title: 'Column Input',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.history,
+        IconButton(
+          icon: const Icon(Icons.history),
           onPressed: () => context.push('/design/column/input/history'),
         ),
       ],
@@ -86,20 +88,15 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Geometry Card
-          SbCard(
+          SBCard(
+            title: 'Geometry',
+            showDivider: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: AppSpacing.md),
                 const Text(
-                  'Geometry',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                const Text(
-                  'Column Type',
+                  'Section Type',
                   style: TextStyle(
                     fontSize: AppFontSizes.subtitle,
                     fontWeight: FontWeight.w500,
@@ -163,18 +160,13 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Materials Card
-          SbCard(
+          SBCard(
+            title: 'Materials',
+            showDivider: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Materials',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: AppSpacing.md),
                 Row(
                   children: [
                     Expanded(
@@ -239,14 +231,16 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Load Definition',
                 onPressed: _onNext,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

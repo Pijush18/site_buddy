@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
@@ -59,8 +61,8 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          SbCard(
+          const SizedBox(height: AppSpacing.lg),
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,7 +81,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                     final val = double.tryParse(v);
                     if (val != null) notifier.updateLoads(pu: val);
                   },
-                  suffixIcon: SbIcons.arrowDown,
+                  suffixIcon: Icons.arrow_downward,
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 const Text(
@@ -100,23 +102,24 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest match)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Slenderness Check',
                 onPressed: _onNext,
-                icon: SbIcons.analytics,
+                icon: Icons.analytics_outlined,
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );

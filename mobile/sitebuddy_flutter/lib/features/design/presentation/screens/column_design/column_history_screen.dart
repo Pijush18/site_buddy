@@ -1,15 +1,15 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_empty_state.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:intl/intl.dart';
 
 /// SCREEN: ColumnHistoryScreen
 /// PURPOSE: History of all column designs and checks.
@@ -24,10 +24,10 @@ class ColumnHistoryScreen extends ConsumerWidget {
     if (selectedProject == null) {
       return const AppScreenWrapper(
         title: 'Column History',
-        child: SbEmptyState(
-          icon: SbIcons.projectOff,
+        child: SBEmptyState(
+          icon: Icons.domain_disabled_outlined,
           title: 'No Project Selected',
-          subtitle:
+          description:
               'Please select or create a project to view its calculation history.',
         ),
       );
@@ -52,11 +52,10 @@ class ColumnHistoryScreen extends ConsumerWidget {
               .toList();
 
           if (columnHistory.isEmpty) {
-            return const SbEmptyState(
+            return const SBEmptyState(
               icon: Icons.history_toggle_off_outlined,
               title: 'No Column History',
-              subtitle:
-                  'Results from your column calculations will appear here.',
+              description: 'No previous column designs found.',
             );
           }
 
@@ -89,7 +88,7 @@ class _HistoryCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
 
-    return SbCard(
+    return SBCard(
       onTap: () {
         context.push('/history-detail', extra: entry);
       },

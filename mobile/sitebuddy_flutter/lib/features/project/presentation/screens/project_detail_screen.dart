@@ -1,15 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
+import 'dart:ui';
 
 /// CLASS: ProjectDetailScreen
 /// PURPOSE: Deep-dive view into a specific project.
@@ -88,8 +92,8 @@ class ProjectDetailScreen extends ConsumerWidget {
       child: Column(
         children: [
           // Status Header
-          SbCard(
-            padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
+          SBCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -201,19 +205,17 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty) ...[
-            SbSection(
-              title: 'Description',
-              child: SbCard(
-                child: Text(
-                  proj.description!,
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    height: 1.5,
-                  ),
+            SBSectionHeader(title: 'Description'),
+            SBCard(
+              child: Text(
+                proj.description!,
+                style: const TextStyle(
+                  fontSize: AppFontSizes.subtitle,
+                  height: 1.5,
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Stats grid
@@ -221,16 +223,16 @@ class ProjectDetailScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: _StatCard(
-                  icon: SbIcons.description,
+                  icon: Icons.description,
                   label: 'LOGS',
                   value: proj.logsCount.toString(),
                   subtext: 'Total Entries',
                 ),
               ),
-              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: _StatCard(
-                  icon: SbIcons.calculator,
+                  icon: Icons.calculate,
                   label: 'CALCS',
                   value: proj.calculationsCount.toString(),
                   subtext: 'Saved Runs',
@@ -241,96 +243,92 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SbSection(
-            title: 'Structural Calculations',
-            child: calcItems.isEmpty
-                ? const SbCard(
-                    child: Text('No entries found for this project.'),
-                  )
-                : SbCard(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: calcItems.length,
-                      separatorBuilder: (context, index) =>
-                          const Divider(height: 1),
-                      itemBuilder: (context, index) {
-                        final item = calcItems[index];
-                        return SbListItem(
-                          leading: Icon(
-                            _getTypeIcon(item['type'] as String),
-                            color: colorScheme.primary,
-                          ),
-                          title: item['name'] as String,
-                          subtitle: DateFormat(
-                            'dd MMM, hh:mm a',
-                          ).format(item['date'] as DateTime),
-                          onTap: () {
-                            context.push('/projects/$projectId/history');
-                          },
-                        );
-                      },
-                    ),
+          SBSectionHeader(title: 'Structural Calculations'),
+          calcItems.isEmpty
+              ? const SBCard(
+                  child: Text('No entries found for this project.'),
+                )
+              : SBCard(
+                  padding: EdgeInsets.zero,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: calcItems.length,
+                    separatorBuilder: (context, index) =>
+                        const Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final item = calcItems[index];
+                      return SbListItem(
+                        leading: Icon(
+                          _getTypeIcon(item['type'] as String),
+                          color: colorScheme.primary,
+                        ),
+                        title: item['name'] as String,
+                        subtitle: DateFormat(
+                          'dd MMM, hh:mm a',
+                        ).format(item['date'] as DateTime),
+                        onTap: () {
+                          context.push('/projects/$projectId/history');
+                        },
+                      );
+                    },
                   ),
-          ),
+                ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          // Level Log History
-          SbSection(
-            title: 'Level Log Sessions',
-            child: logItems.isEmpty
-                ? const SbCard(
-                    child: Text('No entries found for this project.'),
-                  )
-                : SbCard(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: logItems.length,
-                      separatorBuilder: (context, index) =>
-                          const Divider(height: 1),
-                      itemBuilder: (context, index) {
-                        final item = logItems[index];
-                        return SbListItem(
-                          leading: Icon(
-                            SbIcons.layers,
-                            color: colorScheme.secondary,
-                          ),
-                          title: item.name,
-                          subtitle:
-                              '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
-                          onTap: () {
-                            context.push('/projects/$projectId/level-log');
-                          },
-                        );
-                      },
-                    ),
+          SBSectionHeader(title: 'Level Log Sessions'),
+          logItems.isEmpty
+              ? const SBCard(
+                  child: Text('No entries found for this project.'),
+                )
+              : SBCard(
+                  padding: EdgeInsets.zero,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: logItems.length,
+                    separatorBuilder: (context, index) =>
+                        const Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final item = logItems[index];
+                      return SbListItem(
+                        leading: Icon(
+                          SbIcons.layers,
+                          color: colorScheme.secondary,
+                        ),
+                        title: item.name,
+                        subtitle:
+                            '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
+                        onTap: () {
+                          context.push('/projects/$projectId/level-log');
+                        },
+                      );
+                    },
                   ),
-          ),
+                ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SbSection(
-            title: 'Action Zone',
-            child: Column(
-              children: [
-                SbButton(
-                  label: 'New Inspection Entry',
-                  icon: SbIcons.addCircle,
-                  onPressed: () {
-                    context.push('/projects/$projectId/level-log');
-                  },
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                SbButton(
-                  label: 'Edit Project',
-                  icon: SbIcons.editSquare,
-                  variant: SbButtonVariant.outline,
-                  onPressed: () {
-                    context.push('/projects/$projectId/edit');
-                  },
-                ),
-              ],
-            ),
+          SBSectionHeader(title: 'Action Zone'),
+          Column(
+            children: [
+              SBButton.primary(
+                label: 'New Inspection Entry',
+                icon: Icons.add_circle_outline,
+                onPressed: () {
+                  context.push('/projects/$projectId/level-log');
+                },
+                fullWidth: true,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              SBButton.secondary(
+                label: 'Edit Project',
+                icon: Icons.edit_outlined,
+                onPressed: () {
+                  context.push('/projects/$projectId/edit');
+                },
+                fullWidth: true,
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.lg), // Added for consistency
         ],
@@ -357,8 +355,8 @@ class _StatCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
+    return SBCard(
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

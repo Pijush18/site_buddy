@@ -1,12 +1,14 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_empty_state.dart';
+import 'package:site_buddy/core/widgets/project_card.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 
@@ -50,19 +52,23 @@ class ProjectListScreen extends ConsumerWidget {
       ],
       child: Column(
         children: [
-          SbButton.primary(
+          SBButton.primary(
             label: 'New Project',
-            icon: SbIcons.add,
+            icon: Icons.add,
             onPressed: () => context.push('/projects/create'),
+            fullWidth: true,
           ),
           const SizedBox(height: AppSpacing.md),
           projects.isEmpty
-              ? const SbEmptyState(
-                  icon: SbIcons.projectOff,
+              ? SBEmptyState(
+                  icon: Icons.folder_off_outlined,
                   title: 'No Projects Yet',
-                  subtitle:
+                  description:
                       'Create your first civil engineering project to get started.',
-                  actionLabel: 'New Project',
+                  action: SBButton.primary(
+                    label: 'New Project',
+                    onPressed: () => context.push('/projects/create'),
+                  ),
                 )
               : Column(
                   children: projects.map((project) {

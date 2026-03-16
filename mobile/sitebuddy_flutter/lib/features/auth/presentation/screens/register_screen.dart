@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -109,12 +112,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           'Verification email sent. Please verify your email before signing in.',
         ),
         actions: [
-          SbButton.primary(
+          SBButton.primary(
             label: 'Back to Login',
             onPressed: () {
               ref.read(authRepositoryProvider).logout();
               context.go('/login');
             },
+            fullWidth: true,
           ),
         ],
       ),
@@ -158,33 +162,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Join SiteBuddy',
-                  style: TextStyle(
-                    fontSize: 24, // Preserving headlineSmall
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                Text(
-                  'Start your professional design journey',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
+          const SBSectionHeader(
+            title: 'Join SiteBuddy',
+          ),
+          Text(
+            'Start your professional design journey',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // Register Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -228,7 +219,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                 ),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-                SbButton.primary(
+                SBButton.primary(
                   label: 'Register',
                   onPressed: (isLoading ||
                           _emailController.text.isEmpty ||
@@ -237,15 +228,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ? null
                       : _register,
                   isLoading: isLoading,
-                  width: double.infinity,
+                  fullWidth: true,
                 ),
               ],
             ),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          SbButton.ghost(
+          SBButton.secondary(
             label: 'Already have an account? Sign In',
             onPressed: () => context.go('/login'),
+            fullWidth: true,
           ),
           const SizedBox(height: AppSpacing.lg), // Bottom padding
         ],

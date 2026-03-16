@@ -1,17 +1,15 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:flutter/material.dart';
-
-import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
-
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: FootingAnalysisScreen
 /// PURPOSE: Bearing pressure and area analysis (Step 4).
@@ -26,11 +24,11 @@ class FootingAnalysisScreen extends ConsumerWidget {
     return AppScreenWrapper(
       title: 'Soil Analysis',
       actions: [
-        SbButton.icon(
-          icon: SbIcons.help,
+        IconButton(
+          icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Analysis'),
         ),
-        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.pSmall
+        const SizedBox(width: AppSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,7 +90,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Eccentricity etc
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -133,15 +131,17 @@ class FootingAnalysisScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Reinforcement',
-                icon: SbIcons.gridView,
+                icon: Icons.grid_view_outlined,
                 onPressed: () => context.push('/footing/reinforcement'),
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),

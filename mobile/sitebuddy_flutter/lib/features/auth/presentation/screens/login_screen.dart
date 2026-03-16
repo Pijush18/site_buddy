@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
@@ -178,33 +181,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48 (approx)
           
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Sign In',
-                  style: TextStyle(
-                    fontSize: 24, // Preserving headlineSmall
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                Text(
-                  'Welcome back to your workspace',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
+          const SBSectionHeader(
+            title: 'Sign In',
+          ),
+          Text(
+            'Welcome back to your workspace',
+            style: TextStyle(
+              fontSize: AppFontSizes.subtitle,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32 (approx)
 
           // Login Card
-          SbCard(
+          SBCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -244,7 +234,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                SbButton.primary(
+                SBButton.primary(
                   label: "Sign In",
                   onPressed: (isLoading ||
                           _emailController.text.isEmpty ||
@@ -252,7 +242,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ? null
                       : _login,
                   isLoading: isLoading,
-                  width: double.infinity,
+                  fullWidth: true,
                 ),
               ],
             ),
@@ -283,19 +273,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           // OAuth Buttons
           Column(
             children: [
-              SbButton.outline(
+              SBButton.secondary(
                 label: 'Continue with Google',
                 icon: SbIcons.google,
                 onPressed: isLoading ? null : _loginWithGoogle,
-                width: double.infinity,
+                fullWidth: true,
               ),
               if (Platform.isIOS) ...[
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                const SbButton.outline(
+                const SBButton.secondary(
                   label: 'Continue with Apple',
                   icon: SbIcons.apple,
                   onPressed: null, // Placeholder for future implementation
-                  width: double.infinity,
+                  fullWidth: true,
                 ),
               ],
             ],
