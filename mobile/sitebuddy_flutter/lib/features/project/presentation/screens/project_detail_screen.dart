@@ -13,7 +13,6 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
-import 'dart:ui';
 
 /// CLASS: ProjectDetailScreen
 /// PURPOSE: Deep-dive view into a specific project.
@@ -205,7 +204,7 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty) ...[
-            SBSectionHeader(title: 'Description'),
+            const SBSectionHeader(title: 'Description'),
             SBCard(
               child: Text(
                 proj.description!,
@@ -243,7 +242,7 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SBSectionHeader(title: 'Structural Calculations'),
+          const SBSectionHeader(title: 'Structural Calculations'),
           calcItems.isEmpty
               ? const SBCard(
                   child: Text('No entries found for this project.'),
@@ -276,7 +275,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SBSectionHeader(title: 'Level Log Sessions'),
+          const SBSectionHeader(title: 'Level Log Sessions'),
           logItems.isEmpty
               ? const SBCard(
                   child: Text('No entries found for this project.'),
@@ -308,7 +307,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SBSectionHeader(title: 'Action Zone'),
+          const SBSectionHeader(title: 'Action Zone'),
           Column(
             children: [
               SBButton.primary(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
 import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/models/design_advisor_result.dart';
 
 /// WIDGET: DesignAdvisorCard
@@ -18,7 +16,7 @@ class DesignAdvisorCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'ENGINEERING ADVISOR',
           style: TextStyle(
             fontSize: 12,
