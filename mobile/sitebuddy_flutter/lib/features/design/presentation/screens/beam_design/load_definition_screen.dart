@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -102,21 +105,17 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 color: colorScheme.primary,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.md),
 
             // Loads Card
-            SbCard(
+            SBCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Vertical Loads',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  const SBSectionHeader(
+                    title: 'Vertical Loads',
+                    topPadding: 0,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   AppNumberField(
                     controller: _dlController,
@@ -124,7 +123,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Dead Load'),
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
 
                   AppNumberField(
                     controller: _llController,
@@ -132,7 +131,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Live Load'),
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
 
                   AppNumberField(
                     controller: _plController,
@@ -141,24 +140,21 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: AppSpacing.md),
 
             // Load Factor Toggle Card
-            SbCard(
+            SBCard(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Design Limit State',
-                        style: TextStyle(
-                          fontSize: AppFontSizes.title,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      const SBSectionHeader(
+                        title: 'Design Limit State',
+                        topPadding: 0,
+                        bottomPadding: AppSpacing.sm,
                       ),
-                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap4
                       Text(
                         state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
                         style: TextStyle(
@@ -179,24 +175,26 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest match)
+            const SizedBox(height: AppSpacing.lg),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SbButton.primary(
+                SBButton.primary(
                   label: 'Calculate & View Analysis',
                   onPressed: _onNext,
                   icon: SbIcons.analytics,
+                  fullWidth: true,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-                SbButton.outline(
+                const SizedBox(height: AppSpacing.sm),
+                SBButton.ghost(
                   label: 'Back',
                   onPressed: () => context.pop(),
+                  fullWidth: true,
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
           ],
         ),
       ),

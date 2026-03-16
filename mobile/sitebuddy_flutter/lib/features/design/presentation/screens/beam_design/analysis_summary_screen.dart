@@ -1,13 +1,14 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
@@ -38,7 +39,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: AppSpacing.md),
 
           // Design Result Card for Principal Forces
           DesignResultCard(
@@ -62,29 +63,20 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456:2000 Cl. 38',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: AppSpacing.md),
 
           // Diagrams Section
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Engineering Diagrams',
-                style: TextStyle(
-                  fontSize: AppFontSizes.title,
-                  fontWeight: FontWeight.w600,
-                ),
+          SBSectionHeader(
+            title: 'Engineering Diagrams',
+            trailing: Text(
+              'L = ${(state.span / 1000).toStringAsFixed(2)}m',
+              style: const TextStyle(
+                fontSize: AppFontSizes.tab,
+                color: Colors.grey,
               ),
-              Text(
-                'L = ${(state.span / 1000).toStringAsFixed(2)}m',
-                style: const TextStyle(
-                  fontSize: AppFontSizes.tab,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+            ),
+            bottomPadding: AppSpacing.sm,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
 
           _DiagramCard(
             label: 'Shear Force Diagram (SFD)',
@@ -92,19 +84,19 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             isBMD: false,
             isDark: isDark,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: AppSpacing.md),
           _DiagramCard(
             label: 'Bending Moment Diagram (BMD)',
             points: state.bmdPoints,
             isBMD: true,
             isDark: isDark,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap * 1.5
+          const SizedBox(height: AppSpacing.lg),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SbButton.primary(
+              SBButton.primary(
                 label: 'Next: Reinforcement Design',
                 icon: Icons.iron_rounded,
                 onPressed: () {
@@ -113,15 +105,17 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                       .calculateReinforcement();
                   context.push('/beam/rebar');
                 },
+                fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-              SbButton.outline(
+              const SizedBox(height: AppSpacing.sm),
+              SBButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
+                fullWidth: true,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );
@@ -143,35 +137,21 @@ class _DiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      height: 180,
-      padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.cardPadding
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppRadius.md), // Replaced AppLayout.cardRadius
-        border: Border.all(
-          color: theme.colorScheme.outline,
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.30 : 0.12),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+    return SBCard(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: SizedBox(
+        height: 140,
+        child: CustomPaint(
+          painter: BeamDiagramPainter(
+            points: points,
+            isBMD: isBMD,
+            label: label,
+            axisColor: isDark ? Colors.white24 : Colors.black12,
+            labelColor: isDark ? Colors.white70 : Colors.black54,
+            textTheme: Theme.of(context).textTheme,
           ),
-        ],
-      ),
-      child: CustomPaint(
-        painter: BeamDiagramPainter(
-          points: points,
-          isBMD: isBMD,
-          label: label,
-          axisColor: isDark ? Colors.white24 : Colors.black12,
-          labelColor: isDark ? Colors.white70 : Colors.black54,
-          textTheme: Theme.of(context).textTheme,
+          size: Size.infinite,
         ),
-        size: Size.infinite,
       ),
     );
   }

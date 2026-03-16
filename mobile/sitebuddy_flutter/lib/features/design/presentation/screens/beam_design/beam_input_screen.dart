@@ -3,6 +3,9 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -123,15 +126,17 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          SBButton.primary(
             label: 'Next: Load Definition',
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
+            fullWidth: true,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-          SbButton.outline(
+          const SizedBox(height: AppSpacing.sm),
+          SBButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
+            fullWidth: true,
           ),
         ],
       ),
@@ -148,21 +153,17 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 color: colorScheme.primary,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.md),
 
             // Geometry Card
-            SbCard(
+            SBCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Geometry',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  const SBSectionHeader(
+                    title: 'Geometry',
+                    topPadding: 0,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   const Text(
                     'Beam Type',
@@ -171,7 +172,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: AppSpacing.sm),
                   SbDropdown<BeamType>(
                     value: state.type,
                     items: BeamType.values,
@@ -182,7 +183,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       }
                     },
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
 
                   AppNumberField(
                     controller: _spanController,
@@ -190,7 +191,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Span'),
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
 
                   Row(
                     children: [
@@ -202,7 +203,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                               ValidationHelper.validatePositive(v, 'Width'),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                      const SizedBox(width: AppSpacing.md),
                       Expanded(
                         child: AppNumberField(
                           controller: _depthController,
@@ -216,21 +217,17 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: AppSpacing.md),
 
             // Materials Card
-            SbCard(
+            SBCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Materials',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  const SBSectionHeader(
+                    title: 'Materials',
+                    topPadding: 0,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
                   Row(
                     children: [
@@ -244,7 +241,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                               .updateInputs(concrete: v),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                      const SizedBox(width: AppSpacing.md),
                       Expanded(
                         child: _buildGradeDropdown(
                           'Steel Grade',
@@ -257,7 +254,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: AppSpacing.md),
 
                   AppNumberField(
                     controller: _coverController,
@@ -268,7 +265,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
           ],
         ),
       ),
