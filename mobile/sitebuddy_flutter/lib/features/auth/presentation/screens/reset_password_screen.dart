@@ -11,6 +11,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/form_labels.dart';
+import 'package:site_buddy/core/constants/error_strings.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -47,7 +50,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   Future<void> _resetPassword() async {
     final email = _emailController.text.trim();
     if (email.isEmpty) {
-      SbFeedback.showToast(context: context, message: 'Please enter your email');
+      SbFeedback.showToast(context: context, message: ErrorStrings.enterEmail);
       return;
     }
 
@@ -61,12 +64,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     } else {
       if (mounted) {
         final error = authState.error;
-        String message = 'Failed to send reset email.';
+        String message = ErrorStrings.failedToSendReset;
         if (error is firebase.FirebaseAuthException) {
           if (error.code == 'user-not-found') {
-            message = 'No account found for this email.';
+            message = ErrorStrings.userNotFound;
           } else if (error.code == 'invalid-email') {
-            message = 'Invalid email address.';
+            message = ErrorStrings.invalidEmail;
           }
         }
         SbFeedback.showToast(context: context, message: message);
@@ -79,13 +82,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Email Sent'),
+        title: const Text(AppStrings.emailSent),
         content: Text(
-          'A password reset link has been sent to $email. Please check your inbox and follow the instructions.',
+          '${AppStrings.passwordResetLinkSentPrefix}$email${AppStrings.passwordResetLinkSentSuffix}',
         ),
         actions: [
           SBButton.primary(
-            label: 'Back to Login',
+            label: AppStrings.backToLogin,
             onPressed: () => context.go('/login'),
             fullWidth: true,
           ),
@@ -113,7 +116,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
-            'SiteBuddy',
+            AppStrings.siteBuddy,
             style: TextStyle(
               fontSize: 32, // Preserving headline-like size
               fontWeight: FontWeight.bold,
@@ -122,7 +125,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
-            'Professional Structural Design Suite',
+            AppStrings.structuralDesignSuite,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -132,10 +135,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
           const SBSectionHeader(
-            title: 'Forgot Password?',
+            title: AppStrings.forgotPassword,
           ),
           Text(
-            'Enter your email to receive a reset link',
+            AppStrings.enterEmailToReset,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -151,8 +154,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 SbInput(
                   controller: _emailController,
                   focusNode: _emailFocusNode,
-                  label: 'Email',
-                  hint: 'your@email.com',
+                  label: FormLabels.email,
+                  hint: FormLabels.emailHint,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _resetPassword(),
@@ -160,7 +163,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 ),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                 SBButton.primary(
-                  label: 'Send Reset Link',
+                  label: AppStrings.sendResetLink,
                   onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
                   isLoading: isLoading,
                   fullWidth: true,
@@ -170,7 +173,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SBButton.secondary(
-            label: 'Back to Sign In',
+            label: AppStrings.backToSignIn,
             onPressed: () => context.go('/login'),
             fullWidth: true,
           ),

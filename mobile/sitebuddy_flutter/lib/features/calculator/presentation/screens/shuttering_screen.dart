@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -36,35 +38,35 @@ class ShutteringScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return AppScreenWrapper(
-      title: 'Shuttering Area Estimator',
+      title: EngineeringTerms.shutteringAreaEstimator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: 'Element Dimensions'),
+          const _SectionLabel(label: EngineeringTerms.elementDimensions),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Length (m)',
-            hint: 'e.g. 5.0',
+            label: EngineeringTerms.length,
+            hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Width (m)',
-            hint: 'e.g. 0.3',
+            label: EngineeringTerms.width,
+            hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Depth (m)',
-            hint: 'e.g. 0.6',
+            label: EngineeringTerms.depth,
+            hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           SbListItem(
-            title: 'Include Bottom Area?',
+            title: EngineeringTerms.includeBottomArea,
             trailing: Switch(
               value: state.includeBottom,
               onChanged: controller.updateIncludeBottom,
@@ -75,12 +77,12 @@ class ShutteringScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -95,8 +97,7 @@ class ShutteringScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],
           Text(
-            'Estimation for simple beams, slabs, or footings.\n'
-            'Area = 2 × (Length + Width) × Depth + Optional Bottom.',
+            EngineeringTerms.shutteringNote,
             style: TextStyle(
               fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -166,7 +167,7 @@ class _ResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'RESULT SUMMARY',
+            EngineeringTerms.resultSummary,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -178,7 +179,7 @@ class _ResultCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
           SbListItem(
-            title: 'Total Shuttering Area',
+            title: EngineeringTerms.totalShutteringArea,
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
               style: TextStyle(
@@ -189,14 +190,14 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           SbListItem(
-            title: 'Perimeter',
+            title: EngineeringTerms.perimeter,
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
           SbListItem(
-            title: 'Depth',
+            title: EngineeringTerms.depth,
             trailing: Text(
               '${result.depth} m',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),

@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -9,7 +11,6 @@ import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/plaster_controller.dart';
 import 'package:site_buddy/shared/domain/models/plaster_ratio.dart';
 import 'package:site_buddy/shared/domain/models/plaster_material_result.dart';
-import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 class PlasterMaterialEstimatorScreen extends ConsumerWidget {
@@ -19,7 +20,6 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(plasterProvider);
     final controller = ref.read(plasterProvider.notifier);
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -27,30 +27,30 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
     final tError = state.failure?.message.contains('Thickness') == true ? state.failure?.message : null;
 
     return AppScreenWrapper(
-      title: l10n.plasterEstimator,
+      title: EngineeringTerms.plasterEstimator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionLabel(label: l10n.plasterArea),
+          const _SectionLabel(label: EngineeringTerms.plasterArea),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           AppNumberField(
-            label: l10n.wallArea,
-            hint: 'e.g. 80.0',
+            label: EngineeringTerms.wallArea,
+            hint: EngineeringTerms.areaHint,
             suffixIcon: SbIcons.area,
             onChanged: controller.updateArea,
             errorText: aError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: l10n.plasterThickness,
-            hint: 'e.g. 12',
+            label: EngineeringTerms.plasterThickness,
+            hint: EngineeringTerms.diameterHint, // Reuse diameter hint or add specific thickness hint
             suffixIcon: SbIcons.layers,
             onChanged: controller.updateThickness,
             errorText: tError,
           ),
           const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
           Text(
-            l10n.typicalThicknessNote,
+            EngineeringTerms.typicalThicknessNote,
             style: TextStyle(
               fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant,
@@ -59,7 +59,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
-            l10n.mortarRatio,
+            EngineeringTerms.mortarRatio,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -99,12 +99,12 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: l10n.reset,
+                label: AppStrings.reset,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? l10n.calculating : l10n.calculateMaterials,
+                label: state.isLoading ? AppStrings.calculating : EngineeringTerms.calculateMaterials,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: controller.calculate,
@@ -113,7 +113,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
-            l10n.isCodeNote,
+            EngineeringTerms.isPlasterCodeNote,
             style: TextStyle(
               fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -161,7 +161,7 @@ class _ResultSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'RESULT SUMMARY',
+            EngineeringTerms.resultSummary,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -174,9 +174,9 @@ class _ResultSection extends StatelessWidget {
           const Divider(),
 
           SbListItem(
-            title: 'Cement Bags (50 kg)',
+            title: EngineeringTerms.cementBags,
             trailing: Text(
-              '${result.cementBags.toStringAsFixed(0)} bags',
+              '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
               style: TextStyle(
                 fontSize: AppFontSizes.subtitle,
                 fontWeight: FontWeight.w600,
@@ -185,7 +185,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItem(
-            title: 'Sand Volume',
+            title: EngineeringTerms.sandVolume,
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -194,7 +194,7 @@ class _ResultSection extends StatelessWidget {
           const Divider(),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
           SbListItem(
-            title: 'Dry Mortar Volume',
+            title: EngineeringTerms.dryMortarVolume,
             trailing: Text(
               '${result.dryVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -203,7 +203,7 @@ class _ResultSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Mix Ratio:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              const Text(EngineeringTerms.mortarRatioLabel, style: TextStyle(fontSize: AppFontSizes.tab)),
               Text(
                 result.mortarRatio,
                 style: TextStyle(
@@ -216,7 +216,7 @@ class _ResultSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Thickness:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              const Text(EngineeringTerms.thicknessLabel, style: TextStyle(fontSize: AppFontSizes.tab)),
               Text(
                 '${(result.thickness * 1000).toStringAsFixed(0)} mm',
                 style: TextStyle(

@@ -13,6 +13,10 @@ import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/form_labels.dart';
+import 'package:site_buddy/core/constants/error_strings.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -71,23 +75,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     } else {
       if (mounted) {
         final error = authState.error;
-        String message = 'Authentication failed.';
+        String message = ErrorStrings.authFailed;
         if (error is firebase.FirebaseAuthException) {
           switch (error.code) {
             case 'user-not-found':
-              message = 'No account found for this email.';
+              message = ErrorStrings.userNotFound;
               break;
             case 'wrong-password':
-              message = 'Incorrect password.';
+              message = ErrorStrings.wrongPassword;
               break;
             case 'invalid-credential':
-              message = 'Invalid email or password.';
+              message = ErrorStrings.invalidCredential;
               break;
             case 'user-disabled':
-              message = 'This account has been disabled.';
+              message = ErrorStrings.userDisabled;
               break;
             case 'too-many-requests':
-              message = 'Too many attempts. Try again later.';
+              message = ErrorStrings.tooManyRequests;
               break;
           }
         }
@@ -108,32 +112,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Verify Your Email'),
-        content: const Text(
-          'Please verify your email before signing in. Check your inbox for the verification link.',
-        ),
+        title: const Text(ScreenTitles.verifyYourEmail),
+        content: const Text(AppStrings.pleaseVerifyEmail),
         actions: [
           TextButton(
             onPressed: () {
               ref.read(authRepositoryProvider).logout();
               Navigator.pop(context);
             },
-            child: const Text('Back to Login'),
+            child: const Text(AppStrings.backToLogin),
           ),
           SbButton.primary(
-            label: 'Resend Email',
+            label: AppStrings.resendEmail,
             onPressed: () async {
               try {
                 await user.sendEmailVerification();
                 if (context.mounted) {
                   SbFeedback.showToast(
                     context: context,
-                    message: 'Verification email sent!',
+                    message: AppStrings.verificationEmailSent,
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
-                   SbFeedback.showToast(context: context, message: 'Failed to send: $e');
+                   SbFeedback.showToast(context: context, message: '${ErrorStrings.failedToSend}$e');
                 }
               }
             },
@@ -163,7 +165,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
-            'SiteBuddy',
+            AppStrings.siteBuddy,
             style: TextStyle(
               fontSize: 32, // Preserving headline-like size
               fontWeight: FontWeight.bold,
@@ -172,7 +174,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
-            'Professional Structural Design Suite',
+            AppStrings.structuralDesignSuite,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -182,10 +184,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48 (approx)
           
           const SBSectionHeader(
-            title: 'Sign In',
+            title: AppStrings.signIn,
           ),
           Text(
-            'Welcome back to your workspace',
+            AppStrings.welcomeBack,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -201,8 +203,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SbInput(
                   controller: _emailController,
                   focusNode: _emailFocusNode,
-                  label: "Email",
-                  hint: "your@email.com",
+                  label: FormLabels.email,
+                  hint: FormLabels.emailHint,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
@@ -212,8 +214,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SbInput(
                   controller: _passwordController,
                   focusNode: _passwordFocusNode,
-                  label: "Password",
-                  hint: "••••••••",
+                  label: FormLabels.password,
+                  hint: FormLabels.passwordHint,
                   obscureText: _obscurePassword,
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _login(),
@@ -230,12 +232,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () => context.go('/reset-password'),
-                    child: const Text("Forgot password?"),
+                    child: const Text(AppStrings.forgotPassword),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 SBButton.primary(
-                  label: "Sign In",
+                  label: AppStrings.signIn,
                   onPressed: (isLoading ||
                           _emailController.text.isEmpty ||
                           _passwordController.text.isEmpty)
@@ -256,7 +258,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 child: Text(
-                  'OR CONTINUE WITH',
+                  AppStrings.orContinueWith,
                   style: TextStyle(
                     fontSize: 10, // Preserving labelSmall
                     color: colorScheme.outline,
@@ -274,7 +276,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Column(
             children: [
               SBButton.secondary(
-                label: 'Continue with Google',
+                label: AppStrings.continueWithGoogle,
                 icon: SbIcons.google,
                 onPressed: isLoading ? null : _loginWithGoogle,
                 fullWidth: true,
@@ -282,7 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               if (Platform.isIOS) ...[
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 const SBButton.secondary(
-                  label: 'Continue with Apple',
+                  label: AppStrings.continueWithApple,
                   icon: SbIcons.apple,
                   onPressed: null, // Placeholder for future implementation
                   fullWidth: true,
@@ -297,13 +299,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Don't have an account? ",
+                AppStrings.dontHaveAccount,
                 style: TextStyle(fontSize: AppFontSizes.subtitle),
               ),
               GestureDetector(
                 onTap: () => context.go('/register'),
                 child: Text(
-                  "Create account",
+                  AppStrings.createAccount,
                   style: TextStyle(
                     fontSize: AppFontSizes.subtitle,
                     color: colorScheme.primary,

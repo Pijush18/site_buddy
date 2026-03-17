@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -42,7 +44,7 @@ class RebarScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'RESULT SUMMARY',
+              EngineeringTerms.resultSummary,
               style: TextStyle(
                 fontSize: AppFontSizes.title,
                 fontWeight: FontWeight.w600,
@@ -54,7 +56,7 @@ class RebarScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
             SbListItem(
-              title: 'Number of Bars',
+              title: EngineeringTerms.numberOfBars,
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
                 style: TextStyle(
@@ -65,14 +67,14 @@ class RebarScreen extends ConsumerWidget {
               ),
             ),
             SbListItem(
-              title: 'Total Length',
+              title: EngineeringTerms.totalLength,
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
-              title: 'Total Weight',
+              title: EngineeringTerms.totalWeight,
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
                 style: TextStyle(
@@ -90,12 +92,12 @@ class RebarScreen extends ConsumerWidget {
     final bool isValid = state.memberLength != null && state.spacing != null && state.diameter != null;
 
     return AppScreenWrapper(
-      title: 'Rebar Estimator',
+      title: AppStrings.steelWeightEstimatorTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'STRUCTURAL REBAR REQUIREMENTS',
+            EngineeringTerms.rebarRequirements,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -107,7 +109,7 @@ class RebarScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'Member Length (m)',
+            label: EngineeringTerms.memberLength,
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateMemberLength,
             errorText: lError,
@@ -115,7 +117,7 @@ class RebarScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'Spacing (m)',
+            label: EngineeringTerms.spacingLabel,
             suffixIcon: SbIcons.spacing,
             onChanged: controller.updateSpacing,
             errorText: sError,
@@ -129,7 +131,7 @@ class RebarScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Diameter (mm)',
+                  label: EngineeringTerms.diameterLabel,
                   suffixIcon: SbIcons.diameter,
                   onChanged: controller.updateDiameter,
                   errorText: dError,
@@ -138,7 +140,7 @@ class RebarScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Waste (%)',
+                  label: EngineeringTerms.wastePercent,
                   suffixIcon: SbIcons.percent,
                   onChanged: controller.updateWaste,
                 ),
@@ -151,12 +153,12 @@ class RebarScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

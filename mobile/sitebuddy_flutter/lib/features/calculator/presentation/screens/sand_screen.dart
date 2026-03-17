@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
@@ -34,7 +36,7 @@ class SandScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'RESULT SUMMARY',
+              EngineeringTerms.resultSummary,
               style: TextStyle(
                 fontSize: AppFontSizes.title,
                 fontWeight: FontWeight.w600,
@@ -57,14 +59,14 @@ class SandScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             SbListItem(
-              title: 'Wet Volume',
+              title: EngineeringTerms.wetVolume,
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
-              title: 'Sand (ft³)',
+              title: EngineeringTerms.sandCubicFeet,
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -75,7 +77,7 @@ class SandScreen extends ConsumerWidget {
               const Divider(),
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
               SbListItem(
-                title: 'Estimated Cost',
+                title: EngineeringTerms.estimatedCost,
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -92,12 +94,12 @@ class SandScreen extends ConsumerWidget {
     }
 
     return AppScreenWrapper(
-      title: 'Sand Quantity Estimator',
+      title: EngineeringTerms.sandQuantityEstimator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'VOLUME & RATE',
+            EngineeringTerms.volumeAndRate,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -109,7 +111,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12 (8px approx)
 
           AppNumberField(
-            label: 'Length (m)',
+            label: EngineeringTerms.length,
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateLength,
             errorText: lError,
@@ -117,7 +119,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
 
           AppNumberField(
-            label: 'Width (m)',
+            label: EngineeringTerms.width,
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateWidth,
             errorText: wError,
@@ -125,7 +127,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
 
           AppNumberField(
-            label: 'Depth (m)',
+            label: EngineeringTerms.depth,
             suffixIcon: SbIcons.height,
             onChanged: controller.updateDepth,
             errorText: dError,
@@ -133,7 +135,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
 
           AppNumberField(
-            label: 'Rate per m³ (optional)',
+            label: EngineeringTerms.ratePerUnit,
             suffixIcon: SbIcons.payments,
             onChanged: controller.updateRate,
           ),
@@ -148,7 +150,7 @@ class SandScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
@@ -31,7 +34,7 @@ class CementScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'RESULT SUMMARY',
+              EngineeringTerms.resultSummary,
               style: TextStyle(
                 fontSize: AppFontSizes.title,
                 fontWeight: FontWeight.w600,
@@ -43,28 +46,28 @@ class CementScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
             SbListItem(
-              title: 'Wet Volume',
+              title: EngineeringTerms.wetVolume,
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
-              title: 'Dry Volume',
+              title: EngineeringTerms.dryVolume,
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
-              title: 'Cement Weight',
+              title: EngineeringTerms.cementWeight,
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
             SbListItem(
-              title: 'Number of Bags',
+              title: EngineeringTerms.numberOfBags,
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
                 style: TextStyle(
@@ -79,7 +82,7 @@ class CementScreen extends ConsumerWidget {
               const Divider(),
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
               SbListItem(
-                title: 'Estimated Cost',
+                title: EngineeringTerms.estimatedCost,
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -96,12 +99,12 @@ class CementScreen extends ConsumerWidget {
     }
 
     return AppScreenWrapper(
-      title: 'Cement Bag Estimator',
+      title: ScreenTitles.cementBagEstimator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'VOLUME & DIMENSIONS',
+            EngineeringTerms.volumeAndDimensions,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -111,28 +114,28 @@ class CementScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           AppNumberField(
-            label: 'Length (m)',
+            label: EngineeringTerms.wallLength, // Reuse Wall Length or add generic Length
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Width (m)',
+            label: EngineeringTerms.width, // I should check if EngineeringTerms.width has (m)
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Depth (m)',
+            label: EngineeringTerms.depth,
             suffixIcon: SbIcons.height,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
-            'MIX RATIO (CEMENT : SAND : AGG)',
+            EngineeringTerms.ratioFormat,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -148,33 +151,33 @@ class CementScreen extends ConsumerWidget {
               SizedBox(
                 width: 100,
                 child: AppNumberField(
-                  label: 'Cement',
+                  label: EngineeringTerms.cement,
                   onChanged: controller.updateMixCement,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: 'Cement part of the ratio (e.g., 1)',
+                    message: EngineeringTerms.cementRatioInfo,
                   ),
                 ),
               ),
               SizedBox(
                 width: 100,
                 child: AppNumberField(
-                  label: 'Sand',
+                  label: EngineeringTerms.sand,
                   onChanged: controller.updateMixSand,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: 'Sand part of the ratio (e.g., 2)',
+                    message: EngineeringTerms.sandRatioInfo,
                   ),
                 ),
               ),
               SizedBox(
                 width: 100,
                 child: AppNumberField(
-                  label: 'Aggregate',
+                  label: EngineeringTerms.aggregate,
                   onChanged: controller.updateMixAggregate,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: 'Aggregate part of the ratio (e.g., 4)',
+                    message: EngineeringTerms.aggregateRatioInfo,
                   ),
                 ),
               ),
@@ -188,19 +191,19 @@ class CementScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Waste (%)',
+                  label: EngineeringTerms.wastePercent,
                   suffixIcon: SbIcons.percent,
                   onChanged: controller.updateWaste,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: 'Percentage of material expected to be lost during application',
+                    message: EngineeringTerms.wasteInfo,
                   ),
                 ),
               ),
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Price per Bag',
+                  label: EngineeringTerms.pricePerBag,
                   suffixIcon: SbIcons.payments,
                   onChanged: controller.updatePrice,
                 ),
@@ -211,12 +214,12 @@ class CementScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

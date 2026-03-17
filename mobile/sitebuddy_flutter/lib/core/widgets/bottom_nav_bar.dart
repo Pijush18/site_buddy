@@ -29,6 +29,7 @@ import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 /// ----------------------------------------------
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 
 /// CLASS: BottomNavBar
 /// PURPOSE: The main bottom navigation element inside the AppScaffold.
@@ -84,7 +85,7 @@ class BottomNavBar extends StatelessWidget {
                 icon: currentIndex == 0
                     ? SbIcons.home
                     : SbIcons.homeOutlined,
-                label: 'Home',
+                label: AppStrings.home,
                 isSelected: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
@@ -92,7 +93,7 @@ class BottomNavBar extends StatelessWidget {
                 icon: currentIndex == 1
                     ? SbIcons.calculator
                     : SbIcons.calculator,
-                label: 'Calc',
+                label: AppStrings.calculators,
                 isSelected: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
@@ -100,7 +101,7 @@ class BottomNavBar extends StatelessWidget {
                 icon: currentIndex == 2
                     ? SbIcons.architecture
                     : SbIcons.architectureOutlined,
-                label: 'Design',
+                label: AppStrings.design,
                 isSelected: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
@@ -108,7 +109,7 @@ class BottomNavBar extends StatelessWidget {
                 icon: currentIndex == 3
                     ? SbIcons.folderCopy
                     : SbIcons.folderCopyOutlined,
-                label: 'Project',
+                label: AppStrings.projects,
                 isSelected: currentIndex == 3,
                 onTap: () => onTap(3),
               ),

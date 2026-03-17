@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -32,19 +35,19 @@ class GradientScreen extends ConsumerWidget {
       Color classificationColor;
       switch (result.classification) {
         case GradientClassification.flat:
-          classificationLabel = 'FLAT';
+          classificationLabel = EngineeringTerms.flat;
           classificationColor = colorScheme.outline;
           break;
         case GradientClassification.mild:
-          classificationLabel = 'MILD';
+          classificationLabel = EngineeringTerms.mild;
           classificationColor = colorScheme.primary;
           break;
         case GradientClassification.moderate:
-          classificationLabel = 'MODERATE';
+          classificationLabel = EngineeringTerms.moderate;
           classificationColor = colorScheme.secondary;
           break;
         case GradientClassification.steep:
-          classificationLabel = 'STEEP';
+          classificationLabel = EngineeringTerms.steep;
           classificationColor = colorScheme.error;
           break;
       }
@@ -57,7 +60,7 @@ class GradientScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'RESULT SUMMARY',
+                  EngineeringTerms.resultSummary,
                   style: TextStyle(
                     fontSize: AppFontSizes.title,
                     fontWeight: FontWeight.w600,
@@ -69,7 +72,7 @@ class GradientScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 const Divider(),
                 SbListItem(
-                  title: 'Percentage',
+                  title: EngineeringTerms.percentage,
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
                     style: TextStyle(
@@ -80,14 +83,14 @@ class GradientScreen extends ConsumerWidget {
                   ),
                 ),
                 SbListItem(
-                  title: 'Ratio',
+                  title: EngineeringTerms.ratio,
                   trailing: Text(
-                    result.ratio == double.infinity ? 'Vertical' : '1 : ${result.ratio.toStringAsFixed(2)}',
+                    result.ratio == double.infinity ? EngineeringTerms.vertical : '1 : ${result.ratio.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
                 SbListItem(
-                  title: 'Angle',
+                  title: EngineeringTerms.angle,
                   trailing: Text(
                     '${result.angle.toStringAsFixed(2)}°',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -100,7 +103,7 @@ class GradientScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        'CLASSIFICATION',
+                        EngineeringTerms.classification,
                         style: TextStyle(
                           fontSize: AppFontSizes.tab,
                           color: classificationColor.withValues(alpha: 0.6),
@@ -127,7 +130,7 @@ class GradientScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'SLOPE VISUALIZATION',
+                  EngineeringTerms.slopeVisualization,
                   style: TextStyle(
                     fontSize: AppFontSizes.title,
                     fontWeight: FontWeight.w600,
@@ -154,7 +157,7 @@ class GradientScreen extends ConsumerWidget {
     }
 
     return AppScreenWrapper(
-      title: 'Gradient Tool',
+      title: ScreenTitles.gradientTool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -165,7 +168,7 @@ class GradientScreen extends ConsumerWidget {
               const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
               const Flexible(
                 child: Text(
-                  'Slope & Gradient Calculator',
+                  EngineeringTerms.slopeCalculator,
                   style: TextStyle(
                     fontSize: AppFontSizes.title,
                     fontWeight: FontWeight.w600,
@@ -177,7 +180,7 @@ class GradientScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           AppNumberField(
-            label: 'Vertical Rise (m)',
+            label: EngineeringTerms.verticalRise,
             suffixIcon: SbIcons.arrowUp,
             onChanged: controller.updateRise,
             errorText: rError,
@@ -185,7 +188,7 @@ class GradientScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
 
           AppNumberField(
-            label: 'Horizontal Run (m)',
+            label: EngineeringTerms.horizontalRun,
             suffixIcon: SbIcons.arrowForward,
             onChanged: controller.updateRun,
             errorText: runError,
@@ -196,12 +199,12 @@ class GradientScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -246,7 +249,7 @@ class _FieldReference extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'FIELD REFERENCE',
+          EngineeringTerms.fieldReference,
           style: TextStyle(
             fontSize: AppFontSizes.title,
             fontWeight: FontWeight.w600,
@@ -259,13 +262,13 @@ class _FieldReference extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              SbListItem(title: 'Sewer Pipes', trailing: Text('1:100 to 1:200')),
+              SbListItem(title: EngineeringTerms.sewerPipes, trailing: Text(EngineeringTerms.sewerPipesRef)),
               Divider(height: 1),
-              SbListItem(title: 'Road Cross Fall', trailing: Text('2% to 3%')),
+              SbListItem(title: EngineeringTerms.roadCrossFall, trailing: Text(EngineeringTerms.roadCrossFallRef)),
               Divider(height: 1),
-              SbListItem(title: 'Wheelchair Ramp', trailing: Text('1:12 (max 1:8)')),
+              SbListItem(title: EngineeringTerms.wheelchairRamp, trailing: Text(EngineeringTerms.wheelchairRampRef)),
               Divider(height: 1),
-              SbListItem(title: 'Earthworks Batter', trailing: Text('1:2 to 1:4')),
+              SbListItem(title: EngineeringTerms.earthworksBatter, trailing: Text(EngineeringTerms.earthworksBatterRef)),
             ],
           ),
         ),

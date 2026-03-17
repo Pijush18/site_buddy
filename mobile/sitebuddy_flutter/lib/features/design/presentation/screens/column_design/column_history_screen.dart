@@ -10,6 +10,8 @@ import 'package:site_buddy/shared/presentation/providers/history_providers.dart'
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:intl/intl.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 
 /// SCREEN: ColumnHistoryScreen
 /// PURPOSE: History of all column designs and checks.
@@ -23,18 +25,17 @@ class ColumnHistoryScreen extends ConsumerWidget {
 
     if (selectedProject == null) {
       return const AppScreenWrapper(
-        title: 'Column History',
+        title: ScreenTitles.columnHistory,
         child: SBEmptyState(
           icon: Icons.domain_disabled_outlined,
-          title: 'No Project Selected',
-          description:
-              'Please select or create a project to view its calculation history.',
+          title: AppStrings.noProjectSelected,
+          description: AppStrings.selectProjectDesc,
         ),
       );
     }
 
     return AppScreenWrapper(
-      title: 'Column History',
+      title: ScreenTitles.columnHistory,
       child: FutureBuilder<List<CalculationHistoryEntry>>(
         future: historyRepo.getEntriesByProject(selectedProject.id),
         builder: (context, snapshot) {
@@ -54,8 +55,8 @@ class ColumnHistoryScreen extends ConsumerWidget {
           if (columnHistory.isEmpty) {
             return const SBEmptyState(
               icon: Icons.history_toggle_off_outlined,
-              title: 'No Column History',
-              description: 'No previous column designs found.',
+              title: ScreenTitles.columnHistory,
+              description: AppStrings.noEntriesFound,
             );
           }
 
@@ -99,7 +100,7 @@ class _HistoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'COLUMN DESIGN',
+                AppStrings.design.toUpperCase(), // Or add a specific constant
                 style: TextStyle(
                   fontSize: AppFontSizes.tab,
                   color: colorScheme.primary,

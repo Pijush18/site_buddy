@@ -12,7 +12,8 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/enums/unit_system.dart';
-import 'package:site_buddy/core/localization/generated/app_localizations.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/error_strings.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/domain/auth_repository.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
@@ -25,20 +26,18 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return AppScreenWrapper(
-      title: l10n.settings,
+      title: AppStrings.settings,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // --- SECTION 1: ACCOUNT ---
-          const SBSectionHeader(title: "Account"),
+          const SBSectionHeader(title: AppStrings.account),
           _buildAccountSection(context),
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APPEARANCE ---
-          const SBSectionHeader(title: "Appearance"), // Standardized title
+          const SBSectionHeader(title: AppStrings.appearance), // Standardized title
           SBCard(
             padding: EdgeInsets.zero,
             child: Column(
@@ -46,8 +45,8 @@ class SettingsScreen extends StatelessWidget {
                 SbSettingsTile(
                   isVertical: true,
                   icon: SbIcons.palette,
-                  title: l10n.themeMode,
-                  subtitle: "Choose how SiteBuddy appears",
+                  title: AppStrings.themeMode,
+                  subtitle: AppStrings.chooseHowAppAppears,
                   trailing: Consumer(
                     builder: (context, ref, _) {
                       final settings = ref.watch(settingsProvider);
@@ -61,11 +60,11 @@ class SettingsScreen extends StatelessWidget {
                         labelBuilder: (mode) {
                           switch (mode) {
                             case ThemeMode.system:
-                              return 'Auto';
+                              return AppStrings.auto;
                             case ThemeMode.light:
-                              return l10n.light;
+                              return AppStrings.light;
                             case ThemeMode.dark:
-                              return l10n.dark;
+                              return AppStrings.dark;
                           }
                         },
                         onChanged: (mode) =>
@@ -78,8 +77,8 @@ class SettingsScreen extends StatelessWidget {
                 SbSettingsTile(
                   isVertical: true,
                   icon: SbIcons.refresh,
-                  title: l10n.language,
-                  subtitle: "Select your preferred language",
+                  title: AppStrings.language,
+                  subtitle: AppStrings.selectPreferredLanguage,
                   trailing: Consumer(
                     builder: (context, ref, _) {
                       final settings = ref.watch(settingsProvider);
@@ -87,7 +86,7 @@ class SettingsScreen extends StatelessWidget {
                         value: settings.locale,
                         items: const ['en', 'hi'],
                         labelBuilder: (code) =>
-                            code == 'en' ? l10n.english : l10n.hindi,
+                            code == 'en' ? AppStrings.english : AppStrings.hindi,
                         onChanged: (code) {
                           ref.read(settingsProvider.notifier).setLocale(code);
                         },
@@ -101,7 +100,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ENGINEERING STANDARDS ---
-          const SBSectionHeader(title: "Engineering Standards"),
+          const SBSectionHeader(title: AppStrings.engineeringStandards),
           SBCard(
             padding: EdgeInsets.zero,
             child: Column(
@@ -109,8 +108,8 @@ class SettingsScreen extends StatelessWidget {
                 SbSettingsTile(
                   isVertical: true,
                   icon: SbIcons.ruler,
-                  title: l10n.unitSystem,
-                  subtitle: "Select measurement system",
+                  title: AppStrings.unitSystem,
+                  subtitle: AppStrings.selectMeasurementSystem,
                   trailing: Consumer(
                     builder: (context, ref, _) {
                       final settings = ref.watch(settingsProvider);
@@ -118,8 +117,8 @@ class SettingsScreen extends StatelessWidget {
                         value: settings.unitSystem,
                         items: UnitSystem.values,
                         labelBuilder: (unit) => unit == UnitSystem.metric
-                            ? l10n.metric
-                            : l10n.imperial,
+                            ? AppStrings.metric
+                            : AppStrings.imperial,
                         onChanged: (unit) => ref
                             .read(settingsProvider.notifier)
                             .setUnitSystem(unit),
@@ -133,7 +132,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: APP BEHAVIOR ---
-          const SBSectionHeader(title: "App Behavior"),
+          const SBSectionHeader(title: AppStrings.appBehavior),
           SBCard(
             padding: EdgeInsets.zero,
             child: Consumer(
@@ -144,9 +143,8 @@ class SettingsScreen extends StatelessWidget {
                     SbSettingsTile(
                       isVertical: true,
                       icon: SbIcons.refresh,
-                      title: "Restore Last Screen on Launch",
-                      subtitle:
-                          "Continue where you left off when reopening the app.",
+                      title: AppStrings.restoreLastScreen,
+                      subtitle: AppStrings.continueWhereLeftOff,
                       onTap: () => ref
                           .read(settingsProvider.notifier)
                           .setRestoreLastScreen(!settings.restoreLastScreen),
@@ -164,8 +162,8 @@ class SettingsScreen extends StatelessWidget {
                     SbSettingsTile(
                       icon: SbIcons.history,
                       iconColor: Colors.orange,
-                      title: "Reset to Default Settings",
-                      subtitle: "Revert all settings to their original state",
+                      title: AppStrings.resetToDefault,
+                      subtitle: AppStrings.revertSettingsState,
                       onTap: () => _showResetDialog(context, ref),
                     ),
                   ],
@@ -176,14 +174,14 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: LEGAL ---
-          const SBSectionHeader(title: "Legal"),
+          const SBSectionHeader(title: AppStrings.legal),
           SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
                 SbSettingsTile(
                   icon: SbIcons.shield,
-                  title: "Privacy Policy",
+                  title: AppStrings.privacyPolicy,
                   onTap: () async {
                     final url = Uri.parse("https://pijush.com/privacy-policy/");
                     await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -192,7 +190,7 @@ class SettingsScreen extends StatelessWidget {
                 const Divider(height: 1, indent: 56),
                 SbSettingsTile(
                   icon: SbIcons.description,
-                  title: "Terms of Service",
+                  title: AppStrings.termsOfService,
                   onTap: () async {
                     final url = Uri.parse(
                       "https://pijush.com/terms-of-service/",
@@ -206,27 +204,27 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // --- SECTION: ABOUT ---
-          const SBSectionHeader(title: "About"),
+          const SBSectionHeader(title: AppStrings.about),
           SBCard(
             padding: EdgeInsets.zero,
             child: Column(
               children: [
                 const SbSettingsTile(
                   icon: SbIcons.info,
-                  title: "App Version",
-                  subtitle: "SiteBuddy v1.0.0",
+                  title: AppStrings.appVersion,
+                  subtitle: AppStrings.appVersionValue,
                 ),
                 const Divider(height: 1, indent: 56),
                 const SbSettingsTile(
                   icon: SbIcons.profile,
-                  title: "Developer",
-                  subtitle: "Er. Pijush Debbarma",
+                  title: AppStrings.developer,
+                  subtitle: AppStrings.developerName,
                 ),
                 const Divider(height: 1, indent: 56),
                 SbSettingsTile(
                   icon: SbIcons.link,
-                  title: "Website",
-                  subtitle: "www.pijush.com",
+                  title: AppStrings.website,
+                  subtitle: AppStrings.developerWebsite,
                   onTap: () async {
                     final url = Uri.parse("https://www.pijush.com");
                     await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -259,7 +257,7 @@ class SettingsScreen extends StatelessWidget {
                 subscription.isPremium,
               ),
               loading: () => _buildSmallLoadingState(),
-              error: (e, _) => _buildSmallErrorState("Sync error"),
+              error: (e, _) => _buildSmallErrorState(ErrorStrings.syncError),
             );
           },
           loading: () => _buildSmallLoadingState(),
@@ -294,7 +292,7 @@ class SettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Er. Pijush Debbarma",
+                      AppStrings.developerName,
                       style: TextStyle(
                         fontSize: AppFontSizes.title,
                         fontWeight: FontWeight.bold,
@@ -302,7 +300,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      user.email.isEmpty ? "No Email Registered" : user.email,
+                      user.email.isEmpty ? AppStrings.noEmailRegistered : user.email,
                       style: TextStyle(
                         fontSize: AppFontSizes.tab,
                         color: colorScheme.onSurfaceVariant,
@@ -315,7 +313,7 @@ class SettingsScreen extends StatelessWidget {
                         vertical: 3,
                       ),
                       child: Text(
-                        (isPremium ? "Premium Plan" : "Free Plan")
+                        (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
                             .toUpperCase(),
                         style: TextStyle(
                           fontSize: AppFontSizes.tab,
@@ -340,19 +338,19 @@ class SettingsScreen extends StatelessWidget {
             children: [
               SbSettingsTile(
                 icon: SbIcons.profile,
-                title: "Edit Profile",
+                title: AppStrings.editProfile,
                 onTap: () => debugPrint("Profile"),
               ),
               const Divider(height: 1, indent: 56),
               SbSettingsTile(
                 icon: SbIcons.payments,
-                title: "Subscription & Billing",
+                title: AppStrings.subscriptionBilling,
                 onTap: () => context.push('/subscription'),
               ),
               const Divider(height: 1, indent: 56),
               SbSettingsTile(
                 icon: SbIcons.logout,
-                title: "Logout",
+                title: AppStrings.logout,
                 iconColor: colorScheme.error,
                 onTap: () async {
                   await ref.read(authRepositoryProvider).logout();
@@ -392,14 +390,14 @@ class SettingsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Reset Settings?"),
+        title: const Text(AppStrings.resetSettingsQuestion),
         content: const Text(
-          "This will revert all your preferences (Theme, Units, Language) to default. This action cannot be undone.",
+          AppStrings.resetSettingsDisclaimer,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: const Text(AppStrings.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -410,12 +408,12 @@ class SettingsScreen extends StatelessWidget {
               ref.read(settingsProvider.notifier).setLocale('en');
               ref.read(settingsProvider.notifier).setRestoreLastScreen(false);
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Settings reset to defaults")),
-              );
-            },
-            child: const Text("Reset", style: TextStyle(color: Colors.red)),
-          ),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text(AppStrings.settingsResetToDefaults)),
+                );
+              },
+              child: const Text(AppStrings.reset, style: TextStyle(color: Colors.red)),
+            ),
         ],
       ),
     );

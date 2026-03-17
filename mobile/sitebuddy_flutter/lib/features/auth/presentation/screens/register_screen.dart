@@ -12,6 +12,9 @@ import 'package:site_buddy/features/auth/presentation/providers/auth_controller.
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/form_labels.dart';
+import 'package:site_buddy/core/constants/error_strings.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -65,17 +68,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final confirmPassword = _confirmPasswordController.text;
 
     if (email.isEmpty || !email.contains('@')) {
-      SbFeedback.showToast(context: context, message: 'Please enter a valid email');
+      SbFeedback.showToast(context: context, message: ErrorStrings.enterValidEmail);
       return;
     }
 
     if (password != confirmPassword) {
-      SbFeedback.showToast(context: context, message: 'Passwords do not match');
+      SbFeedback.showToast(context: context, message: ErrorStrings.passwordsDoNotMatch);
       return;
     }
 
     if (password.length < 6) {
-      SbFeedback.showToast(context: context, message: 'Password must be at least 6 characters');
+      SbFeedback.showToast(context: context, message: ErrorStrings.passwordTooShort);
       return;
     }
 
@@ -87,14 +90,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     } else {
       if (mounted) {
         final error = authState.error;
-        String message = 'Registration failed.';
+        String message = ErrorStrings.registrationFailed;
         if (error is firebase.FirebaseAuthException) {
           if (error.code == 'email-already-in-use') {
-            message = 'Email already registered.';
+            message = ErrorStrings.emailAlreadyInUse;
           } else if (error.code == 'weak-password') {
-            message = 'Password is too weak.';
+            message = ErrorStrings.weakPassword;
           } else if (error.code == 'network-request-failed') {
-            message = 'Network error. Check connection.';
+            message = ErrorStrings.networkError;
           }
         }
         SbFeedback.showToast(context: context, message: message);
@@ -107,13 +110,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Account Created'),
-        content: const Text(
-          'Verification email sent. Please verify your email before signing in.',
-        ),
+        title: const Text(AppStrings.accountCreated),
+        content: const Text(AppStrings.verifyEmailToSignIn),
         actions: [
           SBButton.primary(
-            label: 'Back to Login',
+            label: AppStrings.backToLogin,
             onPressed: () {
               ref.read(authRepositoryProvider).logout();
               context.go('/login');
@@ -144,7 +145,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
-            'SiteBuddy',
+            AppStrings.siteBuddy,
             style: TextStyle(
               fontSize: 32, // Preserving headline-like size
               fontWeight: FontWeight.bold,
@@ -153,7 +154,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
-            'Professional Structural Design Suite',
+            AppStrings.structuralDesignSuite,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -163,10 +164,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
           const SBSectionHeader(
-            title: 'Join SiteBuddy',
+            title: AppStrings.joinSiteBuddy,
           ),
           Text(
-            'Start your professional design journey',
+            AppStrings.startJourney,
             style: TextStyle(
               fontSize: AppFontSizes.subtitle,
               color: colorScheme.onSurfaceVariant,
@@ -182,8 +183,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 SbInput(
                   controller: _emailController,
                   focusNode: _emailFocusNode,
-                  label: 'Email',
-                  hint: 'your@email.com',
+                  label: FormLabels.email,
+                  hint: FormLabels.emailHint,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
@@ -193,8 +194,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 SbInput(
                   controller: _passwordController,
                   focusNode: _passwordFocusNode,
-                  label: 'Password',
-                  hint: '••••••••',
+                  label: FormLabels.password,
+                  hint: FormLabels.passwordHint,
                   obscureText: _obscurePassword,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
@@ -211,8 +212,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 SbInput(
                   controller: _confirmPasswordController,
                   focusNode: _confirmPasswordFocusNode,
-                  label: 'Confirm Password',
-                  hint: '••••••••',
+                  label: FormLabels.confirmPassword,
+                  hint: FormLabels.passwordHint,
                   obscureText: _obscurePassword,
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _register(),
@@ -220,7 +221,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 ),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                 SBButton.primary(
-                  label: 'Register',
+                  label: AppStrings.register,
                   onPressed: (isLoading ||
                           _emailController.text.isEmpty ||
                           _passwordController.text.isEmpty ||
@@ -235,7 +236,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SBButton.secondary(
-            label: 'Already have an account? Sign In',
+            label: AppStrings.alreadyHaveAccountSignIn,
             onPressed: () => context.go('/login'),
             fullWidth: true,
           ),

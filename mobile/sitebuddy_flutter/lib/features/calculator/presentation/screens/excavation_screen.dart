@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -35,66 +38,66 @@ class ExcavationScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return AppScreenWrapper(
-      title: 'Excavation Calculator',
+      title: ScreenTitles.excavationCalculator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: 'Pit Dimensions'),
+          const _SectionLabel(label: EngineeringTerms.pitDimensions),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Length (m)',
-            hint: 'e.g. 2.0',
+            label: EngineeringTerms.wallLength,
+            hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Width (m)',
-            hint: 'e.g. 2.0',
+            label: EngineeringTerms.width,
+            hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Depth (m)',
-            hint: 'e.g. 1.5',
+            label: EngineeringTerms.depth,
+            hint: EngineeringTerms.pitDepthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const _SectionLabel(label: 'Parameters'),
+          const _SectionLabel(label: EngineeringTerms.parameters),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Clearance (m)',
-            hint: 'e.g. 0.3',
+            label: EngineeringTerms.clearance,
+            hint: EngineeringTerms.widthHint,
             initialValue: '0.3',
             onChanged: controller.updateClearance,
             onInfoPressed: () => SbFeedback.showToast(
               context: context,
-              message: 'Extra space added around the pit for working room (IS 3764).',
+              message: EngineeringTerms.clearanceInfo,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Swell Factor',
-            hint: 'e.g. 1.25',
+            label: EngineeringTerms.swellFactor,
+            hint: EngineeringTerms.swellFactorHint,
             initialValue: '1.25',
             onChanged: controller.updateSwellFactor,
             onInfoPressed: () => SbFeedback.showToast(
               context: context,
-              message: 'Ratio of loose volume to bank volume. 1.25 for typical soil.',
+              message: EngineeringTerms.swellFactorInfo,
             ),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -169,7 +172,7 @@ class _ResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'RESULT SUMMARY',
+            EngineeringTerms.resultSummary,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -181,7 +184,7 @@ class _ResultCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
           SbListItem(
-            title: 'Total Volume (Loose)',
+            title: EngineeringTerms.totalVolumeLoose,
             trailing: Text(
               '${result.volumeM3.toStringAsFixed(2)} m³',
               style: TextStyle(
@@ -192,7 +195,7 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           SbListItem(
-            title: 'Bank Volume (Natural)',
+            title: EngineeringTerms.bankVolumeNatural,
             trailing: Text(
               '${(result.volumeM3 / result.swellFactor).toStringAsFixed(2)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -204,7 +207,7 @@ class _ResultCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Clearance:',
+                EngineeringTerms.clearanceLabel,
                 style: TextStyle(fontSize: AppFontSizes.tab),
               ),
               Text(
@@ -220,7 +223,7 @@ class _ResultCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Swell Factor:',
+                EngineeringTerms.swellFactorLabel,
                 style: TextStyle(fontSize: AppFontSizes.tab),
               ),
               Text(

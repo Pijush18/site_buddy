@@ -6,6 +6,8 @@ import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 
 class SubscriptionScreen extends ConsumerWidget {
   const SubscriptionScreen({super.key});
@@ -17,7 +19,7 @@ class SubscriptionScreen extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
 
     return AppScreenWrapper(
-      title: 'Subscription',
+      title: AppStrings.subscription,
       child: statusAsync.when(
         data: (status) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,7 +28,7 @@ class SubscriptionScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
             if (!status.isPremium) ...[
               const Text(
-                'Upgrade to Premium',
+                AppStrings.upgradeToPremium,
                 style: TextStyle(
                   fontSize: AppFontSizes.title,
                   fontWeight: FontWeight.bold,
@@ -35,7 +37,7 @@ class SubscriptionScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
               Text(
-                'Unlock the full power of SiteBuddy Engineering AI',
+                AppStrings.unlockAIPower,
                 style: TextStyle(
                   fontSize: AppFontSizes.subtitle,
                   color: colorScheme.onSurfaceVariant,
@@ -53,7 +55,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       const Icon(SbIcons.checkFilled, color: Colors.green, size: 48),
                       const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                       const Text(
-                        'You are a Premium User',
+                        AppStrings.premiumUserStatus,
                         style: TextStyle(
                           fontSize: AppFontSizes.subtitle,
                           fontWeight: FontWeight.bold,
@@ -61,7 +63,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       Text(
-                        'All advanced engineering tools and AI assistant are unlocked.',
+                        AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: AppFontSizes.subtitle,
@@ -94,7 +96,7 @@ class SubscriptionScreen extends ConsumerWidget {
           color: status.isPremium ? Colors.amber : colorScheme.outline,
         ),
         title: const Text(
-          'Current Plan',
+          AppStrings.currentPlan,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
@@ -136,7 +138,7 @@ class SubscriptionScreen extends ConsumerWidget {
             child: Column(
               children: [
                 Text(
-                  'PREMIUM LOGIC',
+                  AppStrings.premiumLogic,
                   style: TextStyle(
                     fontSize: AppFontSizes.tab,
                     fontWeight: FontWeight.bold,
@@ -146,7 +148,7 @@ class SubscriptionScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 const Text(
-                  '\$9.99 / Month',
+                  AppStrings.monthlyPrice,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -159,13 +161,13 @@ class SubscriptionScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               children: [
-                _buildBenefitItem(context, 'Full AI Engineering Assistant'),
-                _buildBenefitItem(context, 'PDF Report Cloud Sync'),
-                _buildBenefitItem(context, 'Advanced Steel Reinforcement Designs'),
-                _buildBenefitItem(context, 'Multi-Project Management'),
+                _buildBenefitItem(context, AppStrings.fullAIAssistant),
+                _buildBenefitItem(context, AppStrings.cloudSync),
+                _buildBenefitItem(context, AppStrings.advancedSteelDesign),
+                _buildBenefitItem(context, AppStrings.multiProjectManagement),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                 SbButton.primary(
-                  label: 'Subscribe Now',
+                  label: AppStrings.subscribeNow,
                   onPressed: () => ref.read(subscriptionRepositoryProvider).purchasePremium(),
                 ),
               ],
@@ -200,7 +202,7 @@ class SubscriptionScreen extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Compare Plans',
+          AppStrings.comparePlans,
           style: TextStyle(
             fontSize: AppFontSizes.subtitle,
             fontWeight: FontWeight.bold,
@@ -208,11 +210,11 @@ class SubscriptionScreen extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
         Divider(color: colorScheme.outlineVariant),
-        _buildComparisonRow('Basic Calculations', true, true),
-        _buildComparisonRow('Offline Usage', true, true),
-        _buildComparisonRow('AI Assistant', false, true),
-        _buildComparisonRow('Cloud Sync', false, true),
-        _buildComparisonRow('Professional Reports', false, true),
+        _buildComparisonRow(AppStrings.basicCalculations, true, true),
+        _buildComparisonRow(AppStrings.offlineUsage, true, true),
+        _buildComparisonRow(EngineeringTerms.aiAssistant, false, true),
+        _buildComparisonRow(AppStrings.cloudSync, false, true),
+        _buildComparisonRow(AppStrings.professionalReports, false, true),
       ],
     );
   }

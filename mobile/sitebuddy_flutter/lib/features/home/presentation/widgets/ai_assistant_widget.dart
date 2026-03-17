@@ -26,6 +26,7 @@ import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 
 /// CLASS: AiAssistantWidget
 class AiAssistantWidget extends ConsumerStatefulWidget {
@@ -61,19 +62,17 @@ class _AiAssistantWidgetState extends ConsumerState<AiAssistantWidget> {
           children: [
             Icon(SbIcons.premium, color: Colors.amber),
             AppLayout.hGap8,
-            Text('Go Premium'),
+            Text(AppStrings.goPremium),
           ],
         ),
-        content: const Text(
-          'Smart AI Assistant is a premium feature. Upgrade now to unlock advanced engineering intelligence and report syncing.',
-        ),
+        content: const Text(AppStrings.premiumFeatureNotice),
         actions: [
           SbButton.ghost(
-            label: 'Close',
+            label: AppStrings.close,
             onPressed: () => context.pop(),
           ),
           SbButton.primary(
-            label: 'Upgrade Now',
+            label: AppStrings.upgradeNow,
             onPressed: () {
               context.pop();
               context.push('/subscription');

@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
@@ -41,12 +44,12 @@ class MaterialCalculatorScreen extends ConsumerWidget {
     final bool isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return AppScreenWrapper(
-      title: 'Material Calculator',
+      title: ScreenTitles.materialCalculator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'CONCRETE GRADE',
+            EngineeringTerms.concreteGrade,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -64,30 +67,30 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             },
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const _SectionLabel(label: 'Dimensions'),
+          const _SectionLabel(label: EngineeringTerms.dimensions),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           AppNumberField(
-            label: 'Length (m)',
+            label: EngineeringTerms.wallLength,
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Width (m)',
+            label: EngineeringTerms.width,
             suffixIcon: SbIcons.width,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           AppNumberField(
-            label: 'Thickness / Depth (m)',
+            label: EngineeringTerms.thicknessDepth,
             suffixIcon: SbIcons.layers,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const _SectionLabel(label: 'Reinforcement & Waste'),
+          const _SectionLabel(label: EngineeringTerms.reinforcementAndWaste),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Wrap(
             spacing: AppSpacing.md, // Replaced AppLayout.md
@@ -96,8 +99,8 @@ class MaterialCalculatorScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Steel Ratio (%)',
-                  hint: '1',
+                  label: EngineeringTerms.steelRatioPercent,
+                  hint: EngineeringTerms.steelRatioHint,
                   suffixIcon: SbIcons.rebarVertical,
                   onChanged: controller.updateSteelRatio,
                 ),
@@ -105,8 +108,8 @@ class MaterialCalculatorScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: AppNumberField(
-                  label: 'Waste Factor (%)',
-                  hint: '0',
+                  label: EngineeringTerms.wasteFactorPercent,
+                  hint: EngineeringTerms.wasteFactorHint,
                   suffixIcon: SbIcons.percent,
                   onChanged: controller.updateWasteFactor,
                 ),
@@ -117,12 +120,12 @@ class MaterialCalculatorScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -200,7 +203,7 @@ class _ResultSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'RESULT SUMMARY',
+                EngineeringTerms.resultSummary,
                 style: TextStyle(
                   fontSize: AppFontSizes.title,
                   fontWeight: FontWeight.w600,
@@ -214,16 +217,16 @@ class _ResultSection extends StatelessWidget {
               
               // Basic concrete results
               SbListItem(
-                title: 'Concrete Volume',
+                title: EngineeringTerms.concreteVolume,
                 trailing: Text(
                   '${result.concreteVolume.toStringAsFixed(3)} m³',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
                 ),
               ),
               SbListItem(
-                title: 'Cement Bags (50 kg)',
+                title: EngineeringTerms.cementBags,
                 trailing: Text(
-                  '${result.cementBags.toStringAsFixed(0)} bags',
+                  '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
                   style: TextStyle(
                     fontSize: AppFontSizes.subtitle,
                     fontWeight: FontWeight.w600,
@@ -232,14 +235,14 @@ class _ResultSection extends StatelessWidget {
                 ),
               ),
               SbListItem(
-                title: 'Sand Volume',
+                title: EngineeringTerms.sandVolume,
                 trailing: Text(
                   '${result.sandVolume.toStringAsFixed(3)} m³',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
                 ),
               ),
               SbListItem(
-                title: 'Aggregate Volume',
+                title: EngineeringTerms.aggregateVolume,
                 trailing: Text(
                   '${result.aggregateVolume.toStringAsFixed(3)} m³',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -251,7 +254,7 @@ class _ResultSection extends StatelessWidget {
 
               // Steel results
               SbListItem(
-                title: 'Steel Weight',
+                title: EngineeringTerms.steelWeight,
                 trailing: Text(
                   '${result.steelWeight.toStringAsFixed(1)} kg',
                   style: TextStyle(
@@ -262,7 +265,7 @@ class _ResultSection extends StatelessWidget {
                 ),
               ),
               SbListItem(
-                title: 'Binding Wire (≈1%)',
+                title: EngineeringTerms.bindingWire,
                 trailing: Text(
                   '${result.bindingWire.toStringAsFixed(2)} kg',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -273,7 +276,7 @@ class _ResultSection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.sm), // Replaced AppLayout.pSmall
                   child: Text(
-                    'Steel ratio set to 0 — plain concrete (PCC) assumed.',
+                    EngineeringTerms.steelRatioZeroNote,
                     style: TextStyle(
                       fontSize: AppFontSizes.tab,
                       color: colorScheme.onSurfaceVariant,
@@ -290,7 +293,7 @@ class _ResultSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Mix Grade:', style: TextStyle(fontSize: AppFontSizes.tab)),
+                  const Text(EngineeringTerms.mixGradeLabel, style: TextStyle(fontSize: AppFontSizes.tab)),
                   Text(
                     result.concreteGrade,
                     style: TextStyle(
@@ -317,9 +320,7 @@ class _IsCodeNote extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Text(
-      'Calculations per IS 456:2000 (nominal volume proportioning).\n'
-      'Dry volume factor: 1.54 for concrete · 1.30 for mortar (IS 2212:1991).\n'
-      'Steel density: 7850 kg/m³ (IS 1786).',
+      EngineeringTerms.concreteCodeRef,
       style: TextStyle(
         fontSize: AppFontSizes.tab,
         color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),

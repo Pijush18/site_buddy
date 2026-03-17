@@ -3,6 +3,7 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/components/sb_button.dart';
 import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 
 /// Displays a vertical list of structural optimization suggestions.
 class OptimizationList extends StatelessWidget {
@@ -19,7 +20,7 @@ class OptimizationList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (options.isEmpty) {
       return const Center(
-        child: Text('No optimization suggestions available for this load.'),
+        child: Text(AppStrings.noOptimizationSuggestions),
       );
     }
 
@@ -49,7 +50,7 @@ class OptimizationList extends StatelessWidget {
                     const Divider(height: 1),
                     const SizedBox(height: AppSpacing.md),
                     SBButton(
-                      label: 'Select Option',
+                      label: AppStrings.selectOption,
                       onPressed: onOptionSelected != null
                           ? () => onOptionSelected!(option)
                           : null,

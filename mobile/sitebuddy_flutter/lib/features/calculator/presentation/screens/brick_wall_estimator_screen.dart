@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -38,17 +41,17 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.heightInput.isNotEmpty && state.thicknessInput.isNotEmpty;
 
     return AppScreenWrapper(
-      title: 'Brick Wall Estimator',
+      title: ScreenTitles.brickWallEstimator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // ── Dimensions section ─────────────────────────────────────────
-          const _SectionLabel(label: 'Wall Dimensions'),
+          const _SectionLabel(label: EngineeringTerms.wallDimensions),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'Wall Length (m)',
-            hint: 'e.g. 10.0',
+            label: EngineeringTerms.wallLength,
+            hint: EngineeringTerms.lengthHint,
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateLength,
             errorText: lError,
@@ -56,8 +59,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'Wall Height (m)',
-            hint: 'e.g. 3.0',
+            label: EngineeringTerms.wallHeight,
+            hint: EngineeringTerms.heightHint,
             suffixIcon: SbIcons.height,
             onChanged: controller.updateHeight,
             errorText: hError,
@@ -65,8 +68,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'Wall Thickness (m)',
-            hint: 'e.g. 0.23 for 9-inch',
+            label: EngineeringTerms.wallThickness,
+            hint: EngineeringTerms.brickThicknessHint,
             suffixIcon: SbIcons.layers,
             onChanged: controller.updateThickness,
             errorText: tError,
@@ -75,7 +78,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // ── Brick & mortar section ─────────────────────────────────────
-          const _SectionLabel(label: 'Brick & Mortar'),
+          const _SectionLabel(label: EngineeringTerms.brickAndMortar),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           SbCard(
@@ -88,7 +91,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Brick Size',
+                        EngineeringTerms.brickSize,
                         style: TextStyle(
                           fontSize: AppFontSizes.tab,
                           color: colorScheme.onSurfaceVariant,
@@ -96,11 +99,11 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                       const Text(
-                        '190 × 90 × 90 mm  (IS modular standard)',
+                        EngineeringTerms.standardBrickSize,
                         style: TextStyle(fontSize: AppFontSizes.subtitle),
                       ),
                       Text(
-                        'With 10 mm mortar joint: 200 × 100 × 100 mm',
+                        EngineeringTerms.brickWithJoint,
                         style: TextStyle(
                           fontSize: AppFontSizes.tab,
                           color: colorScheme.onSurfaceVariant,
@@ -112,13 +115,11 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                 ),
                 SbButton.icon(
                   icon: SbIcons.info,
-                  tooltip: 'IS 2212:1991 standard brick dimensions',
+                  tooltip: EngineeringTerms.brickStandardRef,
                   onPressed: () {
                     SbFeedback.showToast(
                       context: context,
-                      message:
-                          'IS modular brick: 190×90×90 mm (without joint).\n'
-                          'Custom brick sizes coming soon.',
+                      message: EngineeringTerms.brickInfo,
                     );
                   },
                 ),
@@ -129,7 +130,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           Text(
-            'MORTAR RATIO',
+            EngineeringTerms.mortarRatio,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -156,12 +157,12 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -196,9 +197,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
           // ── IS code reference note ─────────────────────────────────────
           Text(
-            'Calculations per IS 2212:1991 (Brick masonry code of practice).\n'
-            'IS modular brick: 190 × 90 × 90 mm · Joint: 10 mm · Wastage: 5%.\n'
-            'Mortar dry volume factor: 1.30 · Cement density: 1440 kg/m³.',
+            EngineeringTerms.brickMasonryRef,
             style: TextStyle(
               fontSize: AppFontSizes.tab,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -247,7 +246,7 @@ class _ResultSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'RESULT SUMMARY',
+            EngineeringTerms.resultSummary,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -261,7 +260,7 @@ class _ResultSection extends StatelessWidget {
 
           // Bricks
           SbListItem(
-            title: 'Number of Bricks',
+            title: EngineeringTerms.numberOfBricks,
             trailing: Text(
               result.numberOfBricks.toString(),
               style: TextStyle(
@@ -272,7 +271,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItem(
-            title: 'Brick Volume',
+            title: EngineeringTerms.brickVolume,
             trailing: Text(
               '${result.brickVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -284,9 +283,9 @@ class _ResultSection extends StatelessWidget {
 
           // Cement & Sand
           SbListItem(
-            title: 'Cement Bags (50 kg)',
+            title: EngineeringTerms.cementBags,
             trailing: Text(
-              '${result.cementBags.toStringAsFixed(0)} bags',
+              '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
               style: TextStyle(
                 fontSize: AppFontSizes.subtitle,
                 fontWeight: FontWeight.w600,
@@ -295,7 +294,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItem(
-            title: 'Sand Volume',
+            title: EngineeringTerms.sandVolume,
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -307,7 +306,7 @@ class _ResultSection extends StatelessWidget {
 
           // Totals
           SbListItem(
-            title: 'Wall Volume',
+            title: EngineeringTerms.wallVolume,
             trailing: Text(
               '${result.wallVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -316,7 +315,7 @@ class _ResultSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Mortar Ratio:', style: TextStyle(fontSize: AppFontSizes.tab)),
+              const Text(EngineeringTerms.mortarRatioLabel, style: TextStyle(fontSize: AppFontSizes.tab)),
               Text(
                 result.mortarRatio,
                 style: TextStyle(

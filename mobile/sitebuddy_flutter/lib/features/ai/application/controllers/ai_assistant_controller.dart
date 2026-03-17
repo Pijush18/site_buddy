@@ -14,7 +14,6 @@
 /// ----------------------------------------------
 library;
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,6 +32,7 @@ import 'package:site_buddy/features/ai/application/usecase_providers.dart';
 import 'package:site_buddy/features/reports/application/providers/report_usecase_providers.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/errors/error_handler.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/features/ai/application/controllers/ai_history_controller.dart';
 
 /// Provider definition for the AI Controller.
@@ -58,7 +58,7 @@ class AiController extends Notifier<AiState> {
   /// Retrieves the dynamically active project scope dynamically from the Riverpod graph.
   String get currentProjectName {
     final project = ref.read(activeProjectProvider);
-    return project?.name ?? 'General';
+    return project?.name ?? AppStrings.general;
   }
 
   /// Updates the query string as the user types.
@@ -185,7 +185,7 @@ class AiController extends Notifier<AiState> {
       state = state.copyWith(
         isLoading: false,
         assistantResponse: combinedResponse,
-        query: 'Examine $moduleType Design',
+        query: '${AppStrings.examine} $moduleType ${AppStrings.design}',
       );
     } catch (e) {
       if (context != null && !context.mounted) return;

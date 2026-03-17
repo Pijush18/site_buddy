@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -117,7 +118,7 @@ class KnowledgeCard extends ConsumerWidget {
                   onChanged: (value) => ref
                       .read(aiControllerProvider.notifier)
                       .updateSearch(value),
-                  hint: 'Search inside topic...',
+                  hint: AppStrings.searchInsideTopic,
                   prefixIcon: Icon(SbIcons.search, color: colorScheme.primary),
                 ),
                 AppLayout.vGap16,
@@ -132,7 +133,7 @@ class KnowledgeCard extends ConsumerWidget {
                     AppLayout.vGap16,
                   ],
                   if (filteredKeyPoints.isNotEmpty) ...[
-                    const _SectionHeader(title: 'Key Points'),
+                    const _SectionHeader(title: AppStrings.keyPoints),
                     AppLayout.vGap8,
                     ...filteredKeyPoints.map(
                       (point) => _BulletPoint(text: point),
@@ -141,7 +142,7 @@ class KnowledgeCard extends ConsumerWidget {
                   ],
                   if (filteredThumbRules.isNotEmpty) ...[
                     _HighlightBox(
-                      title: 'Thumb Rules',
+                      title: AppStrings.thumbRules,
                       icon: SbIcons.architecture,
                       color: colorScheme.secondary,
                       items: filteredThumbRules,
@@ -149,7 +150,7 @@ class KnowledgeCard extends ConsumerWidget {
                     AppLayout.vGap16,
                   ],
                   if (filteredTypes.isNotEmpty) ...[
-                    const _SectionHeader(title: 'Types'),
+                    const _SectionHeader(title: AppStrings.types),
                     AppLayout.vGap8,
                     Wrap(
                       spacing: AppLayout.sm,
@@ -168,7 +169,7 @@ class KnowledgeCard extends ConsumerWidget {
                     AppLayout.vGap16,
                   ],
                   if (topic.relatedTopics.isNotEmpty) ...[
-                    const _SectionHeader(title: 'Explore Related Topics'),
+                    const _SectionHeader(title: AppStrings.exploreRelatedTopics),
                     AppLayout.vGap8,
                     Wrap(
                       spacing: AppLayout.sm,
@@ -188,7 +189,7 @@ class KnowledgeCard extends ConsumerWidget {
                   ],
                   if (topic.siteTip.isNotEmpty) ...[
                     _HighlightBox(
-                      title: 'Site Tip',
+                      title: AppStrings.siteTip,
                       icon: SbIcons.lightbulb,
                       color: colorScheme.tertiary,
                       items: [topic.siteTip],
@@ -198,7 +199,7 @@ class KnowledgeCard extends ConsumerWidget {
                   const Center(
                     child: Padding(
                       padding: AppLayout.paddingLarge,
-                      child: Text('No matches found'),
+                      child: Text(AppStrings.noMatchesFound),
                     ),
                   ),
                 ],

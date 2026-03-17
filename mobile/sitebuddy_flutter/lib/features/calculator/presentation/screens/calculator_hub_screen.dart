@@ -1,6 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -13,17 +16,17 @@ class CalculatorHubScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScreenWrapper(
-      title: 'Engineering Toolbox',
+      title: ScreenTitles.engineeringToolbox,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SbSection(
-            title: 'Quantity Tools',
+            title: AppStrings.quantityTools,
             child: _buildQuantityToolsSection(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           SbSection(
-            title: 'Field Surveying',
+            title: AppStrings.fieldSurveying,
             child: _buildFieldToolsSection(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
@@ -39,9 +42,8 @@ class CalculatorHubScreen extends StatelessWidget {
         // 1 — Concrete Material Estimator
         _buildToolCard(
           context,
-          title: 'Concrete Material Estimator',
-          description:
-              'Calculate cement bags, sand, aggregate, and steel for any slab.',
+          title: AppStrings.concreteMaterialEstimatorTitle,
+          description: AppStrings.concreteEstimatorDesc,
           icon: SbIcons.calculator,
           onTap: () => context.push('/calculator/material'),
         ),
@@ -50,9 +52,8 @@ class CalculatorHubScreen extends StatelessWidget {
         // 2 — Brick Wall Material Estimator
         _buildToolCard(
           context,
-          title: 'Brick Wall Estimator',
-          description:
-              'Estimate bricks, cement bags, mortar, and sand for brick walls.',
+          title: AppStrings.brickWallEstimatorTitle,
+          description: AppStrings.brickWallEstimatorDesc,
           icon: SbIcons.gridView,
           onTap: () => context.push('/calculator/brick-wall'),
         ),
@@ -61,8 +62,8 @@ class CalculatorHubScreen extends StatelessWidget {
         // 3 — Steel Weight Estimator
         _buildToolCard(
           context,
-          title: 'Steel Weight Estimator',
-          description: 'Estimate steel rebar length and weight requirements.',
+          title: AppStrings.steelWeightEstimatorTitle,
+          description: AppStrings.steelWeightEstimatorDesc,
           icon: SbIcons.rebar,
           onTap: () => context.push('/calculator/rebar'),
         ),
@@ -71,8 +72,8 @@ class CalculatorHubScreen extends StatelessWidget {
         // 4 — Excavation Volume
         _buildToolCard(
           context,
-          title: 'Excavation Estimator',
-          description: 'Calculate excavation volume and swell factors for foundations.',
+          title: AppStrings.excavationEstimatorTitle,
+          description: AppStrings.excavationEstimatorDesc,
           icon: SbIcons.terrain,
           onTap: () => context.push('/calculator/excavation'),
         ),
@@ -81,8 +82,8 @@ class CalculatorHubScreen extends StatelessWidget {
         // 5 — Shuttering Area
         _buildToolCard(
           context,
-          title: 'Shuttering Area',
-          description: 'Estimate formwork area for beams and footings.',
+          title: AppStrings.shutteringAreaTitle,
+          description: AppStrings.shutteringAreaDesc,
           icon: SbIcons.layers,
           onTap: () => context.push('/calculator/shuttering'),
         ),
@@ -101,25 +102,25 @@ class CalculatorHubScreen extends StatelessWidget {
       children: [
         _buildGridToolCard(
           context,
-          title: 'Level Calculator',
+          title: EngineeringTerms.levelCalculator,
           icon: SbIcons.height,
           onTap: () => context.push('/level'),
         ),
         _buildGridToolCard(
           context,
-          title: 'Gradient Tool',
+          title: EngineeringTerms.gradientTool,
           icon: SbIcons.trendingUp,
           onTap: () => context.push('/calculator/gradient'),
         ),
         _buildGridToolCard(
           context,
-          title: 'Unit Converter',
+          title: AppStrings.unitConverter,
           icon: SbIcons.compareArrows,
           onTap: () => context.push('/converter'),
         ),
         _buildGridToolCard(
           context,
-          title: 'Currency Converter',
+          title: AppStrings.currencyConverter,
           icon: SbIcons.currencyExchange,
           onTap: () => context.push('/currency'),
         ),

@@ -2,22 +2,21 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/features/home/presentation/widgets/ai_assistant_widget.dart';
 import 'package:site_buddy/features/home/presentation/widgets/recent_activity_section.dart';
 
-import 'package:site_buddy/core/localization/generated/app_localizations.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return AppScreenWrapper(
-      title: l10n.appName,
+      title: AppStrings.appName,
       actions: [
         IconButton(
           icon: const Icon(SbIcons.settings),
@@ -47,9 +46,9 @@ class HomeScreen extends StatelessWidget {
 
               // ── 4. Recent Activity ──
               SbSection(
-                title: l10n.recentActivity,
+                title: AppStrings.recentActivity,
                 trailing: SbButton.ghost(
-                  label: l10n.viewAll,
+                  label: AppStrings.viewAll,
                   icon: SbIcons.chevronRight,
                   onPressed: () => context.push('/projects'),
                 ),
@@ -70,11 +69,10 @@ class _FieldToolsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return SbSection(
-      title: l10n.fieldTools,
+      title: AppStrings.fieldTools,
       child: GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
@@ -86,28 +84,28 @@ class _FieldToolsSection extends StatelessWidget {
         children: [
           SbGridCard(
             icon: SbIcons.ruler,
-            label: l10n.levelCalc,
+            label: EngineeringTerms.levelCalculator,
             color: colorScheme.primary,
             isVibrant: true,
             onTap: () => context.push('/level'),
           ),
           SbGridCard(
             icon: SbIcons.architecture,
-            label: l10n.gradient,
+            label: EngineeringTerms.gradientTool,
             color: colorScheme.primary,
             isVibrant: true,
             onTap: () => context.push('/calculator/gradient'),
           ),
           SbGridCard(
             icon: SbIcons.swap,
-            label: l10n.converter,
+            label: AppStrings.unitConverter,
             color: colorScheme.primary,
             isVibrant: true,
             onTap: () => context.push('/converter'),
           ),
           SbGridCard(
             icon: SbIcons.sync,
-            label: l10n.currency,
+            label: AppStrings.currencyConverter,
             color: colorScheme.primary,
             isVibrant: true,
             onTap: () => context.push('/currency'),
@@ -124,12 +122,11 @@ class _QuickActionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return SbSection(
-      title: l10n.quickActions,
+      title: AppStrings.quickActions,
       child: Row(
         children: [
           // New Project — primary
@@ -154,7 +151,7 @@ class _QuickActionsSection extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       Text(
-                        l10n.newProject,
+                        AppStrings.newProject,
                         style: TextStyle(
                           fontSize: AppFontSizes.title,
                           fontWeight: FontWeight.bold,
@@ -190,7 +187,7 @@ class _QuickActionsSection extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                       Text(
-                        l10n.shareReport,
+                        AppStrings.shareReport,
                         style: TextStyle(
                           fontSize: AppFontSizes.title,
                           fontWeight: FontWeight.bold,

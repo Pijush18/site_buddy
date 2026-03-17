@@ -1,5 +1,7 @@
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: site_report_preview_screen.dart
@@ -40,20 +42,20 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
   Widget build(BuildContext context) {
     if (widget.report.isEmpty) {
       return const AppScreenWrapper(
-        title: 'Report Preview',
-        child: Center(child: Text('Cannot generate report: Empty data source.')),
+        title: ScreenTitles.reportPreview,
+        child: Center(child: Text(AppStrings.noEntriesFound)), // Using a generic empty state string
       );
     }
 
     return AppScreenWrapper(
-      title: 'Report Preview',
+      title: ScreenTitles.reportPreview,
       child: PreviewableCard(
         previewKey: _previewKey,
         title: widget.report.projectName,
         actions: [
           PreviewAction(
             icon: SbIcons.image,
-            label: 'Share Image',
+            label: AppStrings.shareImage,
             onPressed: () {
               SiteReportImageGenerator.generateAndShareImage(
                 _previewKey,
@@ -63,18 +65,18 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
           ),
           PreviewAction(
             icon: SbIcons.pdf,
-            label: 'Export PDF',
+            label: AppStrings.exportPdf,
             onPressed: () {
               SiteReportPdfGenerator.generateAndShare(widget.report);
             },
           ),
           PreviewAction(
             icon: SbIcons.bookmarkAdd,
-            label: 'Save',
+            label: AppStrings.save,
             onPressed: () {
               SbFeedback.showToast(
                 context: context,
-                message: 'Generated report copied to clipboard!',
+                message: AppStrings.copiedToClipboard,
               );
             },
           ),

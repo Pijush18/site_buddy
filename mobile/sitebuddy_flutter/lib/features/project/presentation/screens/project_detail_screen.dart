@@ -13,6 +13,8 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/screen_titles.dart';
 
 /// CLASS: ProjectDetailScreen
 /// PURPOSE: Deep-dive view into a specific project.
@@ -33,8 +35,8 @@ class ProjectDetailScreen extends ConsumerWidget {
 
     if (proj == null) {
       return const AppScreenWrapper(
-        title: 'Project Not Found',
-        child: Center(child: Text('The requested project could not be found.')),
+        title: ScreenTitles.projectNotFound,
+        child: Center(child: Text(AppStrings.projectNotFoundDesc)),
       );
     }
 
@@ -100,7 +102,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'STATUS',
+                      AppStrings.status,
                       style: TextStyle(
                         fontSize: AppFontSizes.tab,
                         color: colorScheme.primary,
@@ -155,7 +157,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'CREATED',
+                          AppStrings.created,
                           style: TextStyle(
                             fontSize: AppFontSizes.tab,
                             color: colorScheme.onSurfaceVariant,
@@ -172,7 +174,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'LOCATION',
+                          AppStrings.location,
                           style: TextStyle(
                             fontSize: AppFontSizes.tab,
                             color: colorScheme.onSurfaceVariant,
@@ -204,7 +206,7 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty) ...[
-            const SBSectionHeader(title: 'Description'),
+            const SBSectionHeader(title: AppStrings.description),
             SBCard(
               child: Text(
                 proj.description!,
@@ -242,10 +244,10 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          const SBSectionHeader(title: 'Structural Calculations'),
+          const SBSectionHeader(title: AppStrings.design), // Or structural calculations
           calcItems.isEmpty
               ? const SBCard(
-                  child: Text('No entries found for this project.'),
+                  child: Text(AppStrings.noEntriesFound),
                 )
               : SBCard(
                   padding: EdgeInsets.zero,
@@ -275,10 +277,10 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          const SBSectionHeader(title: 'Level Log Sessions'),
+          const SBSectionHeader(title: AppStrings.fieldSurveying),
           logItems.isEmpty
               ? const SBCard(
-                  child: Text('No entries found for this project.'),
+                  child: Text(AppStrings.noEntriesFound),
                 )
               : SBCard(
                   padding: EdgeInsets.zero,
@@ -307,11 +309,11 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          const SBSectionHeader(title: 'Action Zone'),
+          const SBSectionHeader(title: AppStrings.actionZone),
           Column(
             children: [
               SBButton.primary(
-                label: 'New Inspection Entry',
+                label: AppStrings.newInspection,
                 icon: Icons.add_circle_outline,
                 onPressed: () {
                   context.push('/projects/$projectId/level-log');
@@ -320,7 +322,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.md),
               SBButton.secondary(
-                label: 'Edit Project',
+                label: AppStrings.editProject,
                 icon: Icons.edit_outlined,
                 onPressed: () {
                   context.push('/projects/$projectId/edit');

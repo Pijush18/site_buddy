@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -32,15 +34,15 @@ class LevelCalculatorScreen extends ConsumerWidget {
       Color directionColor;
       switch (result.direction) {
         case LevelDirection.rise:
-          directionLabel = 'RISE';
+          directionLabel = EngineeringTerms.rise;
           directionColor = colorScheme.primary;
           break;
         case LevelDirection.fall:
-          directionLabel = 'FALL';
+          directionLabel = EngineeringTerms.fall;
           directionColor = colorScheme.error;
           break;
         case LevelDirection.flat:
-          directionLabel = 'FLAT';
+          directionLabel = EngineeringTerms.flat;
           directionColor = colorScheme.onSurfaceVariant;
           break;
       }
@@ -50,7 +52,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'RESULT SUMMARY',
+              EngineeringTerms.resultSummary,
               style: TextStyle(
                 fontSize: AppFontSizes.title,
                 fontWeight: FontWeight.w600,
@@ -89,7 +91,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
             SbListItem(
-              title: 'Absolute Difference',
+              title: EngineeringTerms.absoluteDifference,
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -101,14 +103,14 @@ class LevelCalculatorScreen extends ConsumerWidget {
     }
 
     return AppScreenWrapper(
-      title: 'Level Calculator',
+      title: EngineeringTerms.levelCalculator,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Text(
-            'Field Level Comparison',
+            EngineeringTerms.fieldLevelComparison,
             style: TextStyle(
               fontSize: AppFontSizes.title,
               fontWeight: FontWeight.w600,
@@ -118,7 +120,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           AppNumberField(
-            label: 'Start Level (m)',
+            label: EngineeringTerms.startLevel,
             suffixIcon: SbIcons.arrowUp,
             onChanged: controller.updateStartLevel,
             errorText: sError,
@@ -126,7 +128,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
 
           AppNumberField(
-            label: 'End Level (m)',
+            label: EngineeringTerms.endLevel,
             suffixIcon: SbIcons.arrowDown,
             onChanged: controller.updateEndLevel,
             errorText: eError,
@@ -137,12 +139,12 @@ class LevelCalculatorScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SbButton.outline(
-                label: 'Clear All',
+                label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               SbButton.primary(
-                label: state.isLoading ? 'Calculating...' : 'Calculate',
+                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

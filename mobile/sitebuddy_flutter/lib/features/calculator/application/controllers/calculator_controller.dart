@@ -35,6 +35,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/constants/concrete_mix_constants.dart';
+import 'package:site_buddy/core/constants/error_strings.dart';
+import 'package:site_buddy/core/constants/validation_strings.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/calculator_state.dart';
@@ -70,7 +73,7 @@ class CalculatorController extends Notifier<CalculatorState> {
       depthInput: data.thickness?.toString() ?? state.depthInput,
       clearFailure: true,
     );
-    
+
     // Auto-calculate if we have all core dimensions
     if (data.length != null && data.width != null && data.thickness != null) {
       calculate();
@@ -131,19 +134,28 @@ class CalculatorController extends Notifier<CalculatorState> {
     state = state.copyWith(isLoading: true, clearFailure: true);
 
     // ── Validate core dimensions ────────────────────────────────────────────
-    final lParse = Validators.parsePositiveNumber(state.lengthInput, 'Length');
+    final lParse = Validators.parsePositiveNumber(
+      state.lengthInput,
+      EngineeringTerms.length,
+    );
     if (lParse.failure != null) {
       state = state.copyWith(isLoading: false, failure: lParse.failure);
       return;
     }
 
-    final wParse = Validators.parsePositiveNumber(state.widthInput, 'Width');
+    final wParse = Validators.parsePositiveNumber(
+      state.widthInput,
+      EngineeringTerms.width,
+    );
     if (wParse.failure != null) {
       state = state.copyWith(isLoading: false, failure: wParse.failure);
       return;
     }
 
-    final dParse = Validators.parsePositiveNumber(state.depthInput, 'Depth');
+    final dParse = Validators.parsePositiveNumber(
+      state.depthInput,
+      EngineeringTerms.depth,
+    );
     if (dParse.failure != null) {
       state = state.copyWith(isLoading: false, failure: dParse.failure);
       return;
@@ -152,14 +164,21 @@ class CalculatorController extends Notifier<CalculatorState> {
     // ── Parse optional percentage fields ────────────────────────────────────
     // Steel ratio: empty string or blank → 0 (plain concrete).
     final double steelPct =
-        _parseSafePercent(state.steelRatioInput, 'Steel Ratio').pct ?? 0.0;
-    if (_parseSafePercent(state.steelRatioInput, 'Steel Ratio').failure !=
+        _parseSafePercent(
+          state.steelRatioInput,
+          EngineeringTerms.steelRatio,
+        ).pct ??
+        0.0;
+    if (_parseSafePercent(
+          state.steelRatioInput,
+          EngineeringTerms.steelRatio,
+        ).failure !=
         null) {
       state = state.copyWith(
         isLoading: false,
         failure: _parseSafePercent(
           state.steelRatioInput,
-          'Steel Ratio',
+          EngineeringTerms.steelRatio,
         ).failure,
       );
       return;
@@ -167,14 +186,21 @@ class CalculatorController extends Notifier<CalculatorState> {
 
     // Waste factor: empty string or blank → 0 %.
     final double wastePct =
-        _parseSafePercent(state.wasteFactorInput, 'Waste Factor').pct ?? 0.0;
-    if (_parseSafePercent(state.wasteFactorInput, 'Waste Factor').failure !=
+        _parseSafePercent(
+          state.wasteFactorInput,
+          EngineeringTerms.wasteFactor,
+        ).pct ??
+        0.0;
+    if (_parseSafePercent(
+          state.wasteFactorInput,
+          EngineeringTerms.wasteFactor,
+        ).failure !=
         null) {
       state = state.copyWith(
         isLoading: false,
         failure: _parseSafePercent(
           state.wasteFactorInput,
-          'Waste Factor',
+          EngineeringTerms.wasteFactor,
         ).failure,
       );
       return;
@@ -222,7 +248,9 @@ class CalculatorController extends Notifier<CalculatorState> {
       );
       state = state.copyWith(
         isLoading: false,
-        failure: AppFailure('Calculation error: ${e.toString()}'),
+        failure: AppFailure(
+          '${ErrorStrings.calculationError}: ${e.toString()}',
+        ),
       );
     }
   }
@@ -249,11 +277,16 @@ class CalculatorController extends Notifier<CalculatorState> {
     if (parsed == null) {
       return (
         pct: null,
-        failure: AppFailure('$fieldName must be a valid number.'),
+        failure: AppFailure(
+          '$fieldName ${ValidationStrings.mustBeValidNumber}',
+        ),
       );
     }
     if (parsed < 0) {
-      return (pct: null, failure: AppFailure('$fieldName cannot be negative.'));
+      return (
+        pct: null,
+        failure: AppFailure('$fieldName ${ValidationStrings.cannotBeNegative}'),
+      );
     }
     return (pct: parsed, failure: null);
   }
