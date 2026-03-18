@@ -95,8 +95,9 @@ class RccInfoBottomSheet extends StatelessWidget {
 
           // Specs List
           ...item.rccSpecs.map(
-            (spec) => SbListItem(
+            (spec) => SbListItemTile(
               title: spec.label,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 spec.value,
                 style: SbTextStyles.body(context).copyWith(

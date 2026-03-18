@@ -27,7 +27,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 ///   backgroundColor     → colorScheme.surface
 ///   selectedItemColor   → colorScheme.primary
 ///   unselectedItemColor → colorScheme.onSurfaceVariant
-///   elevation           → 6
+///   elevation           → 0 (Border-only UI)
 ///
 /// FUTURE IMPROVEMENTS:
 ///   • Animate label visibility on scroll.
@@ -71,68 +71,78 @@ class AppBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return BottomNavigationBar(
-      // ── Colour theming ─────────────────────────────────────────────────────
-      backgroundColor: colorScheme.surface,
-      selectedItemColor: colorScheme.primary,
-      unselectedItemColor: colorScheme.onSurfaceVariant,
-
-      // ── Elevation / shadow ────────────────────────────────────────────────
-      elevation: 6,
-
-      // ── State ────────────────────────────────────────────────────────────
-      currentIndex: currentIndex,
-      onTap: onTap,
-
-      // ── Layout ───────────────────────────────────────────────────────────
-      // 'fixed' keeps all labels visible at all times, matching the
-      // previous custom implementation's always-visible labels.
-      type: BottomNavigationBarType.fixed,
-
-      // Always show labels (matches the previous always-visible text style).
-      showSelectedLabels: true,
-      showUnselectedLabels: true,
-
-      // ── Typography ────────────────────────────────────────────────────────
-      selectedLabelStyle: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 10,
-        letterSpacing: 0.5,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: colorScheme.outlineVariant.withValues(alpha: 0.6),
+            width: 1.0,
+          ),
+        ),
       ),
-      unselectedLabelStyle: const TextStyle(
-        fontWeight: FontWeight.w500,
-        fontSize: 10,
-        letterSpacing: 0.5,
-      ),
+      child: BottomNavigationBar(
+        // ── Colour theming ─────────────────────────────────────────────────────
+        backgroundColor: colorScheme.surface,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurfaceVariant,
 
-      // ── Navigation items ──────────────────────────────────────────────────
-      // Order and icons are identical to the original BottomNavBar.
-      items: [
-        BottomNavigationBarItem(
-          icon: const Icon(SbIcons.homeOutlined),
-          activeIcon: const Icon(SbIcons.home),
-          label: AppLocalizations.of(context)!.appName.toUpperCase(),
-          tooltip: 'Home',
+        // ── Elevation / shadow ────────────────────────────────────────────────
+        elevation: 0,
+
+        // ── State ────────────────────────────────────────────────────────────
+        currentIndex: currentIndex,
+        onTap: onTap,
+
+        // ── Layout ───────────────────────────────────────────────────────────
+        // 'fixed' keeps all labels visible at all times, matching the
+        // previous custom implementation's always-visible labels.
+        type: BottomNavigationBarType.fixed,
+
+        // Always show labels (matches the previous always-visible text style).
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+
+        // ── Typography ────────────────────────────────────────────────────────
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 10,
+          letterSpacing: 0.5,
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(SbIcons.calculator),
-          activeIcon: const Icon(SbIcons.calculator),
-          label: AppLocalizations.of(context)!.calculator.toUpperCase(),
-          tooltip: 'Calculator',
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 10,
+          letterSpacing: 0.5,
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(SbIcons.architectureOutlined),
-          activeIcon: const Icon(SbIcons.architecture),
-          label: AppLocalizations.of(context)!.design.toUpperCase(),
-          tooltip: 'Design',
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(SbIcons.folderCopyOutlined),
-          activeIcon: const Icon(SbIcons.folderCopy),
-          label: AppLocalizations.of(context)!.project.toUpperCase(),
-          tooltip: 'Projects',
-        ),
-      ],
+
+        // ── Navigation items ──────────────────────────────────────────────────
+        // Order and icons are identical to the original BottomNavBar.
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(SbIcons.homeOutlined),
+            activeIcon: const Icon(SbIcons.home),
+            label: AppLocalizations.of(context)!.appName.toUpperCase(),
+            tooltip: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(SbIcons.calculator),
+            activeIcon: const Icon(SbIcons.calculator),
+            label: AppLocalizations.of(context)!.calculator.toUpperCase(),
+            tooltip: 'Calculator',
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(SbIcons.architectureOutlined),
+            activeIcon: const Icon(SbIcons.architecture),
+            label: AppLocalizations.of(context)!.design.toUpperCase(),
+            tooltip: 'Design',
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(SbIcons.folderCopyOutlined),
+            activeIcon: const Icon(SbIcons.folderCopy),
+            label: AppLocalizations.of(context)!.project.toUpperCase(),
+            tooltip: 'Projects',
+          ),
+        ],
+      ),
     );
   }
 }

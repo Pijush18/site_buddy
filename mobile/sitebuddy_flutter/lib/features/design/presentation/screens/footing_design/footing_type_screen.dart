@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -65,10 +65,10 @@ class FootingTypeScreen extends ConsumerWidget {
             },
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          SBButton.secondary(
+          SbButton.secondary(
             label: 'Back',
             onPressed: () => context.pop(),
-            fullWidth: true,
+            width: double.infinity,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
         ],

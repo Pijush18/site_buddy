@@ -144,4 +144,10 @@ class EngineeringTerms {
   static const pitDepthHint = 'e.g. 1.5';
   static const swellFactorHint = 'e.g. 1.25';
   static const aiAssistant = 'AI Assistant';
+  static const reinforcementDetailing = 'Reinforcement Detailing';
+  static const materialProperties = 'Material Properties';
+  static const sectionProperties = 'Section Properties';
+  static const geometry = 'Geometry';
+  static const loadingConditions = 'Loading Conditions';
+  static const materials = 'Materials';
 }

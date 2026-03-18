@@ -57,13 +57,6 @@ class PreviewableCard extends StatelessWidget {
         border: Border(
           top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

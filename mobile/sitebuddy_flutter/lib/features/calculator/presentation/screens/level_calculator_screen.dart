@@ -90,8 +90,9 @@ class LevelCalculatorScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.absoluteDifference,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),

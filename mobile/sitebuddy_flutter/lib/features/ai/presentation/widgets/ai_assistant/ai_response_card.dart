@@ -310,10 +310,12 @@ class _ToolSuggestionCard extends StatelessWidget {
             ),
             const SizedBox(height: AppLayout.sm),
           ],
-          SbListItem(
-            leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+          SbListItemTile(
+            icon: icon,
+            color: Theme.of(context).colorScheme.primary,
             title: title,
             subtitle: prefillSummary ?? 'Open the specialized tool for this calculation.',
+            onTap: () => context.push(route, extra: prefillData),
           ),
           const SizedBox(height: AppLayout.sm),
           SbButton.primary(

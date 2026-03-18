@@ -50,20 +50,11 @@ class SegmentedToggle<T> extends StatelessWidget {
                   color: isSelected ? colorScheme.primary : colorScheme.surface,
                   borderRadius: BorderRadius.circular(AppLayout.buttonRadius - 4),
                   border: isSelected
-                      ? null
+                      ? Border.all(color: colorScheme.primary, width: 1)
                       : Border.all(
                           color: colorScheme.outline.withValues(alpha: 0.5),
                           width: 1,
                         ),
-                  boxShadow: isSelected
-                      ? [
-                          BoxShadow(
-                            color: colorScheme.primary.withValues(alpha: 0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ]
-                      : null,
                 ),
                 child: Center(
                   child: Text(

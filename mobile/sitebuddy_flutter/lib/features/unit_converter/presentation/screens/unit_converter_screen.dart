@@ -360,22 +360,25 @@ class _ConverterBodySection extends ConsumerWidget {
         SbCard(
           child: Column(
             children: [
-              SbListItem(
+              SbListItemTile(
                 title: 'Wet Volume',
+                onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.volume.toStringAsFixed(2)} m³',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
                 ),
               ),
-              SbListItem(
+              SbListItemTile(
                 title: 'Dry Volume',
+                onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.dryVolume.toStringAsFixed(2)} m³',
                   style: const TextStyle(fontSize: AppFontSizes.subtitle),
                 ),
               ),
-              SbListItem(
+              SbListItemTile(
                 title: 'Cement',
+                onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.cementBags.toStringAsFixed(0)} Bags',
                   style: TextStyle(

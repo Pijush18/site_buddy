@@ -19,20 +19,21 @@ class SafetyUtils {
   }
 
   /// Returns the primary color associated with the safety status.
-  static Color getColor(SafetyStatus status) {
+  static Color getColor(BuildContext context, SafetyStatus status) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case SafetyStatus.safe:
-        return Colors.green;
+        return colorScheme.primary;
       case SafetyStatus.warning:
-        return Colors.orange;
+        return colorScheme.secondary;
       case SafetyStatus.fail:
-        return Colors.red;
+        return colorScheme.error;
     }
   }
 
   /// Returns a light background color associated with the safety status.
-  static Color getBackgroundColor(SafetyStatus status) {
-    return getColor(status).withValues(alpha: 0.1);
+  static Color getBackgroundColor(BuildContext context, SafetyStatus status) {
+    return getColor(context, status).withValues(alpha: 0.1);
   }
 
   /// Returns an icon associated with the safety status.

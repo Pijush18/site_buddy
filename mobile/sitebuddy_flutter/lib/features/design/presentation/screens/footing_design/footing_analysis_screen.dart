@@ -4,12 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: FootingAnalysisScreen
 /// PURPOSE: Bearing pressure and area analysis (Step 4).
@@ -90,20 +88,15 @@ class FootingAnalysisScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
           // Eccentricity etc
-          SBCard(
+          const SbSectionHeader(title: 'Distribution Details'),
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Distribution Details',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                SbListItem(
+                SbListItemTile(
                   title: 'Eccentricity (ex)',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${state.eccentricityX.toStringAsFixed(1)} mm',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -111,8 +104,9 @@ class FootingAnalysisScreen extends ConsumerWidget {
                 ),
                 if (state.type == FootingType.pile) ...[
                   const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                  SbListItem(
+                  SbListItemTile(
                     title: 'Piles Required',
+                    onTap: () {}, // Detail view entry
                     trailing: Text(
                       '${state.pileCount}',
                       style: TextStyle(
@@ -131,17 +125,17 @@ class FootingAnalysisScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Reinforcement',
                 icon: Icons.grid_view_outlined,
                 onPressed: () => context.push('/footing/reinforcement'),
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

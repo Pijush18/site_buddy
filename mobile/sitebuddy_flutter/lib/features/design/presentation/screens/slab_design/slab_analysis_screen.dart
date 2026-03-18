@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
@@ -63,7 +62,8 @@ class SlabAnalysisScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          SBCard(
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               children: [
                 Icon(Icons.analytics_outlined,
@@ -82,17 +82,17 @@ class SlabAnalysisScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Reinforcement Design',
                 onPressed: () => context.push('/slab/reinforcement'),
                 icon: Icons.engineering_outlined,
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

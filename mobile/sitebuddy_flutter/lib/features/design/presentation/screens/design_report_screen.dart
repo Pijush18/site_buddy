@@ -354,9 +354,10 @@ class _CalculationItemRow extends StatelessWidget {
       }
     }
 
-    return SbListItem(
+    return SbListItemTile(
       title: item.label,
       subtitle: item.formula,
+      onTap: () {}, // Detail view entry
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

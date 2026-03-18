@@ -71,8 +71,9 @@ class GradientScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 const Divider(),
-                SbListItem(
+                SbListItemTile(
                   title: EngineeringTerms.percentage,
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
                     style: TextStyle(
@@ -82,15 +83,17 @@ class GradientScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: EngineeringTerms.ratio,
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     result.ratio == double.infinity ? EngineeringTerms.vertical : '1 : ${result.ratio.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: EngineeringTerms.angle,
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.angle.toStringAsFixed(2)}°',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -258,17 +261,17 @@ class _FieldReference extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
-        const SbCard(
+        SbCard(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              SbListItem(title: EngineeringTerms.sewerPipes, trailing: Text(EngineeringTerms.sewerPipesRef)),
-              Divider(height: 1),
-              SbListItem(title: EngineeringTerms.roadCrossFall, trailing: Text(EngineeringTerms.roadCrossFallRef)),
-              Divider(height: 1),
-              SbListItem(title: EngineeringTerms.wheelchairRamp, trailing: Text(EngineeringTerms.wheelchairRampRef)),
-              Divider(height: 1),
-              SbListItem(title: EngineeringTerms.earthworksBatter, trailing: Text(EngineeringTerms.earthworksBatterRef)),
+              SbListItemTile(title: EngineeringTerms.sewerPipes, onTap: () {}, trailing: const Text(EngineeringTerms.sewerPipesRef)),
+              const Divider(height: 1),
+              SbListItemTile(title: EngineeringTerms.roadCrossFall, onTap: () {}, trailing: const Text(EngineeringTerms.roadCrossFallRef)),
+              const Divider(height: 1),
+              SbListItemTile(title: EngineeringTerms.wheelchairRamp, onTap: () {}, trailing: const Text(EngineeringTerms.wheelchairRampRef)),
+              const Divider(height: 1),
+              SbListItemTile(title: EngineeringTerms.earthworksBatter, onTap: () {}, trailing: const Text(EngineeringTerms.earthworksBatterRef)),
             ],
           ),
         ),

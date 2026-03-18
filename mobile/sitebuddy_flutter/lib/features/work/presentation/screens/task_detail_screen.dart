@@ -39,22 +39,25 @@ class TaskDetailScreen extends ConsumerWidget {
           SbCard(
             child: Column(
               children: [
-                SbListItem(
+                SbListItemTile(
                   title: 'Project',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.projectId,
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Assigned To',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.assignedTo,
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Priority',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.priority.name.toUpperCase(),
                     style: TextStyle(
@@ -62,21 +65,23 @@ class TaskDetailScreen extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color:
                           (task.priority == TaskPriority.critical ||
-                              task.priority == TaskPriority.high)
-                          ? colorScheme.error
-                          : colorScheme.primary,
+                                  task.priority == TaskPriority.high)
+                              ? colorScheme.error
+                              : colorScheme.primary,
                     ),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Status',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.status.name.toUpperCase(),
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Due Date',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.dueDate.toLocal().toString().split(' ').first,
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),

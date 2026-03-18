@@ -6,9 +6,6 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
@@ -93,7 +90,7 @@ class ProjectDetailScreen extends ConsumerWidget {
       child: Column(
         children: [
           // Status Header
-          SBCard(
+          SbCard(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -105,9 +102,8 @@ class ProjectDetailScreen extends ConsumerWidget {
                       AppStrings.status,
                       style: TextStyle(
                         fontSize: AppFontSizes.tab,
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
@@ -116,11 +112,11 @@ class ProjectDetailScreen extends ConsumerWidget {
                         vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4)
                       ),
                       child: Text(
-                        proj.status.label.toUpperCase(),
+                        proj.status.label,
                         style: TextStyle(
                           fontSize: AppFontSizes.tab,
-                          color: colorScheme.onSurfaceVariant,
-                          fontWeight: FontWeight.w600,
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -206,17 +202,18 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty) ...[
-            const SBSectionHeader(title: AppStrings.description),
-            SBCard(
-              child: Text(
-                proj.description!,
-                style: const TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  height: 1.5,
+            SbSection(
+              title: AppStrings.description,
+              child: SbCard(
+                child: Text(
+                  proj.description!,
+                  style: const TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    height: 1.5,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Stats grid
@@ -227,7 +224,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   icon: Icons.description,
                   label: 'LOGS',
                   value: proj.logsCount.toString(),
-                  subtext: 'Total Entries',
+                  subtext: 'Entries',
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
@@ -244,94 +241,81 @@ class ProjectDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-          const SBSectionHeader(title: AppStrings.design), // Or structural calculations
-          calcItems.isEmpty
-              ? const SBCard(
-                  child: Text(AppStrings.noEntriesFound),
-                )
-              : SBCard(
-                  padding: EdgeInsets.zero,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: calcItems.length,
-                    separatorBuilder: (context, index) =>
-                        const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final item = calcItems[index];
-                      return SbListItem(
-                        leading: Icon(
-                          _getTypeIcon(item['type'] as String),
-                          color: colorScheme.primary,
+          SbSection(
+            title: AppStrings.design,
+            child: calcItems.isEmpty
+                ? const SbCard(
+                    child: Text(AppStrings.noEntriesFound),
+                  )
+                : Column(
+                    children: calcItems.map((item) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SbListItemTile(
+                          icon: _getTypeIcon(item['type'] as String),
+                          title: item['name'] as String,
+                          subtitle: DateFormat(
+                            'dd MMM, hh:mm a',
+                          ).format(item['date'] as DateTime),
+                          onTap: () {
+                            context.push('/projects/$projectId/history');
+                          },
                         ),
-                        title: item['name'] as String,
-                        subtitle: DateFormat(
-                          'dd MMM, hh:mm a',
-                        ).format(item['date'] as DateTime),
-                        onTap: () {
-                          context.push('/projects/$projectId/history');
-                        },
                       );
-                    },
+                    }).toList(),
                   ),
-                ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-
-          const SBSectionHeader(title: AppStrings.fieldSurveying),
-          logItems.isEmpty
-              ? const SBCard(
-                  child: Text(AppStrings.noEntriesFound),
-                )
-              : SBCard(
-                  padding: EdgeInsets.zero,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: logItems.length,
-                    separatorBuilder: (context, index) =>
-                        const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final item = logItems[index];
-                      return SbListItem(
-                        leading: Icon(
-                          SbIcons.layers,
-                          color: colorScheme.secondary,
-                        ),
-                        title: item.name,
-                        subtitle:
-                            '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
-                        onTap: () {
-                          context.push('/projects/$projectId/level-log');
-                        },
-                      );
-                    },
-                  ),
-                ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-
-          const SBSectionHeader(title: AppStrings.actionZone),
-          Column(
-            children: [
-              SBButton.primary(
-                label: AppStrings.newInspection,
-                icon: Icons.add_circle_outline,
-                onPressed: () {
-                  context.push('/projects/$projectId/level-log');
-                },
-                fullWidth: true,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              SBButton.secondary(
-                label: AppStrings.editProject,
-                icon: Icons.edit_outlined,
-                onPressed: () {
-                  context.push('/projects/$projectId/edit');
-                },
-                fullWidth: true,
-              ),
-            ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for consistency
+
+          const SizedBox(height: AppSpacing.md),
+          SbSection(
+            title: AppStrings.fieldSurveying,
+            child: logItems.isEmpty
+                ? const SbCard(
+                    child: Text(AppStrings.noEntriesFound),
+                  )
+                : Column(
+                    children: logItems.map((item) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SbListItemTile(
+                          icon: SbIcons.layers,
+                          iconColor: colorScheme.secondary,
+                          title: item.name,
+                          subtitle:
+                              '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
+                          onTap: () {
+                            context.push('/projects/$projectId/level-log');
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
+          ),
+
+          SbSection(
+            title: AppStrings.actionZone,
+            child: Column(
+              children: [
+                SbButton.primary(
+                  label: AppStrings.newInspection,
+                  icon: Icons.add_circle_outline,
+                  onPressed: () {
+                    context.push('/projects/$projectId/level-log');
+                  },
+                  width: double.infinity,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                SbButton.secondary(
+                  label: AppStrings.editProject,
+                  icon: Icons.edit_outlined,
+                  onPressed: () {
+                    context.push('/projects/$projectId/edit');
+                  },
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -356,7 +340,7 @@ class _StatCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return SBCard(
+    return SbCard(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

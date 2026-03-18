@@ -1,9 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -48,9 +45,9 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
 
           // DETALLING PREVIEW
-          const SBSectionHeader(
+          const SbSectionHeader(
             title: 'Cross-Section Arrangement',
-            topPadding: 0,
+            padding: EdgeInsets.zero,
           ),
 
           BeamCrossSectionDiagram(
@@ -72,13 +69,13 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           ],
 
           // Detailing Controls Card
-          SBCard(
+          SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SBSectionHeader(
+                const SbSectionHeader(
                   title: 'Steel Specification',
-                  topPadding: 0,
+                  padding: EdgeInsets.zero,
                 ),
 
                 const Text(
@@ -161,19 +158,19 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Safety Checks',
                 icon: Icons.verified_user_outlined,
                 onPressed: () {
                   context.push('/beam/safety');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.ghost(
+              SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

@@ -3,15 +3,13 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 
 import 'package:site_buddy/core/enums/safety_status.dart';
@@ -127,115 +125,114 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           const SizedBox(height: AppSpacing.md),
 
           // Reinforcement Detail
-          const SBSectionHeader(
-            title: 'Reinforcement Cross-Section',
-          ),
-          SBCard(
-            child: Column(
-              children: [
-                RepaintBoundary(
-                  key: _drawingKey,
-                  child: Container(
-                    color: Theme.of(context).cardColor,
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: BeamRebarDrawing(
-                      width: state.width,
-                      depth: state.overallDepth,
-                      cover: state.cover.toDouble(),
-                      mainBars: state.numBars,
-                      mainBarDia: state.mainBarDia,
-                      stirrupLegs: state.stirrupLegs,
-                      stirrupDia: state.stirrupDia,
-                      stirrupSpacing: state.stirrupSpacing,
+          SbSection(
+            title: EngineeringTerms.reinforcementDetailing,
+            child: SbCard(
+              child: Column(
+                children: [
+                  RepaintBoundary(
+                    key: _drawingKey,
+                    child: Container(
+                      color: colorScheme.surfaceContainerHighest,
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: BeamRebarDrawing(
+                        width: state.width,
+                        depth: state.overallDepth,
+                        cover: state.cover.toDouble(),
+                        mainBars: state.numBars,
+                        mainBarDia: state.mainBarDia,
+                        stirrupLegs: state.stirrupLegs,
+                        stirrupDia: state.stirrupDia,
+                        stirrupSpacing: state.stirrupSpacing,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SBButton.ghost(
-                        label: 'Save Image',
-                        icon: SbIcons.image,
-                        onPressed: () async {
-                          final bytes = await WidgetCaptureHelper.capture(
-                            _drawingKey,
-                          );
-                          if (bytes != null) {
-                            await ShareHelper.shareXFile(
-                              bytes: bytes,
-                              name: 'Beam_Reinforcement.png',
-                              mimeType: 'image/png',
+                  const SizedBox(height: AppSpacing.md),
+                  Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SbButton.ghost(
+                          label: 'Save Image',
+                          icon: SbIcons.image,
+                          onPressed: () async {
+                            final bytes = await WidgetCaptureHelper.capture(
+                              _drawingKey,
                             );
-                          }
-                        },
-                        fullWidth: true,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      SBButton.ghost(
-                        label: 'Save PDF',
-                        icon: SbIcons.pdf,
-                        onPressed: () async {
-                          final bytes = await WidgetCaptureHelper.capture(
-                            _drawingKey,
-                          );
-                          if (bytes != null) {
-                            final pdfBytes =
-                                await DrawingExportService.generateDrawingPdf(
-                                  bytes,
-                                  'Beam Reinforcement',
-                                  'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
-                                );
-                            await Printing.sharePdf(
-                              bytes: pdfBytes,
-                              filename: 'Beam_Reinforcement_Drawing.pdf',
+                            if (bytes != null) {
+                              await ShareHelper.shareXFile(
+                                bytes: bytes,
+                                name: 'Beam_Reinforcement.png',
+                                mimeType: 'image/png',
+                              );
+                            }
+                          },
+                          width: double.infinity,
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        SbButton.ghost(
+                          label: 'Save PDF',
+                          icon: SbIcons.pdf,
+                          onPressed: () async {
+                            final bytes = await WidgetCaptureHelper.capture(
+                              _drawingKey,
                             );
-                          }
-                        },
-                        fullWidth: true,
-                      ),
-                    ],
+                            if (bytes != null) {
+                              final pdfBytes =
+                                  await DrawingExportService.generateDrawingPdf(
+                                    bytes,
+                                    'Beam Reinforcement',
+                                    'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
+                                  );
+                              await Printing.sharePdf(
+                                bytes: pdfBytes,
+                                filename: 'Beam_Reinforcement_Drawing.pdf',
+                              );
+                            }
+                          },
+                          width: double.infinity,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Export PDF Report',
                 icon: SbIcons.pdf,
                 onPressed: () {
                   ref.read(beamDesignControllerProvider.notifier).generateReport();
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Save to Design History',
                 icon: SbIcons.history,
                 onPressed: () => _saveDesign(context, ref),
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.primary(
+              SbButton.primary(
                 label: 'New Design',
                 icon: SbIcons.add,
                 onPressed: () {
                   ref.read(beamDesignControllerProvider.notifier).reset();
                   context.go('/');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.ghost(
+              SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),
@@ -281,7 +278,7 @@ class _OverallStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = SafetyUtils.getColor(status);
+    final color = SafetyUtils.getColor(context, status);
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),

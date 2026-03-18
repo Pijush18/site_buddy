@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_empty_state.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 
@@ -37,10 +36,10 @@ class CalculationHistoryScreen extends ConsumerWidget {
         ),
         data: (entries) {
           if (entries.isEmpty) {
-            return const SBEmptyState(
+            return const SbEmptyState(
               icon: Icons.history_toggle_off_outlined,
               title: 'No Calculations Found',
-              description:
+              subtitle:
                   'Results from your engineering designs will appear here as you save them.',
             );
           }
@@ -67,106 +66,34 @@ class _HistoryEntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
+    final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: SBCard(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: SbListItemTile(
+        icon: _getTypeIcon(entry.calculationType),
+        title: entry.resultSummary,
+        subtitle: 'ID: ${entry.id.substring(0, 8)}...',
+        trailing: dateStr,
         onTap: () {
           context.push('/history-detail', extra: entry);
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _TypeChip(type: entry.calculationType),
-                Text(
-                  dateStr,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: theme.colorScheme.onSurfaceVariant.withValues(
-                      alpha: 0.7,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.md
-            Text(
-              entry.resultSummary,
-              style: const TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.sm
-            Text(
-              'ID: ${entry.id}',
-              style: TextStyle(
-                fontSize: AppFontSizes.tab,
-                color: theme.colorScheme.onSurfaceVariant.withValues(
-                  alpha: 0.5,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
-}
 
-class _TypeChip extends StatelessWidget {
-  final CalculationType type;
-
-  const _TypeChip({required this.type});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    Color chipColor;
-    String label;
-
+  IconData _getTypeIcon(CalculationType type) {
     switch (type) {
       case CalculationType.column:
-        chipColor = theme.colorScheme.primary;
-        label = 'COLUMN';
-        break;
+        return SbIcons.viewColumn;
       case CalculationType.beam:
-        chipColor = theme.colorScheme.secondary;
-        label = 'BEAM';
-        break;
+        return SbIcons.viewArray;
       case CalculationType.slab:
-        chipColor = theme.colorScheme.tertiary;
-        label = 'SLAB';
-        break;
+        return SbIcons.layers;
       case CalculationType.footing:
-        chipColor = theme.colorScheme.primary;
-        label = 'FOOTING';
-        break;
+        return SbIcons.foundation;
       case CalculationType.levelLog:
-        chipColor = theme.colorScheme.secondary;
-        label = 'LEVEL LOG';
-        break;
+        return SbIcons.layers; // Using layers for level log as well for now
     }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm, // 8
-        vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4)
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: AppFontSizes.tab,
-          color: chipColor,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.1,
-        ),
-      ),
-    );
   }
 }

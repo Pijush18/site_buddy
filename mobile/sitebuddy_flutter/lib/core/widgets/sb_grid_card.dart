@@ -1,31 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-
+import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 
-import 'package:flutter/material.dart';
-
-const _kNormalShadowLight = [
-  BoxShadow(
-    color: Color(0x1F000000), // black @ 12%
-    blurRadius: 8,
-    offset: Offset(0, 4),
-  ),
-];
-const _kNormalShadowDark = [
-  BoxShadow(
-    color: Color(0x4D000000), // black @ 30%
-    blurRadius: 8,
-    offset: Offset(0, 4),
-  ),
-];
-const _kPressedShadow = [
-  BoxShadow(
-    color: Color(0x1A000000), // black @ 10%
-    blurRadius: 4,
-    spreadRadius: 0,
-    offset: Offset(0, 2),
-  ),
-];
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 class SbGridCard extends StatefulWidget {
   final IconData icon;
@@ -33,6 +9,7 @@ class SbGridCard extends StatefulWidget {
   final Color color;
   final VoidCallback onTap;
   final bool isVibrant;
+  final EdgeInsets? margin;
 
   const SbGridCard({
     super.key,
@@ -41,6 +18,7 @@ class SbGridCard extends StatefulWidget {
     required this.color,
     required this.onTap,
     this.isVibrant = false,
+    this.margin,
   });
 
   @override
@@ -53,27 +31,14 @@ class _SbGridCardState extends State<SbGridCard> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Premium Border Logic
     final borderColor = widget.isVibrant 
-        ? Colors.white.withValues(alpha: 0.12) // Subtle glass edge
+        ? colorScheme.onPrimary.withValues(alpha: 0.12) // Subtle glass edge
         : colorScheme.outline;
     
-    // Sophisticated Soft Shadows
-    final normalShadow = widget.isVibrant
-        ? [
-            BoxShadow(
-              color: widget.color.withValues(alpha: isDark ? 0.45 : 0.35),
-              blurRadius: 16,
-              offset: const Offset(0, 8),
-              spreadRadius: -2,
-            )
-          ]
-        : (isDark ? _kNormalShadowDark : _kNormalShadowLight);
-
     final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surface;
-    final contentColor = widget.isVibrant ? Colors.white : colorScheme.onSurface;
+    final contentColor = widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurface;
 
     return AnimatedScale(
       scale: _pressed ? 0.98 : 1.0,
@@ -93,6 +58,7 @@ class _SbGridCardState extends State<SbGridCard> {
           onTapCancel: () => setState(() => _pressed = false),
           onTap: widget.onTap,
           child: AnimatedContainer(
+            margin: widget.margin ?? const EdgeInsets.all(AppSpacing.sm),
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOut,
             decoration: BoxDecoration(
@@ -108,7 +74,6 @@ class _SbGridCardState extends State<SbGridCard> {
                       end: Alignment.bottomRight,
                     )
                   : null,
-              boxShadow: _pressed ? _kPressedShadow : normalShadow,
             ),
             child: Padding(
               padding: const EdgeInsets.all(AppLayout.pMedium),
@@ -118,16 +83,16 @@ class _SbGridCardState extends State<SbGridCard> {
                   // High-Contrast Clean Icon
                   Icon(
                     widget.icon,
-                    color: widget.isVibrant ? Colors.white : widget.color,
-                    size: 32, // Slightly larger for "Professional Clean"
+                    color: widget.isVibrant ? colorScheme.onPrimary : widget.color,
+                    size: 24, // Standardized 24px (matches SbActionButtonContent)
                   ),
-                  AppLayout.vGap12, // More generous spacing
+                  const SizedBox(height: 4), // Standardized 4px gap
                   Text(
                     widget.label,
-                    style: SbTextStyles.title(context).copyWith(
-                      fontWeight: FontWeight.bold,
+                    style: TextStyle(
+                      fontSize: 14, // Standardized 14px
+                      fontWeight: FontWeight.w600, // Standardized w600
                       color: contentColor,
-                      fontSize: 15,
                     ),
                     textAlign: TextAlign.center,
                   ),

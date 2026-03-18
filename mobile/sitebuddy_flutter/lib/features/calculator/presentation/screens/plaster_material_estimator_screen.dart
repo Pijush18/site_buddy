@@ -173,8 +173,9 @@ class _ResultSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
 
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.cementBags,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
               style: TextStyle(
@@ -184,8 +185,9 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.sandVolume,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -193,8 +195,9 @@ class _ResultSection extends StatelessWidget {
           ),
           const Divider(),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.dryMortarVolume,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.dryVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),

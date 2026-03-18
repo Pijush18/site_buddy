@@ -17,6 +17,6 @@ class AppRadius {
   /// Small corner radius (8.0px)
   static const double sm = 8.0;
 
-  /// Medium corner radius (16.0px)
-  static const double md = 16.0;
+  /// Medium corner radius (10.0px) - STANDARD
+  static const double md = 10.0;
 }

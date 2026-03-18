@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/rebar_layout_diagram.dart';
@@ -44,10 +42,9 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             ast: state.astProvided,
           ),
           const SizedBox(height: AppSpacing.lg),
-          SBCard(
-            title: 'Main Longitudinal Bars',
-            showDivider: true,
-            padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.cardPadding
+          const SbSectionHeader(title: 'Main Longitudinal Bars'),
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -109,18 +106,18 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Safety Checks',
                 onPressed: () {
                   context.push('/column/safety');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

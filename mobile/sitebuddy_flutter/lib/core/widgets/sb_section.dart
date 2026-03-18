@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/widgets/sb_section_header.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 /// CLASS: SbSection
@@ -18,31 +18,22 @@ class SbSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                title.toUpperCase(),
-                style: SbTextStyles.title(context).copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onSurfaceVariant,
-                  letterSpacing: 1.2,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title.isNotEmpty || trailing != null) ...[
+            SbSectionHeader(
+              title: title,
+              trailing: trailing,
+              padding: EdgeInsets.zero,
             ),
-            if (trailing != null) ...[trailing!],
+            const SizedBox(height: AppSpacing.sm),
           ],
-        ),
-        AppLayout.vGap8,
-        child,
-      ],
+          child,
+        ],
+      ),
     );
   }
 }

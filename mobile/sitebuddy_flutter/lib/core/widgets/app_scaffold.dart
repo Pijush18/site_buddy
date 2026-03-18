@@ -18,7 +18,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/branding/branding_provider.dart';
-import 'package:site_buddy/core/constants/ui_elevation.dart';
+
 
 /// CLASS: AppScaffold
 /// Standard layout shell for screens, injecting safe areas and standard padding.
@@ -74,12 +74,9 @@ class AppScaffold extends ConsumerWidget {
               backgroundColor: isDark
                   ? Theme.of(context).colorScheme.surface
                   : colorScheme.surface,
-              elevation: innerBoxIsScrolled
-                  ? AppElevation.level2
-                  : AppElevation.level0,
-              scrolledUnderElevation: AppElevation.level0,
+              elevation: 0,
+              scrolledUnderElevation: 0,
               surfaceTintColor: Colors.transparent,
-              shadowColor: Colors.black.withValues(alpha: isDark ? 0.5 : 0.1),
               forceElevated: innerBoxIsScrolled,
               centerTitle: false,
               title: Column(
@@ -110,7 +107,7 @@ class AppScaffold extends ConsumerWidget {
       },
       body: SafeArea(
         top: title == null,
-        bottom: bottomNavigationBar == null,
+        bottom: false,
         child: Padding(
           padding: padding ?? EdgeInsets.zero,
           child: body,

@@ -1,11 +1,9 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 class ShearInputSection extends StatelessWidget {
   final TextEditingController dController;
@@ -34,83 +32,73 @@ class ShearInputSection extends StatelessWidget {
     const concreteGrades = ['M20', 'M25', 'M30', 'M35', 'M40'];
     const steelGrades = ['Fe415', 'Fe500'];
 
-    return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'INPUT PARAMETERS',
-            style: SbTextStyles.title(context).copyWith(
-              color: const Color(0xFF2563EB),
-
-              letterSpacing: 1.1,
+    return SbSection(
+      title: 'Input Parameters',
+      child: SbCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: AppNumberField(
+                    controller: dController,
+                    label: 'Eff. Depth (d) [mm]',
+                    suffixIcon: SbIcons.layers,
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Depth'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: AppNumberField(
+                    controller: bController,
+                    label: 'Width (b) [mm]',
+                    suffixIcon: SbIcons.ruler,
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Width'),
+                  ),
+                ),
+              ],
             ),
-          ),
-          AppLayout.vGap16,
-          Row(
-            children: [
-              Expanded(
-                child: AppNumberField(
-                  controller: dController,
-                  label: 'Eff. Depth (d) [mm]',
-                  suffixIcon: SbIcons.layers,
-                  validator: (v) =>
-                      ValidationHelper.validatePositive(v, 'Depth'),
+            const SizedBox(height: AppSpacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildLabelledDropdown(
+                    context,
+                    'Concrete',
+                    selectedConcrete,
+                    concreteGrades,
+                    onConcreteChanged,
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppLayout.pMedium),
-              Expanded(
-                child: AppNumberField(
-                  controller: bController,
-                  label: 'Width (b) [mm]',
-                  suffixIcon: SbIcons.ruler,
-                  validator: (v) =>
-                      ValidationHelper.validatePositive(v, 'Width'),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: _buildLabelledDropdown(
+                    context,
+                    'Steel',
+                    selectedSteel,
+                    steelGrades,
+                    onSteelChanged,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          AppLayout.vGap16,
-          Row(
-            children: [
-              Expanded(
-                child: _buildLabelledDropdown(
-                  context,
-                  'Concrete',
-                  selectedConcrete,
-                  concreteGrades,
-                  onConcreteChanged,
-                ),
-              ),
-              const SizedBox(width: AppLayout.pMedium),
-              Expanded(
-                child: _buildLabelledDropdown(
-                  context,
-                  'Steel',
-                  selectedSteel,
-                  steelGrades,
-                  onSteelChanged,
-                ),
-              ),
-            ],
-          ),
-          AppLayout.vGap16,
-          AppNumberField(
-            controller: vuController,
-            label: 'Shear Force (Vu) [kN]',
-            suffixIcon: Icons.vertical_align_bottom,
-            validator: (v) =>
-                ValidationHelper.validatePositive(v, 'Shear Force'),
-          ),
-          AppLayout.vGap16,
-          AppNumberField(
-            controller: ptController,
-            label: 'Steel Per. (pt) [%]',
-            suffixIcon: SbIcons.percent,
-            validator: (v) =>
-                ValidationHelper.validatePercentage(v, 'Percentage'),
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AppNumberField(
+              controller: vuController,
+              label: 'Shear Force (Vu) [kN]',
+              suffixIcon: Icons.vertical_align_bottom,
+              validator: (v) => ValidationHelper.validatePositive(v, 'Shear Force'),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AppNumberField(
+              controller: ptController,
+              label: 'Steel Per. (pt) [%]',
+              suffixIcon: SbIcons.percent,
+              validator: (v) => ValidationHelper.validatePercentage(v, 'Percentage'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -122,14 +110,18 @@ class ShearInputSection extends StatelessWidget {
     List<String> items,
     ValueChanged<String?> onChanged,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: SbTextStyles.caption(context).copyWith(color: const Color(0xFF94A3B8)),
+          style: TextStyle(
+            fontSize: 12,
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
-        const SizedBox(height: AppLayout.xs),
+        const SizedBox(height: AppSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

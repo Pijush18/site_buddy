@@ -1,8 +1,8 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: TermsConditionsScreen
 /// PURPOSE: Standard legal terms and engineering disclaimers.
@@ -76,7 +76,7 @@ class _Section extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SBSectionHeader(title: title), // Standardized header
+        SbSectionHeader(title: title), // Standardized header
         Text(
           content,
           style: const TextStyle(

@@ -285,6 +285,10 @@ class SbButton extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14, // Global Standard: Action Buttons
+              fontWeight: FontWeight.w600,
+            ),
           ),
       ],
     );

@@ -45,29 +45,33 @@ class CementScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.wetVolume,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.dryVolume,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.cementWeight,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.numberOfBags,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
                 style: TextStyle(
@@ -81,8 +85,9 @@ class CementScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
               const Divider(),
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-              SbListItem(
+              SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
+                onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
                   style: TextStyle(

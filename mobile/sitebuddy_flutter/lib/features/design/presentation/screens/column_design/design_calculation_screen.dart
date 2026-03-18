@@ -2,8 +2,6 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -92,6 +90,7 @@ class _DesignCalculationScreenState
 
           // Design Controls Card
           SbCard(
+            padding: const EdgeInsets.all(AppSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,7 +110,8 @@ class _DesignCalculationScreenState
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                SBCard(
+                SbCard(
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   child: Column(
                     children: [
                       SbDropdown<DesignMethod>(
@@ -202,18 +202,18 @@ class _DesignCalculationScreenState
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Detailing',
                 onPressed: () {
                   context.push('/column/detailing');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

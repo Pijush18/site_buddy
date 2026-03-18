@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/application/services/column_insight_service.dart';
@@ -39,8 +37,10 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
     return AppScreenWrapper(
       title: 'Safety Check',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      isScrollable: false,
+      usePadding: false,
+      child: ListView(
+        padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           Text(
             'Step 6 of 6: Final Verification',
@@ -50,12 +50,13 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: AppSpacing.lg),
           if (state.errorMessage != null) ...[
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: SBCard(
-                backgroundColor: colorScheme.error.withValues(alpha: 0.1),
+              child: SbCard(
+                color: colorScheme.error.withValues(alpha: 0.1),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 child: Row(
                   children: [
                     Icon(Icons.error_outline, color: colorScheme.error),
@@ -74,20 +75,14 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ),
             ),
           ],
-          const Text(
-            'Interaction Visualization',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SbSectionHeader(title: 'Interaction Visualization'),
+          const SizedBox(height: AppSpacing.sm),
           ColumnInteractionDiagram(
             pu: state.pu,
             mu: max(state.mx, state.my),
             interactionRatio: state.interactionRatio,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: AppSpacing.lg),
           DesignResultCard(
             title: 'Capacity Verification',
             isSafe: state.isCapacitySafe,
@@ -105,7 +100,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 39.6',
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+          const SizedBox(height: AppSpacing.sm),
           DesignResultCard(
             title: 'Stability & Detailing',
             isSafe: state.isSlendernessSafe && state.isReinforcementSafe,
@@ -132,22 +127,17 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 26.5.3',
           ),
-          const Text(
-            'Reinforcement Detail',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          const SbSectionHeader(title: 'Reinforcement Detail'),
           const SizedBox(height: AppSpacing.sm),
-          SBCard(
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               children: [
                 RepaintBoundary(
                   key: _drawingKey,
                   child: Container(
                     color: theme.cardColor,
-                    padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLarge
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: ColumnRebarDrawing(
                       width: state.b,
                       depth: state.d,
@@ -160,12 +150,12 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: AppSpacing.md),
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SBButton.ghost(
+                      SbButton.ghost(
                         label: 'Save Image',
                         icon: Icons.image_outlined,
                         onPressed: () async {
@@ -182,7 +172,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      SBButton.ghost(
+                      SbButton.ghost(
                         label: 'Save PDF',
                         icon: Icons.picture_as_pdf_outlined,
                         onPressed: () async {
@@ -209,20 +199,15 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const Text(
-            'Smart Engineering Insights',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+          const SizedBox(height: AppSpacing.lg),
+          const SbSectionHeader(title: 'Smart Engineering Insights'),
+          const SizedBox(height: AppSpacing.sm),
           ...ColumnInsightService.getSuggestions(state).map(
             (s) => Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: SBCard(
-                backgroundColor: colorScheme.primary.withValues(alpha: 0.05),
+              child: SbCard(
+                color: colorScheme.primary.withValues(alpha: 0.05),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 child: Row(
                   children: [
                     Icon(
@@ -242,21 +227,21 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: AppSpacing.lg),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Optimize Section',
                 onPressed: () {
                   ref
                       .read(columnDesignControllerProvider.notifier)
                       .optimizeDesign();
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Export PDF Report',
                 icon: Icons.picture_as_pdf_outlined,
                 onPressed: () {
@@ -264,10 +249,10 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       .read(columnDesignControllerProvider.notifier)
                       .generateReport();
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Save to History',
                 icon: Icons.history,
                 onPressed: () {
@@ -279,27 +264,26 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     message: 'Design Saved to History',
                   );
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.primary(
+              SbButton.primary(
                 label: 'New Design',
                 icon: Icons.add,
                 onPressed: () {
                   ref.read(columnDesignControllerProvider.notifier).reset();
                   context.go('/');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
         ],
       ),
     );

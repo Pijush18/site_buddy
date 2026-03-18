@@ -88,34 +88,24 @@ class SubscriptionScreen extends ConsumerWidget {
 
   Widget _buildCurrentStatus(BuildContext context, dynamic status) {
     final colorScheme = Theme.of(context).colorScheme;
-    return SbCard(
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: Icon(
-          status.isPremium ? SbIcons.premium : SbIcons.account,
-          color: status.isPremium ? Colors.amber : colorScheme.outline,
+    return SbListItemTile(
+      icon: status.isPremium ? SbIcons.premium : SbIcons.account,
+      iconColor: status.isPremium ? Colors.amber : colorScheme.outline,
+      title: AppStrings.currentPlan,
+      subtitle: status.plan.toUpperCase(),
+      onTap: () {}, // Placeholder
+      trailing: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          color: (status.status == 'active' ? Colors.green : Colors.orange).withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(4),
         ),
-        title: const Text(
-          AppStrings.currentPlan,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          status.plan.toUpperCase(),
-          style: TextStyle(fontSize: AppFontSizes.tab, color: colorScheme.onSurfaceVariant),
-        ),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          decoration: BoxDecoration(
-            color: (status.status == 'active' ? Colors.green : Colors.orange).withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            status.status.toUpperCase(),
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              color: status.status == 'active' ? Colors.green : Colors.orange,
-            ),
+        child: Text(
+          status.status.toUpperCase(),
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: status.status == 'active' ? Colors.green : Colors.orange,
           ),
         ),
       ),

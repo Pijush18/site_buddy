@@ -1,11 +1,8 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-/// WIDGET: OptimizationCard
-/// Displays a single structural optimization suggestion from the OptimizationEngine.
 class OptimizationCard extends StatelessWidget {
   final OptimizationOption option;
   final VoidCallback? onSelected;
@@ -15,20 +12,16 @@ class OptimizationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-//     final isDark = theme.brightness == Brightness.dark;
+    final colorScheme = theme.colorScheme;
 
-    // Utilization color logic
-    final utilColor = option.utilization > 0.9
-        ? Colors.orange
-        : (option.utilization > 0.95 ? Colors.red : Colors.green);
+    final utilColor = option.utilization > 0.95
+        ? Colors.red
+        : (option.utilization > 0.9 ? Colors.orange : Colors.green);
 
     return SbCard(
-      
-      padding: const EdgeInsets.all(AppLayout.pLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header: Title & Visualization
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -37,17 +30,20 @@ class OptimizationCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      option.title.toUpperCase(),
-                      style: SbTextStyles.caption(context).copyWith(
-                        color: theme.primaryColor,
-                        
-                        letterSpacing: 1.1,
+                      option.title,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.primary,
                       ),
                     ),
-                    AppLayout.vGap4,
+                    const SizedBox(height: 4),
                     Text(
                       _getSectionDimensions(),
-                      style: SbTextStyles.title(context),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -58,12 +54,9 @@ class OptimizationCard extends StatelessWidget {
               ),
             ],
           ),
-
-          const SizedBox(height: AppLayout.pMedium),
-          const Divider(height: 1),
-          const SizedBox(height: AppLayout.pMedium),
-
-          // Details Grid
+          const SizedBox(height: AppSpacing.md),
+          const Divider(),
+          const SizedBox(height: AppSpacing.md),
           Row(
             children: [
               Expanded(
@@ -82,14 +75,10 @@ class OptimizationCard extends StatelessWidget {
               ),
             ],
           ),
-
-          const SizedBox(height: AppLayout.pLarge),
-
-          // Action Button
+          const SizedBox(height: AppSpacing.lg),
           SbButton.primary(
             label: 'Use This Section',
-            onPressed:
-                onSelected ??
+            onPressed: onSelected ??
                 () {
                   debugPrint("Optimization option selected: ${option.title}");
                 },
@@ -100,12 +89,10 @@ class OptimizationCard extends StatelessWidget {
   }
 
   String _getSectionDimensions() {
-    if (option.parameters.containsKey('b') &&
-        option.parameters.containsKey('d')) {
+    if (option.parameters.containsKey('b') && option.parameters.containsKey('d')) {
       return '${option.parameters['b'].toInt()} × ${option.parameters['d'].toInt()} mm';
     }
-    if (option.parameters.containsKey('width') &&
-        option.parameters.containsKey('depth')) {
+    if (option.parameters.containsKey('width') && option.parameters.containsKey('depth')) {
       return '${option.parameters['width'].toInt()} × ${option.parameters['depth'].toInt()} mm';
     }
     if (option.parameters.containsKey('thickness')) {
@@ -123,29 +110,25 @@ class _UtilizationBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      
-      child: Column(
-        children: [
-          Text(
-            '${(utilization * 100).toInt()}%',
-            style: TextStyle(
-              color: color,
-              
-              
-            ),
+    return Column(
+      children: [
+        Text(
+          '${(utilization * 100).toInt()}%',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
-          Text(
-            'UTIL.',
-            style: TextStyle(
-              color: color.withValues(alpha: 0.7),
-              
-              
-            ),
+        ),
+        Text(
+          'UTIL.',
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: color.withValues(alpha: 0.7),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -163,23 +146,27 @@ class _DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: Colors.grey),
-        AppLayout.hGap8,
+        Icon(icon, size: 16, color: colorScheme.onSurfaceVariant),
+        const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label,
-                style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
               Text(
                 value,
-                style: SbTextStyles.body(context),
+                style: const TextStyle(fontWeight: FontWeight.w600),
                 softWrap: true,
-                overflow: TextOverflow.visible,
               ),
             ],
           ),

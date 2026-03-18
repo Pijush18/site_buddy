@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 
@@ -30,7 +29,7 @@ class OptimizationList extends StatelessWidget {
           .map(
             (option) => Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: SBCard(
+              child: SbCard(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +48,7 @@ class OptimizationList extends StatelessWidget {
                     const SizedBox(height: AppSpacing.md),
                     const Divider(height: 1),
                     const SizedBox(height: AppSpacing.md),
-                    SBButton(
+                    SbButton.primary(
                       label: AppStrings.selectOption,
                       onPressed: onOptionSelected != null
                           ? () => onOptionSelected!(option)

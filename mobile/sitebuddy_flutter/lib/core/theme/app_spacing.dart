@@ -18,7 +18,7 @@ class AppSpacing {
   /// Small spacing (8.0px)
   static const double sm = 8.0;
 
-  /// Medium spacing (16.0px)
+  /// Medium spacing (16.0px) - STANDARD
   static const double md = 16.0;
 
   /// Large spacing (24.0px)

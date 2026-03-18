@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 /// CLASS: AppLayout
 /// PURPOSE: Centralized design tokens for spacing, padding, and radii.
 /// Goal: Single source of truth for all layout constants.
@@ -88,7 +89,6 @@ class AppLayout {
   /// Gives every interactive surface the same clean "Site Buddy" bordered look.
   static BoxDecoration sbCommonDecoration(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     return BoxDecoration(
       color: theme.colorScheme.surface,
       borderRadius: BorderRadius.circular(cardRadius),
@@ -96,24 +96,17 @@ class AppLayout {
         color: theme.colorScheme.outline,
         width: 1.2,
       ),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.30 : 0.12),
-          blurRadius: 8,
-          offset: const Offset(0, 4),
-        ),
-      ],
     );
   }
 
   /// Subtle input decoration — same family but lighter, used on input fields.
   static BoxDecoration sbInputDecoration(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return BoxDecoration(
-      color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
+      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
       borderRadius: BorderRadius.circular(inputRadius),
       border: Border.all(
-        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
+        color: colorScheme.outline.withValues(alpha: 0.5),
         width: 1.2,
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 
 /// WIDGET: SbModuleHero
@@ -14,6 +16,7 @@ class SbModuleHero extends StatelessWidget {
   final String subtitle;
   final Widget? child;
   final List<Color>? gradientColors;
+  final EdgeInsets? margin;
 
   const SbModuleHero({
     super.key,
@@ -22,6 +25,7 @@ class SbModuleHero extends StatelessWidget {
     required this.subtitle,
     this.child,
     this.gradientColors,
+    this.margin,
   });
 
   @override
@@ -32,25 +36,23 @@ class SbModuleHero extends StatelessWidget {
     // Professional Grade Gradient
     final colors = gradientColors ?? [
       colorScheme.primary,
-      const Color(0xFF1E40AF), // Deep Engineering Blue
+      colorScheme.primary.withValues(alpha: 0.8), // Tonal shift
     ];
 
     return Container(
       width: double.infinity,
+      margin: margin ?? const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         borderRadius: AppLayout.borderRadiusCard,
+        border: Border.all(
+          color: colorScheme.onPrimary.withValues(alpha: 0.15),
+          width: 1.2,
+        ),
         gradient: LinearGradient(
           colors: colors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colors.first.withValues(alpha: 0.3),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-          ),
-        ],
       ),
       child: ClipRRect(
         borderRadius: AppLayout.borderRadiusCard,
@@ -60,7 +62,7 @@ class SbModuleHero extends StatelessWidget {
             Positioned.fill(
               child: CustomPaint(
                 painter: _HeroPatternPainter(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: colorScheme.onPrimary.withValues(alpha: 0.05),
                 ),
               ),
             ),
@@ -73,31 +75,20 @@ class SbModuleHero extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      // Circular Icon Backdrop
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.15),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            width: 1,
-                          ),
-                        ),
-                        child: Icon(
-                          icon,
-                          color: Colors.white,
-                          size: 24,
-                        ),
+                      // Clean Sharp Icon (no background shading)
+                      Icon(
+                        icon,
+                        color: colorScheme.onPrimary,
+                        size: 32,
                       ),
                       AppLayout.hGap16,
                       Expanded(
                         child: Text(
                           title,
-                          style: SbTextStyles.headline(context).copyWith(
-                            color: Colors.white,
+                        style: TextStyle(
+                            fontSize: 18, // Global Standard: Hero Title
                             fontWeight: FontWeight.bold,
+                            color: colorScheme.onPrimary,
                             letterSpacing: -0.5,
                           ),
                         ),
@@ -110,7 +101,7 @@ class SbModuleHero extends StatelessWidget {
                     child: Text(
                       subtitle,
                       style: SbTextStyles.body(context).copyWith(
-                        color: Colors.white.withValues(alpha: 0.85),
+                        color: colorScheme.onPrimary.withValues(alpha: 0.85),
                         height: 1.5,
                       ),
                     ),

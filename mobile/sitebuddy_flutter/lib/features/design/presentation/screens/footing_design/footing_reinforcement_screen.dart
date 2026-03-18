@@ -2,8 +2,6 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -87,18 +85,12 @@ class FootingReinforcementScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
 
           // Detailing Card
-          SBCard(
+          const SbSectionHeader(title: 'Bar Detailing'),
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Bar Detailing',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 Text(
                   'Main Reinforcement (X-Direction)',
                   style: TextStyle(
@@ -188,16 +180,16 @@ class FootingReinforcementScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Final Safety Checks',
                 onPressed: () => context.push('/footing/safety'),
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

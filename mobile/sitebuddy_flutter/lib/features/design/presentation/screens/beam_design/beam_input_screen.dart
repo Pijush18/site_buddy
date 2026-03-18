@@ -3,9 +3,6 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -126,17 +123,17 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SBButton.primary(
+          SbButton.primary(
             label: 'Next: Load Definition',
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
-            fullWidth: true,
+            width: double.infinity,
           ),
           const SizedBox(height: AppSpacing.sm),
-          SBButton.ghost(
+          SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
-            fullWidth: true,
+            width: double.infinity,
           ),
         ],
       ),
@@ -156,13 +153,13 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             const SizedBox(height: AppSpacing.md),
 
             // Geometry Card
-            SBCard(
+            SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SBSectionHeader(
+                  const SbSectionHeader(
                     title: 'Geometry',
-                    topPadding: 0,
+                    padding: EdgeInsets.zero,
                   ),
 
                   const Text(
@@ -220,13 +217,13 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             const SizedBox(height: AppSpacing.md),
 
             // Materials Card
-            SBCard(
+            SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SBSectionHeader(
+                  const SbSectionHeader(
                     title: 'Materials',
-                    topPadding: 0,
+                    padding: EdgeInsets.zero,
                   ),
 
                   Row(

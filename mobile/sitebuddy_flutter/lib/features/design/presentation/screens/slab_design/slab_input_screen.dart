@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -101,9 +100,8 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-            SBCard(
-              title: 'Geometry',
-              showDivider: true,
+            SbSection(
+              title: EngineeringTerms.geometry,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -150,11 +148,11 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
-            SBCard(
-              title: 'Materials',
-              showDivider: true,
+            SbSection(
+              title: EngineeringTerms.materialProperties,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -193,17 +191,17 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SBButton.primary(
+                SbButton.primary(
                   label: 'Next: Load Definition',
                   onPressed: _onNext,
                   icon: Icons.arrow_forward,
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                SBButton.secondary(
+                SbButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
               ],
             ),

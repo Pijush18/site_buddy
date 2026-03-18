@@ -1,21 +1,4 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
-
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: ai_assistant_widget.dart
-/// Feature: home
-/// Layer: presentation
-///
-/// PURPOSE:
-/// Anchor point on the Home Screen to launch the Smart Assistant Chat.
-///
-/// RESPONSIBILITIES:
-/// - Provides a quick text input block for UX.
-/// - Pushes initial queries into the `/ai/chat` engine.
-///
-/// ----------------------------------------------
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,18 +8,19 @@ import 'package:site_buddy/core/widgets/smart_assistant_input.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 
-/// CLASS: AiAssistantWidget
-class AiAssistantWidget extends ConsumerStatefulWidget {
-  const AiAssistantWidget({super.key});
+/// CLASS: SbSmartAssistantCard
+/// PURPOSE: Premium hero card for launching the Smart Assistant Chat.
+/// Standardized replacement for AssistantHeroCard.
+class SbSmartAssistantCard extends ConsumerStatefulWidget {
+  const SbSmartAssistantCard({super.key});
 
   @override
-  ConsumerState<AiAssistantWidget> createState() => _AiAssistantWidgetState();
+  ConsumerState<SbSmartAssistantCard> createState() => _SbSmartAssistantCardState();
 }
 
-class _AiAssistantWidgetState extends ConsumerState<AiAssistantWidget> {
+class _SbSmartAssistantCardState extends ConsumerState<SbSmartAssistantCard> {
   final TextEditingController _controller = TextEditingController();
 
   void _launchChat() {
@@ -48,38 +32,20 @@ class _AiAssistantWidgetState extends ConsumerState<AiAssistantWidget> {
     }
 
     final text = _controller.text.trim();
-    // Clean local field
     _controller.clear();
-    // Launch the persistent chat screen
     context.push('/ai/chat', extra: text.isNotEmpty ? text : null);
   }
 
   void _showUpgradeDialog() {
-    showDialog(
+    SbFeedback.showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(SbIcons.premium, color: Colors.amber),
-            AppLayout.hGap8,
-            Text(AppStrings.goPremium),
-          ],
-        ),
-        content: const Text(AppStrings.premiumFeatureNotice),
-        actions: [
-          SbButton.ghost(
-            label: AppStrings.close,
-            onPressed: () => context.pop(),
-          ),
-          SbButton.primary(
-            label: AppStrings.upgradeNow,
-            onPressed: () {
-              context.pop();
-              context.push('/subscription');
-            },
-          ),
-        ],
-      ),
+      title: AppStrings.goPremium,
+      content: const Text(AppStrings.premiumFeatureNotice),
+      confirmLabel: AppStrings.upgradeNow,
+      onConfirm: () {
+        context.pop();
+        context.push('/subscription');
+      },
     );
   }
 
@@ -92,7 +58,6 @@ class _AiAssistantWidgetState extends ConsumerState<AiAssistantWidget> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
 
     return SbModuleHero(
       icon: SbIcons.psychology,

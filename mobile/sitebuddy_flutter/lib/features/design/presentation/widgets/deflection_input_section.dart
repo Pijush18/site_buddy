@@ -1,11 +1,9 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 class DeflectionInputSection extends StatelessWidget {
   final TextEditingController dController;
@@ -29,85 +27,101 @@ class DeflectionInputSection extends StatelessWidget {
   Widget build(BuildContext context) {
     const spanTypes = ['Cantilever', 'Simply Supported', 'Continuous'];
 
-    return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'INPUT PARAMETERS',
-            style: SbTextStyles.caption(context).copyWith(
-              color: const Color(0xFF2563EB),
-
-              letterSpacing: 1.1,
+    return SbSection(
+      title: 'Input Parameters',
+      child: SbCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: AppNumberField(
+                    controller: dController,
+                    label: 'Eff. Depth (d) [mm]',
+                    suffixIcon: SbIcons.layers,
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Depth'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: AppNumberField(
+                    controller: spanController,
+                    label: 'Span (L) [mm]',
+                    suffixIcon: SbIcons.level,
+                    validator: (v) => ValidationHelper.validatePositive(v, 'Span'),
+                  ),
+                ),
+              ],
             ),
-          ),
-          AppLayout.vGap16,
-          Row(
-            children: [
-              Expanded(
-                child: AppNumberField(
-                  controller: dController,
-                  label: 'Eff. Depth (d) [mm]',
-                  suffixIcon: SbIcons.layers,
-                  validator: (v) =>
-                      ValidationHelper.validatePositive(v, 'Depth'),
+            const SizedBox(height: AppSpacing.md),
+            _buildLabelledDropdown(
+              context,
+              'Span Type',
+              selectedSpanType,
+              spanTypes,
+              onSpanTypeChanged,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: AppNumberField(
+                    controller: ptController,
+                    label: 'Tension Steel (pt) [%]',
+                    suffixIcon: SbIcons.percent,
+                    validator: (v) => ValidationHelper.validatePercentage(v, 'Tension Steel'),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppLayout.lg),
-              Expanded(
-                child: AppNumberField(
-                  controller: spanController,
-                  label: 'Span (L) [mm]',
-                  suffixIcon: SbIcons.level,
-                  validator: (v) =>
-                      ValidationHelper.validatePositive(v, 'Span'),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: AppNumberField(
+                    controller: pcController,
+                    label: 'Comp. Steel (pc) [%]',
+                    suffixIcon: SbIcons.percent,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) return null;
+                      return ValidationHelper.validatePercentage(
+                        v,
+                        'Comp. Steel',
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-          AppLayout.vGap16,
-          Text(
-            'Span Type',
-            style: SbTextStyles.caption(context).copyWith(color: const Color(0xFF94A3B8)),
-          ),
-          const SizedBox(height: AppLayout.xs),
-          SbDropdown<String>(
-            value: selectedSpanType,
-            items: spanTypes,
-            itemLabelBuilder: (s) => s,
-            onChanged: onSpanTypeChanged,
-          ),
-          AppLayout.vGap16,
-          Row(
-            children: [
-              Expanded(
-                child: AppNumberField(
-                  controller: ptController,
-                  label: 'Tension Steel (pt) [%]',
-                  suffixIcon: SbIcons.percent,
-                  validator: (v) =>
-                      ValidationHelper.validatePercentage(v, 'Tension Steel'),
-                ),
-              ),
-              const SizedBox(width: AppLayout.pMedium),
-              Expanded(
-                child: AppNumberField(
-                  controller: pcController,
-                  label: 'Comp. Steel (pc) [%]',
-                  suffixIcon: SbIcons.percent,
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return null;
-                    return ValidationHelper.validatePercentage(
-                      v,
-                      'Comp. Steel',
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildLabelledDropdown(
+    BuildContext context,
+    String label,
+    String value,
+    List<String> items,
+    ValueChanged<String?> onChanged,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        SbDropdown<String>(
+          value: value,
+          items: items,
+          itemLabelBuilder: (s) => s,
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

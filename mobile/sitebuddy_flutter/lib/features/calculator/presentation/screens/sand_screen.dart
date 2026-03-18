@@ -58,15 +58,17 @@ class SandScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.wetVolume,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.sandCubicFeet,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -76,8 +78,9 @@ class SandScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
               const Divider(),
               const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-              SbListItem(
+              SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
+                onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
                   style: TextStyle(

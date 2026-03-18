@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
@@ -106,21 +105,17 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           // Column Load Card
-          SBCard(
+          SbSectionHeader(
+            title: state.type == FootingType.combined ||
+                    state.type == FootingType.strap
+                ? 'Column 1 Loadings'
+                : 'Column Loadings',
+          ),
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  state.type == FootingType.combined ||
-                          state.type == FootingType.strap
-                      ? 'Column 1 Loadings'
-                      : 'Column Loadings',
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 AppNumberField(
                   label: 'Axial Load (P1) (kN)',
                   controller: _loadController,
@@ -186,18 +181,12 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           ),
           const SizedBox(height: AppSpacing.sm),
           // Soil Parameters Card
-          SBCard(
+          const SbSectionHeader(title: 'Soil Properties'),
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Soil Properties',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 AppNumberField(
                   label: 'Safe Bearing Capacity (SBC) (kN/m²)',
                   controller: _sbcController,
@@ -217,17 +206,17 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Geometry Design',
                 icon: Icons.square_foot,
                 onPressed: _onNext,
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

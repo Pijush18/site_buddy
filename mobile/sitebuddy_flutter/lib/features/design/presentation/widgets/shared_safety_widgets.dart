@@ -1,8 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 class StatusBadge extends StatelessWidget {
   final bool isSafe;
@@ -13,10 +12,13 @@ class StatusBadge extends StatelessWidget {
     final color = isSafe ? Colors.green : Colors.red;
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppLayout.md,
-        vertical: AppLayout.sm,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.sm / 2,
       ),
-
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -25,10 +27,14 @@ class StatusBadge extends StatelessWidget {
             color: color,
             size: 14,
           ),
-          AppLayout.hGap8,
+          const SizedBox(width: AppSpacing.sm),
           Text(
             isSafe ? 'SAFE' : 'UNSAFE',
-            style: SbTextStyles.body(context).copyWith(color: color),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
         ],
       ),
@@ -43,20 +49,27 @@ class ResultDetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: AppLayout.spaceXS,
+        vertical: AppSpacing.sm / 2,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
-            style: SbTextStyles.bodySecondary(context).copyWith(color: const Color(0xFF94A3B8)),
+            style: TextStyle(
+              fontSize: 14,
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           Text(
             value,
-            style: SbTextStyles.body(context).copyWith(color: Colors.white),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),
@@ -72,15 +85,19 @@ class PlaceholderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppCard(
+    final colorScheme = Theme.of(context).colorScheme;
+    return SbCard(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 48.0),
           child: Column(
             children: [
-              Icon(icon, size: 48, color: Colors.white.withValues(alpha: 0.1)),
-              AppLayout.vGap16,
-              Text(message, style: SbTextStyles.body(context)),
+              Icon(icon, size: 48, color: colorScheme.onSurfaceVariant.withValues(alpha: 0.2)),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                message,
+                style: TextStyle(color: colorScheme.onSurfaceVariant),
+              ),
             ],
           ),
         ),

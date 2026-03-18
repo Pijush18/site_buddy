@@ -93,6 +93,7 @@ class AppScreenWrapper extends StatelessWidget {
             )
           : null,
       body: SafeArea(
+        bottom: false,
         child: isScrollable
             ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_empty_state.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 /// SCREEN: ColumnHistoryScreen
 /// PURPOSE: History of all column designs and checks.
@@ -26,10 +25,10 @@ class ColumnHistoryScreen extends ConsumerWidget {
     if (selectedProject == null) {
       return const AppScreenWrapper(
         title: ScreenTitles.columnHistory,
-        child: SBEmptyState(
+        child: SbEmptyState(
           icon: Icons.domain_disabled_outlined,
           title: AppStrings.noProjectSelected,
-          description: AppStrings.selectProjectDesc,
+          subtitle: AppStrings.selectProjectDesc,
         ),
       );
     }
@@ -53,10 +52,10 @@ class ColumnHistoryScreen extends ConsumerWidget {
               .toList();
 
           if (columnHistory.isEmpty) {
-            return const SBEmptyState(
+            return const SbEmptyState(
               icon: Icons.history_toggle_off_outlined,
               title: ScreenTitles.columnHistory,
-              description: AppStrings.noEntriesFound,
+              subtitle: AppStrings.noEntriesFound,
             );
           }
 
@@ -85,52 +84,16 @@ class _HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
+    final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
 
-    return SBCard(
+    return SbListItemTile(
+      icon: SbIcons.viewColumn,
+      title: entry.resultSummary,
+      subtitle: 'ID: ${entry.id.substring(0, 8)}...',
+      trailing: dateStr,
       onTap: () {
         context.push('/history-detail', extra: entry);
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppStrings.design.toUpperCase(), // Or add a specific constant
-                style: TextStyle(
-                  fontSize: AppFontSizes.tab,
-                  color: colorScheme.primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                dateStr,
-                style: TextStyle(
-                  fontSize: AppFontSizes.tab,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-          Text(
-            entry.resultSummary,
-            style: const TextStyle(fontSize: AppFontSizes.subtitle),
-          ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap4 (closest standard)
-          Text(
-            'ID: ${entry.id.substring(0, 8)}...',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

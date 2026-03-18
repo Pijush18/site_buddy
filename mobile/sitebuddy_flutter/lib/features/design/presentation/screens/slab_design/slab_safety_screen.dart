@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/design_advisor/design_advisor_card.dart';
@@ -102,17 +102,17 @@ class SlabSafetyScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Export PDF Design Report',
                 onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
                 icon: Icons.picture_as_pdf_outlined,
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.secondary(
+              SbButton.secondary(
                 label: 'Back',
                 onPressed: () => Navigator.of(context).pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

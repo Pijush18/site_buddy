@@ -23,7 +23,7 @@ import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 /// - Replaced Theme.of(context).colorScheme.surface border → colorScheme.outlineVariant
 /// - Replaced Theme.of(context).colorScheme.primary → colorScheme.primary
 /// - Replaced Theme.of(context).colorScheme.onSurfaceVariant → colorScheme.onSurfaceVariant
-/// - Added elevation shadow via BoxShadow for visual separation (elevation: 6).
+/// - Transitioned to a clean border-only design (elevation: 0, no boxShadow).
 /// - All navigation logic, indices, icons, and labels are unchanged.
 ///
 /// ----------------------------------------------
@@ -49,30 +49,15 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    // elevation: 6 equivalent — replicated as a BoxShadow so we retain the
-    // custom Container approach (which lets us control the top border and
-    // background independently of the default NavigationBar widget).
-    final List<BoxShadow> elevationShadow = [
-      BoxShadow(
-        color: colorScheme.shadow.withValues(alpha: 0.12),
-        blurRadius: 8,
-        offset: const Offset(0, -2),
-      ),
-    ];
-
     return Container(
       decoration: BoxDecoration(
-        // ── Themed background — adapts to light / dark automatically ──────────
         color: colorScheme.surface,
-        // ── Subtle top divider using theme's outline colour ───────────────────
         border: Border(
           top: BorderSide(
             color: colorScheme.outlineVariant.withValues(alpha: 0.6),
             width: 1.0,
           ),
         ),
-        // ── elevation: 6 shadow painted upward ───────────────────────────────
-        boxShadow: elevationShadow,
       ),
       child: SafeArea(
         top: false,

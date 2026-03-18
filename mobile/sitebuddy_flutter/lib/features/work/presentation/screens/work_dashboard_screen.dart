@@ -1,6 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -65,39 +64,16 @@ class WorkDashboardScreen extends ConsumerWidget {
           ),
           child: Icon(SbIcons.checkFilled, color: colorScheme.primary),
         ),
-        child: SbCard(
+        child: SbListItemTile(
+          icon: SbIcons.task,
+          title: t.title,
+          subtitle: 'Project ${t.projectId} • Due ${t.dueDate.toLocal().toString().split(' ').first}',
           onTap: () {
             context.push('/tasks/detail', extra: t);
           },
-          child: Row(
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(width: 4, height: 40, color: priorityColor),
-              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      t.title,
-                      style: const TextStyle(
-                        fontSize: AppFontSizes.subtitle,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
-                    Text(
-                      'Project ${t.projectId} • Due ${t.dueDate.toLocal().toString().split(' ').first}',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
@@ -116,6 +92,8 @@ class WorkDashboardScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+              const SizedBox(width: AppSpacing.sm),
+              Container(width: 4, height: 40, color: priorityColor),
             ],
           ),
         ),
@@ -134,58 +112,30 @@ class WorkDashboardScreen extends ConsumerWidget {
         default:
           icon = SbIcons.meeting;
       }
-      return SbCard(
+      return SbListItemTile(
+        icon: icon,
+        title: m.title,
+        subtitle: '${m.meetingDate.toLocal().toString().split(' ').first} • ${m.mode.name}',
         onTap: () {
           context.push('/meetings/detail', extra: m);
         },
-        child: Row(
-          children: [
-            Icon(icon, color: colorScheme.primary, size: 20),
-            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    m.title,
-                    style: const TextStyle(
-                      fontSize: AppFontSizes.subtitle,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
-                  Text(
-                    '${m.meetingDate.toLocal().toString().split(' ').first} • ${m.mode.name}',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.tab,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
+        trailing: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm,
+            vertical: 2,
+          ),
+          decoration: BoxDecoration(
+            color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            m.status.name.toUpperCase(),
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: colorScheme.secondary,
             ),
-            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.sm,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                m.status.name.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.secondary,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       );
     }
@@ -219,19 +169,18 @@ class WorkDashboardScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SbListItem(
-                    leading: Icon(SbIcons.addTask, color: colorScheme.primary),
+                  SbListItemTile(
+                    icon: SbIcons.addTask,
+                    iconColor: colorScheme.primary,
                     title: 'Create Task',
                     onTap: () {
                       context.pop();
                       context.push('/tasks/create');
                     },
                   ),
-                  SbListItem(
-                    leading: Icon(
-                      SbIcons.meeting,
-                      color: colorScheme.secondary,
-                    ),
+                  SbListItemTile(
+                    icon: SbIcons.meeting,
+                    iconColor: colorScheme.secondary,
                     title: 'Schedule Meeting',
                     onTap: () {
                       context.pop();

@@ -55,8 +55,9 @@ class RebarScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             const Divider(),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.numberOfBars,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
                 style: TextStyle(
@@ -66,15 +67,17 @@ class RebarScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.totalLength,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
                 style: const TextStyle(fontSize: AppFontSizes.subtitle),
               ),
             ),
-            SbListItem(
+            SbListItemTile(
               title: EngineeringTerms.totalWeight,
+              onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
                 style: TextStyle(

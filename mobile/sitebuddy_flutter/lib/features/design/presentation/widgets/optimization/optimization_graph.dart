@@ -1,12 +1,9 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/widgets/app_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-/// WIDGET: OptimizationGraph
-/// PURPOSE: Visually compares multiple optimization options using bar charts.
 class OptimizationGraph extends StatelessWidget {
   final List<OptimizationOption> options;
 
@@ -16,48 +13,39 @@ class OptimizationGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     if (options.isEmpty) return const SizedBox.shrink();
 
-    // Find max values for normalization
     double maxSteelArea = 1.0;
     for (var opt in options) {
       if (opt.steelArea > maxSteelArea) maxSteelArea = opt.steelArea;
     }
 
-    return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                SbIcons.analytics,
-                color: Color(0xFF2563EB),
-                size: 20,
-              ),
-              AppLayout.hGap8,
-              Text(
-                'EFFICIENCY COMPARISON',
-                style: AppTextStyles.labelMedium.copyWith(letterSpacing: 1.2),
-              ),
-            ],
-          ),
-          AppLayout.vGap16,
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: options.length,
-            separatorBuilder: (context, index) => AppLayout.vGap24,
-            itemBuilder: (context, index) {
-              final option = options[index];
-              return _OptimizationRow(
-                option: option,
-                maxSteelArea: maxSteelArea,
-                rankLabel: _getRankLabel(index),
-              );
-            },
-          ),
-          AppLayout.vGap8,
-          _buildLegend(),
-        ],
+    return SbSection(
+      title: 'Efficiency Comparison',
+      trailing: const Icon(
+        SbIcons.analytics,
+        color: Color(0xFF2563EB),
+        size: 20,
+      ),
+      child: SbCard(
+        child: Column(
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: options.length,
+              separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.lg),
+              itemBuilder: (context, index) {
+                final option = options[index];
+                return _OptimizationRow(
+                  option: option,
+                  maxSteelArea: maxSteelArea,
+                  rankLabel: _getRankLabel(index),
+                );
+              },
+            ),
+            const SizedBox(height: AppSpacing.md),
+            _buildLegend(context),
+          ],
+        ),
       ),
     );
   }
@@ -68,17 +56,14 @@ class OptimizationGraph extends StatelessWidget {
     return 'SAFE';
   }
 
-  Widget _buildLegend() {
-    return const Padding(
-      padding: EdgeInsets.only(top: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          _LegendItem(color: Color(0xFF2563EB), label: 'Utilization'),
-          AppLayout.hGap16,
-          _LegendItem(color: Colors.orange, label: 'Steel Area'),
-        ],
-      ),
+  Widget _buildLegend(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _LegendItem(color: Color(0xFF2563EB), label: 'Utilization'),
+        SizedBox(width: AppSpacing.md),
+        _LegendItem(color: Colors.orange, label: 'Steel Area'),
+      ],
     );
   }
 }
@@ -105,24 +90,24 @@ class _OptimizationRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(option.title, style: AppTextStyles.bodyMedium),
+            Text(option.title, style: const TextStyle(fontWeight: FontWeight.w600)),
             Text(
               rankLabel,
-              style: AppTextStyles.labelSmall.copyWith(
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
                 color: _getRankColor(rankLabel),
               ),
             ),
           ],
         ),
-        AppLayout.vGap8,
-        // Utilization Bar
+        const SizedBox(height: AppSpacing.sm),
         _Bar(
           label: 'Util: ${(utilPercentage * 100).toInt()}%',
           percentage: utilPercentage,
           color: const Color(0xFF2563EB),
         ),
-        AppLayout.vGap4,
-        // Steel Area Bar
+        const SizedBox(height: 4),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
@@ -152,26 +137,40 @@ class _Bar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.centerLeft,
-      children: [
-        AppLayout.vGap12,
-        FractionallySizedBox(
-          widthFactor: percentage,
-          child: Container(height: 14),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-
-              shadows: [Shadow(blurRadius: 2, color: Colors.black26)],
+    return Container(
+      height: 16,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Stack(
+        children: [
+          FractionallySizedBox(
+            widthFactor: percentage,
+            child: Container(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(4),
+              ),
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 10,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -186,9 +185,19 @@ class _LegendItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 10, height: 10),
-        AppLayout.hGap8,
-        Text(label, style: AppTextStyles.labelSmall),
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 10),
+        ),
       ],
     );
   }

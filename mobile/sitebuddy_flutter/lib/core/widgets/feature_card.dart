@@ -3,7 +3,7 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 
 /// WIDGET: FeatureCard
@@ -40,7 +40,7 @@ class FeatureCard extends StatelessWidget {
     );
 
     if (isHorizontal) {
-      return SBCard(
+      return SbCard(
         onTap: onTap,
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(
@@ -60,7 +60,7 @@ class FeatureCard extends StatelessWidget {
       );
     }
 
-    return SBCard(
+    return SbCard(
       onTap: onTap,
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(

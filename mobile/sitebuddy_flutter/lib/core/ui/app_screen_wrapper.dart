@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 class AppScreenWrapper extends StatelessWidget {
@@ -9,7 +9,7 @@ class AppScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: child,
     );
   }

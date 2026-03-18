@@ -18,8 +18,9 @@ class SettingSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SbListItem(
+    return SbListItemTile(
       title: title,
+      onTap: () => onChanged(!value),
       trailing: SbSwitch(value: value, onChanged: onChanged),
     );
   }

@@ -84,6 +84,7 @@ class SbIcons {
   static const IconData list = Icons.format_list_bulleted_rounded;
 
   // Feature Specific: Calculator & Engineering
+  static const IconData construction = Icons.construction_outlined;
   static const IconData calculator = Icons.calculate_outlined;
   static const IconData engineering = Icons.engineering_outlined;
   static const IconData layers = Icons.layers_outlined;

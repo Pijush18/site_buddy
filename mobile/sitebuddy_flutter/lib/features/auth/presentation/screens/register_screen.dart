@@ -3,9 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -113,13 +110,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         title: const Text(AppStrings.accountCreated),
         content: const Text(AppStrings.verifyEmailToSignIn),
         actions: [
-          SBButton.primary(
+          SbButton.primary(
             label: AppStrings.backToLogin,
             onPressed: () {
               ref.read(authRepositoryProvider).logout();
               context.go('/login');
             },
-            fullWidth: true,
+            width: double.infinity,
           ),
         ],
       ),
@@ -163,20 +160,23 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
-          const SBSectionHeader(
-            title: AppStrings.joinSiteBuddy,
-          ),
-          Text(
-            AppStrings.startJourney,
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
-              color: colorScheme.onSurfaceVariant,
+          SbSection(
+            title: AppStrings.createAccount,
+            child: Column(
+              children: [
+                Text(
+                  AppStrings.structuralDesignSuite,
+                  style: TextStyle(
+                    fontSize: AppFontSizes.subtitle,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
 
           // Register Card
-          SBCard(
+          SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -220,7 +220,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                 ),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-                SBButton.primary(
+                SbButton.primary(
                   label: AppStrings.register,
                   onPressed: (isLoading ||
                           _emailController.text.isEmpty ||
@@ -229,16 +229,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ? null
                       : _register,
                   isLoading: isLoading,
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
               ],
             ),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          SBButton.secondary(
+          SbButton.secondary(
             label: AppStrings.alreadyHaveAccountSignIn,
             onPressed: () => context.go('/login'),
-            fullWidth: true,
+            width: double.infinity,
           ),
           const SizedBox(height: AppSpacing.lg), // Bottom padding
         ],

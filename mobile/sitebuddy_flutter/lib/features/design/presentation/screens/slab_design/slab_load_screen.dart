@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
@@ -73,9 +72,9 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
-            SBCard(
-              title: 'Loads (kN/m²)',
-              showDivider: true,
+            const SbSectionHeader(title: 'Loads (kN/m²)'),
+            SbCard(
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -107,17 +106,17 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SBButton.primary(
+                SbButton.primary(
                   label: 'Next: Analysis Summary',
                   onPressed: _onCalculate,
                   icon: Icons.calculate_outlined,
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                SBButton.secondary(
+                SbButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
               ],
             ),

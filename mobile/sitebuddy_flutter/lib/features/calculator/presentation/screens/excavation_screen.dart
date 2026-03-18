@@ -183,8 +183,9 @@ class _ResultCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.totalVolumeLoose,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.volumeM3.toStringAsFixed(2)} m³',
               style: TextStyle(
@@ -194,8 +195,9 @@ class _ResultCard extends StatelessWidget {
               ),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.bankVolumeNatural,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${(result.volumeM3 / result.swellFactor).toStringAsFixed(2)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),

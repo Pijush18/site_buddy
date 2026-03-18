@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/models/design_advisor_result.dart';
 
 /// WIDGET: DesignAdvisorCard
@@ -26,16 +26,13 @@ class DesignAdvisorCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-        SBCard(
+        SbSectionHeader(
           title: advisorResult.recommendedOption != null
               ? 'Recommendation'
               : 'Action Required',
-          titleStyle: TextStyle(
-            color: advisorResult.recommendedOption != null
-                ? Colors.blue
-                : Colors.red,
-          ),
-          showDivider: true,
+        ),
+        SbCard(
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

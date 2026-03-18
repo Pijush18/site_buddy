@@ -259,8 +259,9 @@ class _ResultSection extends StatelessWidget {
           const Divider(),
 
           // Bricks
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.numberOfBricks,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               result.numberOfBricks.toString(),
               style: TextStyle(
@@ -270,8 +271,9 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.brickVolume,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.brickVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -282,8 +284,9 @@ class _ResultSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
 
           // Cement & Sand
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.cementBags,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
               style: TextStyle(
@@ -293,8 +296,9 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.sandVolume,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -305,8 +309,9 @@ class _ResultSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
 
           // Totals
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.wallVolume,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.wallVolume.toStringAsFixed(3)} m³',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),

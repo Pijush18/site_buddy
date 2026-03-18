@@ -65,8 +65,9 @@ class ShutteringScreen extends ConsumerWidget {
             errorText: dError,
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.includeBottomArea,
+            onTap: () => controller.updateIncludeBottom(!state.includeBottom),
             trailing: Switch(
               value: state.includeBottom,
               onChanged: controller.updateIncludeBottom,
@@ -178,8 +179,9 @@ class _ResultCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           const Divider(),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.totalShutteringArea,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
               style: TextStyle(
@@ -189,15 +191,17 @@ class _ResultCard extends StatelessWidget {
               ),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.perimeter,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),
             ),
           ),
-          SbListItem(
+          SbListItemTile(
             title: EngineeringTerms.depth,
+            onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.depth} m',
               style: const TextStyle(fontSize: AppFontSizes.subtitle),

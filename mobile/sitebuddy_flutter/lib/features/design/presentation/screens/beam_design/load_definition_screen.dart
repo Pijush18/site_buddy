@@ -2,9 +2,6 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -108,13 +105,13 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             const SizedBox(height: AppSpacing.md),
 
             // Loads Card
-            SBCard(
+            SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SBSectionHeader(
+                  const SbSectionHeader(
                     title: 'Vertical Loads',
-                    topPadding: 0,
+                    padding: EdgeInsets.zero,
                   ),
 
                   AppNumberField(
@@ -143,17 +140,16 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             const SizedBox(height: AppSpacing.md),
 
             // Load Factor Toggle Card
-            SBCard(
+            SbCard(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SBSectionHeader(
+                      const SbSectionHeader(
                         title: 'Design Limit State',
-                        topPadding: 0,
-                        bottomPadding: AppSpacing.sm,
+                        padding: EdgeInsets.only(bottom: AppSpacing.sm),
                       ),
                       Text(
                         state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
@@ -180,17 +176,17 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SBButton.primary(
+                SbButton.primary(
                   label: 'Calculate & View Analysis',
                   onPressed: _onNext,
                   icon: SbIcons.analytics,
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                SBButton.ghost(
+                SbButton.ghost(
                   label: 'Back',
                   onPressed: () => context.pop(),
-                  fullWidth: true,
+                  width: double.infinity,
                 ),
               ],
             ),

@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
@@ -21,38 +21,11 @@ class RecentActivitySection extends ConsumerWidget {
     return Column(
       children: [
         for (int i = 0; i < state.recentActivities.length; i++) ...[
-          _PressableActivityTile(activity: state.recentActivities[i]),
+          ActivityTile(activity: state.recentActivities[i]),
           if (i < state.recentActivities.length - 1)
-            AppLayout.vGap16,
+            const SizedBox(height: AppSpacing.md),
         ],
       ],
-    );
-  }
-}
-
-class _PressableActivityTile extends StatefulWidget {
-  final dynamic activity;
-  const _PressableActivityTile({required this.activity});
-
-  @override
-  State<_PressableActivityTile> createState() => _PressableActivityTileState();
-}
-
-class _PressableActivityTileState extends State<_PressableActivityTile> {
-  bool _pressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => setState(() => _pressed = true),
-      onTapUp: (_) => setState(() => _pressed = false),
-      onTapCancel: () => setState(() => _pressed = false),
-      child: AnimatedScale(
-        scale: _pressed ? 0.98 : 1.0,
-        duration: const Duration(milliseconds: 150),
-        curve: Curves.easeOut,
-        child: ActivityTile(activity: widget.activity),
-      ),
     );
   }
 }

@@ -62,43 +62,49 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
           SbCard(
             child: Column(
               children: [
-                SbListItem(
+                SbListItemTile(
                   title: 'Project',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.projectId,
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Type',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingType.name.toUpperCase(),
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Mode',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.mode.name.toUpperCase(),
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Date',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingDate.toLocal().toString().split(' ').first,
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Time',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${m.startTime.toLocal().hour.toString().padLeft(2, '0')}:${m.startTime.toLocal().minute.toString().padLeft(2, '0')} - ${m.endTime.toLocal().hour.toString().padLeft(2, '0')}:${m.endTime.toLocal().minute.toString().padLeft(2, '0')}',
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),
                   ),
                 ),
-                SbListItem(
+                SbListItemTile(
                   title: 'Participants',
+                  onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.participants.join(', '),
                     style: const TextStyle(fontSize: AppFontSizes.subtitle),

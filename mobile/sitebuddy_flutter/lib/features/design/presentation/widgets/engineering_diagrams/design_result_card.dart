@@ -1,6 +1,5 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 class DesignResultCard extends StatelessWidget {
@@ -19,146 +18,115 @@ class DesignResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final statusColor = isSafe ? colorScheme.primary : colorScheme.error;
 
-    return SbCard(
-      padding: AppLayout.paddingLarge,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          /// HEADER
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  title.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SbTextStyles.title(context).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    letterSpacing: 1.1,
-                  ),
-                ),
-              ),
-              AppLayout.hGap8,
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppLayout.md,
-                  vertical: AppLayout.xs,
-                ),
-                
-                child: Text(
-                  isSafe ? 'SAFE' : 'UNSAFE',
-                  style: SbTextStyles.caption(context).copyWith(
-                    color: statusColor,
-                    
-                  ),
-                ),
-              ),
-            ],
+    return SbSection(
+      title: title,
+      trailing: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.sm / 2,
+        ),
+        decoration: BoxDecoration(
+          color: statusColor.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          isSafe ? 'SAFE' : 'UNSAFE',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: statusColor,
           ),
-
-          AppLayout.vGap16,
-
-          /// RESULT ITEMS
-          ...items.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          item.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: SbTextStyles.body(context).copyWith(
-                            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
+      child: SbCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ...items.map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.label,
+                            style: TextStyle(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ),
-                      ),
-                      AppLayout.hGap8,
-                      Flexible(
-                        child: Row(
+                        const SizedBox(width: AppSpacing.md),
+                        Row(
                           mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Flexible(
-                              child: Text(
-                                item.value,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.end,
-                                style: SbTextStyles.title(context).copyWith(
-                                  color: item.isCritical
-                                      ? statusColor
-                                      : colorScheme.onSurface,
-                                ),
+                            Text(
+                              item.value,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: item.isCritical ? statusColor : null,
                               ),
                             ),
                             if (item.unit != null) ...[
-                              AppLayout.hGap8,
+                              const SizedBox(width: 4),
                               Text(
                                 item.unit!,
-                                maxLines: 1,
-                                style: SbTextStyles.caption(context).copyWith(
-                                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],
                           ],
                         ),
+                      ],
+                    ),
+                    if (item.subtitle != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        item.subtitle!,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.secondary,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                     ],
-                  ),
-
-                  if (item.subtitle != null) ...[
-                    AppLayout.vGap4,
-                    Text(
-                      item.subtitle!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SbTextStyles.caption(context).copyWith(
-                        color: colorScheme.secondary,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
                   ],
-                ],
+                ),
               ),
             ),
-          ),
-
-          /// CODE REFERENCE
-          if (codeReference != null) ...[
-            AppLayout.vGap8,
-            Divider(height: 1, color: colorScheme.outlineVariant),
-            AppLayout.vGap12,
-            Row(
-              children: [
-                Icon(
-                  Icons.menu_book_rounded,
-                  size: 14,
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
-                ),
-                AppLayout.hGap8,
-                Text(
-                  codeReference!,
-                  style: SbTextStyles.caption(context).copyWith(
-                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
-                    fontStyle: FontStyle.italic,
+            if (codeReference != null) ...[
+              const Divider(),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                children: [
+                  Icon(
+                    Icons.menu_book_rounded,
+                    size: 14,
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Text(
+                    codeReference!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

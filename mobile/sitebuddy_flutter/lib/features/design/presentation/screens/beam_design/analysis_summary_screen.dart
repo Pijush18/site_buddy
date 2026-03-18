@@ -1,10 +1,8 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/widgets/components/sb_button.dart';
-import 'package:site_buddy/core/widgets/components/sb_card.dart';
-import 'package:site_buddy/core/widgets/components/sb_section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,7 +64,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
 
           // Diagrams Section
-          SBSectionHeader(
+          SbSectionHeader(
             title: 'Engineering Diagrams',
             trailing: Text(
               'L = ${(state.span / 1000).toStringAsFixed(2)}m',
@@ -75,7 +73,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                 color: Colors.grey,
               ),
             ),
-            bottomPadding: AppSpacing.sm,
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
           ),
 
           _DiagramCard(
@@ -96,7 +94,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SBButton.primary(
+              SbButton.primary(
                 label: 'Next: Reinforcement Design',
                 icon: Icons.iron_rounded,
                 onPressed: () {
@@ -105,13 +103,13 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                       .calculateReinforcement();
                   context.push('/beam/rebar');
                 },
-                fullWidth: true,
+                width: double.infinity,
               ),
               const SizedBox(height: AppSpacing.sm),
-              SBButton.ghost(
+              SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
-                fullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),
@@ -137,7 +135,7 @@ class _DiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBCard(
+    return SbCard(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: SizedBox(
         height: 140,

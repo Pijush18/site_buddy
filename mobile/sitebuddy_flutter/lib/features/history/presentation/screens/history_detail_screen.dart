@@ -101,25 +101,20 @@ class HistoryDetailScreen extends ConsumerWidget {
       );
     }
 
-    return SbCard(
-      child: ListView.separated(
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: params.length,
-        separatorBuilder: (context, index) => const Divider(height: 1),
-        itemBuilder: (context, index) {
-          final key = params.keys.elementAt(index);
-          final value = params.values.elementAt(index);
-          return SbListItem(
-            title: key,
+    return Column(
+      children: params.entries.map((e) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: SbListItemTile(
+            title: e.key,
+            onTap: () {}, // Immutable detail view
             trailing: Text(
-              value.toString(),
-              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              e.value.toString(),
+              style: const TextStyle(fontSize: 12),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      }).toList(),
     );
   }
 

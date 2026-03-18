@@ -1,207 +1,130 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/features/home/presentation/widgets/ai_assistant_widget.dart';
-import 'package:site_buddy/features/home/presentation/widgets/recent_activity_section.dart';
+import 'package:intl/intl.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
+import 'package:site_buddy/features/home/domain/models/activity_type.dart';
 
-class HomeScreen extends StatelessWidget {
+/// SCREEN: HomeScreen
+/// PURPOSE: Pure content composition for the dashboard.
+/// Rule: Order-locked sections using only authorized widgets.
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return AppScreenWrapper(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activities = ref.watch(homeProvider).recentActivities;
+
+    return SbPage.detail(
       title: AppStrings.appName,
-      actions: [
+      appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.settings),
           onPressed: () => context.push('/settings'),
         ),
-        const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
       ],
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 800, // Replaced maxContentWidth
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ── 1. Hero ──
-              const AiAssistantWidget(),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-
-              // ── 2. Field Tools ──
-              const _FieldToolsSection(),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-
-              // ── 3. Quick Actions ──
-              const _QuickActionsSection(),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-
-              // ── 4. Recent Activity ──
-              SbSection(
-                title: AppStrings.recentActivity,
-                trailing: SbButton.ghost(
-                  label: AppStrings.viewAll,
-                  icon: SbIcons.chevronRight,
-                  onPressed: () => context.push('/projects'),
-                ),
-                child: const RecentActivitySection(),
-              ),
-              const SizedBox(height: AppSpacing.lg), // Bottom padding
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Section 1: Field Tools Grid ─────────────────────────────────────────────
-class _FieldToolsSection extends StatelessWidget {
-  const _FieldToolsSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return SbSection(
-      title: AppStrings.fieldTools,
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        mainAxisSpacing: AppSpacing.md, // Replaced AppLayout.vGap16
-        crossAxisSpacing: AppSpacing.md, // Replaced AppLayout.hGap16
-        childAspectRatio: 1.0,
+      body: Column(
         children: [
-          SbGridCard(
-            icon: SbIcons.ruler,
-            label: EngineeringTerms.levelCalculator,
-            color: colorScheme.primary,
-            isVibrant: true,
-            onTap: () => context.push('/level'),
+          // ── SECTION 1: SMART ASSISTANT HERO ──
+          const SbSection(
+            title: '',
+            child: SbSmartAssistantCard(),
           ),
-          SbGridCard(
-            icon: SbIcons.architecture,
-            label: EngineeringTerms.gradientTool,
-            color: colorScheme.primary,
-            isVibrant: true,
-            onTap: () => context.push('/calculator/gradient'),
-          ),
-          SbGridCard(
-            icon: SbIcons.swap,
-            label: AppStrings.unitConverter,
-            color: colorScheme.primary,
-            isVibrant: true,
-            onTap: () => context.push('/converter'),
-          ),
-          SbGridCard(
-            icon: SbIcons.sync,
-            label: AppStrings.currencyConverter,
-            color: colorScheme.primary,
-            isVibrant: true,
-            onTap: () => context.push('/currency'),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-// ─── Section 2: Quick Actions Bar ────────────────────────────────────────────
-class _QuickActionsSection extends StatelessWidget {
-  const _QuickActionsSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return SbSection(
-      title: AppStrings.quickActions,
-      child: Row(
-        children: [
-          // New Project — primary
-          Expanded(
-            child: Material(
-              color: colorScheme.primary,
-              borderRadius: BorderRadius.circular(12), // Replaced AppLayout.borderRadiusCard
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () => context.push('/projects/create'),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: AppSpacing.md, // Replaced AppLayout.pMedium
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        SbIcons.addCircle,
-                        color: colorScheme.onPrimary,
-                        size: 24,
-                      ),
-                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                      Text(
-                        AppStrings.newProject,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.title,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onPrimary,
-                        ),
-                      ),
-                    ],
-                  ),
+          // ── SECTION 2: FIELD TOOLS ──
+          SbSection(
+            title: AppStrings.fieldTools,
+            child: SbGrid(
+              children: [
+                SbActionTile(
+                  icon: SbIcons.ruler,
+                  label: 'Level Calculator',
+                  onTap: () => debugPrint('Level Calculator tapped'),
+                  isVibrant: true,
                 ),
-              ),
+                SbActionTile(
+                  icon: SbIcons.trendingUp,
+                  label: 'Gradient Tool',
+                  onTap: () => debugPrint('Gradient Tool tapped'),
+                  isVibrant: true,
+                ),
+                SbActionTile(
+                  icon: SbIcons.sync,
+                  label: AppStrings.unitConverter,
+                  onTap: () => debugPrint('Unit Converter tapped'),
+                  isVibrant: true,
+                ),
+                SbActionTile(
+                  icon: SbIcons.currencyExchange,
+                  label: AppStrings.currencyConverter,
+                  onTap: () => debugPrint('Currency Converter tapped'),
+                  isVibrant: true,
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
-          // Share Report — secondary
-          Expanded(
-            child: Material(
-              color: colorScheme.secondary,
-              borderRadius: BorderRadius.circular(12), // Replaced AppLayout.borderRadiusCard
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () => context.push('/reports'),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: AppSpacing.md, // Replaced AppLayout.pMedium
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        SbIcons.iosShare,
-                        color: colorScheme.onSecondary,
-                        size: 24,
-                      ),
-                      const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                      Text(
-                        AppStrings.shareReport,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.title,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
+
+          // ── SECTION 3: QUICK ACTIONS ──
+          SbSection(
+            title: AppStrings.quickActions,
+            child: SbGrid(
+              childAspectRatio: 2.5,
+              children: [
+                SbActionTile(
+                  icon: SbIcons.addCircle,
+                  label: AppStrings.newProject,
+                  onTap: () => context.push('/projects/create'),
                 ),
-              ),
+                SbActionTile(
+                  icon: SbIcons.iosShare,
+                  label: AppStrings.shareReport,
+                  onTap: () => context.push('/reports'),
+                ),
+              ],
+            ),
+          ),
+
+          // ── SECTION 4: RECENT ACTIVITY ──
+          SbSection(
+            title: AppStrings.recentActivity,
+            trailing: IconButton(
+              icon: const Icon(SbIcons.chevronRight),
+              onPressed: () => context.push('/projects'),
+            ),
+            child: Column(
+              children: activities.map((activity) {
+                return SbListItemTile(
+                  title: activity.title,
+                  subtitle: activity.subtitle,
+                  icon: _getActivityIcon(activity.type),
+                  trailing: _formatTimestamp(activity.timestamp),
+                  onTap: () => debugPrint('Tapped activity: ${activity.title}'),
+                );
+              }).toList(),
             ),
           ),
         ],
       ),
     );
+  }
+
+  /// HELPER: Activity Icon Mapping
+  IconData _getActivityIcon(ActivityType type) {
+    switch (type) {
+      case ActivityType.calculator:
+        return SbIcons.calculator;
+      case ActivityType.leveling:
+        return SbIcons.ruler;
+      case ActivityType.project:
+        return SbIcons.project;
+    }
+  }
+
+  /// HELPER: Timestamp Formatting
+  String _formatTimestamp(DateTime timestamp) {
+    return DateFormat('MMM dd').format(timestamp);
   }
 }

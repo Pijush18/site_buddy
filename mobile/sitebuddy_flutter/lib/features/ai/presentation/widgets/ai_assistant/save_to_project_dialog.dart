@@ -27,7 +27,7 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/shared/domain/models/project.dart';
 
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 
 class SaveToProjectDialog extends ConsumerWidget {
   /// Defines the action when a user picks a project from the list.
@@ -62,12 +62,8 @@ class SaveToProjectDialog extends ConsumerWidget {
           else
             ...projectState.projects.map((project) {
               final isCurrent = project.id == activeProject?.id;
-              return SbListItem(
-                isSelected: isCurrent,
-                leading: Icon(
-                  Icons.folder_shared,
-                  color: isCurrent ? Colors.blue : Colors.grey,
-                ),
+              return SbListItemTile(
+                icon: Icons.folder_shared,
                 title: project.name,
                 subtitle: isCurrent
                     ? 'Current Active Project'
