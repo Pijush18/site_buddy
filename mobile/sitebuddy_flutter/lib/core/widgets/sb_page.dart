@@ -127,18 +127,25 @@ class SbPage extends StatelessWidget {
 
   // ── Form ──────────────────────────────────────────────────────────────────
   Widget _buildFormPage(BuildContext context) {
-    const bottomInset = 0.0;
-    
+    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
+    // Resulting content-to-edge distance: 16px (Page) + 8px (Card Int) = 24px.
+    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
+    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
+
     return AppScaffold(
       title: title,
       actions: appBarActions,
       automaticallyImplyLeading: automaticallyImplyLeading,
       padding: EdgeInsets.zero,
-      bottomNavigationBar: bottomAction != null ? _BottomActionBar(child: bottomAction!) : null,
+      bottomNavigationBar:
+          bottomAction != null ? _BottomActionBar(child: bottomAction!) : null,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: (usePadding ? AppLayout.paddingMedium : EdgeInsets.zero).copyWith(
-          bottom: bottomInset,
+        padding: EdgeInsets.only(
+          left: horizontalPadding,
+          right: horizontalPadding,
+          top: edgePadding,
+          bottom: edgePadding,
         ),
         child: formBody!,
       ),
@@ -147,7 +154,9 @@ class SbPage extends StatelessWidget {
 
   // ── List ──────────────────────────────────────────────────────────────────
   Widget _buildListPage(BuildContext context) {
-    const bottomInset = 0.0;
+    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
+    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
+    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
 
     return AppScaffold(
       title: title,
@@ -156,8 +165,11 @@ class SbPage extends StatelessWidget {
       padding: EdgeInsets.zero,
       body: ListView(
         physics: const BouncingScrollPhysics(),
-        padding: (usePadding ? AppLayout.paddingMedium : EdgeInsets.zero).copyWith(
-          bottom: bottomInset,
+        padding: EdgeInsets.only(
+          left: horizontalPadding,
+          right: horizontalPadding,
+          top: edgePadding,
+          bottom: edgePadding,
         ),
         children: [
           if (listHeader != null) ...[
@@ -174,7 +186,9 @@ class SbPage extends StatelessWidget {
 
   // ── Detail ────────────────────────────────────────────────────────────────
   Widget _buildDetailPage(BuildContext context) {
-    const bottomInset = 0.0;
+    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
+    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
+    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
 
     return AppScaffold(
       title: title,
@@ -183,8 +197,11 @@ class SbPage extends StatelessWidget {
       padding: EdgeInsets.zero,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: (usePadding ? AppLayout.paddingMedium : EdgeInsets.zero).copyWith(
-          bottom: bottomInset,
+        padding: EdgeInsets.only(
+          left: horizontalPadding,
+          right: horizontalPadding,
+          top: edgePadding,
+          bottom: edgePadding,
         ),
         child: formBody!,
       ),
@@ -193,7 +210,9 @@ class SbPage extends StatelessWidget {
 
   // ── Scaffold ──────────────────────────────────────────────────────────────
   Widget _buildScaffoldPage(BuildContext context) {
-    const bottomInset = 0.0;
+    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
+    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
+    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
 
     return AppScaffold(
       title: title,
@@ -202,8 +221,11 @@ class SbPage extends StatelessWidget {
       bottomNavigationBar: bottomAction != null
           ? _BottomActionBar(child: bottomAction!)
           : null,
-      padding: (usePadding ? AppLayout.paddingMedium : EdgeInsets.zero).copyWith(
-        bottom: bottomInset,
+      padding: EdgeInsets.only(
+        left: horizontalPadding,
+        right: horizontalPadding,
+        top: edgePadding,
+        bottom: edgePadding,
       ),
       body: formBody!,
     );

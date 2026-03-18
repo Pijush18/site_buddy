@@ -1,65 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_button.dart';
 
 /// CLASS: SbSectionHeader
 /// PURPOSE: Standardized header row with a title and an optional action target.
-/// DESIGN: 14px bold uppercase title, with optional ghost button action.
+/// 
+/// UPDATE:
+/// - Action is strictly controlled by [onTap].
+/// - Removed dependency on [trailing] for "View All" UI.
+/// - "View All" link appears automatically if [onTap] is provided.
 class SbSectionHeader extends StatelessWidget {
   final String title;
-  final String? actionLabel;
-  final VoidCallback? onActionTap;
-  final IconData? actionIcon;
+  
+  /// Callback for the "View All" action. 
+  /// If provided, the "View All >" label appears on the right.
+  final VoidCallback? onTap;
+  
+  /// Optional override for the action icon. Default is chevronRight.
+  final IconData? icon;
+  
+  /// Optional additional widget slot for external flexibility.
+  /// Does NOT trigger the "View All" behavior.
   final Widget? trailing;
+  
   final EdgeInsets? padding;
 
   const SbSectionHeader({
     super.key,
     required this.title,
-    this.actionLabel,
-    this.onActionTap,
-    this.actionIcon,
+    this.onTap,
+    this.icon,
     this.trailing,
     this.padding,
-  }) : assert(
-          actionLabel == null || onActionTap != null,
-          'onActionTap must be provided if actionLabel is set',
-        );
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Padding(
       padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // ── TITLE (LEFTSIDE) ──
           if (title.isNotEmpty)
             Expanded(
               child: Text(
                 title,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onSurface,
+                  color: colorScheme.onSurface,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-          if (actionLabel != null)
-            SbButton.ghost(
-              label: actionLabel!,
-              icon: SbIcons.chevronRight,
-              onPressed: onActionTap,
-            )
-          else if (actionIcon != null)
-            SbButton.icon(
-              icon: actionIcon!,
-              onPressed: onActionTap,
-            ),
-          if (trailing != null) trailing!,
+
+          // ── ACTION SLOT (RIGHTSIDE) ──
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Standardized "View All >" Link
+              if (onTap != null)
+                GestureDetector(
+                  onTap: onTap,
+                  behavior: HitTestBehavior.opaque,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "View All",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      Icon(
+                        icon ?? SbIcons.chevronRight,
+                        size: 16,
+                        color: colorScheme.primary,
+                      ),
+                    ],
+                  ),
+                ),
+              
+              // External slot (if still needed for filters/etc)
+              if (trailing != null) ...[
+                if (onTap != null) const SizedBox(width: AppSpacing.sm),
+                trailing!,
+              ],
+            ],
+          ),
         ],
       ),
     );

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbListItemTile
-/// PURPOSE: Standardized list item UI enforcing global icon, typography, and spacing rules.
+/// PURPOSE: Standardized list item UI enforcing global typography and spacing.
 /// 
 /// DESIGN SPECS:
-/// - Icon: 40px in 48x48 container
-/// - Gap (Icon <-> Text): 8px (AppSpacing.sm)
-/// - Title: 14px, w600 (AppFontSizes.tab)
-/// - Subtitle: 12px
-/// - Vertical Gap (Title <-> Subtitle): 2px
-/// - Trailing: 12px (if String)
+/// - Uses [SbCard] master surface.
+/// - NO external margin (spacing managed by parent layout/section).
+/// - Icon: 40px in 48x48 container.
+/// - Gap (Icon <-> Text): AppSpacing.sm (8px).
+/// - Title: 14px, w600.
+/// - Subtitle: 12px.
+/// - Title-Subtitle gap: 2px.
 class SbListItemTile extends StatelessWidget {
   final IconData? icon;
   final String title;
   final String? subtitle;
-  final dynamic trailing; // Widget or String
+  final dynamic trailing;
   final VoidCallback onTap;
   final Color? iconColor;
   final Color? color;
@@ -33,8 +35,7 @@ class SbListItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     Widget? trailingWidget;
     if (trailing is String) {
@@ -42,8 +43,7 @@ class SbListItemTile extends StatelessWidget {
         trailing as String,
         style: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.normal,
-          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+          color: colorScheme.onSurfaceVariant,
         ),
       );
     } else if (trailing is Widget) {
@@ -54,14 +54,12 @@ class SbListItemTile extends StatelessWidget {
       padding: EdgeInsets.zero,
       onTap: onTap,
       color: color,
+      // SPACING OWNERSHIP: Removed bottom margin. 
+      // Spacing between items is now controlled by the parent Column/Section.
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12.0, // Standardized padding
-          vertical: 12.0,
-        ),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(
           children: [
-            // Icon Container: LOCKED 48x48 if icon exists
             if (icon != null) ...[
               SizedBox(
                 width: 48,
@@ -70,14 +68,12 @@ class SbListItemTile extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: iconColor ?? colorScheme.primary,
-                    size: 32, // Adjusted for premium look
+                    size: 40, // LOCKED: 40px
                   ),
                 ),
               ),
-              const SizedBox(width: 12), // Standardized gap
+              const SizedBox(width: AppSpacing.sm),
             ],
-
-            // Text Block
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,21 +82,19 @@ class SbListItemTile extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 14, // LOCKED 14px
-                      fontWeight: FontWeight.w600, // LOCKED w600
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                       color: colorScheme.onSurface,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null && subtitle!.isNotEmpty) ...[
-                    const SizedBox(height: 2), // LOCKED 2px vertical gap
+                    const SizedBox(height: 2),
                     Text(
                       subtitle!,
                       style: TextStyle(
-                        fontSize: 12, // LOCKED 12px
-                        fontWeight: FontWeight.normal, // LOCKED normal
-                        height: 1.1,
+                        fontSize: 12,
                         color: colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
@@ -110,9 +104,8 @@ class SbListItemTile extends StatelessWidget {
                 ],
               ),
             ),
-
             if (trailingWidget != null) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               trailingWidget,
             ],
           ],

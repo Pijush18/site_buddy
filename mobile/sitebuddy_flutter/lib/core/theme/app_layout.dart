@@ -92,10 +92,6 @@ class AppLayout {
     return BoxDecoration(
       color: theme.colorScheme.surface,
       borderRadius: BorderRadius.circular(cardRadius),
-      border: Border.all(
-        color: theme.colorScheme.outline,
-        width: 1.2,
-      ),
     );
   }
 

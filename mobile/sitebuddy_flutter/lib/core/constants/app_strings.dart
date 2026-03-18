@@ -35,6 +35,8 @@ class AppStrings {
   static const quickActions = 'Quick Actions';
   static const newProject = 'New Project';
   static const shareReport = 'Share Report';
+  static const levelCalculator = 'Level Calculator';
+  static const gradientTool = 'Gradient Tool';
 
   // Features & Domain
   static const general = 'General';
@@ -177,4 +179,5 @@ class AppStrings {
   static const basicCalculations = 'Basic Calculations';
   static const offlineUsage = 'Offline Usage';
   static const professionalReports = 'Professional Reports';
+  static const smartAssistant = 'Smart Assistant';
 }

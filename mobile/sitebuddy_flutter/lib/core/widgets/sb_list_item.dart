@@ -4,6 +4,10 @@ import 'package:site_buddy/core/theme/app_radius.dart';
 
 /// WIDGET: SbListItem
 /// PURPOSE: Standard list item for SiteBuddy (e.g., Recent Activity).
+/// 
+/// DESIGN PRINCIPLES:
+/// - NO external margin (spacing managed by parent container).
+/// - Clean surface layout with border and radius.
 class SbListItem extends StatelessWidget {
   final Widget? leading;
   final String title;
@@ -26,7 +30,7 @@ class SbListItem extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      // SPACING OWNERSHIP: Removed bottom margin to prevent double-spacing.
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(AppRadius.md),

@@ -63,6 +63,7 @@ class _SbSmartAssistantCardState extends ConsumerState<SbSmartAssistantCard> {
       icon: SbIcons.psychology,
       title: l10n.smartAssistant,
       subtitle: l10n.aiHeroSubtitle,
+      margin: EdgeInsets.zero, // FIX: Remove external margin to align with global layout
       child: SmartAssistantInput(
         controller: _controller,
         onSend: _launchChat,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 
 /// WIDGET: SbModuleHero
@@ -33,20 +34,20 @@ class SbModuleHero extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     
-    // Professional Grade Gradient
+    // Professional Grade Gradient - Softened for Optical Balance
     final colors = gradientColors ?? [
-      colorScheme.primary,
-      colorScheme.primary.withValues(alpha: 0.8), // Tonal shift
+      colorScheme.primary.withValues(alpha: 0.9), // Muted start
+      Color.lerp(colorScheme.primary, colorScheme.surfaceContainerHighest, 0.3)!, // Desaturated end
     ];
 
     return Container(
       width: double.infinity,
-      margin: margin ?? const EdgeInsets.all(AppSpacing.sm),
+      margin: margin ?? EdgeInsets.zero, // Default to zero for layout-managed edges
       decoration: BoxDecoration(
         borderRadius: AppLayout.borderRadiusCard,
         border: Border.all(
-          color: colorScheme.onPrimary.withValues(alpha: 0.15),
-          width: 1.2,
+          color: AppColors.outlineStrong(context).withValues(alpha: 0.5), // Subtle border
+          width: AppBorder.width,
         ),
         gradient: LinearGradient(
           colors: colors,
@@ -58,18 +59,18 @@ class SbModuleHero extends StatelessWidget {
         borderRadius: AppLayout.borderRadiusCard,
         child: Stack(
           children: [
-            // Texture Overlay (Blueprint Effect)
+            // Texture Overlay (Blueprint Effect) - Lightened
             Positioned.fill(
               child: CustomPaint(
                 painter: _HeroPatternPainter(
-                  color: colorScheme.onPrimary.withValues(alpha: 0.05),
+                  color: colorScheme.onPrimary.withValues(alpha: 0.03),
                 ),
               ),
             ),
             
             // Content
             Padding(
-              padding: const EdgeInsets.all(AppLayout.pLarge),
+              padding: const EdgeInsets.all(12.0), // Tightened for reduced visual mass
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,14 +80,14 @@ class SbModuleHero extends StatelessWidget {
                       Icon(
                         icon,
                         color: colorScheme.onPrimary,
-                        size: 32,
+                        size: 28, // Slightly smaller icon
                       ),
-                      AppLayout.hGap16,
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           title,
                         style: TextStyle(
-                            fontSize: 18, // Global Standard: Hero Title
+                            fontSize: 17, // Slightly normalized title
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onPrimary,
                             letterSpacing: -0.5,
@@ -95,19 +96,19 @@ class SbModuleHero extends StatelessWidget {
                       ),
                     ],
                   ),
-                  AppLayout.vGap8,
+                  const SizedBox(height: 4), // Tightened gap
                   Padding(
                     padding: const EdgeInsets.only(left: 2),
                     child: Text(
                       subtitle,
                       style: SbTextStyles.body(context).copyWith(
-                        color: colorScheme.onPrimary.withValues(alpha: 0.85),
-                        height: 1.5,
+                        color: colorScheme.onPrimary.withValues(alpha: 0.8),
+                        height: 1.4,
                       ),
                     ),
                   ),
                   if (child != null) ...[
-                    AppLayout.vGap16,
+                    const SizedBox(height: 12), // Balanced gap to child
                     child!,
                   ],
                 ],

@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/widgets/sb_card.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbActionTile
-/// PURPOSE: Standardized interactive tile for tools, quick actions, and grid items.
+/// PURPOSE: Standardized interactive tile for tools and quick actions.
 /// 
-/// DESIGN SPECS:
-/// - Follows [AppCard] shadow and radius rules.
-/// - Supports vibrant (gradient/filled) and standard states.
-/// - Centered icon and label layout.
+/// DESIGN OPTIMIZATION: Relies on SbCard for adaptive vertical padding protection.
 class SbActionTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
   
-  /// Optional override for the tile color. 
-  /// In vibrant mode, this is the background color.
-  /// In standard mode, this is the icon color.
+  /// Optional override for the tile background color.
   final Color? color;
   
-  /// Whether to use the vibrant (filled) background style.
+  /// Whether to use the vibrant (filled) primary style.
   final bool isVibrant;
 
   const SbActionTile({
@@ -40,56 +34,38 @@ class SbActionTile extends StatelessWidget {
     // Color Logic
     final backgroundColor = isVibrant 
         ? (color ?? colorScheme.primary) 
-        : colorScheme.surface;
+        : null; // Null means SbCard uses default surface
         
     final contentColor = isVibrant 
         ? colorScheme.onPrimary 
         : (color ?? colorScheme.onSurface);
 
-
     return SbCard(
       onTap: onTap,
-      padding: EdgeInsets.zero,
       color: backgroundColor,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: isVibrant
-            ? BoxDecoration(
-                borderRadius: AppLayout.borderRadiusCard,
-                gradient: LinearGradient(
-                  colors: [
-                    backgroundColor,
-                    backgroundColor.withValues(alpha: 0.9),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              )
-            : null,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
+      // Default padding is handled adaptively by SbCard
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: contentColor,
+            size: 32, // LOCKED size
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
               color: contentColor,
-              size: 24,
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: contentColor,
-              ),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

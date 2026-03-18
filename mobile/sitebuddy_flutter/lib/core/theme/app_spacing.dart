@@ -15,6 +15,9 @@
 class AppSpacing {
   AppSpacing._();
 
+  /// Extra small spacing (4.0px)
+  static const double xs = 4.0;
+
   /// Small spacing (8.0px)
   static const double sm = 8.0;
 
@@ -23,4 +26,13 @@ class AppSpacing {
 
   /// Large spacing (24.0px)
   static const double lg = 24.0;
+
+  /// Extra large spacing (32.0px)
+  static const double xl = 32.0;
+
+  /// Double extra large spacing (48.0px) - CARD MIN
+  static const double xxl = 48.0;
+
+  /// Triple extra large spacing (64.0px)
+  static const double xxxl = 64.0;
 }
