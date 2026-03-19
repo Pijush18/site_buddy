@@ -1,7 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
@@ -45,7 +44,7 @@ class FeatureCard extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(
           children: [
-            _buildIconContainer(colorScheme),
+            _buildIconContainer(context, colorScheme),
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: _buildTextContent(
@@ -54,7 +53,7 @@ class FeatureCard extends StatelessWidget {
                 CrossAxisAlignment.start,
               ),
             ),
-            Icon(SbIcons.chevronRight, color: colorScheme.outlineVariant),
+            Icon(SbIcons.chevronRight, color: colorScheme.primary),
           ],
         ),
       );
@@ -66,7 +65,7 @@ class FeatureCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildIconContainer(colorScheme),
+          _buildIconContainer(context, colorScheme),
           const SizedBox(height: AppLayout.lg),
           _buildTextContent(
             titleStyle,
@@ -78,12 +77,12 @@ class FeatureCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIconContainer(ColorScheme colorScheme) {
+  Widget _buildIconContainer(BuildContext context, ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
-        color: colorScheme.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(icon, color: colorScheme.primary, size: 24),
     );

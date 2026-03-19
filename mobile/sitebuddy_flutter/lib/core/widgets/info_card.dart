@@ -58,11 +58,11 @@ class InfoCard extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(AppLayout.md),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF2563EB),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary, // 👈 Standard primary theme
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: Colors.white, size: 24),
+                child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 24),
               ),
               const SizedBox(width: AppLayout.lg),
               Expanded(

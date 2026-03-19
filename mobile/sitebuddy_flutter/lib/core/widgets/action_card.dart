@@ -36,14 +36,16 @@ class ActionCard extends StatelessWidget {
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
-              color: colorScheme.primary.withValues(alpha: 0.15),
+              color: colorScheme.outline, // 👈 Standard theme outline
               width: 1.0,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.05),
-                blurRadius: 3,
-                offset: const Offset(0, 1),
+                color: colorScheme.shadow.withValues(
+                  alpha: isDark ? 0.15 : 0.04,
+                ), // Refined depth
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
             ],
           ),

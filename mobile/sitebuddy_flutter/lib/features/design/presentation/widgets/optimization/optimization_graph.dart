@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
@@ -20,9 +21,9 @@ class OptimizationGraph extends StatelessWidget {
 
     return SbSection(
       title: 'Efficiency Comparison',
-      trailing: const Icon(
+      trailing: Icon(
         SbIcons.analytics,
-        color: Color(0xFF2563EB),
+        color: Theme.of(context).colorScheme.primary,
         size: 20,
       ),
       child: SbCard(
@@ -57,12 +58,13 @@ class OptimizationGraph extends StatelessWidget {
   }
 
   Widget _buildLegend(BuildContext context) {
-    return const Row(
+    final colorScheme = Theme.of(context).colorScheme;
+    return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        _LegendItem(color: Color(0xFF2563EB), label: 'Utilization'),
-        SizedBox(width: AppSpacing.md),
-        _LegendItem(color: Colors.orange, label: 'Steel Area'),
+        _LegendItem(color: colorScheme.primary, label: 'Utilization'),
+        const SizedBox(width: AppSpacing.md),
+        _LegendItem(color: AppColors.warning(context), label: 'Steel Area'),
       ],
     );
   }
@@ -96,7 +98,7 @@ class _OptimizationRow extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
-                color: _getRankColor(rankLabel),
+                color: _getRankColor(context, rankLabel),
               ),
             ),
           ],
@@ -105,22 +107,22 @@ class _OptimizationRow extends StatelessWidget {
         _Bar(
           label: 'Util: ${(utilPercentage * 100).toInt()}%',
           percentage: utilPercentage,
-          color: const Color(0xFF2563EB),
+          color: Theme.of(context).colorScheme.primary,
         ),
         const SizedBox(height: 4),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
-          color: Colors.orange,
+          color: AppColors.warning(context),
         ),
       ],
     );
   }
 
-  Color _getRankColor(String label) {
-    if (label == 'ECONOMICAL') return Colors.green;
-    if (label == 'BALANCED') return const Color(0xFF2563EB);
-    return Colors.purple;
+  Color _getRankColor(BuildContext context, String label) {
+    if (label == 'ECONOMICAL') return AppColors.success(context);
+    if (label == 'BALANCED') return Theme.of(context).colorScheme.primary;
+    return Colors.purple; // Semantic for "Safe" rank
   }
 }
 
@@ -161,9 +163,9 @@ class _Bar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

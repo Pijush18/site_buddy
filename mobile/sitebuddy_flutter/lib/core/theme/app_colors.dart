@@ -6,37 +6,17 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  /// Returns the standard surface color (CLEAN) for the current theme.
-  /// Purpose: Used for cards, tiles, and interactive surfaces.
-  static Color surface(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark 
-        ? const Color(0xFF1E293B)  // Lighter dark
-        : const Color(0xFFFFFFFF); // Clean white
-  }
+  /// Returns the standard surface color from the automated ColorScheme.
+  static Color surface(BuildContext context) => Theme.of(context).colorScheme.surface;
 
-  /// Returns the standard background color (TINTED) for the current theme.
-  /// Purpose: Used for the main scaffold background.
-  static Color background(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark 
-        ? const Color(0xFF0F172A)  // Very dark
-        : const Color(0xFFF8FAFC); // Soft tinted gray/blue
-  }
+  /// Returns the standard background color from the automated ColorScheme.
+  static Color background(BuildContext context) => Theme.of(context).colorScheme.surface;
 
-  /// Returns the standard outline color for borders.
-  static Color outline(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark 
-        ? const Color(0xFF334155) 
-        : const Color(0xFFE2E8F0);
-  }
+  /// Returns the standard outline color from the automated ColorScheme.
+  static Color outline(BuildContext context) => Theme.of(context).colorScheme.outline;
 
-  /// Returns a stronger outline color for high-visibility borders.
-  static Color outlineStrong(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark 
-        ? const Color(0xFF475569) // Slate 600
-        : const Color(0xFFCBD5E1); // Slate 300
-  }
+  /// Returns colors for situational feedback (Uses primary/error as defaults in automated system)
+  static Color success(BuildContext context) => Theme.of(context).colorScheme.primary; 
+  static Color warning(BuildContext context) => const Color(0xFFF59E0B); // Amber 500 (Semantic override)
+  static Color premium(BuildContext context) => const Color(0xFFF59E0B); // Global Premium Amber
 }

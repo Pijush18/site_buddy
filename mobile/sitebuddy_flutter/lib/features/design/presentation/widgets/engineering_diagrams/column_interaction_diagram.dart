@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 class ColumnInteractionDiagram extends StatelessWidget {
   final double pu;
@@ -16,15 +17,14 @@ class ColumnInteractionDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
-    final axisColor = isDark ? Colors.white70 : Colors.black87;
-    final color = interactionRatio <= 1.0 ? Colors.green : colorScheme.error;
+    final colorScheme = Theme.of(context).colorScheme;
+    final axisColor = colorScheme.onSurfaceVariant;
+    final color = interactionRatio <= 1.0 
+        ? AppColors.success(context) 
+        : colorScheme.error;
 
     return Container(
       width: double.infinity,
-
       padding: const EdgeInsets.all(AppLayout.cardPadding),
       child: AspectRatio(
         aspectRatio: 1.5,
@@ -61,7 +61,6 @@ class ColumnInteractionDiagram extends StatelessWidget {
                     child: CustomPaint(
                       size: const Size(200, 160),
                       painter: _InteractionCurvePainter(
-                        isDark: isDark,
                         axisColor: axisColor,
                         curveColor: colorScheme.primary,
                       ),
@@ -75,7 +74,6 @@ class ColumnInteractionDiagram extends StatelessWidget {
                       color: color,
                       pu: pu,
                       mu: mu,
-                      isDark: isDark,
                     ),
                   ),
                 ],
@@ -102,18 +100,17 @@ class _DesignPoint extends StatelessWidget {
   final Color color;
   final double pu;
   final double mu;
-  final bool isDark;
 
   const _DesignPoint({
     required this.ratio,
     required this.color,
     required this.pu,
     required this.mu,
-    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     double x = (ratio > 1.2 ? 100.0 : ratio * 80.0);
     double y = (ratio > 1.2 ? 80.0 : ratio * 60.0);
 
@@ -122,14 +119,29 @@ class _DesignPoint extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(width: 14, height: 14),
+          Container(
+            width: 14,
+            height: 14,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(color: colorScheme.surface, width: 2),
+            ),
+          ),
           AppLayout.vGap4,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
             child: Text(
               'Pu=${pu.toInt()}, Mu=${mu.toInt()}',
-              style: const TextStyle(),
+              style: TextStyle(
+                fontSize: 9,
+                color: color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -139,12 +151,10 @@ class _DesignPoint extends StatelessWidget {
 }
 
 class _InteractionCurvePainter extends CustomPainter {
-  final bool isDark;
   final Color axisColor;
   final Color curveColor;
 
   _InteractionCurvePainter({
-    required this.isDark,
     required this.axisColor,
     required this.curveColor,
   });

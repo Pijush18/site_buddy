@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 
 /// WIDGET: SbCard
@@ -29,23 +28,22 @@ class SbCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final borderRadius = BorderRadius.circular(12); // Unified radius
+    final borderRadius = BorderRadius.circular(12);
     
     return Container(
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: color ?? AppColors.surface(context),
+        color: color ?? colorScheme.surface,
         borderRadius: borderRadius,
-        // 🔬 Elevation Strategy: Low-opacity border + subtle shadow
         border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.1), 
+          color: colorScheme.outline.withValues(alpha: 0.5), 
           width: 1.0,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 
 /// WIDGET: ComparisonBar
 /// PURPOSE: Visual comparison between Actual and Allowable values.
@@ -37,7 +38,7 @@ class ComparisonBar extends StatelessWidget {
             Text(
               '${actual.toStringAsFixed(2)} / ${allowable.toStringAsFixed(2)} $unit',
               style: SbTextStyles.bodySecondary(context).copyWith(
-                color: isSafe ? Colors.green : Colors.red,
+                color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
               ),
             ),
           ],
@@ -59,7 +60,7 @@ class ComparisonBar extends StatelessWidget {
               child: Container(
                 width: 2,
                 height: 8,
-                color: Colors.white.withValues(alpha: 0.5),
+                color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.5),
               ),
             ),
           ],

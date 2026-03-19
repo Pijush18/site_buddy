@@ -26,10 +26,10 @@ class ProjectCard extends StatelessWidget {
       icon: SbIcons.terrain,
       title: name,
       subtitle: '$date • $location',
-      trailing: const Icon(
+      trailing: Icon(
         Icons.chevron_right,
         size: 20,
-        color: Colors.grey,
+        color: Theme.of(context).colorScheme.onSurfaceVariant, // 👈 Softened trailing icon
       ),
       onTap: onTap ?? () {},
     );

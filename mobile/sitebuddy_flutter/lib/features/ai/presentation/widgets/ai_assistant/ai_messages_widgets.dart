@@ -9,18 +9,27 @@ class UserMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-//     final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16.0, left: 48, right: 16.0),
         padding: AppLayout.paddingMedium,
-
+        decoration: BoxDecoration(
+          color: colorScheme.primary,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+            bottomLeft: Radius.circular(16),
+            bottomRight: Radius.circular(4),
+          ),
+        ),
         child: Text(
           query,
-          style: SbTextStyles.body(context).copyWith(color: Colors.white),
+          style: SbTextStyles.body(context).copyWith(
+            color: colorScheme.onPrimary,
+          ),
         ),
       ),
     );
@@ -34,15 +43,16 @@ class AiErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
       child: Center(
         child: Text(
           error,
-          style: SbTextStyles.body(context).copyWith(color: colorScheme.error),
+          style: SbTextStyles.body(context).copyWith(
+            color: colorScheme.error,
+          ),
           textAlign: TextAlign.center,
         ),
       ),

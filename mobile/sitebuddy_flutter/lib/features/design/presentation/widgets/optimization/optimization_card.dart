@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -15,8 +16,8 @@ class OptimizationCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final utilColor = option.utilization > 0.95
-        ? Colors.red
-        : (option.utilization > 0.9 ? Colors.orange : Colors.green);
+        ? colorScheme.error
+        : (option.utilization > 0.9 ? AppColors.warning(context) : AppColors.success(context));
 
     return SbCard(
       child: Column(

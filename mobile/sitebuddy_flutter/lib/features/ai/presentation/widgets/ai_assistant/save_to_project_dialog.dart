@@ -69,7 +69,10 @@ class SaveToProjectDialog extends ConsumerWidget {
                     ? 'Current Active Project'
                     : 'Project ID: ${project.id}',
                 trailing: isCurrent
-                    ? const Icon(SbIcons.checkFilled, color: Colors.blue)
+                    ? Icon(
+                        SbIcons.checkFilled,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
                     : null,
                 onTap: () {
                   ref

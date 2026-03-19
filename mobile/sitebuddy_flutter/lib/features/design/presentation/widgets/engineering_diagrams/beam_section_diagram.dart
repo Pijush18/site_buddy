@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 class BeamSectionDiagram extends StatelessWidget {
   final double span; // mm
@@ -22,9 +23,9 @@ class BeamSectionDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final axisColor = isDark ? Colors.white70 : Colors.black87;
-    final diagramColor = isDark ? Colors.blue.shade300 : Colors.blue.shade600;
+    final colorScheme = Theme.of(context).colorScheme;
+    final axisColor = colorScheme.onSurfaceVariant;
+    final diagramColor = colorScheme.primary;
 
     return Container(
       height: 200,
@@ -57,7 +58,7 @@ class BeamSectionDiagram extends StatelessWidget {
                 _InfoItem(
                   label: 'Stirrups',
                   value: stirrupInfo,
-                  color: Colors.green,
+                  color: AppColors.success(context),
                 ),
               ],
             ),
@@ -86,7 +87,9 @@ class _InfoItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.labelSmall.copyWith(color: Colors.grey),
+          style: AppTextStyles.labelSmall.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         Text(value, style: AppTextStyles.bodyMedium.copyWith(color: color)),
       ],

@@ -16,40 +16,13 @@ class AppTheme {
     final isDark = brightness == Brightness.dark;
 
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF2563EB),
+      seedColor: const Color(0xFF1E3A8A), // 🎯 Single Source of Truth: Deep Blue
       brightness: brightness,
-      primary: const Color(0xFF2563EB),
-      onPrimary: Colors.white,
-      secondary: const Color(0xFFF97316),
-      onSecondary: Colors.white,
-      // ── COLOR SYSTEM REFACTOR ─────────────────────────────────────────────
-      // Background: Tinted surface (F8FAFC)
-      // Surface (Cards): Pure surface (FFFFFF)
-      surface: isDark ? const Color(0xFF1E293B) : const Color(0xFFFFFFFF),
-      onSurface: isDark ? const Color(0xFFFFFFFF) : const Color(0xFF0F172A),
-      
-      surfaceContainerHighest: isDark
-          ? const Color(0xFF334155)
-          : const Color(0xFFF1F5F9),
-      
-      onSurfaceVariant: isDark
-          ? const Color(0xFF94A3B8)
-          : const Color(0xFF64748B),
-      
-      outline: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-      outlineVariant: isDark ? const Color(0xFF1E293B) : const Color(0xFFCBD5E1),
-      error: const Color(0xFFEF4444),
     );
 
-    final baseTheme = ThemeData(
-      useMaterial3: true,
-      brightness: brightness,
+    final baseTheme = ThemeData.from(
       colorScheme: colorScheme,
-      // Scaffold Background is slightly tinted to let white cards "pop"
-      scaffoldBackgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
-      canvasColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
-      cardColor: colorScheme.surface,
-      dividerColor: colorScheme.outlineVariant.withValues(alpha: 0.5),
+      useMaterial3: true,
     );
 
     return baseTheme.copyWith(
@@ -73,11 +46,11 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
-        elevation: 0.5, // 👈 Subtle elevation for the app bar
+        elevation: 1.0, 
         shadowColor: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
         centerTitle: false,
         titleTextStyle: AppTextStyles.headlineLarge.copyWith(fontSize: 20, color: colorScheme.onSurface),
-        iconTheme: IconThemeData(color: colorScheme.onSurface),
+        iconTheme: IconThemeData(color: colorScheme.onSurface, size: 22),
         surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
@@ -88,7 +61,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12), // 👈 Slightly unified radius
           side: BorderSide(
-            color: colorScheme.primary.withValues(alpha: 0.1), // 👈 Tinted border
+            color: colorScheme.primary.withValues(alpha: 0.08), // 👈 Even subtler tint
             width: 1.0,
           ),
         ),
@@ -97,12 +70,14 @@ class AppTheme {
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: colorScheme.onSurfaceVariant,
-        elevation: 8, // 👈 Lifted from background
+        elevation: 12, // 👈 More lift for nav bar
         type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 11),
+        unselectedLabelStyle: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 11),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        fillColor: colorScheme.surfaceVariant.withValues(alpha: 0.3),
         contentPadding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium, vertical: AppLayout.pSmall),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.inputRadius),

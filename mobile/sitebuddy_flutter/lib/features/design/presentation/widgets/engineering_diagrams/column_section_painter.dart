@@ -9,7 +9,7 @@ class ColumnSectionPainter extends CustomPainter {
   final int numBars;
   final double mainBarDia;
   final double cover;
-  final bool isDark;
+  final ColorScheme colorScheme;
 
   ColumnSectionPainter({
     required this.type,
@@ -18,14 +18,14 @@ class ColumnSectionPainter extends CustomPainter {
     required this.numBars,
     required this.mainBarDia,
     required this.cover,
-    this.isDark = true,
+    required this.colorScheme,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
 
-    final outlineColor = isDark ? Colors.white24 : Colors.black26;
+    final outlineColor = colorScheme.outline.withValues(alpha: 0.3);
 
     final paint = Paint()
       ..color = outlineColor
@@ -33,11 +33,11 @@ class ColumnSectionPainter extends CustomPainter {
       ..strokeWidth = 2.5;
 
     final rebarPaint = Paint()
-      ..color = const Color(0xFF2563EB)
+      ..color = colorScheme.primary
       ..style = PaintingStyle.fill;
 
     final tiePaint = Paint()
-      ..color = isDark ? Colors.white54 : Colors.black45
+      ..color = colorScheme.onSurfaceVariant.withValues(alpha: 0.5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -107,7 +107,6 @@ class ColumnSectionPainter extends CustomPainter {
     if (remaining <= 0) return;
 
     // Distribute remaining bars along sides
-    // Simplification: Assume even distribution for visualization
     int sideBars = (remaining / 2).floor();
 
     for (int i = 1; i <= sideBars; i++) {
@@ -132,6 +131,7 @@ class ColumnSectionPainter extends CustomPainter {
         oldDelegate.mainBarDia != mainBarDia ||
         oldDelegate.width != width ||
         oldDelegate.depth != depth ||
-        oldDelegate.type != type;
+        oldDelegate.type != type ||
+        oldDelegate.colorScheme != colorScheme;
   }
 }

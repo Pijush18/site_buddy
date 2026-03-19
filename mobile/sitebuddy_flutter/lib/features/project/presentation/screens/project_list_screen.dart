@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
@@ -35,14 +36,14 @@ class ProjectListScreen extends ConsumerWidget {
                   Icon(
                     isOnline ? SbIcons.checkFilled : SbIcons.warning,
                     size: 16,
-                    color: isOnline ? Colors.green : Colors.orange,
+                    color: isOnline ? AppColors.success(context) : AppColors.warning(context),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     isOnline ? 'Synced' : 'Offline',
                     style: TextStyle(
                       fontSize: AppFontSizes.tab,
-                      color: isOnline ? Colors.green : Colors.orange,
+                      color: isOnline ? AppColors.success(context) : AppColors.warning(context),
                     ),
                   ),
                 ],

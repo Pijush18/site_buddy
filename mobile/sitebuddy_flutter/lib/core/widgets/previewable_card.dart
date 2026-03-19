@@ -97,7 +97,7 @@ class _ActionButton extends StatelessWidget {
         onPressed: action.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
-          foregroundColor: Colors.white,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
           padding: const EdgeInsets.symmetric(
             horizontal: AppLayout.pLarge,
             vertical: AppLayout.pMedium,
@@ -106,10 +106,15 @@ class _ActionButton extends StatelessWidget {
             borderRadius: AppLayout.borderRadiusCard,
           ),
         ),
-        icon: Icon(action.icon, color: Colors.white),
+        icon: Icon(
+          action.icon,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
         label: Text(
           action.label,
-          style: SbTextStyles.caption(context).copyWith(color: Colors.white),
+          style: SbTextStyles.caption(context).copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
       );
     }

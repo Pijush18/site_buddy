@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -16,12 +17,12 @@ class DesignAdvisorCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'ENGINEERING ADVISOR',
           style: TextStyle(
             fontSize: 12,
             letterSpacing: 1.2,
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -44,10 +45,10 @@ class DesignAdvisorCard extends StatelessWidget {
 
               if (advisorResult.warnings.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
-                const _SectionHeader(
+                _SectionHeader(
                   title: 'Engineering Warnings',
                   icon: Icons.warning_amber_rounded,
-                  color: Colors.orange,
+                  color: AppColors.warning(context),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Column(
@@ -59,10 +60,10 @@ class DesignAdvisorCard extends StatelessWidget {
 
               if (advisorResult.suggestions.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
-                const _SectionHeader(
+                _SectionHeader(
                   title: 'Improvement Suggestions',
                   icon: Icons.tips_and_updates_outlined,
-                  color: Colors.green,
+                  color: AppColors.success(context),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Column(
@@ -124,7 +125,7 @@ class _AdvisoryItem extends StatelessWidget {
         children: [
           Text(
             '• ',
-            style: TextStyle(color: isWarning ? Colors.orange : Colors.green),
+            style: TextStyle(color: isWarning ? AppColors.warning(context) : AppColors.success(context)),
           ),
           Expanded(
             child: Text(

@@ -22,11 +22,9 @@ class SlabReinforcementDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final axisColor = isDark ? Colors.white70 : Colors.black87;
-    final diagramColor = isDark
-        ? Colors.orange.shade300
-        : Colors.orange.shade700;
+    final colorScheme = Theme.of(context).colorScheme;
+    final axisColor = colorScheme.onSurfaceVariant;
+    final diagramColor = colorScheme.primary;
 
     return Container(
       padding: AppLayout.paddingMedium,
@@ -90,7 +88,9 @@ class _InfoTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.labelSmall.copyWith(color: Colors.grey),
+          style: AppTextStyles.labelSmall.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         Flexible(
           child: Text(

@@ -1,24 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
-
 import 'package:site_buddy/core/theme/app_layout.dart';
-
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: app_scaffold.dart
-/// Feature: core (design system)
-/// Layer: presentation/widgets
-///
-/// PURPOSE:
-/// Premium reusable scaffold system providing an app-wide standardized layout,
-/// adhering to "Site Buddy" architectural and UI rules.
-/// ----------------------------------------------
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:site_buddy/core/branding/branding_provider.dart';
-
 
 /// CLASS: AppScaffold
 /// Standard layout shell for screens, injecting safe areas and standard padding.
@@ -30,28 +15,28 @@ class AppScaffold extends ConsumerWidget {
   final List<Widget>? actions;
   final bool automaticallyImplyLeading;
   final EdgeInsetsGeometry? padding;
+  final Color? backgroundColor;
 
   const AppScaffold({
     super.key,
     this.title,
-    required this.body,
+    required this.body, // Fixed missing required
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.actions,
     this.automaticallyImplyLeading = true,
     this.padding,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final branding = ref.watch(brandingProvider);
     final hasScaffoldAncestor = Scaffold.maybeOf(context) != null;
+    final colorScheme = Theme.of(context).colorScheme;
 
     final content = NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        final colorScheme = Theme.of(context).colorScheme;
-        final isDark = Theme.of(context).brightness == Brightness.dark;
-
         return [
           if (title != null)
             SliverAppBar(
@@ -59,9 +44,7 @@ class AppScaffold extends ConsumerWidget {
               automaticallyImplyLeading: automaticallyImplyLeading,
               leading: automaticallyImplyLeading && context.canPop()
                   ? Padding(
-                      padding: const EdgeInsets.only(
-                        left: AppLayout.pSmall,
-                      ), // Adds to internal default to reach 16px visual edge
+                      padding: const EdgeInsets.only(left: AppLayout.pSmall),
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => context.pop(),
@@ -71,9 +54,7 @@ class AppScaffold extends ConsumerWidget {
               leadingWidth: automaticallyImplyLeading && context.canPop()
                   ? 56.0 + 8.0
                   : null,
-              backgroundColor: isDark
-                  ? Theme.of(context).colorScheme.surface
-                  : colorScheme.surface,
+              backgroundColor: colorScheme.surface,
               elevation: 0,
               scrolledUnderElevation: 0,
               surfaceTintColor: Colors.transparent,
@@ -86,7 +67,7 @@ class AppScaffold extends ConsumerWidget {
                   Text(
                     title!,
                     style: SbTextStyles.headline(context).copyWith(
-                      color: isDark ? Colors.white : colorScheme.onSurface,
+                      color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                       letterSpacing: -0.5,
                     ),
@@ -95,7 +76,7 @@ class AppScaffold extends ConsumerWidget {
                     branding.engineerName,
                     style: SbTextStyles.body(context).copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: colorScheme.primary,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -120,7 +101,7 @@ class AppScaffold extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingActionButton,
       body: content,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
@@ -30,7 +31,7 @@ class CrackingHistorySection extends ConsumerWidget {
                 children: [
                   Icon(
                     isSafe ? SbIcons.checkFilled : SbIcons.error,
-                    color: isSafe ? Colors.green : Colors.red,
+                    color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
                     size: 20,
                   ),
                   const SizedBox(width: AppSpacing.md),
@@ -56,7 +57,7 @@ class CrackingHistorySection extends ConsumerWidget {
                     isSafe ? 'SAFE' : 'FAIL',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: isSafe ? Colors.green : Colors.red,
+                      color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
                     ),
                   ),
                 ],

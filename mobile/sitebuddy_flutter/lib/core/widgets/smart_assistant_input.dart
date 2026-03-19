@@ -1,6 +1,5 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/ui/app_decorations.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 /// WIDGET: SmartAssistantInput
 /// PURPOSE: Standardized input for the AI assistant with a fixed action button.
@@ -23,11 +22,12 @@ class SmartAssistantInput extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      decoration: AppDecorations.sbInputDecoration(context).copyWith(
-        color: colorScheme.surface.withValues(alpha: 0.6), // Slightly clearer on hero
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceVariant, 
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: colorScheme.outline, width: 1.0),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 4), // Internal shift
+      padding: const EdgeInsets.symmetric(horizontal: 4), 
       child: Row(
         children: [
           Expanded(
@@ -36,7 +36,7 @@ class SmartAssistantInput extends StatelessWidget {
               onSubmitted: (_) => onSend(),
               textInputAction: TextInputAction.send,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurface, // 👈 High contrast for neutral hero
+                color: colorScheme.onSurface, 
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
@@ -59,7 +59,7 @@ class SmartAssistantInput extends StatelessWidget {
           IconButton(
             icon: Icon(
               SbIcons.send, 
-              color: colorScheme.primary, // 👈 Branding accent
+              color: colorScheme.primary, 
               size: 20,
             ),
             onPressed: onSend,

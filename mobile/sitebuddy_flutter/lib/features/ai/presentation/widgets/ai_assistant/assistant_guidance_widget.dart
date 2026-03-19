@@ -4,6 +4,7 @@ import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/ai/domain/entities/assistant_response.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 class AssistantGuidanceWidget extends StatelessWidget {
   final AssistantResponse response;
@@ -11,6 +12,8 @@ class AssistantGuidanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppLayout.md),
       child: Column(
@@ -20,7 +23,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
             title: response.title,
             message: response.message,
             icon: SbIcons.info,
-            color: Theme.of(context).colorScheme.primary,
+            color: colorScheme.primary,
           ),
           if (response.warnings.isNotEmpty) ...[
             const SizedBox(height: AppLayout.md),
@@ -29,7 +32,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
               message: 'Potential issues detected in calculations:',
               items: response.warnings,
               icon: SbIcons.warning,
-              color: Theme.of(context).colorScheme.error,
+              color: colorScheme.error,
             ),
           ],
           if (response.suggestions.isNotEmpty) ...[
@@ -39,7 +42,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
               message: 'Recommendations for better design performance:',
               items: response.suggestions,
               icon: SbIcons.lightbulb,
-              color: Colors.orange,
+              color: AppColors.warning(context), // 👈 Standardized semantic warning
             ),
           ],
           const SizedBox(height: AppLayout.lg),
@@ -66,6 +69,8 @@ class _GuidanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +83,7 @@ class _GuidanceCard extends StatelessWidget {
                 title.toUpperCase(),
                 style: SbTextStyles.caption(context).copyWith(
                   color: color,
-
+                  fontWeight: FontWeight.bold,
                   letterSpacing: 1.1,
                 ),
               ),
@@ -94,15 +99,22 @@ class _GuidanceCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 6),
-                      child: SizedBox(width: 4, height: 4),
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      width: 4,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.5),
+                        shape: BoxShape.circle,
+                      ),
                     ),
                     AppLayout.hGap12,
                     Expanded(
                       child: Text(
                         item,
-                        style: SbTextStyles.bodySecondary(context).copyWith(color: Colors.grey),
+                        style: SbTextStyles.bodySecondary(context).copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
                   ],

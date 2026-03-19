@@ -33,8 +33,8 @@ class _SbGridCardState extends State<SbGridCard> {
     final colorScheme = Theme.of(context).colorScheme;
 
     // Premium Border Logic
-    final borderColor = widget.isVibrant 
-        ? colorScheme.onPrimary.withValues(alpha: 0.12) // Subtle glass edge
+    final currentBorderColor = widget.isVibrant 
+        ? colorScheme.onPrimary.withValues(alpha: 0.12) 
         : colorScheme.outline;
     
     final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surface;
@@ -63,7 +63,7 @@ class _SbGridCardState extends State<SbGridCard> {
             curve: Curves.easeOut,
             decoration: BoxDecoration(
               borderRadius: AppLayout.borderRadiusCard,
-              border: Border.all(color: borderColor, width: 1.2),
+              border: Border.all(color: currentBorderColor, width: 1.2),
               gradient: widget.isVibrant
                   ? LinearGradient(
                       colors: [
@@ -83,8 +83,8 @@ class _SbGridCardState extends State<SbGridCard> {
                   // High-Contrast Clean Icon
                   Icon(
                     widget.icon,
-                    color: widget.isVibrant ? colorScheme.onPrimary : widget.color,
-                    size: 24, // Standardized 24px (matches SbActionButtonContent)
+                    color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.primary,
+                    size: 24, 
                   ),
                   const SizedBox(height: 4), // Standardized 4px gap
                   Text(

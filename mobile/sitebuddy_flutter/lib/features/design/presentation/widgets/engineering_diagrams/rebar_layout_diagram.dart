@@ -24,7 +24,7 @@ class RebarLayoutDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       padding: AppLayout.paddingMedium,
@@ -46,7 +46,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     numBars: numBars,
                     mainBarDia: mainBarDia,
                     cover: 40.0,
-                    isDark: isDark,
+                    colorScheme: colorScheme,
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: Colors.grey,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   AppLayout.vGap8,
@@ -81,7 +81,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: Colors.grey,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   AppLayout.vGap4,
@@ -91,7 +91,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.blue.shade400,
+                        color: colorScheme.primary,
                       ),
                     ),
                   ),

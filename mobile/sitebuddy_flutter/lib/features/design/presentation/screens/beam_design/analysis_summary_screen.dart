@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
@@ -134,8 +135,9 @@ class _DiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
       child: SizedBox(
         height: 140,
         child: CustomPaint(
@@ -143,9 +145,11 @@ class _DiagramCard extends StatelessWidget {
             points: points,
             isBMD: isBMD,
             label: label,
-            axisColor: isDark ? Colors.white24 : Colors.black12,
-            labelColor: isDark ? Colors.white70 : Colors.black54,
+            axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
+            labelColor: colorScheme.onSurfaceVariant,
             textTheme: Theme.of(context).textTheme,
+            primaryColor: colorScheme.primary,
+            warningColor: AppColors.warning(context),
           ),
           size: Size.infinite,
         ),

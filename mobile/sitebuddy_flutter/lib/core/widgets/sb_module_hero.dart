@@ -40,7 +40,7 @@ class SbModuleHero extends StatelessWidget {
         color: colorScheme.surface, // Base fallback
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.1),
+          color: colorScheme.outline, // 👈 Standardized theme outline
           width: 1.0,
         ),
         gradient: LinearGradient(
@@ -50,9 +50,11 @@ class SbModuleHero extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.04),
-            blurRadius: 3,
-            offset: const Offset(0, 1),
+            color: colorScheme.shadow.withValues(
+              alpha: isDark ? 0.2 : 0.08,
+            ), // 👈 Stronger lift for Hero
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -77,10 +79,9 @@ class SbModuleHero extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      // Branding emphasis on the Icon
                       Icon(
                         icon,
-                        color: colorScheme.primary.withValues(alpha: 0.8),
+                        color: colorScheme.primary, // 👈 Pure primary branding
                         size: 26,
                       ),
                       const SizedBox(width: 12),

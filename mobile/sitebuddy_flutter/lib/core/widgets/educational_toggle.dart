@@ -15,7 +15,9 @@ class EducationalToggle extends ConsumerWidget {
     return IconButton(
       icon: Icon(
         isEnabled ? SbIcons.education : SbIcons.educationOutlined,
-        color: isEnabled ? Theme.of(context).colorScheme.primary : Colors.grey,
+        color: isEnabled
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.onSurfaceVariant,
       ),
       tooltip: isEnabled
           ? 'Disable Educational Mode'

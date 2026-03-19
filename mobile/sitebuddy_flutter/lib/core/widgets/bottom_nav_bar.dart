@@ -37,13 +37,13 @@ class BottomNavBar extends StatelessWidget {
         // 🔬 Elevation Strategy: Border + Shadow for "Lift"
         border: Border(
           top: BorderSide(
-            color: colorScheme.primary.withValues(alpha: 0.1), 
+            color: colorScheme.outline, 
             width: 1.0,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03), 
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),

@@ -11,6 +11,8 @@ class BeamDiagramPainter extends CustomPainter {
   final Color axisColor;
   final Color labelColor;
   final TextTheme textTheme;
+  final Color primaryColor;
+  final Color warningColor;
 
   BeamDiagramPainter({
     required this.points,
@@ -19,6 +21,8 @@ class BeamDiagramPainter extends CustomPainter {
     required this.axisColor,
     required this.labelColor,
     required this.textTheme,
+    required this.primaryColor,
+    required this.warningColor,
   });
 
   @override
@@ -26,12 +30,12 @@ class BeamDiagramPainter extends CustomPainter {
     if (points.isEmpty) return;
 
     final paint = Paint()
-      ..color = isBMD ? Colors.blue : Colors.orange
+      ..color = isBMD ? primaryColor : warningColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.5;
 
     final fillPaint = Paint()
-      ..color = (isBMD ? Colors.blue : Colors.orange).withValues(alpha: 0.15)
+      ..color = (isBMD ? primaryColor : warningColor).withValues(alpha: 0.15)
       ..style = PaintingStyle.fill;
 
     final axisPaint = Paint()

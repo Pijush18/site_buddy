@@ -41,12 +41,19 @@ class CodeReferenceCard extends StatelessWidget {
           const SizedBox(height: AppLayout.pSmall),
           Text(
             reference.title,
-            style: SbTextStyles.caption(context).copyWith(fontWeight: FontWeight.bold),
+            style: SbTextStyles.caption(context).copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: AppLayout.pTiny),
           Text(
             reference.description,
-            style: SbTextStyles.bodySecondary(context).copyWith(fontSize: 11, height: 1.4),
+            style: SbTextStyles.bodySecondary(context).copyWith(
+              fontSize: 11, 
+              height: 1.4,
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           if (reference.formula != null) ...[
             const SizedBox(height: AppLayout.pMedium),
@@ -54,18 +61,18 @@ class CodeReferenceCard extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(AppLayout.pSmall),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Colors.grey.withAlpha(50)),
+                border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
               ),
               child: Center(
                 child: Text(
                   reference.formula!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ),
