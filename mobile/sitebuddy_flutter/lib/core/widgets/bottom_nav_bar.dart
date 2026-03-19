@@ -1,5 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: bottom_nav_bar.dart
@@ -8,33 +9,12 @@ import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 ///
 /// PURPOSE:
 /// Common bottom navigation bar shared across the shell.
-///
-/// RESPONSIBILITIES:
-/// - Renders the icons and labels for Home, Calculator, Design, and Projects.
-/// - Fires the onTap event to notify the shell.
-/// - Adapts colours automatically to the active ThemeData (light / dark).
-///
-/// DEPENDENCIES:
-/// - Theme.of(context).colorScheme — no hard-coded palette imports needed.
-/// - AppTextStyles for label typography.
-///
-/// CHANGES (theming fix):
-/// - Replaced Theme.of(context).colorScheme.surface → colorScheme.surface
-/// - Replaced Theme.of(context).colorScheme.surface border → colorScheme.outlineVariant
-/// - Replaced Theme.of(context).colorScheme.primary → colorScheme.primary
-/// - Replaced Theme.of(context).colorScheme.onSurfaceVariant → colorScheme.onSurfaceVariant
-/// - Transitioned to a clean border-only design (elevation: 0, no boxShadow).
-/// - All navigation logic, indices, icons, and labels are unchanged.
-///
+/// REFACTOR: Professional Color System (Elevated Surface).
 /// ----------------------------------------------
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 
-/// CLASS: BottomNavBar
-/// PURPOSE: The main bottom navigation element inside the AppScaffold.
-/// WHY: Isolated to allow the NavigationController to handle state rather
-///      than internal Stateful logic.
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -47,17 +27,27 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surface,
+        // 🔬 Elevation Strategy: Border + Shadow for "Lift"
         border: Border(
           top: BorderSide(
-            color: colorScheme.outlineVariant.withValues(alpha: 0.6),
+            color: colorScheme.primary.withValues(alpha: 0.1), 
             width: 1.0,
           ),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -67,33 +57,25 @@ class BottomNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _NavItem(
-                icon: currentIndex == 0
-                    ? SbIcons.home
-                    : SbIcons.homeOutlined,
+                icon: currentIndex == 0 ? SbIcons.home : SbIcons.homeOutlined,
                 label: AppStrings.home,
                 isSelected: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
-                icon: currentIndex == 1
-                    ? SbIcons.calculator
-                    : SbIcons.calculator,
+                icon: currentIndex == 1 ? SbIcons.calculator : SbIcons.calculator,
                 label: AppStrings.calculators,
                 isSelected: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
-                icon: currentIndex == 2
-                    ? SbIcons.architecture
-                    : SbIcons.architectureOutlined,
+                icon: currentIndex == 2 ? SbIcons.architecture : SbIcons.architectureOutlined,
                 label: AppStrings.design,
                 isSelected: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
               _NavItem(
-                icon: currentIndex == 3
-                    ? SbIcons.folderCopy
-                    : SbIcons.folderCopyOutlined,
+                icon: currentIndex == 3 ? SbIcons.folderCopy : SbIcons.folderCopyOutlined,
                 label: AppStrings.projects,
                 isSelected: currentIndex == 3,
                 onTap: () => onTap(3),
@@ -106,11 +88,6 @@ class BottomNavBar extends StatelessWidget {
   }
 }
 
-/// CLASS: _NavItem
-/// PURPOSE: A private helper widget defining the UI for a single navigation
-///          tab button.
-/// WHY: Encapsulates selected vs unselected colour styling.
-/// THEMING: All colours resolve through [ColorScheme] — no static values.
 class _NavItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -127,13 +104,7 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
-    // ── Colour resolves automatically with ColorScheme ─────────────────────
-    // Selected   → colorScheme.primary   (brand colour, visible in both modes)
-    // Unselected → colorScheme.onSurfaceVariant (muted, always readable)
-    final Color itemColor = isSelected
-        ? colorScheme.primary
-        : colorScheme.onSurfaceVariant;
+    final Color itemColor = isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant;
 
     return GestureDetector(
       onTap: onTap,

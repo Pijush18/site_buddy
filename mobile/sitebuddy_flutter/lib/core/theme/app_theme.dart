@@ -5,6 +5,7 @@ import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 /// CLASS: AppTheme
 /// PURPOSE: Centralized theme definitions for Site Buddy.
+/// REFACTOR: Professional Color System (Surface/Background inversion).
 class AppTheme {
   AppTheme._();
 
@@ -21,14 +22,20 @@ class AppTheme {
       onPrimary: Colors.white,
       secondary: const Color(0xFFF97316),
       onSecondary: Colors.white,
-      surface: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
+      // ── COLOR SYSTEM REFACTOR ─────────────────────────────────────────────
+      // Background: Tinted surface (F8FAFC)
+      // Surface (Cards): Pure surface (FFFFFF)
+      surface: isDark ? const Color(0xFF1E293B) : const Color(0xFFFFFFFF),
       onSurface: isDark ? const Color(0xFFFFFFFF) : const Color(0xFF0F172A),
+      
       surfaceContainerHighest: isDark
           ? const Color(0xFF334155)
           : const Color(0xFFF1F5F9),
+      
       onSurfaceVariant: isDark
           ? const Color(0xFF94A3B8)
           : const Color(0xFF64748B),
+      
       outline: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
       outlineVariant: isDark ? const Color(0xFF1E293B) : const Color(0xFFCBD5E1),
       error: const Color(0xFFEF4444),
@@ -38,10 +45,11 @@ class AppTheme {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: colorScheme,
-      scaffoldBackgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFFFFFFF),
-      canvasColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFFFFFFF),
+      // Scaffold Background is slightly tinted to let white cards "pop"
+      scaffoldBackgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+      canvasColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
       cardColor: colorScheme.surface,
-      dividerColor: colorScheme.outlineVariant,
+      dividerColor: colorScheme.outlineVariant.withValues(alpha: 0.5),
     );
 
     return baseTheme.copyWith(
@@ -65,7 +73,8 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
-        elevation: 0,
+        elevation: 0.5, // 👈 Subtle elevation for the app bar
+        shadowColor: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
         centerTitle: false,
         titleTextStyle: AppTextStyles.headlineLarge.copyWith(fontSize: 20, color: colorScheme.onSurface),
         iconTheme: IconThemeData(color: colorScheme.onSurface),
@@ -77,15 +86,18 @@ class AppTheme {
         margin: EdgeInsets.zero,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppLayout.cardRadius),
-          side: BorderSide(color: colorScheme.outlineVariant, width: 1.2),
+          borderRadius: BorderRadius.circular(12), // 👈 Slightly unified radius
+          side: BorderSide(
+            color: colorScheme.primary.withValues(alpha: 0.1), // 👈 Tinted border
+            width: 1.0,
+          ),
         ),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: colorScheme.onSurfaceVariant,
-        elevation: 0,
+        elevation: 8, // 👈 Lifted from background
         type: BottomNavigationBarType.fixed,
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -94,15 +106,15 @@ class AppTheme {
         contentPadding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium, vertical: AppLayout.pSmall),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.inputRadius),
-          borderSide: BorderSide(color: colorScheme.outline, width: 1.5),
+          borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.inputRadius),
-          borderSide: BorderSide(color: colorScheme.outline, width: 1.5),
+          borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.inputRadius),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2.0),
+          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
         ),
         labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
         hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
@@ -112,8 +124,9 @@ class AppTheme {
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
           padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.buttonRadius)),
+          elevation: 2, // 👈 Distinct CTA lift
+          shadowColor: colorScheme.primary.withValues(alpha: 0.3),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),
@@ -122,7 +135,7 @@ class AppTheme {
           foregroundColor: colorScheme.primary,
           padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
           side: BorderSide(color: colorScheme.outline),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.buttonRadius)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),

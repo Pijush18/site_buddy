@@ -1,7 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +11,7 @@ import 'package:printing/printing.dart';
 
 /// SCREEN: DesignReportScreen
 /// PURPOSE: Professional, PDF-like engineering calculation report.
+/// RULE: AppScreenWrapper → SbSectionList → SbSection.
 class DesignReportScreen extends StatefulWidget {
   final models.ReportData? data;
 
@@ -63,9 +63,7 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
             child: SizedBox(
               width: 16,
               height: 16,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ),
+              child: CircularProgressIndicator(strokeWidth: 2),
             ),
           )
         else
@@ -74,35 +72,26 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
             onPressed: () => _handleShare(reportData),
           ),
       ],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      // ── PREDEFINED LAYOUT SYSTEM ──
+      // SbSectionList centralizes the 24px gap between sections.
+      child: SbSectionList(
+        sections: [
+          // ── SECTION 1: DOCUMENT HEADER ──
           _ReportDocumentHeader(data: reportData),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+
+          // ── SECTION 2-N: CALCULATION SECTIONS ──
           ...reportData.sections.map(
             (section) => _ReportSectionWidget(section: section),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+
+          // ── SECTION: FOOTER ──
           const _ReportFooter(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
-          if (_isExporting)
-            const Center(child: CircularProgressIndicator())
-          else ...[
-            SbButton.primary(
-              label: 'Share as PDF',
-              icon: SbIcons.share,
-              onPressed: () => _handleShare(reportData),
-            ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-            SbButton.primary(
-              label: 'Download PDF',
-              icon: SbIcons.download,
-              onPressed: () => _handleShare(
-                reportData,
-              ), 
-            ),
-          ],
-          const SizedBox(height: AppSpacing.lg * 2), // Buffer space
+
+          // ── SECTION: EXPORT ACTIONS ──
+          _ReportExportActions(
+            isExporting: _isExporting,
+            onShare: () => _handleShare(reportData),
+          ),
         ],
       ),
     );
@@ -131,7 +120,7 @@ class _ReportErrorState extends StatelessWidget {
                 size: 64,
                 color: theme.colorScheme.error,
               ),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const SizedBox(height: AppSpacing.lg),
               const Text(
                 'Report data unavailable.',
                 style: TextStyle(
@@ -140,13 +129,13 @@ class _ReportErrorState extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const SizedBox(height: AppSpacing.sm),
               const Text(
                 'Please try recalculating the design.',
                 style: TextStyle(fontSize: AppFontSizes.subtitle),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const SizedBox(height: AppSpacing.lg),
               SbButton.primary(
                 label: 'Go Back',
                 width: 200,
@@ -195,7 +184,6 @@ class _ReportDocumentHeader extends StatelessWidget {
                 ),
               ],
             ),
-            // Logo/Badge
             Container(
               padding: const EdgeInsets.all(AppSpacing.sm),
               decoration: BoxDecoration(
@@ -206,7 +194,7 @@ class _ReportDocumentHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+        const SizedBox(height: AppSpacing.lg),
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
@@ -258,7 +246,7 @@ class _HeaderField extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+        const SizedBox(height: AppSpacing.sm),
         Text(
           value,
           style: const TextStyle(fontSize: AppFontSizes.subtitle),
@@ -279,53 +267,50 @@ class _ReportSectionWidget extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isResult = section.type == models.ReportSectionType.result;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 4,
+              height: 24,
+              decoration: BoxDecoration(
+                color: isResult ? colorScheme.primary : colorScheme.secondary,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Text(
+              section.heading.toUpperCase(),
+              style: const TextStyle(
+                fontSize: AppFontSizes.subtitle,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.1,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SbCard(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          color: isResult
+              ? colorScheme.primaryContainer.withValues(alpha: 0.1)
+              : null,
+          child: Column(
             children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: isResult ? colorScheme.primary : colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(2),
+              for (int i = 0; i < section.items.length; i++) ...[
+                _CalculationItemRow(
+                  item: section.items[i],
+                  isCheck: section.type == models.ReportSectionType.check,
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
-              Text(
-                section.heading.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.1,
-                ),
-              ),
+                if (i < section.items.length - 1)
+                  Divider(color: colorScheme.outlineVariant, height: 16),
+              ],
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-          SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            color: isResult
-                ? colorScheme.primaryContainer.withValues(alpha: 0.1)
-                : null,
-            child: Column(
-              children: [
-                for (int i = 0; i < section.items.length; i++) ...[
-                  _CalculationItemRow(
-                    item: section.items[i],
-                    isCheck: section.type == models.ReportSectionType.check,
-                  ),
-                  if (i < section.items.length - 1)
-                    Divider(color: colorScheme.outlineVariant, height: 16),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -357,7 +342,7 @@ class _CalculationItemRow extends StatelessWidget {
     return SbListItemTile(
       title: item.label,
       subtitle: item.formula,
-      onTap: () {}, // Detail view entry
+      onTap: () {},
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -399,7 +384,7 @@ class _ReportFooter extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: AppSpacing.sm),
           Text(
             'DESIGN VERIFIED BY SITE BUDDY PRO',
             style: TextStyle(
@@ -417,6 +402,37 @@ class _ReportFooter extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ReportExportActions extends StatelessWidget {
+  final bool isExporting;
+  final VoidCallback onShare;
+
+  const _ReportExportActions({required this.isExporting, required this.onShare});
+
+  @override
+  Widget build(BuildContext context) {
+    if (isExporting) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Column(
+      children: [
+        SbButton.primary(
+          label: 'Share as PDF',
+          icon: SbIcons.share,
+          onPressed: onShare,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SbButton.primary(
+          label: 'Download PDF',
+          icon: SbIcons.download,
+          onPressed: onShare,
+        ),
+        // Buffer at the bottom to ensure last button is not cut off by SafeArea
+        const SizedBox(height: AppSpacing.lg),
+      ],
     );
   }
 }

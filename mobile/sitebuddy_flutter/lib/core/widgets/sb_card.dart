@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_radius.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
 
 /// WIDGET: SbCard
-/// PURPOSE: Standardized flat card container with adaptive padding.
-/// 
+/// PURPOSE: Standardized surface-based card container.
 /// FEATURES:
-/// - Dynamic padding that scales down if vertical space is limited.
-/// - Uses standard SiteBuddy design tokens.
+/// - Subtle elevation using shadow and 1px border.
+/// - Adaptive padding logic.
+/// - Surface color (WHITE) on Background color (TINTED).
 class SbCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
@@ -28,17 +26,28 @@ class SbCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(AppRadius.md);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+    final borderRadius = BorderRadius.circular(12); // Unified radius
     
     return Container(
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: color ?? AppColors.surface(context),
         borderRadius: borderRadius,
+        // 🔬 Elevation Strategy: Low-opacity border + subtle shadow
         border: Border.all(
-          color: AppColors.outlineStrong(context),
-          width: AppBorder.width,
+          color: colorScheme.primary.withValues(alpha: 0.1), 
+          width: 1.0,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -47,14 +56,14 @@ class SbCard extends StatelessWidget {
           double dynamicPaddingValue;
 
           if (padding != null) {
-            // Manual override takes precedence
             return _buildContent(padding!, borderRadius);
           }
 
-          if (availableHeight < AppSpacing.lg) {
+          // Optimized for dashboard density
+          if (availableHeight < 60) {
             dynamicPaddingValue = AppSpacing.xs; // 4px
           } else {
-            dynamicPaddingValue = AppSpacing.sm; // 8px (Standard Core Density)
+            dynamicPaddingValue = 12.0; // Optimized mid-density
           }
 
           return _buildContent(

@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:site_buddy/core/theme/app_border.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 
 /// WIDGET: SbModuleHero
-/// PURPOSE: Premium hero card used as the primary header for major modules.
-/// DESIGN: 
-/// - Professional gradient from Primary to PrimaryDark.
-/// - Subtle blueprint/geometric pattern overlay for "Engineering" feel.
-/// - Integrated icon, title, and subtitle structure.
+/// PURPOSE: Professional, neutral-toned header for major modules.
+/// REFACTOR: Professional Color System (Simplified, soft gradients).
 class SbModuleHero extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -32,82 +26,90 @@ class SbModuleHero extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
-    // Professional Grade Gradient - Softened for Optical Balance
-    final colors = gradientColors ?? [
-      colorScheme.primary.withValues(alpha: 0.9), // Muted start
-      Color.lerp(colorScheme.primary, colorScheme.surfaceContainerHighest, 0.3)!, // Desaturated end
-    ];
+    final isDark = theme.brightness == Brightness.dark;
+
+    // 🔬 Neutral Tinted Strategy: Soft container surface with a hint of branding.
+    final List<Color> colors = gradientColors ?? (isDark 
+        ? [colorScheme.surfaceContainerHighest.withValues(alpha: 0.8), colorScheme.surface] 
+        : [colorScheme.surfaceContainerHighest.withValues(alpha: 0.3), colorScheme.surface]);
 
     return Container(
       width: double.infinity,
-      margin: margin ?? EdgeInsets.zero, // Default to zero for layout-managed edges
+      margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
-        borderRadius: AppLayout.borderRadiusCard,
+        color: colorScheme.surface, // Base fallback
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.outlineStrong(context).withValues(alpha: 0.5), // Subtle border
-          width: AppBorder.width,
+          color: colorScheme.primary.withValues(alpha: 0.1),
+          width: 1.0,
         ),
         gradient: LinearGradient(
           colors: colors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.04),
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: ClipRRect(
-        borderRadius: AppLayout.borderRadiusCard,
+        borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-            // Texture Overlay (Blueprint Effect) - Lightened
+            // Texture Overlay - Desaturated for focus
             Positioned.fill(
               child: CustomPaint(
                 painter: _HeroPatternPainter(
-                  color: colorScheme.onPrimary.withValues(alpha: 0.03),
+                  color: colorScheme.primary.withValues(alpha: 0.02),
                 ),
               ),
             ),
             
             // Content
             Padding(
-              padding: const EdgeInsets.all(12.0), // Tightened for reduced visual mass
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      // Clean Sharp Icon (no background shading)
+                      // Branding emphasis on the Icon
                       Icon(
                         icon,
-                        color: colorScheme.onPrimary,
-                        size: 28, // Slightly smaller icon
+                        color: colorScheme.primary.withValues(alpha: 0.8),
+                        size: 26,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           title,
-                        style: TextStyle(
-                            fontSize: 17, // Slightly normalized title
+                          style: TextStyle(
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
-                            color: colorScheme.onPrimary,
+                            color: colorScheme.onSurface, // 👈 Soft, high-readability title
                             letterSpacing: -0.5,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4), // Tightened gap
+                  const SizedBox(height: 6),
                   Padding(
                     padding: const EdgeInsets.only(left: 2),
                     child: Text(
                       subtitle,
-                      style: SbTextStyles.body(context).copyWith(
-                        color: colorScheme.onPrimary.withValues(alpha: 0.8),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.85),
                         height: 1.4,
                       ),
                     ),
                   ),
                   if (child != null) ...[
-                    const SizedBox(height: 12), // Balanced gap to child
+                    const SizedBox(height: 12),
                     child!,
                   ],
                 ],
@@ -132,21 +134,13 @@ class _HeroPatternPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
-    const spacing = 40.0;
+    const spacing = 48.0;
     
     // Draw diagonal grid
     for (double i = -size.height; i < size.width; i += spacing) {
       canvas.drawLine(
         Offset(i, 0),
         Offset(i + size.height, size.height),
-        paint,
-      );
-    }
-    
-    for (double i = 0; i < size.width + size.height; i += spacing) {
-      canvas.drawLine(
-        Offset(i, 0),
-        Offset(i - size.height, size.height),
         paint,
       );
     }

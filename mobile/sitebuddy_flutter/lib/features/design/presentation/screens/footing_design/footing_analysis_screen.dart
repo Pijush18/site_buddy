@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';

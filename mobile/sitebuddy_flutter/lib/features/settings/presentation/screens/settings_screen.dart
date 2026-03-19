@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';

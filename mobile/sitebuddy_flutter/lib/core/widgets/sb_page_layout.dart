@@ -6,9 +6,9 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 /// PURPOSE: Standardized page layout wrapper for SiteBuddy screens.
 /// 
 /// FEATURES:
-/// - Uses [SbPage.detail] for consistent scroll behavior and symmetrical 16px padding.
-/// - MANAGES vertical spacing between sections as the SINGLE SPACING AUTHORITY.
-/// - Enforces a strict 16px (AppSpacing.md) rhythm across the entire page.
+/// - Uses [SbPage.detail] for consistent scroll behavior.
+/// - SINGLE AUTHORITY: Manages exact vertical spacing between all sections.
+/// - RHYTHM: Enforces exactly AppSpacing.lg (24px) between sections.
 class SbPageLayout extends StatelessWidget {
   /// The title displayed in the AppBar.
   final String title;
@@ -36,9 +36,10 @@ class SbPageLayout extends StatelessWidget {
         children: [
           for (var i = 0; i < sections.length; i++) ...[
             sections[i],
-            // CORE HARMONY: 8px gap + 8px card internal padding = 16px content rhythm.
+            // ── SINGLE SPACING AUTHORITY ──
+            // Exactly 24px (lg) between all children sections.
             if (i < sections.length - 1) 
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.lg),
           ],
         ],
       ),
