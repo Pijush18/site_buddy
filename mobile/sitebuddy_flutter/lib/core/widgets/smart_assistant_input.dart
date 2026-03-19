@@ -23,7 +23,7 @@ class SmartAssistantInput extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant, 
+        color: colorScheme.surfaceContainerHighest, 
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: colorScheme.outline, width: 1.0),
       ),

@@ -77,7 +77,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceVariant.withValues(alpha: 0.3),
+        fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         contentPadding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium, vertical: AppLayout.pSmall),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.inputRadius),
