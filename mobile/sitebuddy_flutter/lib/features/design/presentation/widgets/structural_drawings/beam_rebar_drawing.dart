@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
 
@@ -60,10 +61,10 @@ class BeamRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               'Beam Section: ${width.toInt()}x${depth.toInt()} mm',
-              style: AppTextStyles.labelSmall.copyWith(color: textColor),
+              style: AppTextStyles.caption.copyWith(color: textColor),
             ),
           ),
         ],

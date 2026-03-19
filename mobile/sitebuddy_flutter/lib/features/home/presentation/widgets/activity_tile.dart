@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -37,7 +38,7 @@ class ActivityTile extends StatelessWidget {
 
     return SbListItem(
       leading: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(AppSpacing.sm),
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryContainer.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(8),

@@ -99,7 +99,7 @@ class SubscriptionScreen extends ConsumerWidget {
       subtitle: status.plan.toUpperCase(),
       onTap: () {}, 
       trailing: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
         decoration: BoxDecoration(
           color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(4),
@@ -174,11 +174,11 @@ class SubscriptionScreen extends ConsumerWidget {
 
   Widget _buildBenefitItem(BuildContext context, String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         children: [
           Icon(SbIcons.check, color: AppColors.success(context), size: 20),
-          const SizedBox(width: 12), 
+          const SizedBox(width: AppSpacing.sm), 
           Expanded(
             child: Text(
               text,
@@ -216,7 +216,7 @@ class SubscriptionScreen extends ConsumerWidget {
   Widget _buildComparisonRow(BuildContext context, String feature, bool free, bool premium) {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         children: [
           Expanded(

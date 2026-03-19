@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -73,7 +74,7 @@ class SbModuleHero extends StatelessWidget {
             
             // Content
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(AppSpacing.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -84,7 +85,7 @@ class SbModuleHero extends StatelessWidget {
                         color: colorScheme.primary, // 👈 Pure primary branding
                         size: 26,
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: Text(
                           title,
@@ -98,9 +99,9 @@ class SbModuleHero extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.sm),
                   Padding(
-                    padding: const EdgeInsets.only(left: 2),
+                    padding: const EdgeInsets.only(left: AppSpacing.xs),
                     child: Text(
                       subtitle,
                       style: theme.textTheme.bodyMedium?.copyWith(
@@ -110,7 +111,7 @@ class SbModuleHero extends StatelessWidget {
                     ),
                   ),
                   if (child != null) ...[
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.sm),
                     child!,
                   ],
                 ],

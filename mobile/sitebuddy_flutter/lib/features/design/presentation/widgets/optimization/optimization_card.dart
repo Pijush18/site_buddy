@@ -38,7 +38,7 @@ class OptimizationCard extends StatelessWidget {
                         color: colorScheme.primary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       _getSectionDimensions(),
                       style: const TextStyle(

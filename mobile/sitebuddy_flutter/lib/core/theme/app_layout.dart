@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -49,10 +50,10 @@ class AppLayout {
   static const double inputRadius = 12.0;
   static const double smallRadius = 4.0;
   // Padding helpers
-  static const EdgeInsets paddingSm = EdgeInsets.all(8);
-  static const EdgeInsets paddingMd = EdgeInsets.all(12);
-  static const EdgeInsets paddingLg = EdgeInsets.all(16);
-  static const EdgeInsets paddingXL = EdgeInsets.all(24);
+  static const EdgeInsets paddingSm = EdgeInsets.all(AppSpacing.sm);
+  static const EdgeInsets paddingMd = EdgeInsets.all(AppSpacing.sm);
+  static const EdgeInsets paddingLg = EdgeInsets.all(AppSpacing.md);
+  static const EdgeInsets paddingXL = EdgeInsets.all(AppSpacing.lg);
 
   static final BorderRadius borderRadiusCard = BorderRadius.circular(
     cardRadius,
@@ -68,19 +69,19 @@ class AppLayout {
   static const double verticalSpace = 16.0;
   static const double horizontalSpace = 16.0;
 
-  static const Widget vGap4 = SizedBox(height: 4.0);
-  static const Widget vGap8 = SizedBox(height: 8.0);
-  static const SizedBox vGap12 = SizedBox(height: 12);
-  static const SizedBox vGap16 = SizedBox(height: 16);
-  static const Widget vGap24 = SizedBox(height: 24.0);
-  static const Widget vGap32 = SizedBox(height: 32.0);
-  static const Widget vGap48 = SizedBox(height: 48.0);
-  static const Widget vGap64 = SizedBox(height: 64.0);
+  static const Widget vGap4 = SizedBox(height: AppSpacing.xs);
+  static const Widget vGap8 = SizedBox(height: AppSpacing.sm);
+  static const SizedBox vGap12 = SizedBox(height: AppSpacing.sm);
+  static const SizedBox vGap16 = SizedBox(height: AppSpacing.md);
+  static const Widget vGap24 = SizedBox(height: AppSpacing.lg);
+  static const Widget vGap32 = SizedBox(height: AppSpacing.xl);
+  static const Widget vGap48 = SizedBox(height: AppSpacing.xl);
+  static const Widget vGap64 = SizedBox(height: AppSpacing.xl);
 
-  static const Widget hGap8 = SizedBox(width: 8.0);
-  static const SizedBox hGap12 = SizedBox(width: 12);
-  static const SizedBox hGap16 = SizedBox(width: 16);
-  static const SizedBox hGap24 = SizedBox(width: 24);
+  static const Widget hGap8 = SizedBox(width: AppSpacing.sm);
+  static const SizedBox hGap12 = SizedBox(width: AppSpacing.sm);
+  static const SizedBox hGap16 = SizedBox(width: AppSpacing.md);
+  static const SizedBox hGap24 = SizedBox(width: AppSpacing.lg);
 
   static const Duration animationDuration = Duration(milliseconds: 300);
   static const Duration calculationDuration = Duration(milliseconds: 600);

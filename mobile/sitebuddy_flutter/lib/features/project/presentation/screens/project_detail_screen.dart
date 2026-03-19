@@ -249,7 +249,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 : Column(
                     children: calcItems.map((item) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                         child: SbListItemTile(
                           icon: _getTypeIcon(item['type'] as String),
                           title: item['name'] as String,
@@ -275,7 +275,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 : Column(
                     children: logItems.map((item) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                         child: SbListItemTile(
                           icon: SbIcons.layers,
                           iconColor: colorScheme.secondary,

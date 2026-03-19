@@ -1,60 +1,42 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// CLASS: AppTextStyles
-/// PURPOSE: Static accessor for the global typography system.
-/// DESIGN: Uses Google Fonts (Inter) with specific weights and sizes.
-///         COLOR properties are OMITTED to allow the theme to control text colors
-///         dynamically based on light/dark mode.
+/// PURPOSE: Centralized strict typography system for App.
+/// DESIGN: Uses Google Fonts (Inter) with controlled weights (w400/w600) and line heights for a compact UI.
 class AppTextStyles {
-  // Title Styles
-  static final TextStyle titleLarge = GoogleFonts.inter(
+  // 1. Screen Title → strongest
+  static final TextStyle screenTitle = GoogleFonts.inter(
     fontSize: 22,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600,
+    height: 1.2,
   );
 
-  static final TextStyle titleMedium = GoogleFonts.inter(
+  // 2. Section Title → secondary
+  static final TextStyle sectionTitle = GoogleFonts.inter(
     fontSize: 18,
     fontWeight: FontWeight.w600,
+    height: 1.3,
   );
 
-  static final TextStyle titleSmall = GoogleFonts.inter(
-    fontSize: 16,
+  // 3. Card Title → medium emphasis
+  static final TextStyle cardTitle = GoogleFonts.inter(
+    fontSize: 14,
     fontWeight: FontWeight.w600,
+    height: 1.4,
   );
 
-  // Body Styles
-  static final TextStyle bodyLarge = GoogleFonts.inter(
-    fontSize: 16,
-    fontWeight: FontWeight.normal,
-  );
-
-  static final TextStyle bodyMedium = GoogleFonts.inter(
+  // 4. Body → low emphasis
+  static final TextStyle body = GoogleFonts.inter(
     fontSize: 14,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w400,
+    height: 1.5,
   );
 
-  static final TextStyle bodySmall = GoogleFonts.inter(
+  // 5. Caption → lowest emphasis
+  static final TextStyle caption = GoogleFonts.inter(
     fontSize: 12,
-    fontWeight: FontWeight.normal,
-  );
-
-  // Label Styles
-  static final TextStyle labelMedium = GoogleFonts.inter(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-  );
-
-  static final TextStyle labelSmall = GoogleFonts.inter(
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-  );
-
-  // Headline Styles (e.g. for calculators/prominent values)
-  static final TextStyle headlineLarge = GoogleFonts.inter(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
   );
 }

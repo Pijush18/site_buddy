@@ -109,7 +109,7 @@ class _OptimizationRow extends StatelessWidget {
           percentage: utilPercentage,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
@@ -158,7 +158,7 @@ class _Bar extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.only(left: AppSpacing.sm),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -195,7 +195,7 @@ class _LegendItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.xs),
         Text(
           label,
           style: const TextStyle(fontSize: 10),

@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -58,10 +59,10 @@ class ColumnRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               '${type.label} Section: ${width.toInt()}x${depth.toInt()} mm',
-              style: AppTextStyles.labelSmall.copyWith(color: textColor),
+              style: AppTextStyles.caption.copyWith(color: textColor),
             ),
           ),
         ],

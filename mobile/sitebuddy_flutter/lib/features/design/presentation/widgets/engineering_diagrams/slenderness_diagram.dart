@@ -97,9 +97,9 @@ class _ValueLabel extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.labelSmall.copyWith(color: Colors.grey),
+          style: AppTextStyles.caption.copyWith(color: Colors.grey),
         ),
-        Text(value, style: AppTextStyles.titleMedium.copyWith(color: color)),
+        Text(value, style: AppTextStyles.cardTitle.copyWith(color: color)),
       ],
     );
   }

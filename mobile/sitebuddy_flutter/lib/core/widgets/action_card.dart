@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 /// CLASS: ActionCard
@@ -49,7 +50,7 @@ class ActionCard extends StatelessWidget {
               ),
             ],
           ),
-          padding: const EdgeInsets.all(12.0), 
+          padding: const EdgeInsets.all(AppSpacing.sm), 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: [
@@ -58,7 +59,7 @@ class ActionCard extends StatelessWidget {
                 color: colorScheme.primary,
                 size: 22,
               ),
-              const SizedBox(height: 6), 
+              const SizedBox(height: AppSpacing.sm), 
               Text(
                 label,
                 textAlign: TextAlign.center, 

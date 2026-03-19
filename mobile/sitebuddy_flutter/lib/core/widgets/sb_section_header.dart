@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 /// CLASS: SbSectionHeader
 /// PURPOSE: Standardized header row with a title and an optional action target.
@@ -40,7 +41,8 @@ class SbSectionHeader extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Padding(
-      padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.md),
+      // Reduced vertical padding slightly for more compact UI
+      padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -49,8 +51,7 @@ class SbSectionHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.sectionTitle.copyWith(
                   color: colorScheme.onSurface,
                 ),
                 maxLines: 1,
@@ -72,10 +73,8 @@ class SbSectionHeader extends StatelessWidget {
                     children: [
                       Text(
                         "View All",
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.caption.copyWith(
                           color: colorScheme.primary,
-                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.xs),

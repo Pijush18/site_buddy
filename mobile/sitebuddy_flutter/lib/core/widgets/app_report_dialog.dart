@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             Flexible(
               child: SingleChildScrollView(
                 child: SelectableText(
@@ -59,7 +60,7 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.lg),
             SbButton.primary(label: 'Close', onPressed: () => context.pop()),
           ],
         ),

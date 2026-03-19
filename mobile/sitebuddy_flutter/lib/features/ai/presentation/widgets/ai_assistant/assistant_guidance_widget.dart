@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
@@ -95,12 +96,12 @@ class _GuidanceCard extends StatelessWidget {
             const SizedBox(height: AppLayout.md),
             ...items!.map(
               (item) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 8),
+                      margin: const EdgeInsets.only(top: AppSpacing.sm),
                       width: 4,
                       height: 4,
                       decoration: BoxDecoration(

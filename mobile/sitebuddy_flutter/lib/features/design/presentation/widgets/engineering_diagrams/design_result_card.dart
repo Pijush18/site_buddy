@@ -75,7 +75,7 @@ class DesignResultCard extends StatelessWidget {
                               ),
                             ),
                             if (item.unit != null) ...[
-                              const SizedBox(width: 4),
+                              const SizedBox(width: AppSpacing.xs),
                               Text(
                                 item.unit!,
                                 style: TextStyle(
@@ -89,7 +89,7 @@ class DesignResultCard extends StatelessWidget {
                       ],
                     ),
                     if (item.subtitle != null) ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       Text(
                         item.subtitle!,
                         style: TextStyle(

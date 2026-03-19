@@ -51,22 +51,24 @@ class AppScreenWrapper extends StatelessWidget {
           : null,
       bottomNavigationBar: footer != null
           ? SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: footer,
-              ),
+              top: false,
+              child: footer!,
             )
           : null,
       body: SafeArea(
-        bottom: false,
+        bottom: false, // Prevents unintended padding accumulation above bottom navigations natively
         child: isScrollable
             ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: usePadding ? const EdgeInsets.all(AppSpacing.md) : EdgeInsets.zero,
+                padding: usePadding 
+                    ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
+                    : EdgeInsets.zero,
                 child: child,
               )
             : Padding(
-                padding: usePadding ? const EdgeInsets.all(AppSpacing.md) : EdgeInsets.zero,
+                padding: usePadding 
+                    ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
+                    : EdgeInsets.zero,
                 child: child,
               ),
       ),

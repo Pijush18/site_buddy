@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
@@ -34,7 +35,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   value: _isLoading,
                   onChanged: (v) => setState(() => _isLoading = v),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 const Text('Enabled', style: TextStyle(fontSize: 10)),
                 Switch.adaptive(
                   value: _isEnabled,

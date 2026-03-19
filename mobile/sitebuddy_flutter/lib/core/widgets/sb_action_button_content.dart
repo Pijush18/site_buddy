@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 /// A reusable widget that provides the interior content for an action button.
@@ -26,7 +27,7 @@ class SbActionButtonContent extends StatelessWidget {
           color: color,
           size: 24,
         ),
-        const SizedBox(height: 4), // Reduced spacing
+        const SizedBox(height: AppSpacing.xs), // Reduced spacing
         Text(
           label,
           textAlign: TextAlign.center,

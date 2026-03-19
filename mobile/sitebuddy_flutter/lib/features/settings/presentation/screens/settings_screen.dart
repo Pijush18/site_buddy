@@ -313,7 +313,7 @@ class SettingsScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.sm,
-                        vertical: 3,
+                        vertical: AppSpacing.xs,
                       ),
                       child: Text(
                         (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
@@ -382,7 +382,7 @@ class SettingsScreen extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),
-          const SizedBox(width: 12), // Replaced AppLayout.hGap12
+          const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
           Text(message, style: const TextStyle(color: Colors.red)),
         ],
       ),

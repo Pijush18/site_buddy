@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 class SbGridCard extends StatefulWidget {
   final IconData icon;
@@ -76,9 +77,10 @@ class _SbGridCardState extends State<SbGridCard> {
                   : null,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppLayout.pMedium),
+              padding: const EdgeInsets.all(AppSpacing.cardPadding),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   // High-Contrast Clean Icon
                   Icon(
@@ -86,15 +88,20 @@ class _SbGridCardState extends State<SbGridCard> {
                     color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.primary,
                     size: 24, 
                   ),
-                  const SizedBox(height: 4), // Standardized 4px gap
-                  Text(
-                    widget.label,
-                    style: TextStyle(
-                      fontSize: 14, // Standardized 14px
-                      fontWeight: FontWeight.w600, // Standardized w600
-                      color: contentColor,
+                  const SizedBox(height: AppSpacing.itemGap), // Standardized gap
+                  SizedBox(
+                    height: 40, // Fixed height constraint to ensure multiline/single line labels don't change card sizes.
+                    child: Center(
+                      child: Text(
+                        widget.label,
+                        style: AppTextStyles.cardTitle.copyWith(
+                          color: contentColor,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

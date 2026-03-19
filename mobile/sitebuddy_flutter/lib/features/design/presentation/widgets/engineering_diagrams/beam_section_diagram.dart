@@ -87,11 +87,11 @@ class _InfoItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.labelSmall.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
-        Text(value, style: AppTextStyles.bodyMedium.copyWith(color: color)),
+        Text(value, style: AppTextStyles.body.copyWith(color: color)),
       ],
     );
   }

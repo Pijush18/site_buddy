@@ -269,7 +269,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.md,
-              vertical: 10,
+              vertical: AppSpacing.sm,
             ),
             decoration: BoxDecoration(
               border: Border.all(color: colorScheme.outlineVariant),

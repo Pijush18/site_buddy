@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 /// FILE HEADER
 /// ----------------------------------------------
@@ -58,7 +59,7 @@ class AppNumberField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4.0, bottom: 6.0),
+          padding: const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.sm),
           child: Row(
             children: [
               Text(
@@ -68,7 +69,7 @@ class AppNumberField extends StatelessWidget {
                 ),
               ),
               if (onInfoPressed != null) ...[
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.xs),
                 GestureDetector(
                   onTap: onInfoPressed,
                   child: Icon(

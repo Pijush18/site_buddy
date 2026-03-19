@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbListItemTile
@@ -10,8 +11,8 @@ import 'package:site_buddy/core/widgets/sb_card.dart';
 /// - NO external margin (spacing managed by parent layout/section).
 /// - Icon: 40px in 48x48 container.
 /// - Gap (Icon <-> Text): AppSpacing.sm (8px).
-/// - Title: 14px, w600.
-/// - Subtitle: 12px.
+/// - Title: cardTitle (14px, w600).
+/// - Subtitle: body (14px, w400) or caption (12px, w400).
 /// - Title-Subtitle gap: 2px.
 class SbListItemTile extends StatelessWidget {
   final IconData? icon;
@@ -41,8 +42,7 @@ class SbListItemTile extends StatelessWidget {
     if (trailing is String) {
       trailingWidget = Text(
         trailing as String,
-        style: TextStyle(
-          fontSize: 12,
+        style: AppTextStyles.caption.copyWith(
           color: colorScheme.onSurfaceVariant,
         ),
       );
@@ -57,7 +57,7 @@ class SbListItemTile extends StatelessWidget {
       // SPACING OWNERSHIP: Removed bottom margin. 
       // Spacing between items is now controlled by the parent Column/Section.
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.cardPadding),
         child: Row(
           children: [
             if (icon != null) ...[
@@ -81,23 +81,20 @@ class SbListItemTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                    style: AppTextStyles.cardTitle.copyWith(
                       color: colorScheme.onSurface,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null && subtitle!.isNotEmpty) ...[
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       subtitle!,
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.body.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

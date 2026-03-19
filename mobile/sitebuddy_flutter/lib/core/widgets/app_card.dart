@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 /// WIDGET: AppCard
@@ -50,7 +51,7 @@ class AppCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(radius),
           child: Padding(
-            padding: padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: padding ?? const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
             child: child,
           ),
         ),

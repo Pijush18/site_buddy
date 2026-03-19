@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_radius.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 /// WIDGET: SbListItem
 /// PURPOSE: Standard list item for SiteBuddy (e.g., Recent Activity).
@@ -46,7 +47,7 @@ class SbListItem extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(AppRadius.md),
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(AppSpacing.cardPadding),
             child: Row(
               children: [
                 if (leading != null) ...[
@@ -60,20 +61,20 @@ class SbListItem extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
+                        style: AppTextStyles.cardTitle.copyWith(
+                          color: colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (subtitle != null) ...[
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Text(
                           subtitle!,
-                          style: theme.textTheme.bodySmall?.copyWith(
+                          style: AppTextStyles.body.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
-                          maxLines: 1,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

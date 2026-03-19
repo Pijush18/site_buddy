@@ -101,7 +101,7 @@ class GradientScreen extends ConsumerWidget {
                 const Divider(),
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Column(
                     children: [
                       Text(

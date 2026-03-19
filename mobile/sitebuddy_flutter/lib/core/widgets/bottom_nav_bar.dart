@@ -14,6 +14,7 @@ import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -52,7 +53,7 @@ class BottomNavBar extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -113,7 +114,7 @@ class _NavItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: itemColor, size: 24),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             label.toUpperCase(),
             style: SbTextStyles.bodySecondary(context).copyWith(

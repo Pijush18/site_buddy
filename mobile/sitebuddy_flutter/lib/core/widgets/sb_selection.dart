@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class SbCheckbox extends StatelessWidget {
       borderRadius: AppLayout.borderRadiusCard,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 4.0,
+          vertical: AppSpacing.xs,
           horizontal: AppLayout.pMedium,
         ),
         child: Row(
@@ -81,7 +82,7 @@ class SbSwitch extends StatelessWidget {
       borderRadius: AppLayout.borderRadiusCard,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 4.0,
+          vertical: AppSpacing.xs,
           horizontal: AppLayout.pMedium,
         ),
         child: Row(

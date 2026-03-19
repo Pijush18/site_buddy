@@ -49,7 +49,7 @@ class AppTheme {
         elevation: 1.0, 
         shadowColor: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
         centerTitle: false,
-        titleTextStyle: AppTextStyles.headlineLarge.copyWith(fontSize: 20, color: colorScheme.onSurface),
+        titleTextStyle: AppTextStyles.screenTitle.copyWith(fontSize: 20, color: colorScheme.onSurface),
         iconTheme: IconThemeData(color: colorScheme.onSurface, size: 22),
         surfaceTintColor: Colors.transparent,
       ),

@@ -88,7 +88,7 @@ class _InfoTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.labelSmall.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
@@ -97,7 +97,7 @@ class _InfoTile extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodyMedium.copyWith(
+            style: AppTextStyles.body.copyWith(
               fontSize: isBold ? 13 : 12,
             ),
           ),

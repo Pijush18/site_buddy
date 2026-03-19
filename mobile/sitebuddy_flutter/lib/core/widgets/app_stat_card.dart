@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_text_styles.dart';
 // lib/core/widgets/app_stat_card.dart
 //
@@ -53,7 +54,7 @@ class AppStatCard extends StatelessWidget {
 
     return Container(
       // Padding inside the card
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(AppSpacing.sm),
 
       // Styling and borders
       decoration: BoxDecoration(
@@ -75,7 +76,7 @@ class AppStatCard extends StatelessWidget {
           Icon(icon, size: 28, color: colorScheme.primary),
 
           // Small gap instead of Expanded to prevent layout errors in Columns
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm),
 
           // ── Value ──────────────────────────────────────────────────────────
           Text(
@@ -88,7 +89,7 @@ class AppStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
 
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
 
           // ── Title / Caption ────────────────────────────────────────────────
           Text(

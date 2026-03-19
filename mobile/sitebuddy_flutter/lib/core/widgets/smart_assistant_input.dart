@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
@@ -27,7 +28,7 @@ class SmartAssistantInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: colorScheme.outline, width: 1.0),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 4), 
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs), 
       child: Row(
         children: [
           Expanded(
@@ -46,8 +47,8 @@ class SmartAssistantInput extends StatelessWidget {
                   color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12,
+                  horizontal: AppSpacing.sm,
+                  vertical: AppSpacing.sm,
                 ),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,

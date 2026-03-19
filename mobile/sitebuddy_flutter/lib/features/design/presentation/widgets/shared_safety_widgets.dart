@@ -89,7 +89,7 @@ class PlaceholderCard extends StatelessWidget {
     return SbCard(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 48.0),
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
           child: Column(
             children: [
               Icon(icon, size: 48, color: colorScheme.onSurfaceVariant.withValues(alpha: 0.2)),

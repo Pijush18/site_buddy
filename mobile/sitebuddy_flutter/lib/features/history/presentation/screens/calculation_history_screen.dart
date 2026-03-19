@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -68,7 +69,7 @@ class _HistoryEntryCard extends StatelessWidget {
     final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: SbListItemTile(
         icon: _getTypeIcon(entry.calculationType),
         title: entry.resultSummary,

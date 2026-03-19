@@ -76,7 +76,7 @@ class WorkDashboardScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm,
-                  vertical: 2,
+                  vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
@@ -121,7 +121,7 @@ class WorkDashboardScreen extends ConsumerWidget {
         trailing: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.sm,
-            vertical: 2,
+            vertical: AppSpacing.xs,
           ),
           decoration: BoxDecoration(
             color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
