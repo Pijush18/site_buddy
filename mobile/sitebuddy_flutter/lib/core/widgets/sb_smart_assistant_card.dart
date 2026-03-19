@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/sb_module_hero.dart';
 import 'package:site_buddy/core/widgets/smart_assistant_input.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';

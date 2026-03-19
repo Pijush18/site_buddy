@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 
 import 'package:site_buddy/core/theme/app_border.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
