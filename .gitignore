@@ -1,6 +1,6 @@
-## ----------------------------------------------------------------ing
-# Flutter/Dart
-# ----------------------------------------------------------------
+# =========================================================
+# Flutter / Dart
+# =========================================================
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -9,53 +9,65 @@
 .pub/
 build/
 
-# ----------------------------------------------------------------
+# =========================================================
 # Android
-# ----------------------------------------------------------------
+# =========================================================
+android/.gradle/
 android/app/build/
 android/local.properties
-android/GeneratedPluginRegistrant.java
-android/.gradle/
-android/app/src/main/res/drawable-*/
-android/app/src/main/res/mipmap-*/
 
-# ----------------------------------------------------------------
+# =========================================================
 # iOS
-# ----------------------------------------------------------------
+# =========================================================
 ios/Pods/
 ios/.symlinks/
 ios/Flutter/Generated.xcconfig
 ios/Flutter/flutter_export_environment.sh
 ios/ServiceDefinitions.json
-ios/Runner/GeneratedPluginRegistrant.h
-ios/Runner/GeneratedPluginRegistrant.m
+ios/Runner/GeneratedPluginRegistrant.*
 *.xcworkspace/
 
-# ----------------------------------------------------------------
+# =========================================================
+# Laravel / PHP (for upcoming backend)
+# =========================================================
+vendor/
+node_modules/
+public/storage
+storage/*.key
+.env
+.env.*
+.phpunit.result.cache
+
+# =========================================================
+# Python (cleanup from FastAPI - prevent future issues)
+# =========================================================
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================================================
 # IDEs & Editors
-# ----------------------------------------------------------------
-.idea/
+# =========================================================
 .vscode/
+.idea/
 *.iml
 *.iws
 .project
 .settings/
 .classpath
 
-# ----------------------------------------------------------------
-# Large Assets & Misc
-# ----------------------------------------------------------------
+# =========================================================
+# OS / Misc
+# =========================================================
+.DS_Store
+Thumbs.db
 *.log
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-node_modules/
 
-# Specifically for your audio book project
-assets/audio/
+# =========================================================
+# Project-specific (keep only if needed)
+# =========================================================
 assets/cache/
-
-# Environment / Secret Files
-.env*backend/.venv/
-__pycache__/
-*.pyc
+# assets/audio/   # ⚠️ Uncomment ONLY if audio files are not needed in repo
