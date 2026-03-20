@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -145,7 +146,7 @@ class _Bar extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: SbRadius.borderSmall,
       ),
       child: Stack(
         children: [
@@ -154,7 +155,7 @@ class _Bar extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: color,
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: SbRadius.borderSmall,
               ),
             ),
           ),

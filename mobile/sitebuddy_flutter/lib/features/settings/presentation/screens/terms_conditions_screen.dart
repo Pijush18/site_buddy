@@ -10,51 +10,55 @@ class TermsConditionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppScreenWrapper(
+    return const SbPage.detail(
       title: 'Terms & Conditions',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
-          _Section(
-            title: 'Acceptance of Terms',
-            content:
-                'By using Site Buddy, you agree to these terms and conditions. '
-                'If you do not agree, please discontinue use of the application.',
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _Section(
+                  title: 'Acceptance of Terms',
+                  content:
+                      'By using Site Buddy, you agree to these terms and conditions. '
+                      'If you do not agree, please discontinue use of the application.',
+                ),
+                SizedBox(height: SbSpacing.xxl * 1.5),
+                _Section(
+                  title: 'Engineering Disclaimer',
+                  content:
+                      'IMPORTANT: Site Buddy is a reference and calculation aid only. '
+                      'All results must be verified by a qualified Structural Engineer '
+                      'before implementation. We are not responsible for structural failures '
+                      'resulting from use of this software.',
+                ),
+                SizedBox(height: SbSpacing.xxl * 1.5),
+                _Section(
+                  title: 'License',
+                  content:
+                      'Users are granted a non-exclusive license for personal or '
+                      'professional use. Reverse engineering or unauthorized distribution '
+                      'is strictly prohibited.',
+                ),
+                SizedBox(height: SbSpacing.xxl * 1.5),
+                _Section(
+                  title: 'Limitation of Liability',
+                  content:
+                      'Site Buddy and its developers are not liable for any direct, indirect, '
+                      'incidental, or consequential damages resulting from the use or '
+                      'inability to use the software.',
+                ),
+                SizedBox(height: SbSpacing.xxl * 1.5),
+                _Section(
+                  title: 'Changes to Terms',
+                  content:
+                      'We reserve the right to modify these terms at any time. '
+                      'Continued use of the app constitutes acceptance of new terms.',
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.xl
-          _Section(
-            title: 'Engineering Disclaimer',
-            content:
-                'IMPORTANT: Site Buddy is a reference and calculation aid only. '
-                'All results must be verified by a qualified Structural Engineer '
-                'before implementation. We are not responsible for structural failures '
-                'resulting from use of this software.',
-          ),
-          SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.xl
-          _Section(
-            title: 'License',
-            content:
-                'Users are granted a non-exclusive license for personal or '
-                'professional use. Reverse engineering or unauthorized distribution '
-                'is strictly prohibited.',
-          ),
-          SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.xl
-          _Section(
-            title: 'Limitation of Liability',
-            content:
-                'Site Buddy and its developers are not liable for any direct, indirect, '
-                'incidental, or consequential damages resulting from the use or '
-                'inability to use the software.',
-          ),
-          SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.xl
-          _Section(
-            title: 'Changes to Terms',
-            content:
-                'We reserve the right to modify these terms at any time. '
-                'Continued use of the app constitutes acceptance of new terms.',
-          ),
-          SizedBox(height: SbSpacing.xxl * 2), // Botttom padding
         ],
       ),
     );

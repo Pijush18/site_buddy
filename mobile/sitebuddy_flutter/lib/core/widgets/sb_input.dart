@@ -1,4 +1,8 @@
 
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
+import 'package:site_buddy/core/widgets/sb_button.dart';
 import 'package:flutter/material.dart';
 
 /// WIDGET: SbInput
@@ -22,6 +26,9 @@ class SbInput extends StatelessWidget {
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
 
+  final String? errorText;
+  final VoidCallback? onInfoPressed;
+
   const SbInput({
     super.key,
     this.initialValue,
@@ -41,33 +48,126 @@ class SbInput extends StatelessWidget {
     this.enabled = true,
     this.textInputAction,
     this.focusNode,
+    this.errorText,
+    this.onInfoPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: initialValue,
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        hintMaxLines: 2,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
-        // Relying on global InputDecorationTheme from AppTheme
-      ),
-      validator: validator,
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      onChanged: onChanged,
-      onEditingComplete: onEditingComplete,
-      onFieldSubmitted: onFieldSubmitted,
-      maxLines: maxLines,
-      minLines: minLines,
-      enabled: enabled,
-      textInputAction: textInputAction,
-      focusNode: focusNode,
-      style: Theme.of(context).textTheme.bodyLarge!,
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (label != null) ...[
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label!,
+                  style: textTheme.labelLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              if (onInfoPressed != null)
+                SbButton.icon(
+                  icon: SbIcons.info,
+                  onPressed: onInfoPressed,
+                  compact: true,
+                ),
+            ],
+          ),
+          const SizedBox(height: SbSpacing.xs),
+        ],
+        Container(
+          height: maxLines == 1 ? 48.0 : null,
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            borderRadius: SbRadius.borderMd,
+            border: Border.all(
+              color: errorText != null 
+                  ? colorScheme.error.withValues(alpha: 0.5) 
+                  : colorScheme.outline.withValues(alpha: 0.15),
+              width: 1.5,
+            ),
+          ),
+          alignment: maxLines == 1 ? Alignment.center : Alignment.topLeft,
+          child: Row(
+            crossAxisAlignment: maxLines == 1 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+            children: [
+              if (prefixIcon != null) ...[
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: SbSpacing.sm,
+                    top: maxLines == 1 ? 0 : SbSpacing.sm,
+                  ),
+                  child: prefixIcon,
+                ),
+              ],
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxLines == 1 ? 0 : SbSpacing.sm,
+                  ),
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      if (hint != null && (controller?.text.isEmpty ?? initialValue == null))
+                        Text(
+                          hint!,
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      TextField(
+                        controller: controller,
+                        onChanged: onChanged,
+                        obscureText: obscureText,
+                        keyboardType: keyboardType,
+                        textInputAction: textInputAction,
+                        focusNode: focusNode,
+                        maxLines: maxLines,
+                        minLines: minLines,
+                        enabled: enabled,
+                        style: textTheme.bodyLarge,
+                        decoration: null, // BARE ENGINE
+                        cursorColor: colorScheme.primary,
+                        textAlignVertical: TextAlignVertical.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (suffixIcon != null) ...[
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: SbSpacing.sm,
+                    top: maxLines == 1 ? 0 : SbSpacing.sm,
+                  ),
+                  child: suffixIcon,
+                ),
+              ],
+            ],
+          ),
+        ),
+        if (errorText != null) ...[
+          const SizedBox(height: SbSpacing.xs),
+          Text(
+            errorText!,
+            style: textTheme.labelSmall?.copyWith(
+              color: colorScheme.error,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

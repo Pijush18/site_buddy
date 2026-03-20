@@ -19,105 +19,123 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Reinforcement Detailing',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 5 of 6: Steel Arrangement',
-            style: Theme.of(context).textTheme.labelMedium!,
+          SbButton.primary(
+            label: 'Next: Safety Checks',
+            onPressed: () {
+              context.push('/column/safety');
+            },
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
-          RebarLayoutDiagram(
-            type: state.type,
-            width: state.b,
-            depth: state.d,
-            numBars: state.numBars,
-            mainBarDia: state.mainBarDia,
-            ast: state.astProvided,
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
           ),
-          const SizedBox(height: SbSpacing.xxl),
-          const SbSectionHeader(title: 'Main Longitudinal Bars'),
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SbDropdown<double>(
-                  value: state.mainBarDia,
-                  items: const [12, 16, 20, 25, 32],
-                  itemLabelBuilder: (d) => '${d.toInt()} mm',
-                  onChanged: (v) {
-                    if (v != null) {
-                      notifier.updateReinforcement(mainBarDia: v);
-                    }
-                  },
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 5 of 6: Steel Arrangement',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
+          ),
+
+          // ── REBAR LAYOUT SECTION ──
+          SbSection(
+            title: 'Sectional Arrangement',
+            child: RebarLayoutDiagram(
+              type: state.type,
+              width: state.b,
+              depth: state.d,
+              numBars: state.numBars,
+              mainBarDia: state.mainBarDia,
+              ast: state.astProvided,
+            ),
+          ),
+
+          // ── MAIN LONGITUDINAL BARS ──
+          SbSection(
+            title: 'Main Longitudinal Bars',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Bar Diameter',
+                    style: Theme.of(context).textTheme.labelLarge!,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  SbDropdown<double>(
+                    value: state.mainBarDia,
+                    items: const [12, 16, 20, 25, 32],
+                    itemLabelBuilder: (d) => '${d.toInt()} mm',
+                    onChanged: (v) {
+                      if (v != null) {
+                        notifier.updateReinforcement(mainBarDia: v);
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // ── LONGITUDINAL RESULTS ──
+          SbSection(
+            title: 'Steel Area Provided',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.astProvided >= state.astRequired,
+              items: [
+                DesignResultItem(
+                  label: 'Number of Bars',
+                  value: '${state.numBars}',
+                  unit: 'Nos',
+                ),
+                DesignResultItem(
+                  label: 'Required Ast',
+                  value: state.astRequired.toStringAsFixed(0),
+                  unit: 'mm²',
+                ),
+                DesignResultItem(
+                  label: 'Provided Ast',
+                  value: state.astProvided.toStringAsFixed(0),
+                  unit: 'mm²',
+                  isCritical: true,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
-          DesignResultCard(
-            title: 'Longitudinal Results',
-            isSafe: state.astProvided >= state.astRequired,
-            items: [
-              DesignResultItem(
-                label: 'Number of Bars',
-                value: '${state.numBars}',
-                unit: 'Nos',
-              ),
-              DesignResultItem(
-                label: 'Required Ast',
-                value: state.astRequired.toStringAsFixed(0),
-                unit: 'mm²',
-              ),
-              DesignResultItem(
-                label: 'Provided Ast',
-                value: state.astProvided.toStringAsFixed(0),
-                unit: 'mm²',
-                isCritical: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
-          DesignResultCard(
+
+          // ── TRANSVERSE TIES ──
+          SbSection(
             title: 'Transverse Ties (Links)',
-            isSafe: true,
-            items: [
-              DesignResultItem(
-                label: 'Tie Diameter (min)',
-                value: state.tieDia.toStringAsFixed(0),
-                unit: 'mm',
-              ),
-              DesignResultItem(
-                label: 'Max Spacing (s)',
-                value: state.tieSpacing.toStringAsFixed(0),
-                unit: 'mm c/c',
-                isCritical: true,
-              ),
-            ],
+            child: DesignResultCard(
+              title: 'Detailing',
+              isSafe: true,
+              items: [
+                DesignResultItem(
+                  label: 'Tie Diameter (min)',
+                  value: state.tieDia.toStringAsFixed(0),
+                  unit: 'mm',
+                ),
+                DesignResultItem(
+                  label: 'Max Spacing (s)',
+                  value: state.tieSpacing.toStringAsFixed(0),
+                  unit: 'mm c/c',
+                  isCritical: true,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Safety Checks',
-                onPressed: () {
-                  context.push('/column/safety');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
         ],
       ),
     );

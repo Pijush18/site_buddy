@@ -79,150 +79,161 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Schedule Meeting',
-      footer: SbButton.primary(
+      primaryAction: SbButton.primary(
         label: 'Schedule Meeting',
         icon: SbIcons.calendar,
         onPressed: () => _submit(context),
+        width: double.infinity,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SbInput(
-            controller: _titleController,
-            label: 'Title',
-            hint: 'Meeting title',
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbInput(
-            controller: _descriptionController,
-            label: 'Description',
-            hint: 'Brief agenda or summary',
-            maxLines: 3,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbInput(
-            controller: _projectController,
-            label: 'Project ID',
-            hint: 'Associated project',
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Text(
-            'MEETING TYPE',
-            style: Theme.of(context).textTheme.labelLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          SbDropdown<MeetingType>(
-            value: _type,
-            items: MeetingType.values,
-            itemLabelBuilder: (e) => e.name.toUpperCase(),
-            onChanged: (v) {
-              if (v != null) setState(() => _type = v);
-            },
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Text(
-            'MODE',
-            style: Theme.of(context).textTheme.labelLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          SbDropdown<MeetingMode>(
-            value: _mode,
-            items: MeetingMode.values,
-            itemLabelBuilder: (e) => e.name.toUpperCase(),
-            onChanged: (v) {
-              if (v != null) setState(() => _mode = v);
-            },
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          SbInput(
-            controller: _locationController,
-            label: 'Location / Link',
-            hint: 'Where is it happening?',
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbInput(
-            controller: _participantsController,
-            label: 'Participants',
-            hint: 'Comma separated names',
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          // Date Picker
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  controller: _titleController,
+                  label: 'Title',
+                  hint: 'Meeting title',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  controller: _descriptionController,
+                  label: 'Description',
+                  hint: 'Brief agenda or summary',
+                  maxLines: 3,
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  controller: _projectController,
+                  label: 'Project ID',
+                  hint: 'Associated project',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                Text(
+                  'MEETING TYPE',
+                  style: Theme.of(context).textTheme.labelLarge!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                SbDropdown<MeetingType>(
+                  value: _type,
+                  items: MeetingType.values,
+                  itemLabelBuilder: (e) => e.name.toUpperCase(),
+                  onChanged: (v) {
+                    if (v != null) setState(() => _type = v);
+                  },
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                Text(
+                  'MODE',
+                  style: Theme.of(context).textTheme.labelLarge!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                SbDropdown<MeetingMode>(
+                  value: _mode,
+                  items: MeetingMode.values,
+                  itemLabelBuilder: (e) => e.name.toUpperCase(),
+                  onChanged: (v) {
+                    if (v != null) setState(() => _mode = v);
+                  },
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                SbInput(
+                  controller: _locationController,
+                  label: 'Location / Link',
+                  hint: 'Where is it happening?',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  controller: _participantsController,
+                  label: 'Participants',
+                  hint: 'Comma separated names',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                // Date Picker
+                Row(
                   children: [
-                    Text(
-                      'DATE',
-                        style: Theme.of(context).textTheme.labelLarge!,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'DATE',
+                            style: Theme.of(context).textTheme.labelLarge!,
+                          ),
+                          const SizedBox(height: SbSpacing.sm),
+                          Text(
+                            _date == null
+                                ? 'Not set'
+                                : _date!.toLocal().toString().split(' ').first,
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                    Text(
-                      _date == null
-                          ? 'Not set'
-                          : _date!.toLocal().toString().split(' ').first,
-                      style: Theme.of(context).textTheme.bodyLarge!,
+                    SbButton.ghost(
+                      label: 'Select',
+                      icon: SbIcons.calendar,
+                      onPressed: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+                        if (!mounted) return;
+                        if (picked != null) setState(() => _date = picked);
+                      },
                     ),
                   ],
                 ),
-              ),
-              SbButton.ghost(
-                label: 'Select',
-                icon: SbIcons.calendar,
-                onPressed: () async {
-                  final picked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (!mounted) return;
-                  if (picked != null) setState(() => _date = picked);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          // Time Pickers
-          Row(
-            children: [
-              Expanded(
-                child: _buildTimePicker(
-                  context,
-                  'START TIME',
-                  _start == null ? 'Not set' : _start!.format(context),
-                  () async {
-                    final t = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    if (!mounted) return;
-                    if (t != null) setState(() => _start = t);
-                  },
+                const SizedBox(height: SbSpacing.lg),
+                // Time Pickers
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildTimePicker(
+                        context,
+                        'START TIME',
+                        _start == null ? 'Not set' : _start!.format(context),
+                        () async {
+                          final t = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+                          if (!mounted) return;
+                          if (t != null) setState(() => _start = t);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: SbSpacing.lg),
+                    Expanded(
+                      child: _buildTimePicker(
+                        context,
+                        'END TIME',
+                        _end == null ? 'Not set' : _end!.format(context),
+                        () async {
+                          final t = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+                          if (!mounted) return;
+                          if (t != null) setState(() => _end = t);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-              Expanded(
-                child: _buildTimePicker(
-                  context,
-                  'END TIME',
-                  _end == null ? 'Not set' : _end!.format(context),
-                  () async {
-                    final t = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    if (!mounted) return;
-                    if (t != null) setState(() => _end = t);
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Buffer
         ],
       ),
     );

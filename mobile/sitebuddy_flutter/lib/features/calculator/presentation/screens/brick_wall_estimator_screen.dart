@@ -1,5 +1,4 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
@@ -7,7 +6,6 @@ import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/calculator/application/controllers/brick_wall_controller.dart';
 import 'package:site_buddy/shared/domain/models/brick_wall_result.dart';
@@ -39,39 +37,44 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
     final isValid = state.lengthInput.isNotEmpty && state.heightInput.isNotEmpty && state.thicknessInput.isNotEmpty;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.brickWallEstimator,
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── SECTION 1: DIMENSIONS ─────────────────────────────────────────
           SbSection(
             title: EngineeringTerms.wallDimensions,
-            child: Column(
-              children: [
-                AppNumberField(
-                  label: EngineeringTerms.wallLength,
-                  hint: EngineeringTerms.lengthHint,
-                  suffixIcon: SbIcons.ruler,
-                  onChanged: controller.updateLength,
-                  errorText: lError,
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                AppNumberField(
-                  label: EngineeringTerms.wallHeight,
-                  hint: EngineeringTerms.heightHint,
-                  suffixIcon: SbIcons.height,
-                  onChanged: controller.updateHeight,
-                  errorText: hError,
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                AppNumberField(
-                  label: EngineeringTerms.wallThickness,
-                  hint: EngineeringTerms.brickThicknessHint,
-                  suffixIcon: SbIcons.layers,
-                  onChanged: controller.updateThickness,
-                  errorText: tError,
-                ),
-              ],
+            child: SbCard(
+              child: Column(
+                children: [
+                  SbInput(
+                    label: EngineeringTerms.wallLength,
+                    hint: EngineeringTerms.lengthHint,
+                    suffixIcon: Icon(SbIcons.ruler, size: 20, color: colorScheme.onSurfaceVariant),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: controller.updateLength,
+                    errorText: lError,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    label: EngineeringTerms.wallHeight,
+                    hint: EngineeringTerms.heightHint,
+                    suffixIcon: Icon(SbIcons.height, size: 20, color: colorScheme.onSurfaceVariant),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: controller.updateHeight,
+                    errorText: hError,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    label: EngineeringTerms.wallThickness,
+                    hint: EngineeringTerms.brickThicknessHint,
+                    suffixIcon: Icon(SbIcons.layers, size: 20, color: colorScheme.onSurfaceVariant),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: controller.updateThickness,
+                    errorText: tError,
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -91,16 +94,23 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                           children: [
                             Text(
                               EngineeringTerms.brickSize,
-                              style: Theme.of(context).textTheme.labelMedium!,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            const SizedBox(height: SbSpacing.xs),
+                            const SizedBox(height: SbSpacing.xxs),
                             Text(
                               EngineeringTerms.standardBrickSize,
-                                style: Theme.of(context).textTheme.bodyLarge!,
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             Text(
                               EngineeringTerms.brickWithJoint,
-                                style: Theme.of(context).textTheme.labelMedium!,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                              ),
                             ),
                           ],
                         ),
@@ -119,13 +129,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: SbSpacing.lg),
-                Text(
-                  EngineeringTerms.mortarRatio,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MortarRatio>(
+                  label: EngineeringTerms.mortarRatio,
                   value: state.selectedRatio,
                   items: MortarRatio.values,
                   itemLabelBuilder: (r) => r.label,
@@ -163,7 +168,9 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Text(
                   state.failure!.message,
-                    style: Theme.of(context).textTheme.bodyLarge!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.error,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -174,10 +181,16 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
             _ResultSection(result: state.result!),
 
           // ── SECTION 6: COMPLIANCE FOOTNOTE ──────────────────────────────
-          Text(
-            EngineeringTerms.brickMasonryRef,
-            style: Theme.of(context).textTheme.labelMedium!,
-            textAlign: TextAlign.center,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
+            child: Text(
+              EngineeringTerms.brickMasonryRef,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+                fontStyle: FontStyle.italic,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -185,88 +198,116 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
   }
 }
 
-
-
 class _ResultSection extends StatelessWidget {
   final BrickWallResult result;
   const _ResultSection({required this.result});
 
   @override
   Widget build(BuildContext context) {
-    return SbCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            EngineeringTerms.resultSummary,
-            style: Theme.of(context).textTheme.titleMedium!,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          const Divider(),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-          // Bricks
-          SbListItemTile(
-            title: EngineeringTerms.numberOfBricks,
-            onTap: () {}, // Detail view entry
-            trailing: Text(
-              result.numberOfBricks.toString(),
-              style: Theme.of(context).textTheme.labelLarge!,
-            ),
-          ),
-          SbListItemTile(
-            title: EngineeringTerms.brickVolume,
-            onTap: () {}, // Detail view entry
-            trailing: Text(
-              '${result.brickVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-          ),
-
-          const Divider(),
-          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
-
-          // Cement & Sand
-          SbListItemTile(
-            title: EngineeringTerms.cementBags,
-            onTap: () {}, // Detail view entry
-            trailing: Text(
-              '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-              style: Theme.of(context).textTheme.labelLarge!,
-            ),
-          ),
-          SbListItemTile(
-            title: EngineeringTerms.sandVolume,
-            onTap: () {}, // Detail view entry
-            trailing: Text(
-              '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-          ),
-
-          const Divider(),
-          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
-
-          // Totals
-          SbListItemTile(
-            title: EngineeringTerms.wallVolume,
-            onTap: () {}, // Detail view entry
-            trailing: Text(
-              '${result.wallVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(EngineeringTerms.mortarRatioLabel, style: Theme.of(context).textTheme.labelMedium!),
-              Text(
-                result.mortarRatio,
-                style: Theme.of(context).textTheme.labelMedium!,
+    return SbSection(
+      title: EngineeringTerms.resultSummary,
+      child: SbCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Bricks
+            SbListItemTile(
+              title: EngineeringTerms.numberOfBricks,
+              onTap: () {}, // Detail view entry
+              trailing: Text(
+                result.numberOfBricks.toString(),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ],
-          ),
-        ],
+            ),
+            SbListItemTile(
+              title: EngineeringTerms.brickVolume,
+              onTap: () {}, // Detail view entry
+              trailing: Text(
+                '${result.brickVolume.toStringAsFixed(3)} m³',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: SbSpacing.sm),
+              child: Divider(height: 1),
+            ),
+
+            // Cement & Sand
+            SbListItemTile(
+              title: EngineeringTerms.cementBags,
+              onTap: () {}, // Detail view entry
+              trailing: Text(
+                '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SbListItemTile(
+              title: EngineeringTerms.sandVolume,
+              onTap: () {}, // Detail view entry
+              trailing: Text(
+                '${result.sandVolume.toStringAsFixed(3)} m³',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: SbSpacing.sm),
+              child: Divider(height: 1),
+            ),
+
+            // Totals
+            SbListItemTile(
+              title: EngineeringTerms.wallVolume,
+              onTap: () {}, // Detail view entry
+              trailing: Text(
+                '${result.wallVolume.toStringAsFixed(3)} m³',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            
+            Padding(
+              padding: const EdgeInsets.all(SbSpacing.md),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    EngineeringTerms.mortarRatioLabel, 
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SbSpacing.sm,
+                      vertical: SbSpacing.xxs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      result.mortarRatio,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

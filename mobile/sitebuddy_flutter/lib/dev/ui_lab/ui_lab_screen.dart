@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 
 // Sections
@@ -36,16 +36,16 @@ class _UiLabScreenState extends State<UiLabScreen>
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'SiteBuddy UI Laboratory',
-      actions: [
+      appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.refresh),
           onPressed: () => setState(() {}),
           tooltip: 'Refresh Lab',
         ),
       ],
-      child: Column(
+      body: Column(
         children: [
           TabBar(
             controller: _tabController,

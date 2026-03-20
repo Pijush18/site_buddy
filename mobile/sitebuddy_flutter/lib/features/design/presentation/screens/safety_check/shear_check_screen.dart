@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
 import 'package:site_buddy/features/design/application/controllers/safety_check_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/insight_card.dart';
-import 'package:site_buddy/features/design/presentation/widgets/shared_action_buttons.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shear_input_section.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shear_result_summary.dart';
@@ -114,53 +113,92 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Shear Check',
-      child: Form(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: _result != null ? 'Calculate Again' : 'Calculate Shear',
+            onPressed: _calculate,
+            isLoading: _isLoading,
+          ),
+          if (_result != null) ...[
+            const SizedBox(height: SbSpacing.sm),
+            SbButton.ghost(
+              label: 'Share Report',
+              onPressed: _shareResult,
+            ),
+          ],
+        ],
+      ),
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Structural Shear Capacity Assessment',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            ShearInputSection(
-              dController: _dController,
-              bController: _bController,
-              vuController: _vuController,
-              ptController: _ptController,
-              selectedConcrete: _selectedConcrete,
-              selectedSteel: _selectedSteel,
-              onConcreteChanged: (v) {
-                if (v != null) setState(() => _selectedConcrete = v);
-              },
-              onSteelChanged: (v) {
-                if (v != null) setState(() => _selectedSteel = v);
-              },
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            SharedActionButtons(
-              calculateLabel: 'Calculate Shear',
-              isLoading: _isLoading,
-              onCalculate: () => _calculate(),
-              onReset: _reset,
-              onShare: _shareResult,
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            if (_result != null) ...[
-              ShearResultSummary(result: _result!),
-              const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-              InsightCard(insights: _result!.insights),
-            ] else
-              const PlaceholderCard(
-                icon: SbIcons.analytics,
-                message: 'Enter parameters to generate report',
+        child: SbSectionList(
+          sections: [
+            // ── HEADER ──
+            SbSection(
+              child: Text(
+                'Structural Shear Capacity Assessment',
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
-            const SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.vGap32
-            const ShearHistorySection(),
-            const SizedBox(height: SbSpacing.xxl),
+            ),
+
+            // ── INPUTS ──
+            SbSection(
+              title: 'Input Parameters',
+              child: ShearInputSection(
+                dController: _dController,
+                bController: _bController,
+                vuController: _vuController,
+                ptController: _ptController,
+                selectedConcrete: _selectedConcrete,
+                selectedSteel: _selectedSteel,
+                onConcreteChanged: (v) {
+                  if (v != null) setState(() => _selectedConcrete = v);
+                },
+                onSteelChanged: (v) {
+                  if (v != null) setState(() => _selectedSteel = v);
+                },
+              ),
+            ),
+
+            // ── RESULTS ──
+            if (_result != null) ...[
+              SbSection(
+                title: 'Design Status',
+                trailing: StatusBadge(isSafe: _result!.isSafe),
+                child: ShearResultSummary(result: _result!),
+              ),
+              SbSection(
+                title: 'Engineering Insight',
+                child: InsightCard(insights: _result!.insights),
+              ),
+            ] else
+              const SbSection(
+                title: 'Design Status',
+                child: PlaceholderCard(
+                  icon: SbIcons.analytics,
+                  message: 'Enter parameters to generate report',
+                ),
+              ),
+
+            // ── SECONDARY ACTIONS ──
+            if (_result != null)
+              SbSection(
+                child: SbButton.ghost(
+                  label: 'Reset Form',
+                  onPressed: _reset,
+                  width: double.infinity,
+                ),
+              ),
+
+            // ── HISTORY ──
+            const SbSection(
+              title: 'Recent Checks',
+              child: ShearHistorySection(),
+            ),
           ],
         ),
       ),

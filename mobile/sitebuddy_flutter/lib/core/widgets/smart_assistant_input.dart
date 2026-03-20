@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class SmartAssistantInput extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
+      height: 52,
       decoration: BoxDecoration(
         color: colorScheme.surface, // Pop against Hero background
         borderRadius: BorderRadius.circular(16),
@@ -40,28 +42,39 @@ class SmartAssistantInput extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm), 
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: TextField(
-              controller: controller,
-              onSubmitted: (_) => onSend(),
-              textInputAction: TextInputAction.send,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-              decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: theme.textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.md,
-                  vertical: SbSpacing.lg, // Improved breathing room
-                ),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                filled: false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: controller,
+                    builder: (context, value, _) {
+                      if (value.text.isEmpty) {
+                        return Text(
+                          hintText,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                  TextField(
+                    controller: controller,
+                    onSubmitted: (_) => onSend(),
+                    textInputAction: TextInputAction.send,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    decoration: null, // BARE ENGINE
+                    cursorColor: colorScheme.primary,
+                  ),
+                ],
               ),
             ),
           ),
@@ -70,10 +83,10 @@ class SmartAssistantInput extends StatelessWidget {
             padding: const EdgeInsets.only(right: SbSpacing.xs),
             child: Material(
               color: colorScheme.primary,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: SbRadius.borderMd,
               child: InkWell(
                 onTap: onSend,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: SbRadius.borderMd,
                 child: Container(
                   width: 44,
                   height: 44,

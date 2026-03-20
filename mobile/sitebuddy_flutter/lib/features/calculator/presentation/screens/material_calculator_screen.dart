@@ -9,7 +9,6 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/constants/concrete_mix_constants.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/calculator_controller.dart';
 import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
 import 'package:site_buddy/shared/domain/models/concrete_material_result.dart';
@@ -38,9 +37,9 @@ class MaterialCalculatorScreen extends ConsumerWidget {
 
     final bool isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.materialCalculator,
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           SbSection(
             title: EngineeringTerms.concreteGrade,
@@ -60,23 +59,23 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             child: SbCard(
               child: Column(
                 children: [
-                  AppNumberField(
+                  SbInput(
                     label: EngineeringTerms.wallLength,
-                    suffixIcon: SbIcons.ruler,
+                    suffixIcon: const Icon(SbIcons.ruler),
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
                   const SizedBox(height: SbSpacing.lg),
-                  AppNumberField(
+                  SbInput(
                     label: EngineeringTerms.width,
-                    suffixIcon: SbIcons.width,
+                    suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
                   const SizedBox(height: SbSpacing.lg),
-                  AppNumberField(
+                  SbInput(
                     label: EngineeringTerms.thicknessDepth,
-                    suffixIcon: SbIcons.layers,
+                    suffixIcon: const Icon(SbIcons.layers),
                     onChanged: controller.updateDepth,
                     errorText: dError,
                   ),
@@ -93,19 +92,19 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                 children: [
                   SizedBox(
                     width: 160,
-                    child: AppNumberField(
+                    child: SbInput(
                       label: EngineeringTerms.steelRatioPercent,
                       hint: EngineeringTerms.steelRatioHint,
-                      suffixIcon: SbIcons.rebarVertical,
+                      suffixIcon: const Icon(SbIcons.rebarVertical),
                       onChanged: controller.updateSteelRatio,
                     ),
                   ),
                   SizedBox(
                     width: 160,
-                    child: AppNumberField(
+                    child: SbInput(
                       label: EngineeringTerms.wasteFactorPercent,
                       hint: EngineeringTerms.wasteFactorHint,
-                      suffixIcon: SbIcons.percent,
+                      suffixIcon: const Icon(SbIcons.percent),
                       onChanged: controller.updateWasteFactor,
                     ),
                   ),

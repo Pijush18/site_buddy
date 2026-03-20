@@ -148,8 +148,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return AppScreenWrapper(
-      child: SbSectionList(
+    return SbPage.scaffold(
+      body: SbSectionList(
         sections: [
           // ── HEADER ──
           SbSection(
@@ -182,7 +182,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     label: FormLabels.email,
                     hint: FormLabels.emailHint,
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                    prefixIcon:
+                        Icon(SbIcons.account, color: colorScheme.primary),
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
@@ -194,10 +195,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
+                        _obscurePassword
+                            ? SbIcons.visibility
+                            : SbIcons.visibilityOff,
                         color: colorScheme.outline,
                       ),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
                   Align(
@@ -210,7 +214,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: SbSpacing.lg),
                   SbButton.primary(
                     label: AppStrings.signIn,
-                    onPressed: (isLoading || _emailController.text.isEmpty || _passwordController.text.isEmpty)
+                    onPressed: (isLoading ||
+                            _emailController.text.isEmpty ||
+                            _passwordController.text.isEmpty)
                         ? null
                         : _login,
                     isLoading: isLoading,
@@ -229,8 +235,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     const Expanded(child: Divider()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
-                      child: Text(AppStrings.orContinueWith, style: theme.textTheme.labelMedium),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                      child: Text(AppStrings.orContinueWith,
+                          style: theme.textTheme.labelMedium),
                     ),
                     const Expanded(child: Divider()),
                   ],
@@ -260,7 +268,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(AppStrings.dontHaveAccount, style: theme.textTheme.bodyLarge),
+                Text(AppStrings.dontHaveAccount,
+                    style: theme.textTheme.bodyLarge),
                 const SizedBox(width: SbSpacing.sm),
                 GestureDetector(
                   onTap: () => context.go('/register'),

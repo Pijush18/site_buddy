@@ -14,20 +14,21 @@ class ReportsScreen extends StatelessWidget {
 
     final textTheme = theme.textTheme;
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: 'Reports',
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           SbSection(
             child: SbEmptyState(
               icon: SbIcons.report,
               title: 'No Reports Yet',
-              subtitle: 'Reports generated from engineering calculations and design tools will appear here automatically.',
+              subtitle:
+                  'Reports generated from engineering calculations and design tools will appear here automatically.',
               actionLabel: 'Go to Calculators',
               onAction: () => context.go('/calculator'),
             ),
           ),
-          
+
           SbSection(
             title: 'How it works',
             child: SbCard(

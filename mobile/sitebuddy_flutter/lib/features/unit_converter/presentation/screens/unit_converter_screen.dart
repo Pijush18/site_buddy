@@ -4,8 +4,6 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
-import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/shared/domain/models/ai_query.dart';
 import 'package:site_buddy/features/unit_converter/domain/entities/unit_definition.dart';
 import 'package:site_buddy/features/unit_converter/domain/entities/engineering_units.dart';
@@ -20,9 +18,9 @@ class UnitConverterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'Smart Converter',
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -30,9 +28,9 @@ class UnitConverterScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           const _SegmentedToggleSection(),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           const _ConverterBodySection(),
           const SizedBox(height: SbSpacing.xxl), // Bottom padding
         ],
@@ -128,7 +126,7 @@ class _ConverterBodySection extends ConsumerWidget {
         Row(
           children: [
             Expanded(
-              child: AppNumberField(
+              child: SbInput(
                 label: 'Value',
                 onChanged: (val) => controller.updateManualValue(context, val),
               ),

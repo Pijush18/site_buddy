@@ -5,7 +5,6 @@ import 'package:site_buddy/core/constants/engineering_terms.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
@@ -81,129 +80,136 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
       }
     });
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Slab Input',
-      child: Form(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: 'Next: Load Definition',
+            onPressed: _onNext,
+            icon: Icons.arrow_forward,
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Step 1 of 5: Geometry & Materials',
-              style: Theme.of(context).textTheme.titleLarge!,
+        child: SbSectionList(
+          sections: [
+            // ── STEP HEADER ──
+            SbSection(
+              child: Text(
+                'Step 1 of 5: Geometry & Materials',
+                style: Theme.of(context).textTheme.titleLarge!,
+              ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
+            // ── GEOMETRY SECTION ──
             SbSection(
               title: EngineeringTerms.geometry,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Slab Behavior',
-                    style: Theme.of(context).textTheme.labelLarge!,
-                  ),
-                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                  SbDropdown<SlabType>(
-                    value: state.type,
-                    items: SlabType.values,
-                    itemLabelBuilder: (t) => t.label,
-                    onChanged: (v) => v != null ? notifier.updateType(v) : null,
-                  ),
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppNumberField(
-                          controller: _lxController,
-                          label: 'Short Span (Lx) (m)',
-                          validator: (v) => ValidationHelper.validatePositive(v, 'Lx'),
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Slab Behavior',
+                      style: Theme.of(context).textTheme.labelLarge!,
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    SbDropdown<SlabType>(
+                      value: state.type,
+                      items: SlabType.values,
+                      itemLabelBuilder: (t) => t.label,
+                      onChanged: (v) =>
+                          v != null ? notifier.updateType(v) : null,
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SbInput(
+                            controller: _lxController,
+                            label: 'Short Span (Lx) (m)',
+                            validator: (v) =>
+                                ValidationHelper.validatePositive(v, 'Lx'),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-                      Expanded(
-                        child: AppNumberField(
-                          controller: _lyController,
-                          label: 'Long Span (Ly) (m)',
-                          validator: (v) => ValidationHelper.validatePositive(v, 'Ly'),
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: SbInput(
+                            controller: _lyController,
+                            label: 'Long Span (Ly) (m)',
+                            validator: (v) =>
+                                ValidationHelper.validatePositive(v, 'Ly'),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                  AppNumberField(
-                    controller: _depthController,
-                    label: 'Overall Thickness (D) (mm)',
-                    validator: (v) => ValidationHelper.validatePositive(v, 'Thickness'),
-                  ),
-                ],
+                      ],
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _depthController,
+                      label: 'Overall Thickness (D) (mm)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Thickness'),
+                    ),
+                  ],
+                ),
               ),
             ),
 
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-
+            // ── MATERIAL PROPERTIES ──
             SbSection(
               title: EngineeringTerms.materialProperties,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _gradeDropdown(
-                          'Concrete Grade',
-                          state.concreteGrade,
-                          ['M20', 'M25', 'M30', 'M35'],
-                          notifier.updateConcreteGrade,
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _gradeDropdown(
+                            'Concrete Grade',
+                            state.concreteGrade,
+                            const ['M20', 'M25', 'M30', 'M35'],
+                            notifier.updateConcreteGrade,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-                      Expanded(
-                        child: _gradeDropdown(
-                          'Steel Grade',
-                          state.steelGrade,
-                          ['Fe415', 'Fe500', 'Fe550'],
-                          notifier.updateSteelGrade,
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: _gradeDropdown(
+                            'Steel Grade',
+                            state.steelGrade,
+                            const ['Fe415', 'Fe500', 'Fe550'],
+                            notifier.updateSteelGrade,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                  AppNumberField(
-                    controller: _coverController,
-                    label: 'Clear Cover (mm)',
-                    validator: (v) => ValidationHelper.validatePositive(v, 'Cover'),
-                  ),
-                ],
+                      ],
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _coverController,
+                      label: 'Clear Cover (mm)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Cover'),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SbButton.primary(
-                  label: 'Next: Load Definition',
-                  onPressed: _onNext,
-                  icon: Icons.arrow_forward,
-                  width: double.infinity,
-                ),
-                const SizedBox(height: SbSpacing.sm),
-                SbButton.secondary(
-                  label: 'Back',
-                  onPressed: () => context.pop(),
-                  width: double.infinity,
-                ),
-              ],
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
           ],
         ),
       ),
     );
   }
 
-  Widget _gradeDropdown(String label, String value, List<String> items, Function(String) onChanged) {
+  Widget _gradeDropdown(
+      String label, String value, List<String> items, Function(String) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -211,7 +217,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

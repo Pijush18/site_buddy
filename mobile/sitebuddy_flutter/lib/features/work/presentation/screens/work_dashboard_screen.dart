@@ -149,10 +149,9 @@ class WorkDashboardScreen extends ConsumerWidget {
         break;
     }
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: 'Work Management',
-      isScrollable: false,
-      actions: [
+      appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.add),
           onPressed: () {
@@ -179,42 +178,32 @@ class WorkDashboardScreen extends ConsumerWidget {
                       context.push('/meetings/create');
                     },
                   ),
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+                  const SizedBox(height: SbSpacing.lg),
                 ],
               ),
             );
           },
         ),
       ],
-      child: Column(
-        children: [
-          SbDropdown<WorkTab>(
-            items: WorkTab.values,
-            value: state.selectedTab,
-            itemLabelBuilder: (tab) => tab.name.toUpperCase(),
-            onChanged: (val) {
-              if (val != null) controller.selectTab(val);
-            },
-          ),
-          const SizedBox(height: SbSpacing.lg),
-          Expanded(
-            child: state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : bodyItems.isEmpty
-                    ? const SbEmptyState(
-                        icon: SbIcons.task,
-                        title: 'No Items Yet',
-                        subtitle: 'Tap the "+" icon to create one.',
-                      )
-                    : ListView.separated(
-                        padding: EdgeInsets.zero,
-                        itemCount: bodyItems.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                        itemBuilder: (context, index) => bodyItems[index],
-                      ),
-          ),
-        ],
+      header: SbDropdown<WorkTab>(
+        items: WorkTab.values,
+        value: state.selectedTab,
+        itemLabelBuilder: (tab) => tab.name.toUpperCase(),
+        onChanged: (val) {
+          if (val != null) controller.selectTab(val);
+        },
       ),
+      body: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : bodyItems.isEmpty
+              ? const SbEmptyState(
+                  icon: SbIcons.task,
+                  title: 'No Items Yet',
+                  subtitle: 'Tap the "+" icon to create one.',
+                )
+              : SbListGroup(
+                  children: bodyItems,
+                ),
     );
   }
 }

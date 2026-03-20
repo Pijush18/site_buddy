@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -54,9 +54,9 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
       return const _ReportErrorState();
     }
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: reportData.title,
-      actions: [
+      appBarActions: [
         if (_isExporting)
           const Padding(
             padding: EdgeInsets.all(SbSpacing.lg),
@@ -74,23 +74,31 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
       ],
       // ── PREDEFINED LAYOUT SYSTEM ──
       // SbSectionList centralizes the 24px gap between sections.
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── SECTION 1: DOCUMENT HEADER ──
-          _ReportDocumentHeader(data: reportData),
+          SbSection(
+            child: _ReportDocumentHeader(data: reportData),
+          ),
 
           // ── SECTION 2-N: CALCULATION SECTIONS ──
           ...reportData.sections.map(
-            (section) => _ReportSectionWidget(section: section),
+            (section) => SbSection(
+              child: _ReportSectionWidget(section: section),
+            ),
           ),
 
           // ── SECTION: FOOTER ──
-          const _ReportFooter(),
+          const SbSection(
+            child: _ReportFooter(),
+          ),
 
           // ── SECTION: EXPORT ACTIONS ──
-          _ReportExportActions(
-            isExporting: _isExporting,
-            onShare: () => _handleShare(reportData),
+          SbSection(
+            child: _ReportExportActions(
+              isExporting: _isExporting,
+              onShare: () => _handleShare(reportData),
+            ),
           ),
         ],
       ),
@@ -104,9 +112,9 @@ class _ReportErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'Design Report',
-      child: Center(
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: SbSpacing.xxl,
@@ -178,7 +186,7 @@ class _ReportDocumentHeader extends StatelessWidget {
               padding: const EdgeInsets.all(SbSpacing.sm),
               decoration: BoxDecoration(
                 color: colorScheme.primary,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: SbRadius.borderSmall,
               ),
               child: Icon(SbIcons.architecture, color: colorScheme.onPrimary, size: 24),
             ),
@@ -189,7 +197,7 @@ class _ReportDocumentHeader extends StatelessWidget {
           padding: const EdgeInsets.all(SbSpacing.lg),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: SbRadius.borderMd,
           ),
           child: Row(
             children: [

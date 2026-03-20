@@ -5,7 +5,6 @@ import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/calculator/application/controllers/sand_controller.dart';
@@ -37,15 +36,15 @@ class SandScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+            const SizedBox(height: SbSpacing.sm),
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
               onTap: () {}, // Detail view entry
@@ -63,9 +62,9 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+              const SizedBox(height: SbSpacing.sm),
               const Divider(),
-              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+              const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -80,9 +79,9 @@ class SandScreen extends ConsumerWidget {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: EngineeringTerms.sandQuantityEstimator,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -90,39 +89,39 @@ class SandScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md) (8px approx)
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.length,
-            suffixIcon: SbIcons.ruler,
+            suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.width,
-            suffixIcon: SbIcons.ruler,
+            suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.depth,
-            suffixIcon: SbIcons.height,
+            suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.ratePerUnit,
-            suffixIcon: SbIcons.payments,
+            suffixIcon: const Icon(SbIcons.payments),
             onChanged: controller.updateRate,
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -140,12 +139,12 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
               child: Padding(
-                padding: const EdgeInsets.all(SbSpacing.lg), // Replaced const EdgeInsets.all(SbSpacing.lg)
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Text(
                   state.error!,
                   style: Theme.of(context).textTheme.bodyLarge!,
@@ -153,12 +152,12 @@ class SandScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

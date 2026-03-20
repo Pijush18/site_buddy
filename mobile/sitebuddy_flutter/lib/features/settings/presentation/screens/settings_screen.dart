@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/enums/unit_system.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
@@ -21,216 +20,219 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: AppStrings.settings,
-      sections: [
-        // --- SECTION 1: ACCOUNT ---
-        SbSection(
-          title: AppStrings.account,
-          child: _buildAccountSection(context),
-        ),
-
-        // --- SECTION: APPEARANCE ---
-        SbSection(
-          title: AppStrings.appearance,
-          child: SbCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                SbSettingsTile(
-                  isVertical: true,
-                  icon: SbIcons.palette,
-                  title: AppStrings.themeMode,
-                  subtitle: AppStrings.chooseHowAppAppears,
-                  trailing: Consumer(
-                    builder: (context, ref, _) {
-                      final settings = ref.watch(settingsProvider);
-                      return SegmentedToggle<ThemeMode>(
-                        value: settings.themeMode,
-                        items: const [
-                          ThemeMode.system,
-                          ThemeMode.light,
-                          ThemeMode.dark,
-                        ],
-                        labelBuilder: (mode) {
-                          switch (mode) {
-                            case ThemeMode.system:
-                              return AppStrings.auto;
-                            case ThemeMode.light:
-                              return AppStrings.light;
-                            case ThemeMode.dark:
-                              return AppStrings.dark;
-                          }
-                        },
-                        onChanged: (mode) =>
-                            ref.read(settingsProvider.notifier).setTheme(mode),
-                      );
-                    },
-                  ),
-                ),
-                const Divider(height: 1, indent: 56),
-                SbSettingsTile(
-                  isVertical: true,
-                  icon: SbIcons.refresh,
-                  title: AppStrings.language,
-                  subtitle: AppStrings.selectPreferredLanguage,
-                  trailing: Consumer(
-                    builder: (context, ref, _) {
-                      final settings = ref.watch(settingsProvider);
-                      return SegmentedToggle<String>(
-                        value: settings.locale,
-                        items: const ['en', 'hi'],
-                        labelBuilder: (code) =>
-                            code == 'en' ? AppStrings.english : AppStrings.hindi,
-                        onChanged: (code) {
-                          ref.read(settingsProvider.notifier).setLocale(code);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+      body: SbSectionList(
+        sections: [
+          // --- SECTION 1: ACCOUNT ---
+          SbSection(
+            title: AppStrings.account,
+            child: _buildAccountSection(context),
           ),
-        ),
 
-        // --- SECTION: ENGINEERING STANDARDS ---
-        SbSection(
-          title: AppStrings.engineeringStandards,
-          child: SbCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                SbSettingsTile(
-                  isVertical: true,
-                  icon: SbIcons.ruler,
-                  title: AppStrings.unitSystem,
-                  subtitle: AppStrings.selectMeasurementSystem,
-                  trailing: Consumer(
-                    builder: (context, ref, _) {
-                      final settings = ref.watch(settingsProvider);
-                      return SegmentedToggle<UnitSystem>(
-                        value: settings.unitSystem,
-                        items: UnitSystem.values,
-                        labelBuilder: (unit) => unit == UnitSystem.metric
-                            ? AppStrings.metric
-                            : AppStrings.imperial,
-                        onChanged: (unit) => ref
-                            .read(settingsProvider.notifier)
-                            .setUnitSystem(unit),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        // --- SECTION: APP BEHAVIOR ---
-        SbSection(
-          title: AppStrings.appBehavior,
-          child: SbCard(
-            padding: EdgeInsets.zero,
-            child: Consumer(
-              builder: (context, ref, _) {
-                final settings = ref.watch(settingsProvider);
-                return Column(
-                  children: [
-                    SbSettingsTile(
-                      isVertical: true,
-                      icon: SbIcons.refresh,
-                      title: AppStrings.restoreLastScreen,
-                      subtitle: AppStrings.continueWhereLeftOff,
-                      onTap: () => ref
-                          .read(settingsProvider.notifier)
-                          .setRestoreLastScreen(!settings.restoreLastScreen),
-                      trailing: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Switch(
-                          value: settings.restoreLastScreen,
-                          onChanged: (value) => ref
+          // --- SECTION: APPEARANCE ---
+          SbSection(
+            title: AppStrings.appearance,
+            child: SbCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  SbSettingsTile(
+                    isVertical: true,
+                    icon: SbIcons.palette,
+                    title: AppStrings.themeMode,
+                    subtitle: AppStrings.chooseHowAppAppears,
+                    trailing: Consumer(
+                      builder: (context, ref, _) {
+                        final settings = ref.watch(settingsProvider);
+                        return SegmentedToggle<ThemeMode>(
+                          value: settings.themeMode,
+                          items: const [
+                            ThemeMode.system,
+                            ThemeMode.light,
+                            ThemeMode.dark,
+                          ],
+                          labelBuilder: (mode) {
+                            switch (mode) {
+                              case ThemeMode.system:
+                                return AppStrings.auto;
+                              case ThemeMode.light:
+                                return AppStrings.light;
+                              case ThemeMode.dark:
+                                return AppStrings.dark;
+                            }
+                          },
+                          onChanged: (mode) => ref
                               .read(settingsProvider.notifier)
-                              .setRestoreLastScreen(value),
+                              .setTheme(mode),
+                        );
+                      },
+                    ),
+                  ),
+                  const Divider(height: 1, indent: 56),
+                  SbSettingsTile(
+                    isVertical: true,
+                    icon: SbIcons.refresh,
+                    title: AppStrings.language,
+                    subtitle: AppStrings.selectPreferredLanguage,
+                    trailing: Consumer(
+                      builder: (context, ref, _) {
+                        final settings = ref.watch(settingsProvider);
+                        return SegmentedToggle<String>(
+                          value: settings.locale,
+                          items: const ['en', 'hi'],
+                          labelBuilder: (code) =>
+                              code == 'en' ? AppStrings.english : AppStrings.hindi,
+                          onChanged: (code) {
+                            ref.read(settingsProvider.notifier).setLocale(code);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // --- SECTION: ENGINEERING STANDARDS ---
+          SbSection(
+            title: AppStrings.engineeringStandards,
+            child: SbCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  SbSettingsTile(
+                    isVertical: true,
+                    icon: SbIcons.ruler,
+                    title: AppStrings.unitSystem,
+                    subtitle: AppStrings.selectMeasurementSystem,
+                    trailing: Consumer(
+                      builder: (context, ref, _) {
+                        final settings = ref.watch(settingsProvider);
+                        return SegmentedToggle<UnitSystem>(
+                          value: settings.unitSystem,
+                          items: UnitSystem.values,
+                          labelBuilder: (unit) => unit == UnitSystem.metric
+                              ? AppStrings.metric
+                              : AppStrings.imperial,
+                          onChanged: (unit) => ref
+                              .read(settingsProvider.notifier)
+                              .setUnitSystem(unit),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // --- SECTION: APP BEHAVIOR ---
+          SbSection(
+            title: AppStrings.appBehavior,
+            child: SbCard(
+              padding: EdgeInsets.zero,
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final settings = ref.watch(settingsProvider);
+                  return Column(
+                    children: [
+                      SbSettingsTile(
+                        isVertical: true,
+                        icon: SbIcons.refresh,
+                        title: AppStrings.restoreLastScreen,
+                        subtitle: AppStrings.continueWhereLeftOff,
+                        onTap: () => ref
+                            .read(settingsProvider.notifier)
+                            .setRestoreLastScreen(!settings.restoreLastScreen),
+                        trailing: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Switch(
+                            value: settings.restoreLastScreen,
+                            onChanged: (value) => ref
+                                .read(settingsProvider.notifier)
+                                .setRestoreLastScreen(value),
+                          ),
                         ),
                       ),
-                    ),
-                    const Divider(height: 1, indent: 56),
-                    SbSettingsTile(
-                      icon: SbIcons.history,
-                      title: AppStrings.resetToDefault,
-                      subtitle: AppStrings.revertSettingsState,
-                      onTap: () => _showResetDialog(context, ref),
-                    ),
-                  ],
-                );
-              },
+                      const Divider(height: 1, indent: 56),
+                      SbSettingsTile(
+                        icon: SbIcons.history,
+                        title: AppStrings.resetToDefault,
+                        subtitle: AppStrings.revertSettingsState,
+                        onTap: () => _showResetDialog(context, ref),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
-        ),
 
-        // --- SECTION: LEGAL ---
-        SbSection(
-          title: AppStrings.legal,
-          child: SbCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                SbSettingsTile(
-                  icon: SbIcons.shield,
-                  title: AppStrings.privacyPolicy,
-                  onTap: () async {
-                    final url = Uri.parse("https://pijush.com/privacy-policy/");
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
-                  },
-                ),
-                const Divider(height: 1, indent: 56),
-                SbSettingsTile(
-                  icon: SbIcons.description,
-                  title: AppStrings.termsOfService,
-                  onTap: () async {
-                    final url = Uri.parse("https://pijush.com/terms-of-service/");
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
-                  },
-                ),
-              ],
+          // --- SECTION: LEGAL ---
+          SbSection(
+            title: AppStrings.legal,
+            child: SbCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  SbSettingsTile(
+                    icon: SbIcons.shield,
+                    title: AppStrings.privacyPolicy,
+                    onTap: () async {
+                      final url = Uri.parse("https://pijush.com/privacy-policy/");
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
+                    },
+                  ),
+                  const Divider(height: 1, indent: 56),
+                  SbSettingsTile(
+                    icon: SbIcons.description,
+                    title: AppStrings.termsOfService,
+                    onTap: () async {
+                      final url = Uri.parse("https://pijush.com/terms-of-service/");
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
 
-        // --- SECTION: ABOUT ---
-        SbSection(
-          title: AppStrings.about,
-          child: SbCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                const SbSettingsTile(
-                  icon: SbIcons.info,
-                  title: AppStrings.appVersion,
-                  subtitle: AppStrings.appVersionValue,
-                ),
-                const Divider(height: 1, indent: 56),
-                const SbSettingsTile(
-                  icon: SbIcons.profile,
-                  title: AppStrings.developer,
-                  subtitle: AppStrings.developerName,
-                ),
-                const Divider(height: 1, indent: 56),
-                SbSettingsTile(
-                  icon: SbIcons.link,
-                  title: AppStrings.website,
-                  subtitle: AppStrings.developerWebsite,
-                  onTap: () async {
-                    final url = Uri.parse("https://www.pijush.com");
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
-                  },
-                ),
-              ],
+          // --- SECTION: ABOUT ---
+          SbSection(
+            title: AppStrings.about,
+            child: SbCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  const SbSettingsTile(
+                    icon: SbIcons.info,
+                    title: AppStrings.appVersion,
+                    subtitle: AppStrings.appVersionValue,
+                  ),
+                  const Divider(height: 1, indent: 56),
+                  const SbSettingsTile(
+                    icon: SbIcons.profile,
+                    title: AppStrings.developer,
+                    subtitle: AppStrings.developerName,
+                  ),
+                  const Divider(height: 1, indent: 56),
+                  SbSettingsTile(
+                    icon: SbIcons.link,
+                    title: AppStrings.website,
+                    subtitle: AppStrings.developerWebsite,
+                    onTap: () async {
+                      final url = Uri.parse("https://www.pijush.com");
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

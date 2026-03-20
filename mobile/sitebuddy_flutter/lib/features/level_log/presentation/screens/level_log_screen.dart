@@ -25,16 +25,16 @@ class LevelLogScreen extends ConsumerWidget {
     final state = ref.watch(levelLogControllerProvider);
     final notifier = ref.read(levelLogControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: l10n.levelLogSession,
-      actions: [
+      appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.add),
           tooltip: l10n.addStation,
           onPressed: notifier.addEntry,
         ),
       ],
-      footer: Column(
+      primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -42,42 +42,52 @@ class LevelLogScreen extends ConsumerWidget {
             label: l10n.addStation,
             icon: SbIcons.locationAdd,
             onPressed: notifier.addEntry,
+            width: double.infinity,
           ),
           const SizedBox(height: SbSpacing.lg),
           SbButton.outline(
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
             onPressed: notifier.exportReport,
+            width: double.infinity,
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _MethodSelectorCard(state: state, notifier: notifier),
-          const SizedBox(height: SbSpacing.xxl),
-
-          if (state.entries.isEmpty)
-            const _EmptyState()
-          else
-            ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.entries.length,
-              separatorBuilder: (_, index) => const SizedBox(height: SbSpacing.lg),
-              itemBuilder: (context, i) => SbCard(
-                child: _StationCardContent(
-                  entry: state.entries[i],
-                  index: i,
-                  method: state.method,
-                  colorScheme: colorScheme,
-                  onDelete: state.entries.length > 1
-                      ? () => notifier.removeEntry(i)
-                      : null,
-                ),
-              ),
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: _MethodSelectorCard(state: state, notifier: notifier),
+          ),
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (state.entries.isEmpty)
+                  const _EmptyState()
+                else
+                  ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.entries.length,
+                    separatorBuilder: (_, index) =>
+                        const SizedBox(height: SbSpacing.lg),
+                    itemBuilder: (context, i) => SbCard(
+                      child: _StationCardContent(
+                        entry: state.entries[i],
+                        index: i,
+                        method: state.method,
+                        colorScheme: colorScheme,
+                        onDelete: state.entries.length > 1
+                            ? () => notifier.removeEntry(i)
+                            : null,
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: SbSpacing.xxl),
+              ],
             ),
+          ),
         ],
       ),
     );

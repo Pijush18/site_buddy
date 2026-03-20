@@ -7,7 +7,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+
 
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
@@ -114,9 +114,9 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
       }
     });
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Beam Input',
-      footer: Column(
+      primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -124,135 +124,125 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             label: 'Next: Load Definition',
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
-            width: double.infinity,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
-            width: double.infinity,
           ),
         ],
       ),
-      child: Form(
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Step 1 of 5: Geometry & Materials',
-              style: Theme.of(context).textTheme.titleLarge!,
-            ),
-            const SizedBox(height: SbSpacing.lg),
-
-            // Geometry Card
-            SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SbSectionHeader(
-                    title: 'Geometry',
-                    padding: EdgeInsets.zero,
-                  ),
-
-                  Text(
-                    'Beam Type',
-                    style: Theme.of(context).textTheme.labelLarge!,
-                  ),
-                  const SizedBox(height: SbSpacing.sm),
-                  SbDropdown<BeamType>(
-                    value: state.type,
-                    items: BeamType.values,
-                    itemLabelBuilder: (t) => t.label,
-                    onChanged: (v) {
-                      if (v != null) {
-                        notifier.updateInputs(type: v);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-
-                  AppNumberField(
-                    controller: _spanController,
-                    label: 'Clear Span (L) (mm)',
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Span'),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppNumberField(
-                          controller: _widthController,
-                          label: 'Width (b) (mm)',
-                          validator: (v) =>
-                              ValidationHelper.validatePositive(v, 'Width'),
-                        ),
-                      ),
-                      const SizedBox(width: SbSpacing.lg),
-                      Expanded(
-                        child: AppNumberField(
-                          controller: _depthController,
-                          label: 'Total Depth (D) (mm)',
-                          validator: (v) =>
-                              ValidationHelper.validatePositive(v, 'Depth'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+        child: SbSectionList(
+          sections: [
+            // ── STEP HEADER ──
+            SbSection(
+              child: Text(
+                'Step 1 of 5: Geometry & Materials',
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
 
-            // Materials Card
-            SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SbSectionHeader(
-                    title: 'Materials',
-                    padding: EdgeInsets.zero,
-                  ),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildGradeDropdown(
-                          'Concrete Grade',
-                          state.concreteGrade,
-                          ['M20', 'M25', 'M30', 'M35', 'M40'],
-                          (v) => ref
-                              .read(beamDesignControllerProvider.notifier)
-                              .updateInputs(concrete: v),
+            // ── GEOMETRY SECTION ──
+            SbSection(
+              title: 'Geometry',
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Beam Type',
+                      style: Theme.of(context).textTheme.labelLarge!,
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    SbDropdown<BeamType>(
+                      value: state.type,
+                      items: BeamType.values,
+                      itemLabelBuilder: (t) => t.label,
+                      onChanged: (v) {
+                        if (v != null) {
+                          notifier.updateInputs(type: v);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _spanController,
+                      label: 'Clear Span (L) (mm)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Span'),
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SbInput(
+                            controller: _widthController,
+                            label: 'Width (b) (mm)',
+                            validator: (v) =>
+                                ValidationHelper.validatePositive(v, 'Width'),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: SbSpacing.lg),
-                      Expanded(
-                        child: _buildGradeDropdown(
-                          'Steel Grade',
-                          state.steelGrade,
-                          ['Fe415', 'Fe500'],
-                          (v) => ref
-                              .read(beamDesignControllerProvider.notifier)
-                              .updateInputs(steel: v),
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: SbInput(
+                            controller: _depthController,
+                            label: 'Total Depth (D) (mm)',
+                            validator: (v) =>
+                                ValidationHelper.validatePositive(v, 'Depth'),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-
-                  AppNumberField(
-                    controller: _coverController,
-                    label: 'Clear Cover (mm)',
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Cover'),
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+
+            // ── MATERIALS SECTION ──
+            SbSection(
+              title: 'Materials',
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildGradeDropdown(
+                            'Concrete Grade',
+                            state.concreteGrade,
+                            ['M20', 'M25', 'M30', 'M35', 'M40'],
+                            (v) => ref
+                                .read(beamDesignControllerProvider.notifier)
+                                .updateInputs(concrete: v),
+                          ),
+                        ),
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: _buildGradeDropdown(
+                            'Steel Grade',
+                            state.steelGrade,
+                            ['Fe415', 'Fe500'],
+                            (v) => ref
+                                .read(beamDesignControllerProvider.notifier)
+                                .updateInputs(steel: v),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _coverController,
+                      label: 'Clear Cover (mm)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Cover'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

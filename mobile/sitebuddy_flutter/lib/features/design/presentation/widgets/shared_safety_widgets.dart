@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// A header widget that displays whether a check is safe or unsafe.
@@ -26,7 +27,7 @@ class SafetyStatusHeader extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: SbRadius.borderMd,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -138,7 +139,7 @@ class PlaceholderCard extends StatelessWidget {
       elevation: 0,
       color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: SbRadius.borderMd,
         side: BorderSide(
           color: colorScheme.outlineVariant.withValues(alpha: 0.5),
         ),

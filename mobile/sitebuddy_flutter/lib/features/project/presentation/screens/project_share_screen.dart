@@ -34,49 +34,55 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
     final proj = state.selectedProject;
 
     if (state.isLoading || proj == null) {
-      return const AppScreenWrapper(
+      return const SbPage.list(
         title: 'Share Project',
-        child: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: 'Share: ${proj.name}',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildShareOption(
-            context,
-            icon: SbIcons.pdf,
-            title: 'Export as PDF',
-            subtitle: 'Generate a formatted daily report',
-            onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildShareOption(
+                  context,
+                  icon: SbIcons.pdf,
+                  title: 'Export as PDF',
+                  subtitle: 'Generate a formatted daily report',
+                  onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                _buildShareOption(
+                  context,
+                  icon: SbIcons.message,
+                  title: 'Share via Text',
+                  subtitle: 'Send a quick text summary link',
+                  onTap: () => debugPrint('Sharing Text for ${proj.name}'),
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                _buildShareOption(
+                  context,
+                  icon: SbIcons.copy,
+                  title: 'Copy Summary',
+                  subtitle: 'Copy project stats to clipboard',
+                  onTap: () => debugPrint('Copying data for ${proj.name}'),
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                _buildShareOption(
+                  context,
+                  icon: SbIcons.table,
+                  title: 'Export Data (CSV)',
+                  subtitle: 'Download raw calculations and logs',
+                  onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          _buildShareOption(
-            context,
-            icon: SbIcons.message,
-            title: 'Share via Text',
-            subtitle: 'Send a quick text summary link',
-            onTap: () => debugPrint('Sharing Text for ${proj.name}'),
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          _buildShareOption(
-            context,
-            icon: SbIcons.copy,
-            title: 'Copy Summary',
-            subtitle: 'Copy project stats to clipboard',
-            onTap: () => debugPrint('Copying data for ${proj.name}'),
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          _buildShareOption(
-            context,
-            icon: SbIcons.table,
-            title: 'Export Data (CSV)',
-            subtitle: 'Download raw calculations and logs',
-            onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Added for consistency
         ],
       ),
     );

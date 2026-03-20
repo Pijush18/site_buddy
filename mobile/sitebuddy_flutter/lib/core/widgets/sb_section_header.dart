@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: SbSectionHeader
@@ -74,7 +75,7 @@ class SbSectionHeader extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: onTap,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: SbRadius.borderSmall,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: SbSpacing.sm,

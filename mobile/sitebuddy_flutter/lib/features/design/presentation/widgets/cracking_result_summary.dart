@@ -12,13 +12,10 @@ class CrackingResultSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SbSection(
-      title: 'Design Status',
-      trailing: StatusBadge(isSafe: result.isSafe),
-      child: SbCard(
-        child: Column(
-          children: [
-          const SizedBox(height: SbSpacing.xxl),
+    return SbCard(
+      child: Column(
+        children: [
+          const SizedBox(height: SbSpacing.lg),
           ComparisonBar(
             actual: result.crackWidth,
             allowable: 0.3,
@@ -31,8 +28,7 @@ class CrackingResultSummary extends StatelessWidget {
             value: '${result.crackWidth.toStringAsFixed(3)} mm',
           ),
           const ResultDetailRow(label: 'Limit (IS 456)', value: '0.300 mm'),
-          ],
-        ),
+        ],
       ),
     );
   }

@@ -12,20 +12,17 @@ class ShearResultSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SbSection(
-      title: 'Design Status',
-      trailing: StatusBadge(isSafe: result.isSafe),
-      child: SbCard(
-        child: Column(
-          children: [
-            const SizedBox(height: SbSpacing.xxl),
-            ComparisonBar(
-              actual: result.tv,
-              allowable: result.tc,
-              label: 'Shear Stress (τv vs τc)',
-              unit: 'N/mm²',
-            ),
-            const SizedBox(height: SbSpacing.lg),
+    return SbCard(
+      child: Column(
+        children: [
+          const SizedBox(height: SbSpacing.lg),
+          ComparisonBar(
+            actual: result.tv,
+            allowable: result.tc,
+            label: 'Shear Stress (τv vs τc)',
+            unit: 'N/mm²',
+          ),
+          const SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Nominal Stress (τv)',
             value: '${result.tv.toStringAsFixed(3)} N/mm²',
@@ -34,8 +31,7 @@ class ShearResultSummary extends StatelessWidget {
             label: 'Design Strength (τc)',
             value: '${result.tc.toStringAsFixed(3)} N/mm²',
           ),
-          ],
-        ),
+        ],
       ),
     );
   }

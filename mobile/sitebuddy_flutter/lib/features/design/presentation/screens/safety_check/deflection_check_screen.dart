@@ -1,6 +1,6 @@
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +10,6 @@ import 'package:site_buddy/features/design/application/controllers/safety_check_
 import 'package:site_buddy/features/design/presentation/widgets/insight_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/design/presentation/widgets/deflection_input_section.dart';
-import 'package:site_buddy/features/design/presentation/widgets/shared_action_buttons.dart';
 import 'package:site_buddy/features/design/presentation/widgets/deflection_result_summary.dart';
 import 'package:site_buddy/features/design/presentation/widgets/deflection_history_section.dart';
 
@@ -106,49 +105,88 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Deflection Check',
-      child: Form(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: _result != null ? 'Check Again' : 'Check Deflection',
+            onPressed: _calculate,
+            isLoading: _isLoading,
+          ),
+          if (_result != null) ...[
+            const SizedBox(height: SbSpacing.sm),
+            SbButton.ghost(
+              label: 'Share Report',
+              onPressed: _shareResult,
+            ),
+          ],
+        ],
+      ),
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Span-to-Depth Ratio Analysis',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            DeflectionInputSection(
-              dController: _dController,
-              spanController: _spanController,
-              ptController: _ptController,
-              pcController: _pcController,
-              selectedSpanType: _selectedSpanType,
-              onSpanTypeChanged: (v) {
-                if (v != null) setState(() => _selectedSpanType = v);
-              },
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            SharedActionButtons(
-              calculateLabel: 'Check Deflection',
-              isLoading: _isLoading,
-              onCalculate: () => _calculate(),
-              onReset: _reset,
-              onShare: _shareResult,
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-            if (_result != null) ...[
-              DeflectionResultSummary(result: _result!),
-              const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-              InsightCard(insights: _result!.insights),
-            ] else
-              const PlaceholderCard(
-                icon: Icons.query_stats,
-                message: 'Calculate ratio to check safety',
+        child: SbSectionList(
+          sections: [
+            // ── HEADER ──
+            SbSection(
+              child: Text(
+                'Span-to-Depth Ratio Analysis',
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
-            const SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.vGap32
-            const DeflectionHistorySection(),
-            const SizedBox(height: SbSpacing.xxl),
+            ),
+
+            // ── INPUTS ──
+            SbSection(
+              title: 'Input Parameters',
+              child: DeflectionInputSection(
+                dController: _dController,
+                spanController: _spanController,
+                ptController: _ptController,
+                pcController: _pcController,
+                selectedSpanType: _selectedSpanType,
+                onSpanTypeChanged: (v) {
+                  if (v != null) setState(() => _selectedSpanType = v);
+                },
+              ),
+            ),
+
+            // ── RESULTS ──
+            if (_result != null) ...[
+              SbSection(
+                title: 'Design Status',
+                trailing: StatusBadge(isSafe: _result!.isSafe),
+                child: DeflectionResultSummary(result: _result!),
+              ),
+              SbSection(
+                title: 'Engineering Insight',
+                child: InsightCard(insights: _result!.insights),
+              ),
+            ] else
+              const SbSection(
+                title: 'Design Status',
+                child: PlaceholderCard(
+                  icon: Icons.query_stats,
+                  message: 'Calculate ratio to check safety',
+                ),
+              ),
+
+            // ── SECONDARY ACTIONS ──
+            if (_result != null)
+              SbSection(
+                child: SbButton.ghost(
+                  label: 'Reset Form',
+                  onPressed: _reset,
+                  width: double.infinity,
+                ),
+              ),
+
+            // ── HISTORY ──
+            const SbSection(
+              title: 'Recent Checks',
+              child: DeflectionHistorySection(),
+            ),
           ],
         ),
       ),

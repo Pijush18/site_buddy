@@ -6,7 +6,6 @@ import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/calculator/application/controllers/level_controller.dart';
 import 'package:site_buddy/features/calculator/domain/entities/level_result.dart';
@@ -51,19 +50,19 @@ class LevelCalculatorScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             Text(
               '${result.difference.toStringAsFixed(2)} m',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+            const SizedBox(height: SbSpacing.sm),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: SbSpacing.lg,
-                vertical: SbSpacing.sm / 2, // Replaced SbSpacing.xs (4px)
+                vertical: SbSpacing.sm / 2,
               ),
               child: Text(
                 directionLabel,
@@ -71,7 +70,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
             SbListItemTile(
               title: EngineeringTerms.absoluteDifference,
               onTap: () {}, // Detail view entry
@@ -85,36 +84,36 @@ class LevelCalculatorScreen extends ConsumerWidget {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: EngineeringTerms.levelCalculator,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.lg),
           Text(
             EngineeringTerms.fieldLevelComparison,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.startLevel,
-            suffixIcon: SbIcons.arrowUp,
+            suffixIcon: const Icon(SbIcons.arrowUp),
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.endLevel,
-            suffixIcon: SbIcons.arrowDown,
+            suffixIcon: const Icon(SbIcons.arrowDown),
             onChanged: controller.updateEndLevel,
             errorText: eError,
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -132,7 +131,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -142,12 +141,12 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

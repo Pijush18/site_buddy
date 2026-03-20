@@ -7,7 +7,6 @@ import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/gradient_controller.dart';
 import 'package:site_buddy/features/calculator/domain/entities/gradient_result.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
@@ -58,7 +57,7 @@ class GradientScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+                const SizedBox(height: SbSpacing.lg),
                 const Divider(),
                 SbListItemTile(
                   title: EngineeringTerms.percentage,
@@ -85,7 +84,7 @@ class GradientScreen extends ConsumerWidget {
                   ),
                 ),
                 const Divider(),
-                const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
+                const SizedBox(height: SbSpacing.xxl),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
                   child: Column(
@@ -94,7 +93,7 @@ class GradientScreen extends ConsumerWidget {
                         EngineeringTerms.classification,
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
-                      const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
+                      const SizedBox(height: SbSpacing.sm / 2),
                       Text(
                         classificationLabel,
                         style: Theme.of(context).textTheme.titleMedium!,
@@ -105,7 +104,7 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +113,7 @@ class GradientScreen extends ConsumerWidget {
                   EngineeringTerms.slopeVisualization,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+                const SizedBox(height: SbSpacing.lg),
                 SizedBox(
                   height: 120,
                   width: double.infinity,
@@ -133,16 +132,16 @@ class GradientScreen extends ConsumerWidget {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.gradientTool,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(SbIcons.trendingUp, size: 48, color: colorScheme.primary),
-              const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
+              const SizedBox(width: SbSpacing.sm),
               Flexible(
                 child: Text(
                   EngineeringTerms.slopeCalculator,
@@ -151,24 +150,24 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.verticalRise,
-            suffixIcon: SbIcons.arrowUp,
+            suffixIcon: const Icon(SbIcons.arrowUp),
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
+          const SizedBox(height: SbSpacing.sm),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.horizontalRun,
-            suffixIcon: SbIcons.arrowForward,
+            suffixIcon: const Icon(SbIcons.arrowForward),
             onChanged: controller.updateRun,
             errorText: runError,
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -185,7 +184,7 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -195,12 +194,12 @@ class GradientScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           const _FieldReference(),

@@ -7,7 +7,6 @@ import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/excavation_controller.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
@@ -36,37 +35,37 @@ class ExcavationScreen extends ConsumerWidget {
 
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.excavationCalculator,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.pitDimensions),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.wallLength,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.pitDepthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           const _SectionLabel(label: EngineeringTerms.parameters),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.clearance,
             hint: EngineeringTerms.widthHint,
             initialValue: '0.3',
@@ -76,8 +75,8 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.clearanceInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.swellFactor,
             hint: EngineeringTerms.swellFactorHint,
             initialValue: '1.25',
@@ -87,7 +86,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.swellFactorInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -103,12 +102,12 @@ class ExcavationScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null)
             _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

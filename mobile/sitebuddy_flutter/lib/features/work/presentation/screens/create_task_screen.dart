@@ -39,9 +39,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
   Widget build(BuildContext context) {
     final controller = ref.read(workControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Create Task',
-      footer: SbButton.primary(
+      primaryAction: SbButton.primary(
         label: 'Create Task',
         icon: SbIcons.addTask,
         onPressed: () async {
@@ -71,90 +71,96 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
           if (!context.mounted) return;
           context.pop();
         },
+        width: double.infinity,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SbInput(
-            controller: _titleController,
-            label: 'Title',
-            hint: 'Task title',
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbInput(
-            controller: _descriptionController,
-            label: 'Description',
-            hint: 'Brief description of the task',
-            maxLines: 3,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbInput(
-            controller: _projectController,
-            label: 'Project ID',
-            hint: 'e.g., PRJ-001',
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Text(
-            'PRIORITY',
-            style: Theme.of(context).textTheme.labelLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          SbDropdown<TaskPriority>(
-            value: _priority,
-            items: TaskPriority.values,
-            itemLabelBuilder: (p) => p.name.toUpperCase(),
-            onChanged: (v) {
-              if (v != null) setState(() => _priority = v);
-            },
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          SbInput(
-            controller: _assignedController,
-            label: 'Assigned To',
-            hint: 'User name or ID',
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  controller: _titleController,
+                  label: 'Title',
+                  hint: 'Task title',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  controller: _descriptionController,
+                  label: 'Description',
+                  hint: 'Brief description of the task',
+                  maxLines: 3,
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  controller: _projectController,
+                  label: 'Project ID',
+                  hint: 'e.g., PRJ-001',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                Text(
+                  'PRIORITY',
+                  style: Theme.of(context).textTheme.labelLarge!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                SbDropdown<TaskPriority>(
+                  value: _priority,
+                  items: TaskPriority.values,
+                  itemLabelBuilder: (p) => p.name.toUpperCase(),
+                  onChanged: (v) {
+                    if (v != null) setState(() => _priority = v);
+                  },
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                SbInput(
+                  controller: _assignedController,
+                  label: 'Assigned To',
+                  hint: 'User name or ID',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                Row(
                   children: [
-                    Text(
-                      'DUE DATE',
-                      style: Theme.of(context).textTheme.labelLarge!,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'DUE DATE',
+                            style: Theme.of(context).textTheme.labelLarge!,
+                          ),
+                          const SizedBox(height: SbSpacing.sm),
+                          Text(
+                            _dueDate == null
+                                ? 'Not set'
+                                : _dueDate!.toLocal().toString().split(' ').first,
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                    Text(
-                      _dueDate == null
-                          ? 'Not set'
-                          : _dueDate!
-                                .toLocal()
-                                .toString()
-                                .split(' ')
-                                .first,
-                      style: Theme.of(context).textTheme.bodyLarge!,
+                    SbButton.ghost(
+                      label: 'Select',
+                      icon: SbIcons.calendar,
+                      onPressed: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2100),
+                        );
+                        if (!mounted) return;
+                        if (picked != null) setState(() => _dueDate = picked);
+                      },
                     ),
                   ],
                 ),
-              ),
-              SbButton.ghost(
-                label: 'Select',
-                icon: SbIcons.calendar,
-                onPressed: () async {
-                  final picked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                  if (!mounted) return;
-                  if (picked != null) setState(() => _dueDate = picked);
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Buffer space before footer
         ],
       ),
     );

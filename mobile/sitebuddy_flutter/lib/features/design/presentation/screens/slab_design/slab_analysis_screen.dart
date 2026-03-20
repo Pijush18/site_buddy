@@ -16,82 +16,89 @@ class SlabAnalysisScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     if (state.result == null) {
-      return const AppScreenWrapper(
+      return const SbPage.scaffold(
         title: 'Analysis Summary',
-        child: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
     final totalLoad = (state.deadLoad + state.liveLoad) * 1.5;
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Analysis Summary',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 3 of 5: Bending Capacity',
-            style: Theme.of(context).textTheme.titleLarge!,
+          SbButton.primary(
+            label: 'Next: Reinforcement Design',
+            onPressed: () => context.push('/slab/reinforcement'),
+            icon: Icons.engineering_outlined,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-          DesignResultCard(
-            title: 'Analysis Results',
-            isSafe: true, 
-            items: [
-              DesignResultItem(
-                label: 'Total Factored Load (wu)',
-                value: '${totalLoad.toStringAsFixed(2)} kN/m²',
-              ),
-              DesignResultItem(
-                label: 'Factored Moment (Mu)',
-                value: '${state.result!.bendingMoment.toStringAsFixed(2)} kNm/m',
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'Slab behavior',
-                value: state.type.label,
-              ),
-            ],
-            codeReference: 'IS 456 Annex D',
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              children: [
-                Icon(Icons.analytics_outlined,
-                    size: 64, color: colorScheme.primary.withValues(alpha: 0.5)),
-                const SizedBox(height: SbSpacing.sm),
-                Text(
-                  'Maximum moment occurs at the midspan for a simply supported slab.',
-                  style: Theme.of(context).textTheme.bodyLarge!,
-                  textAlign: TextAlign.center,
-                ),
-              ],
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 3 of 5: Bending Capacity',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Reinforcement Design',
-                onPressed: () => context.push('/slab/reinforcement'),
-                icon: Icons.engineering_outlined,
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
+          // ── ANALYSIS RESULTS ──
+          SbSection(
+            title: 'Analysis Results',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: true,
+              items: [
+                DesignResultItem(
+                  label: 'Total Factored Load (wu)',
+                  value: '${totalLoad.toStringAsFixed(2)} kN/m²',
+                ),
+                DesignResultItem(
+                  label: 'Factored Moment (Mu)',
+                  value:
+                      '${state.result!.bendingMoment.toStringAsFixed(2)} kNm/m',
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Slab behavior',
+                  value: state.type.label,
+                ),
+              ],
+              codeReference: 'IS 456 Annex D',
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
+
+          // ── INSIGHTS ──
+          SbSection(
+            title: 'Engineering Insights',
+            child: SbCard(
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.analytics_outlined,
+                    size: 64,
+                    color: colorScheme.primary.withValues(alpha: 0.5),
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  Text(
+                    'Maximum moment occurs at the midspan for a simply supported slab.',
+                    style: Theme.of(context).textTheme.bodyLarge!,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

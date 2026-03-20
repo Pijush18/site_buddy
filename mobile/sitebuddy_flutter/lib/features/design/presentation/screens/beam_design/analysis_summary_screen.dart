@@ -23,89 +23,87 @@ class AnalysisSummaryScreen extends ConsumerWidget {
     final state = ref.watch(beamDesignControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Analysis Summary',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 3 of 5: Engineering Analysis',
-            style: Theme.of(context).textTheme.titleLarge!,
+          SbButton.primary(
+            label: 'Next: Reinforcement Design',
+            icon: Icons.iron_rounded,
+            onPressed: () {
+              ref
+                  .read(beamDesignControllerProvider.notifier)
+                  .calculateReinforcement();
+              context.push('/beam/rebar');
+            },
           ),
-          const SizedBox(height: SbSpacing.lg),
-
-          // Design Result Card for Principal Forces
-          DesignResultCard(
-            title: 'Principal Design Forces',
-            isSafe: true, 
-            items: [
-              DesignResultItem(
-                label: 'Bending Moment (Mu)',
-                value: '${state.mu.toStringAsFixed(2)} kNm',
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'Shear Force (Vu)',
-                value: '${state.vu.toStringAsFixed(2)} kN',
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'ULS Load (wu)',
-                value: '${state.wu.toStringAsFixed(2)} kN/m',
-              ),
-            ],
-            codeReference: 'IS 456:2000 Cl. 38',
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
           ),
-          const SizedBox(height: SbSpacing.lg),
-
-          // Diagrams Section
-          SbSectionHeader(
-            title: 'Engineering Diagrams',
-            trailing: Text(
-              'L = ${(state.span / 1000).toStringAsFixed(2)}m',
-              style: Theme.of(context).textTheme.labelMedium!,
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 3 of 5: Engineering Analysis',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
           ),
 
-          _DiagramCard(
-            label: 'Shear Force Diagram (SFD)',
-            points: state.sfdPoints,
-            isBMD: false,
-            isDark: isDark,
+          // ── PRINCIPAL FORCES ──
+          SbSection(
+            title: 'Principal Design Forces',
+            child: DesignResultCard(
+              title: 'ULS State Forces',
+              isSafe: true,
+              items: [
+                DesignResultItem(
+                  label: 'Bending Moment (Mu)',
+                  value: '${state.mu.toStringAsFixed(2)} kNm',
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Shear Force (Vu)',
+                  value: '${state.vu.toStringAsFixed(2)} kN',
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'ULS Load (wu)',
+                  value: '${state.wu.toStringAsFixed(2)} kN/m',
+                ),
+              ],
+              codeReference: 'IS 456:2000 Cl. 38',
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg),
-          _DiagramCard(
-            label: 'Bending Moment Diagram (BMD)',
-            points: state.bmdPoints,
-            isBMD: true,
-            isDark: isDark,
-          ),
-          const SizedBox(height: SbSpacing.xxl),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Reinforcement Design',
-                icon: Icons.iron_rounded,
-                onPressed: () {
-                  ref
-                      .read(beamDesignControllerProvider.notifier)
-                      .calculateReinforcement();
-                  context.push('/beam/rebar');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.ghost(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
+          // ── ENGINEERING DIAGRAMS ──
+          SbSection(
+            title: 'Engineering Diagrams',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _DiagramCard(
+                  label: 'Shear Force Diagram (SFD)',
+                  points: state.sfdPoints,
+                  isBMD: false,
+                  isDark: isDark,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                _DiagramCard(
+                  label: 'Bending Moment Diagram (BMD)',
+                  points: state.bmdPoints,
+                  isBMD: true,
+                  isDark: isDark,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

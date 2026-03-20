@@ -1,6 +1,6 @@
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -50,12 +50,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       }
     });
 
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: null,
-      child: Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -64,7 +62,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Icon(
               SbIcons.engineering,
               size: 64, // Standard large icon size
-              color: colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
@@ -84,7 +82,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
             // Loading Indicator
             CircularProgressIndicator(
-              color: colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary,
             ),
             
             const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8

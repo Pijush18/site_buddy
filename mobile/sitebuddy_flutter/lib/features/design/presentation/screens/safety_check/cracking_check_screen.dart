@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +11,6 @@ import 'package:site_buddy/features/design/application/controllers/safety_check_
 import 'package:site_buddy/features/design/presentation/widgets/insight_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/design/presentation/widgets/cracking_input_section.dart';
-import 'package:site_buddy/features/design/presentation/widgets/shared_action_buttons.dart';
 import 'package:site_buddy/features/design/presentation/widgets/cracking_result_summary.dart';
 import 'package:site_buddy/features/design/presentation/widgets/cracking_history_section.dart';
 
@@ -109,57 +108,96 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Cracking Check',
-      child: Form(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: _result != null ? 'Check Again' : 'Check Cracking',
+            onPressed: _calculate,
+            isLoading: _isLoading,
+          ),
+          if (_result != null) ...[
+            const SizedBox(height: SbSpacing.sm),
+            SbButton.ghost(
+              label: 'Share Report',
+              onPressed: _shareResult,
+            ),
+          ],
+        ],
+      ),
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Durability & Crack Control Visualization',
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-            const SizedBox(height: SbSpacing.xxl),
-            CrackingInputSection(
-              spacingController: _spacingController,
-              coverController: _coverController,
-              fsController: _fsController,
-              selectedConcrete: _selectedConcrete,
-              selectedSteel: _selectedSteel,
-              concreteGrades: _concreteGrades,
-              steelGrades: _steelGrades,
-              onDropdownChanged: (label, value) {
-                setState(() {
-                  if (label == 'Concrete') {
-                    _selectedConcrete = value;
-                  } else {
-                    _selectedSteel = value;
-                  }
-                });
-              },
-            ),
-            const SizedBox(height: SbSpacing.xxl),
-            SharedActionButtons(
-              calculateLabel: 'Check Cracking',
-              isLoading: _isLoading,
-              onCalculate: _calculate,
-              onReset: _reset,
-              onShare: _shareResult,
-            ),
-            const SizedBox(height: SbSpacing.xxl),
-            if (_result != null) ...[
-              CrackingResultSummary(result: _result!),
-              const SizedBox(height: SbSpacing.xxl),
-              InsightCard(insights: _result!.insights),
-            ] else
-              const PlaceholderCard(
-                icon: SbIcons.visibility,
-                message: 'Calculate crack width for durability',
+        child: SbSectionList(
+          sections: [
+            // ── HEADER ──
+            SbSection(
+              child: Text(
+                'Durability & Crack Control Analysis',
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
-            const SizedBox(height: SbSpacing.xxl * 1.5),
-            const CrackingHistorySection(),
-            const SizedBox(height: SbSpacing.xxl),
+            ),
+
+            // ── INPUTS ──
+            SbSection(
+              title: 'Input Parameters',
+              child: CrackingInputSection(
+                spacingController: _spacingController,
+                coverController: _coverController,
+                fsController: _fsController,
+                selectedConcrete: _selectedConcrete,
+                selectedSteel: _selectedSteel,
+                concreteGrades: _concreteGrades,
+                steelGrades: _steelGrades,
+                onDropdownChanged: (label, value) {
+                  setState(() {
+                    if (label == 'Concrete') {
+                      _selectedConcrete = value;
+                    } else {
+                      _selectedSteel = value;
+                    }
+                  });
+                },
+              ),
+            ),
+
+            // ── RESULTS ──
+            if (_result != null) ...[
+              SbSection(
+                title: 'Design Status',
+                trailing: StatusBadge(isSafe: _result!.isSafe),
+                child: CrackingResultSummary(result: _result!),
+              ),
+              SbSection(
+                title: 'Engineering Insight',
+                child: InsightCard(insights: _result!.insights),
+              ),
+            ] else
+              const SbSection(
+                title: 'Design Status',
+                child: PlaceholderCard(
+                  icon: SbIcons.visibility,
+                  message: 'Calculate crack width for durability',
+                ),
+              ),
+
+            // ── SECONDARY ACTIONS ──
+            if (_result != null)
+              SbSection(
+                child: SbButton.ghost(
+                  label: 'Reset Form',
+                  onPressed: _reset,
+                  width: double.infinity,
+                ),
+              ),
+
+            // ── HISTORY ──
+            const SbSection(
+              title: 'Recent Checks',
+              child: CrackingHistorySection(),
+            ),
           ],
         ),
       ),

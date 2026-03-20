@@ -27,25 +27,29 @@ class HistoryDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
 
-    return AppScreenWrapper(
+    return SbPage.detail(
       title: 'History Detail',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeader(context, dateStr),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Text(
-            'Input Parameters',
-            style: Theme.of(context).textTheme.titleMedium!,
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: _buildHeader(context, dateStr),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          _buildParametersList(context),
-          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
-          SbButton.primary(
-            onPressed: () => _restoreVersion(context, ref),
-            label: 'Restore this Version',
+          SbSection(
+            title: 'Input Parameters',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildParametersList(context),
+                const SizedBox(height: SbSpacing.xxl),
+                SbButton.primary(
+                  onPressed: () => _restoreVersion(context, ref),
+                  label: 'Restore this Version',
+                  width: double.infinity,
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
         ],
       ),
     );

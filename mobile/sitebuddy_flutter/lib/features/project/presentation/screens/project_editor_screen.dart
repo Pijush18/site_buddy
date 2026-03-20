@@ -30,15 +30,15 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Project Info',
-      footer: SbButton.primary(
+      primaryAction: SbButton.primary(
         label: 'Save Project',
         onPressed: () => Navigator.pop(context),
+        width: double.infinity,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      body: SbSectionList(
+        sections: [
           SbSection(
             title: 'Primary Details',
             child: Column(
@@ -48,18 +48,19 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
                   hint: 'e.g. Skyline Apartments',
                   label: 'PROJECT NAME',
                   textInputAction: TextInputAction.next,
+                  onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+                const SizedBox(height: SbSpacing.lg),
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',
                   label: 'LOCATION',
                   textInputAction: TextInputAction.next,
+                  onChanged: (v) {},
                 ),
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Stakeholders',
             child: SbInput(
@@ -67,9 +68,9 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               hint: 'Contracting Authority / Client',
               label: 'CLIENT',
               textInputAction: TextInputAction.next,
+              onChanged: (v) {},
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Project Status',
             child: SbDropdown<ProjectStatus>(
@@ -83,7 +84,6 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               },
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Scope & Description',
             child: SbInput(
@@ -91,9 +91,9 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               maxLines: 5,
               hint: 'Enter detailed project scope...',
               label: 'DESCRIPTION',
+              onChanged: (v) {},
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );

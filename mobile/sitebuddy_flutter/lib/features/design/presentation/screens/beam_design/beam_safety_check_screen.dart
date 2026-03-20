@@ -44,82 +44,129 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         ? SafetyStatus.safe
         : SafetyStatus.fail;
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Safety Verification',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 5 of 5: Engineering Validation',
-            style: Theme.of(context).textTheme.titleLarge!,
+          SbButton.primary(
+            label: 'Export PDF Report',
+            icon: SbIcons.pdf,
+            onPressed: () {
+              ref
+                  .read(beamDesignControllerProvider.notifier)
+                  .generateReport();
+            },
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.primary(
+            label: 'Save to Design History',
+            icon: SbIcons.history,
+            onPressed: () => _saveDesign(context, ref),
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'New Design',
+            icon: SbIcons.add,
+            onPressed: () {
+              ref.read(beamDesignControllerProvider.notifier).reset();
+              context.go('/');
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 5 of 5: Engineering Validation',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
+          ),
 
-          // Overall Safety Status Display
-          _OverallStatusBadge(status: overallStatus),
-          const SizedBox(height: SbSpacing.lg),
+          // ── OVERALL STATUS ──
+          SbSection(
+            child: _OverallStatusBadge(status: overallStatus),
+          ),
 
-          DesignResultCard(
+          // ── FLEXURE CHECK ──
+          SbSection(
             title: 'Limit State of Flexure',
-            isSafe: state.isFlexureSafe,
-            items: [
-              DesignResultItem(
-                label: 'Design Moment (Mu)',
-                value: '${state.mu.toStringAsFixed(2)} kNm',
-              ),
-              DesignResultItem(
-                label: 'Neutral Axis Ratio',
-                value: (state.xu / state.xuMax).toStringAsFixed(3),
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'Status',
-                value: state.isFlexureSafe
-                    ? 'Under-reinforced'
-                    : 'Over-reinforced',
-              ),
-            ],
-            codeReference: 'IS 456 Cl. 38.1',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isFlexureSafe,
+              items: [
+                DesignResultItem(
+                  label: 'Design Moment (Mu)',
+                  value: '${state.mu.toStringAsFixed(2)} kNm',
+                ),
+                DesignResultItem(
+                  label: 'Neutral Axis Ratio',
+                  value: (state.xu / state.xuMax).toStringAsFixed(3),
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Status',
+                  value: state.isFlexureSafe
+                      ? 'Under-reinforced'
+                      : 'Over-reinforced',
+                ),
+              ],
+              codeReference: 'IS 456 Cl. 38.1',
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg),
 
-          DesignResultCard(
+          // ── SHEAR CHECK ──
+          SbSection(
             title: 'Limit State of Shear',
-            isSafe: state.isShearSafe,
-            items: [
-              DesignResultItem(
-                label: 'Nominal Stress (τv)',
-                value: '${state.tv.toStringAsFixed(2)} MPa',
-              ),
-              DesignResultItem(
-                label: 'Stirrup Capacity',
-                value: '${state.stirrupSpacing.toInt()} mm c/c',
-                isCritical: true,
-              ),
-            ],
-            codeReference: 'IS 456 Cl. 40.0',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isShearSafe,
+              items: [
+                DesignResultItem(
+                  label: 'Nominal Stress (τv)',
+                  value: '${state.tv.toStringAsFixed(2)} MPa',
+                ),
+                DesignResultItem(
+                  label: 'Stirrup Capacity',
+                  value: '${state.stirrupSpacing.toInt()} mm c/c',
+                  isCritical: true,
+                ),
+              ],
+              codeReference: 'IS 456 Cl. 40.0',
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg),
 
-          DesignResultCard(
+          // ── DEFLECTION CHECK ──
+          SbSection(
             title: 'Control of Deflection',
-            isSafe: state.isDeflectionSafe,
-            items: [
-              DesignResultItem(
-                label: 'L/d Ratio provided',
-                value: (state.span / state.overallDepth).toStringAsFixed(2),
-              ),
-              DesignResultItem(
-                label: 'Safety Status',
-                value: state.isDeflectionSafe ? 'PERMISSIBLE' : 'EXCEEDS LIMIT',
-                isCritical: true,
-              ),
-            ],
-            codeReference: 'IS 456 Cl. 23.2.1',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isDeflectionSafe,
+              items: [
+                DesignResultItem(
+                  label: 'L/d Ratio provided',
+                  value: (state.span / state.overallDepth).toStringAsFixed(2),
+                ),
+                DesignResultItem(
+                  label: 'Safety Status',
+                  value:
+                      state.isDeflectionSafe ? 'PERMISSIBLE' : 'EXCEEDS LIMIT',
+                  isCritical: true,
+                ),
+              ],
+              codeReference: 'IS 456 Cl. 23.2.1',
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg),
 
-          // Reinforcement Detail
+          // ── REINFORCEMENT DRAWING ──
           SbSection(
             title: EngineeringTerms.reinforcementDetailing,
             child: SbCard(
@@ -143,95 +190,48 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                     ),
                   ),
                   const SizedBox(height: SbSpacing.lg),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SbButton.ghost(
-                          label: 'Save Image',
-                          icon: SbIcons.image,
-                          onPressed: () async {
-                            final bytes = await WidgetCaptureHelper.capture(
-                              _drawingKey,
-                            );
-                            if (bytes != null) {
-                              await ShareHelper.shareXFile(
-                                bytes: bytes,
-                                name: 'Beam_Reinforcement.png',
-                                mimeType: 'image/png',
-                              );
-                            }
-                          },
-                          width: double.infinity,
-                        ),
-                        const SizedBox(height: SbSpacing.sm),
-                        SbButton.ghost(
-                          label: 'Save PDF',
-                          icon: SbIcons.pdf,
-                          onPressed: () async {
-                            final bytes = await WidgetCaptureHelper.capture(
-                              _drawingKey,
-                            );
-                            if (bytes != null) {
-                              final pdfBytes =
-                                  await DrawingExportService.generateDrawingPdf(
-                                    bytes,
-                                    'Beam Reinforcement',
-                                    'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
-                                  );
-                              await Printing.sharePdf(
-                                bytes: pdfBytes,
-                                filename: 'Beam_Reinforcement_Drawing.pdf',
-                              );
-                            }
-                          },
-                          width: double.infinity,
-                        ),
-                      ],
-                    ),
+                  SbButton.ghost(
+                    label: 'Save Image',
+                    icon: SbIcons.image,
+                    onPressed: () async {
+                      final bytes =
+                          await WidgetCaptureHelper.capture(_drawingKey);
+                      if (bytes != null) {
+                        await ShareHelper.shareXFile(
+                          bytes: bytes,
+                          name: 'Beam_Reinforcement.png',
+                          mimeType: 'image/png',
+                        );
+                      }
+                    },
+                    width: double.infinity,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  SbButton.ghost(
+                    label: 'Save PDF',
+                    icon: SbIcons.pdf,
+                    onPressed: () async {
+                      final bytes =
+                          await WidgetCaptureHelper.capture(_drawingKey);
+                      if (bytes != null) {
+                        final pdfBytes =
+                            await DrawingExportService.generateDrawingPdf(
+                          bytes,
+                          'Beam Reinforcement',
+                          'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
+                        );
+                        await Printing.sharePdf(
+                          bytes: pdfBytes,
+                          filename: 'Beam_Reinforcement_Drawing.pdf',
+                        );
+                      }
+                    },
+                    width: double.infinity,
                   ),
                 ],
               ),
             ),
           ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Export PDF Report',
-                icon: SbIcons.pdf,
-                onPressed: () {
-                  ref.read(beamDesignControllerProvider.notifier).generateReport();
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.primary(
-                label: 'Save to Design History',
-                icon: SbIcons.history,
-                onPressed: () => _saveDesign(context, ref),
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.primary(
-                label: 'New Design',
-                icon: SbIcons.add,
-                onPressed: () {
-                  ref.read(beamDesignControllerProvider.notifier).reset();
-                  context.go('/');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.ghost(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

@@ -8,7 +8,7 @@ import 'package:site_buddy/features/design/presentation/widgets/rcc_info_bottom_
 
 /// SCREEN: DesignHomeScreen
 /// PURPOSE: Main hub for structural design information and RCC standards.
-/// RULE: AppScreenWrapper → SbSectionList → SbSection (NO loose widgets).
+/// RULE: SbPage → SbSectionList → SbSection (NO loose widgets).
 class DesignHomeScreen extends ConsumerWidget {
   const DesignHomeScreen({super.key});
 
@@ -16,9 +16,9 @@ class DesignHomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(designControllerProvider);
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'Structural Design',
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── SECTION 1: HERO BANNER (FIXED: now wrapped in SbSection) ──
           const SbSection(

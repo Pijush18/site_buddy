@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbListItem
@@ -28,7 +29,7 @@ class SbListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: SbRadius.borderMd,
         border: Border.all(
           color: colorScheme.outlineVariant.withValues(alpha: 0.5),
           width: 1.0,
@@ -36,10 +37,10 @@ class SbListItem extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: SbRadius.borderMd,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: SbRadius.borderMd,
           child: Padding(
             padding: const EdgeInsets.all(SbSpacing.md),
             child: Row(

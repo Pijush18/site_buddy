@@ -5,7 +5,6 @@ import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/shuttering_controller.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
@@ -35,28 +34,28 @@ class ShutteringScreen extends ConsumerWidget {
 
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: EngineeringTerms.shutteringAreaEstimator,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.elementDimensions),
           const SizedBox(height: SbSpacing.sm),
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.length,
             hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: SbSpacing.sm),
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: SbSpacing.sm),
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,

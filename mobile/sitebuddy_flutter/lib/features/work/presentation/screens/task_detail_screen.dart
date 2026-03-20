@@ -21,77 +21,13 @@ class TaskDetailScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return AppScreenWrapper(
+    final isCompleted = task.status == TaskStatus.completed;
+
+    return SbPage.form(
       title: 'Task Details',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            task.title,
-            style: theme.textTheme.titleLarge!,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          SbCard(
-            child: Column(
-              children: [
-                SbListItemTile(
-                  title: 'Project',
-                  onTap: () {}, // Detail view entry
-                  trailing: Text(
-                    task.projectId,
-                    style: theme.textTheme.bodyLarge!,
-                  ),
-                ),
-                SbListItemTile(
-                  title: 'Assigned To',
-                  onTap: () {}, // Detail view entry
-                  trailing: Text(
-                    task.assignedTo,
-                    style: theme.textTheme.bodyLarge!,
-                  ),
-                ),
-                SbListItemTile(
-                  title: 'Priority',
-                  onTap: () {}, // Detail view entry
-                  trailing: Text(
-                    task.priority.name.toUpperCase(),
-                    style: theme.textTheme.bodyLarge!,
-                  ),
-                ),
-                SbListItemTile(
-                  title: 'Status',
-                  onTap: () {}, // Detail view entry
-                  trailing: Text(
-                    task.status.name.toUpperCase(),
-                    style: theme.textTheme.bodyLarge!,
-                  ),
-                ),
-                SbListItemTile(
-                  title: 'Due Date',
-                  onTap: () {}, // Detail view entry
-                  trailing: Text(
-                    task.dueDate.toLocal().toString().split(' ').first,
-                    style: theme.textTheme.bodyLarge!,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          Text(
-            'DESCRIPTION',
-            style: theme.textTheme.labelMedium!,
-          ),
-          const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
-          Text(
-            task.description.isEmpty
-                ? 'No description provided.'
-                : task.description,
-            style: Theme.of(context).textTheme.bodyLarge!,
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
-          if (task.status != TaskStatus.completed) ...[
-            SbButton.primary(
+      primaryAction: isCompleted
+          ? null
+          : SbButton.primary(
               label: 'Mark as Completed',
               icon: SbIcons.checkFilled,
               onPressed: () async {
@@ -104,22 +40,95 @@ class TaskDetailScreen extends ConsumerWidget {
                 if (!context.mounted) return;
                 context.pop();
               },
+              width: double.infinity,
             ),
-          ] else ...[
-            SbCard(
-              color: colorScheme.primary.withValues(alpha: 0.1),
-              child: Row(
-                children: [
-                  Icon(SbIcons.checkFilled, color: colorScheme.primary),
-                  const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-                  Text(
-                    'Task Completed',
-                    style: theme.textTheme.bodyLarge!,
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  task.title,
+                  style: theme.textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbCard(
+                  child: Column(
+                    children: [
+                      SbListItemTile(
+                        title: 'Project',
+                        onTap: () {}, // Detail view entry
+                        trailing: Text(
+                          task.projectId,
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ),
+                      SbListItemTile(
+                        title: 'Assigned To',
+                        onTap: () {}, // Detail view entry
+                        trailing: Text(
+                          task.assignedTo,
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ),
+                      SbListItemTile(
+                        title: 'Priority',
+                        onTap: () {}, // Detail view entry
+                        trailing: Text(
+                          task.priority.name.toUpperCase(),
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ),
+                      SbListItemTile(
+                        title: 'Status',
+                        onTap: () {}, // Detail view entry
+                        trailing: Text(
+                          task.status.name.toUpperCase(),
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ),
+                      SbListItemTile(
+                        title: 'Due Date',
+                        onTap: () {}, // Detail view entry
+                        trailing: Text(
+                          task.dueDate.toLocal().toString().split(' ').first,
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                Text(
+                  'DESCRIPTION',
+                  style: theme.textTheme.labelMedium!,
+                ),
+                const SizedBox(height: SbSpacing.sm / 2),
+                Text(
+                  task.description.isEmpty
+                      ? 'No description provided.'
+                      : task.description,
+                  style: Theme.of(context).textTheme.bodyLarge!,
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                if (isCompleted)
+                  SbCard(
+                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    child: Row(
+                      children: [
+                        Icon(SbIcons.checkFilled, color: colorScheme.primary),
+                        const SizedBox(width: SbSpacing.lg),
+                        Text(
+                          'Task Completed',
+                          style: theme.textTheme.bodyLarge!,
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );

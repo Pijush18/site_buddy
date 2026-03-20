@@ -1,46 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
-/// Temporary compatibility class to fix analyzer errors after AppLayout was removed.
-/// These values should be migrated to SbSpacing or theme-driven constants in the future.
+/// DEPRECATED: Use SbSpacing directly.
+/// Aliased compatibility class to fix analyzer errors after AppLayout was removed.
+@Deprecated('Use SbSpacing instead')
 class AppLayout {
   AppLayout._();
 
-  static const double pMedium = 16.0;
-  static const double pSmall = 8.0;
-  static const double md = 16.0;
-  static const double sm = 8.0;
-  static const double elementGap = 12.0;
-  static const double spaceXS = 4.0;
-  static const double spaceS = 8.0;
-  static const double spaceM = 16.0;
-  static const double spaceL = 24.0;
-  static const double spaceXL = 32.0;
-  static const double pLarge = 24.0;
-  static const double sectionGap = 32.0;
-  static const double cardPadding = 16.0;
+  static const double pMedium = SbSpacing.lg;
+  static const double pSmall = SbSpacing.sm;
+  static const double md = SbSpacing.lg;
+  static const double sm = SbSpacing.sm;
+  static const double elementGap = SbSpacing.md;
+  static const double spaceXS = SbSpacing.xs;
+  static const double spaceS = SbSpacing.sm;
+  static const double spaceM = SbSpacing.lg;
+  static const double spaceL = SbSpacing.xxl;
+  static const double spaceXL = SbSpacing.xxxl;
+  static const double pLarge = SbSpacing.xxl;
+  static const double sectionGap = SbSpacing.xxxl;
+  static const double cardPadding = SbSpacing.lg;
   static const double buttonHeight = 48.0;
   static const double buttonHeightCompact = 32.0;
   static const double iconSize = 24.0;
   
   // Gaps
-  static const SizedBox vGap16 = SizedBox(height: 16);
-  static const SizedBox hGap16 = SizedBox(width: 16);
-  static const SizedBox vGap12 = SizedBox(height: 12);
-  static const SizedBox hGap12 = SizedBox(width: 12);
-  static const SizedBox vGap8 = SizedBox(height: 8);
-  static const SizedBox hGap8 = SizedBox(width: 8);
-  static const SizedBox vGap4 = SizedBox(height: 4);
-  static const SizedBox hGap4 = SizedBox(width: 4);
-  static const SizedBox vGap24 = SizedBox(height: 24);
-  static const SizedBox vGap32 = SizedBox(height: 32);
+  static const SizedBox vGap16 = SizedBox(height: SbSpacing.lg);
+  static const SizedBox hGap16 = SizedBox(width: SbSpacing.lg);
+  static const SizedBox vGap12 = SizedBox(height: SbSpacing.md);
+  static const SizedBox hGap12 = SizedBox(width: SbSpacing.md);
+  static const SizedBox vGap8 = SizedBox(height: SbSpacing.sm);
+  static const SizedBox hGap8 = SizedBox(width: SbSpacing.sm);
+  static const SizedBox vGap4 = SizedBox(height: SbSpacing.xs);
+  static const SizedBox hGap4 = SizedBox(width: SbSpacing.xs);
+  static const SizedBox vGap24 = SizedBox(height: SbSpacing.xxl);
+  static const SizedBox vGap32 = SizedBox(height: SbSpacing.xxxl);
 
   // Padding
-  static const EdgeInsets paddingSmall = EdgeInsets.all(8.0);
-  static const EdgeInsets paddingMedium = EdgeInsets.all(16.0);
-  static const EdgeInsets paddingLarge = EdgeInsets.all(24.0);
-  static const EdgeInsets pagePadding = EdgeInsets.all(16.0);
+  static const EdgeInsets paddingSmall = SbSpacing.paddingSM;
+  static const EdgeInsets paddingMedium = SbSpacing.paddingLG;
+  static const EdgeInsets paddingLarge = SbSpacing.paddingXL;
+  static const EdgeInsets pagePadding = SbSpacing.paddingLG;
   
-  // Radius
+  // Radius (These should eventually move to SbRadius)
   static const double cardRadius = 12.0;
   static const double buttonRadius = 16.0;
   static const double inputRadius = 12.0;

@@ -41,9 +41,9 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
   @override
   Widget build(BuildContext context) {
     if (widget.report.isEmpty) {
-      return AppScreenWrapper(
+      return SbPage.detail(
         title: ScreenTitles.reportPreview,
-        child: Center(
+        body: Center(
           child: Text(
             AppStrings.noEntriesFound,
             style: Theme.of(context).textTheme.bodyLarge!,
@@ -52,9 +52,9 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.detail(
       title: ScreenTitles.reportPreview,
-      child: PreviewableCard(
+      body: PreviewableCard(
         previewKey: _previewKey,
         title: widget.report.projectName,
         actions: [

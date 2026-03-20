@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 
@@ -41,7 +42,7 @@ class SbActionTile extends StatelessWidget {
         color: Colors.transparent, // Always transparent, parent provides surface
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: SbRadius.borderMd,
           child: Padding(
             padding: padding,
             child: Column(
@@ -53,7 +54,7 @@ class SbActionTile extends StatelessWidget {
                   padding: const EdgeInsets.all(SbSpacing.sm),
                   decoration: BoxDecoration(
                     color: contentColor.withValues(alpha: iconOpacity),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: SbRadius.borderMedium,
                   ),
                   child: Icon(
                     icon,

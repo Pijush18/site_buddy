@@ -41,125 +41,163 @@ class _FootingSafetyCheckScreenState
         state.isOneWayShearSafe &&
         state.isPunchingShearSafe;
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Safety Checks',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 6 of 6: Design Validation',
-            style: Theme.of(context).textTheme.labelMedium!,
+          SbButton.primary(
+            label: 'Calculation Sheet',
+            icon: Icons.description_outlined,
+            onPressed: () {
+              ref
+                  .read(footingDesignControllerProvider.notifier)
+                  .generateReport();
+            },
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-
-          // Overall Status Card
-          SbCard(
-            color: overallSafe
-                ? colorScheme.primaryContainer.withValues(alpha: 0.2)
-                : colorScheme.errorContainer.withValues(alpha: 0.2),
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  overallSafe ? Icons.verified_user : Icons.warning_amber_rounded,
-                  color: overallSafe ? colorScheme.primary : colorScheme.error,
-                  size: 32,
-                ),
-                const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-                Text(
-                  overallSafe ? 'DESIGN IS SAFE' : 'DESIGN UNSAFE',
-                  style: Theme.of(context).textTheme.titleLarge!,
-                ),
-              ],
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.primary(
+            label: 'Save Design',
+            icon: Icons.save_outlined,
+            onPressed: () => context.go('/design'),
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'New Design',
+            icon: Icons.add,
+            onPressed: () => context.go('/'),
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 6 of 6: Design Validation',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          // ── OVERALL STATUS ──
+          SbSection(
+            child: SbCard(
+              color: overallSafe
+                  ? colorScheme.primaryContainer.withValues(alpha: 0.2)
+                  : colorScheme.errorContainer.withValues(alpha: 0.2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    overallSafe
+                        ? Icons.verified_user
+                        : Icons.warning_amber_rounded,
+                    color:
+                        overallSafe ? colorScheme.primary : colorScheme.error,
+                    size: 32,
+                  ),
+                  const SizedBox(width: SbSpacing.lg),
+                  Text(
+                    overallSafe ? 'DESIGN IS SAFE' : 'DESIGN UNSAFE',
+                    style: Theme.of(context).textTheme.titleLarge!,
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-          // Soil Bearing Pressure
-          DesignResultCard(
+          // ── SOIL BEARING ──
+          SbSection(
             title: 'Soil Bearing',
-            isSafe: state.isAreaSafe,
-            items: [
-              DesignResultItem(
-                label: 'Max Pressure (q_max)',
-                value: state.maxSoilPressure.toStringAsFixed(1),
-                unit: 'kN/m²',
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'Allowable SBC',
-                value: state.sbc.toStringAsFixed(0),
-                unit: 'kN/m²',
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-
-          // Shear Checks
-          DesignResultCard(
-            title: 'Shear Validation',
-            isSafe: state.isOneWayShearSafe && state.isPunchingShearSafe,
-            items: [
-              DesignResultItem(
-                label: 'One-Way Shear (τv)',
-                value: state.tauV.toStringAsFixed(2),
-                unit: 'N/mm²',
-                subtitle: 'Limit τc: ${state.tauC.toStringAsFixed(2)} N/mm²',
-              ),
-              DesignResultItem(
-                label: 'Punching Shear (Vu)',
-                value: state.vup.toStringAsFixed(1),
-                unit: 'kN',
-                subtitle:
-                    'Effective Depth: ${state.effDepth.toStringAsFixed(0)} mm',
-                isCritical: true,
-              ),
-            ],
-          ),
-
-          if (state.type == FootingType.pile) ...[
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-            DesignResultCard(
-              title: 'Pile Requirements',
-              isSafe: true,
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isAreaSafe,
               items: [
                 DesignResultItem(
-                  label: 'Number of Piles',
-                  value: state.pileCount.toString(),
+                  label: 'Max Pressure (q_max)',
+                  value: state.maxSoilPressure.toStringAsFixed(1),
+                  unit: 'kN/m²',
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Allowable SBC',
+                  value: state.sbc.toStringAsFixed(0),
+                  unit: 'kN/m²',
                 ),
               ],
             ),
-          ],
+          ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
-          // Reinforcement Detail
-          const SbSectionHeader(title: 'Reinforcement Layout'),
-          const SizedBox(height: SbSpacing.lg),
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              children: [
-                RepaintBoundary(
-                  key: _drawingKey,
-                  child: Container(
-                    color: theme.cardColor,
-                    padding: const EdgeInsets.all(SbSpacing.xxl),
-                    child: FootingRebarDrawing(
-                      length: state.footingLength,
-                      width: state.footingWidth,
-                      thickness: state.footingThickness,
-                      colA: state.colA,
-                      colB: state.colB,
-                      barDia: state.mainBarDia,
-                      spacing: state.mainBarSpacing,
+          // ── SHEAR VALIDATION ──
+          SbSection(
+            title: 'Shear Validation',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isOneWayShearSafe && state.isPunchingShearSafe,
+              items: [
+                DesignResultItem(
+                  label: 'One-Way Shear (τv)',
+                  value: state.tauV.toStringAsFixed(2),
+                  unit: 'N/mm²',
+                  subtitle: 'Limit τc: ${state.tauC.toStringAsFixed(2)} N/mm²',
+                ),
+                DesignResultItem(
+                  label: 'Punching Shear (Vu)',
+                  value: state.vup.toStringAsFixed(1),
+                  unit: 'kN',
+                  subtitle:
+                      'Effective Depth: ${state.effDepth.toStringAsFixed(0)} mm',
+                  isCritical: true,
+                ),
+              ],
+            ),
+          ),
+
+          if (state.type == FootingType.pile)
+            SbSection(
+              title: 'Pile Requirements',
+              child: DesignResultCard(
+                title: 'Pile Check',
+                isSafe: true,
+                items: [
+                  DesignResultItem(
+                    label: 'Number of Piles',
+                    value: state.pileCount.toString(),
+                  ),
+                ],
+              ),
+            ),
+
+          // ── REINFORCEMENT DRAWING ──
+          SbSection(
+            title: 'Reinforcement Layout',
+            child: SbCard(
+              child: Column(
+                children: [
+                  RepaintBoundary(
+                    key: _drawingKey,
+                    child: Container(
+                      color: theme.cardColor,
+                      padding: const EdgeInsets.all(SbSpacing.xxl),
+                      child: FootingRebarDrawing(
+                        length: state.footingLength,
+                        width: state.footingWidth,
+                        thickness: state.footingThickness,
+                        colA: state.colA,
+                        colB: state.colB,
+                        barDia: state.mainBarDia,
+                        spacing: state.mainBarSpacing,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                Center(
-                  child: Column(
+                  const SizedBox(height: SbSpacing.lg),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SbButton.ghost(
@@ -174,7 +212,7 @@ class _FootingSafetyCheckScreenState
                               bytes: bytes,
                               name: 'Footing_Reinforcement.png',
                               mimeType: 'image/png',
-                              );
+                            );
                           }
                         },
                       ),
@@ -189,10 +227,10 @@ class _FootingSafetyCheckScreenState
                           if (bytes != null) {
                             final pdfBytes =
                                 await DrawingExportService.generateDrawingPdf(
-                                  bytes,
-                                  'Footing Reinforcement',
-                                  'Layout: ${state.footingLength.toInt()}x${state.footingWidth.toInt()} mm',
-                                );
+                              bytes,
+                              'Footing Reinforcement',
+                              'Layout: ${state.footingLength.toInt()}x${state.footingWidth.toInt()} mm',
+                            );
                             await Printing.sharePdf(
                               bytes: pdfBytes,
                               filename: 'Footing_Reinforcement_Drawing.pdf',
@@ -202,78 +240,34 @@ class _FootingSafetyCheckScreenState
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-
-          if (state.isSettlementWarning) ...[
-            const SizedBox(height: SbSpacing.lg),
-            SbCard(
-              color: colorScheme.tertiaryContainer.withValues(alpha: 0.2),
-              padding: const EdgeInsets.all(SbSpacing.lg),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    color: colorScheme.tertiary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
-                  Expanded(
-                    child: Text(
-                      'Warning: Low SBC detected. Consider detailed settlement analysis.',
-                        style: Theme.of(context).textTheme.labelMedium!,
-                    ),
-                  ),
                 ],
               ),
             ),
-          ],
-
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Calculation Sheet',
-                icon: Icons.description_outlined,
-                onPressed: () {
-                  ref
-                      .read(footingDesignControllerProvider.notifier)
-                      .generateReport();
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.primary(
-                label: 'Save Design',
-                icon: Icons.save_outlined,
-                onPressed: () {
-                  context.go('/design');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.primary(
-                label: 'New Design',
-                icon: Icons.add,
-                onPressed: () {
-                  context.go('/');
-                },
-                width: double.infinity,
-              ),
-            ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          // ── SETTLEMENT WARNING ──
+          if (state.isSettlementWarning)
+            SbSection(
+              child: SbCard(
+                color: colorScheme.tertiaryContainer.withValues(alpha: 0.2),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: colorScheme.tertiary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: SbSpacing.lg),
+                    Expanded(
+                      child: Text(
+                        'Warning: Low SBC detected. Consider detailed settlement analysis.',
+                        style: Theme.of(context).textTheme.labelMedium!,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
     );

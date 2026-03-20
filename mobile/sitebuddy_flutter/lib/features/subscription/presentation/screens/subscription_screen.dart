@@ -16,10 +16,9 @@ class SubscriptionScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final statusAsync = ref.watch(subscriptionStatusProvider);
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: AppStrings.subscription,
-      isScrollable: true,
-      child: statusAsync.when(
+      body: statusAsync.when(
         data: (status) => SbSectionList(
           sections: [
             // ── Account status ──
@@ -50,7 +49,11 @@ class SubscriptionScreen extends ConsumerWidget {
                 child: SbCard(
                   child: Column(
                     children: [
-                      Icon(SbIcons.checkFilled, color: AppColors.success(context), size: 48),
+                      Icon(
+                        SbIcons.checkFilled,
+                        color: AppColors.success(context),
+                        size: 48,
+                      ),
                       const SizedBox(height: SbSpacing.lg),
                       Text(
                         AppStrings.premiumUserStatus,

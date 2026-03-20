@@ -114,12 +114,14 @@ class SbButton extends StatelessWidget {
     VoidCallback? onPressed,
     bool isLoading = false,
     String? tooltip,
+    bool compact = false,
   }) : this._(
          key: key,
          icon: icon,
          onPressed: onPressed,
          isLoading: isLoading,
          tooltip: tooltip,
+         width: compact ? 32.0 : null,
          type: _SbButtonType.icon,
        );
 

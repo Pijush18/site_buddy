@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -70,7 +70,7 @@ class FeatureCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: SbRadius.borderMedium,
           child: Padding(
             padding: EdgeInsets.all(isFeatured ? SbSpacing.lg : SbSpacing.md),
             child: content,
@@ -144,7 +144,7 @@ class FeatureCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: (variant == FeatureCardVariant.primary ? colorScheme.primary : colorScheme.onSurfaceVariant)
             .withValues(alpha: opacity),
-        borderRadius: BorderRadius.circular(isFeatured ? 16 : 14),
+        borderRadius: isFeatured ? SbRadius.borderMedium : SbRadius.borderMd,
       ),
       child: Icon(
         icon, 

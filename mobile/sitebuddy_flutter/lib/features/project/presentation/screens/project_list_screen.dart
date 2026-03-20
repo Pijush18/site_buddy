@@ -20,16 +20,14 @@ class ProjectListScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: 'Projects',
-      isScrollable: true,
-      usePadding: true,
-      actions: [
+      appBarActions: [
         Consumer(
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             final statusColor = isOnline ? Colors.green : Colors.orange;
-            
+
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
               child: Row(
@@ -50,7 +48,7 @@ class ProjectListScreen extends ConsumerWidget {
           },
         ),
       ],
-      child: SbSectionList(
+      body: SbSectionList(
         physics: const BouncingScrollPhysics(),
         sections: [
           // ── HERO SECTION & PRIMARY CTA ──
@@ -58,7 +56,8 @@ class ProjectListScreen extends ConsumerWidget {
             child: SbModuleHero(
               icon: SbIcons.project,
               title: 'Project Management',
-              subtitle: 'Track and manage your site projects, dimensions, and engineering logs.',
+              subtitle:
+                  'Track and manage your site projects, dimensions, and engineering logs.',
               child: SbButton.primary(
                 label: 'New Project',
                 icon: Icons.add,
@@ -73,7 +72,8 @@ class ProjectListScreen extends ConsumerWidget {
               child: SbEmptyState(
                 icon: Icons.folder_off_outlined,
                 title: 'No Projects Yet',
-                subtitle: 'Create your first civil engineering project to get started.',
+                subtitle:
+                    'Create your first civil engineering project to get started.',
                 actionLabel: 'New Project',
                 onAction: () => context.push('/projects/create'),
               ),
@@ -84,14 +84,16 @@ class ProjectListScreen extends ConsumerWidget {
               subtitle: 'Quickly access your recently updated site projects.',
               child: SbListGroup(
                 children: projects.map((project) {
-                  final formattedDate = DateFormat('MMM dd, yyyy').format(project.createdAt);
+                  final formattedDate =
+                      DateFormat('MMM dd, yyyy').format(project.createdAt);
                   return ProjectCard(
                     name: project.name,
                     date: formattedDate,
                     location: project.location,
                     logsCount: 0,
                     calcsCount: 0,
-                    onTap: () => context.push('/projects/detail', extra: project),
+                    onTap: () =>
+                        context.push('/projects/detail', extra: project),
                   );
                 }).toList(),
               ),

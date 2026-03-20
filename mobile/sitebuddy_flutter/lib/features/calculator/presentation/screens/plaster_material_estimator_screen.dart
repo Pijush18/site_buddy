@@ -5,11 +5,9 @@ import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/plaster_controller.dart';
 import 'package:site_buddy/shared/domain/models/plaster_ratio.dart';
 import 'package:site_buddy/shared/domain/models/plaster_material_result.dart';
-import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 
 class PlasterMaterialEstimatorScreen extends ConsumerWidget {
   const PlasterMaterialEstimatorScreen({super.key});
@@ -22,106 +20,109 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
     final aError = state.failure?.message.contains('Area') == true ? state.failure?.message : null;
     final tError = state.failure?.message.contains('Thickness') == true ? state.failure?.message : null;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: EngineeringTerms.plasterEstimator,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const _SectionLabel(label: EngineeringTerms.plasterArea),
-          const SizedBox(height: SbSpacing.lg),
-          AppNumberField(
-            label: EngineeringTerms.wallArea,
-            hint: EngineeringTerms.areaHint,
-            suffixIcon: SbIcons.area,
-            onChanged: controller.updateArea,
-            errorText: aError,
+      body: SbSectionList(
+        sections: [
+          // ── INPUT SECTION ──
+          SbSection(
+            title: EngineeringTerms.plasterArea,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbInput(
+                  label: EngineeringTerms.wallArea,
+                  hint: EngineeringTerms.areaHint,
+                  suffixIcon: const Icon(SbIcons.area),
+                  onChanged: controller.updateArea,
+                  errorText: aError,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SbInput(
+                  label: EngineeringTerms.plasterThickness,
+                  hint: EngineeringTerms.diameterHint,
+                  suffixIcon: const Icon(SbIcons.layers),
+                  onChanged: controller.updateThickness,
+                  errorText: tError,
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                Text(
+                  EngineeringTerms.typicalThicknessNote,
+                  style: Theme.of(context).textTheme.labelMedium!,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.sm),
-          AppNumberField(
-            label: EngineeringTerms.plasterThickness,
-            hint: EngineeringTerms.diameterHint,
-            suffixIcon: SbIcons.layers,
-            onChanged: controller.updateThickness,
-            errorText: tError,
+
+          // ── RATIO SECTION ──
+          SbSection(
+            title: EngineeringTerms.mortarRatio,
+            child: SbDropdown<PlasterRatio>(
+              value: state.selectedRatio,
+              items: PlasterRatio.values,
+              itemLabelBuilder: (r) => r.label,
+              onChanged: (val) {
+                if (val != null) {
+                  controller.updateRatio(val);
+                }
+              },
+            ),
           ),
-          const SizedBox(height: SbSpacing.sm),
-          Text(
-            EngineeringTerms.typicalThicknessNote,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
-          const SizedBox(height: SbSpacing.xxl),
-          Text(
-            EngineeringTerms.mortarRatio,
-            style: Theme.of(context).textTheme.titleMedium!,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SbSpacing.lg),
-          SbDropdown<PlasterRatio>(
-            value: state.selectedRatio,
-            items: PlasterRatio.values,
-            itemLabelBuilder: (r) => r.label,
-            onChanged: (val) {
-              if (val != null) {
-                controller.updateRatio(val);
-              }
-            },
-          ),
-          const SizedBox(height: SbSpacing.xxl),
-          if (state.failure != null) ...[
-            SbCard(
-              child: Text(
-                state.failure!.message,
-                style: Theme.of(context).textTheme.bodyLarge!,
-                textAlign: TextAlign.center,
+
+          // ── FAILURE/RESULT SECTION ──
+          if (state.failure != null)
+            SbSection(
+              child: SbCard(
+                child: Text(
+                  state.failure!.message,
+                  style: Theme.of(context).textTheme.bodyLarge!,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
-          ],
-          if (state.result != null) ...[
-            _ResultSection(result: state.result!),
-            const SizedBox(height: SbSpacing.xxl),
-          ],
-          ActionButtonsGroup(
-            children: [
-              SbButton.outline(
-                label: AppStrings.reset,
-                icon: SbIcons.refresh,
-                onPressed: controller.reset,
-              ),
-              SbButton.primary(
-                label: state.isLoading ? AppStrings.calculating : EngineeringTerms.calculateMaterials,
-                icon: SbIcons.calculator,
-                isLoading: state.isLoading,
-                onPressed: controller.calculate,
-              ),
-            ],
+          
+          if (state.result != null)
+            SbSection(
+              child: _ResultSection(result: state.result!),
+            ),
+
+          // ── ACTION SECTION ──
+          SbSection(
+            child: SbButton.primary(
+              label: state.isLoading 
+                  ? AppStrings.calculating 
+                  : EngineeringTerms.calculateMaterials,
+              icon: SbIcons.calculator,
+              isLoading: state.isLoading,
+              onPressed: controller.calculate,
+              width: double.infinity,
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
-          Text(
-            EngineeringTerms.isPlasterCodeNote,
-            style: Theme.of(context).textTheme.labelMedium!,
-            textAlign: TextAlign.center,
+
+          // ── RESET ACTION ──
+          SbSection(
+            child: SbButton.outline(
+              label: AppStrings.reset,
+              icon: SbIcons.refresh,
+              onPressed: controller.reset,
+              width: double.infinity,
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+
+          // ── CODEX NOTE ──
+          SbSection(
+            child: Text(
+              EngineeringTerms.isPlasterCodeNote,
+              style: Theme.of(context).textTheme.labelMedium!,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  final String label;
-  const _SectionLabel({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      label.toUpperCase(),
-      style: Theme.of(context).textTheme.titleMedium!,
-      textAlign: TextAlign.center,
-    );
-  }
-}
 
 class _ResultSection extends StatelessWidget {
   final PlasterMaterialResult result;

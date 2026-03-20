@@ -129,25 +129,25 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return AppScreenWrapper(
-      child: SbSectionList(
+    return SbPage.scaffold(
+      body: SbSectionList(
         sections: [
           // ── HEADER ──
           SbSection(
             child: Column(
               children: [
                 const SizedBox(height: SbSpacing.xxl),
-          Icon(
-            SbIcons.engineering,
-            size: 64,
-            color: colorScheme.primary,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          Text(
-            AppStrings.siteBuddy,
-            style: Theme.of(context).textTheme.titleLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+                Icon(
+                  SbIcons.engineering,
+                  size: 64,
+                  color: colorScheme.primary,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                Text(
+                  AppStrings.siteBuddy,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -163,46 +163,51 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                SbInput(
-                  controller: _emailController,
-                  focusNode: _emailFocusNode,
-                  label: FormLabels.email,
-                  hint: FormLabels.emailHint,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                SbInput(
-                  controller: _passwordController,
-                  focusNode: _passwordFocusNode,
-                  label: FormLabels.password,
-                  hint: FormLabels.passwordHint,
-                  obscureText: _obscurePassword,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
-                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
-                      color: colorScheme.outline,
-                    ),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  SbInput(
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    label: FormLabels.email,
+                    hint: FormLabels.emailHint,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
+                    prefixIcon:
+                        Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                SbInput(
-                  controller: _confirmPasswordController,
-                  focusNode: _confirmPasswordFocusNode,
-                  label: FormLabels.confirmPassword,
-                  hint: FormLabels.passwordHint,
-                  obscureText: _obscurePassword,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (_) => _register(),
-                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                ),
-                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
+                    label: FormLabels.password,
+                    hint: FormLabels.passwordHint,
+                    obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) =>
+                        _confirmPasswordFocusNode.requestFocus(),
+                    prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? SbIcons.visibility
+                            : SbIcons.visibilityOff,
+                        color: colorScheme.outline,
+                      ),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
+                    ),
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    controller: _confirmPasswordController,
+                    focusNode: _confirmPasswordFocusNode,
+                    label: FormLabels.confirmPassword,
+                    hint: FormLabels.passwordHint,
+                    obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _register(),
+                    prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                  ),
+                  const SizedBox(height: SbSpacing.xxl),
                   SbButton.primary(
                     label: AppStrings.register,
                     onPressed: (isLoading ||

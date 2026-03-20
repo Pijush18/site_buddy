@@ -15,16 +15,17 @@ class CalculatorHubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.engineeringToolbox,
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── PREMIUM HERO BANNER ──
           const SbSection(
             child: SbModuleHero(
               icon: SbIcons.calculator,
               title: ScreenTitles.engineeringToolbox,
-              subtitle: 'Precision estimating and surveying tools designed for real-world site conditions.',
+              subtitle:
+                  'Precision estimating and surveying tools designed for real-world site conditions.',
               isElevated: true,
             ),
           ),
@@ -46,7 +47,7 @@ class CalculatorHubScreen extends StatelessWidget {
                   isFeatured: true,
                 ),
                 const SizedBox(height: SbSpacing.md),
-                
+
                 // SECONDARY LIST: Tight grouping for less common tools
                 SbListGroup(
                   isSubtle: true,

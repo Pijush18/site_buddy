@@ -22,9 +22,9 @@ class ColumnHistoryScreen extends ConsumerWidget {
     final selectedProject = ref.watch(activeProjectProvider);
 
     if (selectedProject == null) {
-      return const AppScreenWrapper(
+      return const SbPage.scaffold(
         title: ScreenTitles.columnHistory,
-        child: SbEmptyState(
+        body: SbEmptyState(
           icon: Icons.domain_disabled_outlined,
           title: AppStrings.noProjectSelected,
           subtitle: AppStrings.selectProjectDesc,
@@ -32,9 +32,9 @@ class ColumnHistoryScreen extends ConsumerWidget {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: ScreenTitles.columnHistory,
-      child: FutureBuilder<List<CalculationHistoryEntry>>(
+      body: FutureBuilder<List<CalculationHistoryEntry>>(
         future: historyRepo.getEntriesByProject(selectedProject.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,15 +61,13 @@ class ColumnHistoryScreen extends ConsumerWidget {
           // Sort by timestamp descending
           columnHistory.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-          return ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: columnHistory.length,
-            separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-            itemBuilder: (context, index) {
-              final entry = columnHistory[index];
-              return _HistoryCard(entry: entry);
-            },
+          return Column(
+            children: columnHistory
+                .map((entry) => Padding(
+                      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+                      child: _HistoryCard(entry: entry),
+                    ))
+                .toList(),
           );
         },
       ),

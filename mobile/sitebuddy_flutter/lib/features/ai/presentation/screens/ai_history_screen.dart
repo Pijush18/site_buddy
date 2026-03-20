@@ -17,10 +17,9 @@ class AiHistoryScreen extends ConsumerWidget {
     final state = ref.watch(aiHistoryControllerProvider);
     final controller = ref.read(aiHistoryControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'AI Interaction History',
-      isScrollable: false,
-      child: _buildBody(context, ref, state, controller),
+      body: _buildBody(context, ref, state, controller),
     );
   }
 

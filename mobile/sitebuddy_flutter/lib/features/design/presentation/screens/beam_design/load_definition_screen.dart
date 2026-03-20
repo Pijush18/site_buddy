@@ -7,7 +7,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+
 
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
@@ -84,103 +84,94 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(beamDesignControllerProvider);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Load Definition',
-      child: Form(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: 'Calculate & View Analysis',
+            onPressed: _onNext,
+            icon: SbIcons.analytics,
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Step 2 of 5: Applied Loads',
-              style: Theme.of(context).textTheme.titleLarge!,
-            ),
-            const SizedBox(height: SbSpacing.lg),
-
-            // Loads Card
-            SbCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SbSectionHeader(
-                    title: 'Vertical Loads',
-                    padding: EdgeInsets.zero,
-                  ),
-
-                  AppNumberField(
-                    controller: _dlController,
-                    label: 'Dead Load (incl. Self-weight) (kN/m)',
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Dead Load'),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-
-                  AppNumberField(
-                    controller: _llController,
-                    label: 'Live Load (kN/m)',
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Live Load'),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-
-                  AppNumberField(
-                    controller: _plController,
-                    label: 'Point Load (Optional) (kN)',
-                  ),
-                ],
+        child: SbSectionList(
+          sections: [
+            // ── STEP HEADER ──
+            SbSection(
+              child: Text(
+                'Step 2 of 5: Applied Loads',
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
 
-            // Load Factor Toggle Card
-            SbCard(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SbSectionHeader(
-                        title: 'Design Limit State',
-                        padding: EdgeInsets.only(bottom: SbSpacing.sm),
-                      ),
-                      Text(
-                        state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
-                        style: Theme.of(context).textTheme.labelMedium!,
-                      ),
-                    ],
-                  ),
-                  SbSwitch(
-                    value: state.isULS,
-                    onChanged: (v) {
-                      ref
-                          .read(beamDesignControllerProvider.notifier)
-                          .updateLoads(isULS: v);
-                    },
-                  ),
-                ],
+            // ── LOADS SECTION ──
+            SbSection(
+              title: 'Vertical Loads',
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SbInput(
+                      controller: _dlController,
+                      label: 'Dead Load (incl. Self-weight) (kN/m)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Dead Load'),
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _llController,
+                      label: 'Live Load (kN/m)',
+                      validator: (v) =>
+                          ValidationHelper.validatePositive(v, 'Live Load'),
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      controller: _plController,
+                      label: 'Point Load (Optional) (kN)',
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
 
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SbButton.primary(
-                  label: 'Calculate & View Analysis',
-                  onPressed: _onNext,
-                  icon: SbIcons.analytics,
-                  width: double.infinity,
+            // ── LIMIT STATE SECTION ──
+            SbSection(
+              title: 'Design Limit State',
+              child: SbCard(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
+                          style: Theme.of(context).textTheme.labelMedium!,
+                        ),
+                      ],
+                    ),
+                    SbSwitch(
+                      value: state.isULS,
+                      onChanged: (v) {
+                        ref
+                            .read(beamDesignControllerProvider.notifier)
+                            .updateLoads(isULS: v);
+                      },
+                    ),
+                  ],
                 ),
-                const SizedBox(height: SbSpacing.sm),
-                SbButton.ghost(
-                  label: 'Back',
-                  onPressed: () => context.pop(),
-                  width: double.infinity,
-                ),
-              ],
+              ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
           ],
         ),
       ),

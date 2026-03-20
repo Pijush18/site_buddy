@@ -24,9 +24,9 @@ class CalculationHistoryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historyAsync = ref.watch(projectHistoryProvider(projectId));
 
-    return AppScreenWrapper(
+    return SbPage.list(
       title: 'Calculation History',
-      child: historyAsync.when(
+      body: historyAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
           child: Text(

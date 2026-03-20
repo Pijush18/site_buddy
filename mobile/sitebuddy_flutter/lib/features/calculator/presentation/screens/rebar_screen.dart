@@ -6,7 +6,6 @@ import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/features/calculator/application/controllers/rebar_controller.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +44,7 @@ class RebarScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.numberOfBars,
@@ -78,9 +77,9 @@ class RebarScreen extends ConsumerWidget {
 
     final bool isValid = state.memberLength != null && state.spacing != null && state.diameter != null;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: AppStrings.steelWeightEstimatorTitle,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -88,49 +87,49 @@ class RebarScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.memberLength,
-            suffixIcon: SbIcons.ruler,
+            suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm),
 
-          AppNumberField(
+          SbInput(
             label: EngineeringTerms.spacingLabel,
-            suffixIcon: SbIcons.spacing,
+            suffixIcon: const Icon(SbIcons.spacing),
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm),
 
           Wrap(
-            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
-            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            spacing: SbSpacing.lg,
+            runSpacing: SbSpacing.lg,
             children: [
               SizedBox(
                 width: 160,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.diameterLabel,
-                  suffixIcon: SbIcons.diameter,
+                  suffixIcon: const Icon(SbIcons.diameter),
                   onChanged: controller.updateDiameter,
                   errorText: dError,
                 ),
               ),
               SizedBox(
                 width: 160,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.wastePercent,
-                  suffixIcon: SbIcons.percent,
+                  suffixIcon: const Icon(SbIcons.percent),
                   onChanged: controller.updateWaste,
                 ),
               ),
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -147,7 +146,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -157,12 +156,12 @@ class RebarScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

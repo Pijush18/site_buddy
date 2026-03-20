@@ -12,20 +12,17 @@ class DeflectionResultSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SbSection(
-      title: 'Design Status',
-      trailing: StatusBadge(isSafe: result.isSafe),
-      child: SbCard(
-        child: Column(
-          children: [
-            const SizedBox(height: SbSpacing.xxl),
-            ComparisonBar(
-              actual: result.actualRatio,
-              allowable: result.allowableRatio,
-              label: 'Span/Depth Ratio',
-              unit: '',
-            ),
-            const SizedBox(height: SbSpacing.lg),
+    return SbCard(
+      child: Column(
+        children: [
+          const SizedBox(height: SbSpacing.lg),
+          ComparisonBar(
+            actual: result.actualRatio,
+            allowable: result.allowableRatio,
+            label: 'Span/Depth Ratio',
+            unit: '',
+          ),
+          const SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Actual Ratio',
             value: result.actualRatio.toStringAsFixed(2),
@@ -34,8 +31,7 @@ class DeflectionResultSummary extends StatelessWidget {
             label: 'Allowable Ratio',
             value: result.allowableRatio.toStringAsFixed(2),
           ),
-          ],
-        ),
+        ],
       ),
     );
   }

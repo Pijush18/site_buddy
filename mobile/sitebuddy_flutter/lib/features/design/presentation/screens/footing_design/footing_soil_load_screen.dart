@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
@@ -83,140 +82,131 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
     final state = ref.watch(footingDesignControllerProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Soil & Load',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.help_outline),
-          onPressed: () => debugPrint('Help: Footing Soil & Load'),
-        ),
-        const SizedBox(width: SbSpacing.sm),
-      ],
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 2 of 6: Parameters',
-            style: Theme.of(context).textTheme.labelMedium!,
+          SbButton.primary(
+            label: 'Next: Geometry Design',
+            icon: Icons.square_foot,
+            onPressed: _onNext,
           ),
-          const SizedBox(height: SbSpacing.xxl),
-          // Column Load Card
-          SbSectionHeader(
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 2 of 6: Parameters',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
+          ),
+
+          // ── COLUMN LOADS ──
+          SbSection(
             title: state.type == FootingType.combined ||
                     state.type == FootingType.strap
                 ? 'Column 1 Loadings'
                 : 'Column Loadings',
-          ),
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppNumberField(
-                  label: 'Axial Load (P1) (kN)',
-                  controller: _loadController,
-                  suffixIcon: SbIcons.arrowDown,
-                ),
-                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppNumberField(
-                        label: 'Mx1 (kNm)',
-                        controller: _mxController,
-                      ),
-                    ),
-                    const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
-                    Expanded(
-                      child: AppNumberField(
-                        label: 'My1 (kNm)',
-                        controller: _myController,
-                      ),
-                    ),
-                  ],
-                ),
-
-                if (state.type == FootingType.combined ||
-                    state.type == FootingType.strap) ...[
-                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-                  Divider(color: colorScheme.outlineVariant),
-                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-                  Text(
-                    'Column 2 Loadings',
-                    style: Theme.of(context).textTheme.labelLarge!,
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SbInput(
+                    label: 'Axial Load (P1) (kN)',
+                    controller: _loadController,
+                    suffixIcon: const Icon(SbIcons.arrowDown),
                   ),
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                  AppNumberField(
-                    label: 'Axial Load (P2) (kN)',
-                    controller: _load2Controller,
-                  ),
-                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
-                        child: AppNumberField(
-                          label: 'Mx2 (kNm)',
-                          controller: _mx2Controller,
+                        child: SbInput(
+                          label: 'Mx1 (kNm)',
+                          controller: _mxController,
                         ),
                       ),
-                      const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
+                      const SizedBox(width: SbSpacing.lg),
                       Expanded(
-                        child: AppNumberField(
-                          label: 'My2 (kNm)',
-                          controller: _my2Controller,
+                        child: SbInput(
+                          label: 'My1 (kNm)',
+                          controller: _myController,
                         ),
                       ),
                     ],
                   ),
+                  if (state.type == FootingType.combined ||
+                      state.type == FootingType.strap) ...[
+                    const SizedBox(height: SbSpacing.xxl),
+                    Divider(color: colorScheme.outlineVariant),
+                    const SizedBox(height: SbSpacing.xxl),
+                    Text(
+                      'Column 2 Loadings',
+                      style: Theme.of(context).textTheme.labelLarge!,
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      label: 'Axial Load (P2) (kN)',
+                      controller: _load2Controller,
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SbInput(
+                            label: 'Mx2 (kNm)',
+                            controller: _mx2Controller,
+                          ),
+                        ),
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: SbInput(
+                            label: 'My2 (kNm)',
+                            controller: _my2Controller,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
-              ],
-            ),
-          ),
-          const SizedBox(height: SbSpacing.sm),
-          // Soil Parameters Card
-          const SbSectionHeader(title: 'Soil Properties'),
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppNumberField(
-                  label: 'Safe Bearing Capacity (SBC) (kN/m²)',
-                  controller: _sbcController,
-                  suffixIcon: SbIcons.terrain,
-                ),
-                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
-                AppNumberField(
-                  label: 'Foundation Depth (m)',
-                  controller: _depthController,
-                  suffixIcon: SbIcons.arrowDown,
-                ),
-              ],
+              ),
             ),
           ),
 
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Geometry Design',
-                icon: Icons.square_foot,
-                onPressed: _onNext,
-                width: double.infinity,
+          // ── SOIL PARAMETERS ──
+          SbSection(
+            title: 'Soil Properties',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SbInput(
+                    label: 'Safe Bearing Capacity (SBC) (kN/m²)',
+                    controller: _sbcController,
+                    suffixIcon: const Icon(SbIcons.terrain),
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    label: 'Foundation Depth (m)',
+                    controller: _depthController,
+                    suffixIcon: const Icon(SbIcons.arrowDown),
+                  ),
+                ],
               ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
+
   }
 }
 

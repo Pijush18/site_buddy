@@ -1,12 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/calculator/application/controllers/cement_controller.dart';
@@ -36,7 +34,7 @@ class CementScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
@@ -71,9 +69,9 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+              const SizedBox(height: SbSpacing.sm),
               const Divider(),
-              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+              const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -88,9 +86,9 @@ class CementScreen extends ConsumerWidget {
       );
     }
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: ScreenTitles.cementBagEstimator,
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -98,41 +96,41 @@ class CementScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          AppNumberField(
-            label: EngineeringTerms.wallLength, // Reuse Wall Length or add generic Length
-            suffixIcon: SbIcons.ruler,
+          const SizedBox(height: SbSpacing.lg),
+          SbInput(
+            label: EngineeringTerms.wallLength,
+            suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
-            label: EngineeringTerms.width, // I should check if EngineeringTerms.width has (m)
-            suffixIcon: SbIcons.ruler,
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
+            label: EngineeringTerms.width,
+            suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          AppNumberField(
+          const SizedBox(height: SbSpacing.sm),
+          SbInput(
             label: EngineeringTerms.depth,
-            suffixIcon: SbIcons.height,
+            suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           Text(
             EngineeringTerms.ratioFormat,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.lg),
           Wrap(
-            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
-            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            spacing: SbSpacing.lg,
+            runSpacing: SbSpacing.lg,
             children: [
               SizedBox(
                 width: 100,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.cement,
                   onChanged: controller.updateMixCement,
                   onInfoPressed: () => SbFeedback.showToast(
@@ -143,7 +141,7 @@ class CementScreen extends ConsumerWidget {
               ),
               SizedBox(
                 width: 100,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.sand,
                   onChanged: controller.updateMixSand,
                   onInfoPressed: () => SbFeedback.showToast(
@@ -154,7 +152,7 @@ class CementScreen extends ConsumerWidget {
               ),
               SizedBox(
                 width: 100,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.aggregate,
                   onChanged: controller.updateMixAggregate,
                   onInfoPressed: () => SbFeedback.showToast(
@@ -165,16 +163,16 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.lg),
           Wrap(
-            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
-            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            spacing: SbSpacing.lg,
+            runSpacing: SbSpacing.lg,
             children: [
               SizedBox(
                 width: 160,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.wastePercent,
-                  suffixIcon: SbIcons.percent,
+                  suffixIcon: const Icon(SbIcons.percent),
                   onChanged: controller.updateWaste,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
@@ -184,15 +182,15 @@ class CementScreen extends ConsumerWidget {
               ),
               SizedBox(
                 width: 160,
-                child: AppNumberField(
+                child: SbInput(
                   label: EngineeringTerms.pricePerBag,
-                  suffixIcon: SbIcons.payments,
+                  suffixIcon: const Icon(SbIcons.payments),
                   onChanged: controller.updatePrice,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -208,7 +206,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
@@ -217,25 +215,14 @@ class CementScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

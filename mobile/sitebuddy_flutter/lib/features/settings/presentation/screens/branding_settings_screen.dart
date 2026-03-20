@@ -74,47 +74,63 @@ class _BrandingSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Report Branding',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Enterprise Profile',
-            style: Theme.of(context).textTheme.titleMedium!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          Text(
-            'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
-            style: Theme.of(context).textTheme.bodyMedium!,
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          _buildInputLabel(context, 'Company / Enterprise Name'),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          SbInput(
-            controller: _companyController,
-            hint: 'e.g., ABC Infra Pvt Ltd',
-            keyboardType: TextInputType.text,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          _buildInputLabel(context, 'Lead Engineer Name'),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          SbInput(
-            controller: _engineerController,
-            hint: 'e.g., Er. Pijush Debbarma',
-            keyboardType: TextInputType.name,
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbButton.primary(
             label: 'Save Branding Profile',
             onPressed: _saveBranding,
+            width: double.infinity,
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.lg),
           SbButton.ghost(
             label: 'Reset to Site Buddy Defaults',
             onPressed: _resetBranding,
+            width: double.infinity,
           ),
-          const SizedBox(height: SbSpacing.xxl), // Added for consistency
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          SbSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Enterprise Profile',
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                Text(
+                  'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
+                  style: Theme.of(context).textTheme.bodyMedium!,
+                ),
+                const SizedBox(height: SbSpacing.xxl),
+                _buildInputLabel(context, 'Company / Enterprise Name'),
+                const SizedBox(height: SbSpacing.sm),
+                SbInput(
+                  controller: _companyController,
+                  hint: 'e.g., ABC Infra Pvt Ltd',
+                  keyboardType: TextInputType.text,
+                  label: 'COMPANY NAME',
+                  onChanged: (v) {},
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                _buildInputLabel(context, 'Lead Engineer Name'),
+                const SizedBox(height: SbSpacing.sm),
+                SbInput(
+                  controller: _engineerController,
+                  hint: 'e.g., Er. Pijush Debbarma',
+                  keyboardType: TextInputType.name,
+                  label: 'ENGINEER NAME',
+                  onChanged: (v) {},
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

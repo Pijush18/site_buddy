@@ -6,11 +6,10 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/core/widgets/educational_toggle.dart';
 import 'package:site_buddy/core/widgets/code_reference_card.dart';
 import 'package:site_buddy/core/data/code_references/is_456_references.dart';
 import 'package:site_buddy/core/services/educational_mode_service.dart';
@@ -49,156 +48,147 @@ class _DesignCalculationScreenState
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Design Calculation',
-      actions: const [EducationalToggle()],
-      child: Column(
+      appBarActions: const [EducationalToggle()],
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 4 of 6: Structural Design',
-            style: Theme.of(context).textTheme.titleLarge!,
+          SbButton.primary(
+            label: 'Next: Detailing',
+            onPressed: () {
+              context.push('/column/detailing');
+            },
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 4 of 6: Structural Design',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
+          ),
 
-          // Design Settings & Properties
-          DesignResultCard(
+          // ── SECTION PROPERTIES ──
+          SbSection(
             title: 'Section Properties',
-            isSafe: true,
-            items: [
-              DesignResultItem(
-                label: 'Gross Area (Ag)',
-                value: state.ag.toInt().toString(),
-                unit: 'mm²',
-              ),
-              DesignResultItem(
-                label: 'Target Steel %',
-                value: state.steelPercentage.toStringAsFixed(2),
-                unit: '%',
-              ),
-            ],
-          ),
-
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-
-          // Design Controls Card
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.xxl),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Design Configuration',
-                  style: Theme.of(context).textTheme.titleMedium!,
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: true,
+              items: [
+                DesignResultItem(
+                  label: 'Gross Area (Ag)',
+                  value: state.ag.toInt().toString(),
+                  unit: 'mm²',
                 ),
-                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md) (closest standard)
-                Text(
-                  'Design Method',
-                  style: Theme.of(context).textTheme.labelMedium!,
+                DesignResultItem(
+                  label: 'Target Steel %',
+                  value: state.steelPercentage.toStringAsFixed(2),
+                  unit: '%',
                 ),
-                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                SbCard(
-                  padding: const EdgeInsets.all(SbSpacing.lg),
-                  child: Column(
-                    children: [
-                      SbDropdown<DesignMethod>(
-                        value: state.designMethod,
-                        items: DesignMethod.values,
-                        itemLabelBuilder: (m) => m.label,
-                        onChanged: (v) =>
-                            v != null ? notifier.updateDesignMethod(v) : null,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Auto-calculate Steel %',
-                            style: Theme.of(context).textTheme.labelLarge!,
-                          ),
-                          Text(
-                            'Automatically find minimum steel',
-                            style: Theme.of(context).textTheme.labelMedium!,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SbSwitch(
-                      value: state.isAutoSteel,
-                      onChanged: (v) =>
-                          notifier.updateReinforcement(isAutoSteel: v),
-                    ),
-                  ],
-                ),
-                if (!state.isAutoSteel) ...[
-                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                  AppNumberField(
-                    label: 'Manual Steel (%)',
-                    hint: 'e.g. 1.20',
-                    controller: _steelPercentageController,
-                    onChanged: (v) {
-                      final p = double.tryParse(v);
-                      if (p != null) {
-                        notifier.updateReinforcement(steelPercentage: p);
-                      }
-                    },
-                  ),
-                ],
               ],
             ),
           ),
 
+          // ── DESIGN CONFIGURATION ──
+          SbSection(
+            title: 'Design Configuration',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Design Method',
+                    style: Theme.of(context).textTheme.labelMedium!,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  SbDropdown<DesignMethod>(
+                    value: state.designMethod,
+                    items: DesignMethod.values,
+                    itemLabelBuilder: (m) => m.label,
+                    onChanged: (v) =>
+                        v != null ? notifier.updateDesignMethod(v) : null,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Auto-calculate Steel %',
+                              style: Theme.of(context).textTheme.labelLarge!,
+                            ),
+                            Text(
+                              'Automatically find minimum steel',
+                              style: Theme.of(context).textTheme.labelMedium!,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SbSwitch(
+                        value: state.isAutoSteel,
+                        onChanged: (v) =>
+                            notifier.updateReinforcement(isAutoSteel: v),
+                      ),
+                    ],
+                  ),
+                  if (!state.isAutoSteel) ...[
+                    const SizedBox(height: SbSpacing.lg),
+                    SbInput(
+                      label: 'Manual Steel (%)',
+                      hint: 'e.g. 1.20',
+                      controller: _steelPercentageController,
+                      onChanged: (v) {
+                        final p = double.tryParse(v);
+                        if (p != null) {
+                          notifier.updateReinforcement(steelPercentage: p);
+                        }
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+
+          // ── CODE REFERENCE ──
           if (ref.watch(educationalModeProvider))
-            const CodeReferenceCard(
-              reference: IS456References.minReinforcementColumn,
+            const SbSection(
+              child: CodeReferenceCard(
+                reference: IS456References.minReinforcementColumn,
+              ),
             ),
 
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-
-          // Required Steel Area (Asc)
-          DesignResultCard(
+          // ── REINFORCEMENT REQUIREMENT ──
+          SbSection(
             title: 'Reinforcement Requirement',
-            isSafe: state.astRequired > 0,
-            items: [
-              DesignResultItem(
-                label: 'Required Steel Area (Asc)',
-                value: state.astRequired.toInt().toString(),
-                unit: 'mm²',
-                isCritical: true,
-              ),
-            ],
-            codeReference: state.designMethod == DesignMethod.analytical
-                ? 'IS 456 Cl. 39.3'
-                : 'IS 456 Annex B',
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.astRequired > 0,
+              items: [
+                DesignResultItem(
+                  label: 'Required Steel Area (Asc)',
+                  value: state.astRequired.toInt().toString(),
+                  unit: 'mm²',
+                  isCritical: true,
+                ),
+              ],
+              codeReference: state.designMethod == DesignMethod.analytical
+                  ? 'IS 456 Cl. 39.3'
+                  : 'IS 456 Annex B',
+            ),
           ),
-
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Detailing',
-                onPressed: () {
-                  context.push('/column/detailing');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );

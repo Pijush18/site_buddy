@@ -100,25 +100,25 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
-    return AppScreenWrapper(
-      child: SbSectionList(
+    return SbPage.scaffold(
+      body: SbSectionList(
         sections: [
           // ── HEADER ──
           SbSection(
             child: Column(
               children: [
                 const SizedBox(height: SbSpacing.xxl),
-          Icon(
-            SbIcons.engineering,
-            size: 64,
-            color: colorScheme.primary,
-          ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          Text(
-            AppStrings.siteBuddy,
-            style: Theme.of(context).textTheme.titleLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+                Icon(
+                  SbIcons.engineering,
+                  size: 64,
+                  color: colorScheme.primary,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                Text(
+                  AppStrings.siteBuddy,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -147,12 +147,16 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => _resetPassword(),
-                    prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                    prefixIcon:
+                        Icon(SbIcons.account, color: colorScheme.primary),
                   ),
                   const SizedBox(height: SbSpacing.xl),
                   SbButton.primary(
                     label: AppStrings.sendResetLink,
-                    onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
+                    onPressed:
+                        (isLoading || _emailController.text.isEmpty)
+                            ? null
+                            : _resetPassword,
                     isLoading: isLoading,
                     width: double.infinity,
                   ),

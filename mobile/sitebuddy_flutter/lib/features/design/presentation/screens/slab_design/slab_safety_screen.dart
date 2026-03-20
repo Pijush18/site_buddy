@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -18,9 +19,9 @@ class SlabSafetyScreen extends ConsumerWidget {
     final state = ref.watch(slabDesignControllerProvider);
 
     if (state.result == null) {
-      return const AppScreenWrapper(
+      return const SbPage.scaffold(
         title: 'Safety Check',
-        child: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -30,84 +31,93 @@ class SlabSafetyScreen extends ConsumerWidget {
       optimizationResult: optimizationResult,
     );
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Safety Check',
-      actions: [
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SbButton.primary(
+            label: 'Export PDF Design Report',
+            onPressed: () => ref
+                .read(slabDesignControllerProvider.notifier)
+                .generateReport(),
+            icon: Icons.picture_as_pdf_outlined,
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      appBarActions: [
         IconButton(
           icon: const Icon(Icons.share_outlined),
           tooltip: 'Share Report',
-          onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
+          onPressed: () =>
+              ref.read(slabDesignControllerProvider.notifier).generateReport(),
         ),
       ],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Final Step: Engineering Validation',
-            style: Theme.of(context).textTheme.titleLarge!,
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Final Step: Engineering Validation',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
-          DesignResultCard(
+          // ── SAFETY STATUS ──
+          SbSection(
             title: 'Critical Safety Status',
-            isSafe: state.result!.isDeflectionSafe && state.result!.isShearSafe,
-            items: [
-              DesignResultItem(
-                label: 'Deflection Check',
-                value: state.result!.isDeflectionSafe ? 'SAFE' : 'ACTION REQUIRED',
-                isCritical: !state.result!.isDeflectionSafe,
-              ),
-              DesignResultItem(
-                label: 'Shear Check',
-                value: state.result!.isShearSafe ? 'PASS' : 'FAIL',
-              ),
-              DesignResultItem(
-                label: 'Cracking Limit',
-                value: state.result!.isCrackingSafe ? 'OK' : 'FAIL',
-              ),
-            ],
-            codeReference: 'IS 456 Cl. 23.2.1',
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-          DesignAdvisorCard(advisorResult: advisorResult),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-
-          if (optimizationResult.options.isNotEmpty) ...[
-            Text(
-              'ECONOMICAL ALTERNATIVES',
-              style: Theme.of(context).textTheme.titleMedium!,
+            child: DesignResultCard(
+              title: 'Verification Details',
+              isSafe:
+                  state.result!.isDeflectionSafe && state.result!.isShearSafe,
+              items: [
+                DesignResultItem(
+                  label: 'Deflection Check',
+                  value: state.result!.isDeflectionSafe
+                      ? 'SAFE'
+                      : 'ACTION REQUIRED',
+                  isCritical: !state.result!.isDeflectionSafe,
+                ),
+                DesignResultItem(
+                  label: 'Shear Check',
+                  value: state.result!.isShearSafe ? 'PASS' : 'FAIL',
+                ),
+                DesignResultItem(
+                  label: 'Cracking Limit',
+                  value: state.result!.isCrackingSafe ? 'OK' : 'FAIL',
+                ),
+              ],
+              codeReference: 'IS 456 Cl. 23.2.1',
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-            OptimizationList(
-              options: optimizationResult.options,
-              onOptionSelected: (opt) {
-                final thickness = opt.parameters['thickness'] as double;
-                ref.read(slabDesignControllerProvider.notifier).updateDepth(thickness);
-                ref.read(slabDesignControllerProvider.notifier).calculate();
-              },
-            ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          ],
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Export PDF Design Report',
-                onPressed: () => ref.read(slabDesignControllerProvider.notifier).generateReport(),
-                icon: Icons.picture_as_pdf_outlined,
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => Navigator.of(context).pop(),
-                width: double.infinity,
-              ),
-            ],
           ),
-          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
+
+          // ── ADVISOR ──
+          SbSection(
+            title: 'Design Advisor',
+            child: DesignAdvisorCard(advisorResult: advisorResult),
+          ),
+
+          // ── OPTIMIZATION ──
+          if (optimizationResult.options.isNotEmpty)
+            SbSection(
+              title: 'Economical Alternatives',
+              child: OptimizationList(
+                options: optimizationResult.options,
+                onOptionSelected: (opt) {
+                  final thickness = opt.parameters['thickness'] as double;
+                  ref
+                      .read(slabDesignControllerProvider.notifier)
+                      .updateDepth(thickness);
+                  ref.read(slabDesignControllerProvider.notifier).calculate();
+                },
+              ),
+            ),
         ],
       ),
     );

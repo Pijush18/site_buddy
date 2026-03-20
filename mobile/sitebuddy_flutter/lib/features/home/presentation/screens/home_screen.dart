@@ -10,7 +10,7 @@ import 'package:site_buddy/features/home/domain/models/activity_type.dart';
 
 /// SCREEN: HomeScreen
 /// PURPOSE: Root dashboard implementation following the Predefined Layout System.
-/// RULE: AppScreenWrapper → SbSectionList → SbSection.
+/// RULE: SbPage → SbSectionList → SbSection.
 /// RULE: No direct Columns, no manual SizedBox heights between sections.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -19,9 +19,9 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activities = ref.watch(homeProvider).recentActivities;
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: AppStrings.appName,
-      actions: [
+      appBarActions: [
         SbButton.icon(
           icon: SbIcons.settings,
           onPressed: () => context.push('/settings'),
@@ -30,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
       ],
       // ── PREDEFINED LAYOUT SYSTEM ──
       // SbSectionList centralizes the 24px gap between children.
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── SECTION 1: SMART ASSISTANT HERO ──
           const SbSection(title: null, child: SbSmartAssistantCard()),

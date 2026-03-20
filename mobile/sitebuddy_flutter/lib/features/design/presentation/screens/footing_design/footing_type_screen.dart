@@ -17,56 +17,53 @@ class FootingTypeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Footing Design',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.share_outlined),
-          onPressed: () => debugPrint('ACTION: share footing design'),
-        ),
-        const SizedBox(width: SbSpacing.sm),
-      ],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Step 1 of 6: Foundation Type',
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg), // Replaced SbSpacing.lg
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
-              mainAxisSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
-              childAspectRatio: 0.95,
+      primaryAction: SbButton.ghost(
+        label: 'Back',
+        onPressed: () => context.pop(),
+        width: double.infinity,
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 1 of 6: Foundation Type',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            itemCount: FootingType.values.length,
-            itemBuilder: (context, index) {
-              final type = FootingType.values[index];
-              return FootingCard(
-                title: type.label,
-                description: type.description,
-                icon: _getIcon(type),
-                onTap: () {
-                  ref
-                      .read(footingDesignControllerProvider.notifier)
-                      .updateType(type);
-                  context.push('/footing/soil-load');
-                },
-              );
-            },
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          SbButton.secondary(
-            label: 'Back',
-            onPressed: () => context.pop(),
-            width: double.infinity,
+
+          // ── SELECTION GRID ──
+          SbSection(
+            title: 'Select Foundation Type',
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: SbSpacing.lg,
+                mainAxisSpacing: SbSpacing.lg,
+                childAspectRatio: 0.95,
+              ),
+              itemCount: FootingType.values.length,
+              itemBuilder: (context, index) {
+                final type = FootingType.values[index];
+                return FootingCard(
+                  title: type.label,
+                  description: type.description,
+                  icon: _getIcon(type),
+                  onTap: () {
+                    ref
+                        .read(footingDesignControllerProvider.notifier)
+                        .updateType(type);
+                    context.push('/footing/soil-load');
+                  },
+                );
+              },
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );

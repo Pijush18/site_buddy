@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/widgets/app_number_field.dart';
+
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 
@@ -45,70 +45,67 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Load & Support',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 2 of 6: Loading Conditions',
-            style: Theme.of(context).textTheme.labelMedium!,
+          SbButton.primary(
+            label: 'Next: Slenderness Check',
+            onPressed: _onNext,
+            icon: Icons.analytics_outlined,
           ),
-          const SizedBox(height: SbSpacing.xxl),
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Axial Loading',
-                  style: Theme.of(context).textTheme.labelLarge!,
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                AppNumberField(
-                  label: 'Factored Load Pu (kN)',
-                  controller: _loadController,
-                  onChanged: (v) {
-                    final val = double.tryParse(v);
-                    if (val != null) notifier.updateLoads(pu: val);
-                  },
-                  suffixIcon: Icons.arrow_downward,
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                Text(
-                  'End Support Condition',
-                  style: Theme.of(context).textTheme.labelMedium!,
-                ),
-                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-                SbDropdown<EndCondition>(
-                  value: state.endCondition,
-                  items: EndCondition.values,
-                  itemLabelBuilder: (c) => c.label,
-                  onChanged: (v) => v != null
-                      ? notifier.updateInput(endCondition: v)
-                      : null,
-                ),
-              ],
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 2 of 6: Loading & Support',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Slenderness Check',
-                onPressed: _onNext,
-                icon: Icons.analytics_outlined,
-                width: double.infinity,
+
+          // ── LOADING SECTION ──
+          SbSection(
+            title: 'Vertical Loads',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SbInput(
+                    label: 'Factored Axial Load Pu (kN)',
+                    controller: _loadController,
+                    onChanged: (v) {
+                      final val = double.tryParse(v);
+                      if (val != null) notifier.updateLoads(pu: val);
+                    },
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  Text(
+                    'End Support Condition',
+                    style: Theme.of(context).textTheme.labelLarge!,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  SbDropdown<EndCondition>(
+                    value: state.endCondition,
+                    items: EndCondition.values,
+                    itemLabelBuilder: (c) => c.label,
+                    onChanged: (v) => v != null
+                        ? notifier.updateInput(endCondition: v)
+                        : null,
+                  ),
+                ],
               ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

@@ -30,9 +30,9 @@ class ProjectDetailScreen extends ConsumerWidget {
         .getProjectById(projectId);
 
     if (proj == null) {
-      return const AppScreenWrapper(
+      return const SbPage.detail(
         title: ScreenTitles.projectNotFound,
-        child: Center(child: Text(AppStrings.projectNotFoundDesc)),
+        body: Center(child: Text(AppStrings.projectNotFoundDesc)),
       );
     }
 
@@ -69,14 +69,14 @@ class ProjectDetailScreen extends ConsumerWidget {
     final logItems = detailState.logs;
     final formattedDate = DateFormat('dd MMM yyyy').format(proj.createdAt);
 
-    return AppScreenWrapper(
+    return SbPage.detail(
       title: proj.name,
-      actions: [
+      appBarActions: [
         Consumer(
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
-              margin: const EdgeInsets.only(right: SbSpacing.lg), // Replaced SbSpacing.lg
+              margin: const EdgeInsets.only(right: SbSpacing.lg),
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
@@ -86,98 +86,98 @@ class ProjectDetailScreen extends ConsumerWidget {
           },
         ),
       ],
-      child: SbSectionList(
+      body: SbSectionList(
         sections: [
           // ── Status Header ──
           SbSection(
             child: SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppStrings.status,
-                      style: Theme.of(context).textTheme.labelMedium!,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.lg,
-                        vertical: SbSpacing.sm / 2,
-                      ),
-                      child: Text(
-                        proj.status.label,
+              padding: const EdgeInsets.all(SbSpacing.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.status,
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                Text(
-                  proj.name,
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                // Cover Image Mock
-                SizedBox(
-                  height: 120,
-                  width: double.infinity,
-                  child: Center(
-                    child: Icon(
-                      SbIcons.terrain,
-                      size: 48,
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.5,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SbSpacing.lg,
+                          vertical: SbSpacing.sm / 2,
+                        ),
+                        child: Text(
+                          proj.status.label,
+                          style: Theme.of(context).textTheme.labelMedium!,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  Text(
+                    proj.name,
+                    style: Theme.of(context).textTheme.titleMedium!,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  // Cover Image Mock
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: Center(
+                      child: Icon(
+                        SbIcons.terrain,
+                        size: 48,
+                        color: colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.5,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppStrings.created,
-                          style: Theme.of(context).textTheme.labelMedium!,
-                        ),
-                        Text(
-                          formattedDate,
-                          style: Theme.of(context).textTheme.bodyLarge!,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          AppStrings.location,
-                          style: Theme.of(context).textTheme.labelMedium!,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              SbIcons.location,
-                              size: 20,
-                              color: colorScheme.primary,
-                            ),
-                            const SizedBox(width: SbSpacing.sm),
-                            Text(
-                              proj.location,
+                  const SizedBox(height: SbSpacing.lg),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.created,
+                            style: Theme.of(context).textTheme.labelMedium!,
+                          ),
+                          Text(
+                            formattedDate,
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            AppStrings.location,
+                            style: Theme.of(context).textTheme.labelMedium!,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                SbIcons.location,
+                                size: 20,
+                                color: colorScheme.primary,
+                              ),
+                              const SizedBox(width: SbSpacing.sm),
+                              Text(
+                                proj.location,
                                 style: Theme.of(context).textTheme.bodyLarge!,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -188,7 +188,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               child: SbCard(
                 child: Text(
                   proj.description!,
-                    style: Theme.of(context).textTheme.bodyLarge!,
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ),

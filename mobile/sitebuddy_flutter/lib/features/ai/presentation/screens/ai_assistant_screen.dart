@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,11 +64,10 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
     final state = ref.watch(aiControllerProvider);
     final controller = ref.read(aiControllerProvider.notifier);
 
-    return AppScreenWrapper(
+    return SbPage.scaffold(
       title: 'Smart Assistant',
-      isScrollable: false,
       usePadding: false,
-      actions: [
+      appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.task),
           onPressed: () {
@@ -81,7 +80,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
           onPressed: () => context.push('/settings/branding'),
         ),
       ],
-      child: Column(
+      body: Column(
         children: [
           if (state.response != null)
             Offstage(
@@ -91,8 +90,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                 child: Material(
                   child: AiShareReportCard(
                     question: state.query,
-                    answer:
-                        state.response!.knowledge?.definition ??
+                    answer: state.response!.knowledge?.definition ??
                         state.response!.conversion?.mainValue.toString() ??
                         'Calculation Result',
                     projectName: controller.currentProjectName,
@@ -100,7 +98,6 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                 ),
               ),
             ),
-
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
@@ -117,17 +114,17 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
                     AssistantGuidanceWidget(response: state.assistantResponse!),
-                    const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   AiResponseCard(
                     response: state.response!,
                     onSaveToProject: state.latestChatId == null
                         ? null
                         : () => AiActionHandlers.handleSaveToProject(
-                            context,
-                            ref,
-                            state,
-                          ),
+                              context,
+                              ref,
+                              state,
+                            ),
                     onShare: () => AiActionHandlers.handleShare(
                       context,
                       state,
@@ -155,7 +152,6 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
               ],
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(SbSpacing.lg),
             child: AiInputBar(

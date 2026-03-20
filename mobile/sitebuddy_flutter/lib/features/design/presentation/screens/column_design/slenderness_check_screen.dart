@@ -19,88 +19,95 @@ class SlendernessCheckScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(columnDesignControllerProvider);
 
-    return AppScreenWrapper(
+    return SbPage.form(
       title: 'Slenderness Check',
-      child: Column(
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Step 3 of 6: Slenderness Classification',
-            style: Theme.of(context).textTheme.titleLarge!,
+          SbButton.primary(
+            label: 'Next: Design Calculation',
+            onPressed: () {
+              context.push('/column/design');
+            },
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
-          DesignResultCard(
+          const SizedBox(height: SbSpacing.sm),
+          SbButton.ghost(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
+      ),
+      body: SbSectionList(
+        sections: [
+          // ── STEP HEADER ──
+          SbSection(
+            child: Text(
+              'Step 3 of 6: Slenderness Check',
+              style: Theme.of(context).textTheme.titleLarge!,
+            ),
+          ),
+
+          // ── CLASSIFICATION SECTION ──
+          SbSection(
             title: 'Column Classification',
-            isSafe: state.isShort,
-            items: [
-              DesignResultItem(
-                label: 'Status',
-                value: state.isShort ? 'SHORT' : 'SLENDER',
-                isCritical: true,
-              ),
-              DesignResultItem(
-                label: 'Classification Rule',
-                value: state.isShort ? 'λ < 12' : 'λ ≥ 12',
-                subtitle: 'Based on IS 456 Cl 39.7.1',
-              ),
-            ],
+            child: DesignResultCard(
+              title: 'Verification',
+              isSafe: state.isShort,
+              items: [
+                DesignResultItem(
+                  label: 'Status',
+                  value: state.isShort ? 'SHORT' : 'SLENDER',
+                  isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Classification Rule',
+                  value: state.isShort ? 'λ < 12' : 'λ ≥ 12',
+                  subtitle: 'Based on IS 456 Cl 39.7.1',
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
-          Text(
-            'Geometric Visualization',
-          style: Theme.of(context).textTheme.titleMedium!,
+
+          // ── VISUALIZATION SECTION ──
+          SbSection(
+            title: 'Geometric Visualization',
+            child: SlendernessDiagram(
+              slendernessX: state.slendernessX,
+              slendernessY: state.slendernessY,
+              lex: state.lex,
+              ley: state.ley,
+              b: state.b,
+              d: state.d,
+              isCircular: state.type == ColumnType.circular,
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
-          SlendernessDiagram(
-            slendernessX: state.slendernessX,
-            slendernessY: state.slendernessY,
-            lex: state.lex,
-            ley: state.ley,
-            b: state.b,
-            d: state.d,
-            isCircular: state.type == ColumnType.circular,
+
+          // ── PARAMETERS SECTION ──
+          SbSection(
+            title: 'Effective Length',
+            child: DesignResultCard(
+              title: 'Parameters',
+              isSafe: true,
+              items: [
+                DesignResultItem(
+                  label: 'lex (Major Axis)',
+                  value: state.lex.toInt().toString(),
+                  unit: 'mm',
+                ),
+                DesignResultItem(
+                  label: 'ley (Minor Axis)',
+                  value: state.ley.toInt().toString(),
+                  unit: 'mm',
+                ),
+                DesignResultItem(
+                  label: 'Unsupported Length (L)',
+                  value: state.length.toInt().toString(),
+                  unit: 'mm',
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
-          DesignResultCard(
-            title: 'Effective Length Parameters',
-            isSafe: true,
-            items: [
-              DesignResultItem(
-                label: 'lex (Major Axis)',
-                value: state.lex.toInt().toString(),
-                unit: 'mm',
-              ),
-              DesignResultItem(
-                label: 'ley (Minor Axis)',
-                value: state.ley.toInt().toString(),
-                unit: 'mm',
-              ),
-              DesignResultItem(
-                label: 'Unsupported Length (L)',
-                value: state.length.toInt().toString(),
-                unit: 'mm',
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SbButton.primary(
-                label: 'Next: Design Calculation',
-                onPressed: () {
-                  context.push('/column/design');
-                },
-                width: double.infinity,
-              ),
-              const SizedBox(height: SbSpacing.sm),
-              SbButton.secondary(
-                label: 'Back',
-                onPressed: () => context.pop(),
-                width: double.infinity,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

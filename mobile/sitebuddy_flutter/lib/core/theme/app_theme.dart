@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
+import 'package:site_buddy/core/design_system/sb_colors.dart';
 
 /// CLASS: AppTheme
 /// PURPOSE: Centralized theme definitions for Site Buddy.
@@ -12,16 +13,15 @@ class AppTheme {
   static ThemeData get darkTheme => _createTheme(Brightness.dark);
 
   static ThemeData _createTheme(Brightness brightness) {
-    // 🧱 Base Color Definition
-    const primarySeed = Color(0xFF1E3A8A); // Slate 800-900 base
+    final bool isLight = brightness == Brightness.light;
 
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: primarySeed,
+      seedColor: SbColors.primarySeed,
       brightness: brightness,
       // 🎨 Hierarchy Overrides
-      surface: brightness == Brightness.light ? const Color(0xFFF8FAFC) : const Color(0xFF0F172A),
-      surfaceContainer: brightness == Brightness.light ? const Color(0xFFFFFFFF) : const Color(0xFF1E293B),
-      surfaceContainerHigh: brightness == Brightness.light ? const Color(0xFFF1F5F9) : const Color(0xFF334155),
+      surface: isLight ? SbColors.lightSurface : SbColors.darkSurface,
+      surfaceContainer: isLight ? SbColors.lightContainer : SbColors.darkContainer,
+      surfaceContainerHigh: isLight ? SbColors.lightContainerHigh : SbColors.darkContainerHigh,
     );
 
     return ThemeData(
@@ -61,23 +61,6 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
       ),
 
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: colorScheme.surfaceContainerHigh.withValues(alpha: 0.5),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: colorScheme.outline, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
-        ),
-      ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
