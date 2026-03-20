@@ -63,3 +63,6 @@ class ShutteringController extends Notifier<ShutteringState> {
   void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ShutteringState.initial();
 }
+
+
+

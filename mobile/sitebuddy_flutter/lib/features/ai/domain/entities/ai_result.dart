@@ -42,3 +42,6 @@ class AiResult {
     required this.message,
   });
 }
+
+
+

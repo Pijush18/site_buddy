@@ -1,7 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 
 
@@ -42,7 +41,7 @@ class SbModuleHero extends StatelessWidget {
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: colorScheme.surface, // Base fallback
-        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+        borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
           color: AppColors.skyBlue.withValues(alpha: 0.7),
           width: 1.0,
@@ -54,7 +53,7 @@ class SbModuleHero extends StatelessWidget {
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+        borderRadius: BorderRadius.circular(12.0),
         child: Stack(
           children: [
             // Texture Overlay - Desaturated for focus
@@ -68,7 +67,7 @@ class SbModuleHero extends StatelessWidget {
             
             // Content
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,31 +78,25 @@ class SbModuleHero extends StatelessWidget {
                         color: colorScheme.primary, // 👈 Pure primary branding
                         size: 26,
                       ),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                       Expanded(
                         child: Text(
                           title,
-                          style: AppTextStyles.body(context, secondary: true).copyWith(
-                            color: colorScheme.onSurface, // 👈 Soft, high-readability title
-                            letterSpacing: -0.5,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Padding(
-                    padding: const EdgeInsets.only(left: AppSpacing.xs),
+                    padding: const EdgeInsets.only(left: SbSpacing.xs),
                     child: Text(
                       subtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.85),
-                        height: 1.4,
-                      ),
+                      style: theme.textTheme.bodyMedium!,
                     ),
                   ),
                   if (child != null) ...[
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     child!,
                   ],
                 ],
@@ -143,3 +136,13 @@ class _HeroPatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
+
+

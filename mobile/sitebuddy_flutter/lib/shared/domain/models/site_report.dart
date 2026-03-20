@@ -66,3 +66,6 @@ class SiteReport {
   /// Validates if the entire constructed payload actually contains generated bodies.
   bool get isEmpty => sections.isEmpty;
 }
+
+
+

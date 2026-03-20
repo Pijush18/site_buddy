@@ -1,6 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +18,6 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(plasterProvider);
     final controller = ref.read(plasterProvider.notifier);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     final aError = state.failure?.message.contains('Area') == true ? state.failure?.message : null;
     final tError = state.failure?.message.contains('Thickness') == true ? state.failure?.message : null;
@@ -31,7 +28,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.plasterArea),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           AppNumberField(
             label: EngineeringTerms.wallArea,
             hint: EngineeringTerms.areaHint,
@@ -39,31 +36,26 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
             onChanged: controller.updateArea,
             errorText: aError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           AppNumberField(
             label: EngineeringTerms.plasterThickness,
-            hint: EngineeringTerms.diameterHint, // Reuse diameter hint or add specific thickness hint
+            hint: EngineeringTerms.diameterHint,
             suffixIcon: SbIcons.layers,
             onChanged: controller.updateThickness,
             errorText: tError,
           ),
-          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+          const SizedBox(height: SbSpacing.sm),
           Text(
             EngineeringTerms.typicalThicknessNote,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-              fontStyle: FontStyle.italic,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           Text(
             EngineeringTerms.mortarRatio,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           SbDropdown<PlasterRatio>(
             value: state.selectedRatio,
             items: PlasterRatio.values,
@@ -74,22 +66,20 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
               }
             },
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
           if (state.result != null) ...[
             _ResultSection(result: state.result!),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
           ActionButtonsGroup(
             children: [
@@ -106,16 +96,13 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           Text(
             EngineeringTerms.isPlasterCodeNote,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-              fontStyle: FontStyle.italic,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -128,12 +115,9 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Text(
       label.toUpperCase(),
-      style: AppTextStyles.sectionTitle(context).copyWith(
-        color: theme.colorScheme.primary,
-      ),
+      style: Theme.of(context).textTheme.titleMedium!,
       textAlign: TextAlign.center,
     );
   }
@@ -145,73 +129,61 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             EngineeringTerms.resultSummary,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
 
           SbListItemTile(
             title: EngineeringTerms.cementBags,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
             ),
           ),
           SbListItemTile(
             title: EngineeringTerms.sandVolume,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           const Divider(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
+          const SizedBox(height: SbSpacing.xxl),
           SbListItemTile(
             title: EngineeringTerms.dryMortarVolume,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${result.dryVolume.toStringAsFixed(3)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(EngineeringTerms.mortarRatioLabel, style: AppTextStyles.caption(context)),
+              Text(EngineeringTerms.mortarRatioLabel, style: Theme.of(context).textTheme.labelMedium!),
               Text(
                 result.mortarRatio,
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(EngineeringTerms.thicknessLabel, style: AppTextStyles.caption(context)),
+              Text(EngineeringTerms.thicknessLabel, style: Theme.of(context).textTheme.labelMedium!),
               Text(
                 '${(result.thickness * 1000).toStringAsFixed(0)} mm',
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),

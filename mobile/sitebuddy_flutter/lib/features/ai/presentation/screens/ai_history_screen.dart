@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,9 +30,6 @@ class AiHistoryScreen extends ConsumerWidget {
     state,
     AiHistoryController controller,
   ) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     if (state.isLoading && state.chats.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -41,7 +38,7 @@ class AiHistoryScreen extends ConsumerWidget {
       return Center(
         child: Text(
           state.error!,
-          style: AppTextStyles.body(context).copyWith(color: colorScheme.error),
+          style: Theme.of(context).textTheme.bodyLarge!,
           textAlign: TextAlign.center,
         ),
       );
@@ -60,7 +57,7 @@ class AiHistoryScreen extends ConsumerWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: state.chats.length,
       separatorBuilder: (context, index) =>
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
       itemBuilder: (context, index) {
         final chat = state.chats[index];
         return ChatCard(
@@ -85,3 +82,14 @@ class AiHistoryScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

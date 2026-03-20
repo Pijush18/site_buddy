@@ -421,3 +421,6 @@ class MaterialEstimationService {
   /// while preserving engineering precision.
   double _round(double value) => (value * 1e6).roundToDouble() / 1e6;
 }
+
+
+

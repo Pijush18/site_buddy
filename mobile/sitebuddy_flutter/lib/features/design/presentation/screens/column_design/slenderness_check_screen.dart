@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +18,6 @@ class SlendernessCheckScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(columnDesignControllerProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return AppScreenWrapper(
       title: 'Slenderness Check',
@@ -27,11 +26,9 @@ class SlendernessCheckScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 3 of 6: Slenderness Classification',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
           DesignResultCard(
             title: 'Column Classification',
             isSafe: state.isShort,
@@ -48,12 +45,12 @@ class SlendernessCheckScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
           Text(
             'Geometric Visualization',
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
           SlendernessDiagram(
             slendernessX: state.slendernessX,
             slendernessY: state.slendernessY,
@@ -63,7 +60,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
             d: state.d,
             isCircular: state.type == ColumnType.circular,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
           DesignResultCard(
             title: 'Effective Length Parameters',
             isSafe: true,
@@ -95,7 +92,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -103,9 +100,20 @@ class SlendernessCheckScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

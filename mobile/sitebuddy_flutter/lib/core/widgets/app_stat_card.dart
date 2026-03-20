@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 // lib/core/widgets/app_stat_card.dart
 //
 // Reusable statistics card for the SiteBuddy dashboard.
@@ -54,7 +54,7 @@ class AppStatCard extends StatelessWidget {
 
     return Container(
       // Padding inside the card
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      padding: const EdgeInsets.all(SbSpacing.sm),
 
       // Styling and borders
       decoration: BoxDecoration(
@@ -76,28 +76,22 @@ class AppStatCard extends StatelessWidget {
           Icon(icon, size: 28, color: colorScheme.primary),
 
           // Small gap instead of Expanded to prevent layout errors in Columns
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           // ── Value ──────────────────────────────────────────────────────────
           Text(
             value,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              fontWeight: FontWeight.bold,
-              color: colorScheme.onSurface,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
 
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
 
           // ── Title / Caption ────────────────────────────────────────────────
           Text(
             title,
-            style: AppTextStyles.body(context, secondary: true).copyWith(
-              color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -106,3 +100,10 @@ class AppStatCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

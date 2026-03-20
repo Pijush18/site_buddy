@@ -7,3 +7,6 @@ class OptimizationResult {
 
   const OptimizationResult({required this.options});
 }
+
+
+

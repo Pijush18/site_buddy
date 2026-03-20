@@ -72,3 +72,6 @@ class ProjectState extends Equatable {
   @override
   List<Object?> get props => [projects, selectedProject, isLoading, failure];
 }
+
+
+

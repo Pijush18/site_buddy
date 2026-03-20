@@ -4,7 +4,7 @@
 library;
 
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class AppSizes {
@@ -42,7 +42,7 @@ class AppSizes {
   static const gap8 = SizedBox(height: p8);
   static const gap12 = SizedBox(height: p12);
   static const gap16 = SizedBox(height: p16);
-  static const gap18 = SizedBox(height: AppSpacing.md);
+  static const gap18 = SizedBox(height: SbSpacing.lg);
   static const gap24 = SizedBox(height: p24);
 
   // SizedBoxes for horizontal spacing
@@ -56,3 +56,7 @@ class AppSizes {
   static const gapW16 = SizedBox(width: p16);
   static const gapW24 = SizedBox(width: p24);
 }
+
+
+
+

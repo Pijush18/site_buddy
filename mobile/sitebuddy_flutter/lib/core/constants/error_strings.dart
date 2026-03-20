@@ -25,3 +25,6 @@ class ErrorStrings {
   static const invalidEmail = 'Invalid email address.';
   static const syncError = 'Sync error';
 }
+
+
+

@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// A header widget that displays whether a check is safe or unsafe.
 class SafetyStatusHeader extends StatelessWidget {
@@ -21,8 +21,8 @@ class SafetyStatusHeader extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -32,13 +32,10 @@ class SafetyStatusHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 14, color: color),
-          const SizedBox(width: AppSpacing.xs),
+          const SizedBox(width: SbSpacing.xs),
           Text(
             label.isNotEmpty ? label : (isSafe ? 'SAFE' : 'UNSAFE'),
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: color,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
           ),
         ],
       ),
@@ -61,24 +58,18 @@ class SafetyInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
-            style: AppTextStyles.body(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
           Text(
             value,
-            style: AppTextStyles.body(context).copyWith(
-              fontWeight: isStrong ? FontWeight.bold : FontWeight.normal,
-              color: colorScheme.onSurface,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ],
       ),
@@ -153,7 +144,7 @@ class PlaceholderCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.xl),
+        padding: const EdgeInsets.all(SbSpacing.xxl),
         child: Column(
           children: [
             Icon(
@@ -161,13 +152,11 @@ class PlaceholderCard extends StatelessWidget {
               size: 48,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ],
         ),
@@ -175,3 +164,14 @@ class PlaceholderCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

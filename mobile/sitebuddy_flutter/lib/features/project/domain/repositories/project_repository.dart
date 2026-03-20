@@ -57,3 +57,6 @@ abstract class ProjectRepository {
   /// PURPOSE: Synchronizes local projects with the cloud backend.
   Future<void> syncProjects();
 }
+
+
+

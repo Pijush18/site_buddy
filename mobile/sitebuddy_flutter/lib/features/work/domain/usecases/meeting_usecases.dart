@@ -12,3 +12,6 @@ class UpdateMeetingUseCase {
   const UpdateMeetingUseCase(this.repository);
   Future<void> execute(Meeting meeting) => repository.updateMeeting(meeting);
 }
+
+
+

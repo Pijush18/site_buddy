@@ -1,12 +1,11 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: AppScreenWrapper
 /// PURPOSE: Standardized layout wrapper for all application screens.
 class AppScreenWrapper extends StatelessWidget {
   final Widget? child;
-  final List<Widget>? sections; // Native Layout-Driven Engine
+  final List<Widget>? sections;
   final String? title;
   final Color? backgroundColor;
   final List<Widget>? actions;
@@ -28,10 +27,10 @@ class AppScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Policy: Use the standard surface color from the theme (now white in light, slate in dark).
-    final Color effectiveBackgroundColor = backgroundColor ?? Theme.of(context).colorScheme.surface;
-    final Color foregroundColor = Theme.of(context).colorScheme.onSurface;
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final effectiveBackgroundColor = backgroundColor ?? theme.colorScheme.surface;
+    final foregroundColor = theme.colorScheme.onSurface;
 
     return Scaffold(
       backgroundColor: effectiveBackgroundColor,
@@ -39,9 +38,7 @@ class AppScreenWrapper extends StatelessWidget {
           ? AppBar(
               title: Text(
                 title!,
-                style: AppTextStyles.screenTitle(context).copyWith(
-                  color: colorScheme.onSurface,
-                ),
+                style: textTheme.titleLarge,
               ),
               actions: actions,
               backgroundColor: effectiveBackgroundColor,
@@ -58,20 +55,26 @@ class AppScreenWrapper extends StatelessWidget {
             )
           : null,
       body: SafeArea(
-        bottom: false, // Prevents unintended padding accumulation above bottom navigations natively
+        bottom: false,
         child: isScrollable
             ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: usePadding 
-                    ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
+                    ? const EdgeInsets.symmetric(
+                        horizontal: SbSpacing.screenPadding, 
+                        vertical: SbSpacing.lg,
+                      ) 
                     : EdgeInsets.zero,
                 child: sections != null 
-                    ? Column(children: sections!) // If sections is passed, layout controls it automatically. We use raw column here because we'll rely on SbSection's native margins.
+                    ? Column(children: sections!)
                     : child ?? const SizedBox(),
               )
             : Padding(
                 padding: usePadding 
-                    ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
+                    ? const EdgeInsets.symmetric(
+                        horizontal: SbSpacing.screenPadding, 
+                        vertical: SbSpacing.lg,
+                      ) 
                     : EdgeInsets.zero,
                 child: sections != null 
                     ? Column(children: sections!)
@@ -81,3 +84,6 @@ class AppScreenWrapper extends StatelessWidget {
     );
   }
 }
+
+
+

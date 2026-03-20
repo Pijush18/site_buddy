@@ -30,3 +30,6 @@ class ReportSection {
   /// Helpful helper to combine lists cleanly without UI manipulation overhead.
   String get combinedContent => content.join('\n\n');
 }
+
+
+

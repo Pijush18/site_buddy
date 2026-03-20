@@ -70,3 +70,6 @@ class AiChat extends Equatable {
   @override
   List<Object?> get props => [id, query, response, timestamp, projectId];
 }
+
+
+

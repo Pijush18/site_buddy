@@ -149,3 +149,6 @@ class PlasterMaterialResult {
       'ratio: $mortarRatio'
       ')';
 }
+
+
+

@@ -23,3 +23,6 @@ library;
 /// CLASS: UnitType
 /// PURPOSE: Enum classifying the measurable dimensions handled by the converter.
 enum UnitType { length, area, volume, weight, pressure }
+
+
+

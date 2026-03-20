@@ -18,3 +18,6 @@ class AiIntentResult {
   @override
   String toString() => 'AiIntentResult(intent: $intent, params: $parameters)';
 }
+
+
+

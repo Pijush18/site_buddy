@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
@@ -30,33 +30,29 @@ class CalculationCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppLayout.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             color: colorScheme.primary.withValues(alpha: 0.1),
             child: Row(
               children: [
                 Icon(SbIcons.architecture, color: colorScheme.primary, size: 24),
-                AppLayout.hGap12,
+                const SizedBox(width: SbSpacing.md),
                 Text(
                   'Material Estimate',
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppLayout.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   'Input: $dimensionsTitle',
-                  style: AppTextStyles.body(context, secondary: true).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: SbSpacing.lg),
                 Row(
                   children: [
                     Expanded(
@@ -66,7 +62,7 @@ class CalculationCard extends ConsumerWidget {
                         icon: SbIcons.layers,
                       ),
                     ),
-                    AppLayout.hGap16,
+                    const SizedBox(width: SbSpacing.lg),
                     Expanded(
                       child: _StatBox(
                         label: 'Dry Materials',
@@ -77,22 +73,20 @@ class CalculationCard extends ConsumerWidget {
                     ),
                   ],
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: SbSpacing.lg),
                 Container(
-                  padding: const EdgeInsets.all(AppLayout.md),
+                  padding: const EdgeInsets.all(SbSpacing.lg),
                   
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Cement Required',
-                        style: AppTextStyles.sectionTitle(context),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                       Text(
                         '${result.cementBags} Bags',
-                        style: AppTextStyles.sectionTitle(context).copyWith(
-                          color: colorScheme.primary,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ],
                   ),
@@ -124,7 +118,7 @@ class _StatBox extends StatelessWidget {
 //     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,28 +126,33 @@ class _StatBox extends StatelessWidget {
           Row(
             children: [
               Icon(icon, size: 20, color: colorScheme.primary),
-              AppLayout.hGap8,
+              const SizedBox(width: SbSpacing.sm),
               Flexible(
                 child: Text(
                   label,
-                  style: AppTextStyles.body(context, secondary: true).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: SbSpacing.sm),
           Text(
             value,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.onSurface,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
           ),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+

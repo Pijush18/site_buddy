@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -41,8 +41,6 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
   Widget build(BuildContext context) {
     final m = widget.meeting;
     final controller = ref.read(workControllerProvider.notifier);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return AppScreenWrapper(
       title: 'Meeting Details',
@@ -51,11 +49,9 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
         children: [
           Text(
             m.title,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           SbCard(
             child: Column(
               children: [
@@ -64,7 +60,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.projectId,
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -72,7 +68,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingType.name.toUpperCase(),
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -80,7 +76,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.mode.name.toUpperCase(),
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -88,7 +84,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingDate.toLocal().toString().split(' ').first,
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -96,7 +92,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${m.startTime.toLocal().hour.toString().padLeft(2, '0')}:${m.startTime.toLocal().minute.toString().padLeft(2, '0')} - ${m.endTime.toLocal().hour.toString().padLeft(2, '0')}:${m.endTime.toLocal().minute.toString().padLeft(2, '0')}',
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -104,32 +100,30 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.participants.join(', '),
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           Text(
             'DESCRIPTION',
-            style: AppTextStyles.cardTitle(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.xs
+          const SizedBox(height: SbSpacing.sm / 2), // Replaced SbSpacing.xs
           Text(
             m.description.isEmpty ? 'No description provided.' : m.description,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           SbInput(
             controller: _minutesController,
             label: 'Minutes of Meeting',
             hint: 'Record key points...',
             maxLines: 5,
           ),
-          const SizedBox(height: AppSpacing.lg * 1.5),
+          const SizedBox(height: SbSpacing.xxl * 1.5),
           SbButton.primary(
             label: 'Save & Mark Completed',
             icon: SbIcons.check,
@@ -144,9 +138,18 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
               context.pop();
             },
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+

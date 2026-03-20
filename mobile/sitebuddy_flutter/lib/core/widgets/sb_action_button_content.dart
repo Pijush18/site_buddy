@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 
 /// A reusable widget that provides the interior content for an action button.
@@ -30,12 +30,16 @@ class SbActionButtonContent extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.center,
-          style: AppTextStyles.caption(context).copyWith(
-            fontWeight: FontWeight.w600,
-            color: color,
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
       ],
     );
   }
 }
+
+
+
+
+
+
+

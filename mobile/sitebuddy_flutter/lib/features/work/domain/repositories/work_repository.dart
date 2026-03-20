@@ -11,3 +11,6 @@ abstract class WorkRepository {
   Future<void> createMeeting(Meeting meeting);
   Future<void> updateMeeting(Meeting meeting);
 }
+
+
+

@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -46,8 +46,6 @@ class _DesignCalculationScreenState
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
@@ -59,11 +57,9 @@ class _DesignCalculationScreenState
         children: [
           Text(
             'Step 4 of 6: Structural Design',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           // Design Settings & Properties
           DesignResultCard(
@@ -83,26 +79,26 @@ class _DesignCalculationScreenState
             ],
           ),
 
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Design Controls Card
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.xxl),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Design Configuration',
-                  style: AppTextStyles.sectionTitle(context),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12 (closest standard)
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md) (closest standard)
                 Text(
                   'Design Method',
-                  style: AppTextStyles.caption(context),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 SbCard(
-                  padding: const EdgeInsets.all(AppSpacing.md),
+                  padding: const EdgeInsets.all(SbSpacing.lg),
                   child: Column(
                     children: [
                       SbDropdown<DesignMethod>(
@@ -115,7 +111,7 @@ class _DesignCalculationScreenState
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                 Row(
                   children: [
                     Expanded(
@@ -124,11 +120,11 @@ class _DesignCalculationScreenState
                         children: [
                           Text(
                             'Auto-calculate Steel %',
-                            style: AppTextStyles.cardTitle(context),
+                            style: Theme.of(context).textTheme.labelLarge!,
                           ),
                           Text(
                             'Automatically find minimum steel',
-                            style: AppTextStyles.caption(context),
+                            style: Theme.of(context).textTheme.labelMedium!,
                           ),
                         ],
                       ),
@@ -141,7 +137,7 @@ class _DesignCalculationScreenState
                   ],
                 ),
                 if (!state.isAutoSteel) ...[
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     label: 'Manual Steel (%)',
                     hint: 'e.g. 1.20',
@@ -163,7 +159,7 @@ class _DesignCalculationScreenState
               reference: IS456References.minReinforcementColumn,
             ),
 
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Required Steel Area (Asc)
           DesignResultCard(
@@ -182,7 +178,7 @@ class _DesignCalculationScreenState
                 : 'IS 456 Annex B',
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -194,7 +190,7 @@ class _DesignCalculationScreenState
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -202,9 +198,20 @@ class _DesignCalculationScreenState
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

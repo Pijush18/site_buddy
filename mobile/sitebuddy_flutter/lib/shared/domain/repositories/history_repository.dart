@@ -7,3 +7,6 @@ abstract class HistoryRepository {
   Future<void> deleteEntry(String id);
   Future<void> syncCalculations(String projectId);
 }
+
+
+

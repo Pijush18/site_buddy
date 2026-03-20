@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 /// WIDGET: FootingRebarDrawing
 /// PURPOSE: Plan layout for RC Footing reinforcement.
@@ -54,10 +54,10 @@ class FootingRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            padding: const EdgeInsets.only(top: SbSpacing.sm),
             child: Text(
               'Footing Detail: ${length.toInt()}x${width.toInt()} mm',
-              style: AppTextStyles.caption(context).copyWith(color: textColor),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ],
@@ -148,3 +148,11 @@ class _FootingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+
+
+
+
+
+
+

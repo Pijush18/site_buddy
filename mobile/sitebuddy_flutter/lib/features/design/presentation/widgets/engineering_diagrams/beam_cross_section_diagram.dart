@@ -1,7 +1,7 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 class BeamCrossSectionDiagram extends StatelessWidget {
   final double width;
@@ -26,7 +26,7 @@ class BeamCrossSectionDiagram extends StatelessWidget {
     final rebarColor = isDark ? Colors.blue.shade300 : Colors.blue.shade600;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -56,15 +56,15 @@ class BeamCrossSectionDiagram extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _Label(label: 'Width', value: '${width.toInt()} mm'),
-                  AppLayout.vGap8,
+                  const SizedBox(height: SbSpacing.sm),
                   _Label(label: 'Depth', value: '${depth.toInt()} mm'),
-                  AppLayout.vGap16,
+                  const SizedBox(height: SbSpacing.lg),
                   _Label(
                     label: 'Main Steel',
                     value: '$numBars bars Ø${barDia.toInt()}',
                     isBold: true,
                   ),
-                  AppLayout.vGap4,
+                  const SizedBox(height: SbSpacing.xs),
                   _Label(
                     label: 'Stirrups',
                     value: '@ ${stirrupSpacing.toInt()} mm c/c',
@@ -95,14 +95,14 @@ class _Label extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption(context),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ),
       ],
@@ -191,3 +191,11 @@ class _CrossSectionPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+

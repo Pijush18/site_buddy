@@ -22,3 +22,6 @@ library;
 /// ENUM: ActivityType
 /// PURPOSE: Identifies the subsystem that generated the activity.
 enum ActivityType { calculator, leveling, project }
+
+
+

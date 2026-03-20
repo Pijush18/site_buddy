@@ -32,3 +32,6 @@ class AiConfig {
   /// Chosen model engine for extraction accuracy.
   static const String model = 'gpt-3.5-turbo';
 }
+
+
+

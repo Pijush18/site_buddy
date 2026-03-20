@@ -1,8 +1,9 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -58,13 +59,13 @@ class SlabIllustrationWidget extends StatelessWidget {
               right: AppLayout.spaceM,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppLayout.sm,
+                  horizontal: SbSpacing.sm,
                   vertical: AppLayout.spaceXS,
                 ),
 
                 child: Text(
                   type.label.toUpperCase(),
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ),
@@ -236,3 +237,11 @@ class _ContinuousPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+

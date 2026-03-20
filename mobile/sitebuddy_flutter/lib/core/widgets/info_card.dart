@@ -1,33 +1,10 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
-
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: info_card.dart
-/// Feature: core
-/// Layer: presentation
-///
-/// PURPOSE:
-/// Displays generic actionable or info cards, highly used in Recent Activity.
-///
-/// RESPONSIBILITIES:
-/// - Renders a stylized horizontal card with an icon, title, subtitle, and dynamic status/time labels.
-///
-/// DEPENDENCIES:
-/// - Core design constants (AppColors, AppSizes).
-///
-/// FUTURE IMPROVEMENTS:
-/// - Provide different icon background colors depending on the Card's semantic meaning.
-///
-/// ----------------------------------------------
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: InfoCard
 /// PURPOSE: Standard reusable component for displaying a summary of an entity (like a past log).
-/// WHY: Consistency and easy maintenance of list-based reading experiences.
-/// LOGIC: Uses AppTextStyles for global typography. Icon is centered in a primary-colored circle.
 class InfoCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -48,23 +25,27 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return GestureDetector(
       onTap: onTap,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(AppLayout.lg),
+          padding: const EdgeInsets.all(SbSpacing.xxl),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(AppLayout.md),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary, // 👈 Standard primary theme
+                  color: colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 24),
+                child: Icon(icon, color: colorScheme.onPrimary, size: 24),
               ),
-              const SizedBox(width: AppLayout.lg),
+              const SizedBox(width: SbSpacing.xxl),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,36 +53,37 @@ class InfoCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          title,
-                          style: AppTextStyles.cardTitle(context).copyWith(fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: textTheme.titleMedium,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         if (timeAgo != null)
                           Text(
                             timeAgo!,
-                            style: AppTextStyles.body(context, secondary: true).copyWith(fontWeight: FontWeight.bold),
+                            style: textTheme.labelMedium,
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppLayout.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          subtitle,
-                          style: AppTextStyles.body(context).copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant,
-                              ),
+                        Expanded(
+                          child: Text(
+                            subtitle,
+                            style: textTheme.bodyMedium,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         if (statusText != null)
                           Text(
                             statusText!,
-                            style: AppTextStyles.body(context, secondary: true).copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                            style: textTheme.labelMedium,
                           ),
                       ],
                     ),
@@ -115,3 +97,8 @@ class InfoCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

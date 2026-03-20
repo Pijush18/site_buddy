@@ -122,3 +122,6 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get themeMode => 'थीम मोड';
 }
+
+
+

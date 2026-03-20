@@ -167,3 +167,6 @@ class BrickWallResult {
       'mortar: $mortarRatio'
       ')';
 }
+
+
+

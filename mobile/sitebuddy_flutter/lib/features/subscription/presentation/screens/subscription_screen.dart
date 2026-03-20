@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
@@ -15,8 +15,6 @@ class SubscriptionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final statusAsync = ref.watch(subscriptionStatusProvider);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return AppScreenWrapper(
       title: AppStrings.subscription,
@@ -26,51 +24,47 @@ class SubscriptionScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildCurrentStatus(context, status),
-            const SizedBox(height: AppSpacing.lg * 1.5), 
+            const SizedBox(height: SbSpacing.xxl * 1.5), 
             if (!status.isPremium) ...[
               Text(
                 AppStrings.upgradeToPremium,
-                style: AppTextStyles.screenTitle(context),
+                style: Theme.of(context).textTheme.titleLarge!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.sm), 
+              const SizedBox(height: SbSpacing.sm), 
               Text(
                 AppStrings.unlockAIPower,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.lg), 
+              const SizedBox(height: SbSpacing.xxl), 
               _buildPremiumCard(context, ref),
             ] else ...[
               SbCard(
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
+                  padding: const EdgeInsets.all(SbSpacing.lg),
                   child: Column(
                     children: [
                       Icon(SbIcons.checkFilled, color: AppColors.success(context), size: 48),
-                      const SizedBox(height: AppSpacing.md), 
+                      const SizedBox(height: SbSpacing.lg), 
                       Text(
                         AppStrings.premiumUserStatus,
-                        style: AppTextStyles.sectionTitle(context),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
-                      const SizedBox(height: AppSpacing.sm), 
+                      const SizedBox(height: SbSpacing.sm), 
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.body(context).copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!,
                       ),
                     ],
                   ),
                 ),
               ),
             ],
-            const SizedBox(height: AppSpacing.lg * 1.5), 
+            const SizedBox(height: SbSpacing.xxl * 1.5), 
             _buildFeatureComparison(context),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -91,18 +85,14 @@ class SubscriptionScreen extends ConsumerWidget {
       subtitle: status.plan.toUpperCase(),
       onTap: () {}, 
       trailing: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
         decoration: BoxDecoration(
           color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
           status.status.toUpperCase(),
-          style: AppTextStyles.caption(context).copyWith(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: isActive ? AppColors.success(context) : AppColors.warning(context),
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
       ),
     );
@@ -116,7 +106,7 @@ class SubscriptionScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainer, // Standard Slate 100 for premium header
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -125,30 +115,25 @@ class SubscriptionScreen extends ConsumerWidget {
               children: [
                 Text(
                   AppStrings.premiumLogic,
-                  style: AppTextStyles.cardTitle(context).copyWith(
-                    letterSpacing: 1.2,
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm), 
+                const SizedBox(height: SbSpacing.sm), 
                 Text(
                   AppStrings.monthlyPrice,
-                  style: AppTextStyles.screenTitle(context).copyWith(
-                    fontSize: 24,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!,
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               children: [
                 _buildBenefitItem(context, AppStrings.fullAIAssistant),
                 _buildBenefitItem(context, AppStrings.cloudSync),
                 _buildBenefitItem(context, AppStrings.advancedSteelDesign),
                 _buildBenefitItem(context, AppStrings.multiProjectManagement),
-                const SizedBox(height: AppSpacing.lg), 
+                const SizedBox(height: SbSpacing.xxl), 
                 SbButton.primary(
                   label: AppStrings.subscribeNow,
                   onPressed: () => ref.read(subscriptionRepositoryProvider).purchasePremium(),
@@ -163,15 +148,15 @@ class SubscriptionScreen extends ConsumerWidget {
 
   Widget _buildBenefitItem(BuildContext context, String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Icon(SbIcons.check, color: AppColors.success(context), size: 20),
-          const SizedBox(width: AppSpacing.sm), 
+          const SizedBox(width: SbSpacing.sm), 
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
         ],
@@ -186,9 +171,9 @@ class SubscriptionScreen extends ConsumerWidget {
       children: [
         Text(
           AppStrings.comparePlans,
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: AppSpacing.md), 
+        const SizedBox(height: SbSpacing.lg), 
         Divider(color: colorScheme.outline), 
         _buildComparisonRow(context, AppStrings.basicCalculations, true, true),
         _buildComparisonRow(context, AppStrings.offlineUsage, true, true),
@@ -202,13 +187,13 @@ class SubscriptionScreen extends ConsumerWidget {
   Widget _buildComparisonRow(BuildContext context, String feature, bool free, bool premium) {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Expanded(
             child: Text(
               feature,
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           Icon(
@@ -216,7 +201,7 @@ class SubscriptionScreen extends ConsumerWidget {
             color: free ? AppColors.success(context) : colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(width: AppSpacing.lg), 
+          const SizedBox(width: SbSpacing.xxl), 
           Icon(
             premium ? Icons.check_circle : Icons.cancel,
             color: premium ? AppColors.premium(context) : colorScheme.onSurfaceVariant,
@@ -227,3 +212,11 @@ class SubscriptionScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

@@ -1,8 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_button.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 
 /// CLASS: HomeHeaderSection
@@ -12,9 +11,12 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     final l10n = AppLocalizations.of(context)!;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppLayout.pMedium),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -23,14 +25,12 @@ class HomeHeaderSection extends StatelessWidget {
             children: [
               Text(
                 l10n.readyToBuild,
-                style: AppTextStyles.body(context).copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+                style: textTheme.bodyMedium,
               ),
-              AppLayout.vGap4,
+              const SizedBox(height: SbSpacing.xs),
               Text(
                 l10n.appName,
-                style: AppTextStyles.screenTitle(context).copyWith(fontSize: 32),
+                style: textTheme.displayLarge,
               ),
             ],
           ),
@@ -44,3 +44,6 @@ class HomeHeaderSection extends StatelessWidget {
     );
   }
 }
+
+
+

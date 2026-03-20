@@ -1,6 +1,5 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 
 class UserMessageWidget extends StatelessWidget {
@@ -15,8 +14,8 @@ class UserMessageWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: const EdgeInsets.only(bottom: AppSpacing.md, left: AppSpacing.xl, right: AppSpacing.md),
-        padding: AppLayout.paddingMedium,
+        margin: const EdgeInsets.only(bottom: SbSpacing.lg, left: SbSpacing.xxl, right: SbSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         decoration: BoxDecoration(
           color: colorScheme.primary,
           borderRadius: const BorderRadius.only(
@@ -28,9 +27,7 @@ class UserMessageWidget extends StatelessWidget {
         ),
         child: Text(
           query,
-          style: AppTextStyles.body(context).copyWith(
-            color: colorScheme.onPrimary,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
         ),
       ),
     );
@@ -44,19 +41,27 @@ class AiErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg, horizontal: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl, horizontal: SbSpacing.lg),
       child: Center(
         child: Text(
           error,
-          style: AppTextStyles.body(context).copyWith(
-            color: colorScheme.error,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
           textAlign: TextAlign.center,
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+

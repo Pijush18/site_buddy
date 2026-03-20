@@ -1,26 +1,8 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-
 import 'package:site_buddy/core/theme/app_layout.dart';
-
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: site_report_card.dart
-/// Feature: reports
-/// Layer: presentation/widgets
-///
-/// PURPOSE:
-/// Visually represents a compiled `SiteReport` on the screen precisely as it would map to standard A4 printing.
-///
-/// RESPONSIBILITIES:
-/// - Reusably formats headers, dynamically iterates `ReportSection`s, and locks footer branding securely.
-/// - Adheres exclusively to `AppLayout` constraints for paddings assuring strict enterprise UI/UX specifications.
-/// ----------------------------------------------
-
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:site_buddy/shared/domain/models/site_report.dart';
 
 class SiteReportCard extends StatelessWidget {
@@ -31,7 +13,7 @@ class SiteReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbCard(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -51,8 +33,7 @@ class SiteReportCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: const EdgeInsets.only(bottom: AppLayout.pMedium),
-
+      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,8 +41,7 @@ class SiteReportCard extends StatelessWidget {
             Container(
               height: 48,
               width: 48,
-              margin: const EdgeInsets.only(right: AppLayout.pMedium),
-
+              margin: const EdgeInsets.only(right: SbSpacing.lg),
               child: Icon(SbIcons.site, color: colorScheme.primary),
             ),
           ],
@@ -71,12 +51,9 @@ class SiteReportCard extends StatelessWidget {
               children: [
                 Text(
                   'SITE BUDDY REPORT',
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    letterSpacing: 1.2,
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                AppLayout.vGap8,
+                const SizedBox(height: SbSpacing.sm),
                 _buildMetaText(
                   context,
                   'Company: ',
@@ -102,23 +79,16 @@ class SiteReportCard extends StatelessWidget {
   }
 
   Widget _buildMetaText(BuildContext context, String label, String value) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      padding: const EdgeInsets.only(bottom: SbSpacing.xs),
       child: RichText(
         text: TextSpan(
           text: label,
-          style: AppTextStyles.caption(context).copyWith(color: Colors.grey),
+          style: Theme.of(context).textTheme.labelMedium!,
           children: [
             TextSpan(
               text: value,
-              style: AppTextStyles.caption(context).copyWith(
-                color: colorScheme.onSurface,
-
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ],
         ),
@@ -127,44 +97,35 @@ class SiteReportCard extends StatelessWidget {
   }
 
   List<Widget> _buildSections(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return report.sections.map((section) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: AppLayout.pMedium),
+        padding: const EdgeInsets.only(bottom: SbSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(AppLayout.pSmall),
-
+              padding: const EdgeInsets.all(SbSpacing.sm),
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
                       section.title.toUpperCase(),
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.primary,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
                   ),
                 ],
               ),
             ),
-            AppLayout.vGap8,
+            const SizedBox(height: SbSpacing.sm),
             ...section.content.map(
               (text) => Padding(
                 padding: const EdgeInsets.only(
-                  bottom: AppLayout.pSmall,
-                  left: AppLayout.pSmall,
+                  bottom: SbSpacing.sm,
+                  left: SbSpacing.sm,
                 ),
                 child: Text(
                   text,
-                  style: AppTextStyles.body(context).copyWith(
-                    height: 1.5,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ),
@@ -175,15 +136,21 @@ class SiteReportCard extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
-//     final theme = Theme.of(context);
-
     return Container(
-      padding: const EdgeInsets.only(top: AppLayout.pSmall),
-
+      padding: const EdgeInsets.only(top: SbSpacing.sm),
       child: Text(
         'Generated natively by Site Buddy',
-        style: AppTextStyles.body(context, secondary: true).copyWith(color: Colors.grey),
+        style: Theme.of(context).textTheme.bodyMedium!,
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+

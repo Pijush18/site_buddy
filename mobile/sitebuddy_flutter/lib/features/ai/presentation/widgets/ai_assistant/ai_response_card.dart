@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
@@ -107,18 +107,18 @@ class AiResponseCard extends StatelessWidget {
 
     if (!hasAnyAction) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppLayout.pSmall),
+        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
         child: child,
       );
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppLayout.pSmall),
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           child,
-          const SizedBox(height: AppLayout.pSmall),
+          const SizedBox(height: SbSpacing.sm),
           Row(
             children: [
               if (onSaveToProject != null)
@@ -131,7 +131,7 @@ class AiResponseCard extends StatelessWidget {
                 ),
               if (onSaveToProject != null &&
                   (onCopy != null || onShare != null || onExportPdf != null))
-                AppLayout.hGap8,
+                const SizedBox(width: SbSpacing.sm),
               if (onCopy != null)
                 Expanded(
                   child: _MiniActionButton(
@@ -141,7 +141,7 @@ class AiResponseCard extends StatelessWidget {
                   ),
                 ),
               if (onCopy != null && (onShare != null || onExportPdf != null))
-                AppLayout.hGap8,
+                const SizedBox(width: SbSpacing.sm),
               if (onShare != null)
                 Expanded(
                   child: _MiniActionButton(
@@ -151,7 +151,7 @@ class AiResponseCard extends StatelessWidget {
                   ),
                 ),
               if (onShare != null && (onExportPdf != null))
-                AppLayout.hGap8,
+                const SizedBox(width: SbSpacing.sm),
               if (onExportPdf != null)
                 Expanded(
                   child: _MiniActionButton(
@@ -183,15 +183,15 @@ class _MiniActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
-      padding: AppLayout.paddingSmall,
+      padding: const EdgeInsets.all(SbSpacing.sm),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 20, color: colorScheme.primary),
-          const SizedBox(height: AppLayout.pSmall),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             label,
-            style: AppTextStyles.caption(context).copyWith(color: colorScheme.primary),
+            style: Theme.of(context).textTheme.labelMedium!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -306,9 +306,9 @@ class _ToolSuggestionCard extends StatelessWidget {
           if (message != null) ...[
             Text(
               message!,
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppLayout.sm),
+            const SizedBox(height: SbSpacing.sm),
           ],
           SbListItemTile(
             icon: icon,
@@ -317,7 +317,7 @@ class _ToolSuggestionCard extends StatelessWidget {
             subtitle: prefillSummary ?? 'Open the specialized tool for this calculation.',
             onTap: () => context.push(route, extra: prefillData),
           ),
-          const SizedBox(height: AppLayout.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Launch $title',
             icon: SbIcons.assistant,
@@ -345,13 +345,11 @@ class _ErrorCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(SbIcons.error, color: colorScheme.error),
-          const SizedBox(width: AppLayout.pSmall),
+          const SizedBox(width: SbSpacing.sm),
           Expanded(
             child: Text(
               message,
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.error,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
         ],
@@ -359,3 +357,11 @@ class _ErrorCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

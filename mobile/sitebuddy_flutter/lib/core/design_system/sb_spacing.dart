@@ -1,34 +1,71 @@
 import 'package:flutter/material.dart';
 
 /// CLASS: SbSpacing
-/// PURPOSE: Standardized spacing scale for SiteBuddy.
+/// PURPOSE: Production-grade spacing system for SiteBuddy.
 ///
-/// Scale:
-/// - low    -> 8 px
-/// - medium -> 16 px (Default choice)
-/// - high   -> 24 px
+/// BASE UNIT: 4 px
+/// All spacing must be derived from this scale.
+/// No hardcoded values allowed anywhere in UI.
+///
+/// WHY:
+/// - Ensures visual rhythm
+/// - Fixes layout imbalance
+/// - Prevents arbitrary spacing decisions
 class SbSpacing {
   SbSpacing._();
 
-  /// 8 px — Compact spacing.
-  static const double low = 8.0;
+  // =========================
+  // 🔹 Base Scale (4pt system)
+  // =========================
 
-  /// 16 px — Standard spacing. Default choice for most widgets.
-  static const double medium = 16.0;
+  static const double xxs = 2; // Rare use (hairline spacing)
+  static const double xs = 4;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
+  static const double xxl = 24;
+  static const double xxxl = 32;
+  static const double huge = 40;
 
-  /// 24 px — Loose spacing.
-  static const double high = 24.0;
+  // =========================
+  // 🔹 Semantic Spacing
+  // =========================
 
-  // Convenience EdgeInsets
-  static const EdgeInsets paddingLow = EdgeInsets.all(low);
-  static const EdgeInsets paddingMedium = EdgeInsets.all(medium);
-  static const EdgeInsets paddingHigh = EdgeInsets.all(high);
+  /// Default horizontal padding for screens
+  static const double screenPadding = lg; // 16
 
-  static const EdgeInsets horizontalLow = EdgeInsets.symmetric(horizontal: low);
-  static const EdgeInsets horizontalMedium = EdgeInsets.symmetric(horizontal: medium);
-  static const EdgeInsets horizontalHigh = EdgeInsets.symmetric(horizontal: high);
+  /// Gap between major sections
+  static const double sectionGap = xxl; // 24
 
-  static const EdgeInsets verticalLow = EdgeInsets.symmetric(vertical: low);
-  static const EdgeInsets verticalMedium = EdgeInsets.symmetric(vertical: medium);
-  static const EdgeInsets verticalHigh = EdgeInsets.symmetric(vertical: high);
+  /// Gap between components (cards, fields)
+  static const double componentGap = lg; // 16
+
+  /// Gap between tightly related elements
+  static const double itemGap = sm; // 8
+
+  // =========================
+  // 🔹 EdgeInsets Helpers
+  // =========================
+
+  static const EdgeInsets screenHorizontal = EdgeInsets.symmetric(
+    horizontal: screenPadding,
+  );
+
+  static const EdgeInsets paddingXS = EdgeInsets.all(xs);
+  static const EdgeInsets paddingSM = EdgeInsets.all(sm);
+  static const EdgeInsets paddingMD = EdgeInsets.all(md);
+  static const EdgeInsets paddingLG = EdgeInsets.all(lg);
+  static const EdgeInsets paddingXL = EdgeInsets.all(xl);
+
+  static const EdgeInsets horizontalSM = EdgeInsets.symmetric(horizontal: sm);
+
+  static const EdgeInsets horizontalLG = EdgeInsets.symmetric(horizontal: lg);
+
+  static const EdgeInsets verticalSM = EdgeInsets.symmetric(vertical: sm);
+
+  static const EdgeInsets verticalLG = EdgeInsets.symmetric(vertical: lg);
 }
+
+
+

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 /// CLASS: ActionCard
@@ -50,7 +50,7 @@ class ActionCard extends StatelessWidget {
               ),
             ],
           ),
-          padding: const EdgeInsets.all(AppSpacing.sm), 
+          padding: const EdgeInsets.all(SbSpacing.sm), 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: [
@@ -59,18 +59,13 @@ class ActionCard extends StatelessWidget {
                 color: colorScheme.primary,
                 size: 22,
               ),
-              const SizedBox(height: AppSpacing.sm), 
+              const SizedBox(height: SbSpacing.sm), 
               Text(
                 label,
                 textAlign: TextAlign.center, 
                 maxLines: 2, 
                 overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600, 
-                  color: colorScheme.onSurface,
-                  fontSize: 14, 
-                  height: 1.0, 
-                ),
+                style: theme.textTheme.bodyMedium!,
               ),
             ],
           ),
@@ -79,3 +74,8 @@ class ActionCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

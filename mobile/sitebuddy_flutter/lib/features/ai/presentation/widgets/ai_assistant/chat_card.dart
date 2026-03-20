@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/ai_chat.dart';
@@ -64,7 +64,7 @@ class ChatCard extends StatelessWidget {
         children: [
           // Header: User Query + Timestamp
           Container(
-            padding: const EdgeInsets.all(AppLayout.pSmall),
+            padding: const EdgeInsets.all(SbSpacing.sm),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,17 +72,15 @@ class ChatCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     chat.query,
-                    style: AppTextStyles.cardTitle(context).copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                AppLayout.hGap8,
+                const SizedBox(width: SbSpacing.sm),
                 Text(
                   _formatTime(),
-                  style: AppTextStyles.body(context, secondary: true),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ],
             ),
@@ -90,10 +88,10 @@ class ChatCard extends StatelessWidget {
 
           // Body: Response snippet
           Padding(
-            padding: const EdgeInsets.all(AppLayout.pSmall),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Text(
               _getPreviewText(),
-              style: AppTextStyles.body(context).copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: Theme.of(context).textTheme.bodyLarge!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -102,8 +100,8 @@ class ChatCard extends StatelessWidget {
           // Actions
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.md,
-              vertical: AppLayout.pSmall,
+              horizontal: SbSpacing.lg,
+              vertical: SbSpacing.sm,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -116,12 +114,10 @@ class ChatCard extends StatelessWidget {
                         size: 20,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      AppLayout.hGap8,
+                      const SizedBox(width: SbSpacing.sm),
                       Text(
                         'Saved to Project',
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ],
                   )
@@ -139,3 +135,12 @@ class ChatCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

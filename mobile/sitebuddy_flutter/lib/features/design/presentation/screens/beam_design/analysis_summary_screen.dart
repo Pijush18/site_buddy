@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -22,7 +22,6 @@ class AnalysisSummaryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(beamDesignControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final colorScheme = Theme.of(context).colorScheme;
 
     return AppScreenWrapper(
       title: 'Analysis Summary',
@@ -31,11 +30,9 @@ class AnalysisSummaryScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 3 of 5: Engineering Analysis',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // Design Result Card for Principal Forces
           DesignResultCard(
@@ -59,18 +56,16 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456:2000 Cl. 38',
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // Diagrams Section
           SbSectionHeader(
             title: 'Engineering Diagrams',
             trailing: Text(
               'L = ${(state.span / 1000).toStringAsFixed(2)}m',
-              style: AppTextStyles.caption(context).copyWith(
-                color: Colors.grey,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
           ),
 
           _DiagramCard(
@@ -79,14 +74,14 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             isBMD: false,
             isDark: isDark,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           _DiagramCard(
             label: 'Bending Moment Diagram (BMD)',
             points: state.bmdPoints,
             isBMD: true,
             isDark: isDark,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +97,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -110,7 +105,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -144,7 +139,7 @@ class _DiagramCard extends StatelessWidget {
             label: label,
             axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
             labelColor: colorScheme.onSurfaceVariant,
-            labelStyle: AppTextStyles.caption(context),
+            labelStyle: Theme.of(context).textTheme.labelMedium!,
             primaryColor: colorScheme.primary,
             warningColor: AppColors.warning(context),
           ),
@@ -154,3 +149,11 @@ class _DiagramCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

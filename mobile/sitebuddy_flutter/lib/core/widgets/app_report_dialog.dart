@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -22,7 +22,7 @@ class AppReportDialog extends StatelessWidget {
       content: SingleChildScrollView(
         child: SelectableText(
           content,
-          style: AppTextStyles.body(context).copyWith(fontFamily: 'monospace'),
+          style: Theme.of(context).textTheme.bodyLarge!,
         ),
       ),
       confirmLabel: 'Close',
@@ -35,7 +35,7 @@ class AppReportDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(borderRadius: AppLayout.borderRadiusCard),
       child: Container(
-        padding: const EdgeInsets.all(AppLayout.pLarge),
+        padding: const EdgeInsets.all(SbSpacing.xxl),
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -44,23 +44,23 @@ class AppReportDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style: AppTextStyles.sectionTitle(context)),
+                Text(title, style: Theme.of(context).textTheme.titleMedium!),
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () => context.pop(),
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             Flexible(
               child: SingleChildScrollView(
                 child: SelectableText(
                   content,
-                  style: AppTextStyles.body(context).copyWith(fontFamily: 'monospace'),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
             SbButton.primary(label: 'Close', onPressed: () => context.pop()),
           ],
         ),
@@ -68,3 +68,13 @@ class AppReportDialog extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

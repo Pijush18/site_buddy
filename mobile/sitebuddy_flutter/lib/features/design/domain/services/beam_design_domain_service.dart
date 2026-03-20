@@ -250,3 +250,6 @@ class BeamDesignDomainService {
     return 0.71;
   }
 }
+
+
+

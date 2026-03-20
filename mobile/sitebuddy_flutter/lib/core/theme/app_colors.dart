@@ -22,3 +22,6 @@ class AppColors {
   static Color warning(BuildContext context) => const Color(0xFFF59E0B); // Amber 500 (Semantic override)
   static Color premium(BuildContext context) => const Color(0xFFF59E0B); // Global Premium Amber
 }
+
+
+

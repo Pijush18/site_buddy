@@ -38,3 +38,6 @@ class AiProcessingError extends AppError {
 class UnknownError extends AppError {
   const UnknownError({super.message = 'An unexpected error occurred.'});
 }
+
+
+

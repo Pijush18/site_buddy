@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 /// WIDGET: SlabRebarDrawing
 /// PURPOSE: Plan view visualization for Slab Reinforcement grids.
@@ -46,10 +46,10 @@ class SlabRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            padding: const EdgeInsets.only(top: SbSpacing.sm),
             child: Text(
               'Slab Plan: ${lx.toStringAsFixed(2)}m x ${ly.toStringAsFixed(2)}m',
-              style: AppTextStyles.caption(context).copyWith(color: textColor),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ],
@@ -129,3 +129,11 @@ class _SlabPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+
+
+
+
+
+
+

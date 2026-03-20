@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +59,7 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
       actions: [
         if (_isExporting)
           const Padding(
-            padding: EdgeInsets.all(AppSpacing.md),
+            padding: EdgeInsets.all(SbSpacing.lg),
             child: SizedBox(
               width: 16,
               height: 16,
@@ -109,8 +109,8 @@ class _ReportErrorState extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+            horizontal: SbSpacing.xxl,
+            vertical: SbSpacing.lg,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -120,19 +120,19 @@ class _ReportErrorState extends StatelessWidget {
                 size: 64,
                 color: theme.colorScheme.error,
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: SbSpacing.xxl),
               Text(
                 'Report data unavailable.',
-                style: AppTextStyles.sectionTitle(context),
+                style: Theme.of(context).textTheme.titleMedium!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               Text(
                 'Please try recalculating the design.',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: SbSpacing.xxl),
               SbButton.primary(
                 label: 'Go Back',
                 width: 200,
@@ -166,20 +166,16 @@ class _ReportDocumentHeader extends StatelessWidget {
               children: [
                 Text(
                   data.title.toUpperCase(),
-                  style: AppTextStyles.screenTitle(context).copyWith(
-                    letterSpacing: 1.2,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!,
                 ),
                 Text(
                   'ENGINEERING COMPUTATION SHEET',
-                  style: AppTextStyles.caption(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
             ),
             Container(
-              padding: const EdgeInsets.all(AppSpacing.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               decoration: BoxDecoration(
                 color: colorScheme.primary,
                 borderRadius: BorderRadius.circular(8),
@@ -188,9 +184,9 @@ class _ReportDocumentHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.xxl),
         Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: const EdgeInsets.all(SbSpacing.lg),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(12),
@@ -201,7 +197,7 @@ class _ReportDocumentHeader extends StatelessWidget {
                 child: _HeaderField(label: 'PROJECT', value: data.projectName),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
                 child: Container(
                   width: 1,
                   height: 32,
@@ -234,12 +230,12 @@ class _HeaderField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption(context),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         Text(
           value,
-          style: AppTextStyles.body(context),
+          style: Theme.of(context).textTheme.bodyLarge!,
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -270,18 +266,16 @@ class _ReportSectionWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(width: AppSpacing.md),
+            const SizedBox(width: SbSpacing.lg),
             Text(
               section.heading.toUpperCase(),
-              style: AppTextStyles.cardTitle(context).copyWith(
-                letterSpacing: 1.1,
-              ),
+              style: Theme.of(context).textTheme.labelLarge!,
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: SbSpacing.lg),
         SbCard(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: const EdgeInsets.all(SbSpacing.lg),
           color: isResult
               ? colorScheme.primaryContainer.withValues(alpha: 0.1)
               : null,
@@ -311,22 +305,6 @@ class _CalculationItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isSafe = item.value.toLowerCase() == 'safe';
-    final isFail = item.value.toLowerCase() == 'fail';
-
-    Color? statusColor;
-    if (isCheck) {
-      if (isSafe) {
-        statusColor = colorScheme.primary; 
-      } else if (isFail) {
-        statusColor = colorScheme.error;
-      } else {
-        statusColor = colorScheme.secondary;
-      }
-    }
-
     return SbListItemTile(
       title: item.label,
       subtitle: item.formula,
@@ -336,16 +314,13 @@ class _CalculationItemRow extends StatelessWidget {
         children: [
           Text(
             item.value,
-            style: AppTextStyles.body(context).copyWith(
-              color: statusColor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
           if (item.unit != null) ...[
-            const SizedBox(width: AppSpacing.sm / 2),
+            const SizedBox(width: SbSpacing.sm / 2),
             Text(
               item.unit!,
-              style: AppTextStyles.caption(context),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ],
         ],
@@ -368,19 +343,14 @@ class _ReportFooter extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             'DESIGN VERIFIED BY SITE BUDDY PRO',
-            style: AppTextStyles.caption(context).copyWith(
-              letterSpacing: 2,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
           Text(
             'Structural Engineering Computation Suite v2.0',
-            style: AppTextStyles.caption(context).copyWith(
-              fontSize: 10,
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ),
@@ -406,15 +376,23 @@ class _ReportExportActions extends StatelessWidget {
           icon: SbIcons.share,
           onPressed: onShare,
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: SbSpacing.lg),
         SbButton.primary(
           label: 'Download PDF',
           icon: SbIcons.download,
           onPressed: onShare,
         ),
         // Buffer at the bottom to ensure last button is not cut off by SafeArea
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.xxl),
       ],
     );
   }
 }
+
+
+
+
+
+
+
+

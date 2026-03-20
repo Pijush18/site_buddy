@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -26,11 +26,9 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 5 of 6: Steel Arrangement',
-            style: AppTextStyles.caption(context).copyWith(
-            color: Colors.grey,
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
           RebarLayoutDiagram(
             type: state.type,
             width: state.b,
@@ -39,10 +37,10 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             mainBarDia: state.mainBarDia,
             ast: state.astProvided,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           const SbSectionHeader(title: 'Main Longitudinal Bars'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -59,7 +57,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
           DesignResultCard(
             title: 'Longitudinal Results',
             isSafe: state.astProvided >= state.astRequired,
@@ -82,7 +80,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
           DesignResultCard(
             title: 'Transverse Ties (Links)',
             isSafe: true,
@@ -100,7 +98,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -111,7 +109,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -119,9 +117,20 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.sectionGap
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.sectionGap
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

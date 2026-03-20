@@ -182,3 +182,6 @@ class ColumnDesignService {
     return double.tryParse(grade.replaceAll(RegExp(r'[^0-9]'), '')) ?? 25;
   }
 }
+
+
+

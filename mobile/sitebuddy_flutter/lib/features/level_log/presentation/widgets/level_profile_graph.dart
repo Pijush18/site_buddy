@@ -1,7 +1,6 @@
+import 'package:site_buddy/core/theme/app_layout.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 
 /// WIDGET: LevelProfileGraph
@@ -25,9 +24,7 @@ class LevelProfileGraph extends StatelessWidget {
         .where((e) => e.value.rl != null)
         .map(
           (e) => _ProfilePoint(
-            x:
-                e.value.chainage ??
-                (e.key * 20.0), // Default to 20m spacing if no chainage
+            x: e.value.chainage ?? (e.key * 20.0),
             y: e.value.rl!,
             label: e.value.station,
           ),
@@ -36,13 +33,13 @@ class LevelProfileGraph extends StatelessWidget {
 
     if (validPoints.length < 2) {
       return Container(
-          height: height,
-          alignment: Alignment.center,
-          child: Text(
-            'Add at least 2 stations with readings to view profile',
-            style: AppTextStyles.caption(context).copyWith(color: Colors.grey),
-          ),
-        );
+        height: height,
+        alignment: Alignment.center,
+        child: Text(
+          'Add at least 2 stations with readings to view profile',
+          style: Theme.of(context).textTheme.labelMedium!,
+        ),
+      );
     }
 
     return Container(
@@ -57,7 +54,7 @@ class LevelProfileGraph extends StatelessWidget {
           points: validPoints,
           isDark: Theme.of(context).brightness == Brightness.dark,
           primaryColor: Theme.of(context).colorScheme.primary,
-          labelStyle: AppTextStyles.caption(context),
+          labelStyle: Theme.of(context).textTheme.labelMedium!,
         ),
       ),
     );
@@ -112,7 +109,6 @@ class _ProfilePainter extends CustomPainter {
     double maxY = points.map((p) => p.y).reduce(max);
     double rangeY = maxY - minY;
 
-    // Add padding to Y range (at least 1m if flat)
     if (rangeY < 1.0) {
       minY -= 0.5;
       maxY += 0.5;
@@ -127,17 +123,14 @@ class _ProfilePainter extends CustomPainter {
     final double maxX = points.last.x;
     final double rangeX = max(1.0, maxX - minX);
 
-    // Coordinate mapping functions
     double getX(double x) => (x - minX) / rangeX * size.width;
     double getY(double y) => size.height - ((y - minY) / rangeY * size.height);
 
-    // Draw grid lines (horizontal)
     const int horizontalLines = 4;
     for (int i = 0; i <= horizontalLines; i++) {
       double y = size.height * (i / horizontalLines);
       canvas.drawLine(Offset(0, y), Offset(size.width, y), axisPaint);
 
-      // Draw Y value labels
       final labelValue = maxY - (i / horizontalLines * rangeY);
       final textPainter = TextPainter(
         text: TextSpan(
@@ -154,7 +147,6 @@ class _ProfilePainter extends CustomPainter {
       );
     }
 
-    // Path for profile line and fill
     final path = Path();
     final fillPath = Path();
 
@@ -178,18 +170,15 @@ class _ProfilePainter extends CustomPainter {
       }
     }
 
-    // Draw fill then line
     canvas.drawPath(fillPath, fillPaint);
     canvas.drawPath(path, linePaint);
 
-    // Draw dots and labels for points
     for (var p in points) {
       final x = getX(p.x);
       final y = getY(p.y);
 
       canvas.drawCircle(Offset(x, y), 4, dotPaint);
 
-      // Station label
       final textPainter = TextPainter(
         text: TextSpan(
           text: p.label,

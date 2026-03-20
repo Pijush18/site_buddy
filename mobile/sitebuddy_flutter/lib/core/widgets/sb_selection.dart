@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 
 /// WIDGET: SbCheckbox
@@ -39,15 +39,15 @@ class SbCheckbox extends StatelessWidget {
       borderRadius: AppLayout.borderRadiusCard,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.xs,
-          horizontal: AppLayout.pMedium,
+          vertical: SbSpacing.xs,
+          horizontal: SbSpacing.lg,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             checkbox,
-            const SizedBox(width: AppLayout.pSmall),
-            Text(label!, style: AppTextStyles.body(context)),
+            const SizedBox(width: SbSpacing.sm),
+            Text(label!, style: Theme.of(context).textTheme.bodyLarge!),
           ],
         ),
       ),
@@ -82,13 +82,13 @@ class SbSwitch extends StatelessWidget {
       borderRadius: AppLayout.borderRadiusCard,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.xs,
-          horizontal: AppLayout.pMedium,
+          vertical: SbSpacing.xs,
+          horizontal: SbSpacing.lg,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label!, style: AppTextStyles.body(context)),
+            Text(label!, style: Theme.of(context).textTheme.bodyLarge!),
             toggle,
           ],
         ),
@@ -96,3 +96,13 @@ class SbSwitch extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -16,7 +16,6 @@ class SlabSafetyScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(slabDesignControllerProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     if (state.result == null) {
       return const AppScreenWrapper(
@@ -45,11 +44,9 @@ class SlabSafetyScreen extends ConsumerWidget {
         children: [
           Text(
             'Final Step: Engineering Validation',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           DesignResultCard(
             title: 'Critical Safety Status',
@@ -71,17 +68,17 @@ class SlabSafetyScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Cl. 23.2.1',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           DesignAdvisorCard(advisorResult: advisorResult),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           if (optimizationResult.options.isNotEmpty) ...[
             Text(
               'ECONOMICAL ALTERNATIVES',
-              style: AppTextStyles.sectionTitle(context),
+              style: Theme.of(context).textTheme.titleMedium!,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             OptimizationList(
               options: optimizationResult.options,
               onOptionSelected: (opt) {
@@ -90,7 +87,7 @@ class SlabSafetyScreen extends ConsumerWidget {
                 ref.read(slabDesignControllerProvider.notifier).calculate();
               },
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           Column(
@@ -102,7 +99,7 @@ class SlabSafetyScreen extends ConsumerWidget {
                 icon: Icons.picture_as_pdf_outlined,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => Navigator.of(context).pop(),
@@ -110,9 +107,20 @@ class SlabSafetyScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

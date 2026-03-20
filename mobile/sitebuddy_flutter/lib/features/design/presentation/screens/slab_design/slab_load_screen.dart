@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -52,8 +52,6 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return AppScreenWrapper(
       title: 'Slab Loading',
       child: Form(
@@ -63,41 +61,37 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
           children: [
             Text(
               'Step 2 of 5: Load Definition',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
             const SbSectionHeader(title: 'Loads (kN/m²)'),
             SbCard(
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(SbSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.lg),
                   AppNumberField(
                     controller: _dlController,
                     label: 'Dead Load (inc. Finishes)',
                     validator: (v) => ValidationHelper.validatePositive(v, 'Dead Load'),
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     controller: _llController,
                     label: 'Live Load',
                     validator: (v) => ValidationHelper.validatePositive(v, 'Live Load'),
                   ),
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                   Text(
                     'Note: Load factor of 1.5 will be applied automatically.',
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: Colors.grey,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -108,7 +102,7 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                   icon: Icons.calculate_outlined,
                   width: double.infinity,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
@@ -116,10 +110,21 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+            const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

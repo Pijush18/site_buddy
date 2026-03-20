@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -61,7 +61,6 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(slabDesignControllerProvider);
     final notifier = ref.read(slabDesignControllerProvider.notifier);
-    final colorScheme = Theme.of(context).colorScheme;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -91,11 +90,9 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
           children: [
             Text(
               'Step 1 of 5: Geometry & Materials',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
             SbSection(
               title: EngineeringTerms.geometry,
@@ -104,16 +101,16 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                 children: [
                   Text(
                     'Slab Behavior',
-                    style: AppTextStyles.cardTitle(context),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                   SbDropdown<SlabType>(
                     value: state.type,
                     items: SlabType.values,
                     itemLabelBuilder: (t) => t.label,
                     onChanged: (v) => v != null ? notifier.updateType(v) : null,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   Row(
                     children: [
                       Expanded(
@@ -123,7 +120,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                           validator: (v) => ValidationHelper.validatePositive(v, 'Lx'),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                      const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                       Expanded(
                         child: AppNumberField(
                           controller: _lyController,
@@ -133,7 +130,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     controller: _depthController,
                     label: 'Overall Thickness (D) (mm)',
@@ -143,7 +140,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
               ),
             ),
 
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
             SbSection(
               title: EngineeringTerms.materialProperties,
@@ -160,7 +157,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                           notifier.updateConcreteGrade,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                      const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                       Expanded(
                         child: _gradeDropdown(
                           'Steel Grade',
@@ -171,7 +168,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     controller: _coverController,
                     label: 'Clear Cover (mm)',
@@ -180,7 +177,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,7 +188,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                   icon: Icons.arrow_forward,
                   width: double.infinity,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbButton.secondary(
                   label: 'Back',
                   onPressed: () => context.pop(),
@@ -199,7 +196,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+            const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
           ],
         ),
       ),
@@ -212,9 +209,9 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
       children: [
         Text(
           label,
-          style: AppTextStyles.cardTitle(context),
+          style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
         SbDropdown<String>(
           value: value,
           items: items,
@@ -225,3 +222,14 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

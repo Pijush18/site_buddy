@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -73,14 +73,14 @@ class _DesignTokensTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       children: const [
         ColorsLabSection(),
-        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
         TypographyLabSection(),
-        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
         SpacingLabSection(),
-        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
         RadiusLabSection(),
       ],
     );
@@ -91,10 +91,10 @@ class _ComponentsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       children: const [
         ComponentLabSection(),
-        SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
         EngineeringWidgetsSection(),
       ],
     );
@@ -105,8 +105,15 @@ class _LayoutTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       children: const [LayoutLabSection()],
     );
   }
 }
+
+
+
+
+
+
+

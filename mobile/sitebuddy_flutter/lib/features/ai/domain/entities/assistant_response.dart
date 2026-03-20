@@ -24,3 +24,6 @@ class AssistantResponse {
     this.warnings = const [],
   });
 }
+
+
+

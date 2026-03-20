@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,8 +106,6 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return AppScreenWrapper(
       title: 'Deflection Check',
       child: Form(
@@ -117,11 +115,9 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
           children: [
             Text(
               'Span-to-Depth Ratio Analysis',
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             DeflectionInputSection(
               dController: _dController,
               spanController: _spanController,
@@ -132,7 +128,7 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
                 if (v != null) setState(() => _selectedSpanType = v);
               },
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             SharedActionButtons(
               calculateLabel: 'Check Deflection',
               isLoading: _isLoading,
@@ -140,22 +136,32 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
               onReset: _reset,
               onShare: _shareResult,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             if (_result != null) ...[
               DeflectionResultSummary(result: _result!),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
               InsightCard(insights: _result!.insights),
             ] else
               const PlaceholderCard(
                 icon: Icons.query_stats,
                 message: 'Calculate ratio to check safety',
               ),
-            const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
+            const SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.vGap32
             const DeflectionHistorySection(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

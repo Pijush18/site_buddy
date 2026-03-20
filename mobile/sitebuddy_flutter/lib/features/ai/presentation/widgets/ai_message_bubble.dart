@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: ai_message_bubble.dart
@@ -12,10 +12,11 @@ import 'package:site_buddy/core/theme/app_text_styles.dart';
 /// - Determines distinct alignment/color structures per role.
 /// - Wraps text rigorously preventing layout overflows.
 /// ----------------------------------------------
+library;
 
 import 'package:flutter/material.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/features/ai/domain/entities/ai_message.dart';
 
 /// CLASS: AiMessageBubble
@@ -29,12 +30,9 @@ class AiMessageBubble extends StatelessWidget {
     // Role-dependent alignments
     final isUser = message.isUser;
     final align = isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-    final textColor = isUser
-        ? Theme.of(context).colorScheme.onPrimary
-        : Theme.of(context).colorScheme.onSurface;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppLayout.md),
+      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
       child: Column(
         crossAxisAlignment: align,
         children: [
@@ -43,22 +41,20 @@ class AiMessageBubble extends StatelessWidget {
               maxWidth: MediaQuery.of(context).size.width * 0.8,
             ),
             padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.pMedium,
-              vertical: AppLayout.pSmall,
+              horizontal: SbSpacing.lg,
+              vertical: SbSpacing.sm,
             ),
             
 
             child: Text(
               message.text,
-              style: AppTextStyles.body(context).copyWith(color: textColor),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
-          AppLayout.vGap4,
+          const SizedBox(height: SbSpacing.xs),
           Text(
             _formatTime(message.timestamp),
-            style: AppTextStyles.caption(context).copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ),
@@ -69,3 +65,11 @@ class AiMessageBubble extends StatelessWidget {
     return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   }
 }
+
+
+
+
+
+
+
+

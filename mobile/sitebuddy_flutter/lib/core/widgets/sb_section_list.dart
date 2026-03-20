@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbSectionList
 /// PURPOSE: Standardized vertical layout for screen sections.
-/// 
+///
 /// DESIGN PRINCIPLES:
-/// - REPLACES Column for all screen-level layouts.
-/// - SINGLE AUTHORITY: Enforces exactly AppSpacing.lg (24px) between sections.
-/// - ZERO PADDING: Relies on AppScreenWrapper for edge insets.
-/// - NO NESTED SCROLLING: Uses physics to prevent scroll conflicts.
+/// - Replaces Column for all screen-level layouts.
+/// - SINGLE AUTHORITY: Controls vertical spacing between sections.
+/// - Uses SbSpacing.sectionGap for consistency.
+/// - ZERO internal padding (handled by AppScreenWrapper).
 class SbSectionList extends StatelessWidget {
   final List<Widget> sections;
   final bool shrinkWrap;
@@ -29,9 +29,16 @@ class SbSectionList extends StatelessWidget {
       shrinkWrap: shrinkWrap,
       physics: physics,
       itemCount: sections.length,
-      padding: EdgeInsets.zero, // 🔬 Rule: No padding, managed by AppScreenWrapper
-      separatorBuilder: (context, index) => const SizedBox.shrink(), // SbSection inherently provides structural anchoring gaps
+      padding: EdgeInsets.zero,
+
+      /// ✅ CENTRALIZED spacing control (FIXED)
+      separatorBuilder: (context, index) =>
+          const SizedBox(height: SbSpacing.sectionGap),
+
       itemBuilder: (context, index) => sections[index],
     );
   }
 }
+
+
+

@@ -49,3 +49,6 @@ class BeamTypeAdapter extends TypeAdapter<BeamType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

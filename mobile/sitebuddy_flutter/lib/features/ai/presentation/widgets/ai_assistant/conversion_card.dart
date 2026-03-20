@@ -1,6 +1,7 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/conversion_result.dart';
@@ -27,80 +28,69 @@ class ConversionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppLayout.pMedium),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             color: colorScheme.primary.withValues(alpha: 0.08),
             child: Row(
               children: [
                 Icon(SbIcons.swap, color: colorScheme.primary, size: 24),
-                AppLayout.hGap16,
+                const SizedBox(width: SbSpacing.lg),
                 Text(
                   'Unit Conversion',
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppLayout.pMedium),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   inputTitle,
-                  style: AppTextStyles.body(context).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: AppLayout.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       '=',
-                      style: AppTextStyles.screenTitle(context).copyWith(
-                        color: colorScheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge!,
                     ),
-                    AppLayout.hGap16,
+                    const SizedBox(width: SbSpacing.lg),
                     Expanded(
                       child: Text(
                         '${result.mainValue.toStringAsFixed(4)} $outputUnit',
-                        style: AppTextStyles.screenTitle(context).copyWith(
-                          color: colorScheme.primary,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge!,
                       ),
                     ),
                   ],
                 ),
                 if (result.secondaryValues.isNotEmpty) ...[
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppLayout.md),
+                    padding: EdgeInsets.symmetric(vertical: SbSpacing.lg),
                     child: Divider(),
                   ),
                   Text(
                     'ALSO EQUIVALENT TO',
-                    style: AppTextStyles.body(context, secondary: true).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      letterSpacing: 1.1,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
-                  AppLayout.vGap8,
+                  const SizedBox(height: SbSpacing.sm),
                   Wrap(
-                    spacing: AppLayout.sm,
-                    runSpacing: AppLayout.sm,
+                    spacing: SbSpacing.sm,
+                    runSpacing: SbSpacing.sm,
                     children: result.secondaryValues.entries
                         .map(
                           (entry) => Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: AppLayout.pSmall,
+                              horizontal: SbSpacing.sm,
                               vertical: AppLayout.spaceXS,
                             ),
                             
                             child: Text(
                               '${entry.value.toStringAsFixed(3)} ${entry.key}',
-                              style: AppTextStyles.body(context),
+                              style: Theme.of(context).textTheme.bodyLarge!,
                             ),
                           ),
                         )
@@ -115,3 +105,13 @@ class ConversionCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

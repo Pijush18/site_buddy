@@ -19,3 +19,6 @@ class ScreenTitles {
   static const reportPreview = 'Report Preview';
   static const columnHistory = 'Column History';
 }
+
+
+

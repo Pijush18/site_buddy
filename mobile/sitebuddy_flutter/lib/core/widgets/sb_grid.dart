@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbGrid
 /// PURPOSE: Standard 2-column grid for SiteBuddy Home Screen.
@@ -19,10 +19,14 @@ class SbGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: AppSpacing.sm, // 8px horizontal gap
-      mainAxisSpacing: AppSpacing.sm, // 8px vertical gap
+      crossAxisSpacing: SbSpacing.sm, // 8px horizontal gap
+      mainAxisSpacing: SbSpacing.sm, // 8px vertical gap
       childAspectRatio: 1.2, // Optimized for high-density labels
       children: children,
     );
   }
 }
+
+
+
+

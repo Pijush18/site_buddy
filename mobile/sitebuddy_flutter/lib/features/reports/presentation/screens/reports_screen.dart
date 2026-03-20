@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: ReportsScreen
@@ -11,7 +10,9 @@ class ReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return AppScreenWrapper(
       title: 'Reports',
@@ -20,7 +21,7 @@ class ReportsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SbCard(
-              padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.lg
+              padding: const EdgeInsets.all(SbSpacing.lg),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -29,31 +30,28 @@ class ReportsScreen extends StatelessWidget {
                     size: 64,
                     color: colorScheme.primary.withValues(alpha: 0.5),
                   ),
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.lg),
                   Text(
                     "No Reports Yet",
-                    style: AppTextStyles.sectionTitle(context),
+                    style: textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.md),
                   Text(
                     "Reports generated from calculations and design tools will appear here.",
-                    style: AppTextStyles.body(context),
+                    style: textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.lg),
                   Container(
-                    padding: const EdgeInsets.all(AppSpacing.md),
+                    padding: const EdgeInsets.all(SbSpacing.md),
                     child: Text(
                       "Use the Export PDF option in any calculator or design module to create your first report.",
-                      style: AppTextStyles.body(context).copyWith(
-                        color: colorScheme.primary,
-                        fontStyle: FontStyle.italic,
-                      ),
+                      style: textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+                  const SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -62,7 +60,7 @@ class ReportsScreen extends StatelessWidget {
                           onPressed: () => context.go('/calculator'),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md),
+                      const SizedBox(width: SbSpacing.md),
                       Expanded(
                         child: SbButton.primary(
                           label: "Design Tools",
@@ -80,3 +78,6 @@ class ReportsScreen extends StatelessWidget {
     );
   }
 }
+
+
+

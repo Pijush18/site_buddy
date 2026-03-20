@@ -1,11 +1,12 @@
-
 import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/design_item.dart';
 
@@ -31,7 +32,7 @@ class RccInfoBottomSheet extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.all(AppLayout.pMedium),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,26 +50,22 @@ class RccInfoBottomSheet extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(AppLayout.pSmall),
+                padding: const EdgeInsets.all(SbSpacing.sm),
                 
                 child: Icon(item.icon, color: colorScheme.primary, size: 24),
               ),
-              AppLayout.hGap16,
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'RCC Information',
-                      style: AppTextStyles.sectionTitle(context).copyWith(
-                        color: colorScheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!,
                     ),
                     Text(
                       'Structural RCC Guidelines',
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
                   ],
                 ),
@@ -86,9 +83,7 @@ class RccInfoBottomSheet extends StatelessWidget {
 
           Text(
             item.description,
-            style: AppTextStyles.body(context).copyWith(
-              color: colorScheme.onSurface,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
           AppLayout.vGap24,
 
@@ -99,9 +94,7 @@ class RccInfoBottomSheet extends StatelessWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 spec.value,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
           ),
@@ -138,7 +131,7 @@ class RccInfoBottomSheet extends StatelessWidget {
                     label: 'DESIGN NOW',
                   ),
                 ),
-                AppLayout.vGap12,
+                const SizedBox(height: SbSpacing.md),
               ],
               SizedBox(
                 width: double.infinity,
@@ -155,9 +148,19 @@ class RccInfoBottomSheet extends StatelessWidget {
             ],
           ),
 
-          AppLayout.vGap16,
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

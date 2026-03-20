@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -76,9 +76,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
         children: [
           Text(
             'Step 1 of 6: Geometry & Materials',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           // Geometry Card
           SbSection(
@@ -86,12 +86,12 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 Text(
                   'Section Type',
-                  style: AppTextStyles.cardTitle(context),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 SbDropdown<ColumnType>(
                   value: state.type,
                   items: ColumnType.values,
@@ -99,7 +99,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                   onChanged: (v) =>
                       v != null ? notifier.updateInput(type: v) : null,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 Row(
                   children: [
                     Expanded(
@@ -111,7 +111,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       ),
                     ),
                     if (state.type == ColumnType.rectangular) ...[
-                      const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                      const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                       Expanded(
                         child: AppNumberField(
                           label: 'Depth (D) (mm)',
@@ -121,17 +121,17 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 AppNumberField(
                   label: 'Unsupported Length (L) (mm)',
                   controller: _lengthController,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 Text(
                   'End Condition',
-                  style: AppTextStyles.cardTitle(context),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 SbDropdown<EndCondition>(
                   value: state.endCondition,
                   items: EndCondition.values,
@@ -150,7 +150,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 Row(
                   children: [
                     Expanded(
@@ -159,9 +159,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                         children: [
                           Text(
                             'Concrete Grade',
-                            style: AppTextStyles.cardTitle(context),
+                            style: Theme.of(context).textTheme.labelLarge!,
                           ),
-                          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                           SbDropdown<String>(
                             value: state.concreteGrade,
                             items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
@@ -173,16 +173,16 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Steel Grade',
-                            style: AppTextStyles.cardTitle(context),
+                            style: Theme.of(context).textTheme.labelLarge!,
                           ),
-                          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                           SbDropdown<String>(
                             value: state.steelGrade,
                             items: const ['Fe415', 'Fe500', 'Fe550'],
@@ -196,7 +196,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 AppNumberField(
                   label: 'Clear Cover (mm)',
                   controller: _coverController,
@@ -204,7 +204,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -214,7 +214,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                 onPressed: _onNext,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -222,9 +222,19 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

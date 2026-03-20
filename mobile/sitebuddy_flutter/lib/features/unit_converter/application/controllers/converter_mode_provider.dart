@@ -36,3 +36,6 @@ class ConverterModeNotifier extends Notifier<ConverterMode> {
     state = activeMode;
   }
 }
+
+
+

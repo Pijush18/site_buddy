@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -33,50 +33,43 @@ class HistoryDetailScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context, dateStr),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'Input Parameters',
-            style: AppTextStyles.sectionTitle(context),
+            style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           _buildParametersList(context),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
           SbButton.primary(
             onPressed: () => _restoreVersion(context, ref),
             label: 'Restore this Version',
           ),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
         ],
       ),
     );
   }
 
   Widget _buildHeader(BuildContext context, String dateStr) {
-    final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
       child: Column(
         children: [
           Text(
             entry.calculationType.name.toUpperCase(),
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const Divider(height: AppSpacing.md), // Replaced Divider(16)
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const Divider(height: SbSpacing.lg), // Replaced Divider(16)
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             entry.resultSummary,
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle(context),
+            style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             dateStr,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ),
@@ -88,20 +81,20 @@ class HistoryDetailScreen extends ConsumerWidget {
     if (params.isEmpty) {
       return Text(
         'No parameters recorded.',
-        style: AppTextStyles.body(context),
+        style: Theme.of(context).textTheme.bodyLarge!,
       );
     }
 
     return Column(
       children: params.entries.map((e) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+          padding: const EdgeInsets.only(bottom: SbSpacing.sm),
           child: SbListItemTile(
             title: e.key,
             onTap: () {}, // Immutable detail view
             trailing: Text(
               e.value.toString(),
-              style: AppTextStyles.caption(context),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         );
@@ -198,3 +191,13 @@ class HistoryDetailScreen extends ConsumerWidget {
     context.pop();
   }
 }
+
+
+
+
+
+
+
+
+
+

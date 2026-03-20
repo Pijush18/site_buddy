@@ -20,3 +20,6 @@ class ShutteringResult {
     return const ShutteringResult(areaM2: 0, length: 0, width: 0, depth: 0);
   }
 }
+
+
+

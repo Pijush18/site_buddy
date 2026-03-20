@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,16 +90,16 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Soil & Load'),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 2 of 6: Parameters',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           // Column Load Card
           SbSectionHeader(
             title: state.type == FootingType.combined ||
@@ -108,7 +108,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                 : 'Column Loadings',
           ),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -117,7 +117,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                   controller: _loadController,
                   suffixIcon: SbIcons.arrowDown,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
                 Row(
                   children: [
                     Expanded(
@@ -126,7 +126,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                         controller: _mxController,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
+                    const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
                     Expanded(
                       child: AppNumberField(
                         label: 'My1 (kNm)',
@@ -138,19 +138,19 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
 
                 if (state.type == FootingType.combined ||
                     state.type == FootingType.strap) ...[
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                   Divider(color: colorScheme.outlineVariant),
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                   Text(
                     'Column 2 Loadings',
-                    style: AppTextStyles.cardTitle(context),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     label: 'Axial Load (P2) (kN)',
                     controller: _load2Controller,
                   ),
-                  const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                  const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                   Row(
                     children: [
                       Expanded(
@@ -159,7 +159,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                           controller: _mx2Controller,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
+                      const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
                       Expanded(
                         child: AppNumberField(
                           label: 'My2 (kNm)',
@@ -172,11 +172,11 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           // Soil Parameters Card
           const SbSectionHeader(title: 'Soil Properties'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -185,7 +185,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                   controller: _sbcController,
                   suffixIcon: SbIcons.terrain,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
                 AppNumberField(
                   label: 'Foundation Depth (m)',
                   controller: _depthController,
@@ -195,7 +195,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
             ),
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -205,7 +205,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                 onPressed: _onNext,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -213,9 +213,19 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

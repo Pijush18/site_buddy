@@ -28,3 +28,6 @@ class RebarResult {
     required this.totalWeight,
   });
 }
+
+
+

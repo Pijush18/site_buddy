@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -29,11 +29,9 @@ class SlabReinforcementScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 4 of 5: Steel Detailing',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           DesignResultCard(
             title: 'Steel Area Check',
@@ -50,7 +48,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Cl. 26.5.2.1',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           DesignResultCard(
             title: 'Practical Detailing',
@@ -67,24 +65,24 @@ class SlabReinforcementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               children: [
                 Icon(Icons.layers_outlined,
                     size: 64, color: colorScheme.secondary.withValues(alpha: 0.5)),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   'Rebar spacing should not exceed 3d or 300mm for main rebar.',
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +93,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
                 icon: Icons.security_outlined,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -103,9 +101,20 @@ class SlabReinforcementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

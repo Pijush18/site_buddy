@@ -22,3 +22,6 @@ abstract class StructuralRepository {
   Future<void> saveFooting(FootingDesignState state);
   List<FootingDesignState> getFootingsForProject(String projectId);
 }
+
+
+

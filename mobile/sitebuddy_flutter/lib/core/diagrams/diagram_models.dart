@@ -96,3 +96,6 @@ class FootingDiagramGeom {
     required this.gridLines,
   });
 }
+
+
+

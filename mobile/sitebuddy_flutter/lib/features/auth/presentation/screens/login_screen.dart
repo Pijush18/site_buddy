@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
@@ -153,27 +153,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing for login layout
+          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing for login layout
           Icon(
             SbIcons.engineering,
             size: 64,
             color: colorScheme.primary,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Text(
             AppStrings.siteBuddy,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              fontSize: 32, // Brand logo exception, but using centralized style base
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             AppStrings.structuralDesignSuite,
-            style: AppTextStyles.body(context, secondary: true),
+            style: Theme.of(context).textTheme.bodyMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48 (approx)
+          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8 (approx)
           
           SbSection(
             title: AppStrings.signIn,
@@ -181,7 +178,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 Text(
                   AppStrings.welcomeBack,
-                  style: AppTextStyles.body(context, secondary: true),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ],
             ),
@@ -202,7 +199,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
                   prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SbInput(
                   controller: _passwordController,
                   focusNode: _passwordFocusNode,
@@ -227,7 +224,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: const Text(AppStrings.forgotPassword),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SbButton.primary(
                   label: AppStrings.signIn,
                   onPressed: (isLoading ||
@@ -241,26 +238,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
 
           // Divider
           Row(
             children: [
               const Expanded(child: Divider()),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
                 child: Text(
                   AppStrings.orContinueWith,
-                  style: AppTextStyles.caption(context).copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ),
               const Expanded(child: Divider()),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
 
           // OAuth Buttons
           Column(
@@ -272,7 +266,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 width: double.infinity,
               ),
               if (Platform.isIOS) ...[
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 const SbButton.secondary(
                   label: AppStrings.continueWithApple,
                   icon: SbIcons.apple,
@@ -282,7 +276,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
 
           // Register Link
           Row(
@@ -290,23 +284,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             children: [
               Text(
                 AppStrings.dontHaveAccount,
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
               GestureDetector(
                 onTap: () => context.go('/register'),
                 child: Text(
                   AppStrings.createAccount,
-                  style: AppTextStyles.body(context).copyWith(
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl), // Bottom padding
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

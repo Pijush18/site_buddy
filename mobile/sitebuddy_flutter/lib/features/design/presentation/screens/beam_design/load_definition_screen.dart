@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -82,9 +82,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final state = ref.watch(beamDesignControllerProvider);
-    final colorScheme = theme.colorScheme;
 
     return AppScreenWrapper(
       title: 'Load Definition',
@@ -95,11 +93,9 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
           children: [
             Text(
               'Step 2 of 5: Applied Loads',
-              style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
 
             // Loads Card
             SbCard(
@@ -117,7 +113,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Dead Load'),
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.lg),
 
                   AppNumberField(
                     controller: _llController,
@@ -125,7 +121,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Live Load'),
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.lg),
 
                   AppNumberField(
                     controller: _plController,
@@ -134,7 +130,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
 
             // Load Factor Toggle Card
             SbCard(
@@ -146,11 +142,11 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     children: [
                       const SbSectionHeader(
                         title: 'Design Limit State',
-                        padding: EdgeInsets.only(bottom: AppSpacing.sm),
+                        padding: EdgeInsets.only(bottom: SbSpacing.sm),
                       ),
                       Text(
                         state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
-                        style: AppTextStyles.caption(context),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ],
                   ),
@@ -165,7 +161,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -176,7 +172,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                   icon: SbIcons.analytics,
                   width: double.infinity,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbButton.ghost(
                   label: 'Back',
                   onPressed: () => context.pop(),
@@ -184,10 +180,18 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+

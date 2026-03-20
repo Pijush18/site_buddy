@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -263,7 +263,7 @@ class SbButton extends StatelessWidget {
           child: TextButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: AppLayout.sm),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
             ),
             child: isLoading ? spinner : _buildLabelRow(context),
           ),
@@ -272,13 +272,14 @@ class SbButton extends StatelessWidget {
   }
 
   Widget _buildLabelRow(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: AppLayout.iconSize),
-          if (label != null) const SizedBox(width: AppLayout.sm),
+          Icon(icon, size: 20),
+          if (label != null) const SizedBox(width: 8),
         ],
         if (label != null)
           Text(
@@ -286,9 +287,16 @@ class SbButton extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: AppTextStyles.cardTitle(context),
+            style: theme.textTheme.labelLarge!,
           ),
       ],
     );
   }
 }
+
+
+
+
+
+
+

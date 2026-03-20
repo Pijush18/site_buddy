@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -23,7 +23,6 @@ class MaterialCalculatorScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(calculatorProvider);
     final controller = ref.read(calculatorProvider.notifier);
-    final colorScheme = Theme.of(context).colorScheme;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -44,7 +43,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           SbSection(
             title: EngineeringTerms.concreteGrade,
             child: SbDropdown<ConcreteGrade>(
@@ -66,14 +65,14 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                   onChanged: controller.updateLength,
                   errorText: lError,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 AppNumberField(
                   label: EngineeringTerms.width,
                   suffixIcon: SbIcons.width,
                   onChanged: controller.updateWidth,
                   errorText: wError,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 AppNumberField(
                   label: EngineeringTerms.thicknessDepth,
                   suffixIcon: SbIcons.layers,
@@ -86,8 +85,8 @@ class MaterialCalculatorScreen extends ConsumerWidget {
           SbSection(
             title: EngineeringTerms.reinforcementAndWaste,
             child: Wrap(
-              spacing: AppSpacing.md,
-              runSpacing: AppSpacing.md,
+              spacing: SbSpacing.lg,
+              runSpacing: SbSpacing.lg,
               children: [
                 SizedBox(
                   width: 160,
@@ -125,25 +124,23 @@ class MaterialCalculatorScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
           if (state.concreteResult != null) ...[
             _ResultSection(result: state.concreteResult!),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
           const _IsCodeNote(),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -165,7 +162,6 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return SbSection(
       title: EngineeringTerms.resultSummary,
@@ -178,7 +174,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.concreteVolume.toStringAsFixed(3)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -186,9 +182,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
               ),
             ),
             SbListItemTile(
@@ -196,7 +190,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.sandVolume.toStringAsFixed(3)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -204,19 +198,17 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.aggregateVolume.toStringAsFixed(3)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             const Divider(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
             SbListItemTile(
               title: EngineeringTerms.steelWeight,
               onTap: () {},
               trailing: Text(
                 '${result.steelWeight.toStringAsFixed(1)} kg',
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: result.steelWeight > 0 ? colorScheme.secondary : null,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
               ),
             ),
             SbListItemTile(
@@ -224,32 +216,28 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.bindingWire.toStringAsFixed(2)} kg',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             if (result.steelWeight == 0)
               Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.sm),
+                padding: const EdgeInsets.only(top: SbSpacing.sm),
                 child: Text(
                   EngineeringTerms.steelRatioZeroNote,
-                  style: AppTextStyles.caption(context).copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                   textAlign: TextAlign.center,
                 ),
               ),
             const Divider(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(EngineeringTerms.mixGradeLabel,
-                    style: AppTextStyles.caption(context)),
+                    style: Theme.of(context).textTheme.labelMedium!),
                 Text(
                   result.concreteGrade,
-                  style: AppTextStyles.caption(context).copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
             ),
@@ -265,14 +253,17 @@ class _IsCodeNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Text(
       EngineeringTerms.concreteCodeRef,
-      style: AppTextStyles.caption(context).copyWith(
-        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-        fontStyle: FontStyle.italic,
-      ),
+      style: Theme.of(context).textTheme.labelMedium!,
       textAlign: TextAlign.center,
     );
   }
 }
+
+
+
+
+
+
+

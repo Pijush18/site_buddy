@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 
 class SlendernessDiagram extends StatelessWidget {
@@ -27,12 +27,10 @@ class SlendernessDiagram extends StatelessWidget {
     final theme = Theme.of(context);
     final axisColor = theme.brightness == Brightness.dark ? Colors.white70 : Colors.black87;
     final diagramColor = theme.colorScheme.primary;
-    final labelStyle = AppTextStyles.caption(context).copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
+    final labelStyle = Theme.of(context).textTheme.labelMedium!;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: AspectRatio(
         aspectRatio: 2.5,
         child: Row(
@@ -63,7 +61,7 @@ class SlendernessDiagram extends StatelessWidget {
                     value: slendernessX.toStringAsFixed(2),
                     color: diagramColor,
                   ),
-                  AppLayout.vGap12,
+                  const SizedBox(height: SbSpacing.md),
                   if (!isCircular)
                     _ValueLabel(
                       label: 'λy = ley / b',
@@ -98,9 +96,9 @@ class _ValueLabel extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption(context),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
-        Text(value, style: AppTextStyles.cardTitle(context).copyWith(color: color)),
+        Text(value, style: Theme.of(context).textTheme.labelLarge!),
       ],
     );
   }
@@ -217,3 +215,12 @@ class _SlendernessPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
+

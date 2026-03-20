@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// WIDGET: SbCard
@@ -29,7 +28,7 @@ class SbCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final borderRadius = BorderRadius.circular(AppLayout.cardRadius);
+    final borderRadius = BorderRadius.circular(12.0);
     
     return Container(
       margin: margin ?? EdgeInsets.zero,
@@ -53,7 +52,7 @@ class SbCard extends StatelessWidget {
 
           // Optimized for dashboard density
           if (availableHeight < 60) {
-            dynamicPaddingValue = AppSpacing.xs; // 4px
+            dynamicPaddingValue = SbSpacing.xs; // 4px
           } else {
             dynamicPaddingValue = 12.0; // Optimized mid-density
           }
@@ -82,3 +81,9 @@ class SbCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

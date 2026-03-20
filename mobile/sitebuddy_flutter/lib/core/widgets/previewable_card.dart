@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:flutter/material.dart';
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -12,8 +12,6 @@ import 'package:site_buddy/core/theme/app_layout.dart';
 /// Shared component for previewing and sharing report-like content.
 /// Consolidates RepaintBoundary and ActionRow logic.
 /// ----------------------------------------------
-
-import 'package:flutter/material.dart';
 
 class PreviewableCard extends StatelessWidget {
   final Widget child;
@@ -35,10 +33,10 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: AppLayout.pLarge),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppLayout.pTiny + 2,
+                horizontal: SbSpacing.xs + 2,
               ), // 6px
               child: RepaintBoundary(key: previewKey, child: child),
             ),
@@ -51,7 +49,7 @@ class PreviewableCard extends StatelessWidget {
 
   Widget _buildActionRow(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppLayout.pLarge),
+      padding: const EdgeInsets.all(SbSpacing.xxl),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -99,8 +97,8 @@ class _ActionButton extends StatelessWidget {
           backgroundColor: primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           padding: const EdgeInsets.symmetric(
-            horizontal: AppLayout.pLarge,
-            vertical: AppLayout.pMedium,
+            horizontal: SbSpacing.xxl,
+            vertical: SbSpacing.lg,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: AppLayout.borderRadiusCard,
@@ -112,9 +110,7 @@ class _ActionButton extends StatelessWidget {
         ),
         label: Text(
           action.label,
-          style: AppTextStyles.caption(context).copyWith(
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
+          style: theme.textTheme.labelMedium!,
         ),
       );
     }
@@ -123,19 +119,21 @@ class _ActionButton extends StatelessWidget {
       onPressed: action.onPressed,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppLayout.pMedium,
-          vertical: AppLayout.pMedium,
+          horizontal: SbSpacing.lg,
+          vertical: SbSpacing.lg,
         ),
         side: BorderSide(color: primaryColor),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+          borderRadius: BorderRadius.circular(12.0),
         ),
       ),
       icon: Icon(action.icon, color: primaryColor, size: 20),
       label: Text(
         action.label,
-        style: AppTextStyles.caption(context).copyWith(color: primaryColor),
+        style: theme.textTheme.labelMedium!,
       ),
     );
   }
 }
+
+

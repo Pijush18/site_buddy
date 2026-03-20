@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
-
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 
 class SbGridCard extends StatefulWidget {
@@ -39,7 +37,6 @@ class _SbGridCardState extends State<SbGridCard> {
     final currentBorderColor = AppColors.skyBlue.withValues(alpha: 0.7);
     
     final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surfaceContainerHighest;
-    final contentColor = widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurface;
 
     return AnimatedScale(
       scale: _pressed ? 0.98 : 1.0,
@@ -77,7 +74,7 @@ class _SbGridCardState extends State<SbGridCard> {
                   : null,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.cardPadding),
+              padding: const EdgeInsets.all(SbSpacing.lg),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -91,15 +88,13 @@ class _SbGridCardState extends State<SbGridCard> {
                       size: 22, 
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.itemGap), // Standardized gap
+                  const SizedBox(height: SbSpacing.sm), // Standardized gap
                   SizedBox(
                     height: 48, // Fixed height constraint to ensure multiline/single line labels don't change card sizes.
                     child: Center(
                       child: Text(
                         widget.label,
-                        style: AppTextStyles.cardTitle(context).copyWith(
-                          color: contentColor,
-                        ),
+                        style: Theme.of(context).textTheme.labelLarge!,
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -115,3 +110,5 @@ class _SbGridCardState extends State<SbGridCard> {
     );
   }
 }
+
+

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +27,7 @@ class AiChatScreen extends ConsumerWidget {
           Expanded(
             child: ListView.builder(
               reverse: false, // Messages are strictly appended to the end of array
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(SbSpacing.lg),
               itemCount: messages.length,
               itemBuilder: (context, index) {
                 final message = messages[index];
@@ -43,3 +43,7 @@ class AiChatScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbListItemTile
 /// PURPOSE: Standardized list item UI enforcing global typography and spacing.
-/// 
-/// DESIGN SPECS:
-/// - Uses [SbCard] master surface.
-/// - NO external margin (spacing managed by parent layout/section).
-/// - Icon: 40px in 48x48 container.
-/// - Gap (Icon <-> Text): AppSpacing.sm (8px).
-/// - Title: cardTitle (14px, w600).
-/// - Subtitle: body (14px, w400) or caption (12px, w400).
-/// - Title-Subtitle gap: 2px.
 class SbListItemTile extends StatelessWidget {
   final IconData? icon;
   final String title;
@@ -36,13 +26,15 @@ class SbListItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
 
     Widget? trailingWidget;
     if (trailing is String) {
       trailingWidget = Text(
         trailing as String,
-        style: AppTextStyles.caption(context),
+        style: textTheme.labelMedium,
       );
     } else if (trailing is Widget) {
       trailingWidget = trailing as Widget;
@@ -52,10 +44,8 @@ class SbListItemTile extends StatelessWidget {
       padding: EdgeInsets.zero,
       onTap: onTap,
       color: color,
-      // SPACING OWNERSHIP: Removed bottom margin. 
-      // Spacing between items is now controlled by the parent Column/Section.
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.cardPadding),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Row(
           children: [
             if (icon != null) ...[
@@ -66,11 +56,11 @@ class SbListItemTile extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: iconColor ?? colorScheme.primary.withValues(alpha: 0.8),
-                    size: 20, // LOCKED: 20px
+                    size: 20,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.md),
             ],
             Expanded(
               child: Column(
@@ -79,15 +69,15 @@ class SbListItemTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTextStyles.cardTitle(context),
+                    style: textTheme.titleMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null && subtitle!.isNotEmpty) ...[
-                    const SizedBox(height: 2),
+                    const SizedBox(height: SbSpacing.xxs),
                     Text(
                       subtitle!,
-                      style: AppTextStyles.body(context, secondary: true),
+                      style: textTheme.bodyMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -96,7 +86,7 @@ class SbListItemTile extends StatelessWidget {
               ),
             ),
             if (trailingWidget != null) ...[
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.md),
               trailingWidget,
             ],
           ],
@@ -105,3 +95,6 @@ class SbListItemTile extends StatelessWidget {
     );
   }
 }
+
+
+

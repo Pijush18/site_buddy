@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -45,7 +45,7 @@ class CrackingInputSection extends StatelessWidget {
                     validator: (v) => ValidationHelper.validatePositive(v, 'Spacing'),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: AppNumberField(
                     controller: coverController,
@@ -56,14 +56,14 @@ class CrackingInputSection extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             AppNumberField(
               controller: fsController,
               label: 'Steel Stress (fs) [MPa]',
               suffixIcon: Icons.speed,
               validator: (v) => ValidationHelper.validatePositive(v, 'Stress'),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             Row(
               children: [
                 Expanded(
@@ -74,7 +74,7 @@ class CrackingInputSection extends StatelessWidget {
                     concreteGrades,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: _buildLabelledDropdown(
                     context,
@@ -108,7 +108,7 @@ class CrackingInputSection extends StatelessWidget {
             color: colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,
@@ -121,3 +121,7 @@ class CrackingInputSection extends StatelessWidget {
     );
   }
 }
+
+
+
+

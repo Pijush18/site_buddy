@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: save_to_project_dialog.dart
@@ -51,12 +51,12 @@ class SaveToProjectDialog extends ConsumerWidget {
             const Center(child: CircularProgressIndicator())
           else if (projectState.projects.isEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               child: Center(
                 child: Text(
                   'No projects available.\nCreate a project first!',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             )
@@ -88,3 +88,9 @@ class SaveToProjectDialog extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+

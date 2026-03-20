@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
@@ -24,33 +24,29 @@ class OptimizationList extends StatelessWidget {
       );
     }
 
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: options
           .map(
             (option) => Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.md),
+              padding: const EdgeInsets.only(bottom: SbSpacing.lg),
               child: SbCard(
-                padding: const EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       option.title,
-                      style: AppTextStyles.sectionTitle(context).copyWith(
-                        color: colorScheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!,
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Text(
                       option.description,
-                      style: AppTextStyles.body(context),
+                      style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: SbSpacing.lg),
                     const Divider(height: 1),
-                    const SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: SbSpacing.lg),
                     SbButton.primary(
                       label: AppStrings.selectOption,
                       onPressed: onOptionSelected != null
@@ -66,3 +62,11 @@ class OptimizationList extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

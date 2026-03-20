@@ -15,3 +15,6 @@ class DesignAdvisorResult {
     this.suggestions = const [],
   });
 }
+
+
+

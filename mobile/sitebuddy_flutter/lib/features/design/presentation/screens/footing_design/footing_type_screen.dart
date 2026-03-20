@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:flutter/material.dart';
@@ -24,24 +24,24 @@ class FootingTypeScreen extends ConsumerWidget {
           icon: const Icon(Icons.share_outlined),
           onPressed: () => debugPrint('ACTION: share footing design'),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 1 of 6: Foundation Type',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md), // Replaced AppLayout.pMedium
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg), // Replaced SbSpacing.lg
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: AppSpacing.md, // Replaced AppLayout.pMedium
-              mainAxisSpacing: AppSpacing.md, // Replaced AppLayout.pMedium
+              crossAxisSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
+              mainAxisSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
               childAspectRatio: 0.95,
             ),
             itemCount: FootingType.values.length,
@@ -60,13 +60,13 @@ class FootingTypeScreen extends ConsumerWidget {
               );
             },
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbButton.secondary(
             label: 'Back',
             onPressed: () => context.pop(),
             width: double.infinity,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );
@@ -89,3 +89,12 @@ class FootingTypeScreen extends ConsumerWidget {
     }
   }
 }
+
+
+
+
+
+
+
+
+

@@ -14,7 +14,7 @@
 library;
 
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -45,7 +45,7 @@ class PdfGenerator {
                     top: pw.BorderSide(color: PdfColors.grey400, width: 2),
                   ),
                 ),
-                padding: const pw.EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                padding: const pw.EdgeInsets.symmetric(vertical: SbSpacing.sm),
                 child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
@@ -56,7 +56,7 @@ class PdfGenerator {
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
-                    pw.SizedBox(height: AppSpacing.xs),
+                    pw.SizedBox(height: SbSpacing.xs),
                     pw.Text(
                       'Project: $projectName',
                       style: pw.TextStyle(
@@ -65,7 +65,7 @@ class PdfGenerator {
                         color: PdfColors.grey700,
                       ),
                     ),
-                    pw.SizedBox(height: AppSpacing.xs),
+                    pw.SizedBox(height: SbSpacing.xs),
                     pw.Text(
                       'Date: $formattedDate',
                       style: const pw.TextStyle(
@@ -76,7 +76,7 @@ class PdfGenerator {
                   ],
                 ),
               ),
-              pw.SizedBox(height: AppSpacing.lg),
+              pw.SizedBox(height: SbSpacing.xxl),
               pw.Text(
                 'Question:',
                 style: pw.TextStyle(
@@ -84,9 +84,9 @@ class PdfGenerator {
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
-              pw.SizedBox(height: AppSpacing.sm),
+              pw.SizedBox(height: SbSpacing.sm),
               pw.Text(question, style: const pw.TextStyle(fontSize: 14)),
-              pw.SizedBox(height: AppSpacing.lg),
+              pw.SizedBox(height: SbSpacing.xxl),
               pw.Text(
                 'Answer:',
                 style: pw.TextStyle(
@@ -94,7 +94,7 @@ class PdfGenerator {
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
-              pw.SizedBox(height: AppSpacing.sm),
+              pw.SizedBox(height: SbSpacing.sm),
               pw.Text(answer, style: const pw.TextStyle(fontSize: 14)),
               pw.Spacer(),
               pw.Container(
@@ -104,7 +104,7 @@ class PdfGenerator {
                     bottom: pw.BorderSide(color: PdfColors.grey400, width: 2),
                   ),
                 ),
-                padding: const pw.EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                padding: const pw.EdgeInsets.symmetric(vertical: SbSpacing.sm),
                 child: pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
@@ -116,7 +116,7 @@ class PdfGenerator {
                         color: PdfColors.grey800,
                       ),
                     ),
-                    pw.SizedBox(height: AppSpacing.xs),
+                    pw.SizedBox(height: SbSpacing.xs),
                     pw.Text(
                       'Developed by Er. Pijush Debbarma',
                       style: const pw.TextStyle(
@@ -159,3 +159,7 @@ class PdfGenerator {
     return '${now.day} ${months[now.month - 1]} ${now.year}';
   }
 }
+
+
+
+

@@ -39,3 +39,6 @@ class LevelResult {
     required this.direction,
   });
 }
+
+
+

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// Model class for items in the Tool Grid.
@@ -39,8 +39,8 @@ class SbToolGridSection extends StatelessWidget {
         padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: AppSpacing.md,
-          crossAxisSpacing: AppSpacing.md,
+          mainAxisSpacing: SbSpacing.lg,
+          crossAxisSpacing: SbSpacing.lg,
           childAspectRatio: 1.0,
         ),
         itemCount: items.length,
@@ -58,3 +58,7 @@ class SbToolGridSection extends StatelessWidget {
     );
   }
 }
+
+
+
+

@@ -1,7 +1,8 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 class SbDropdown<T> extends StatelessWidget {
   final T? value;
@@ -22,7 +23,7 @@ class SbDropdown<T> extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppLayout.pMedium),
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: AppLayout.borderRadiusInput,
@@ -39,7 +40,7 @@ class SbDropdown<T> extends StatelessWidget {
             SbIcons.chevronDown,
             color: colorScheme.onSurfaceVariant,
           ),
-          style: AppTextStyles.body(context).copyWith(color: colorScheme.onSurface),
+          style: Theme.of(context).textTheme.bodyLarge!,
           dropdownColor: colorScheme.surface,
           borderRadius: AppLayout.borderRadiusInput,
           items: items.map((T item) {
@@ -47,7 +48,7 @@ class SbDropdown<T> extends StatelessWidget {
               value: item,
               child: Text(
                 itemLabelBuilder(item),
-                style: AppTextStyles.body(context).copyWith(color: colorScheme.onSurface),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             );
           }).toList(),
@@ -57,3 +58,12 @@ class SbDropdown<T> extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Firebase (Assuming default options or configured via native files)
   try {
     await Firebase.initializeApp();
@@ -55,3 +55,6 @@ class SiteBuddyApp extends ConsumerWidget {
     );
   }
 }
+
+
+

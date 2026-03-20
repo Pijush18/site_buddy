@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -18,7 +18,6 @@ class CementScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(cementControllerProvider);
     final controller = ref.read(cementControllerProvider.notifier);
-    final colorScheme = Theme.of(context).colorScheme;
 
     final lError = state.failure?.message.contains('Length') == true ? state.failure?.message : null;
     final wError = state.failure?.message.contains('Width') == true ? state.failure?.message : null;
@@ -34,20 +33,17 @@ class CementScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: AppTextStyles.sectionTitle(context).copyWith(
-                color: colorScheme.primary,
-                letterSpacing: 1.2,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -55,7 +51,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -63,7 +59,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -71,23 +67,19 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
               const Divider(),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
-                    style: AppTextStyles.cardTitle(context).copyWith(
-                      color: colorScheme.primary,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!,
                 ),
               ),
             ],
@@ -103,44 +95,40 @@ class CementScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.volumeAndDimensions,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           AppNumberField(
             label: EngineeringTerms.wallLength, // Reuse Wall Length or add generic Length
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.width, // I should check if EngineeringTerms.width has (m)
             suffixIcon: SbIcons.ruler,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.depth,
             suffixIcon: SbIcons.height,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             EngineeringTerms.ratioFormat,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Wrap(
-            spacing: AppSpacing.md, // Replaced AppLayout.md
-            runSpacing: AppSpacing.md, // Replaced AppLayout.md
+            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
             children: [
               SizedBox(
                 width: 100,
@@ -177,10 +165,10 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Wrap(
-            spacing: AppSpacing.md, // Replaced AppLayout.md
-            runSpacing: AppSpacing.md, // Replaced AppLayout.md
+            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
             children: [
               SizedBox(
                 width: 160,
@@ -204,7 +192,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -220,25 +208,34 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

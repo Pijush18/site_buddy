@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -86,23 +86,21 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Geometry'),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 3 of 6: Dimensioning (${state.type.label})',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           // Column Geometry Card
           const SbSectionHeader(title: 'Column Dimensions'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -114,7 +112,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                         controller: _colAController,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                     Expanded(
                       child: AppNumberField(
                         label: 'Column B (mm)',
@@ -123,20 +121,20 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 Text(
                   'Critical for shear and bending calculations at face.',
-                  style: AppTextStyles.caption(context),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Main Geometry Card
           const SbSectionHeader(title: 'Footing Dimensions'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -148,7 +146,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                         controller: _lengthController,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                     Expanded(
                       child: AppNumberField(
                         label: 'Width (B) (mm)',
@@ -157,7 +155,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 AppNumberField(
                   label: 'Overall Thickness (D) (mm)',
                   controller: _thicknessController,
@@ -165,7 +163,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                 ),
                 if (state.type == FootingType.combined ||
                     state.type == FootingType.strap) ...[
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   AppNumberField(
                     label: 'Column C/C Spacing (mm)',
                     controller: _spacingController,
@@ -174,28 +172,26 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Information Card
           SbCard(
             color: colorScheme.primary.withValues(alpha: 0.05),
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Row(
               children: [
                 Icon(SbIcons.info, color: colorScheme.primary, size: 20),
-                const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                 Expanded(
                   child: Text(
                     'For ${state.type.label}, ensure dimensions capture the full required bearing area of ${(state.requiredArea).toStringAsFixed(2)} m².',
-                      style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.primary,
-                    ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -205,7 +201,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                 onPressed: _onNext,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -213,9 +209,20 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -22,8 +22,6 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final state = ref.watch(beamDesignControllerProvider);
     final notifier = ref.read(beamDesignControllerProvider.notifier);
 
@@ -35,11 +33,9 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 4 of 5: Steel Detailing',
-            style: AppTextStyles.screenTitle(context).copyWith(
-            color: colorScheme.primary,
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // DETALLING PREVIEW
           const SbSectionHeader(
@@ -54,7 +50,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             barDia: state.mainBarDia,
             stirrupSpacing: state.stirrupSpacing,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // SMART SUGGESTIONS
           if (state.suggestions.isNotEmpty) ...[
@@ -62,7 +58,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               suggestions: state.suggestions,
               onOptimize: () => notifier.optimize(),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           // Detailing Controls Card
@@ -77,9 +73,9 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
                 Text(
                   'Main Bar Diameter',
-                  style: AppTextStyles.cardTitle(context),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<double>(
                   value: state.mainBarDia,
                   items: const [12, 16, 20, 25, 32],
@@ -94,14 +90,14 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           if (ref.watch(educationalModeProvider))
             const CodeReferenceCard(
               reference: IS456References.tensionReinforcement,
             ),
 
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // RESULTS: FLEXURE
           DesignResultCard(
@@ -124,7 +120,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Annex G',
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // RESULTS: SHEAR
           DesignResultCard(
@@ -147,7 +143,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             ],
             codeReference: 'IS 456 Cl. 40',
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,7 +156,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -168,9 +164,17 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+

@@ -1,8 +1,7 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 
 /// WidGET: SbSettingsTile
 /// PURPOSE: Standardized settings row for professional production-grade interfaces.
@@ -28,18 +27,17 @@ class SbSettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     if (isVertical) {
-      // Keep vertical layout as is or refactor if SbListItemTile can't handle it.
-      // For settings, vertical usually means subtitle/trailing below.
-      // Let's keep it consistent with the new design system where possible.
-      final theme = Theme.of(context);
-      final colorScheme = theme.colorScheme;
       return Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,29 +45,25 @@ class SbSettingsTile extends StatelessWidget {
                   children: [
                     if (icon != null) ...[
                       Icon(icon, color: iconColor ?? colorScheme.primary, size: 24),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                     ],
                     Expanded(
                       child: Text(
                         title,
-                        style: AppTextStyles.sectionTitle(context).copyWith(
-                          color: colorScheme.onSurface,
-                        ),
+                        style: textTheme.titleMedium,
                       ),
                     ),
                   ],
                 ),
                 if (subtitle != null) ...[
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     subtitle!,
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: textTheme.bodyMedium,
                   ),
                 ],
                 if (trailing != null) ...[
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   trailing!,
                 ],
               ],
@@ -85,7 +79,10 @@ class SbSettingsTile extends StatelessWidget {
       title: title,
       subtitle: subtitle,
       onTap: onTap ?? () {},
-      trailing: trailing ?? (onTap != null ? Icon(SbIcons.chevronRight, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant) : null),
+      trailing: trailing ?? (onTap != null ? Icon(SbIcons.chevronRight, size: 20, color: colorScheme.onSurfaceVariant) : null),
     );
   }
 }
+
+
+

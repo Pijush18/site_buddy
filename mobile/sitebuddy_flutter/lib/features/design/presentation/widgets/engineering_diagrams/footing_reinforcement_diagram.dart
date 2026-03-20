@@ -1,7 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 class FootingReinforcementDiagram extends StatelessWidget {
   final double length; // mm
@@ -35,7 +34,7 @@ class FootingReinforcementDiagram extends StatelessWidget {
     final colColor = isDark ? Colors.white24 : Colors.black12;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 1.8, // Slightly taller for footing details
@@ -58,7 +57,7 @@ class FootingReinforcementDiagram extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.only(left: AppSpacing.sm),
+                padding: const EdgeInsets.only(left: SbSpacing.sm),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,20 +67,20 @@ class FootingReinforcementDiagram extends StatelessWidget {
                       value:
                           '${(length / 1000).toStringAsFixed(2)}x${(width / 1000).toStringAsFixed(2)} m',
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     _ValueTile(
                       label: 'Thickness',
                       value: '${thickness.toInt()} mm',
                     ),
-                    AppLayout.vGap12,
+                    const SizedBox(height: SbSpacing.md),
                     _ValueTile(
                       label: 'Net Soil Pr.',
                       value: '$qu kN/m²',
                       color: Colors.blue,
                     ),
-                    AppLayout.vGap12,
+                    const SizedBox(height: SbSpacing.md),
                     _ValueTile(label: 'Steel X-X', value: rebarX, isBold: true),
-                    AppLayout.vGap4,
+                    const SizedBox(height: SbSpacing.xs),
                     _ValueTile(label: 'Steel Y-Y', value: rebarY, isBold: true),
                   ],
                 ),
@@ -116,14 +115,14 @@ class _ValueTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption(context),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body(context).copyWith(color: color),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ),
       ],
@@ -216,3 +215,13 @@ class _FootingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
+
+

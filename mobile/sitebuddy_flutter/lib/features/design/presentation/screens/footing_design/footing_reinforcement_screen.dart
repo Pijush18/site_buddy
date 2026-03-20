@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -32,9 +32,9 @@ class FootingReinforcementScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 5 of 6: Steel Detailing',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           // Requirement Card
           DesignResultCard(
@@ -59,7 +59,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
           if (ref.watch(educationalModeProvider))
             const CodeReferenceCard(reference: IS456References.soilPressure),
 
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Visualization
           FootingReinforcementDiagram(
@@ -76,20 +76,20 @@ class FootingReinforcementScreen extends ConsumerWidget {
                 'T${state.crossBarDia.toInt()} @ ${state.crossBarSpacing.toInt()} c/c',
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
 
           // Detailing Card
           const SbSectionHeader(title: 'Bar Detailing'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Main Reinforcement (X-Direction)',
-                  style: AppTextStyles.caption(context),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 Row(
                   children: [
                     Expanded(
@@ -104,7 +104,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                         },
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                     Expanded(
                       child: SbDropdown<double>(
                         value: state.mainBarSpacing,
@@ -120,12 +120,12 @@ class FootingReinforcementScreen extends ConsumerWidget {
                   ],
                 ),
 
-                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                 Text(
                   'Distribution Steel (Y-Direction)',
-                  style: AppTextStyles.caption(context),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 Row(
                   children: [
                     Expanded(
@@ -140,7 +140,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                         },
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                    const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                     Expanded(
                       child: SbDropdown<double>(
                         value: state.crossBarSpacing,
@@ -164,7 +164,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
               reference: IS456References.footingMinReinforcement,
             ),
 
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -173,7 +173,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                 onPressed: () => context.push('/footing/safety'),
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -181,9 +181,19 @@ class FootingReinforcementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

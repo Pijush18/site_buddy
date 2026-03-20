@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_radius.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class SpacingLabSection extends StatelessWidget {
@@ -8,29 +8,29 @@ class SpacingLabSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = [
-      _TokenData('xs (pTiny)', AppLayout.xs),
-      _TokenData('sm (pSmall)', AppLayout.sm),
-      _TokenData('md (pMedium)', AppLayout.md),
-      _TokenData('lg (pLarge)', AppLayout.lg),
-      _TokenData('xl (pHuge)', AppLayout.xl),
-      _TokenData('xxl', AppLayout.xxl),
+      _TokenData('xs (pTiny)', SbSpacing.xs),
+      _TokenData('sm (pSmall)', SbSpacing.sm),
+      _TokenData('md (pMedium)', SbSpacing.lg),
+      _TokenData('lg (pLarge)', SbSpacing.xxl),
+      _TokenData('xl (pHuge)', SbSpacing.xl),
+      _TokenData('xxl', SbSpacing.xxl),
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Spacing Tokens', style: AppTextStyles.sectionTitle(context)),
-        AppLayout.vGap16,
+        Text('Spacing Tokens', style: Theme.of(context).textTheme.titleMedium!),
+        const SizedBox(height: SbSpacing.lg),
         ...tokens.map(
           (t) => Padding(
-            padding: const EdgeInsets.only(bottom: AppLayout.pSmall),
+            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
             child: Row(
               children: [
                 SizedBox(
                   width: 100,
                   child: Text(
                     t.name,
-                    style: AppTextStyles.body(context, secondary: true),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ),
                 Container(
@@ -71,18 +71,18 @@ class RadiusLabSection extends StatelessWidget {
       children: [
         Text(
           'Radius & Elevation',
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         const Row(
           children: [
-            _RadiusBox(name: 'Small', radius: AppLayout.smallRadius),
-            AppLayout.hGap16,
-            _RadiusBox(name: 'Card', radius: AppLayout.cardRadius),
-            AppLayout.hGap16,
-            _RadiusBox(name: 'Input', radius: AppLayout.inputRadius),
-            AppLayout.hGap16,
-            _RadiusBox(name: 'Button', radius: AppLayout.buttonRadius),
+            _RadiusBox(name: 'Small', radius: AppRadius.sm),
+            SizedBox(width: SbSpacing.lg),
+            _RadiusBox(name: 'Card', radius: 12.0),
+            SizedBox(width: SbSpacing.lg),
+            _RadiusBox(name: 'Input', radius: 12.0),
+            SizedBox(width: SbSpacing.lg),
+            _RadiusBox(name: 'Button', radius: 16.0),
           ],
         ),
       ],
@@ -116,11 +116,11 @@ class _RadiusBox extends StatelessWidget {
           child: Center(
             child: Text(
               '${radius.toInt()}',
-              style: AppTextStyles.caption(context),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ),
-        AppLayout.vGap4,
+        const SizedBox(height: SbSpacing.xs),
         Text(name, style: const TextStyle(fontSize: 10)),
       ],
     );

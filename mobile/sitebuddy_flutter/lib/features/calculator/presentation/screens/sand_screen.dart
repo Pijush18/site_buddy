@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +17,8 @@ class SandScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final state = ref.watch(sandControllerProvider);
     final controller = ref.read(sandControllerProvider.notifier);
-    final colorScheme = theme.colorScheme;
 
     final lError = state.error?.toLowerCase().contains('length') == true ? state.error : null;
     final wError = state.error?.toLowerCase().contains('width') == true ? state.error : null;
@@ -36,30 +34,24 @@ class SandScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: AppTextStyles.sectionTitle(context).copyWith(
-                color: colorScheme.primary,
-                letterSpacing: 1.2,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             const Divider(),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                fontSize: 24,
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -67,21 +59,19 @@ class SandScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
               const Divider(),
-              const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+              const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
-                  style: AppTextStyles.cardTitle(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
               ),
             ],
@@ -97,13 +87,10 @@ class SandScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.volumeAndRate,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: theme.colorScheme.primary,
-              letterSpacing: 1.1,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12 (8px approx)
+          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md) (8px approx)
 
           AppNumberField(
             label: EngineeringTerms.length,
@@ -111,7 +98,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
+          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
 
           AppNumberField(
             label: EngineeringTerms.width,
@@ -119,7 +106,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
+          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
 
           AppNumberField(
             label: EngineeringTerms.depth,
@@ -127,7 +114,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.md / 1.5), // Replaced AppLayout.vGap12
+          const SizedBox(height: SbSpacing.lg / 1.5), // Replaced const SizedBox(height: SbSpacing.md)
 
           AppNumberField(
             label: EngineeringTerms.ratePerUnit,
@@ -135,7 +122,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateRate,
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -153,30 +140,39 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.paddingMedium
+                padding: const EdgeInsets.all(SbSpacing.lg), // Replaced const EdgeInsets.all(SbSpacing.lg)
                 child: Text(
                   state.error!,
-                  style: AppTextStyles.body(context).copyWith(
-                    color: colorScheme.error,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

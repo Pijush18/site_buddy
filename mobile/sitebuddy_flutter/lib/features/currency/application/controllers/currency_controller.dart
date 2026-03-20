@@ -133,3 +133,6 @@ class CurrencyController extends Notifier<CurrencyState> {
     }
   }
 }
+
+
+

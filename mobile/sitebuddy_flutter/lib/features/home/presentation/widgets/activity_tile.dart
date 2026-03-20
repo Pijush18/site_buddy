@@ -1,8 +1,7 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/core/widgets/sb_list_item.dart';
 
@@ -28,18 +27,18 @@ class ActivityTile extends StatelessWidget {
   }
 
   String _formatTime(DateTime time, AppLocalizations l10n) {
-    // ... logic remains same ...
-    return DateFormat('MMM dd').format(time); // Simplified for brevity in chunk
+    return DateFormat('MMM dd').format(time);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return SbListItem(
       leading: Container(
-        padding: const EdgeInsets.all(AppSpacing.sm),
+        padding: const EdgeInsets.all(SbSpacing.sm),
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryContainer.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(8),
@@ -54,7 +53,7 @@ class ActivityTile extends StatelessWidget {
       subtitle: activity.subtitle,
       trailing: Text(
         _formatTime(activity.timestamp, l10n),
-        style: AppTextStyles.caption(context),
+        style: textTheme.labelMedium,
       ),
       onTap: () {
         debugPrint('TODO: action for ${activity.type}');
@@ -62,3 +61,5 @@ class ActivityTile extends StatelessWidget {
     );
   }
 }
+
+

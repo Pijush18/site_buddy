@@ -49,3 +49,6 @@ class ClientException extends NetworkException {
   const ClientException({required String message, super.statusCode})
       : super(message);
 }
+
+
+

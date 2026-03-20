@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 
@@ -39,9 +39,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: Text(
                       'Vertical: Pu (kN)',
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: axisColor,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
                   ),
                   Align(
@@ -50,9 +48,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                       quarterTurns: 1,
                       child: Text(
                         'Horizontal: Mu (kNm)',
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: axisColor,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ),
                   ),
@@ -87,7 +83,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                   : 'Design point exceeds the capacity envelope!',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption(context).copyWith(color: color),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ],
         ),
@@ -129,20 +125,16 @@ class _DesignPoint extends StatelessWidget {
               border: Border.all(color: colorScheme.surface, width: 2),
             ),
           ),
-          AppLayout.vGap4,
+          const SizedBox(height: SbSpacing.xs),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: AppSpacing.xs),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs, vertical: SbSpacing.xs),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               'Pu=${pu.toInt()}, Mu=${mu.toInt()}',
-              style: AppTextStyles.caption(context).copyWith(
-                fontSize: 9,
-                color: color,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ],
@@ -213,3 +205,13 @@ class _InteractionCurvePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
+
+

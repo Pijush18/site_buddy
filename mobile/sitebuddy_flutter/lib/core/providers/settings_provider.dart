@@ -76,3 +76,6 @@ extension AppSettingsX on AppSettings {
   String get forceUnit => unitSystem == UnitSystem.metric ? 'kN' : 'kip';
   String get stressUnit => unitSystem == UnitSystem.metric ? 'MPa' : 'ksi';
 }
+
+
+

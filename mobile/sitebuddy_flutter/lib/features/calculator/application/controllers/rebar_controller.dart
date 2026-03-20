@@ -179,3 +179,6 @@ class RebarController extends Notifier<RebarState> {
 
   void reset() => state = const RebarState();
 }
+
+
+

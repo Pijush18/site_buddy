@@ -30,3 +30,6 @@ class SubscriptionStatus extends Equatable {
   @override
   List<Object?> get props => [isPremium, plan, status];
 }
+
+
+

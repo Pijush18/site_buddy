@@ -135,3 +135,6 @@ class ColumnSectionPainter extends CustomPainter {
         oldDelegate.colorScheme != colorScheme;
   }
 }
+
+
+

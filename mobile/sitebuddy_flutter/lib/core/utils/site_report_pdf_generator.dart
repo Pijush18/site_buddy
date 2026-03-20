@@ -15,7 +15,7 @@
 library;
 
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -32,7 +32,7 @@ class SiteReportPdfGenerator {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(AppSpacing.xl),
+        margin: const pw.EdgeInsets.all(SbSpacing.xxl),
         header: (context) => _buildHeader(report),
         footer: (context) => _buildFooter(context),
         build: (context) => _buildBody(report),
@@ -53,7 +53,7 @@ class SiteReportPdfGenerator {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(AppSpacing.xl),
+        margin: const pw.EdgeInsets.all(SbSpacing.xxl),
         header: (context) => _buildHeader(report),
         footer: (context) => _buildFooter(context),
         build: (context) => _buildBody(report),
@@ -97,9 +97,9 @@ class SiteReportPdfGenerator {
             ),
           ],
         ),
-        pw.SizedBox(height: AppSpacing.sm),
+        pw.SizedBox(height: SbSpacing.sm),
         pw.Container(
-          padding: const pw.EdgeInsets.all(AppSpacing.sm),
+          padding: const pw.EdgeInsets.all(SbSpacing.sm),
           decoration: pw.BoxDecoration(
             color: PdfColors.grey100,
             border: pw.Border.all(color: PdfColors.grey300),
@@ -112,7 +112,7 @@ class SiteReportPdfGenerator {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   _buildMetaRow('Company:', report.branding.companyName),
-                  pw.SizedBox(height: AppSpacing.xs),
+                  pw.SizedBox(height: SbSpacing.xs),
                   _buildMetaRow('Engineer:', report.branding.engineerName),
                 ],
               ),
@@ -120,7 +120,7 @@ class SiteReportPdfGenerator {
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
                   _buildMetaRow('Project:', report.projectName),
-                  pw.SizedBox(height: AppSpacing.xs),
+                  pw.SizedBox(height: SbSpacing.xs),
                   _buildMetaRow(
                     'Date:',
                     '${report.date.day}/${report.date.month}/${report.date.year}',
@@ -130,7 +130,7 @@ class SiteReportPdfGenerator {
             ],
           ),
         ),
-        pw.SizedBox(height: AppSpacing.lg),
+        pw.SizedBox(height: SbSpacing.xxl),
       ],
     );
   }
@@ -146,7 +146,7 @@ class SiteReportPdfGenerator {
             fontWeight: pw.FontWeight.bold,
           ),
         ),
-        pw.SizedBox(width: AppSpacing.sm),
+        pw.SizedBox(width: SbSpacing.sm),
         pw.Text(
           value,
           style: const pw.TextStyle(fontSize: 11, color: PdfColors.black),
@@ -163,7 +163,7 @@ class SiteReportPdfGenerator {
     for (var section in report.sections) {
       widgets.add(
         pw.Container(
-          margin: const pw.EdgeInsets.only(bottom: AppSpacing.lg),
+          margin: const pw.EdgeInsets.only(bottom: SbSpacing.xxl),
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
@@ -176,8 +176,8 @@ class SiteReportPdfGenerator {
                     ),
                   ),
                 ),
-                padding: const pw.EdgeInsets.only(bottom: AppSpacing.xs),
-                margin: const pw.EdgeInsets.only(bottom: AppSpacing.sm),
+                padding: const pw.EdgeInsets.only(bottom: SbSpacing.xs),
+                margin: const pw.EdgeInsets.only(bottom: SbSpacing.sm),
                 child: pw.Text(
                   section.title.toUpperCase(),
                   style: pw.TextStyle(
@@ -189,7 +189,7 @@ class SiteReportPdfGenerator {
               ),
               ...section.content.map(
                 (text) => pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: AppSpacing.sm),
+                  padding: const pw.EdgeInsets.only(bottom: SbSpacing.sm),
                   child: pw.Text(
                     text,
                     style: const pw.TextStyle(
@@ -212,11 +212,11 @@ class SiteReportPdfGenerator {
   /// Renders page tracking context alongside universal authorship declarations globally.
   static pw.Widget _buildFooter(pw.Context context) {
     return pw.Container(
-      margin: const pw.EdgeInsets.only(top: AppSpacing.lg),
+      margin: const pw.EdgeInsets.only(top: SbSpacing.xxl),
       decoration: const pw.BoxDecoration(
         border: pw.Border(top: pw.BorderSide(color: PdfColors.grey300)),
       ),
-      padding: const pw.EdgeInsets.only(top: AppSpacing.sm),
+      padding: const pw.EdgeInsets.only(top: SbSpacing.sm),
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
@@ -233,3 +233,10 @@ class SiteReportPdfGenerator {
     );
   }
 }
+
+
+
+
+
+
+

@@ -70,3 +70,6 @@ class FirebaseAuthRepository implements AuthRepository {
     return await _auth.currentUser?.getIdToken(forceRefresh);
   }
 }
+
+
+

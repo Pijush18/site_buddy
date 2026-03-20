@@ -84,3 +84,6 @@ class BrandingNotifier extends Notifier<BrandingModel> {
 final brandingProvider = NotifierProvider<BrandingNotifier, BrandingModel>(() {
   return BrandingNotifier();
 });
+
+
+

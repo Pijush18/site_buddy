@@ -1,6 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -42,28 +41,28 @@ class ShutteringScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.elementDimensions),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           AppNumberField(
             label: EngineeringTerms.length,
             hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           AppNumberField(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           AppNumberField(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           SbListItemTile(
             title: EngineeringTerms.includeBottomArea,
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
@@ -73,7 +72,7 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -89,22 +88,19 @@ class ShutteringScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl),
           ],
           Text(
             EngineeringTerms.shutteringNote,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-              fontStyle: FontStyle.italic,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -119,10 +115,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label.toUpperCase(),
-      style: AppTextStyles.sectionTitle(context).copyWith(
-        color: Theme.of(context).colorScheme.primary,
-        letterSpacing: 1.1,
-      ),
+      style: Theme.of(context).textTheme.titleMedium!,
       textAlign: TextAlign.center,
     );
   }
@@ -138,12 +131,10 @@ class _ErrorBanner extends StatelessWidget {
     return SbCard(
       color: colorScheme.errorContainer.withValues(alpha: 0.1),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Text(
           message,
-          style: AppTextStyles.body(context).copyWith(
-            color: colorScheme.error,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
           textAlign: TextAlign.center,
         ),
       ),
@@ -157,45 +148,39 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             EngineeringTerms.resultSummary,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
             title: EngineeringTerms.totalShutteringArea,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
-              style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+              style: Theme.of(context).textTheme.titleMedium!,
             ),
           ),
           SbListItemTile(
             title: EngineeringTerms.perimeter,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           SbListItemTile(
             title: EngineeringTerms.depth,
-            onTap: () {}, // Detail view entry
+            onTap: () {},
             trailing: Text(
               '${result.depth} m',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
         ],

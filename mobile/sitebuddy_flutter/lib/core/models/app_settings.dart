@@ -38,3 +38,6 @@ class AppSettings extends Equatable {
   @override
   List<Object?> get props => [themeMode, unitSystem, locale, restoreLastScreen];
 }
+
+
+

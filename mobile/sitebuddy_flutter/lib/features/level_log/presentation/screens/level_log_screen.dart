@@ -1,11 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:site_buddy/features/level_log/application/controllers/level_log_controller.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_method.dart';
@@ -46,7 +43,7 @@ class LevelLogScreen extends ConsumerWidget {
             icon: SbIcons.locationAdd,
             onPressed: notifier.addEntry,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           SbButton.outline(
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
@@ -57,11 +54,9 @@ class LevelLogScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // ── Method selector ──────────────────────────────
           _MethodSelectorCard(state: state, notifier: notifier),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl),
 
-          // ── Station list OR empty state ──────────
           if (state.entries.isEmpty)
             const _EmptyState()
           else
@@ -70,7 +65,7 @@ class LevelLogScreen extends ConsumerWidget {
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.entries.length,
-              separatorBuilder: (_, index) => const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+              separatorBuilder: (_, index) => const SizedBox(height: SbSpacing.lg),
               itemBuilder: (context, i) => SbCard(
                 child: _StationCardContent(
                   entry: state.entries[i],
@@ -99,7 +94,7 @@ class _EmptyState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+        padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -108,17 +103,15 @@ class _EmptyState extends StatelessWidget {
               size: 64,
               color: colorScheme.outlineVariant,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg),
             Text(
               l10n.noLevelingLogsYet,
-              style: AppTextStyles.screenTitle(context),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            const SizedBox(height: SbSpacing.sm),
             Text(
               l10n.tapAddStationToStart,
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ],
         ),
@@ -136,20 +129,15 @@ class _MethodSelectorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             l10n.calculationMethod.toUpperCase(),
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -160,7 +148,7 @@ class _MethodSelectorCard extends StatelessWidget {
                       notifier.setMethod(LevelMethod.heightOfInstrument),
                 ),
               ),
-              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: _MethodToggle(
                   label: l10n.riseFall,
@@ -194,7 +182,7 @@ class _MethodToggle extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+        padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
         decoration: BoxDecoration(
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
@@ -205,10 +193,7 @@ class _MethodToggle extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: AppTextStyles.caption(context).copyWith(
-              fontWeight: FontWeight.bold,
-              color: isActive ? colorScheme.onPrimary : colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ),
       ),
@@ -255,21 +240,19 @@ class _StationCardContent extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+            const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     entry.station,
-                    style: AppTextStyles.screenTitle(context),
+                    style: Theme.of(context).textTheme.titleLarge!,
                   ),
                   if (entry.chainage != null)
                     Text(
                       'Ch: ${UiFormatters.chainage(entry.chainage!)}',
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
                 ],
               ),
@@ -281,9 +264,9 @@ class _StationCardContent extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+        const SizedBox(height: SbSpacing.lg),
         Divider(color: colorScheme.outlineVariant),
-        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+        const SizedBox(height: SbSpacing.lg),
 
         Row(
           children: [
@@ -318,13 +301,10 @@ class _StationCardContent extends StatelessWidget {
         ),
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg),
           Text(
             entry.remark!,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-              fontStyle: FontStyle.italic,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ],
@@ -352,22 +332,12 @@ class _ReadingPill extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.caption(context).copyWith(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              color: colorScheme.onSurfaceVariant,
-              letterSpacing: 0.8,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm),
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
-            style: AppTextStyles.caption(context).copyWith(
-              fontWeight: highlight ? FontWeight.bold : FontWeight.normal,
-              color: highlight
-                  ? colorScheme.primary
-                  : (value != null ? null : colorScheme.outlineVariant),
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ),

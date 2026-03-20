@@ -1,29 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: SbSectionHeader
 /// PURPOSE: Standardized header row with a title and an optional action target.
-/// 
-/// UPDATE:
-/// - Action is strictly controlled by [onTap].
-/// - Removed dependency on [trailing] for "View All" UI.
-/// - "View All" link appears automatically if [onTap] is provided.
 class SbSectionHeader extends StatelessWidget {
   final String title;
-  
-  /// Callback for the "View All" action. 
-  /// If provided, the "View All >" label appears on the right.
   final VoidCallback? onTap;
-  
-  /// Optional override for the action icon. Default is chevronRight.
   final IconData? icon;
-  
-  /// Optional additional widget slot for external flexibility.
-  /// Does NOT trigger the "View All" behavior.
   final Widget? trailing;
-  
   final EdgeInsets? padding;
 
   const SbSectionHeader({
@@ -38,11 +23,10 @@ class SbSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Padding(
-      // Reduced vertical padding slightly for more compact UI
-      padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -51,7 +35,7 @@ class SbSectionHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: AppTextStyles.sectionTitle(context),
+                style: textTheme.titleMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -71,23 +55,21 @@ class SbSectionHeader extends StatelessWidget {
                     children: [
                       Text(
                         "View All",
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: colorScheme.primary,
-                        ),
+                        style: textTheme.labelLarge,
                       ),
-                      const SizedBox(width: AppSpacing.xs),
+                      const SizedBox(width: SbSpacing.xs),
                       Icon(
                         icon ?? SbIcons.chevronRight,
                         size: 16,
-                        color: colorScheme.primary,
+                        color: theme.colorScheme.primary,
                       ),
                     ],
                   ),
                 ),
               
-              // External slot (if still needed for filters/etc)
+              // External slot
               if (trailing != null) ...[
-                if (onTap != null) const SizedBox(width: AppSpacing.sm),
+                if (onTap != null) const SizedBox(width: SbSpacing.sm),
                 trailing!,
               ],
             ],
@@ -97,3 +79,6 @@ class SbSectionHeader extends StatelessWidget {
     );
   }
 }
+
+
+

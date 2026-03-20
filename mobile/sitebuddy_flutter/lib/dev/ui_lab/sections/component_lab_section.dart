@@ -1,7 +1,7 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -26,7 +26,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
           children: [
             Text(
               'Components Lab',
-              style: AppTextStyles.sectionTitle(context),
+              style: Theme.of(context).textTheme.titleMedium!,
             ),
             Row(
               children: [
@@ -35,7 +35,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   value: _isLoading,
                   onChanged: (v) => setState(() => _isLoading = v),
                 ),
-                const SizedBox(width: AppSpacing.sm),
+                const SizedBox(width: SbSpacing.sm),
                 const Text('Enabled', style: TextStyle(fontSize: 10)),
                 Switch.adaptive(
                   value: _isEnabled,
@@ -48,11 +48,11 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap24,
 
         // --- BUTTONS ---
-        Text('Buttons', style: AppTextStyles.sectionTitle(context)),
-        AppLayout.vGap16,
+        Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
+        const SizedBox(height: SbSpacing.lg),
         Wrap(
-          spacing: AppLayout.pMedium,
-          runSpacing: AppLayout.pMedium,
+          spacing: SbSpacing.lg,
+          runSpacing: SbSpacing.lg,
           children: [
             SbButton.primary(
               label: 'Primary Button',
@@ -78,8 +78,8 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap32,
 
         // --- CARDS ---
-        Text('Containers', style: AppTextStyles.sectionTitle(context)),
-        AppLayout.vGap16,
+        Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
+        const SizedBox(height: SbSpacing.lg),
         Row(
           children: [
             Expanded(
@@ -89,9 +89,9 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   children: [
                     Text(
                       'SbCard',
-                      style: AppTextStyles.body(context),
+                      style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     const Text(
                       'This is the standard SiteBuddy card component.',
                     ),
@@ -99,19 +99,19 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                 ),
               ),
             ),
-            AppLayout.hGap16,
+            const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: Container(
                 decoration: AppLayout.sbCommonDecoration(context),
-                padding: const EdgeInsets.all(AppLayout.pMedium),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Common Decoration',
-                      style: AppTextStyles.body(context),
+                      style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     const Text('Direct use of AppLayout.sbCommonDecoration.'),
                   ],
                 ),
@@ -122,16 +122,26 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap32,
 
         // --- FORMS ---
-        Text('Form Inputs', style: AppTextStyles.sectionTitle(context)),
-        AppLayout.vGap16,
+        Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),
+        const SizedBox(height: SbSpacing.lg),
         SbInput(
           label: 'Standard Input',
           hint: 'Type something...',
           enabled: _isEnabled,
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         const SbInput(label: 'Input with Helper', hint: 'Example helper text'),
       ],
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

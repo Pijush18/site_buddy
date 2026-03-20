@@ -13,3 +13,6 @@ class CurrencyRate {
     required this.timestamp,
   });
 }
+
+
+

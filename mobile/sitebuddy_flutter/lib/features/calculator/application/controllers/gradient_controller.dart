@@ -130,3 +130,6 @@ class GradientController extends Notifier<GradientState> {
 
   void reset() => state = const GradientState();
 }
+
+
+

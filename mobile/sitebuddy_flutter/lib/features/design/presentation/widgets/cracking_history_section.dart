@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/safety_check_controller.dart';
 
@@ -25,7 +25,7 @@ class CrackingHistorySection extends ConsumerWidget {
         children: history.take(3).map((check) {
           final isSafe = check['isSafe'] as bool;
           return Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
             child: SbCard(
               child: Row(
                 children: [
@@ -34,7 +34,7 @@ class CrackingHistorySection extends ConsumerWidget {
                     color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
                     size: 20,
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: SbSpacing.lg),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,3 +69,7 @@ class CrackingHistorySection extends ConsumerWidget {
     );
   }
 }
+
+
+
+

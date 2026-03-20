@@ -20,3 +20,6 @@ class LevelLogSession {
     required this.entries,
   });
 }
+
+
+

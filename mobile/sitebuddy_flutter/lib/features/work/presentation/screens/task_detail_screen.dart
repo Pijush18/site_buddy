@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -28,11 +28,9 @@ class TaskDetailScreen extends ConsumerWidget {
         children: [
           Text(
             task.title,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: theme.textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbCard(
             child: Column(
               children: [
@@ -41,7 +39,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.projectId,
-                    style: AppTextStyles.body(context),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -49,7 +47,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.assignedTo,
-                    style: AppTextStyles.body(context),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -57,13 +55,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.priority.name.toUpperCase(),
-                    style: AppTextStyles.body(context).copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: (task.priority == TaskPriority.critical ||
-                              task.priority == TaskPriority.high)
-                          ? colorScheme.error
-                          : colorScheme.primary,
-                    ),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -71,7 +63,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.status.name.toUpperCase(),
-                    style: AppTextStyles.body(context),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -79,27 +71,25 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.dueDate.toLocal().toString().split(' ').first,
-                    style: AppTextStyles.body(context),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'DESCRIPTION',
-            style: AppTextStyles.caption(context).copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: theme.textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+          const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
           Text(
             task.description.isEmpty
                 ? 'No description provided.'
                 : task.description,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
           if (task.status != TaskStatus.completed) ...[
             SbButton.primary(
               label: 'Mark as Completed',
@@ -121,13 +111,10 @@ class TaskDetailScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   Icon(SbIcons.checkFilled, color: colorScheme.primary),
-                  const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                  const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                   Text(
                     'Task Completed',
-                    style: AppTextStyles.body(context).copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.primary,
-                    ),
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ],
               ),
@@ -138,3 +125,14 @@ class TaskDetailScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

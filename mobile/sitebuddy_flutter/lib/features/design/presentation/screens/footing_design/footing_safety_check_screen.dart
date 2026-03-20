@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -48,16 +48,16 @@ class _FootingSafetyCheckScreenState
         children: [
           Text(
             'Step 6 of 6: Design Validation',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Overall Status Card
           SbCard(
             color: overallSafe
                 ? colorScheme.primaryContainer.withValues(alpha: 0.2)
                 : colorScheme.errorContainer.withValues(alpha: 0.2),
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -66,18 +66,16 @@ class _FootingSafetyCheckScreenState
                   color: overallSafe ? colorScheme.primary : colorScheme.error,
                   size: 32,
                 ),
-                const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                 Text(
                   overallSafe ? 'DESIGN IS SAFE' : 'DESIGN UNSAFE',
-                  style: AppTextStyles.screenTitle(context).copyWith(
-                    color: overallSafe ? colorScheme.primary : colorScheme.error,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!,
                 ),
               ],
             ),
           ),
 
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Soil Bearing Pressure
           DesignResultCard(
@@ -97,7 +95,7 @@ class _FootingSafetyCheckScreenState
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Shear Checks
           DesignResultCard(
@@ -122,7 +120,7 @@ class _FootingSafetyCheckScreenState
           ),
 
           if (state.type == FootingType.pile) ...[
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             DesignResultCard(
               title: 'Pile Requirements',
               isSafe: true,
@@ -135,19 +133,19 @@ class _FootingSafetyCheckScreenState
             ),
           ],
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
           // Reinforcement Detail
           const SbSectionHeader(title: 'Reinforcement Layout'),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               children: [
                 RepaintBoundary(
                   key: _drawingKey,
                   child: Container(
                     color: theme.cardColor,
-                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    padding: const EdgeInsets.all(SbSpacing.xxl),
                     child: FootingRebarDrawing(
                       length: state.footingLength,
                       width: state.footingWidth,
@@ -159,7 +157,7 @@ class _FootingSafetyCheckScreenState
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -180,7 +178,7 @@ class _FootingSafetyCheckScreenState
                           }
                         },
                       ),
-                      const SizedBox(height: AppSpacing.sm),
+                      const SizedBox(height: SbSpacing.sm),
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: Icons.picture_as_pdf_outlined,
@@ -210,10 +208,10 @@ class _FootingSafetyCheckScreenState
           ),
 
           if (state.isSettlementWarning) ...[
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             SbCard(
               color: colorScheme.tertiaryContainer.withValues(alpha: 0.2),
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(SbSpacing.lg),
               child: Row(
                 children: [
                   Icon(
@@ -221,13 +219,11 @@ class _FootingSafetyCheckScreenState
                     color: colorScheme.tertiary,
                     size: 20,
                   ),
-                  const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+                  const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
                   Expanded(
                     child: Text(
                       'Warning: Low SBC detected. Consider detailed settlement analysis.',
-                        style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.onTertiaryContainer,
-                      ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                     ),
                   ),
                 ],
@@ -235,7 +231,7 @@ class _FootingSafetyCheckScreenState
             ),
           ],
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -250,7 +246,7 @@ class _FootingSafetyCheckScreenState
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.primary(
                 label: 'Save Design',
                 icon: Icons.save_outlined,
@@ -259,13 +255,13 @@ class _FootingSafetyCheckScreenState
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.primary(
                 label: 'New Design',
                 icon: Icons.add,
@@ -277,9 +273,20 @@ class _FootingSafetyCheckScreenState
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

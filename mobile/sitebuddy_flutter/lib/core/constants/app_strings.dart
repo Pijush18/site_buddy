@@ -181,3 +181,6 @@ class AppStrings {
   static const professionalReports = 'Professional Reports';
   static const smartAssistant = 'Smart Assistant';
 }
+
+
+

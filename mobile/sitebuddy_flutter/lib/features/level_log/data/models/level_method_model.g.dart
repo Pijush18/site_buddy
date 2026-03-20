@@ -49,3 +49,6 @@ class LevelMethodModelAdapter extends TypeAdapter<LevelMethodModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

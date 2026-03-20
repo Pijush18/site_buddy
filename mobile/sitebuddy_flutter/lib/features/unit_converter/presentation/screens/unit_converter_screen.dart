@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -27,14 +27,14 @@ class UnitConverterScreen extends ConsumerWidget {
         children: [
           Text(
             'Conversion Assistant',
-            style: AppTextStyles.screenTitle(context),
+            style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           const _SegmentedToggleSection(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           const _ConverterBodySection(),
-          const SizedBox(height: AppSpacing.lg), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl), // Bottom padding
         ],
       ),
     );
@@ -108,19 +108,14 @@ class _ConverterBodySection extends ConsumerWidget {
     ConverterState state,
     ConverterController controller,
   ) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           'CATEGORY',
-          style: AppTextStyles.caption(context).copyWith(
-            color: colorScheme.onSurfaceVariant,
-            letterSpacing: 1.1,
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
         SbDropdown<UnitType>(
           value: state.selectedType,
           items: UnitType.values,
@@ -129,7 +124,7 @@ class _ConverterBodySection extends ConsumerWidget {
           },
           itemLabelBuilder: (t) => t.name.toUpperCase(),
         ),
-        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         Row(
           children: [
             Expanded(
@@ -138,18 +133,16 @@ class _ConverterBodySection extends ConsumerWidget {
                 onChanged: (val) => controller.updateManualValue(context, val),
               ),
             ),
-            const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+            const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'FROM',
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.fromUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -161,7 +154,7 @@ class _ConverterBodySection extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+        const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
         Row(
           children: [
             const Spacer(),
@@ -177,11 +170,9 @@ class _ConverterBodySection extends ConsumerWidget {
                 children: [
                   Text(
                     'TO',
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.toUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -198,15 +189,12 @@ class _ConverterBodySection extends ConsumerWidget {
   }
 
   Widget _buildErrorDisplay(String error, BuildContext context) {
-    final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.lg),
+      padding: const EdgeInsets.only(top: SbSpacing.xxl),
       child: SbCard(
         child: Text(
           error,
-          style: AppTextStyles.body(context).copyWith(
-            color: theme.colorScheme.error,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
           textAlign: TextAlign.center,
         ),
       ),
@@ -231,7 +219,7 @@ class _ConverterBodySection extends ConsumerWidget {
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLarge
+      padding: const EdgeInsets.all(SbSpacing.xxl), // Replaced const EdgeInsets.all(SbSpacing.xxl)
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -240,19 +228,16 @@ class _ConverterBodySection extends ConsumerWidget {
             size: 48,
             color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Text(
             'Try asking the AI:',
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             '"50 kg to lbs"\n"10x12x0.5 ft m25"\n"100 sqm sqft"',
             textAlign: TextAlign.center,
-            style: AppTextStyles.body(context).copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ],
       ),
@@ -271,45 +256,37 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         SbCard(
           child: Column(
             children: [
               Text(
                 fromLabel,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
               Icon(SbIcons.arrowDown, color: colorScheme.primary, size: 20),
               Text(
                 '${mainValue.toStringAsFixed(2)} $toSymbol',
-                style: AppTextStyles.screenTitle(context).copyWith(
-                  fontSize: 32,
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.titleLarge!,
               ),
             ],
           ),
         ),
         if (secondaries.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'ALSO EQUALS',
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.secondary,
-              letterSpacing: 1.1,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
+            spacing: SbSpacing.sm,
+            runSpacing: SbSpacing.sm,
             children: secondaries.entries.map((e) {
               return Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
-                  vertical: AppSpacing.sm / 2,
+                  horizontal: SbSpacing.lg,
+                  vertical: SbSpacing.sm / 2,
                 ),
                 decoration: BoxDecoration(
                   color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
@@ -317,7 +294,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 ),
                 child: Text(
                   '${e.value.toStringAsFixed(2)} ${e.key}',
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               );
             }).toList(),
@@ -332,18 +309,15 @@ class _ConverterBodySection extends ConsumerWidget {
     MaterialResult result,
     BuildContext context,
   ) {
-    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         Text(
           'ESTIMATE: ${query.length} x ${query.width} x ${query.depth} (${query.grade?.label})',
-          style: AppTextStyles.caption(context).copyWith(
-            color: theme.colorScheme.primary,
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
         SbCard(
           child: Column(
             children: [
@@ -352,7 +326,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.volume.toStringAsFixed(2)} m³',
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
               SbListItemTile(
@@ -360,7 +334,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.dryVolume.toStringAsFixed(2)} m³',
-                  style: AppTextStyles.body(context),
+                  style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
               SbListItemTile(
@@ -368,9 +342,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '${result.cementBags.toStringAsFixed(0)} Bags',
-                  style: AppTextStyles.cardTitle(context).copyWith(
-                    color: theme.colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
               ),
             ],
@@ -380,3 +352,13 @@ class _ConverterBodySection extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

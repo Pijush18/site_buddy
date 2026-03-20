@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -30,19 +30,15 @@ class LevelCalculatorScreen extends ConsumerWidget {
 
     Widget buildResultCard(LevelResult result) {
       String directionLabel;
-      Color directionColor;
       switch (result.direction) {
         case LevelDirection.rise:
           directionLabel = EngineeringTerms.rise;
-          directionColor = colorScheme.primary;
           break;
         case LevelDirection.fall:
           directionLabel = EngineeringTerms.fall;
-          directionColor = colorScheme.error;
           break;
         case LevelDirection.flat:
           directionLabel = EngineeringTerms.flat;
-          directionColor = colorScheme.onSurfaceVariant;
           break;
       }
 
@@ -52,44 +48,36 @@ class LevelCalculatorScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: AppTextStyles.sectionTitle(context).copyWith(
-                color: colorScheme.primary,
-                letterSpacing: 1.2,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             const Divider(),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             Text(
               '${result.difference.toStringAsFixed(2)} m',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                fontSize: 32,
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4px)
+                horizontal: SbSpacing.lg,
+                vertical: SbSpacing.sm / 2, // Replaced SbSpacing.xs (4px)
               ),
               child: Text(
                 directionLabel,
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: directionColor,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             SbListItemTile(
               title: EngineeringTerms.absoluteDifference,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
           ],
@@ -103,13 +91,13 @@ class LevelCalculatorScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Text(
             EngineeringTerms.fieldLevelComparison,
-            style: AppTextStyles.sectionTitle(context),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           AppNumberField(
             label: EngineeringTerms.startLevel,
@@ -117,7 +105,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
 
           AppNumberField(
             label: EngineeringTerms.endLevel,
@@ -126,7 +114,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             errorText: eError,
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -144,27 +132,36 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

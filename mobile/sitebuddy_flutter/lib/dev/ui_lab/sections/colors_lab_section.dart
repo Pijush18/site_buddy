@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,16 +37,16 @@ class ColorsLabSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Color System', style: AppTextStyles.sectionTitle(context)),
-        AppLayout.vGap16,
+        Text('Color System', style: Theme.of(context).textTheme.titleMedium!),
+        const SizedBox(height: SbSpacing.lg),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 2.5,
-            crossAxisSpacing: AppLayout.pSmall,
-            mainAxisSpacing: AppLayout.pSmall,
+            crossAxisSpacing: SbSpacing.sm,
+            mainAxisSpacing: SbSpacing.sm,
           ),
           itemCount: colors.length,
           itemBuilder: (context, index) => _ColorCard(data: colors[index]),
@@ -89,12 +89,12 @@ class _ColorCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: data.color,
-          borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+          borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
             color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
           ),
         ),
-        padding: const EdgeInsets.all(AppLayout.pSmall),
+        padding: const EdgeInsets.all(SbSpacing.sm),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,3 +120,11 @@ class _ColorCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

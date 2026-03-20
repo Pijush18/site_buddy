@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
@@ -65,7 +65,7 @@ class ColumnHistoryScreen extends ConsumerWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: columnHistory.length,
-            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             itemBuilder: (context, index) {
               final entry = columnHistory[index];
               return _HistoryCard(entry: entry);
@@ -96,3 +96,8 @@ class _HistoryCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

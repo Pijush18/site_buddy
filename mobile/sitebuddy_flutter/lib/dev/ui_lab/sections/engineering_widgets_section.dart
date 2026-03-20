@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
@@ -13,9 +13,9 @@ class EngineeringWidgetsSection extends StatelessWidget {
       children: [
         Text(
           'Engineering Results',
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         const DesignResultCard(
           title: 'Foundation Safety Check',
           isSafe: true,
@@ -34,7 +34,7 @@ class EngineeringWidgetsSection extends StatelessWidget {
             ),
           ],
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         const DesignResultCard(
           title: 'Failed Analysis Example',
           isSafe: false,
@@ -52,3 +52,10 @@ class EngineeringWidgetsSection extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

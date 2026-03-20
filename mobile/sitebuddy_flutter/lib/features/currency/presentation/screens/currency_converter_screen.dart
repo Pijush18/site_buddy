@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
@@ -26,35 +26,26 @@ class CurrencyConverterScreen extends ConsumerWidget {
           children: [
             Text(
               'Converted Amount',
-              style: AppTextStyles.caption(context).copyWith(
-                color: colorScheme.secondary,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
             Text(
               state.convertedAmount != null
                   ? state.convertedAmount!.toStringAsFixed(2)
                   : '-',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                fontSize: 32,
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             Divider(color: colorScheme.outlineVariant),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             Text(
               'Rate: ${state.rate?.toStringAsFixed(6) ?? '-'}',
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+            const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
             Text(
               'Last Updated: ${state.lastUpdated != null ? state.lastUpdated!.toLocal().toString().split('.')[0] : '-'}',
-              style: AppTextStyles.caption(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ],
         ),
@@ -66,19 +57,19 @@ class CurrencyConverterScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'Market Exchange Rates',
-            style: AppTextStyles.sectionTitle(context),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           AppNumberField(
             label: 'Amount to Convert',
             suffixIcon: SbIcons.payments,
             onChanged: controller.updateAmount,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Row(
             children: [
               Expanded(
@@ -87,11 +78,9 @@ class CurrencyConverterScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'From',
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
-                    const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+                    const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
                     SbDropdown<String>(
                       value: state.fromCurrency,
                       items: _currencies,
@@ -105,7 +94,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
+                  horizontal: SbSpacing.lg,
                 ),
                 child: SbButton.icon(
                   icon: SbIcons.swap,
@@ -118,11 +107,9 @@ class CurrencyConverterScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'To',
-                      style: AppTextStyles.caption(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
-                    const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+                    const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
                     SbDropdown<String>(
                       value: state.toCurrency,
                       items: _currencies,
@@ -136,20 +123,18 @@ class CurrencyConverterScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           if (state.error != null) ...[
             Text(
               state.error!,
-              style: AppTextStyles.body(context).copyWith(
-                color: theme.colorScheme.error,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
           if (state.convertedAmount != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
           SbButton(
             label: state.isLoading ? 'Processing...' : 'Calculate Conversion',
@@ -164,3 +149,14 @@ class CurrencyConverterScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

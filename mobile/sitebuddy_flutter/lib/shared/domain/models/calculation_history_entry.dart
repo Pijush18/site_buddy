@@ -73,3 +73,6 @@ enum CalculationType {
   @HiveField(4)
   levelLog,
 }
+
+
+

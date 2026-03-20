@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -49,7 +49,7 @@ class ShearInputSection extends StatelessWidget {
                     validator: (v) => ValidationHelper.validatePositive(v, 'Depth'),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: AppNumberField(
                     controller: bController,
@@ -60,7 +60,7 @@ class ShearInputSection extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             Row(
               children: [
                 Expanded(
@@ -72,7 +72,7 @@ class ShearInputSection extends StatelessWidget {
                     onConcreteChanged,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: _buildLabelledDropdown(
                     context,
@@ -84,14 +84,14 @@ class ShearInputSection extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             AppNumberField(
               controller: vuController,
               label: 'Shear Force (Vu) [kN]',
               suffixIcon: Icons.vertical_align_bottom,
               validator: (v) => ValidationHelper.validatePositive(v, 'Shear Force'),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             AppNumberField(
               controller: ptController,
               label: 'Steel Per. (pt) [%]',
@@ -111,17 +111,14 @@ class ShearInputSection extends StatelessWidget {
     List<String> items,
     ValueChanged<String?> onChanged,
   ) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: AppTextStyles.caption(context).copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,
@@ -132,3 +129,11 @@ class ShearInputSection extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

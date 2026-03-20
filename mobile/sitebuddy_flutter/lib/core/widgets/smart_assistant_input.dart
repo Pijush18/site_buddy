@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:flutter/material.dart';
 
 /// WIDGET: SmartAssistantInput
 /// PURPOSE: Standardized input for the AI assistant with a fixed action button.
@@ -28,7 +28,7 @@ class SmartAssistantInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: colorScheme.outline, width: 1.0),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs), 
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs), 
       child: Row(
         children: [
           Expanded(
@@ -36,19 +36,14 @@ class SmartAssistantInput extends StatelessWidget {
               controller: controller,
               onSubmitted: (_) => onSend(),
               textInputAction: TextInputAction.send,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurface, 
-                fontWeight: FontWeight.w500,
-              ),
+              style: theme.textTheme.bodyMedium!,
               decoration: InputDecoration(
                 hintText: hintText,
                 hintMaxLines: 1,
-                hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-                ),
+                hintStyle: theme.textTheme.bodyMedium!,
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.sm,
+                  horizontal: SbSpacing.sm,
+                  vertical: SbSpacing.sm,
                 ),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -71,3 +66,8 @@ class SmartAssistantInput extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

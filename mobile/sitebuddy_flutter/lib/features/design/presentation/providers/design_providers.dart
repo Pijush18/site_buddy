@@ -26,3 +26,6 @@ final slabOptimizationProvider = Provider<OptimizationResult>((ref) {
     type: state.type,
   );
 });
+
+
+

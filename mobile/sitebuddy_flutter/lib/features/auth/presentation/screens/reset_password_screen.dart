@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -104,36 +104,33 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing
+          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing
           Icon(
             SbIcons.engineering,
             size: 64,
             color: colorScheme.primary,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Text(
             AppStrings.siteBuddy,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              fontSize: 32,
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             AppStrings.structuralDesignSuite,
-            style: AppTextStyles.body(context, secondary: true),
+            style: Theme.of(context).textTheme.bodyMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
 
           const SbSectionHeader(
             title: AppStrings.forgotPassword,
           ),
           Text(
             AppStrings.enterEmailToReset,
-            style: AppTextStyles.body(context, secondary: true),
+            style: Theme.of(context).textTheme.bodyMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg + AppSpacing.sm), // Replaced AppLayout.vGap32 (approx)
+          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32 (approx)
 
           // Auth Card
           SbCard(
@@ -150,7 +147,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   onFieldSubmitted: (_) => _resetPassword(),
                   prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
                 ),
-                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                 SbButton.primary(
                   label: AppStrings.sendResetLink,
                   onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
@@ -160,15 +157,26 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbButton.secondary(
             label: AppStrings.backToSignIn,
             onPressed: () => context.go('/login'),
             width: double.infinity,
           ),
-          const SizedBox(height: AppSpacing.lg), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl), // Bottom padding
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

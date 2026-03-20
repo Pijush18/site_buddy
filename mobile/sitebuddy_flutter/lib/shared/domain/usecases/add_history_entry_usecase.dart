@@ -10,3 +10,6 @@ class AddHistoryEntryUseCase {
     return repository.addEntry(entry);
   }
 }
+
+
+

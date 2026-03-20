@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -57,7 +57,7 @@ class WorkDashboardScreen extends ConsumerWidget {
         },
         background: Container(
           alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(SbSpacing.xxl),
           decoration: BoxDecoration(
             color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
@@ -76,8 +76,8 @@ class WorkDashboardScreen extends ConsumerWidget {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
+                  horizontal: SbSpacing.sm,
+                  vertical: SbSpacing.xs,
                 ),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
@@ -85,12 +85,10 @@ class WorkDashboardScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   t.status.name.toUpperCase(),
-                  style: AppTextStyles.caption(context).copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.sm),
               Container(width: 4, height: 40, color: priorityColor),
             ],
           ),
@@ -119,8 +117,8 @@ class WorkDashboardScreen extends ConsumerWidget {
         },
         trailing: Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm,
-            vertical: AppSpacing.xs,
+            horizontal: SbSpacing.sm,
+            vertical: SbSpacing.xs,
           ),
           decoration: BoxDecoration(
             color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
@@ -128,10 +126,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           ),
           child: Text(
             m.status.name.toUpperCase(),
-            style: AppTextStyles.caption(context).copyWith(
-              fontWeight: FontWeight.bold,
-              color: colorScheme.secondary,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ),
       );
@@ -184,7 +179,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                       context.push('/meetings/create');
                     },
                   ),
-                  const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                  const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 ],
               ),
             );
@@ -201,7 +196,7 @@ class WorkDashboardScreen extends ConsumerWidget {
               if (val != null) controller.selectTab(val);
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           Expanded(
             child: state.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -214,7 +209,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                     : ListView.separated(
                         padding: EdgeInsets.zero,
                         itemCount: bodyItems.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                        separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                         itemBuilder: (context, index) => bodyItems[index],
                       ),
           ),
@@ -223,3 +218,12 @@ class WorkDashboardScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

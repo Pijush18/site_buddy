@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 
 /// WIDGET: SbInput
@@ -67,7 +67,13 @@ class SbInput extends StatelessWidget {
       enabled: enabled,
       textInputAction: textInputAction,
       focusNode: focusNode,
-      style: AppTextStyles.body(context),
+      style: Theme.of(context).textTheme.bodyLarge!,
     );
   }
 }
+
+
+
+
+
+

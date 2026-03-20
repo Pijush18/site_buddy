@@ -24,3 +24,6 @@ final projectDetailControllerProvider =
         logs: logUseCase.execute(projectId).cast<LevelLogSession>(),
       );
     });
+
+
+

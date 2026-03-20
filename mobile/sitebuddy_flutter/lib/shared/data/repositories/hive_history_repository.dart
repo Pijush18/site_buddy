@@ -86,3 +86,6 @@ class HiveHistoryRepository implements HistoryRepository {
 }
 
 // Riverpod provider moved to shared/presentation/providers/history_providers.dart
+
+
+

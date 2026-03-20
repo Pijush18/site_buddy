@@ -40,3 +40,6 @@ final aiRoutes = [
     builder: (context, state) => const CurrencyConverterScreen(),
   ),
 ];
+
+
+

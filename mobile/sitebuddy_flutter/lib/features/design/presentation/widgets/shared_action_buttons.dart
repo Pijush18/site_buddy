@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -29,9 +29,9 @@ class SharedActionButtons extends StatelessWidget {
             onPressed: isLoading ? null : onCalculate,
           ),
         ),
-        const SizedBox(width: AppLayout.sm),
+        const SizedBox(width: SbSpacing.sm),
         _buildCircularAction(SbIcons.refresh, 'Reset', onReset),
-        const SizedBox(width: AppLayout.sm),
+        const SizedBox(width: SbSpacing.sm),
         _buildCircularAction(SbIcons.share, 'Share', onShare),
       ],
     );
@@ -47,3 +47,7 @@ class SharedActionButtons extends StatelessWidget {
     );
   }
 }
+
+
+
+

@@ -1,9 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 
 /// WIDGET: FeatureCard
 /// PURPOSE: Standardized card for feature selection grids across the app.
@@ -27,22 +26,18 @@ class FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final titleStyle = AppTextStyles.sectionTitle(context).copyWith(
-      color: colorScheme.onSurface,
-    );
+    final titleStyle = Theme.of(context).textTheme.titleMedium!;
 
-    final descriptionStyle = AppTextStyles.body(context, secondary: true).copyWith(
-      color: colorScheme.onSurfaceVariant,
-    );
+    final descriptionStyle = Theme.of(context).textTheme.bodyMedium!;
 
     if (isHorizontal) {
       return SbCard(
         onTap: onTap,
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Row(
           children: [
             _buildIconContainer(context, colorScheme),
-            const SizedBox(width: AppSpacing.md),
+            const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: _buildTextContent(
                 titleStyle,
@@ -58,12 +53,12 @@ class FeatureCard extends StatelessWidget {
 
     return SbCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildIconContainer(context, colorScheme),
-          const SizedBox(height: AppLayout.lg),
+          const SizedBox(height: SbSpacing.xxl),
           _buildTextContent(
             titleStyle,
             descriptionStyle,
@@ -76,7 +71,7 @@ class FeatureCard extends StatelessWidget {
 
   Widget _buildIconContainer(BuildContext context, ColorScheme colorScheme) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      padding: const EdgeInsets.all(SbSpacing.sm),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
@@ -104,7 +99,7 @@ class FeatureCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         if (description != null) ...[
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             description!,
             style: descriptionStyle,
@@ -119,3 +114,11 @@ class FeatureCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

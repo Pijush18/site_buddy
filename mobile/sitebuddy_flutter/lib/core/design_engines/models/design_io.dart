@@ -184,3 +184,6 @@ class ColumnDesignOutputs extends DesignResult {
     'isSlendernessSafe': isSlendernessSafe,
   };
 }
+
+
+

@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class TypographyLabSection extends StatelessWidget {
@@ -10,12 +10,12 @@ class TypographyLabSection extends StatelessWidget {
 //     final textTheme = Theme.of(context).textTheme;
 
     final styles = [
-      _TypoData('Screen Title', AppTextStyles.screenTitle(context), '20px, Bold'),
-      _TypoData('Section Title', AppTextStyles.sectionTitle(context), '17px, Semibold'),
-      _TypoData('Card Title', AppTextStyles.cardTitle(context), '14px, Semibold'),
-      _TypoData('Body Text', AppTextStyles.body(context), '13px, Regular'),
-      _TypoData('Body Secondary', AppTextStyles.body(context, secondary: true), '13px, Regular, Opacity'),
-      _TypoData('Caption', AppTextStyles.caption(context), '12px, Regular'),
+      _TypoData('Screen Title', Theme.of(context).textTheme.titleLarge!, '20px, Bold'),
+      _TypoData('Section Title', Theme.of(context).textTheme.titleMedium!, '17px, Semibold'),
+      _TypoData('Card Title', Theme.of(context).textTheme.labelLarge!, '14px, Semibold'),
+      _TypoData('Body Text', Theme.of(context).textTheme.bodyLarge!, '13px, Regular'),
+      _TypoData('Body Secondary', Theme.of(context).textTheme.bodyMedium!, '13px, Regular, Opacity'),
+      _TypoData('Caption', Theme.of(context).textTheme.labelMedium!, '12px, Regular'),
     ];
 
     return Column(
@@ -23,19 +23,19 @@ class TypographyLabSection extends StatelessWidget {
       children: [
         Text(
           'Typography System',
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         ...styles.map(
           (style) => Padding(
-            padding: const EdgeInsets.all(AppLayout.pSmall),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(style.name, style: style.style),
                 Text(
                   'Size: ${style.info}',
-                  style: AppTextStyles.body(context, secondary: true).copyWith(color: Colors.grey),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const Divider(),
               ],
@@ -54,3 +54,11 @@ class _TypoData {
 
   _TypoData(this.name, this.style, this.info);
 }
+
+
+
+
+
+
+
+

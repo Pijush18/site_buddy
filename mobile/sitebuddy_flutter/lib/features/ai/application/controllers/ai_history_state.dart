@@ -58,3 +58,6 @@ class AiHistoryState extends Equatable {
   @override
   List<Object?> get props => [chats, isLoading, error];
 }
+
+
+

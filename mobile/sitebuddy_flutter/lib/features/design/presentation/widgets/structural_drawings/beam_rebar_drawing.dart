@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 /// WIDGET: BeamRebarDrawing
 /// PURPOSE: Cross-section visualization for RC Beams.
@@ -61,10 +61,10 @@ class BeamRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            padding: const EdgeInsets.only(top: SbSpacing.sm),
             child: Text(
               'Beam Section: ${width.toInt()}x${depth.toInt()} mm',
-              style: AppTextStyles.caption(context).copyWith(color: textColor),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ],
@@ -161,3 +161,11 @@ class _BeamPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+
+
+
+
+
+
+

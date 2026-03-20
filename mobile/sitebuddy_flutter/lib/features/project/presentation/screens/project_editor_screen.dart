@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
@@ -49,7 +49,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
                   label: 'PROJECT NAME',
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',
@@ -59,7 +59,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Stakeholders',
             child: SbInput(
@@ -69,7 +69,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               textInputAction: TextInputAction.next,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Project Status',
             child: SbDropdown<ProjectStatus>(
@@ -83,7 +83,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               },
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbSection(
             title: 'Scope & Description',
             child: SbInput(
@@ -93,9 +93,16 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
               label: 'DESCRIPTION',
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+

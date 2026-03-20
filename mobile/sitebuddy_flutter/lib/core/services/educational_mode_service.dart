@@ -33,3 +33,6 @@ class EducationalModeService extends StateNotifier<bool> {
     await prefs.setBool(_storageKey, state);
   }
 }
+
+
+

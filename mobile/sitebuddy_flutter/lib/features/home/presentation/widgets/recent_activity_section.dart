@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
@@ -23,9 +23,13 @@ class RecentActivitySection extends ConsumerWidget {
         for (int i = 0; i < state.recentActivities.length; i++) ...[
           ActivityTile(activity: state.recentActivities[i]),
           if (i < state.recentActivities.length - 1)
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
         ],
       ],
     );
   }
 }
+
+
+
+

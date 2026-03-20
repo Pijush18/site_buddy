@@ -39,3 +39,6 @@ class HiveLevelLogRepository implements LevelLogRepository {
     await box.delete(id);
   }
 }
+
+
+

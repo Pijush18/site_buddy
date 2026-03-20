@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class LayoutLabSection extends StatelessWidget {
@@ -12,9 +13,9 @@ class LayoutLabSection extends StatelessWidget {
       children: [
         Text(
           'Layout & Grid System',
-          style: AppTextStyles.sectionTitle(context),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        AppLayout.vGap16,
+        const SizedBox(height: SbSpacing.lg),
         const Text(
           'The SiteBuddy grid system enforces a maximum content width of 800px on all primary screens to ensure readability and professional presentation.',
           style: TextStyle(fontSize: 12, color: Colors.grey),
@@ -29,7 +30,7 @@ class LayoutLabSection extends StatelessWidget {
             color: Theme.of(
               context,
             ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+            borderRadius: BorderRadius.circular(12.0),
             border: Border.all(color: Theme.of(context).dividerColor),
           ),
           child: Stack(
@@ -95,12 +96,12 @@ class LayoutLabSection extends StatelessWidget {
             ],
           ),
         ),
-        AppLayout.vGap16,
-        Text('Layout Rules:', style: AppTextStyles.body(context)),
+        const SizedBox(height: SbSpacing.lg),
+        Text('Layout Rules:', style: Theme.of(context).textTheme.bodyLarge!),
         const Padding(
           padding: EdgeInsets.only(
-            left: AppLayout.pSmall,
-            top: AppLayout.pSmall,
+            left: SbSpacing.sm,
+            top: SbSpacing.sm,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,3 +158,12 @@ class _GridPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
+

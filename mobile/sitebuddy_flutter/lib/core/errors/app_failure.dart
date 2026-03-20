@@ -32,3 +32,6 @@ class AppFailure {
   @override
   String toString() => 'AppFailure(message: $message, code: $code)';
 }
+
+
+

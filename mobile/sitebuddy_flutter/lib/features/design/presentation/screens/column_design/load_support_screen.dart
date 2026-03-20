@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,19 +52,19 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
         children: [
           Text(
             'Step 2 of 6: Loading Conditions',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Axial Loading',
-                  style: AppTextStyles.cardTitle(context),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 AppNumberField(
                   label: 'Factored Load Pu (kN)',
                   controller: _loadController,
@@ -74,12 +74,12 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                   },
                   suffixIcon: Icons.arrow_downward,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 Text(
                   'End Support Condition',
-                  style: AppTextStyles.caption(context),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                 SbDropdown<EndCondition>(
                   value: state.endCondition,
                   items: EndCondition.values,
@@ -100,7 +100,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                 icon: Icons.analytics_outlined,
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -108,9 +108,17 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+

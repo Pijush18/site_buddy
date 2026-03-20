@@ -3,16 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 
 /// SCREEN: ProjectListScreen
 /// PURPOSE: List all civil engineering projects following the Predefined Layout System.
-/// RULE: AppScreenWrapper → SbSectionList → Local Components.
 class ProjectListScreen extends ConsumerWidget {
   const ProjectListScreen({super.key});
 
@@ -20,30 +17,32 @@ class ProjectListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(projectControllerProvider);
     final projects = state.projects;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return AppScreenWrapper(
       title: 'Projects',
-      isScrollable: true, // Switched to true to support SbSectionList's internal scrolling if needed
+      isScrollable: true,
       usePadding: true,
       actions: [
         Consumer(
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
+            final statusColor = isOnline ? Colors.green : Colors.orange;
+            
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
               child: Row(
                 children: [
                   Icon(
                     isOnline ? SbIcons.checkFilled : SbIcons.warning,
                     size: 16,
-                    color: isOnline ? AppColors.success(context) : AppColors.warning(context),
+                    color: statusColor,
                   ),
-                  const SizedBox(width: AppSpacing.sm),
+                  const SizedBox(width: SbSpacing.xs),
                   Text(
                     isOnline ? 'Synced' : 'Offline',
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: isOnline ? AppColors.success(context) : AppColors.warning(context),
-                    ),
+                    style: textTheme.labelMedium,
                   ),
                 ],
               ),
@@ -51,12 +50,9 @@ class ProjectListScreen extends ConsumerWidget {
           },
         ),
       ],
-      // ── PREDEFINED LAYOUT SYSTEM ──
-      // SbSectionList centralizes the vertical rhythm (24px gap).
       child: SbSectionList(
         physics: const BouncingScrollPhysics(),
         sections: [
-          // ── SECTION 1: PRIMARY ACTION ──
           SbSection(
             child: SbButton.primary(
               label: 'New Project',
@@ -66,7 +62,6 @@ class ProjectListScreen extends ConsumerWidget {
             ),
           ),
 
-          // ── SECTION 2: DATA LIST ──
           if (projects.isEmpty)
             SbSection(
               child: SbEmptyState(
@@ -81,8 +76,7 @@ class ProjectListScreen extends ConsumerWidget {
             SbSection(
               child: Column(
                 children: projects.map((project) {
-                  final formattedDate =
-                      DateFormat('MMM dd, yyyy').format(project.createdAt);
+                  final formattedDate = DateFormat('MMM dd, yyyy').format(project.createdAt);
                   return ProjectCard(
                     name: project.name,
                     date: formattedDate,
@@ -99,3 +93,6 @@ class ProjectListScreen extends ConsumerWidget {
     );
   }
 }
+
+
+

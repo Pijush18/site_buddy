@@ -63,3 +63,6 @@ class SlabDesignStateAdapter extends TypeAdapter<SlabDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -79,9 +79,6 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return AppScreenWrapper(
       title: 'Schedule Meeting',
       footer: SbButton.primary(
@@ -97,27 +94,25 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
             label: 'Title',
             hint: 'Meeting title',
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbInput(
             controller: _descriptionController,
             label: 'Description',
             hint: 'Brief agenda or summary',
             maxLines: 3,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbInput(
             controller: _projectController,
             label: 'Project ID',
             hint: 'Associated project',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'MEETING TYPE',
-            style: AppTextStyles.cardTitle(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           SbDropdown<MeetingType>(
             value: _type,
             items: MeetingType.values,
@@ -126,14 +121,12 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               if (v != null) setState(() => _type = v);
             },
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'MODE',
-            style: AppTextStyles.cardTitle(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           SbDropdown<MeetingMode>(
             value: _mode,
             items: MeetingMode.values,
@@ -142,19 +135,19 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               if (v != null) setState(() => _mode = v);
             },
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbInput(
             controller: _locationController,
             label: 'Location / Link',
             hint: 'Where is it happening?',
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbInput(
             controller: _participantsController,
             label: 'Participants',
             hint: 'Comma separated names',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           // Date Picker
           Row(
             children: [
@@ -164,16 +157,14 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   children: [
                     Text(
                       'DATE',
-                        style: AppTextStyles.cardTitle(context).copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                        style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                    const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                     Text(
                       _date == null
                           ? 'Not set'
                           : _date!.toLocal().toString().split(' ').first,
-                      style: AppTextStyles.body(context),
+                      style: Theme.of(context).textTheme.bodyLarge!,
                     ),
                   ],
                 ),
@@ -194,7 +185,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           // Time Pickers
           Row(
             children: [
@@ -213,7 +204,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   },
                 ),
               ),
-              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
+              const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
               Expanded(
                 child: _buildTimePicker(
                   context,
@@ -231,7 +222,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Buffer
+          const SizedBox(height: SbSpacing.xxl), // Buffer
         ],
       ),
     );
@@ -250,18 +241,16 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
       children: [
         Text(
           label,
-          style: AppTextStyles.cardTitle(context).copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
         InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(8),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
+              horizontal: SbSpacing.lg,
+              vertical: SbSpacing.sm,
             ),
             decoration: BoxDecoration(
               border: Border.all(color: colorScheme.outlineVariant),
@@ -274,11 +263,11 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   size: 20,
                   color: colorScheme.onSurfaceVariant,
                 ),
-                const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+                const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.sm)
                 Expanded(
                   child: Text(
                     value,
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -290,3 +279,14 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

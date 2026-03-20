@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
@@ -18,14 +18,14 @@ class ShearResultSummary extends StatelessWidget {
       child: SbCard(
         child: Column(
           children: [
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
             ComparisonBar(
               actual: result.tv,
               allowable: result.tc,
               label: 'Shear Stress (τv vs τc)',
               unit: 'N/mm²',
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Nominal Stress (τv)',
             value: '${result.tv.toStringAsFixed(3)} N/mm²',
@@ -40,3 +40,7 @@ class ShearResultSummary extends StatelessWidget {
     );
   }
 }
+
+
+
+

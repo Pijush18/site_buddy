@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/column_section_painter.dart';
 
@@ -27,7 +27,7 @@ class RebarLayoutDiagram extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -62,33 +62,31 @@ class RebarLayoutDiagram extends StatelessWidget {
                     'Steel Arrangement',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption(context),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  AppLayout.vGap8,
+                  const SizedBox(height: SbSpacing.sm),
                   Flexible(
                     child: Text(
                       '$numBars bars Ø${mainBarDia.toInt()}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.cardTitle(context),
+                      style: Theme.of(context).textTheme.labelLarge!,
                     ),
                   ),
-                  AppLayout.vGap16,
+                  const SizedBox(height: SbSpacing.lg),
                   Text(
                     'Total Steel Area',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption(context),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  AppLayout.vGap4,
+                  const SizedBox(height: SbSpacing.xs),
                   Flexible(
                     child: Text(
                       'Ast = ${ast.toInt()} mm²',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.cardTitle(context).copyWith(
-                        color: colorScheme.primary,
-                      ),
+                      style: Theme.of(context).textTheme.labelLarge!,
                     ),
                   ),
                 ],
@@ -100,3 +98,12 @@ class RebarLayoutDiagram extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

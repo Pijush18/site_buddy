@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_button.dart';
@@ -23,16 +23,14 @@ class SbFeedback {
       SnackBar(
         content: Text(
           message,
-          style: AppTextStyles.body(context).copyWith(
-            color: isError ? colorScheme.onError : colorScheme.onInverseSurface,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
         ),
         backgroundColor: isError
             ? colorScheme.error
             : colorScheme.inverseSurface,
         behavior: SnackBarBehavior.floating,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(AppLayout.sm)),
+          borderRadius: BorderRadius.all(Radius.circular(SbSpacing.sm)),
         ),
         duration: duration ?? const Duration(seconds: 3),
       ),
@@ -55,10 +53,10 @@ class SbFeedback {
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog.adaptive(
-          title: Text(title, style: AppTextStyles.sectionTitle(context)),
+          title: Text(title, style: Theme.of(context).textTheme.titleMedium!),
           content: content,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppLayout.sm),
+            borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
           actions: [
             if (cancelLabel != null || onCancel != null)
@@ -90,7 +88,7 @@ class SbFeedback {
       useRootNavigator: useRootNavigator,
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppLayout.sm)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(SbSpacing.sm)),
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(
@@ -101,3 +99,11 @@ class SbFeedback {
     );
   }
 }
+
+
+
+
+
+
+
+

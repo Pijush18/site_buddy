@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -51,15 +51,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         children: [
           Text(
             'Step 5 of 5: Engineering Validation',
-            style: AppTextStyles.screenTitle(context).copyWith(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // Overall Safety Status Display
           _OverallStatusBadge(status: overallStatus),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           DesignResultCard(
             title: 'Limit State of Flexure',
@@ -83,7 +81,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 38.1',
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           DesignResultCard(
             title: 'Limit State of Shear',
@@ -101,7 +99,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 40.0',
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           DesignResultCard(
             title: 'Control of Deflection',
@@ -119,7 +117,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             ],
             codeReference: 'IS 456 Cl. 23.2.1',
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
 
           // Reinforcement Detail
           SbSection(
@@ -131,7 +129,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                     key: _drawingKey,
                     child: Container(
                       color: colorScheme.surfaceContainerHighest,
-                      padding: const EdgeInsets.all(AppSpacing.md),
+                      padding: const EdgeInsets.all(SbSpacing.lg),
                       child: BeamRebarDrawing(
                         width: state.width,
                         depth: state.overallDepth,
@@ -144,7 +142,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.lg),
                   Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -166,7 +164,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                           },
                           width: double.infinity,
                         ),
-                        const SizedBox(height: AppSpacing.sm),
+                        const SizedBox(height: SbSpacing.sm),
                         SbButton.ghost(
                           label: 'Save PDF',
                           icon: SbIcons.pdf,
@@ -208,14 +206,14 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.primary(
                 label: 'Save to Design History',
                 icon: SbIcons.history,
                 onPressed: () => _saveDesign(context, ref),
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.primary(
                 label: 'New Design',
                 icon: SbIcons.add,
@@ -225,7 +223,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                 },
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.ghost(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -233,7 +231,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -278,7 +276,7 @@ class _OverallStatusBadge extends StatelessWidget {
     final color = SafetyUtils.getColor(context, status);
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppRadius.md),
@@ -287,29 +285,27 @@ class _OverallStatusBadge extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(SafetyUtils.getIcon(status), color: color, size: 24),
           ),
-          const SizedBox(width: AppSpacing.md),
+          const SizedBox(width: SbSpacing.lg),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   SafetyUtils.getLabel(status).toUpperCase(),
-                  style: AppTextStyles.sectionTitle(context),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Text(
                   status == SafetyStatus.safe
                       ? 'Verified as per IS 456 code standards'
                       : 'Fails to meet safety requirements',
-                  style: AppTextStyles.caption(context).copyWith(
-                    color: color.withValues(alpha: 0.7),
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
             ),
@@ -319,3 +315,10 @@ class _OverallStatusBadge extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

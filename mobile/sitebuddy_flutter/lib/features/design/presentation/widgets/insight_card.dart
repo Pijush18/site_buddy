@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
 
@@ -21,18 +21,14 @@ class InsightCard extends StatelessWidget {
       children: [
         Text(
           'SMART INSIGHTS',
-          style: AppTextStyles.sectionTitle(context).copyWith(
-            color: Colors.blue,
-
-            letterSpacing: 1.2,
-          ),
+          style: Theme.of(context).textTheme.titleMedium!,
         ),
-        AppLayout.vGap8,
+        const SizedBox(height: SbSpacing.sm),
         ...insights.map(
           (insight) => Padding(
-            padding: const EdgeInsets.only(bottom: AppLayout.sm),
+            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
             child: Container(
-              padding: const EdgeInsets.all(AppLayout.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
 
               child: Row(
                 children: [
@@ -43,14 +39,11 @@ class InsightCard extends StatelessWidget {
                     color: insight.isWarning ? Colors.orange : Colors.blue,
                     size: 20,
                   ),
-                  const SizedBox(width: AppLayout.sm),
+                  const SizedBox(width: SbSpacing.sm),
                   Expanded(
                     child: Text(
                       insight.message,
-                      style: AppTextStyles.body(context, secondary: true).copyWith(
-                        color: insight.isWarning ? Colors.orange : Colors.blue,
-                        height: 1.4,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!,
                     ),
                   ),
                 ],
@@ -62,3 +55,10 @@ class InsightCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

@@ -67,3 +67,6 @@ class ExcavationController extends Notifier<ExcavationState> {
   void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ExcavationState.initial();
 }
+
+
+

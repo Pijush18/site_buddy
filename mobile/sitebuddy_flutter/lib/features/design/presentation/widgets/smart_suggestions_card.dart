@@ -1,6 +1,5 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
@@ -21,7 +20,6 @@ class SmartSuggestionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (suggestions.isEmpty) return const SizedBox.shrink();
-    final colorScheme = Theme.of(context).colorScheme;
     final warningColor = AppColors.warning(context);
 
     return SbCard(
@@ -31,13 +29,10 @@ class SmartSuggestionsCard extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.tips_and_updates, color: warningColor, size: 20),
-              const SizedBox(width: AppLayout.md),
+              const SizedBox(width: SbSpacing.lg),
               Text(
                 'Design Insights',
-                style: AppTextStyles.body(context).copyWith(
-                  color: warningColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
               const Spacer(),
               if (onOptimize != null)
@@ -47,37 +42,28 @@ class SmartSuggestionsCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppLayout.md),
+          const SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
             (s) => Padding(
-              padding: const EdgeInsets.only(bottom: AppLayout.md),
+              padding: const EdgeInsets.only(bottom: SbSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     s.title,
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     s.description,
-                    style: AppTextStyles.body(context, secondary: true).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                   if (s.action.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.only(top: AppLayout.sm),
+                      padding: const EdgeInsets.only(top: SbSpacing.sm),
                       child: Text(
                         '➔ ${s.action}',
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: warningColor,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ),
                 ],
@@ -89,3 +75,12 @@ class SmartSuggestionsCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

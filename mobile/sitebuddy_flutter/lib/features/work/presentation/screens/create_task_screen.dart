@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,8 +38,6 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.read(workControllerProvider.notifier);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return AppScreenWrapper(
       title: 'Create Task',
@@ -82,27 +80,25 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             label: 'Title',
             hint: 'Task title',
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbInput(
             controller: _descriptionController,
             label: 'Description',
             hint: 'Brief description of the task',
             maxLines: 3,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           SbInput(
             controller: _projectController,
             label: 'Project ID',
             hint: 'e.g., PRJ-001',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Text(
             'PRIORITY',
-            style: AppTextStyles.cardTitle(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           SbDropdown<TaskPriority>(
             value: _priority,
             items: TaskPriority.values,
@@ -111,13 +107,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
               if (v != null) setState(() => _priority = v);
             },
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbInput(
             controller: _assignedController,
             label: 'Assigned To',
             hint: 'User name or ID',
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           Row(
             children: [
               Expanded(
@@ -126,11 +122,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                   children: [
                     Text(
                       'DUE DATE',
-                      style: AppTextStyles.cardTitle(context).copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                    const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                     Text(
                       _dueDate == null
                           ? 'Not set'
@@ -139,7 +133,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                                 .toString()
                                 .split(' ')
                                 .first,
-                      style: AppTextStyles.body(context),
+                      style: Theme.of(context).textTheme.bodyLarge!,
                     ),
                   ],
                 ),
@@ -160,9 +154,20 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Buffer space before footer
+          const SizedBox(height: SbSpacing.xxl), // Buffer space before footer
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

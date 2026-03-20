@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
@@ -16,7 +16,6 @@ class FootingAnalysisScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(footingDesignControllerProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return AppScreenWrapper(
       title: 'Soil Analysis',
@@ -25,16 +24,16 @@ class FootingAnalysisScreen extends ConsumerWidget {
           icon: const Icon(Icons.help_outline),
           onPressed: () => debugPrint('Help: Footing Analysis'),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Step 4 of 6: Pressure Distribution',
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           // Area Comparison
           DesignResultCard(
@@ -55,7 +54,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Pressure Analysis
           DesignResultCard(
@@ -81,12 +80,12 @@ class FootingAnalysisScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
           // Eccentricity etc
           const SbSectionHeader(title: 'Distribution Details'),
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -95,20 +94,17 @@ class FootingAnalysisScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${state.eccentricityX.toStringAsFixed(1)} mm',
-                    style: AppTextStyles.cardTitle(context),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
                 ),
                 if (state.type == FootingType.pile) ...[
-                  const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
                   SbListItemTile(
                     title: 'Piles Required',
                     onTap: () {}, // Detail view entry
                     trailing: Text(
                       '${state.pileCount}',
-                      style: AppTextStyles.cardTitle(context).copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.labelLarge!,
                     ),
                   ),
                 ],
@@ -116,7 +112,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
             ),
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32 (closest standard)
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32 (closest standard)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -126,7 +122,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                 onPressed: () => context.push('/footing/reinforcement'),
                 width: double.infinity,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbButton.secondary(
                 label: 'Back',
                 onPressed: () => context.pop(),
@@ -134,9 +130,19 @@ class FootingAnalysisScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Added for bottom padding consistency
+          const SizedBox(height: SbSpacing.xxl), // Added for bottom padding consistency
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

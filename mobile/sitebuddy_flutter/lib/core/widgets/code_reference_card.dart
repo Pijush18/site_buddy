@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/models/code_reference.dart';
 
@@ -15,8 +16,8 @@ class CodeReferenceCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Container(
-      margin: const EdgeInsets.only(top: AppLayout.pMedium),
-      padding: AppLayout.paddingMedium,
+      margin: const EdgeInsets.only(top: SbSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       decoration: AppLayout.sbCommonDecoration(context).copyWith(
         color: colorScheme.primaryContainer.withOpacity(0.1),
         border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
@@ -27,39 +28,28 @@ class CodeReferenceCard extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.menu_book, size: 16, color: colorScheme.primary),
-              const SizedBox(width: AppLayout.pSmall),
+              const SizedBox(width: SbSpacing.sm),
               Text(
                 'IS 456:2000 REFERENCE',
-                style: AppTextStyles.caption(context).copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.1,
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
-          const SizedBox(height: AppLayout.pSmall),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             reference.title,
-            style: AppTextStyles.caption(context).copyWith(
-              fontWeight: FontWeight.bold,
-              color: colorScheme.onSurface,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppLayout.pTiny),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             reference.description,
-            style: AppTextStyles.body(context, secondary: true).copyWith(
-              fontSize: 11, 
-              height: 1.4,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!,
           ),
           if (reference.formula != null) ...[
-            const SizedBox(height: AppLayout.pMedium),
+            const SizedBox(height: SbSpacing.lg),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(AppLayout.pSmall),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(4),
@@ -83,3 +73,12 @@ class CodeReferenceCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

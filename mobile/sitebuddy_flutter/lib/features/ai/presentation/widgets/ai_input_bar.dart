@@ -17,7 +17,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:site_buddy/features/ai/application/controllers/ai_controller.dart';
 
@@ -53,11 +53,11 @@ class _AiInputBarState extends ConsumerState<AiInputBar> {
     final isLoading = ref.watch(aiProvider).isLoading;
     return SbCard(
       padding: EdgeInsets.only(
-        left: AppLayout.pMedium,
-        right: AppLayout.pMedium,
-        top: AppLayout.pSmall,
+        left: SbSpacing.lg,
+        right: SbSpacing.lg,
+        top: SbSpacing.sm,
         bottom:
-            AppLayout.pSmall +
+            SbSpacing.sm +
             MediaQuery.of(context).padding.bottom, // Safe zone
       ),
       child: Row(
@@ -74,7 +74,7 @@ class _AiInputBarState extends ConsumerState<AiInputBar> {
               ),
             ),
           ),
-          AppLayout.hGap12,
+          const SizedBox(width: SbSpacing.md),
           SizedBox(
             width: 48,
             height: 48,
@@ -90,3 +90,8 @@ class _AiInputBarState extends ConsumerState<AiInputBar> {
     );
   }
 }
+
+
+
+
+

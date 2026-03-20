@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 
@@ -28,10 +28,10 @@ class SegmentedToggle<T> extends StatelessWidget {
 
     return Container(
       height: 44, // Professional height (40–44px)
-      padding: const EdgeInsets.all(AppLayout.pTiny),
+      padding: const EdgeInsets.all(SbSpacing.xs),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(AppLayout.buttonRadius),
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: Row(
         children: items.map((item) {
@@ -48,7 +48,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: isSelected ? colorScheme.primary : colorScheme.surface,
-                  borderRadius: BorderRadius.circular(AppLayout.buttonRadius - 4),
+                  borderRadius: BorderRadius.circular(16.0 - 4),
                   border: isSelected
                       ? Border.all(color: colorScheme.primary, width: 1)
                       : Border.all(
@@ -60,12 +60,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                   child: Text(
                     labelBuilder(item),
                     maxLines: 1,
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: isSelected
-                          ? colorScheme.onPrimary
-                          : colorScheme.primary,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
                 ),
               ),
@@ -76,3 +71,11 @@ class SegmentedToggle<T> extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

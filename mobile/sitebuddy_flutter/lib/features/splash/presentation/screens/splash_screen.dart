@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,50 +59,56 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap64
+            const SizedBox(height: SbSpacing.xxl * 2), // Replaced AppLayout.vGap64
             // Logo
             Icon(
               SbIcons.engineering,
               size: 64, // Standard large icon size
               color: colorScheme.primary,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
             // App Name
             Text(
               'SiteBuddy',
-              style: AppTextStyles.screenTitle(context).copyWith(
-                fontSize: 32,
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
 
             // Tagline
             Text(
               'Civil Engineering Intelligence',
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
             // Loading Indicator
             CircularProgressIndicator(
               color: colorScheme.primary,
             ),
             
-            const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+            const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
 
             // Footer
             Text(
               '© Pijush Debbarma',
-              style: AppTextStyles.caption(context),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

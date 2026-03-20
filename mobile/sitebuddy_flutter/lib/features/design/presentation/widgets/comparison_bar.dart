@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 
 /// WIDGET: ComparisonBar
 /// PURPOSE: Visual comparison between Actual and Allowable values.
@@ -21,12 +20,9 @@ class ComparisonBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-    final bool isSafe = actual <= allowable;
     final double ratio = (allowable > 0)
         ? (actual / allowable).clamp(0.0, 1.2)
         : 0.0;
-//     final Color barColor = isSafe ? Colors.green : Colors.red;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,16 +30,14 @@ class ComparisonBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label, style: AppTextStyles.sectionTitle(context)),
+            Text(label, style: Theme.of(context).textTheme.titleMedium!),
             Text(
               '${actual.toStringAsFixed(2)} / ${allowable.toStringAsFixed(2)} $unit',
-              style: AppTextStyles.body(context, secondary: true).copyWith(
-                color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!,
             ),
           ],
         ),
-        const SizedBox(height: AppLayout.pSmall),
+        const SizedBox(height: SbSpacing.sm),
         Stack(
           children: [
             Container(height: 8),
@@ -69,3 +63,11 @@ class ComparisonBar extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

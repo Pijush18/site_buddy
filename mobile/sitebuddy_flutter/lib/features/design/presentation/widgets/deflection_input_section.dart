@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -43,7 +43,7 @@ class DeflectionInputSection extends StatelessWidget {
                     validator: (v) => ValidationHelper.validatePositive(v, 'Depth'),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: AppNumberField(
                     controller: spanController,
@@ -54,7 +54,7 @@ class DeflectionInputSection extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             _buildLabelledDropdown(
               context,
               'Span Type',
@@ -62,7 +62,7 @@ class DeflectionInputSection extends StatelessWidget {
               spanTypes,
               onSpanTypeChanged,
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             Row(
               children: [
                 Expanded(
@@ -73,7 +73,7 @@ class DeflectionInputSection extends StatelessWidget {
                     validator: (v) => ValidationHelper.validatePercentage(v, 'Tension Steel'),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: AppNumberField(
                     controller: pcController,
@@ -114,7 +114,7 @@ class DeflectionInputSection extends StatelessWidget {
             color: colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,
@@ -125,3 +125,7 @@ class DeflectionInputSection extends StatelessWidget {
     );
   }
 }
+
+
+
+

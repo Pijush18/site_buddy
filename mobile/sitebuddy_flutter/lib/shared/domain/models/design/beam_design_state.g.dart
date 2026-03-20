@@ -224,3 +224,6 @@ class BeamDesignStateAdapter extends TypeAdapter<BeamDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

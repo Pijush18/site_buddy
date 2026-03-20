@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -114,8 +114,6 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return AppScreenWrapper(
       title: 'Shear Check',
       child: Form(
@@ -125,11 +123,9 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
           children: [
             Text(
               'Structural Shear Capacity Assessment',
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             ShearInputSection(
               dController: _dController,
               bController: _bController,
@@ -144,7 +140,7 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
                 if (v != null) setState(() => _selectedSteel = v);
               },
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             SharedActionButtons(
               calculateLabel: 'Calculate Shear',
               isLoading: _isLoading,
@@ -152,22 +148,32 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
               onReset: _reset,
               onShare: _shareResult,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
             if (_result != null) ...[
               ShearResultSummary(result: _result!),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
               InsightCard(insights: _result!.insights),
             ] else
               const PlaceholderCard(
                 icon: SbIcons.analytics,
                 message: 'Enter parameters to generate report',
               ),
-            const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
+            const SizedBox(height: SbSpacing.xxl * 1.5), // Replaced AppLayout.vGap32
             const ShearHistorySection(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

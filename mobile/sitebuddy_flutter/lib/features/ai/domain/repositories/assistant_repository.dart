@@ -7,3 +7,6 @@ abstract class AssistantRepository {
   /// PURPOSE: Sends a user prompt to the AI and returns the text response and detected intent.
   Future<({String text, AiIntent intent})?> query(String prompt);
 }
+
+
+

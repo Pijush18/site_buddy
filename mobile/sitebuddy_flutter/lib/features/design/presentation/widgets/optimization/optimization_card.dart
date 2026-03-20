@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -18,7 +18,7 @@ class OptimizationCard extends StatelessWidget {
         : (option.utilization > 0.8 ? Colors.orange : colorScheme.primary);
 
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +28,7 @@ class OptimizationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   option.title,
-                  style: AppTextStyles.cardTitle(context),
+                  style: Theme.of(context).textTheme.labelLarge!,
                 ),
               ),
               if (option.utilization <= 1.0)
@@ -37,14 +37,12 @@ class OptimizationCard extends StatelessWidget {
                 Icon(Icons.warning, color: colorScheme.error, size: 16),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             option.description,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               _StatItem(
@@ -52,7 +50,7 @@ class OptimizationCard extends StatelessWidget {
                 value: '${option.steelArea.toInt()} mm²',
                 color: colorScheme.primary,
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.xxl),
               _StatItem(
                 label: 'Utilization',
                 value: '${(option.utilization * 100).toInt()}%',
@@ -84,16 +82,21 @@ class _StatItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption(context).copyWith(fontSize: 10),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
         Text(
           value,
-          style: AppTextStyles.body(context).copyWith(
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
         ),
       ],
     );
   }
 }
+
+
+
+
+
+
+
+

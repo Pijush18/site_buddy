@@ -6,3 +6,6 @@ abstract class KnowledgeRepository {
   /// Finds a topic by query (supports fuzzy matching).
   KnowledgeTopic? findTopic(String query);
 }
+
+
+

@@ -35,7 +35,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 ///
 /// ----------------------------------------------
 
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 
@@ -104,10 +104,8 @@ class AppBottomNavigation extends StatelessWidget {
         showUnselectedLabels: true,
 
         // ── Typography ────────────────────────────────────────────────────────
-        selectedLabelStyle: AppTextStyles.caption(context).copyWith(
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: AppTextStyles.caption(context),
+        selectedLabelStyle: Theme.of(context).textTheme.labelMedium!,
+        unselectedLabelStyle: Theme.of(context).textTheme.labelMedium!,
 
         // ── Navigation items ──────────────────────────────────────────────────
         // Order and icons are identical to the original BottomNavBar.
@@ -141,3 +139,10 @@ class AppBottomNavigation extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

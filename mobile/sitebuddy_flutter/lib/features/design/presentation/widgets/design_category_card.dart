@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
 
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -33,7 +33,7 @@ class DesignCategoryCard extends StatelessWidget {
         children: [
           // Circular Icon Container
           Container(
-            padding: const EdgeInsets.all(AppLayout.pMedium),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             
             child: Icon(
               icon,
@@ -41,15 +41,13 @@ class DesignCategoryCard extends StatelessWidget {
               color: colorScheme.primary,
             ),
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: SbSpacing.sm),
           // Label
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppLayout.pSmall),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
             child: Text(
               label,
-              style: AppTextStyles.body(context).copyWith(
-                color: colorScheme.onSurface,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!,
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -60,3 +58,11 @@ class DesignCategoryCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

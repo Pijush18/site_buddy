@@ -109,3 +109,6 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

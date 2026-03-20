@@ -30,3 +30,6 @@ class FootingCard extends StatelessWidget {
     );
   }
 }
+
+
+

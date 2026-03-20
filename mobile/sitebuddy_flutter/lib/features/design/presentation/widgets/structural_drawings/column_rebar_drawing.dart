@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'dart:math' as math;
 
@@ -59,10 +59,10 @@ class ColumnRebarDrawing extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            padding: const EdgeInsets.only(top: SbSpacing.sm),
             child: Text(
               '${type.label} Section: ${width.toInt()}x${depth.toInt()} mm',
-              style: AppTextStyles.caption(context).copyWith(color: textColor),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
           ),
         ],
@@ -215,3 +215,11 @@ class _ColumnPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+
+
+
+
+
+
+

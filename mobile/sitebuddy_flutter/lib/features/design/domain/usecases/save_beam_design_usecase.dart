@@ -35,3 +35,6 @@ class SaveBeamDesignUseCase {
     await historyRepository.addEntry(entry);
   }
 }
+
+
+

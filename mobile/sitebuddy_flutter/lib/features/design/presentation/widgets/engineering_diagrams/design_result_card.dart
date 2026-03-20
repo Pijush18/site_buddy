@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 class DesignResultCard extends StatelessWidget {
@@ -26,8 +26,8 @@ class DesignResultCard extends StatelessWidget {
       title: title,
       trailing: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: AppSpacing.sm / 2,
+          horizontal: SbSpacing.sm,
+          vertical: SbSpacing.sm / 2,
         ),
         decoration: BoxDecoration(
           color: statusColor.withValues(alpha: 0.1),
@@ -35,10 +35,7 @@ class DesignResultCard extends StatelessWidget {
         ),
         child: Text(
           isSafe ? 'SAFE' : 'UNSAFE',
-          style: AppTextStyles.caption(context).copyWith(
-            fontWeight: FontWeight.bold,
-            color: statusColor,
-          ),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
       ),
       child: SbCard(
@@ -47,7 +44,7 @@ class DesignResultCard extends StatelessWidget {
           children: [
             ...items.map(
               (item) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                padding: const EdgeInsets.only(bottom: SbSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -57,28 +54,22 @@ class DesignResultCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.label,
-                            style: AppTextStyles.body(context, secondary: true).copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.md),
+                        const SizedBox(width: SbSpacing.lg),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               item.value,
-                                style: AppTextStyles.sectionTitle(context).copyWith(
-                                  color: item.isCritical ? statusColor : null,
-                                ),
+                                style: Theme.of(context).textTheme.titleMedium!,
                             ),
                             if (item.unit != null) ...[
-                              const SizedBox(width: AppSpacing.xs),
+                              const SizedBox(width: SbSpacing.xs),
                               Text(
                                 item.unit!,
-                                style: AppTextStyles.caption(context).copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
+                                style: Theme.of(context).textTheme.labelMedium!,
                               ),
                             ],
                           ],
@@ -86,13 +77,10 @@ class DesignResultCard extends StatelessWidget {
                       ],
                     ),
                     if (item.subtitle != null) ...[
-                      const SizedBox(height: AppSpacing.xs),
+                      const SizedBox(height: SbSpacing.xs),
                       Text(
                         item.subtitle!,
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: colorScheme.secondary,
-                          fontStyle: FontStyle.italic,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ],
                   ],
@@ -101,7 +89,7 @@ class DesignResultCard extends StatelessWidget {
             ),
             if (codeReference != null) ...[
               const Divider(),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               Row(
                 children: [
                   Icon(
@@ -109,13 +97,10 @@ class DesignResultCard extends StatelessWidget {
                     size: 14,
                     color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                   ),
-                  const SizedBox(width: AppSpacing.sm),
+                  const SizedBox(width: SbSpacing.sm),
                   Text(
                     codeReference!,
-                    style: AppTextStyles.caption(context).copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontStyle: FontStyle.italic,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
                 ],
               ),
@@ -142,3 +127,10 @@ class DesignResultItem {
     this.isCritical = false,
   });
 }
+
+
+
+
+
+
+

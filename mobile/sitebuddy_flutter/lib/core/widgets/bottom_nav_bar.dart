@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -14,7 +14,7 @@ import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -53,7 +53,7 @@ class BottomNavBar extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -114,18 +114,20 @@ class _NavItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: itemColor, size: 24),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             label.toUpperCase(),
-            style: AppTextStyles.body(context, secondary: true).copyWith(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              letterSpacing: 0.5,
-              color: itemColor,
-              fontSize: 10,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!,
           ),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -15,7 +15,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           _Section(
             title: 'Introduction',
             content:
@@ -51,7 +51,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 'If you have questions about this policy, please contact us at: '
                 'support@sitebuddy.app',
           ),
-          SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.sectionGap * 1.5
+          SizedBox(height: SbSpacing.xxl * 2), // Replaced AppLayout.sectionGap * 1.5
         ],
       ),
     );
@@ -67,17 +67,27 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      padding: const EdgeInsets.only(bottom: SbSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SbSectionHeader(title: title), // Standardized header
           Text(
             content,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+

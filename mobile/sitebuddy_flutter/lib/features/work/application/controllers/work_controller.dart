@@ -101,3 +101,6 @@ class WorkController extends Notifier<WorkState> {
   List<Meeting> get scheduledMeetings =>
       state.meetings.where((m) => m.status == MeetingStatus.scheduled).toList();
 }
+
+
+

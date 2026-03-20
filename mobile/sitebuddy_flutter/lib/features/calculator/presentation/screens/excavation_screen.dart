@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -42,30 +42,30 @@ class ExcavationScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.pitDimensions),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.wallLength,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.pitDepthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           const _SectionLabel(label: EngineeringTerms.parameters),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.clearance,
             hint: EngineeringTerms.widthHint,
@@ -76,7 +76,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.clearanceInfo,
             ),
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           AppNumberField(
             label: EngineeringTerms.swellFactor,
             hint: EngineeringTerms.swellFactorHint,
@@ -87,7 +87,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.swellFactorInfo,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -103,12 +103,12 @@ class ExcavationScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           if (state.failure != null)
             _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ],
       ),
@@ -124,10 +124,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label.toUpperCase(),
-      style: AppTextStyles.sectionTitle(context).copyWith(
-        color: Theme.of(context).colorScheme.primary,
-        letterSpacing: 1.1,
-      ),
+      style: Theme.of(context).textTheme.titleMedium!,
       textAlign: TextAlign.center,
     );
   }
@@ -143,12 +140,10 @@ class _ErrorBanner extends StatelessWidget {
     return SbCard(
       color: colorScheme.errorContainer.withValues(alpha: 0.1),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Text(
           message,
-          style: AppTextStyles.body(context).copyWith(
-            color: colorScheme.error,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!,
           textAlign: TextAlign.center,
         ),
       ),
@@ -162,29 +157,23 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             EngineeringTerms.resultSummary,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           const Divider(),
           SbListItemTile(
             title: EngineeringTerms.totalVolumeLoose,
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.volumeM3.toStringAsFixed(2)} m³',
-              style: AppTextStyles.sectionTitle(context).copyWith(
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
             ),
           ),
           SbListItemTile(
@@ -192,23 +181,21 @@ class _ResultCard extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${(result.volumeM3 / result.swellFactor).toStringAsFixed(2)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           const Divider(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
+          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 EngineeringTerms.clearanceLabel,
-                style: AppTextStyles.caption(context),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
               Text(
                 '${result.clearance} m',
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
@@ -217,13 +204,11 @@ class _ResultCard extends StatelessWidget {
             children: [
               Text(
                 EngineeringTerms.swellFactorLabel,
-                style: AppTextStyles.caption(context),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
               Text(
                 '${result.swellFactor}',
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
@@ -232,3 +217,14 @@ class _ResultCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

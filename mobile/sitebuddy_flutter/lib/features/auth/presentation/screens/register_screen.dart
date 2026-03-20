@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -133,27 +133,24 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: AppSpacing.lg * 2), // Extra top spacing
+          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing
           Icon(
             SbIcons.engineering,
             size: 64,
             color: colorScheme.primary,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           Text(
             AppStrings.siteBuddy,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              fontSize: 32,
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             AppStrings.structuralDesignSuite,
-            style: AppTextStyles.body(context, secondary: true),
+            style: Theme.of(context).textTheme.bodyMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
+          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
 
           SbSection(
             title: AppStrings.createAccount,
@@ -161,7 +158,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               children: [
                 Text(
                   AppStrings.structuralDesignSuite,
-                  style: AppTextStyles.body(context, secondary: true),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ],
             ),
@@ -182,7 +179,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
                   prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SbInput(
                   controller: _passwordController,
                   focusNode: _passwordFocusNode,
@@ -200,7 +197,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SbInput(
                   controller: _confirmPasswordController,
                   focusNode: _confirmPasswordFocusNode,
@@ -211,7 +208,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   onFieldSubmitted: (_) => _register(),
                   prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                 ),
-                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
                 SbButton.primary(
                   label: AppStrings.register,
                   onPressed: (isLoading ||
@@ -226,15 +223,26 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbButton.secondary(
             label: AppStrings.alreadyHaveAccountSignIn,
             onPressed: () => context.go('/login'),
             width: double.infinity,
           ),
-          const SizedBox(height: AppSpacing.lg), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl), // Bottom padding
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

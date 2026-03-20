@@ -19,3 +19,6 @@ class UiDuration {
   static const Duration medium = Duration(milliseconds: 300);
   static const Duration slow = Duration(milliseconds: 500);
 }
+
+
+

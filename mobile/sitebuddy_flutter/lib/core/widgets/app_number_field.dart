@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: app_number_field.dart
@@ -59,17 +59,15 @@ class AppNumberField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.sm),
+          padding: const EdgeInsets.only(left: SbSpacing.xs, bottom: SbSpacing.sm),
           child: Row(
             children: [
               Text(
                 label,
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
               if (onInfoPressed != null) ...[
-                const SizedBox(width: AppSpacing.xs),
+                const SizedBox(width: SbSpacing.xs),
                 GestureDetector(
                   onTap: onInfoPressed,
                   child: Icon(
@@ -88,10 +86,7 @@ class AppNumberField extends StatelessWidget {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: onChanged,
           validator: validator,
-          style: AppTextStyles.sectionTitle(context).copyWith(
-            fontWeight: FontWeight.w500,
-            color: colorScheme.onSurface,
-          ),
+          style: Theme.of(context).textTheme.titleMedium!,
           decoration: InputDecoration(
             hintText: hint ?? '0.00',
             errorText: errorText,
@@ -104,3 +99,10 @@ class AppNumberField extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

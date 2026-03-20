@@ -1,6 +1,6 @@
 
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class BeamDetailingWidget extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.5,
       child: Container(
-        padding: AppLayout.paddingLarge,
+        padding: const EdgeInsets.all(SbSpacing.xxl),
 
         child: CustomPaint(
           painter: _DetailingPainter(
@@ -37,7 +37,7 @@ class BeamDetailingWidget extends StatelessWidget {
             n: numBars,
             dia: barDia,
             spacing: stirrupSpacing,
-            labelStyle: AppTextStyles.caption(context),
+            labelStyle: Theme.of(context).textTheme.labelMedium!,
           ),
         ),
       ),
@@ -142,3 +142,11 @@ class _DetailingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+
+
+
+
+
+
+

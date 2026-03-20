@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 
 class BeamSectionDiagram extends StatelessWidget {
@@ -19,9 +19,7 @@ class BeamSectionDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final axisColor = theme.brightness == Brightness.dark ? Colors.white70 : Colors.black87;
-    final labelStyle = AppTextStyles.caption(context).copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
+    final labelStyle = Theme.of(context).textTheme.labelMedium!;
 
     return AspectRatio(
       aspectRatio: 1.2,
@@ -105,3 +103,10 @@ class _BeamSectionPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+

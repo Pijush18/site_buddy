@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -55,7 +55,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateLength,
                   errorText: lError,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 AppNumberField(
                   label: EngineeringTerms.wallHeight,
                   hint: EngineeringTerms.heightHint,
@@ -63,7 +63,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateHeight,
                   errorText: hError,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 AppNumberField(
                   label: EngineeringTerms.wallThickness,
                   hint: EngineeringTerms.brickThicknessHint,
@@ -84,28 +84,23 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   child: Row(
                     children: [
                       Icon(SbIcons.crop, size: 20, color: colorScheme.onSurfaceVariant),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               EngineeringTerms.brickSize,
-                              style: AppTextStyles.caption(context).copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!,
                             ),
-                            const SizedBox(height: AppSpacing.xs),
+                            const SizedBox(height: SbSpacing.xs),
                             Text(
                               EngineeringTerms.standardBrickSize,
-                                style: AppTextStyles.body(context),
+                                style: Theme.of(context).textTheme.bodyLarge!,
                             ),
                             Text(
                               EngineeringTerms.brickWithJoint,
-                                style: AppTextStyles.caption(context).copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                  fontStyle: FontStyle.italic,
-                                ),
+                                style: Theme.of(context).textTheme.labelMedium!,
                             ),
                           ],
                         ),
@@ -123,16 +118,13 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 Text(
                   EngineeringTerms.mortarRatio,
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    color: colorScheme.primary,
-                    letterSpacing: 1.1,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MortarRatio>(
                   value: state.selectedRatio,
                   items: MortarRatio.values,
@@ -168,12 +160,10 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           if (state.failure != null)
             SbCard(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Text(
                   state.failure!.message,
-                    style: AppTextStyles.body(context).copyWith(
-                      color: colorScheme.error,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -186,10 +176,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           // ── SECTION 6: COMPLIANCE FOOTNOTE ──────────────────────────────
           Text(
             EngineeringTerms.brickMasonryRef,
-            style: AppTextStyles.caption(context).copyWith(
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-              fontStyle: FontStyle.italic,
-            ),
+            style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
         ],
@@ -206,22 +193,16 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             EngineeringTerms.resultSummary,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.2,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
           const Divider(),
 
           // Bricks
@@ -230,9 +211,7 @@ class _ResultSection extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               result.numberOfBricks.toString(),
-              style: AppTextStyles.cardTitle(context).copyWith(
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.labelLarge!,
             ),
           ),
           SbListItemTile(
@@ -240,12 +219,12 @@ class _ResultSection extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.brickVolume.toStringAsFixed(3)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
 
           const Divider(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
+          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
 
           // Cement & Sand
           SbListItemTile(
@@ -253,9 +232,7 @@ class _ResultSection extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-              style: AppTextStyles.cardTitle(context).copyWith(
-                color: colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.labelLarge!,
             ),
           ),
           SbListItemTile(
@@ -263,12 +240,12 @@ class _ResultSection extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
 
           const Divider(),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
+          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
 
           // Totals
           SbListItemTile(
@@ -276,18 +253,16 @@ class _ResultSection extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.wallVolume.toStringAsFixed(3)} m³',
-              style: AppTextStyles.body(context),
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(EngineeringTerms.mortarRatioLabel, style: AppTextStyles.caption(context)),
+              Text(EngineeringTerms.mortarRatioLabel, style: Theme.of(context).textTheme.labelMedium!),
               Text(
                 result.mortarRatio,
-                style: AppTextStyles.caption(context).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
@@ -296,3 +271,12 @@ class _ResultSection extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

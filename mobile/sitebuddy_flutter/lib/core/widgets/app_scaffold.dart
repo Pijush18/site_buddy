@@ -1,5 +1,5 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class AppScaffold extends ConsumerWidget {
               automaticallyImplyLeading: automaticallyImplyLeading,
               leading: automaticallyImplyLeading && context.canPop()
                   ? Padding(
-                      padding: const EdgeInsets.only(left: AppLayout.pSmall),
+                      padding: const EdgeInsets.only(left: SbSpacing.sm),
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => context.pop(),
@@ -66,20 +66,11 @@ class AppScaffold extends ConsumerWidget {
                 children: [
                   Text(
                     title!,
-                    style: AppTextStyles.screenTitle(context).copyWith(
-                      color: colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -0.5,
-                      fontSize: 24,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge!,
                   ),
                   Text(
                     branding.engineerName,
-                    style: AppTextStyles.body(context).copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.primary,
-                      letterSpacing: 0.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ],
               ),
@@ -109,3 +100,11 @@ class AppScaffold extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -46,7 +46,7 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
         child: Center(
           child: Text(
             AppStrings.noEntriesFound,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ),
       );
@@ -91,3 +91,9 @@ class _SiteReportPreviewScreenState extends State<SiteReportPreviewScreen> {
     );
   }
 }
+
+
+
+
+
+

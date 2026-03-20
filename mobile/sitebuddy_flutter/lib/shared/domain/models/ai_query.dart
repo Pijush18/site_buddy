@@ -61,3 +61,6 @@ class AiQuery {
   bool get hasValidDimensions =>
       length != null && width != null && depth != null;
 }
+
+
+

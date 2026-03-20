@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -22,7 +22,7 @@ class SbHomeQuickActions extends StatelessWidget {
               isVibrant: true,
             ),
           ),
-          const SizedBox(width: AppSpacing.md),
+          const SizedBox(width: SbSpacing.lg),
           Expanded(
             child: SbActionTile(
               icon: SbIcons.iosShare,
@@ -37,3 +37,7 @@ class SbHomeQuickActions extends StatelessWidget {
     );
   }
 }
+
+
+
+

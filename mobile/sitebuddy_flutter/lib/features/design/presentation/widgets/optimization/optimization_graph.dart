@@ -1,8 +1,8 @@
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -34,7 +34,7 @@ class OptimizationGraph extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: options.length,
-              separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.lg),
+              separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.xxl),
               itemBuilder: (context, index) {
                 final option = options[index];
                 return _OptimizationRow(
@@ -44,7 +44,7 @@ class OptimizationGraph extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.lg),
             _buildLegend(context),
           ],
         ),
@@ -64,7 +64,7 @@ class OptimizationGraph extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         _LegendItem(color: colorScheme.primary, label: 'Utilization'),
-        const SizedBox(width: AppSpacing.md),
+        const SizedBox(width: SbSpacing.lg),
         _LegendItem(color: AppColors.warning(context), label: 'Steel Area'),
       ],
     );
@@ -93,7 +93,7 @@ class _OptimizationRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(option.title, style: AppTextStyles.caption(context).copyWith(fontWeight: FontWeight.w600)),
+            Text(option.title, style: Theme.of(context).textTheme.labelMedium!),
             Text(
               rankLabel,
               style: TextStyle(
@@ -104,13 +104,13 @@ class _OptimizationRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         _Bar(
           label: 'Util: ${(utilPercentage * 100).toInt()}%',
           percentage: utilPercentage,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: SbSpacing.xs),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
@@ -159,15 +159,12 @@ class _Bar extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: AppSpacing.sm),
+            padding: const EdgeInsets.only(left: SbSpacing.sm),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 label,
-                style: AppTextStyles.caption(context).copyWith(
-                  color: label.toLowerCase().contains('safe') ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ),
           ),
@@ -195,12 +192,20 @@ class _LegendItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-        const SizedBox(width: AppSpacing.xs),
+        const SizedBox(width: SbSpacing.xs),
         Text(
           label,
-          style: AppTextStyles.caption(context).copyWith(fontSize: 10),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
       ],
     );
   }
 }
+
+
+
+
+
+
+
+

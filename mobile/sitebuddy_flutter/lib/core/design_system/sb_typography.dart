@@ -1,29 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// lib/core/design_system/sb_typography.dart
 
-/// CLASS: SbTypography
-/// PURPOSE: Standardized typography styles for SiteBuddy.
+import 'package:flutter/material.dart';
+
 class SbTypography {
   SbTypography._();
 
-  /// Title style for headers and primary labels.
-  static TextStyle title(BuildContext context) => GoogleFonts.inter(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: Theme.of(context).colorScheme.onSurface,
-      );
+  static TextTheme get textTheme => const TextTheme(
+    // 🔹 Large headers
+    displayLarge: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.5,
+    ),
 
-  /// Subtitle style for secondary information.
-  static TextStyle subtitle(BuildContext context) => GoogleFonts.inter(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-      );
+    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
 
-  /// Tab text style for navigation elements.
-  static TextStyle tabText(BuildContext context) => GoogleFonts.inter(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: Theme.of(context).colorScheme.onSurface,
-      );
+    // 🔹 Section titles
+    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+
+    titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+
+    // 🔹 Body text
+    bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+
+    bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+
+    // 🔹 Small text / metadata
+    labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+
+    labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+  );
 }
+
+
+

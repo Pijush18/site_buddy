@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
@@ -76,7 +76,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
-              margin: const EdgeInsets.only(right: AppSpacing.md), // Replaced AppLayout.md
+              margin: const EdgeInsets.only(right: SbSpacing.lg), // Replaced SbSpacing.lg
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
@@ -90,7 +90,7 @@ class ProjectDetailScreen extends ConsumerWidget {
         children: [
           // Status Header
           SbCard(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -99,31 +99,26 @@ class ProjectDetailScreen extends ConsumerWidget {
                   children: [
                     Text(
                       AppStrings.status,
-                      style: AppTextStyles.caption(context).copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: AppSpacing.sm / 2,
+                        horizontal: SbSpacing.lg,
+                        vertical: SbSpacing.sm / 2,
                       ),
                       child: Text(
                         proj.status.label,
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 Text(
                   proj.name,
-                  style: AppTextStyles.sectionTitle(context),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 // Cover Image Mock
                 SizedBox(
                   height: 120,
@@ -138,7 +133,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -147,13 +142,11 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           AppStrings.created,
-                          style: AppTextStyles.caption(context).copyWith(
-                            letterSpacing: 1.2,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Text(
                           formattedDate,
-                          style: AppTextStyles.body(context),
+                          style: Theme.of(context).textTheme.bodyLarge!,
                         ),
                       ],
                     ),
@@ -162,9 +155,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           AppStrings.location,
-                          style: AppTextStyles.caption(context).copyWith(
-                            letterSpacing: 1.2,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Row(
                           children: [
@@ -173,10 +164,10 @@ class ProjectDetailScreen extends ConsumerWidget {
                               size: 20,
                               color: colorScheme.primary,
                             ),
-                            const SizedBox(width: AppSpacing.sm),
+                            const SizedBox(width: SbSpacing.sm),
                             Text(
                               proj.location,
-                                style: AppTextStyles.body(context),
+                                style: Theme.of(context).textTheme.bodyLarge!,
                             ),
                           ],
                         ),
@@ -195,7 +186,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               child: SbCard(
                 child: Text(
                   proj.description!,
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                 ),
               ),
             ),
@@ -213,7 +204,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     subtext: 'Entries',
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.lg),
                 Expanded(
                   child: _StatCard(
                     icon: Icons.calculate,
@@ -282,7 +273,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   },
                   width: double.infinity,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.lg),
                 SbButton.secondary(
                   label: AppStrings.editProject,
                   icon: Icons.edit_outlined,
@@ -319,7 +310,7 @@ class _StatCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -329,24 +320,19 @@ class _StatCard extends StatelessWidget {
               Icon(icon, color: colorScheme.primary, size: 20),
               Text(
                 label,
-                  style: AppTextStyles.caption(context).copyWith(
-                    letterSpacing: -0.5,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             value,
-            style: AppTextStyles.screenTitle(context).copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Text(
             subtext,
-            style: AppTextStyles.caption(context),
+            style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
       ),
@@ -368,3 +354,12 @@ IconData _getTypeIcon(String? type) {
       return SbIcons.calculator;
   }
 }
+
+
+
+
+
+
+
+
+

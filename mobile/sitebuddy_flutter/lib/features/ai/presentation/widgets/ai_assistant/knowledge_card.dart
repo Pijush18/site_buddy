@@ -1,10 +1,8 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/knowledge_topic.dart';
 import 'package:site_buddy/features/ai/application/controllers/ai_assistant_controller.dart';
@@ -18,6 +16,7 @@ class KnowledgeCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final state = ref.watch(aiControllerProvider);
     final query = state.searchQuery.toLowerCase();
 
@@ -52,18 +51,16 @@ class KnowledgeCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppLayout.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             color: colorScheme.primary,
             child: Row(
               children: [
                 Icon(SbIcons.book, color: colorScheme.onPrimary, size: 24),
-                AppLayout.hGap8,
+                const SizedBox(width: SbSpacing.sm),
                 Expanded(
                   child: Text(
                     topic.title.toUpperCase(),
-                    style: AppTextStyles.cardTitle(
-                      context,
-                    ).copyWith(color: colorScheme.onPrimary),
+                    style: textTheme.labelLarge,
                   ),
                 ),
               ],
@@ -71,11 +68,10 @@ class KnowledgeCard extends ConsumerWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(AppLayout.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // BREADCRUMB
                 if (state.breadcrumb.isNotEmpty) ...[
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -95,7 +91,7 @@ class KnowledgeCard extends ConsumerWidget {
                             if (index != state.breadcrumb.length - 1)
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: AppLayout.xs,
+                                  horizontal: SbSpacing.xs,
                                 ),
                                 child: Icon(
                                   SbIcons.chevronRight,
@@ -109,12 +105,11 @@ class KnowledgeCard extends ConsumerWidget {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppLayout.sm),
+                    padding: EdgeInsets.symmetric(vertical: SbSpacing.sm),
                     child: Divider(),
                   ),
                 ],
 
-                // SEARCH
                 SbInput(
                   onChanged: (value) => ref
                       .read(aiControllerProvider.notifier)
@@ -122,24 +117,23 @@ class KnowledgeCard extends ConsumerWidget {
                   hint: AppStrings.searchInsideTopic,
                   prefixIcon: Icon(SbIcons.search, color: colorScheme.primary),
                 ),
-                AppLayout.vGap16,
+                const SizedBox(height: SbSpacing.lg),
 
-                // CONTENT
                 if (hasResults) ...[
                   if (matchesDefinition) ...[
                     Text(
                       topic.definition,
-                      style: AppTextStyles.body(context).copyWith(height: 1.5),
+                      style: textTheme.bodyLarge,
                     ),
-                    AppLayout.vGap16,
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredKeyPoints.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.keyPoints),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     ...filteredKeyPoints.map(
                       (point) => _BulletPoint(text: point),
                     ),
-                    AppLayout.vGap16,
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredThumbRules.isNotEmpty) ...[
                     _HighlightBox(
@@ -148,14 +142,14 @@ class KnowledgeCard extends ConsumerWidget {
                       color: colorScheme.secondary,
                       items: filteredThumbRules,
                     ),
-                    AppLayout.vGap16,
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredTypes.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.types),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     Wrap(
-                      spacing: AppLayout.sm,
-                      runSpacing: AppLayout.sm,
+                      spacing: SbSpacing.sm,
+                      runSpacing: SbSpacing.sm,
                       children: filteredTypes
                           .map(
                             (t) => SbButton.outline(
@@ -167,14 +161,14 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    AppLayout.vGap16,
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.relatedTopics.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.exploreRelatedTopics),
-                    AppLayout.vGap8,
+                    const SizedBox(height: SbSpacing.sm),
                     Wrap(
-                      spacing: AppLayout.sm,
-                      runSpacing: AppLayout.sm,
+                      spacing: SbSpacing.sm,
+                      runSpacing: SbSpacing.sm,
                       children: topic.relatedTopics
                           .map(
                             (t) => SbButton.outline(
@@ -186,7 +180,7 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    AppLayout.vGap16,
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.siteTip.isNotEmpty) ...[
                     _HighlightBox(
@@ -199,7 +193,7 @@ class KnowledgeCard extends ConsumerWidget {
                 ] else ...[
                   const Center(
                     child: Padding(
-                      padding: AppLayout.paddingLarge,
+                      padding: EdgeInsets.all(SbSpacing.xl),
                       child: Text(AppStrings.noMatchesFound),
                     ),
                   ),
@@ -220,10 +214,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppTextStyles.body(context, secondary: true).copyWith(
-        color: Theme.of(context).colorScheme.primary,
-        letterSpacing: 1.1,
-      ),
+      style: Theme.of(context).textTheme.labelLarge!,
     );
   }
 }
@@ -233,18 +224,17 @@ class _BulletPoint extends StatelessWidget {
   const _BulletPoint({required this.text});
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      padding: const EdgeInsets.only(bottom: SbSpacing.sm),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('• ', style: AppTextStyles.body(context)),
+          Text('• ', style: textTheme.bodyLarge),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.body(
-                context,
-              ).copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: textTheme.bodyMedium,
             ),
           ),
         ],
@@ -268,30 +258,37 @@ class _HighlightBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.all(AppLayout.md),
-      
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Icon(icon, size: 20, color: color),
-              AppLayout.hGap8,
+              const SizedBox(width: SbSpacing.sm),
               Text(
                 title,
-                style: AppTextStyles.body(context).copyWith(color: color),
+                style: textTheme.bodyLarge,
               ),
             ],
           ),
-          AppLayout.vGap8,
+          const SizedBox(height: SbSpacing.sm),
           ...items.map(
             (item) =>
-                Text('• $item', style: AppTextStyles.body(context, secondary: true)),
+                Text('• $item', style: textTheme.bodyMedium),
           ),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+

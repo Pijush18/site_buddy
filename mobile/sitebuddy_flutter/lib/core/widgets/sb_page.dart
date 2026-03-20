@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/app_scaffold.dart';
 
@@ -16,7 +16,7 @@ enum _SbPageType { form, list, detail, scaffold }
 ///   [SbPage.detail]   — Read-only scrollable detail view, no bottom bar.
 ///   [SbPage.scaffold] — Generic scaffold with padding but no automatic scrolling.
 ///
-/// Rule: All variants use AppLayout.pMedium (16px) for edge insets.
+/// Rule: All variants use SbSpacing.lg (16px) for edge insets.
 class SbPage extends StatelessWidget {
   // ── Common ────────────────────────────────────────────────────────────────
   final String? title;
@@ -129,8 +129,8 @@ class SbPage extends StatelessWidget {
   Widget _buildFormPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
     // Resulting content-to-edge distance: 16px (Page) + 8px (Card Int) = 24px.
-    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
-    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,
@@ -155,8 +155,8 @@ class SbPage extends StatelessWidget {
   // ── List ──────────────────────────────────────────────────────────────────
   Widget _buildListPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
-    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,
@@ -174,9 +174,9 @@ class SbPage extends StatelessWidget {
         children: [
           if (listHeader != null) ...[
             listHeader!,
-            const SizedBox(height: AppLayout.pMedium),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(height: 1),
-            const SizedBox(height: AppLayout.pMedium),
+            const SizedBox(height: SbSpacing.lg),
           ],
           listBody!,
         ],
@@ -187,8 +187,8 @@ class SbPage extends StatelessWidget {
   // ── Detail ────────────────────────────────────────────────────────────────
   Widget _buildDetailPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
-    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,
@@ -211,8 +211,8 @@ class SbPage extends StatelessWidget {
   // ── Scaffold ──────────────────────────────────────────────────────────────
   Widget _buildScaffoldPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? AppLayout.pMedium : 0.0;
-    final horizontalPadding = usePadding ? AppLayout.pMedium : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,
@@ -240,7 +240,7 @@ class _BottomActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(AppLayout.pMedium),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           border: Border(
@@ -255,3 +255,8 @@ class _BottomActionBar extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

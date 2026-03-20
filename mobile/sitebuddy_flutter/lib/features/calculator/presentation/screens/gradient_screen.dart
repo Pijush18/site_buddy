@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -31,23 +31,18 @@ class GradientScreen extends ConsumerWidget {
 
     Widget buildResultCard(GradientResult result) {
       String classificationLabel;
-      Color classificationColor;
       switch (result.classification) {
         case GradientClassification.flat:
           classificationLabel = EngineeringTerms.flat;
-          classificationColor = colorScheme.outline;
           break;
         case GradientClassification.mild:
           classificationLabel = EngineeringTerms.mild;
-          classificationColor = colorScheme.primary;
           break;
         case GradientClassification.moderate:
           classificationLabel = EngineeringTerms.moderate;
-          classificationColor = colorScheme.secondary;
           break;
         case GradientClassification.steep:
           classificationLabel = EngineeringTerms.steep;
-          classificationColor = colorScheme.error;
           break;
       }
 
@@ -60,22 +55,17 @@ class GradientScreen extends ConsumerWidget {
               children: [
                 Text(
                   EngineeringTerms.resultSummary,
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    color: colorScheme.primary,
-                    letterSpacing: 1.2,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 const Divider(),
                 SbListItemTile(
                   title: EngineeringTerms.percentage,
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
-                    style: AppTextStyles.cardTitle(context).copyWith(
-                      color: colorScheme.primary,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -83,7 +73,7 @@ class GradientScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     result.ratio == double.infinity ? EngineeringTerms.vertical : '1 : ${result.ratio.toStringAsFixed(2)}',
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
@@ -91,27 +81,23 @@ class GradientScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.angle.toStringAsFixed(2)}°',
-                    style: AppTextStyles.body(context),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 const Divider(),
-                const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.lg
+                const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
                   child: Column(
                     children: [
                       Text(
                         EngineeringTerms.classification,
-                        style: AppTextStyles.caption(context).copyWith(
-                          color: classificationColor.withValues(alpha: 0.6),
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
-                      const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
+                      const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
                       Text(
                         classificationLabel,
-                        style: AppTextStyles.sectionTitle(context).copyWith(
-                          color: classificationColor,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ],
                   ),
@@ -119,18 +105,16 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   EngineeringTerms.slopeVisualization,
-                  style: AppTextStyles.sectionTitle(context).copyWith(
-                    color: colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                 SizedBox(
                   height: 120,
                   width: double.infinity,
@@ -158,16 +142,16 @@ class GradientScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(SbIcons.trendingUp, size: 48, color: colorScheme.primary),
-              const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
+              const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.md)
               Flexible(
                 child: Text(
                   EngineeringTerms.slopeCalculator,
-                  style: AppTextStyles.sectionTitle(context),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           AppNumberField(
             label: EngineeringTerms.verticalRise,
@@ -175,7 +159,7 @@ class GradientScreen extends ConsumerWidget {
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
 
           AppNumberField(
             label: EngineeringTerms.horizontalRun,
@@ -184,7 +168,7 @@ class GradientScreen extends ConsumerWidget {
             errorText: runError,
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -201,24 +185,22 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           const _FieldReference(),
@@ -233,18 +215,15 @@ class _FieldReference extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           EngineeringTerms.fieldReference,
-          style: AppTextStyles.sectionTitle(context).copyWith(
-            color: colorScheme.primary,
-          ),
+          style: Theme.of(context).textTheme.titleMedium!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12
+        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
         SbCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -259,7 +238,7 @@ class _FieldReference extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
       ],
     );
   }
@@ -325,3 +304,14 @@ class _SlopeTrianglePainter extends CustomPainter {
     return oldDelegate.rise != rise || oldDelegate.run != run || oldDelegate.color != color;
   }
 }
+
+
+
+
+
+
+
+
+
+
+

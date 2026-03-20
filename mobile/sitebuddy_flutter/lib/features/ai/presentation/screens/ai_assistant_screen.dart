@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
@@ -103,12 +103,12 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
 
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               physics: const BouncingScrollPhysics(),
               children: [
                 if (state.isLoading)
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                    padding: EdgeInsets.symmetric(vertical: SbSpacing.xxl),
                     child: Center(
                       child: CircularProgressIndicator(strokeWidth: 2),
                     ),
@@ -117,7 +117,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
                     AssistantGuidanceWidget(response: state.assistantResponse!),
-                    const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                    const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
                   ],
                   AiResponseCard(
                     response: state.response!,
@@ -149,7 +149,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   AiErrorWidget(error: state.error!)
                 else
                   const Padding(
-                    padding: EdgeInsets.all(AppSpacing.md),
+                    padding: EdgeInsets.all(SbSpacing.lg),
                     child: OnboardingMessage(),
                   ),
               ],
@@ -157,7 +157,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: AiInputBar(
               onChanged: controller.updateInput,
               onSubmit: () => controller.processInput(context),
@@ -169,3 +169,8 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
     );
   }
 }
+
+
+
+
+

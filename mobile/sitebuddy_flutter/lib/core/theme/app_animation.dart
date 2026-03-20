@@ -18,3 +18,6 @@ class AppAnimation {
   /// Curve for all SiteBuddy animations.
   static const Curve curve = Curves.easeInOutCubic;
 }
+
+
+

@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +19,8 @@ class RebarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final state = ref.watch(rebarControllerProvider);
     final controller = ref.read(rebarControllerProvider.notifier);
-    final colorScheme = theme.colorScheme;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -44,22 +42,17 @@ class RebarScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: AppTextStyles.sectionTitle(context).copyWith(
-                color: colorScheme.primary,
-                letterSpacing: 1.2,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.numberOfBars,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
               ),
             ),
             SbListItemTile(
@@ -67,7 +60,7 @@ class RebarScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
-                style: AppTextStyles.body(context),
+                style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
             SbListItemTile(
@@ -75,9 +68,7 @@ class RebarScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
-                style: AppTextStyles.cardTitle(context).copyWith(
-                  color: colorScheme.primary,
-                ),
+                style: Theme.of(context).textTheme.labelLarge!,
               ),
             ),
           ],
@@ -94,13 +85,10 @@ class RebarScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.rebarRequirements,
-            style: AppTextStyles.sectionTitle(context).copyWith(
-              color: colorScheme.primary,
-              letterSpacing: 1.1,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
 
           AppNumberField(
             label: EngineeringTerms.memberLength,
@@ -108,7 +96,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
 
           AppNumberField(
             label: EngineeringTerms.spacingLabel,
@@ -116,11 +104,11 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
+          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
 
           Wrap(
-            spacing: AppSpacing.md, // Replaced AppLayout.md
-            runSpacing: AppSpacing.md, // Replaced AppLayout.md
+            spacing: SbSpacing.lg, // Replaced SbSpacing.lg
+            runSpacing: SbSpacing.lg, // Replaced SbSpacing.lg
             children: [
               SizedBox(
                 width: 160,
@@ -142,7 +130,7 @@ class RebarScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           ActionButtonsGroup(
             children: [
@@ -159,27 +147,36 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: AppTextStyles.body(context).copyWith(
-                  color: colorScheme.error,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
           ],
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

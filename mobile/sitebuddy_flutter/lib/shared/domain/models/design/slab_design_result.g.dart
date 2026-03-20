@@ -57,3 +57,6 @@ class SlabDesignResultAdapter extends TypeAdapter<SlabDesignResult> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+
+

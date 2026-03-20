@@ -1,6 +1,6 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_text_styles.dart';
+
 
 class SlabReinforcementDiagram extends StatelessWidget {
   final double lx; // m
@@ -27,7 +27,7 @@ class SlabReinforcementDiagram extends StatelessWidget {
     final diagramColor = colorScheme.primary;
 
     return Container(
-      padding: AppLayout.paddingMedium,
+      padding: const EdgeInsets.all(SbSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -52,11 +52,11 @@ class SlabReinforcementDiagram extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _InfoTile(label: 'Lx', value: '${lx.toStringAsFixed(2)} m'),
-                  AppLayout.vGap8,
+                  const SizedBox(height: SbSpacing.sm),
                   _InfoTile(label: 'Ly', value: '${ly.toStringAsFixed(2)} m'),
-                  AppLayout.vGap12,
+                  const SizedBox(height: SbSpacing.md),
                   _InfoTile(label: 'Main', value: mainRebar, isBold: true),
-                  AppLayout.vGap4,
+                  const SizedBox(height: SbSpacing.xs),
                   _InfoTile(label: 'Dist', value: distRebar),
                 ],
               ),
@@ -88,14 +88,14 @@ class _InfoTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption(context),
+          style: Theme.of(context).textTheme.labelMedium!,
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body(context),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ),
       ],
@@ -155,3 +155,11 @@ class _SlabPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+
+
+
+
+
