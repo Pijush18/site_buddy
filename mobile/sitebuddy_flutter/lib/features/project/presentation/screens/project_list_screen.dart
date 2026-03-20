@@ -53,12 +53,18 @@ class ProjectListScreen extends ConsumerWidget {
       child: SbSectionList(
         physics: const BouncingScrollPhysics(),
         sections: [
+          // ── HERO SECTION & PRIMARY CTA ──
           SbSection(
-            child: SbButton.primary(
-              label: 'New Project',
-              icon: Icons.add,
-              onPressed: () => context.push('/projects/create'),
-              width: double.infinity,
+            child: SbModuleHero(
+              icon: SbIcons.project,
+              title: 'Project Management',
+              subtitle: 'Track and manage your site projects, dimensions, and engineering logs.',
+              child: SbButton.primary(
+                label: 'New Project',
+                icon: Icons.add,
+                onPressed: () => context.push('/projects/create'),
+                width: 180, // More controlled width for visibility
+              ),
             ),
           ),
 
@@ -74,7 +80,9 @@ class ProjectListScreen extends ConsumerWidget {
             )
           else
             SbSection(
-              child: Column(
+              title: 'Recent Projects',
+              subtitle: 'Quickly access your recently updated site projects.',
+              child: SbListGroup(
                 children: projects.map((project) {
                   final formattedDate = DateFormat('MMM dd, yyyy').format(project.createdAt);
                   return ProjectCard(

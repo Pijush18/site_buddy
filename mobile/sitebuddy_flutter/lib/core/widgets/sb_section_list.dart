@@ -11,7 +11,11 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 /// - ZERO internal padding (handled by AppScreenWrapper).
 class SbSectionList extends StatelessWidget {
   final List<Widget> sections;
+
+  /// Use true ONLY when embedding inside another scrollable
   final bool shrinkWrap;
+
+  /// Default: non-scrollable (controlled by parent)
   final ScrollPhysics? physics;
 
   const SbSectionList({
@@ -31,7 +35,7 @@ class SbSectionList extends StatelessWidget {
       itemCount: sections.length,
       padding: EdgeInsets.zero,
 
-      /// ✅ CENTRALIZED spacing control (FIXED)
+      /// ✅ Centralized spacing system
       separatorBuilder: (context, index) =>
           const SizedBox(height: SbSpacing.sectionGap),
 
@@ -39,6 +43,3 @@ class SbSectionList extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -149,153 +149,133 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final isLoading = authState.isLoading;
 
     return AppScreenWrapper(
-      // Login screen doesn't traditionally have an AppBar title
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing for login layout
-          Icon(
-            SbIcons.engineering,
-            size: 64,
-            color: colorScheme.primary,
+      child: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Column(
+              children: [
+                const SizedBox(height: SbSpacing.xxl),
+                Icon(SbIcons.engineering, size: 64, color: colorScheme.primary),
+                const SizedBox(height: SbSpacing.lg),
+                Text(AppStrings.siteBuddy, style: theme.textTheme.titleLarge),
+                const SizedBox(height: SbSpacing.sm),
+                Text(
+                  AppStrings.structuralDesignSuite,
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-          Text(
-            AppStrings.siteBuddy,
-            style: Theme.of(context).textTheme.titleLarge!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          Text(
-            AppStrings.structuralDesignSuite,
-            style: Theme.of(context).textTheme.bodyMedium!,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8 (approx)
-          
+
+          // ── LOGIN FORM ──
           SbSection(
             title: AppStrings.signIn,
-            child: Column(
-              children: [
-                Text(
-                  AppStrings.welcomeBack,
-                  style: Theme.of(context).textTheme.bodyMedium!,
-                ),
-              ],
-            ),
-          ),
-
-          // Login Card
-          SbCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SbInput(
-                  controller: _emailController,
-                  focusNode: _emailFocusNode,
-                  label: FormLabels.email,
-                  hint: FormLabels.emailHint,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                SbInput(
-                  controller: _passwordController,
-                  focusNode: _passwordFocusNode,
-                  label: FormLabels.password,
-                  hint: FormLabels.passwordHint,
-                  obscureText: _obscurePassword,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (_) => _login(),
-                  prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
-                      color: colorScheme.outline,
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SbInput(
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    label: FormLabels.email,
+                    hint: FormLabels.emailHint,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
+                    label: FormLabels.password,
+                    hint: FormLabels.passwordHint,
+                    obscureText: _obscurePassword,
+                    prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword ? SbIcons.visibility : SbIcons.visibilityOff,
+                        color: colorScheme.outline,
+                      ),
+                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () => context.go('/reset-password'),
-                    child: const Text(AppStrings.forgotPassword),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => context.go('/reset-password'),
+                      child: const Text(AppStrings.forgotPassword),
+                    ),
                   ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbButton.primary(
+                    label: AppStrings.signIn,
+                    onPressed: (isLoading || _emailController.text.isEmpty || _passwordController.text.isEmpty)
+                        ? null
+                        : _login,
+                    isLoading: isLoading,
+                    width: double.infinity,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // ── SOCIAL LOGIN ──
+          SbSection(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Expanded(child: Divider()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                      child: Text(AppStrings.orContinueWith, style: theme.textTheme.labelMedium),
+                    ),
+                    const Expanded(child: Divider()),
+                  ],
                 ),
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                SbButton.primary(
-                  label: AppStrings.signIn,
-                  onPressed: (isLoading ||
-                          _emailController.text.isEmpty ||
-                          _passwordController.text.isEmpty)
-                      ? null
-                      : _login,
-                  isLoading: isLoading,
+                const SizedBox(height: SbSpacing.xl),
+                SbButton.secondary(
+                  label: AppStrings.continueWithGoogle,
+                  icon: SbIcons.google,
+                  onPressed: isLoading ? null : _loginWithGoogle,
                   width: double.infinity,
+                ),
+                if (Platform.isIOS) ...[
+                  const SizedBox(height: SbSpacing.lg),
+                  const SbButton.secondary(
+                    label: AppStrings.continueWithApple,
+                    icon: SbIcons.apple,
+                    onPressed: null,
+                    width: double.infinity,
+                  ),
+                ],
+              ],
+            ),
+          ),
+
+          // ── FOOTER LINK ──
+          SbSection(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(AppStrings.dontHaveAccount, style: theme.textTheme.bodyLarge),
+                const SizedBox(width: SbSpacing.sm),
+                GestureDetector(
+                  onTap: () => context.go('/register'),
+                  child: Text(
+                    AppStrings.createAccount,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
-
-          // Divider
-          Row(
-            children: [
-              const Expanded(child: Divider()),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
-                child: Text(
-                  AppStrings.orContinueWith,
-                  style: Theme.of(context).textTheme.labelMedium!,
-                ),
-              ),
-              const Expanded(child: Divider()),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32
-
-          // OAuth Buttons
-          Column(
-            children: [
-              SbButton.secondary(
-                label: AppStrings.continueWithGoogle,
-                icon: SbIcons.google,
-                onPressed: isLoading ? null : _loginWithGoogle,
-                width: double.infinity,
-              ),
-              if (Platform.isIOS) ...[
-                const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
-                const SbButton.secondary(
-                  label: AppStrings.continueWithApple,
-                  icon: SbIcons.apple,
-                  onPressed: null, // Placeholder for future implementation
-                  width: double.infinity,
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
-
-          // Register Link
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppStrings.dontHaveAccount,
-                style: Theme.of(context).textTheme.bodyLarge!,
-              ),
-              GestureDetector(
-                onTap: () => context.go('/register'),
-                child: Text(
-                  AppStrings.createAccount,
-                  style: Theme.of(context).textTheme.bodyLarge!,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

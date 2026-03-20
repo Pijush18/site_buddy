@@ -1,12 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-
+import 'package:site_buddy/core/widgets/sb_card.dart';
 import 'package:flutter/material.dart';
 
-
 /// WIDGET: SbModuleHero
-/// PURPOSE: Professional, neutral-toned header for major modules.
-/// REFACTOR: Professional Color System (Simplified, soft gradients).
+/// PURPOSE: Professional, high-contrast header for major modules.
+/// REFINEMENT: Premium vertical breathing room and stronger visual hierarchy.
 class SbModuleHero extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -14,6 +12,7 @@ class SbModuleHero extends StatelessWidget {
   final Widget? child;
   final List<Color>? gradientColors;
   final EdgeInsets? margin;
+  final bool isElevated;
 
   const SbModuleHero({
     super.key,
@@ -23,6 +22,7 @@ class SbModuleHero extends StatelessWidget {
     this.child,
     this.gradientColors,
     this.margin,
+    this.isElevated = false,
   });
 
   @override
@@ -31,72 +31,77 @@ class SbModuleHero extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
 
-    // 🔬 Neutral Tinted Strategy: Soft container surface with a hint of branding.
+    // Premium Contrast: Highlighting surface containers more confidently
     final List<Color> colors = gradientColors ?? (isDark 
-        ? [colorScheme.surfaceContainerHighest.withValues(alpha: 0.8), colorScheme.surface] 
-        : [colorScheme.surfaceContainerHighest.withValues(alpha: 0.3), colorScheme.surface]);
+        ? [colorScheme.surfaceContainerHighest.withValues(alpha: 0.9), colorScheme.surface] 
+        : [colorScheme.surfaceContainerHighest.withValues(alpha: 0.45), colorScheme.surface]);
 
-    return Container(
-      width: double.infinity,
+    return SbCard(
       margin: margin ?? EdgeInsets.zero,
-      decoration: BoxDecoration(
-        color: colorScheme.surface, // Base fallback
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(
-          color: AppColors.skyBlue.withValues(alpha: 0.7),
-          width: 1.0,
+      padding: EdgeInsets.zero,
+      isElevated: isElevated,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: colors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
-        gradient: LinearGradient(
-          colors: colors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
         child: Stack(
           children: [
-            // Texture Overlay - Desaturated for focus
+            // Micro-pattern Texture Overlay
             Positioned.fill(
               child: CustomPaint(
                 painter: _HeroPatternPainter(
-                  color: colorScheme.primary.withValues(alpha: 0.02),
+                  color: colorScheme.primary.withValues(alpha: 0.08),
                 ),
               ),
             ),
             
-            // Content
+            // Content with Premium Vertical Flow
             Padding(
-              padding: const EdgeInsets.all(SbSpacing.sm),
+              padding: const EdgeInsets.symmetric(
+                horizontal: SbSpacing.xl,
+                vertical: SbSpacing.huge, // Premium vertical breathing room
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        icon,
-                        color: colorScheme.primary, // 👈 Pure primary branding
-                        size: 26,
-                      ),
-                      const SizedBox(width: SbSpacing.sm),
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: Theme.of(context).textTheme.bodyMedium!,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.sm),
-                  Padding(
-                    padding: const EdgeInsets.only(left: SbSpacing.xs),
-                    child: Text(
-                      subtitle,
-                      style: theme.textTheme.bodyMedium!,
+                   Container(
+                    padding: const EdgeInsets.all(SbSpacing.lg),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: colorScheme.primary,
+                      size: 34, // Slightly bolder icon
                     ),
                   ),
+                  const SizedBox(height: SbSpacing.xxl),
+                  Text(
+                    title,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800, // Stronger visual confidence
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  Text(
+                    subtitle,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                      height: 1.5,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   if (child != null) ...[
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.xxl),
                     child!,
                   ],
                 ],
@@ -109,7 +114,6 @@ class SbModuleHero extends StatelessWidget {
   }
 }
 
-/// Subtle geometric pattern painter
 class _HeroPatternPainter extends CustomPainter {
   final Color color;
   _HeroPatternPainter({required this.color});
@@ -118,12 +122,10 @@ class _HeroPatternPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = 1.0
+      ..strokeWidth = 1.2
       ..style = PaintingStyle.stroke;
 
-    const spacing = 48.0;
-    
-    // Draw diagonal grid
+    const spacing = 54.0;
     for (double i = -size.height; i < size.width; i += spacing) {
       canvas.drawLine(
         Offset(i, 0),
@@ -136,13 +138,3 @@ class _HeroPatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
-
-
-
-
-
-
-
-
-

@@ -20,38 +20,43 @@ class SubscriptionScreen extends ConsumerWidget {
       title: AppStrings.subscription,
       isScrollable: true,
       child: statusAsync.when(
-        data: (status) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildCurrentStatus(context, status),
-            const SizedBox(height: SbSpacing.xxl * 1.5), 
+        data: (status) => SbSectionList(
+          sections: [
+            // ── Account status ──
+            SbSection(
+              title: 'Account status',
+              child: _buildCurrentStatus(context, status),
+            ),
+
             if (!status.isPremium) ...[
-              Text(
-                AppStrings.upgradeToPremium,
-                style: Theme.of(context).textTheme.titleLarge!,
-                textAlign: TextAlign.center,
+              // ── Upgrade Prompt ──
+              SbSection(
+                title: 'Upgrade to PRO',
+                child: Column(
+                  children: [
+                    Text(
+                      AppStrings.unlockAIPower,
+                      style: Theme.of(context).textTheme.bodyLarge!,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: SbSpacing.lg),
+                    _buildPremiumCard(context, ref),
+                  ],
+                ),
               ),
-              const SizedBox(height: SbSpacing.sm), 
-              Text(
-                AppStrings.unlockAIPower,
-                style: Theme.of(context).textTheme.bodyLarge!,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: SbSpacing.xxl), 
-              _buildPremiumCard(context, ref),
             ] else ...[
-              SbCard(
-                child: Padding(
-                  padding: const EdgeInsets.all(SbSpacing.lg),
+              // ── Active Premium ──
+              SbSection(
+                child: SbCard(
                   child: Column(
                     children: [
                       Icon(SbIcons.checkFilled, color: AppColors.success(context), size: 48),
-                      const SizedBox(height: SbSpacing.lg), 
+                      const SizedBox(height: SbSpacing.lg),
                       Text(
                         AppStrings.premiumUserStatus,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
-                      const SizedBox(height: SbSpacing.sm), 
+                      const SizedBox(height: SbSpacing.sm),
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
@@ -62,13 +67,24 @@ class SubscriptionScreen extends ConsumerWidget {
                 ),
               ),
             ],
-            const SizedBox(height: SbSpacing.xxl * 1.5), 
-            _buildFeatureComparison(context),
-            const SizedBox(height: SbSpacing.xxl),
+
+            // ── Comparison ──
+            SbSection(
+              title: AppStrings.comparePlans,
+              child: _buildFeatureComparison(context),
+            ),
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(child: Text('Error: $e')),
+        error: (e, s) => Center(
+          child: SbCard(
+            child: Text(
+              'Error loading status: $e',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -165,22 +181,17 @@ class SubscriptionScreen extends ConsumerWidget {
   }
 
   Widget _buildFeatureComparison(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          AppStrings.comparePlans,
-          style: Theme.of(context).textTheme.titleMedium!,
-        ),
-        const SizedBox(height: SbSpacing.lg), 
-        Divider(color: colorScheme.outline), 
-        _buildComparisonRow(context, AppStrings.basicCalculations, true, true),
-        _buildComparisonRow(context, AppStrings.offlineUsage, true, true),
-        _buildComparisonRow(context, EngineeringTerms.aiAssistant, false, true),
-        _buildComparisonRow(context, AppStrings.cloudSync, false, true),
-        _buildComparisonRow(context, AppStrings.professionalReports, false, true),
-      ],
+    return SbCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildComparisonRow(context, AppStrings.basicCalculations, true, true),
+          _buildComparisonRow(context, AppStrings.offlineUsage, true, true),
+          _buildComparisonRow(context, EngineeringTerms.aiAssistant, false, true),
+          _buildComparisonRow(context, AppStrings.cloudSync, false, true),
+          _buildComparisonRow(context, AppStrings.professionalReports, false, true),
+        ],
+      ),
     );
   }
 

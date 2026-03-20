@@ -3,8 +3,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 
 /// WIDGET: SmartAssistantInput
-/// PURPOSE: Standardized input for the AI assistant with a fixed action button.
-/// REFACTOR: Professional Color System (Contrast-checked for neutral hero).
+/// PURPOSE: Premium input component for the AI assistant.
+/// REFINEMENT: Elevating the "form-like" input into a floating, high-contrast entry point.
 class SmartAssistantInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
@@ -24,11 +24,21 @@ class SmartAssistantInput extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest, 
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: colorScheme.outline, width: 1.0),
+        color: colorScheme.surface, // Pop against Hero background
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.15), 
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.primary.withValues(alpha: 0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs), 
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm), 
       child: Row(
         children: [
           Expanded(
@@ -36,14 +46,17 @@ class SmartAssistantInput extends StatelessWidget {
               controller: controller,
               onSubmitted: (_) => onSend(),
               textInputAction: TextInputAction.send,
-              style: theme.textTheme.bodyMedium!,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
               decoration: InputDecoration(
                 hintText: hintText,
-                hintMaxLines: 1,
-                hintStyle: theme.textTheme.bodyMedium!,
+                hintStyle: theme.textTheme.bodyLarge?.copyWith(
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.sm,
-                  vertical: SbSpacing.sm,
+                  horizontal: SbSpacing.md,
+                  vertical: SbSpacing.lg, // Improved breathing room
                 ),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -52,22 +65,30 @@ class SmartAssistantInput extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(
-              SbIcons.send, 
-              color: colorScheme.primary, 
-              size: 20,
+          // Premium action button anchoring
+          Padding(
+            padding: const EdgeInsets.only(right: SbSpacing.xs),
+            child: Material(
+              color: colorScheme.primary,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                onTap: onSend,
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    SbIcons.send, 
+                    color: colorScheme.onPrimary, 
+                    size: 20,
+                  ),
+                ),
+              ),
             ),
-            onPressed: onSend,
-            tooltip: 'Send message',
           ),
         ],
       ),
     );
   }
 }
-
-
-
-
-

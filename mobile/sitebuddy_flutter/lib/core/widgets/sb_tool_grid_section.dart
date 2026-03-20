@@ -29,7 +29,7 @@ class SbToolGridSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+
 
     return SbSection(
       title: title,
@@ -49,8 +49,6 @@ class SbToolGridSection extends StatelessWidget {
           return SbActionTile(
             icon: item.icon,
             label: item.label,
-            color: colorScheme.primary,
-            isVibrant: true,
             onTap: () => context.push(item.route),
           );
         },

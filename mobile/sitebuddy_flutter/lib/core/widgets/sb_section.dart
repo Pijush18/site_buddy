@@ -3,14 +3,11 @@ import 'package:site_buddy/core/widgets/sb_section_header.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: SbSection
-/// PURPOSE: A standardized section header and content wrapper for SiteBuddy screens.
-/// 
-/// DESIGN PRINCIPLES:
-/// - STRICT COMPACT RHYTHM: This widget enforces rigorous gaps.
-/// - SINGLE OWNERSHIP: Title -> Content Gap is strictly [SbSpacing.xxl].
-/// - ARCHITECTURAL STABILITY: No internal offsets or conditional logic.
+/// PURPOSE: Standardized section wrapper with header + content.
+/// REFINEMENT: Tightening the internal rhythm between header and content for a premium "one-piece" unit feel.
 class SbSection extends StatelessWidget {
   final String? title;
+  final String? subtitle;
   final Widget child;
   final Widget? trailing;
   final VoidCallback? onTap;
@@ -18,6 +15,7 @@ class SbSection extends StatelessWidget {
   const SbSection({
     super.key,
     this.title,
+    this.subtitle,
     required this.child,
     this.trailing,
     this.onTap,
@@ -34,22 +32,18 @@ class SbSection extends StatelessWidget {
         if (hasHeader) ...[
           SbSectionHeader(
             title: title ?? '',
+            subtitle: subtitle,
             trailing: trailing,
             onTap: onTap,
-            padding: const EdgeInsets.all(0),
           ),
-          const SizedBox(height: SbSpacing.sm), // Enforced fixed gap
+
+          /// Tighter internal gap: 8 -> 4 (XS) to group header with its content
+          const SizedBox(height: SbSpacing.xs),
         ],
+
+        /// Content only — no bottom spacing (handled by SbSectionList)
         child,
-        const SizedBox(height: SbSpacing.lg), // Anchors the section structurally below it (Sole source of inter-section truth)
       ],
     );
   }
 }
-
-
-
-
-
-
-

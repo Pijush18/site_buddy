@@ -3,9 +3,10 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: SbSectionHeader
-/// PURPOSE: Standardized header row with a title and an optional action target.
+/// PURPOSE: Standardized section header with strong hierarchy and interaction.
 class SbSectionHeader extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final VoidCallback? onTap;
   final IconData? icon;
   final Widget? trailing;
@@ -14,6 +15,7 @@ class SbSectionHeader extends StatelessWidget {
   const SbSectionHeader({
     super.key,
     required this.title,
+    this.subtitle,
     this.onTap,
     this.icon,
     this.trailing,
@@ -24,50 +26,82 @@ class SbSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
 
     return Padding(
       padding: padding ?? const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // ── TITLE (LEFTSIDE) ──
+          // ── TITLE & SUBTITLE ──
           if (title.isNotEmpty)
             Expanded(
-              child: Text(
-                title,
-                style: textTheme.titleMedium,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.titleLarge?.copyWith(
+                      color: colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle!,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ],
               ),
             ),
 
-          // ── ACTION SLOT (RIGHTSIDE) ──
+          // ── ACTION AREA ──
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Standardized "View All >" Link
               if (onTap != null)
-                GestureDetector(
-                  onTap: onTap,
-                  behavior: HitTestBehavior.opaque,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "View All",
-                        style: textTheme.labelLarge,
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onTap,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SbSpacing.sm,
+                        vertical: SbSpacing.xs,
                       ),
-                      const SizedBox(width: SbSpacing.xs),
-                      Icon(
-                        icon ?? SbIcons.chevronRight,
-                        size: 16,
-                        color: theme.colorScheme.primary,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "View All",
+                            style: textTheme.labelLarge?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: SbSpacing.xs),
+                          Icon(
+                            icon ?? SbIcons.chevronRight,
+                            size: 18,
+                            color: colorScheme.primary,
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              
-              // External slot
+
               if (trailing != null) ...[
                 if (onTap != null) const SizedBox(width: SbSpacing.sm),
                 trailing!,
@@ -79,6 +113,3 @@ class SbSectionHeader extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -2,15 +2,7 @@ import 'package:flutter/material.dart';
 
 /// CLASS: SbSpacing
 /// PURPOSE: Production-grade spacing system for SiteBuddy.
-///
-/// BASE UNIT: 4 px
-/// All spacing must be derived from this scale.
-/// No hardcoded values allowed anywhere in UI.
-///
-/// WHY:
-/// - Ensures visual rhythm
-/// - Fixes layout imbalance
-/// - Prevents arbitrary spacing decisions
+/// REFINEMENT: Shifting to a more generous architectural scale for premium rhythm.
 class SbSpacing {
   SbSpacing._();
 
@@ -18,7 +10,7 @@ class SbSpacing {
   // 🔹 Base Scale (4pt system)
   // =========================
 
-  static const double xxs = 2; // Rare use (hairline spacing)
+  static const double xxs = 2; 
   static const double xs = 4;
   static const double sm = 8;
   static const double md = 12;
@@ -35,8 +27,8 @@ class SbSpacing {
   /// Default horizontal padding for screens
   static const double screenPadding = lg; // 16
 
-  /// Gap between major sections
-  static const double sectionGap = xxl; // 24
+  /// Gap between major sections: Increased to XXXL (32) for premium breathing room
+  static const double sectionGap = xxxl; // 32
 
   /// Gap between components (cards, fields)
   static const double componentGap = lg; // 16
@@ -59,13 +51,7 @@ class SbSpacing {
   static const EdgeInsets paddingXL = EdgeInsets.all(xl);
 
   static const EdgeInsets horizontalSM = EdgeInsets.symmetric(horizontal: sm);
-
   static const EdgeInsets horizontalLG = EdgeInsets.symmetric(horizontal: lg);
-
   static const EdgeInsets verticalSM = EdgeInsets.symmetric(vertical: sm);
-
   static const EdgeInsets verticalLG = EdgeInsets.symmetric(vertical: lg);
 }
-
-
-

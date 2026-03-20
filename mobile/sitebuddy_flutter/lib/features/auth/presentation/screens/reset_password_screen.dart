@@ -101,10 +101,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final isLoading = authState.isLoading;
 
     return AppScreenWrapper(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing
+      child: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Column(
+              children: [
+                const SizedBox(height: SbSpacing.xxl),
           Icon(
             SbIcons.engineering,
             size: 64,
@@ -116,54 +119,57 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
             style: Theme.of(context).textTheme.titleLarge!,
           ),
           const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          Text(
-            AppStrings.structuralDesignSuite,
-            style: Theme.of(context).textTheme.bodyMedium!,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
-
-          const SbSectionHeader(
-            title: AppStrings.forgotPassword,
-          ),
-          Text(
-            AppStrings.enterEmailToReset,
-            style: Theme.of(context).textTheme.bodyMedium!,
-          ),
-          const SizedBox(height: SbSpacing.xxl + SbSpacing.sm), // Replaced AppLayout.vGap32 (approx)
-
-          // Auth Card
-          SbCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SbInput(
-                  controller: _emailController,
-                  focusNode: _emailFocusNode,
-                  label: FormLabels.email,
-                  hint: FormLabels.emailHint,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (_) => _resetPassword(),
-                  prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
-                ),
-                const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-                SbButton.primary(
-                  label: AppStrings.sendResetLink,
-                  onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
-                  isLoading: isLoading,
-                  width: double.infinity,
+                Text(
+                  AppStrings.structuralDesignSuite,
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          SbButton.secondary(
-            label: AppStrings.backToSignIn,
-            onPressed: () => context.go('/login'),
-            width: double.infinity,
+          // ── RESET FORM ──
+          SbSection(
+            title: AppStrings.forgotPassword,
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    AppStrings.enterEmailToReset,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbInput(
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    label: FormLabels.email,
+                    hint: FormLabels.emailHint,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _resetPassword(),
+                    prefixIcon: Icon(SbIcons.account, color: colorScheme.primary),
+                  ),
+                  const SizedBox(height: SbSpacing.xl),
+                  SbButton.primary(
+                    label: AppStrings.sendResetLink,
+                    onPressed: (isLoading || _emailController.text.isEmpty) ? null : _resetPassword,
+                    isLoading: isLoading,
+                    width: double.infinity,
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Bottom padding
+
+          // ── ACTIONS ──
+          SbSection(
+            child: SbButton.secondary(
+              label: AppStrings.backToSignIn,
+              onPressed: () => context.go('/login'),
+              width: double.infinity,
+            ),
+          ),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

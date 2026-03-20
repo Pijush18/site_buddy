@@ -40,106 +40,110 @@ class MaterialCalculatorScreen extends ConsumerWidget {
 
     return AppScreenWrapper(
       title: ScreenTitles.materialCalculator,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: SbSpacing.lg),
+      child: SbSectionList(
+        sections: [
           SbSection(
             title: EngineeringTerms.concreteGrade,
-            child: SbDropdown<ConcreteGrade>(
-              value: state.grade,
-              items: ConcreteGrade.values,
-              itemLabelBuilder: _gradeLabel,
-              onChanged: (val) {
-                if (val != null) controller.updateGrade(val);
-              },
+            child: SbCard(
+              child: SbDropdown<ConcreteGrade>(
+                value: state.grade,
+                items: ConcreteGrade.values,
+                itemLabelBuilder: _gradeLabel,
+                onChanged: (val) {
+                  if (val != null) controller.updateGrade(val);
+                },
+              ),
             ),
           ),
           SbSection(
             title: EngineeringTerms.dimensions,
-            child: Column(
-              children: [
-                AppNumberField(
-                  label: EngineeringTerms.wallLength,
-                  suffixIcon: SbIcons.ruler,
-                  onChanged: controller.updateLength,
-                  errorText: lError,
-                ),
-                const SizedBox(height: SbSpacing.sm),
-                AppNumberField(
-                  label: EngineeringTerms.width,
-                  suffixIcon: SbIcons.width,
-                  onChanged: controller.updateWidth,
-                  errorText: wError,
-                ),
-                const SizedBox(height: SbSpacing.sm),
-                AppNumberField(
-                  label: EngineeringTerms.thicknessDepth,
-                  suffixIcon: SbIcons.layers,
-                  onChanged: controller.updateDepth,
-                  errorText: dError,
-                ),
-              ],
+            child: SbCard(
+              child: Column(
+                children: [
+                  AppNumberField(
+                    label: EngineeringTerms.wallLength,
+                    suffixIcon: SbIcons.ruler,
+                    onChanged: controller.updateLength,
+                    errorText: lError,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  AppNumberField(
+                    label: EngineeringTerms.width,
+                    suffixIcon: SbIcons.width,
+                    onChanged: controller.updateWidth,
+                    errorText: wError,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  AppNumberField(
+                    label: EngineeringTerms.thicknessDepth,
+                    suffixIcon: SbIcons.layers,
+                    onChanged: controller.updateDepth,
+                    errorText: dError,
+                  ),
+                ],
+              ),
             ),
           ),
           SbSection(
             title: EngineeringTerms.reinforcementAndWaste,
-            child: Wrap(
-              spacing: SbSpacing.lg,
-              runSpacing: SbSpacing.lg,
+            child: SbCard(
+              child: Wrap(
+                spacing: SbSpacing.lg,
+                runSpacing: SbSpacing.lg,
+                children: [
+                  SizedBox(
+                    width: 160,
+                    child: AppNumberField(
+                      label: EngineeringTerms.steelRatioPercent,
+                      hint: EngineeringTerms.steelRatioHint,
+                      suffixIcon: SbIcons.rebarVertical,
+                      onChanged: controller.updateSteelRatio,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 160,
+                    child: AppNumberField(
+                      label: EngineeringTerms.wasteFactorPercent,
+                      hint: EngineeringTerms.wasteFactorHint,
+                      suffixIcon: SbIcons.percent,
+                      onChanged: controller.updateWasteFactor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SbSection(
+            child: ActionButtonsGroup(
               children: [
-                SizedBox(
-                  width: 160,
-                  child: AppNumberField(
-                    label: EngineeringTerms.steelRatioPercent,
-                    hint: EngineeringTerms.steelRatioHint,
-                    suffixIcon: SbIcons.rebarVertical,
-                    onChanged: controller.updateSteelRatio,
-                  ),
+                SbButton.outline(
+                  label: AppStrings.clearAll,
+                  icon: SbIcons.refresh,
+                  onPressed: controller.reset,
                 ),
-                SizedBox(
-                  width: 160,
-                  child: AppNumberField(
-                    label: EngineeringTerms.wasteFactorPercent,
-                    hint: EngineeringTerms.wasteFactorHint,
-                    suffixIcon: SbIcons.percent,
-                    onChanged: controller.updateWasteFactor,
-                  ),
+                SbButton.primary(
+                  label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                  icon: state.isLoading ? null : SbIcons.calculator,
+                  isLoading: state.isLoading,
+                  onPressed: isValid ? controller.calculate : null,
                 ),
               ],
             ),
           ),
-          ActionButtonsGroup(
-            children: [
-              SbButton.outline(
-                label: AppStrings.clearAll,
-                icon: SbIcons.refresh,
-                onPressed: controller.reset,
-              ),
-              SbButton.primary(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
-                icon: state.isLoading ? null : SbIcons.calculator,
-                isLoading: state.isLoading,
-                onPressed: isValid ? controller.calculate : null,
-              ),
-            ],
-          ),
-          const SizedBox(height: SbSpacing.xxl),
-          if (state.failure != null) ...[
-            SbCard(
-              child: Text(
-                state.failure!.message,
-                style: Theme.of(context).textTheme.bodyLarge!,
-                textAlign: TextAlign.center,
+          if (state.failure != null)
+            SbSection(
+              child: SbCard(
+                child: Text(
+                  state.failure!.message,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
-          ],
-          if (state.concreteResult != null) ...[
-            _ResultSection(result: state.concreteResult!),
-            const SizedBox(height: SbSpacing.xxl),
-          ],
-          const _IsCodeNote(),
+          if (state.concreteResult != null) _ResultSection(result: state.concreteResult!),
+          const SbSection(
+            child: _IsCodeNote(),
+          ),
           const SizedBox(height: SbSpacing.xxl),
         ],
       ),
@@ -162,87 +166,59 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SbSection(
       title: EngineeringTerms.resultSummary,
-      child: SbCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SbListItemTile(
-              title: EngineeringTerms.concreteVolume,
-              onTap: () {},
-              trailing: Text(
-                '${result.concreteVolume.toStringAsFixed(3)} m³',
-                style: Theme.of(context).textTheme.bodyLarge!,
-              ),
+      child: SbListGroup(
+        children: [
+          SbListItemTile(
+            title: EngineeringTerms.concreteVolume,
+            onTap: () {},
+            trailing: Text(
+              '${result.concreteVolume.toStringAsFixed(3)} m³',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SbListItemTile(
-              title: EngineeringTerms.cementBags,
-              onTap: () {},
-              trailing: Text(
-                '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-                style: Theme.of(context).textTheme.labelLarge!,
-              ),
+          ),
+          SbListItemTile(
+            title: EngineeringTerms.cementBags,
+            onTap: () {},
+            trailing: Text(
+              '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-            SbListItemTile(
-              title: EngineeringTerms.sandVolume,
-              onTap: () {},
-              trailing: Text(
-                '${result.sandVolume.toStringAsFixed(3)} m³',
-                style: Theme.of(context).textTheme.bodyLarge!,
-              ),
+          ),
+          SbListItemTile(
+            title: EngineeringTerms.sandVolume,
+            onTap: () {},
+            trailing: Text(
+              '${result.sandVolume.toStringAsFixed(3)} m³',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SbListItemTile(
-              title: EngineeringTerms.aggregateVolume,
-              onTap: () {},
-              trailing: Text(
-                '${result.aggregateVolume.toStringAsFixed(3)} m³',
-                style: Theme.of(context).textTheme.bodyLarge!,
-              ),
+          ),
+          SbListItemTile(
+            title: EngineeringTerms.aggregateVolume,
+            onTap: () {},
+            trailing: Text(
+              '${result.aggregateVolume.toStringAsFixed(3)} m³',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const Divider(),
-            const SizedBox(height: SbSpacing.xxl),
-            SbListItemTile(
-              title: EngineeringTerms.steelWeight,
-              onTap: () {},
-              trailing: Text(
-                '${result.steelWeight.toStringAsFixed(1)} kg',
-                style: Theme.of(context).textTheme.labelLarge!,
-              ),
+          ),
+          SbListItemTile(
+            title: EngineeringTerms.steelWeight,
+            onTap: () {},
+            trailing: Text(
+              '${result.steelWeight.toStringAsFixed(1)} kg',
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-            SbListItemTile(
-              title: EngineeringTerms.bindingWire,
-              onTap: () {},
-              trailing: Text(
-                '${result.bindingWire.toStringAsFixed(2)} kg',
-                style: Theme.of(context).textTheme.bodyLarge!,
-              ),
+          ),
+          SbListItemTile(
+            title: EngineeringTerms.bindingWire,
+            onTap: () {},
+            trailing: Text(
+              '${result.bindingWire.toStringAsFixed(2)} kg',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            if (result.steelWeight == 0)
-              Padding(
-                padding: const EdgeInsets.only(top: SbSpacing.sm),
-                child: Text(
-                  EngineeringTerms.steelRatioZeroNote,
-                  style: Theme.of(context).textTheme.labelMedium!,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            const Divider(),
-            const SizedBox(height: SbSpacing.xxl),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(EngineeringTerms.mixGradeLabel,
-                    style: Theme.of(context).textTheme.labelMedium!),
-                Text(
-                  result.concreteGrade,
-                  style: Theme.of(context).textTheme.labelMedium!,
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -260,10 +236,3 @@ class _IsCodeNote extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-

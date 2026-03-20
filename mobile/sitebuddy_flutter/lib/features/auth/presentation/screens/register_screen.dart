@@ -130,10 +130,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final isLoading = authState.isLoading;
 
     return AppScreenWrapper(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: SbSpacing.xxl * 2), // Extra top spacing
+      child: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Column(
+              children: [
+                const SizedBox(height: SbSpacing.xxl),
           Icon(
             SbIcons.engineering,
             size: 64,
@@ -145,30 +148,21 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             style: Theme.of(context).textTheme.titleLarge!,
           ),
           const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
-          Text(
-            AppStrings.structuralDesignSuite,
-            style: Theme.of(context).textTheme.bodyMedium!,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
-
-          SbSection(
-            title: AppStrings.createAccount,
-            child: Column(
-              children: [
                 Text(
                   AppStrings.structuralDesignSuite,
-                  style: Theme.of(context).textTheme.bodyMedium!,
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-
-          // Register Card
-          SbCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+          // ── REGISTER FORM ──
+          SbSection(
+            title: AppStrings.createAccount,
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                 SbInput(
                   controller: _emailController,
                   focusNode: _emailFocusNode,
@@ -209,27 +203,31 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                 ),
                 const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-                SbButton.primary(
-                  label: AppStrings.register,
-                  onPressed: (isLoading ||
-                          _emailController.text.isEmpty ||
-                          _passwordController.text.isEmpty ||
-                          _confirmPasswordController.text.isEmpty)
-                      ? null
-                      : _register,
-                  isLoading: isLoading,
-                  width: double.infinity,
-                ),
-              ],
+                  SbButton.primary(
+                    label: AppStrings.register,
+                    onPressed: (isLoading ||
+                            _emailController.text.isEmpty ||
+                            _passwordController.text.isEmpty ||
+                            _confirmPasswordController.text.isEmpty)
+                        ? null
+                        : _register,
+                    isLoading: isLoading,
+                    width: double.infinity,
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
-          SbButton.secondary(
-            label: AppStrings.alreadyHaveAccountSignIn,
-            onPressed: () => context.go('/login'),
-            width: double.infinity,
+
+          // ── ACTIONS ──
+          SbSection(
+            child: SbButton.secondary(
+              label: AppStrings.alreadyHaveAccountSignIn,
+              onPressed: () => context.go('/login'),
+              width: double.infinity,
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl), // Bottom padding
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

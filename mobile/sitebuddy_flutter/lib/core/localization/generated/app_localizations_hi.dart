@@ -394,6 +394,3 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get dryMortarVolume => 'सूखा मोर्टार आयतन';
 }
-
-
-

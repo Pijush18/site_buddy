@@ -390,6 +390,3 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get dryMortarVolume => 'Dry Mortar Volume';
 }
-
-
-

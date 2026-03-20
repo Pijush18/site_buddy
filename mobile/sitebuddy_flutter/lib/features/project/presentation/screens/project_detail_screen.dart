@@ -86,10 +86,11 @@ class ProjectDetailScreen extends ConsumerWidget {
           },
         ),
       ],
-      child: Column(
-        children: [
-          // Status Header
-          SbCard(
+      child: SbSectionList(
+        sections: [
+          // ── Status Header ──
+          SbSection(
+            child: SbCard(
             padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,6 +178,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
               ],
             ),
+            ),
           ),
 
           // Description block if available
@@ -262,27 +264,29 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: AppStrings.actionZone,
-            child: Column(
-              children: [
-                SbButton.primary(
-                  label: AppStrings.newInspection,
-                  icon: Icons.add_circle_outline,
-                  onPressed: () {
-                    context.push('/projects/$projectId/level-log');
-                  },
-                  width: double.infinity,
-                ),
-                const SizedBox(height: SbSpacing.lg),
-                SbButton.secondary(
-                  label: AppStrings.editProject,
-                  icon: Icons.edit_outlined,
-                  onPressed: () {
-                    context.push('/projects/$projectId/edit');
-                  },
-                  width: double.infinity,
-                ),
-              ],
+            title: 'Management',
+            child: SbCard(
+              child: Column(
+                children: [
+                  SbButton.primary(
+                    label: AppStrings.newInspection,
+                    icon: Icons.add_circle_outline,
+                    onPressed: () {
+                      context.push('/projects/$projectId/level-log');
+                    },
+                    width: double.infinity,
+                  ),
+                  const SizedBox(height: SbSpacing.lg),
+                  SbButton.secondary(
+                    label: AppStrings.editProject,
+                    icon: Icons.edit_outlined,
+                    onPressed: () {
+                      context.push('/projects/$projectId/edit');
+                    },
+                    width: double.infinity,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

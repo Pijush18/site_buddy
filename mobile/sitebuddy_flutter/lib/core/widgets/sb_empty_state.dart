@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_button.dart';
+import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbEmptyState
 /// PURPOSE: Standardized empty-state display for list screens.
@@ -28,22 +29,21 @@ class SbEmptyState extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+      child: SbCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // Icon
             Container(
-              width: 80,
-              height: 80,
+              width: 64,
+              height: 64,
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 36, color: colorScheme.onSurfaceVariant),
+              child: Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
 
             // Title
             Text(
@@ -54,20 +54,24 @@ class SbEmptyState extends StatelessWidget {
 
             // Subtitle
             if (subtitle != null) ...[
-              const SizedBox(height: SbSpacing.sm),
-              Text(
-                subtitle!,
-                style: textTheme.bodyMedium,
-                textAlign: TextAlign.center,
+              const SizedBox(height: SbSpacing.xs),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                child: Text(
+                  subtitle!,
+                  style: textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
 
             // Action
             if (actionLabel != null && onAction != null) ...[
-              const SizedBox(height: SbSpacing.xxl),
+              const SizedBox(height: SbSpacing.lg),
               SbButton.primary(
                 label: actionLabel!,
                 onPressed: onAction,
+                width: double.infinity,
               ),
             ],
           ],

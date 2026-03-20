@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbGrid
-/// PURPOSE: Standard 2-column grid for SiteBuddy Home Screen.
+/// PURPOSE: Standard 2-column grid layout for SiteBuddy.
+/// DESIGN: 
+/// - Enforces AspectRatio 1:1 for internal tiles.
+/// - Returns a raw GridView (NOT a surface) to avoid nesting.
+/// - Parent section or SbCard controls background.
 class SbGrid extends StatelessWidget {
   final List<Widget> children;
   final double childAspectRatio;
@@ -10,23 +14,20 @@ class SbGrid extends StatelessWidget {
   const SbGrid({
     super.key,
     required this.children,
-    this.childAspectRatio = 1.0,
+    this.childAspectRatio = 1.0, // Forced 1:1 for premium consistency
   });
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: SbSpacing.sm, // 8px horizontal gap
-      mainAxisSpacing: SbSpacing.sm, // 8px vertical gap
-      childAspectRatio: 1.2, // Optimized for high-density labels
+      crossAxisSpacing: SbSpacing.sm,
+      mainAxisSpacing: SbSpacing.sm,
+      childAspectRatio: childAspectRatio,
       children: children,
     );
   }
 }
-
-
-
-

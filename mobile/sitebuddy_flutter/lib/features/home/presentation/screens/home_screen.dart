@@ -33,64 +33,72 @@ class HomeScreen extends ConsumerWidget {
       child: SbSectionList(
         sections: [
           // ── SECTION 1: SMART ASSISTANT HERO ──
-          const SbSection(
-            title: null,
-            child: SbSmartAssistantCard(),
-          ),
+          const SbSection(title: null, child: SbSmartAssistantCard()),
 
           // ── SECTION 2: FIELD TOOLS ──
           SbSection(
             title: AppStrings.fieldTools,
-            child: SbGrid(
-              children: [
-                SbActionTile(
-                  icon: SbIcons.calculator,
-                  label: AppStrings.levelCalculator,
-                  onTap: () => context.push('/tools/calculator'),
-                ),
-                SbActionTile(
-                  icon: SbIcons.trendingUp,
-                  label: AppStrings.gradientTool,
-                  onTap: () => context.push('/tools/gradient'),
-                ),
-                SbActionTile(
-                  icon: SbIcons.sync,
-                  label: AppStrings.unitConverter,
-                  onTap: () => context.push('/tools/converter'),
-                ),
-                SbActionTile(
-                  icon: SbIcons.currencyExchange,
-                  label: AppStrings.currencyConverter,
-                  onTap: () => context.push('/tools/currency'),
-                ),
-              ],
+            subtitle: 'Essential calculators and survey tools for on-site use.',
+            child: SbCard(
+              child: SbGrid(
+                children: [
+                  SbActionTile(
+                    icon: SbIcons.calculator,
+                    label: AppStrings.levelCalculator,
+                    onTap: () => context.push('/tools/calculator'),
+                  ),
+                  SbActionTile(
+                    icon: SbIcons.trendingUp,
+                    label: AppStrings.gradientTool,
+                    onTap: () => context.push('/tools/gradient'),
+                  ),
+                  SbActionTile(
+                    icon: SbIcons.sync,
+                    label: AppStrings.unitConverter,
+                    onTap: () => context.push('/tools/converter'),
+                  ),
+                  SbActionTile(
+                    icon: SbIcons.currencyExchange,
+                    label: AppStrings.currencyConverter,
+                    onTap: () => context.push('/tools/currency'),
+                  ),
+                ],
+              ),
             ),
           ),
 
           // ── SECTION 3: QUICK ACTIONS ──
           SbSection(
             title: AppStrings.quickActions,
-            child: SbGrid(
-              children: [
-                SbActionTile(
-                  icon: SbIcons.addCircle,
-                  label: AppStrings.newProject,
-                  onTap: () => context.push('/projects/create'),
-                ),
-                SbActionTile(
-                  icon: SbIcons.iosShare,
-                  label: AppStrings.shareReport,
-                  onTap: () => context.push('/reports'),
-                ),
-              ],
+            subtitle: 'Common site management workflows.',
+            child: SbCard(
+              isElevated: true, // Stronger surface for primary focus
+              child: SbGrid(
+                children: [
+                  SbActionTile(
+                    icon: SbIcons.addCircle,
+                    label: AppStrings.newProject,
+                    onTap: () => context.push('/projects/create'),
+                    isProminent: true,
+                  ),
+                  SbActionTile(
+                    icon: SbIcons.iosShare,
+                    label: AppStrings.shareReport,
+                    onTap: () => context.push('/reports'),
+                    isProminent: true,
+                  ),
+                ],
+              ),
             ),
           ),
 
           // ── SECTION 4: RECENT ACTIVITY ──
           SbSection(
             title: AppStrings.recentActivity,
+            subtitle: 'Your most recent project updates and calculations.',
             onTap: () => context.push('/projects'),
             child: SbListGroup(
+              isSubtle: true, // Recede this section in the hierarchy
               children: activities.map((activity) {
                 return SbListItemTile(
                   title: activity.title,
@@ -98,6 +106,7 @@ class HomeScreen extends ConsumerWidget {
                   icon: _getActivityIcon(activity.type),
                   trailing: _formatTimestamp(activity.timestamp),
                   onTap: () => context.push('/projects/${activity.title}'),
+                  isSubtle: true,
                 );
               }).toList(),
             ),
@@ -124,6 +133,3 @@ class HomeScreen extends ConsumerWidget {
     return DateFormat('MMM dd').format(timestamp);
   }
 }
-
-
-

@@ -1,8 +1,9 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/models/code_reference.dart';
+import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: CodeReferenceCard
 /// PURPOSE: Displays a specific IS Code clause Reference for educational context.
@@ -15,13 +16,11 @@ class CodeReferenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    return Container(
+    final textTheme = theme.textTheme;
+
+    return SbCard(
       margin: const EdgeInsets.only(top: SbSpacing.lg),
-      padding: const EdgeInsets.all(SbSpacing.lg),
-      decoration: AppLayout.sbCommonDecoration(context).copyWith(
-        color: colorScheme.primaryContainer.withOpacity(0.1),
-        border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
-      ),
+      color: colorScheme.primaryContainer.withValues(alpha: 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,19 +30,19 @@ class CodeReferenceCard extends StatelessWidget {
               const SizedBox(width: SbSpacing.sm),
               Text(
                 'IS 456:2000 REFERENCE',
-                style: Theme.of(context).textTheme.labelMedium!,
+                style: textTheme.labelMedium,
               ),
             ],
           ),
           const SizedBox(height: SbSpacing.sm),
           Text(
             reference.title,
-            style: Theme.of(context).textTheme.labelMedium!,
+            style: textTheme.labelMedium,
           ),
           const SizedBox(height: SbSpacing.xs),
           Text(
             reference.description,
-            style: Theme.of(context).textTheme.bodyMedium!,
+            style: textTheme.bodyMedium,
           ),
           if (reference.formula != null) ...[
             const SizedBox(height: SbSpacing.lg),
@@ -53,17 +52,14 @@ class CodeReferenceCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: colorScheme.outline.withValues(alpha: 0.1),
+                ),
               ),
               child: Center(
                 child: Text(
                   reference.formula!,
-                  style: TextStyle(
-                    fontFamily: 'monospace',
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
-                  ),
+                  style: textTheme.labelMedium,
                 ),
               ),
             ),
@@ -73,12 +69,3 @@ class CodeReferenceCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-

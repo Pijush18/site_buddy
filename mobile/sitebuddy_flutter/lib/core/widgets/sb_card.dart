@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 
 /// WIDGET: SbCard
 /// PURPOSE: Standardized surface-based card container.
 /// FEATURES:
-/// - Subtle elevation using shadow and 1px border.
+/// - Three-tier hierarchy (Elevated, Standard, Subtle).
 /// - Adaptive padding logic.
-/// - Surface color (WHITE) on Background color (TINTED).
 class SbCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Color? color;
   final VoidCallback? onTap;
+  final bool isElevated;
+  final bool isSubtle;
 
   const SbCard({
     super.key,
@@ -22,68 +23,51 @@ class SbCard extends StatelessWidget {
     this.margin,
     this.color,
     this.onTap,
+    this.isElevated = false,
+    this.isSubtle = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final borderRadius = BorderRadius.circular(12.0);
-    
+    final br = BorderRadius.circular(SbRadius.medium);
+
+    // Tonal Hierarchy based on prominence
+    final surfaceColor = color ?? 
+        (isElevated 
+            ? colorScheme.surfaceContainerHigh 
+            : (isSubtle ? colorScheme.surface : colorScheme.surfaceContainer));
+
     return Container(
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: color ?? colorScheme.surfaceContainerLow,
-        borderRadius: borderRadius,
+        color: surfaceColor,
+        borderRadius: br,
         border: Border.all(
-          color: AppColors.skyBlue.withValues(alpha: 0.7), 
-          width: 1.0,
+          color: colorScheme.outlineVariant.withValues(alpha: isSubtle ? 0.05 : 0.1),
+          width: 0.8,
         ),
+        boxShadow: isSubtle ? null : [
+          BoxShadow(
+            color: colorScheme.shadow.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          // Adaptive Padding Logic
-          final availableHeight = constraints.maxHeight;
-          double dynamicPaddingValue;
-
-          if (padding != null) {
-            return _buildContent(padding!, borderRadius);
-          }
-
-          // Optimized for dashboard density
-          if (availableHeight < 60) {
-            dynamicPaddingValue = SbSpacing.xs; // 4px
-          } else {
-            dynamicPaddingValue = 12.0; // Optimized mid-density
-          }
-
-          return _buildContent(
-            EdgeInsets.all(dynamicPaddingValue), 
-            borderRadius,
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildContent(EdgeInsets padding, BorderRadius borderRadius) {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: borderRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: borderRadius,
-        child: Padding(
-          padding: padding,
-          child: child,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: br,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: br,
+          child: Padding(
+            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
+            child: child,
+          ),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

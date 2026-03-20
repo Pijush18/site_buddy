@@ -29,14 +29,39 @@ class DesignHomeScreen extends ConsumerWidget {
           // ── SECTION 2: DESIGN CATEGORIES ──
           SbSection(
             title: 'Design Categories',
-            child: SbGrid(
-              children: state.items.map((item) {
-                return DesignCategoryCard(
-                  icon: item.icon,
-                  label: item.title,
-                  onTap: () => RccInfoBottomSheet.show(context, item),
-                );
-              }).toList(),
+            subtitle: 'RCC standards and reinforcement guides.',
+            child: SbCard(
+              child: SbGrid(
+                children: state.items.map((item) {
+                  return DesignCategoryCard(
+                    icon: item.icon,
+                    label: item.title,
+                    onTap: () => RccInfoBottomSheet.show(context, item),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+
+          // ── SECTION 3: ENGINEERING STANDARDS ──
+          SbSection(
+            title: 'Key References',
+            subtitle: 'Access national structural design codes.',
+            child: SbListGroup(
+              children: [
+                SbListItemTile(
+                  icon: SbIcons.description,
+                  title: 'IS 456:2000',
+                  subtitle: 'Plain and Reinforced Concrete Code',
+                  onTap: () {},
+                ),
+                SbListItemTile(
+                  icon: SbIcons.description,
+                  title: 'IS 800:2007',
+                  subtitle: 'Steel Construction Code of Practice',
+                  onTap: () {},
+                ),
+              ],
             ),
           ),
         ],
