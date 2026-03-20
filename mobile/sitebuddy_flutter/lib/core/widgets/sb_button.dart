@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -203,7 +204,7 @@ class SbButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
             style: ElevatedButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
-            child: isLoading ? spinner : _buildLabelRow(),
+            child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
       case _SbButtonType.secondary:
@@ -216,7 +217,7 @@ class SbButton extends StatelessWidget {
               foregroundColor: colorScheme.onSecondaryContainer,
               minimumSize: const Size(0, AppLayout.buttonHeight),
             ),
-            child: isLoading ? spinner : _buildLabelRow(),
+            child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
       case _SbButtonType.outline:
@@ -225,7 +226,7 @@ class SbButton extends StatelessWidget {
           child: OutlinedButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
             style: OutlinedButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
-            child: isLoading ? spinner : _buildLabelRow(),
+            child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
       case _SbButtonType.ghost:
@@ -234,7 +235,7 @@ class SbButton extends StatelessWidget {
           child: TextButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
             style: TextButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
-            child: isLoading ? spinner : _buildLabelRow(),
+            child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
       case _SbButtonType.icon:
@@ -264,13 +265,13 @@ class SbButton extends StatelessWidget {
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: AppLayout.sm),
             ),
-            child: isLoading ? spinner : _buildLabelRow(),
+            child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
     }
   }
 
-  Widget _buildLabelRow() {
+  Widget _buildLabelRow(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -285,10 +286,7 @@ class SbButton extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 14, // Global Standard: Action Buttons
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTextStyles.cardTitle(context),
           ),
       ],
     );

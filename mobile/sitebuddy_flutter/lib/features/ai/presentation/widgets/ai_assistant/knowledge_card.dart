@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class KnowledgeCard extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     topic.title.toUpperCase(),
-                    style: SbTextStyles.title(
+                    style: AppTextStyles.cardTitle(
                       context,
                     ).copyWith(color: colorScheme.onPrimary),
                   ),
@@ -129,7 +129,7 @@ class KnowledgeCard extends ConsumerWidget {
                   if (matchesDefinition) ...[
                     Text(
                       topic.definition,
-                      style: SbTextStyles.body(context).copyWith(height: 1.5),
+                      style: AppTextStyles.body(context).copyWith(height: 1.5),
                     ),
                     AppLayout.vGap16,
                   ],
@@ -220,7 +220,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: SbTextStyles.bodySecondary(context).copyWith(
+      style: AppTextStyles.body(context, secondary: true).copyWith(
         color: Theme.of(context).colorScheme.primary,
         letterSpacing: 1.1,
       ),
@@ -238,11 +238,11 @@ class _BulletPoint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('• ', style: SbTextStyles.body(context)),
+          Text('• ', style: AppTextStyles.body(context)),
           Expanded(
             child: Text(
               text,
-              style: SbTextStyles.body(
+              style: AppTextStyles.body(
                 context,
               ).copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
@@ -281,14 +281,14 @@ class _HighlightBox extends StatelessWidget {
               AppLayout.hGap8,
               Text(
                 title,
-                style: SbTextStyles.body(context).copyWith(color: color),
+                style: AppTextStyles.body(context).copyWith(color: color),
               ),
             ],
           ),
           AppLayout.vGap8,
           ...items.map(
             (item) =>
-                Text('• $item', style: SbTextStyles.bodySecondary(context)),
+                Text('• $item', style: AppTextStyles.body(context, secondary: true)),
           ),
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -117,7 +117,7 @@ class _NavItem extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             label.toUpperCase(),
-            style: SbTextStyles.bodySecondary(context).copyWith(
+            style: AppTextStyles.body(context, secondary: true).copyWith(
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
               letterSpacing: 0.5,
               color: itemColor,

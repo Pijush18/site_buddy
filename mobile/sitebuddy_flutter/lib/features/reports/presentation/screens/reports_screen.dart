@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: ReportsScreen
@@ -30,18 +30,15 @@ class ReportsScreen extends StatelessWidget {
                     color: colorScheme.primary.withValues(alpha: 0.5),
                   ),
                   const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-                  const Text(
+                  Text(
                     "No Reports Yet",
-                    style: TextStyle(
-                      fontSize: AppFontSizes.title,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.sectionTitle(context),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                  const Text(
+                  Text(
                     "Reports generated from calculations and design tools will appear here.",
-                    style: TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
@@ -49,8 +46,7 @@ class ReportsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(
                       "Use the Export PDF option in any calculator or design module to create your first report.",
-                      style: TextStyle(
-                        fontSize: AppFontSizes.subtitle,
+                      style: AppTextStyles.body(context).copyWith(
                         color: colorScheme.primary,
                         fontStyle: FontStyle.italic,
                       ),

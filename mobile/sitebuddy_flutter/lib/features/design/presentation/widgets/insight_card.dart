@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
@@ -21,7 +21,7 @@ class InsightCard extends StatelessWidget {
       children: [
         Text(
           'SMART INSIGHTS',
-          style: SbTextStyles.title(context).copyWith(
+          style: AppTextStyles.sectionTitle(context).copyWith(
             color: Colors.blue,
 
             letterSpacing: 1.2,
@@ -47,7 +47,7 @@ class InsightCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       insight.message,
-                      style: SbTextStyles.bodySecondary(context).copyWith(
+                      style: AppTextStyles.body(context, secondary: true).copyWith(
                         color: insight.isWarning ? Colors.orange : Colors.blue,
                         height: 1.4,
                       ),

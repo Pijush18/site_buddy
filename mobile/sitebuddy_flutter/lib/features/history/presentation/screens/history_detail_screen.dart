@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -34,12 +34,9 @@ class HistoryDetailScreen extends ConsumerWidget {
         children: [
           _buildHeader(context, dateStr),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const Text(
+          Text(
             'Input Parameters',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.sectionTitle(context),
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           _buildParametersList(context),
@@ -61,8 +58,7 @@ class HistoryDetailScreen extends ConsumerWidget {
         children: [
           Text(
             entry.calculationType.name.toUpperCase(),
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
+            style: AppTextStyles.caption(context).copyWith(
               color: colorScheme.primary,
               letterSpacing: 1.2,
               fontWeight: FontWeight.w600,
@@ -73,16 +69,12 @@ class HistoryDetailScreen extends ConsumerWidget {
           Text(
             entry.resultSummary,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.sectionTitle(context),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             dateStr,
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
+            style: AppTextStyles.caption(context).copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
           ),
@@ -94,9 +86,9 @@ class HistoryDetailScreen extends ConsumerWidget {
   Widget _buildParametersList(BuildContext context) {
     final params = entry.inputParameters;
     if (params.isEmpty) {
-      return const Text(
+      return Text(
         'No parameters recorded.',
-        style: TextStyle(fontSize: AppFontSizes.subtitle),
+        style: AppTextStyles.body(context),
       );
     }
 
@@ -109,7 +101,7 @@ class HistoryDetailScreen extends ConsumerWidget {
             onTap: () {}, // Immutable detail view
             trailing: Text(
               e.value.toString(),
-              style: const TextStyle(fontSize: 12),
+              style: AppTextStyles.caption(context),
             ),
           ),
         );

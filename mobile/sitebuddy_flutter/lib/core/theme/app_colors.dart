@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
+  static const Color skyBlue = Color(0xFF38BDF8);
+
   /// Returns the standard surface color from the automated ColorScheme.
   static Color surface(BuildContext context) => Theme.of(context).colorScheme.surface;
 

@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -51,9 +51,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
         children: [
           Text(
             m.title,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -66,7 +64,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.projectId,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -74,7 +72,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingType.name.toUpperCase(),
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -82,7 +80,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.mode.name.toUpperCase(),
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -90,7 +88,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.meetingDate.toLocal().toString().split(' ').first,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -98,7 +96,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${m.startTime.toLocal().hour.toString().padLeft(2, '0')}:${m.startTime.toLocal().minute.toString().padLeft(2, '0')} - ${m.endTime.toLocal().hour.toString().padLeft(2, '0')}:${m.endTime.toLocal().minute.toString().padLeft(2, '0')}',
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -106,7 +104,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     m.participants.join(', '),
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
               ],
@@ -115,16 +113,14 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
           const SizedBox(height: AppSpacing.lg),
           Text(
             'DESCRIPTION',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.cardTitle(context).copyWith(
               color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.xs
           Text(
             m.description.isEmpty ? 'No description provided.' : m.description,
-            style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            style: AppTextStyles.body(context),
           ),
           const SizedBox(height: AppSpacing.lg),
           SbInput(

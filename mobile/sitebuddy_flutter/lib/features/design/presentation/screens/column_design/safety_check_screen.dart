@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -43,9 +43,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
         children: [
           Text(
             'Step 6 of 6: Final Verification',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -63,8 +61,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     Expanded(
                       child: Text(
                         state.errorMessage!,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.tab,
+                        style: AppTextStyles.caption(context).copyWith(
                           color: colorScheme.error,
                         ),
                       ),
@@ -218,7 +215,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     Expanded(
                       child: Text(
                         s,
-                        style: const TextStyle(fontSize: AppFontSizes.tab),
+                        style: AppTextStyles.caption(context),
                       ),
                     ),
                   ],

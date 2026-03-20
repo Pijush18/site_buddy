@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -121,18 +121,15 @@ class _ReportErrorState extends StatelessWidget {
                 color: theme.colorScheme.error,
               ),
               const SizedBox(height: AppSpacing.lg),
-              const Text(
+              Text(
                 'Report data unavailable.',
-                style: TextStyle(
-                  fontSize: AppFontSizes.title,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.sectionTitle(context),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.sm),
-              const Text(
+              Text(
                 'Please try recalculating the design.',
-                style: TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -169,16 +166,13 @@ class _ReportDocumentHeader extends StatelessWidget {
               children: [
                 Text(
                   data.title.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.screenTitle(context).copyWith(
                     letterSpacing: 1.2,
                   ),
                 ),
                 Text(
                   'ENGINEERING COMPUTATION SHEET',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
+                  style: AppTextStyles.caption(context).copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -235,21 +229,17 @@ class _HeaderField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: AppFontSizes.tab,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+          style: AppTextStyles.caption(context),
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
           value,
-          style: const TextStyle(fontSize: AppFontSizes.subtitle),
+          style: AppTextStyles.body(context),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -283,9 +273,7 @@ class _ReportSectionWidget extends StatelessWidget {
             const SizedBox(width: AppSpacing.md),
             Text(
               section.heading.toUpperCase(),
-              style: const TextStyle(
-                fontSize: AppFontSizes.subtitle,
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.cardTitle(context).copyWith(
                 letterSpacing: 1.1,
               ),
             ),
@@ -348,8 +336,7 @@ class _CalculationItemRow extends StatelessWidget {
         children: [
           Text(
             item.value,
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
+            style: AppTextStyles.body(context).copyWith(
               color: statusColor,
               fontWeight: FontWeight.bold,
             ),
@@ -358,10 +345,7 @@ class _CalculationItemRow extends StatelessWidget {
             const SizedBox(width: AppSpacing.sm / 2),
             Text(
               item.unit!,
-              style: TextStyle(
-                fontSize: AppFontSizes.tab,
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              style: AppTextStyles.caption(context),
             ),
           ],
         ],
@@ -387,15 +371,13 @@ class _ReportFooter extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           Text(
             'DESIGN VERIFIED BY SITE BUDDY PRO',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: theme.colorScheme.onSurfaceVariant,
+            style: AppTextStyles.caption(context).copyWith(
               letterSpacing: 2,
             ),
           ),
           Text(
             'Structural Engineering Computation Suite v2.0',
-            style: TextStyle(
+            style: AppTextStyles.caption(context).copyWith(
               fontSize: 10,
               color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),

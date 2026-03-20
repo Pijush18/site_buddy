@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -111,16 +111,12 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             Text(
               l10n.noLevelingLogsYet,
-              style: const TextStyle(
-                fontSize: AppFontSizes.subtitle,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.screenTitle(context),
             ),
             const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
             Text(
               l10n.tapAddStationToStart,
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -148,9 +144,7 @@ class _MethodSelectorCard extends StatelessWidget {
         children: [
           Text(
             l10n.calculationMethod.toUpperCase(),
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
               letterSpacing: 1.2,
             ),
@@ -211,8 +205,7 @@ class _MethodToggle extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.caption(context).copyWith(
               fontWeight: FontWeight.bold,
               color: isActive ? colorScheme.onPrimary : colorScheme.primary,
             ),
@@ -269,16 +262,12 @@ class _StationCardContent extends StatelessWidget {
                 children: [
                   Text(
                     entry.station,
-                    style: const TextStyle(
-                      fontSize: AppFontSizes.subtitle,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.screenTitle(context),
                   ),
                   if (entry.chainage != null)
                     Text(
                       'Ch: ${UiFormatters.chainage(entry.chainage!)}',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
+                      style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -332,8 +321,7 @@ class _StationCardContent extends StatelessWidget {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
             entry.remark!,
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.caption(context).copyWith(
               color: colorScheme.onSurfaceVariant,
               fontStyle: FontStyle.italic,
             ),
@@ -364,7 +352,7 @@ class _ReadingPill extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: AppTextStyles.caption(context).copyWith(
               fontSize: 10,
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurfaceVariant,
@@ -374,8 +362,7 @@ class _ReadingPill extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap8
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.caption(context).copyWith(
               fontWeight: highlight ? FontWeight.bold : FontWeight.normal,
               color: highlight
                   ? colorScheme.primary

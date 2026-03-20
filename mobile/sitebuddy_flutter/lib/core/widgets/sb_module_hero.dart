@@ -1,4 +1,7 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 
@@ -39,9 +42,9 @@ class SbModuleHero extends StatelessWidget {
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: colorScheme.surface, // Base fallback
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
         border: Border.all(
-          color: colorScheme.outline, // 👈 Standardized theme outline
+          color: AppColors.skyBlue.withValues(alpha: 0.7),
           width: 1.0,
         ),
         gradient: LinearGradient(
@@ -49,18 +52,9 @@ class SbModuleHero extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(
-              alpha: isDark ? 0.2 : 0.08,
-            ), // 👈 Stronger lift for Hero
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
         child: Stack(
           children: [
             // Texture Overlay - Desaturated for focus
@@ -89,9 +83,7 @@ class SbModuleHero extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
+                          style: AppTextStyles.body(context, secondary: true).copyWith(
                             color: colorScheme.onSurface, // 👈 Soft, high-readability title
                             letterSpacing: -0.5,
                           ),

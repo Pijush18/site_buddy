@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -74,10 +74,7 @@ class _Section extends StatelessWidget {
           SbSectionHeader(title: title), // Standardized header
           Text(
             content,
-            style: const TextStyle(
-              fontSize: AppFontSizes.subtitle,
-              height: 1.5,
-            ),
+            style: AppTextStyles.body(context),
           ),
         ],
       ),

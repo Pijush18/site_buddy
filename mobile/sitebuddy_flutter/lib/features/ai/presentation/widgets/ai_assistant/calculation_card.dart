@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +38,7 @@ class CalculationCard extends ConsumerWidget {
                 AppLayout.hGap12,
                 Text(
                   'Material Estimate',
-                  style: SbTextStyles.title(context).copyWith(
+                  style: AppTextStyles.sectionTitle(context).copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -52,7 +52,7 @@ class CalculationCard extends ConsumerWidget {
               children: [
                 Text(
                   'Input: $dimensionsTitle',
-                  style: SbTextStyles.bodySecondary(context).copyWith(
+                  style: AppTextStyles.body(context, secondary: true).copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -86,11 +86,11 @@ class CalculationCard extends ConsumerWidget {
                     children: [
                       Text(
                         'Cement Required',
-                        style: SbTextStyles.title(context),
+                        style: AppTextStyles.sectionTitle(context),
                       ),
                       Text(
                         '${result.cementBags} Bags',
-                        style: SbTextStyles.title(context).copyWith(
+                        style: AppTextStyles.sectionTitle(context).copyWith(
                           color: colorScheme.primary,
                         ),
                       ),
@@ -136,7 +136,7 @@ class _StatBox extends StatelessWidget {
               Flexible(
                 child: Text(
                   label,
-                  style: SbTextStyles.bodySecondary(context).copyWith(
+                  style: AppTextStyles.body(context, secondary: true).copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
                   maxLines: 1,
@@ -148,7 +148,7 @@ class _StatBox extends StatelessWidget {
           AppLayout.vGap8,
           Text(
             value,
-            style: SbTextStyles.title(context).copyWith(
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.onSurface,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
@@ -27,14 +27,11 @@ class FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final titleStyle = TextStyle(
-      fontSize: AppFontSizes.subtitle,
-      fontWeight: FontWeight.w600,
+    final titleStyle = AppTextStyles.sectionTitle(context).copyWith(
       color: colorScheme.onSurface,
     );
 
-    final descriptionStyle = TextStyle(
-      fontSize: AppFontSizes.tab,
+    final descriptionStyle = AppTextStyles.body(context, secondary: true).copyWith(
       color: colorScheme.onSurfaceVariant,
     );
 

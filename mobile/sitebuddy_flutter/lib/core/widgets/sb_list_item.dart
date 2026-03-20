@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// WIDGET: SbListItem
 /// PURPOSE: Standard list item for SiteBuddy (e.g., Recent Activity).
@@ -33,19 +34,19 @@ class SbListItem extends StatelessWidget {
     return Container(
       // SPACING OWNERSHIP: Removed bottom margin to prevent double-spacing.
       decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
         border: Border.all(
-          color: colorScheme.outline,
-          width: 1.2,
+          color: AppColors.skyBlue.withValues(alpha: 0.7),
+          width: 1.0,
         ),
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: BorderRadius.circular(AppLayout.cardRadius),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: BorderRadius.circular(AppLayout.cardRadius),
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.cardPadding),
             child: Row(
@@ -61,19 +62,15 @@ class SbListItem extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: AppTextStyles.cardTitle.copyWith(
-                          color: colorScheme.onSurface,
-                        ),
+                        style: AppTextStyles.cardTitle(context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (subtitle != null) ...[
-                        const SizedBox(height: AppSpacing.xs),
+                        const SizedBox(height: 2),
                         Text(
                           subtitle!,
-                          style: AppTextStyles.body.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                          style: AppTextStyles.body(context, secondary: true),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

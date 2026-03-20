@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,10 +97,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
         children: [
           Text(
             'Step 2 of 6: Parameters',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg),
           // Column Load Card
@@ -144,12 +141,9 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                   const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                   Divider(color: colorScheme.outlineVariant),
                   const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-                  const Text(
+                  Text(
                     'Column 2 Loadings',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.subtitle,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.cardTitle(context),
                   ),
                   const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                   AppNumberField(

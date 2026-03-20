@@ -5,38 +5,61 @@ import 'package:google_fonts/google_fonts.dart';
 /// PURPOSE: Centralized strict typography system for App.
 /// DESIGN: Uses Google Fonts (Inter) with controlled weights (w400/w600) and line heights for a compact UI.
 class AppTextStyles {
-  // 1. Screen Title → strongest
-  static final TextStyle screenTitle = GoogleFonts.inter(
-    fontSize: 22,
+  // ── BASE STYLES (PUBLIC) ──
+  
+  static final TextStyle screenTitleBase = GoogleFonts.inter(
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     height: 1.2,
   );
 
-  // 2. Section Title → secondary
-  static final TextStyle sectionTitle = GoogleFonts.inter(
-    fontSize: 18,
+  static final TextStyle sectionTitleBase = GoogleFonts.inter(
+    fontSize: 17,
     fontWeight: FontWeight.w600,
+    height: 1.25,
+    letterSpacing: 0.1,
+  );
+
+  static final TextStyle cardTitleBase = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    height: 1.25,
+    letterSpacing: 0.2,
+  );
+
+  static final TextStyle bodyBase = GoogleFonts.inter(
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    height: 1.35,
+  );
+
+  static final TextStyle captionBase = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
     height: 1.3,
   );
 
-  // 3. Card Title → medium emphasis
-  static final TextStyle cardTitle = GoogleFonts.inter(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    height: 1.4,
+  // ── CONTEXT-AWARE STYLES (PUBLIC) ──
+
+  static TextStyle screenTitle(BuildContext context) => screenTitleBase.copyWith(
+    color: Theme.of(context).colorScheme.onSurface,
   );
 
-  // 4. Body → low emphasis
-  static final TextStyle body = GoogleFonts.inter(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
+  static TextStyle sectionTitle(BuildContext context) => sectionTitleBase.copyWith(
+    color: Theme.of(context).colorScheme.onSurface,
   );
 
-  // 5. Caption → lowest emphasis
-  static final TextStyle caption = GoogleFonts.inter(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1.4,
+  static TextStyle cardTitle(BuildContext context) => cardTitleBase.copyWith(
+    color: Theme.of(context).colorScheme.onSurface,
+  );
+
+  static TextStyle body(BuildContext context, {bool secondary = false}) => bodyBase.copyWith(
+    color: secondary 
+        ? Theme.of(context).colorScheme.onSurfaceVariant 
+        : Theme.of(context).colorScheme.onSurface,
+  );
+
+  static TextStyle caption(BuildContext context) => captionBase.copyWith(
+    color: Theme.of(context).colorScheme.onSurfaceVariant,
   );
 }

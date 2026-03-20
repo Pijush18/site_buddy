@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -31,9 +31,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 3 of 5: Engineering Analysis',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -68,8 +66,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             title: 'Engineering Diagrams',
             trailing: Text(
               'L = ${(state.span / 1000).toStringAsFixed(2)}m',
-              style: const TextStyle(
-                fontSize: AppFontSizes.tab,
+              style: AppTextStyles.caption(context).copyWith(
                 color: Colors.grey,
               ),
             ),
@@ -147,7 +144,7 @@ class _DiagramCard extends StatelessWidget {
             label: label,
             axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
             labelColor: colorScheme.onSurfaceVariant,
-            textTheme: Theme.of(context).textTheme,
+            labelStyle: AppTextStyles.caption(context),
             primaryColor: colorScheme.primary,
             warningColor: AppColors.warning(context),
           ),

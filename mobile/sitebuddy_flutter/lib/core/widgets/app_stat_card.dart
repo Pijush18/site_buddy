@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 // lib/core/widgets/app_stat_card.dart
 //
 // Reusable statistics card for the SiteBuddy dashboard.
@@ -81,7 +81,7 @@ class AppStatCard extends StatelessWidget {
           // ── Value ──────────────────────────────────────────────────────────
           Text(
             value,
-            style: SbTextStyles.headline(context).copyWith(
+            style: AppTextStyles.screenTitle(context).copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
             ),
@@ -94,7 +94,7 @@ class AppStatCard extends StatelessWidget {
           // ── Title / Caption ────────────────────────────────────────────────
           Text(
             title,
-            style: SbTextStyles.bodySecondary(context).copyWith(
+            style: AppTextStyles.body(context, secondary: true).copyWith(
               color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w500,
             ),

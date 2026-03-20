@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -60,9 +60,7 @@ class GradientScreen extends ConsumerWidget {
               children: [
                 Text(
                   EngineeringTerms.resultSummary,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.sectionTitle(context).copyWith(
                     color: colorScheme.primary,
                     letterSpacing: 1.2,
                   ),
@@ -75,10 +73,8 @@ class GradientScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.subtitle,
+                    style: AppTextStyles.cardTitle(context).copyWith(
                       color: colorScheme.primary,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -87,7 +83,7 @@ class GradientScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     result.ratio == double.infinity ? EngineeringTerms.vertical : '1 : ${result.ratio.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -95,7 +91,7 @@ class GradientScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.angle.toStringAsFixed(2)}°',
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 const Divider(),
@@ -106,17 +102,14 @@ class GradientScreen extends ConsumerWidget {
                     children: [
                       Text(
                         EngineeringTerms.classification,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.tab,
+                        style: AppTextStyles.caption(context).copyWith(
                           color: classificationColor.withValues(alpha: 0.6),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.sm / 2), // Replaced AppLayout.vGap4
                       Text(
                         classificationLabel,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.title,
-                          fontWeight: FontWeight.w600,
+                        style: AppTextStyles.sectionTitle(context).copyWith(
                           color: classificationColor,
                         ),
                       ),
@@ -133,9 +126,7 @@ class GradientScreen extends ConsumerWidget {
               children: [
                 Text(
                   EngineeringTerms.slopeVisualization,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.sectionTitle(context).copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -168,13 +159,10 @@ class GradientScreen extends ConsumerWidget {
             children: [
               Icon(SbIcons.trendingUp, size: 48, color: colorScheme.primary),
               const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
-              const Flexible(
+              Flexible(
                 child: Text(
                   EngineeringTerms.slopeCalculator,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyles.sectionTitle(context),
                 ),
               ),
             ],
@@ -219,8 +207,7 @@ class GradientScreen extends ConsumerWidget {
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,
@@ -252,9 +239,7 @@ class _FieldReference extends StatelessWidget {
       children: [
         Text(
           EngineeringTerms.fieldReference,
-          style: TextStyle(
-            fontSize: AppFontSizes.title,
-            fontWeight: FontWeight.w600,
+          style: AppTextStyles.sectionTitle(context).copyWith(
             color: colorScheme.primary,
           ),
           textAlign: TextAlign.center,

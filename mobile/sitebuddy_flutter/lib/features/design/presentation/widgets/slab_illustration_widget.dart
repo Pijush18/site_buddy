@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -64,7 +64,7 @@ class SlabIllustrationWidget extends StatelessWidget {
 
                 child: Text(
                   type.label.toUpperCase(),
-                  style: SbTextStyles.body(context),
+                  style: AppTextStyles.body(context),
                 ),
               ),
             ),

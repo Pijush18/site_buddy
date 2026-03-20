@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -45,9 +45,7 @@ class SlabSafetyScreen extends ConsumerWidget {
         children: [
           Text(
             'Final Step: Engineering Validation',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -79,12 +77,9 @@ class SlabSafetyScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           if (optimizationResult.options.isNotEmpty) ...[
-            const Text(
+            Text(
               'ECONOMICAL ALTERNATIVES',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppTextStyles.sectionTitle(context),
             ),
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             OptimizationList(

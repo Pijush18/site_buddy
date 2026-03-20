@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+
 
 /// WIDGET: SbSectionList
 /// PURPOSE: Standardized vertical layout for screen sections.
@@ -30,7 +30,7 @@ class SbSectionList extends StatelessWidget {
       physics: physics,
       itemCount: sections.length,
       padding: EdgeInsets.zero, // 🔬 Rule: No padding, managed by AppScreenWrapper
-      separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.lg), // 👈 24px Gap
+      separatorBuilder: (context, index) => const SizedBox.shrink(), // SbSection inherently provides structural anchoring gaps
       itemBuilder: (context, index) => sections[index],
     );
   }

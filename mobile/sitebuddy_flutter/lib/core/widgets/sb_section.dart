@@ -41,6 +41,7 @@ class SbSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.sectionGap), // Enforced fixed gap
         ],
         child,
+        const SizedBox(height: AppSpacing.md), // Anchors the section structurally below it (Sole source of inter-section truth)
       ],
     );
   }

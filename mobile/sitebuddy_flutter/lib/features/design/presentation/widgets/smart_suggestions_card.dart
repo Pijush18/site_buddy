@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -34,7 +34,7 @@ class SmartSuggestionsCard extends StatelessWidget {
               const SizedBox(width: AppLayout.md),
               Text(
                 'Design Insights',
-                style: SbTextStyles.body(context).copyWith(
+                style: AppTextStyles.body(context).copyWith(
                   color: warningColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -56,7 +56,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                 children: [
                   Text(
                     s.title,
-                    style: SbTextStyles.caption(context).copyWith(
+                    style: AppTextStyles.caption(context).copyWith(
                       color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                     ),
@@ -64,7 +64,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.xs),
                   Text(
                     s.description,
-                    style: SbTextStyles.bodySecondary(context).copyWith(
+                    style: AppTextStyles.body(context, secondary: true).copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
@@ -73,7 +73,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: AppLayout.sm),
                       child: Text(
                         '➔ ${s.action}',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: AppTextStyles.caption(context).copyWith(
                           color: warningColor,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w600,

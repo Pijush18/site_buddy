@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -35,7 +35,7 @@ class ConversionCard extends StatelessWidget {
                 AppLayout.hGap16,
                 Text(
                   'Unit Conversion',
-                  style: SbTextStyles.title(context).copyWith(
+                  style: AppTextStyles.sectionTitle(context).copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -49,7 +49,7 @@ class ConversionCard extends StatelessWidget {
               children: [
                 Text(
                   inputTitle,
-                  style: SbTextStyles.body(context).copyWith(
+                  style: AppTextStyles.body(context).copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -59,7 +59,7 @@ class ConversionCard extends StatelessWidget {
                   children: [
                     Text(
                       '=',
-                      style: SbTextStyles.headlineLarge(context).copyWith(
+                      style: AppTextStyles.screenTitle(context).copyWith(
                         color: colorScheme.onSurface,
                       ),
                     ),
@@ -67,7 +67,7 @@ class ConversionCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${result.mainValue.toStringAsFixed(4)} $outputUnit',
-                        style: SbTextStyles.headline(context).copyWith(
+                        style: AppTextStyles.screenTitle(context).copyWith(
                           color: colorScheme.primary,
                         ),
                       ),
@@ -81,7 +81,7 @@ class ConversionCard extends StatelessWidget {
                   ),
                   Text(
                     'ALSO EQUIVALENT TO',
-                    style: SbTextStyles.bodySecondary(context).copyWith(
+                    style: AppTextStyles.body(context, secondary: true).copyWith(
                       color: colorScheme.onSurfaceVariant,
                       letterSpacing: 1.1,
                     ),
@@ -100,7 +100,7 @@ class ConversionCard extends StatelessWidget {
                             
                             child: Text(
                               '${entry.value.toStringAsFixed(3)} ${entry.key}',
-                              style: SbTextStyles.body(context),
+                              style: AppTextStyles.body(context),
                             ),
                           ),
                         )

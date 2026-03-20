@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -91,9 +91,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
           children: [
             Text(
               'Step 1 of 5: Geometry & Materials',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.screenTitle(context).copyWith(
                 color: colorScheme.primary,
               ),
             ),
@@ -104,12 +102,9 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  Text(
                     'Slab Behavior',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.subtitle,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.cardTitle(context),
                   ),
                   const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                   SbDropdown<SlabType>(
@@ -217,10 +212,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: AppFontSizes.subtitle,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.cardTitle(context),
         ),
         const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
         SbDropdown<String>(

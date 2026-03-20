@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +36,7 @@ class SandScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.sectionTitle(context).copyWith(
                 color: colorScheme.primary,
                 letterSpacing: 1.2,
               ),
@@ -49,9 +47,8 @@ class SandScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
-              style: TextStyle(
-                fontSize: 24, // Preserving headline-like size
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.screenTitle(context).copyWith(
+                fontSize: 24,
                 color: colorScheme.primary,
               ),
               textAlign: TextAlign.center,
@@ -62,7 +59,7 @@ class SandScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -70,7 +67,7 @@ class SandScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             if (res.totalCost != null) ...[
@@ -82,9 +79,7 @@ class SandScreen extends ConsumerWidget {
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.cardTitle(context).copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -102,9 +97,7 @@ class SandScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.volumeAndRate,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: theme.colorScheme.primary,
               letterSpacing: 1.1,
             ),
@@ -168,8 +161,7 @@ class SandScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.paddingMedium
                 child: Text(
                   state.error!,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
+                  style: AppTextStyles.body(context).copyWith(
                     color: colorScheme.error,
                   ),
                   textAlign: TextAlign.center,

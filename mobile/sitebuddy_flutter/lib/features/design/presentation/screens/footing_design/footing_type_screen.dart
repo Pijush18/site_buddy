@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:flutter/material.dart';
@@ -31,10 +31,7 @@ class FootingTypeScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 1 of 6: Foundation Type',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab, // Replaced SbTextStyles.caption
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           GridView.builder(

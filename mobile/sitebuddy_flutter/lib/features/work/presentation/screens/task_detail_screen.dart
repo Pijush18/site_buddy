@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -28,9 +28,7 @@ class TaskDetailScreen extends ConsumerWidget {
         children: [
           Text(
             task.title,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -43,7 +41,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.projectId,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -51,7 +49,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.assignedTo,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -59,14 +57,12 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.priority.name.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: AppFontSizes.subtitle,
+                    style: AppTextStyles.body(context).copyWith(
                       fontWeight: FontWeight.bold,
-                      color:
-                          (task.priority == TaskPriority.critical ||
-                                  task.priority == TaskPriority.high)
-                              ? colorScheme.error
-                              : colorScheme.primary,
+                      color: (task.priority == TaskPriority.critical ||
+                              task.priority == TaskPriority.high)
+                          ? colorScheme.error
+                          : colorScheme.primary,
                     ),
                   ),
                 ),
@@ -75,7 +71,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.status.name.toUpperCase(),
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
                 SbListItemTile(
@@ -83,7 +79,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     task.dueDate.toLocal().toString().split(' ').first,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                   ),
                 ),
               ],
@@ -92,9 +88,7 @@ class TaskDetailScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'DESCRIPTION',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
+            style: AppTextStyles.caption(context).copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -103,7 +97,7 @@ class TaskDetailScreen extends ConsumerWidget {
             task.description.isEmpty
                 ? 'No description provided.'
                 : task.description,
-            style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            style: AppTextStyles.body(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap32
           if (task.status != TaskStatus.completed) ...[
@@ -130,8 +124,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                   Text(
                     'Task Completed',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.subtitle,
+                    style: AppTextStyles.body(context).copyWith(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.primary,
                     ),

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class SpacingLabSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Spacing Tokens', style: SbTextStyles.title(context)),
+        Text('Spacing Tokens', style: AppTextStyles.sectionTitle(context)),
         AppLayout.vGap16,
         ...tokens.map(
           (t) => Padding(
@@ -30,7 +30,7 @@ class SpacingLabSection extends StatelessWidget {
                   width: 100,
                   child: Text(
                     t.name,
-                    style: SbTextStyles.bodySecondary(context),
+                    style: AppTextStyles.body(context, secondary: true),
                   ),
                 ),
                 Container(
@@ -71,7 +71,7 @@ class RadiusLabSection extends StatelessWidget {
       children: [
         Text(
           'Radius & Elevation',
-          style: SbTextStyles.title(context),
+          style: AppTextStyles.sectionTitle(context),
         ),
         AppLayout.vGap16,
         const Row(
@@ -116,7 +116,7 @@ class _RadiusBox extends StatelessWidget {
           child: Center(
             child: Text(
               '${radius.toInt()}',
-              style: SbTextStyles.caption(context),
+              style: AppTextStyles.caption(context),
             ),
           ),
         ),

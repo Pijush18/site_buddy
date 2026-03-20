@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
@@ -142,19 +142,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
           Text(
             AppStrings.siteBuddy,
-            style: TextStyle(
-              fontSize: 32, // Preserving headline-like size
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.screenTitle(context).copyWith(
+              fontSize: 32,
               color: colorScheme.primary,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             AppStrings.structuralDesignSuite,
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.body(context, secondary: true),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
@@ -165,10 +161,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               children: [
                 Text(
                   AppStrings.structuralDesignSuite,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyles.body(context, secondary: true),
                 ),
               ],
             ),

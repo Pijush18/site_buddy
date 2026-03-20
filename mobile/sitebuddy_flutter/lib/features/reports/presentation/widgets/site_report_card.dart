@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -71,7 +71,7 @@ class SiteReportCard extends StatelessWidget {
               children: [
                 Text(
                   'SITE BUDDY REPORT',
-                  style: SbTextStyles.title(context).copyWith(
+                  style: AppTextStyles.sectionTitle(context).copyWith(
                     letterSpacing: 1.2,
                     color: colorScheme.primary,
                   ),
@@ -110,11 +110,11 @@ class SiteReportCard extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: label,
-          style: SbTextStyles.caption(context).copyWith(color: Colors.grey),
+          style: AppTextStyles.caption(context).copyWith(color: Colors.grey),
           children: [
             TextSpan(
               text: value,
-              style: SbTextStyles.caption(context).copyWith(
+              style: AppTextStyles.caption(context).copyWith(
                 color: colorScheme.onSurface,
 
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -144,7 +144,7 @@ class SiteReportCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       section.title.toUpperCase(),
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.primary,
                       ),
                     ),
@@ -161,7 +161,7 @@ class SiteReportCard extends StatelessWidget {
                 ),
                 child: Text(
                   text,
-                  style: SbTextStyles.body(context).copyWith(
+                  style: AppTextStyles.body(context).copyWith(
                     height: 1.5,
                     fontFeatures: const [FontFeature.tabularFigures()],
                   ),
@@ -182,7 +182,7 @@ class SiteReportCard extends StatelessWidget {
 
       child: Text(
         'Generated natively by Site Buddy',
-        style: SbTextStyles.bodySecondary(context).copyWith(color: Colors.grey),
+        style: AppTextStyles.body(context, secondary: true).copyWith(color: Colors.grey),
       ),
     );
   }

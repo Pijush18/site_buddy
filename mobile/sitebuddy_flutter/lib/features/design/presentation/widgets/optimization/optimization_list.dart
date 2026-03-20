@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -23,6 +24,8 @@ class OptimizationList extends StatelessWidget {
       );
     }
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: options
@@ -36,14 +39,14 @@ class OptimizationList extends StatelessWidget {
                   children: [
                     Text(
                       option.title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: AppTextStyles.sectionTitle(context).copyWith(
+                        color: colorScheme.onSurface,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
                       option.description,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: AppTextStyles.body(context),
                     ),
                     const SizedBox(height: AppSpacing.md),
                     const Divider(height: 1),

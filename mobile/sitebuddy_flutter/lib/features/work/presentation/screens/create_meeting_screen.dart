@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -113,10 +113,8 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'MEETING TYPE',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.cardTitle(context).copyWith(
               color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
@@ -131,10 +129,8 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'MODE',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.cardTitle(context).copyWith(
               color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
@@ -168,18 +164,16 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   children: [
                     Text(
                       'DATE',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
-                        color: colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.bold,
-                      ),
+                        style: AppTextStyles.cardTitle(context).copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                     ),
                     const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                     Text(
                       _date == null
                           ? 'Not set'
                           : _date!.toLocal().toString().split(' ').first,
-                      style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                      style: AppTextStyles.body(context),
                     ),
                   ],
                 ),
@@ -256,10 +250,8 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: AppFontSizes.tab,
+          style: AppTextStyles.cardTitle(context).copyWith(
             color: colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
@@ -286,7 +278,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 Expanded(
                   child: Text(
                     value,
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.body(context),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

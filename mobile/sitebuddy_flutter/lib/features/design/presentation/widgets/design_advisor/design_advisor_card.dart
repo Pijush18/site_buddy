@@ -1,109 +1,73 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/models/design_advisor_result.dart';
 
-/// WIDGET: DesignAdvisorCard
-/// PURPOSE: Displays engineering advice, warnings, and suggestions for a selected design option.
 class DesignAdvisorCard extends StatelessWidget {
   final DesignAdvisorResult advisorResult;
 
-  const DesignAdvisorCard({super.key, required this.advisorResult});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'ENGINEERING ADVISOR',
-          style: TextStyle(
-            fontSize: 12,
-            letterSpacing: 1.2,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        SbSectionHeader(
-          title: advisorResult.recommendedOption != null
-              ? 'Recommendation'
-              : 'Action Required',
-        ),
-        SbCard(
-          padding: const EdgeInsets.all(AppSpacing.md),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: AppSpacing.md),
-
-              // Explanation
-              Text(advisorResult.explanation,
-                  style: const TextStyle(fontSize: AppFontSizes.tab)),
-
-              if (advisorResult.warnings.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.md),
-                _SectionHeader(
-                  title: 'Engineering Warnings',
-                  icon: Icons.warning_amber_rounded,
-                  color: AppColors.warning(context),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Column(
-                  children: advisorResult.warnings
-                      .map((w) => _AdvisoryItem(text: w, isWarning: true))
-                      .toList(),
-                ),
-              ],
-
-              if (advisorResult.suggestions.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.md),
-                _SectionHeader(
-                  title: 'Improvement Suggestions',
-                  icon: Icons.tips_and_updates_outlined,
-                  color: AppColors.success(context),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Column(
-                  children: advisorResult.suggestions
-                      .map((s) => _AdvisoryItem(text: s, isWarning: false))
-                      .toList(),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color color;
-
-  const _SectionHeader({
-    required this.title,
-    required this.icon,
-    required this.color,
+  const DesignAdvisorCard({
+    super.key,
+    required this.advisorResult,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: color),
-        const SizedBox(width: AppSpacing.sm),
-        Text(title,
-            style: TextStyle(
-              fontSize: 12,
-              color: color,
-              fontWeight: FontWeight.bold,
-            )),
-      ],
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SbCard(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                advisorResult.recommendedOption != null 
+                  ? Icons.tips_and_updates_outlined 
+                  : Icons.warning_amber_rounded,
+                color: advisorResult.recommendedOption != null 
+                  ? colorScheme.primary 
+                  : colorScheme.error,
+                size: 20,
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                advisorResult.recommendedOption != null 
+                  ? 'ENGINEERING ADVISOR' 
+                  : 'ACTION REQUIRED',
+                style: AppTextStyles.sectionTitle(context).copyWith(
+                  color: advisorResult.recommendedOption != null 
+                    ? colorScheme.primary 
+                    : colorScheme.error,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            advisorResult.explanation,
+            style: AppTextStyles.body(context),
+          ),
+          if (advisorResult.warnings.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            ...advisorResult.warnings.map((warning) => _AdvisoryItem(
+                  text: warning,
+                  isWarning: true,
+                )),
+          ],
+          if (advisorResult.suggestions.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            const Divider(),
+            const SizedBox(height: AppSpacing.md),
+            ...advisorResult.suggestions.map((suggestion) => _AdvisoryItem(
+                  text: suggestion,
+                  isWarning: false,
+                )),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -112,27 +76,37 @@ class _AdvisoryItem extends StatelessWidget {
   final String text;
   final bool isWarning;
 
-  const _AdvisoryItem({required this.text, required this.isWarning});
+  const _AdvisoryItem({
+    required this.text,
+    required this.isWarning,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.sm / 2,
-      ),
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '• ',
-            style: TextStyle(color: isWarning ? AppColors.warning(context) : AppColors.success(context)),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Container(
+              width: 5,
+              height: 5,
+              decoration: BoxDecoration(
+                color: isWarning ? colorScheme.error : colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
-                fontSize: 13,
-                height: 1.4,
+              style: AppTextStyles.caption(context).copyWith(
+                color: isWarning ? colorScheme.error : colorScheme.onSurfaceVariant,
               ),
             ),
           ),

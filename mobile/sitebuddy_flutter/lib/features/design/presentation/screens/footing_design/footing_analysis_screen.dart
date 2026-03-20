@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
@@ -32,10 +32,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 4 of 6: Pressure Distribution',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
@@ -98,7 +95,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${state.eccentricityX.toStringAsFixed(1)} mm',
-                    style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                    style: AppTextStyles.cardTitle(context),
                   ),
                 ),
                 if (state.type == FootingType.pile) ...[
@@ -108,8 +105,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                     onTap: () {}, // Detail view entry
                     trailing: Text(
                       '${state.pileCount}',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.subtitle,
+                      style: AppTextStyles.cardTitle(context).copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.w600,
                       ),

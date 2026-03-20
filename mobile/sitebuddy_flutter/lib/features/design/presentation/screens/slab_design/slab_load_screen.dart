@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -63,9 +63,7 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
           children: [
             Text(
               'Step 2 of 5: Load Definition',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.screenTitle(context).copyWith(
                 color: colorScheme.primary,
               ),
             ),
@@ -90,10 +88,9 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                     validator: (v) => ValidationHelper.validatePositive(v, 'Live Load'),
                   ),
                   const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                  const Text(
+                  Text(
                     'Note: Load factor of 1.5 will be applied automatically.',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.tab,
+                    style: AppTextStyles.caption(context).copyWith(
                       color: Colors.grey,
                     ),
                   ),

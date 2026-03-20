@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -34,9 +34,7 @@ class CementScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.sectionTitle(context).copyWith(
                 color: colorScheme.primary,
                 letterSpacing: 1.2,
               ),
@@ -49,7 +47,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -57,7 +55,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -65,7 +63,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -73,9 +71,7 @@ class CementScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: colorScheme.primary,
                 ),
               ),
@@ -89,11 +85,9 @@ class CementScreen extends ConsumerWidget {
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.primary,
-                  ),
+                    style: AppTextStyles.cardTitle(context).copyWith(
+                      color: colorScheme.primary,
+                    ),
                 ),
               ),
             ],
@@ -109,9 +103,7 @@ class CementScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.volumeAndDimensions,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
             ),
             textAlign: TextAlign.center,
@@ -140,9 +132,7 @@ class CementScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             EngineeringTerms.ratioFormat,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
             ),
             textAlign: TextAlign.center,
@@ -235,8 +225,7 @@ class CementScreen extends ConsumerWidget {
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,

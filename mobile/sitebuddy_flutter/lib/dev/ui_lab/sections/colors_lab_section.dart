@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +37,7 @@ class ColorsLabSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Color System', style: SbTextStyles.title(context)),
+        Text('Color System', style: AppTextStyles.sectionTitle(context)),
         AppLayout.vGap16,
         GridView.builder(
           shrinkWrap: true,

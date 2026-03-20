@@ -116,14 +116,14 @@ class _ValueTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(color: Colors.grey),
+          style: AppTextStyles.caption(context),
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(color: color),
+            style: AppTextStyles.body(context).copyWith(color: color),
           ),
         ),
       ],

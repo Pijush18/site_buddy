@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -65,7 +65,7 @@ class SbEmptyState extends StatelessWidget {
             // Title
             Text(
               title,
-              style: SbTextStyles.title(context).copyWith(
+              style: AppTextStyles.sectionTitle(context).copyWith(
                 fontWeight: FontWeight.w600,
                 color: colorScheme.onSurface,
               ),
@@ -77,7 +77,7 @@ class SbEmptyState extends StatelessWidget {
               AppLayout.vGap8,
               Text(
                 subtitle!,
-                style: SbTextStyles.body(context).copyWith(
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,

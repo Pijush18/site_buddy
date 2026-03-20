@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -124,9 +124,8 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'IS 456:2000 Structural Safety',
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              'Structural Shear Capacity Assessment',
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),

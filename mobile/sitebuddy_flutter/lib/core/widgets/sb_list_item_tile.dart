@@ -42,9 +42,7 @@ class SbListItemTile extends StatelessWidget {
     if (trailing is String) {
       trailingWidget = Text(
         trailing as String,
-        style: AppTextStyles.caption.copyWith(
-          color: colorScheme.onSurfaceVariant,
-        ),
+        style: AppTextStyles.caption(context),
       );
     } else if (trailing is Widget) {
       trailingWidget = trailing as Widget;
@@ -62,13 +60,13 @@ class SbListItemTile extends StatelessWidget {
           children: [
             if (icon != null) ...[
               SizedBox(
-                width: 48,
-                height: 48,
+                width: 36,
+                height: 36,
                 child: Center(
                   child: Icon(
                     icon,
-                    color: iconColor ?? colorScheme.primary,
-                    size: 40, // LOCKED: 40px
+                    color: iconColor ?? colorScheme.primary.withValues(alpha: 0.8),
+                    size: 20, // LOCKED: 20px
                   ),
                 ),
               ),
@@ -81,19 +79,15 @@ class SbListItemTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTextStyles.cardTitle.copyWith(
-                      color: colorScheme.onSurface,
-                    ),
+                    style: AppTextStyles.cardTitle(context),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null && subtitle!.isNotEmpty) ...[
-                    const SizedBox(height: AppSpacing.xs),
+                    const SizedBox(height: 2),
                     Text(
                       subtitle!,
-                      style: AppTextStyles.body.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: AppTextStyles.body(context, secondary: true),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

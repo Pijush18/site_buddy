@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// WIDGET: SbCard
 /// PURPOSE: Standardized surface-based card container.
@@ -27,25 +29,17 @@ class SbCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
-    final borderRadius = BorderRadius.circular(12);
+    final borderRadius = BorderRadius.circular(AppLayout.cardRadius);
     
     return Container(
       margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: color ?? colorScheme.surface,
+        color: color ?? colorScheme.surfaceContainerLow,
         borderRadius: borderRadius,
         border: Border.all(
-          color: colorScheme.outline.withValues(alpha: 0.5), 
+          color: AppColors.skyBlue.withValues(alpha: 0.7), 
           width: 1.0,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {

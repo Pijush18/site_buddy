@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -66,15 +66,16 @@ class AppScaffold extends ConsumerWidget {
                 children: [
                   Text(
                     title!,
-                    style: SbTextStyles.headline(context).copyWith(
+                    style: AppTextStyles.screenTitle(context).copyWith(
                       color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                       letterSpacing: -0.5,
+                      fontSize: 24,
                     ),
                   ),
                   Text(
                     branding.engineerName,
-                    style: SbTextStyles.body(context).copyWith(
+                    style: AppTextStyles.body(context).copyWith(
                       fontWeight: FontWeight.w600,
                       color: colorScheme.primary,
                       letterSpacing: 0.5,

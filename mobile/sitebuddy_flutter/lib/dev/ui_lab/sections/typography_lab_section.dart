@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -10,16 +10,12 @@ class TypographyLabSection extends StatelessWidget {
 //     final textTheme = Theme.of(context).textTheme;
 
     final styles = [
-      _TypoData('Headline Large', SbTextStyles.headlineLarge(context), '32px, Bold'),
-      _TypoData('Headline Medium', SbTextStyles.headline(context), '28px, Bold'),
-      _TypoData('Title Large', SbTextStyles.title(context), '22px, Bold'),
-      _TypoData('Title Medium', SbTextStyles.title(context), '18px, Semibold'),
-      _TypoData('Title Small', SbTextStyles.body(context), '16px, Semibold'),
-      _TypoData('Body Large', SbTextStyles.body(context), '16px, Regular'),
-      _TypoData('Body Medium', SbTextStyles.body(context), '14px, Regular'),
-      _TypoData('Body Small', SbTextStyles.bodySecondary(context), '12px, Regular'),
-      _TypoData('Label Large', SbTextStyles.button(context), '14px, Medium'),
-      _TypoData('Label Small', SbTextStyles.caption(context), '12px, Medium'),
+      _TypoData('Screen Title', AppTextStyles.screenTitle(context), '20px, Bold'),
+      _TypoData('Section Title', AppTextStyles.sectionTitle(context), '17px, Semibold'),
+      _TypoData('Card Title', AppTextStyles.cardTitle(context), '14px, Semibold'),
+      _TypoData('Body Text', AppTextStyles.body(context), '13px, Regular'),
+      _TypoData('Body Secondary', AppTextStyles.body(context, secondary: true), '13px, Regular, Opacity'),
+      _TypoData('Caption', AppTextStyles.caption(context), '12px, Regular'),
     ];
 
     return Column(
@@ -27,7 +23,7 @@ class TypographyLabSection extends StatelessWidget {
       children: [
         Text(
           'Typography System',
-          style: SbTextStyles.title(context),
+          style: AppTextStyles.sectionTitle(context),
         ),
         AppLayout.vGap16,
         ...styles.map(
@@ -39,7 +35,7 @@ class TypographyLabSection extends StatelessWidget {
                 Text(style.name, style: style.style),
                 Text(
                   'Size: ${style.info}',
-                  style: SbTextStyles.bodySecondary(context).copyWith(color: Colors.grey),
+                  style: AppTextStyles.body(context, secondary: true).copyWith(color: Colors.grey),
                 ),
                 const Divider(),
               ],

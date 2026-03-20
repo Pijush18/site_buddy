@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -47,9 +47,8 @@ class DesignCategoryCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AppLayout.pSmall),
             child: Text(
               label,
-              style: SbTextStyles.body(context).copyWith(
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurface,
-                
               ),
               textAlign: TextAlign.center,
               maxLines: 2,

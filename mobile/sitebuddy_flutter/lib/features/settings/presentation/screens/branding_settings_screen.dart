@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -84,19 +84,14 @@ class _BrandingSettingsScreenState
         children: [
           Text(
             'Enterprise Profile',
-            style: TextStyle(
-              fontSize: AppFontSizes.title, // headline-like
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
-            style: TextStyle(
-              fontSize: AppFontSizes.subtitle,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.body(context, secondary: true),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           _buildInputLabel(context, 'Company / Enterprise Name'),
@@ -133,10 +128,7 @@ class _BrandingSettingsScreenState
   Widget _buildInputLabel(BuildContext context, String label) {
     return Text(
       label,
-      style: const TextStyle(
-        fontSize: AppFontSizes.tab, // Button text style equiv
-        fontWeight: FontWeight.w600,
-      ),
+      style: AppTextStyles.cardTitle(context),
     );
   }
 }

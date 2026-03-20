@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -72,7 +72,7 @@ class ChatCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     chat.query,
-                    style: SbTextStyles.title(context).copyWith(
+                    style: AppTextStyles.cardTitle(context).copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                     maxLines: 1,
@@ -82,7 +82,7 @@ class ChatCard extends StatelessWidget {
                 AppLayout.hGap8,
                 Text(
                   _formatTime(),
-                  style: SbTextStyles.bodySecondary(context),
+                  style: AppTextStyles.body(context, secondary: true),
                 ),
               ],
             ),
@@ -93,7 +93,7 @@ class ChatCard extends StatelessWidget {
             padding: const EdgeInsets.all(AppLayout.pSmall),
             child: Text(
               _getPreviewText(),
-              style: SbTextStyles.body(context).copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: AppTextStyles.body(context).copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -119,7 +119,7 @@ class ChatCard extends StatelessWidget {
                       AppLayout.hGap8,
                       Text(
                         'Saved to Project',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: AppTextStyles.caption(context).copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),

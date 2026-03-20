@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -31,9 +31,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 3 of 5: Bending Capacity',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -68,9 +66,9 @@ class SlabAnalysisScreen extends ConsumerWidget {
                 Icon(Icons.analytics_outlined,
                     size: 64, color: colorScheme.primary.withValues(alpha: 0.5)),
                 const SizedBox(height: AppSpacing.sm),
-                const Text(
+                Text(
                   'Maximum moment occurs at the midspan for a simply supported slab.',
-                  style: TextStyle(fontSize: AppFontSizes.tab),
+                  style: AppTextStyles.body(context),
                   textAlign: TextAlign.center,
                 ),
               ],

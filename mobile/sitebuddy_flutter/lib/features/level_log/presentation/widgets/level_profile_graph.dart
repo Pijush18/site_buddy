@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 
 /// WIDGET: LevelProfileGraph
@@ -39,9 +40,7 @@ class LevelProfileGraph extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             'Add at least 2 stations with readings to view profile',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+            style: AppTextStyles.caption(context).copyWith(color: Colors.grey),
           ),
         );
     }
@@ -58,7 +57,7 @@ class LevelProfileGraph extends StatelessWidget {
           points: validPoints,
           isDark: Theme.of(context).brightness == Brightness.dark,
           primaryColor: Theme.of(context).colorScheme.primary,
-          textTheme: Theme.of(context).textTheme,
+          labelStyle: AppTextStyles.caption(context),
         ),
       ),
     );
@@ -77,13 +76,13 @@ class _ProfilePainter extends CustomPainter {
   final List<_ProfilePoint> points;
   final bool isDark;
   final Color primaryColor;
-  final TextTheme textTheme;
+  final TextStyle labelStyle;
 
   _ProfilePainter({
     required this.points,
     required this.isDark,
     required this.primaryColor,
-    required this.textTheme,
+    required this.labelStyle,
   });
 
   @override
@@ -143,7 +142,7 @@ class _ProfilePainter extends CustomPainter {
       final textPainter = TextPainter(
         text: TextSpan(
           text: labelValue.toStringAsFixed(1),
-          style: textTheme.labelSmall?.copyWith(
+          style: labelStyle.copyWith(
             color: isDark ? Colors.white70 : Colors.black87,
           ),
         ),
@@ -194,7 +193,7 @@ class _ProfilePainter extends CustomPainter {
       final textPainter = TextPainter(
         text: TextSpan(
           text: p.label,
-          style: textTheme.labelSmall?.copyWith(
+          style: labelStyle.copyWith(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.7)
                 : Colors.black.withValues(alpha: 0.7),

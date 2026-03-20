@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -35,11 +35,9 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 4 of 5: Steel Detailing',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.primary,
-            ),
+            style: AppTextStyles.screenTitle(context).copyWith(
+            color: colorScheme.primary,
+          ),
           ),
           const SizedBox(height: AppSpacing.md),
 
@@ -77,12 +75,9 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   padding: EdgeInsets.zero,
                 ),
 
-                const Text(
+                Text(
                   'Main Bar Diameter',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.cardTitle(context),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 SbDropdown<double>(

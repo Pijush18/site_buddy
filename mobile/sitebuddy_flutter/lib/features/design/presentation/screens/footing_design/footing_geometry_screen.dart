@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -93,9 +93,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
         children: [
           Text(
             'Step 3 of 6: Dimensioning (${state.type.label})',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -128,10 +126,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 Text(
                   'Critical for shear and bending calculations at face.',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyles.caption(context),
                 ),
               ],
             ),
@@ -192,8 +187,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                 Expanded(
                   child: Text(
                     'For ${state.type.label}, ensure dimensions capture the full required bearing area of ${(state.requiredArea).toStringAsFixed(2)} m².',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.tab,
+                      style: AppTextStyles.caption(context).copyWith(
                       color: colorScheme.primary,
                     ),
                   ),

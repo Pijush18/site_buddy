@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -95,11 +95,9 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
           children: [
             Text(
               'Step 2 of 5: Applied Loads',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.primary,
-              ),
+              style: AppTextStyles.screenTitle(context).copyWith(
+              color: colorScheme.primary,
+            ),
             ),
             const SizedBox(height: AppSpacing.md),
 
@@ -152,10 +150,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                       ),
                       Text(
                         state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
-                        style: TextStyle(
-                          fontSize: AppFontSizes.tab,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                        style: AppTextStyles.caption(context),
                       ),
                     ],
                   ),

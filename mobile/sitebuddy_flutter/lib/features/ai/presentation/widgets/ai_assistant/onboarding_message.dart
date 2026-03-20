@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class OnboardingMessage extends StatelessWidget {
         const SizedBox(height: AppLayout.sectionGap),
         Text(
           'How can I assist your site today?',
-          style: SbTextStyles.headline(context).copyWith(color: Colors.grey),
+          style: AppTextStyles.screenTitle(context).copyWith(color: Colors.grey),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppLayout.md),
@@ -26,7 +26,7 @@ class OnboardingMessage extends StatelessWidget {
           '• "What is a retaining wall?"\n'
           '• "Convert 100 sqft to sqm"\n'
           '• "12x6x0.5 slab M25"',
-          style: SbTextStyles.body(context).copyWith(
+          style: AppTextStyles.body(context).copyWith(
             color: Colors.grey,
             height: 1.5,
           ),

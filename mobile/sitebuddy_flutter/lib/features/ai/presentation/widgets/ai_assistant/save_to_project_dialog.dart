@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: save_to_project_dialog.dart
@@ -56,7 +56,7 @@ class SaveToProjectDialog extends ConsumerWidget {
                 child: Text(
                   'No projects available.\nCreate a project first!',
                   textAlign: TextAlign.center,
-                  style: SbTextStyles.body(context),
+                  style: AppTextStyles.body(context),
                 ),
               ),
             )

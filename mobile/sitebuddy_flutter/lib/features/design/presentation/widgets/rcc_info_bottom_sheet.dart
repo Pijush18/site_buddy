@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/design_item.dart';
 
@@ -60,14 +60,13 @@ class RccInfoBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       'RCC Information',
-                      style: SbTextStyles.title(context).copyWith(
+                      style: AppTextStyles.sectionTitle(context).copyWith(
                         color: colorScheme.onSurface,
-                        
                       ),
                     ),
                     Text(
                       'Structural RCC Guidelines',
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -87,7 +86,7 @@ class RccInfoBottomSheet extends StatelessWidget {
 
           Text(
             item.description,
-            style: SbTextStyles.body(context).copyWith(
+            style: AppTextStyles.body(context).copyWith(
               color: colorScheme.onSurface,
             ),
           ),
@@ -100,9 +99,8 @@ class RccInfoBottomSheet extends StatelessWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 spec.value,
-                style: SbTextStyles.body(context).copyWith(
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.primary,
-                  
                 ),
               ),
             ),

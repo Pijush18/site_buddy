@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +23,7 @@ class SbFeedback {
       SnackBar(
         content: Text(
           message,
-          style: SbTextStyles.body(context).copyWith(
+          style: AppTextStyles.body(context).copyWith(
             color: isError ? colorScheme.onError : colorScheme.onInverseSurface,
           ),
         ),
@@ -55,7 +55,7 @@ class SbFeedback {
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog.adaptive(
-          title: Text(title, style: SbTextStyles.title(context)),
+          title: Text(title, style: AppTextStyles.sectionTitle(context)),
           content: content,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppLayout.sm),

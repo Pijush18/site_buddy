@@ -88,18 +88,14 @@ class _InfoTile extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+          style: AppTextStyles.caption(context),
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(
-              fontSize: isBold ? 13 : 12,
-            ),
+            style: AppTextStyles.body(context),
           ),
         ),
       ],

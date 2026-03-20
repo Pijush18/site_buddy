@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -13,7 +13,7 @@ class EngineeringWidgetsSection extends StatelessWidget {
       children: [
         Text(
           'Engineering Results',
-          style: SbTextStyles.title(context),
+          style: AppTextStyles.sectionTitle(context),
         ),
         AppLayout.vGap16,
         const DesignResultCard(

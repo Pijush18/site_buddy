@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -34,8 +35,7 @@ class DesignResultCard extends StatelessWidget {
         ),
         child: Text(
           isSafe ? 'SAFE' : 'UNSAFE',
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.caption(context).copyWith(
             fontWeight: FontWeight.bold,
             color: statusColor,
           ),
@@ -57,7 +57,7 @@ class DesignResultCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.label,
-                            style: TextStyle(
+                            style: AppTextStyles.body(context, secondary: true).copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -68,18 +68,15 @@ class DesignResultCard extends StatelessWidget {
                           children: [
                             Text(
                               item.value,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: item.isCritical ? statusColor : null,
-                              ),
+                                style: AppTextStyles.sectionTitle(context).copyWith(
+                                  color: item.isCritical ? statusColor : null,
+                                ),
                             ),
                             if (item.unit != null) ...[
                               const SizedBox(width: AppSpacing.xs),
                               Text(
                                 item.unit!,
-                                style: TextStyle(
-                                  fontSize: 12,
+                                style: AppTextStyles.caption(context).copyWith(
                                   color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
@@ -92,8 +89,7 @@ class DesignResultCard extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xs),
                       Text(
                         item.subtitle!,
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.caption(context).copyWith(
                           color: colorScheme.secondary,
                           fontStyle: FontStyle.italic,
                         ),
@@ -116,8 +112,7 @@ class DesignResultCard extends StatelessWidget {
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     codeReference!,
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.caption(context).copyWith(
                       color: colorScheme.onSurfaceVariant,
                       fontStyle: FontStyle.italic,
                     ),

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
@@ -99,21 +99,18 @@ class ProjectDetailScreen extends ConsumerWidget {
                   children: [
                     Text(
                       AppStrings.status,
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
-                        color: colorScheme.onSurfaceVariant,
+                      style: AppTextStyles.caption(context).copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md, // 16
-                        vertical: AppSpacing.sm / 2, // Replaced AppLayout.xs (4)
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.sm / 2,
                       ),
                       child: Text(
                         proj.status.label,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.tab,
+                        style: AppTextStyles.caption(context).copyWith(
                           color: colorScheme.primary,
                           fontWeight: FontWeight.bold,
                         ),
@@ -121,15 +118,12 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: AppSpacing.md),
                 Text(
                   proj.name,
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextStyles.sectionTitle(context),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: AppSpacing.md),
                 // Cover Image Mock
                 SizedBox(
                   height: 120,
@@ -144,7 +138,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
+                const SizedBox(height: AppSpacing.md),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -153,15 +147,13 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           AppStrings.created,
-                          style: TextStyle(
-                            fontSize: AppFontSizes.tab,
-                            color: colorScheme.onSurfaceVariant,
+                          style: AppTextStyles.caption(context).copyWith(
                             letterSpacing: 1.2,
                           ),
                         ),
                         Text(
                           formattedDate,
-                          style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                          style: AppTextStyles.body(context),
                         ),
                       ],
                     ),
@@ -170,9 +162,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       children: [
                         Text(
                           AppStrings.location,
-                          style: TextStyle(
-                            fontSize: AppFontSizes.tab,
-                            color: colorScheme.onSurfaceVariant,
+                          style: AppTextStyles.caption(context).copyWith(
                             letterSpacing: 1.2,
                           ),
                         ),
@@ -183,10 +173,10 @@ class ProjectDetailScreen extends ConsumerWidget {
                               size: 20,
                               color: colorScheme.primary,
                             ),
-                            const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap8
+                            const SizedBox(width: AppSpacing.sm),
                             Text(
                               proj.location,
-                              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                                style: AppTextStyles.body(context),
                             ),
                           ],
                         ),
@@ -197,48 +187,44 @@ class ProjectDetailScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           // Description block if available
-          if (proj.description != null && proj.description!.isNotEmpty) ...[
+          if (proj.description != null && proj.description!.isNotEmpty)
             SbSection(
               title: AppStrings.description,
               child: SbCard(
                 child: Text(
                   proj.description!,
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    height: 1.5,
-                  ),
+                    style: AppTextStyles.body(context),
                 ),
               ),
             ),
-          ],
 
-          // Stats grid
-          Row(
-            children: [
-              Expanded(
-                child: _StatCard(
-                  icon: Icons.description,
-                  label: 'LOGS',
-                  value: proj.logsCount.toString(),
-                  subtext: 'Entries',
+          // Stats grid section (Sole source of inter-section truth)
+          SbSection(
+            title: null,
+            child: Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.description,
+                    label: 'LOGS',
+                    value: proj.logsCount.toString(),
+                    subtext: 'Entries',
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: _StatCard(
-                  icon: Icons.calculate,
-                  label: 'CALCS',
-                  value: proj.calculationsCount.toString(),
-                  subtext: 'Saved Runs',
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.calculate,
+                    label: 'CALCS',
+                    value: proj.calculationsCount.toString(),
+                    subtext: 'Saved Runs',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-
-          const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
           SbSection(
             title: AppStrings.design,
@@ -246,46 +232,39 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ? const SbCard(
                     child: Text(AppStrings.noEntriesFound),
                   )
-                : Column(
+                : SbListGroup(
                     children: calcItems.map((item) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: SbListItemTile(
-                          icon: _getTypeIcon(item['type'] as String),
-                          title: item['name'] as String,
-                          subtitle: DateFormat(
-                            'dd MMM, hh:mm a',
-                          ).format(item['date'] as DateTime),
-                          onTap: () {
-                            context.push('/projects/$projectId/history');
-                          },
-                        ),
+                      return SbListItemTile(
+                        icon: _getTypeIcon(item['type'] as String),
+                        title: item['name'] as String,
+                        subtitle: DateFormat(
+                          'dd MMM, hh:mm a',
+                        ).format(item['date'] as DateTime),
+                        onTap: () {
+                          context.push('/projects/$projectId/history');
+                        },
                       );
                     }).toList(),
                   ),
           ),
 
-          const SizedBox(height: AppSpacing.md),
           SbSection(
             title: AppStrings.fieldSurveying,
             child: logItems.isEmpty
                 ? const SbCard(
                     child: Text(AppStrings.noEntriesFound),
                   )
-                : Column(
+                : SbListGroup(
                     children: logItems.map((item) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: SbListItemTile(
-                          icon: SbIcons.layers,
-                          iconColor: colorScheme.secondary,
-                          title: item.name,
-                          subtitle:
-                              '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
-                          onTap: () {
-                            context.push('/projects/$projectId/level-log');
-                          },
-                        ),
+                      return SbListItemTile(
+                        icon: SbIcons.layers,
+                        iconColor: colorScheme.secondary,
+                        title: item.name,
+                        subtitle:
+                            '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
+                        onTap: () {
+                          context.push('/projects/$projectId/level-log');
+                        },
                       );
                     }).toList(),
                   ),
@@ -350,30 +329,24 @@ class _StatCard extends StatelessWidget {
               Icon(icon, color: colorScheme.primary, size: 20),
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: AppFontSizes.tab,
-                  color: colorScheme.onSurfaceVariant,
-                  letterSpacing: -0.5,
-                ),
+                  style: AppTextStyles.caption(context).copyWith(
+                    letterSpacing: -0.5,
+                  ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 24, // Preserving headline-like size
+            style: AppTextStyles.screenTitle(context).copyWith(
+              fontSize: 24,
               fontWeight: FontWeight.bold,
-              fontFeatures: [FontFeature.tabularFigures()],
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
           Text(
             subtext,
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
         ],
       ),

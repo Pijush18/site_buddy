@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -53,7 +54,7 @@ class ActivityTile extends StatelessWidget {
       subtitle: activity.subtitle,
       trailing: Text(
         _formatTime(activity.timestamp, l10n),
-        style: theme.textTheme.labelSmall,
+        style: AppTextStyles.caption(context),
       ),
       onTap: () {
         debugPrint('TODO: action for ${activity.type}');

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class UserMessageWidget extends StatelessWidget {
         ),
         child: Text(
           query,
-          style: SbTextStyles.body(context).copyWith(
+          style: AppTextStyles.body(context).copyWith(
             color: colorScheme.onPrimary,
           ),
         ),
@@ -51,7 +51,7 @@ class AiErrorWidget extends StatelessWidget {
       child: Center(
         child: Text(
           error,
-          style: SbTextStyles.body(context).copyWith(
+          style: AppTextStyles.body(context).copyWith(
             color: colorScheme.error,
           ),
           textAlign: TextAlign.center,

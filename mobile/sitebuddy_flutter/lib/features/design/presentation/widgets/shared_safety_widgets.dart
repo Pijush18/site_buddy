@@ -1,19 +1,28 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-class StatusBadge extends StatelessWidget {
+/// A header widget that displays whether a check is safe or unsafe.
+class SafetyStatusHeader extends StatelessWidget {
   final bool isSafe;
-  const StatusBadge({super.key, required this.isSafe});
+  final String label;
+
+  const SafetyStatusHeader({
+    super.key,
+    required this.isSafe,
+    this.label = '',
+  });
 
   @override
   Widget build(BuildContext context) {
-    final color = isSafe ? Colors.green : Colors.red;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = isSafe ? colorScheme.primary : colorScheme.error;
+    final icon = isSafe ? Icons.check_circle : Icons.warning;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.sm,
-        vertical: AppSpacing.sm / 2,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -22,18 +31,13 @@ class StatusBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            isSafe ? SbIcons.checkFilled : SbIcons.error,
-            color: color,
-            size: 14,
-          ),
-          const SizedBox(width: AppSpacing.sm),
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: AppSpacing.xs),
           Text(
-            isSafe ? 'SAFE' : 'UNSAFE',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+            label.isNotEmpty ? label : (isSafe ? 'SAFE' : 'UNSAFE'),
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: color,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
@@ -42,33 +46,38 @@ class StatusBadge extends StatelessWidget {
   }
 }
 
-class ResultDetailRow extends StatelessWidget {
+/// A simple row for displaying a label and its corresponding check result.
+class SafetyInfoRow extends StatelessWidget {
   final String label;
   final String value;
-  const ResultDetailRow({super.key, required this.label, required this.value});
+  final bool isStrong;
+
+  const SafetyInfoRow({
+    super.key,
+    required this.label,
+    required this.value,
+    this.isStrong = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.sm / 2,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.body(context).copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.body(context).copyWith(
+              fontWeight: isStrong ? FontWeight.bold : FontWeight.normal,
+              color: colorScheme.onSurface,
             ),
           ),
         ],
@@ -77,29 +86,90 @@ class ResultDetailRow extends StatelessWidget {
   }
 }
 
+/// A badge displaying safety status (SAFE/FAIL).
+class StatusBadge extends StatelessWidget {
+  final bool isSafe;
+  final String? customLabel;
+
+  const StatusBadge({
+    super.key,
+    required this.isSafe,
+    this.customLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafetyStatusHeader(
+      isSafe: isSafe,
+      label: customLabel ?? (isSafe ? 'SAFE' : 'FAIL'),
+    );
+  }
+}
+
+/// A standard row for displaying a result label and value.
+class ResultDetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isStrong;
+
+  const ResultDetailRow({
+    super.key,
+    required this.label,
+    required this.value,
+    this.isStrong = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafetyInfoRow(
+      label: label,
+      value: value,
+      isStrong: isStrong,
+    );
+  }
+}
+
+/// A card used as a placeholder when no results are available.
 class PlaceholderCard extends StatelessWidget {
   final IconData icon;
   final String message;
 
-  const PlaceholderCard({super.key, required this.icon, required this.message});
+  const PlaceholderCard({
+    super.key,
+    required this.icon,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return SbCard(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
-          child: Column(
-            children: [
-              Icon(icon, size: 48, color: colorScheme.onSurfaceVariant.withValues(alpha: 0.2)),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                message,
-                style: TextStyle(color: colorScheme.onSurfaceVariant),
+    return Card(
+      elevation: 0,
+      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 48,
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.body(context).copyWith(
+                color: colorScheme.onSurfaceVariant,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

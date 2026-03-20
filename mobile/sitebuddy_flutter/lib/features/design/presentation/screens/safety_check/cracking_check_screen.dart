@@ -1,7 +1,7 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
-import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -120,12 +120,11 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
           children: [
             Text(
               'Durability & Crack Control Visualization',
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
             CrackingInputSection(
               spacingController: _spacingController,
               coverController: _coverController,
@@ -144,7 +143,7 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
                 });
               },
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
             SharedActionButtons(
               calculateLabel: 'Check Cracking',
               isLoading: _isLoading,
@@ -152,17 +151,17 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
               onReset: _reset,
               onShare: _shareResult,
             ),
-            const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+            const SizedBox(height: AppSpacing.lg),
             if (_result != null) ...[
               CrackingResultSummary(result: _result!),
-              const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
+              const SizedBox(height: AppSpacing.lg),
               InsightCard(insights: _result!.insights),
             ] else
               const PlaceholderCard(
                 icon: SbIcons.visibility,
                 message: 'Calculate crack width for durability',
               ),
-            const SizedBox(height: AppSpacing.lg * 1.5), // Replaced AppLayout.vGap32
+            const SizedBox(height: AppSpacing.lg * 1.5),
             const CrackingHistorySection(),
             const SizedBox(height: AppSpacing.lg),
           ],

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
@@ -39,7 +39,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: Text(
                       'Vertical: Pu (kN)',
-                      style: SbTextStyles.caption(context).copyWith(
+                      style: AppTextStyles.caption(context).copyWith(
                         color: axisColor,
                       ),
                     ),
@@ -50,7 +50,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                       quarterTurns: 1,
                       child: Text(
                         'Horizontal: Mu (kNm)',
-                        style: SbTextStyles.caption(context).copyWith(
+                        style: AppTextStyles.caption(context).copyWith(
                           color: axisColor,
                         ),
                       ),
@@ -87,7 +87,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                   : 'Design point exceeds the capacity envelope!',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: SbTextStyles.caption(context).copyWith(color: color),
+              style: AppTextStyles.caption(context).copyWith(color: color),
             ),
           ],
         ),
@@ -138,7 +138,7 @@ class _DesignPoint extends StatelessWidget {
             ),
             child: Text(
               'Pu=${pu.toInt()}, Mu=${mu.toInt()}',
-              style: TextStyle(
+              style: AppTextStyles.caption(context).copyWith(
                 fontSize: 9,
                 color: color,
                 fontWeight: FontWeight.bold,

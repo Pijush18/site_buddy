@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +47,7 @@ class SbCheckbox extends StatelessWidget {
           children: [
             checkbox,
             const SizedBox(width: AppLayout.pSmall),
-            Text(label!, style: SbTextStyles.body(context)),
+            Text(label!, style: AppTextStyles.body(context)),
           ],
         ),
       ),
@@ -88,7 +88,7 @@ class SbSwitch extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label!, style: SbTextStyles.body(context)),
+            Text(label!, style: AppTextStyles.body(context)),
             toggle,
           ],
         ),

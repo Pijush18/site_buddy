@@ -18,9 +18,9 @@ class AppSpacing {
   static const double xl = 32.0;
 
   // Semantic Design System Tokens
-  static const double screenHorizontal = md;
-  static const double screenVertical = md;
-  static const double cardPadding = md;
-  static const double sectionGap = md; // Standard spacing between title and content or subsequent sections
-  static const double itemGap = sm;
+  static const double screenHorizontal = 16.0;
+  static const double screenVertical = 12.0;
+  static const double cardPadding = 12.0;
+  static const double sectionGap = 8.0; 
+  static const double itemGap = 8.0;
 }

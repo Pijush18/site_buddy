@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,9 +116,8 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'IS 456:2000 Serviceability Limit State',
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              'Span-to-Depth Ratio Analysis',
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),

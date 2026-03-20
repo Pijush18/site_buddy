@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -74,12 +74,12 @@ class InfoCard extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: SbTextStyles.title(context).copyWith(fontWeight: FontWeight.bold),
+                          style: AppTextStyles.cardTitle(context).copyWith(fontWeight: FontWeight.bold),
                         ),
                         if (timeAgo != null)
                           Text(
                             timeAgo!,
-                            style: SbTextStyles.bodySecondary(context).copyWith(fontWeight: FontWeight.bold),
+                            style: AppTextStyles.body(context, secondary: true).copyWith(fontWeight: FontWeight.bold),
                           ),
                       ],
                     ),
@@ -89,7 +89,7 @@ class InfoCard extends StatelessWidget {
                       children: [
                         Text(
                           subtitle,
-                          style: SbTextStyles.body(context).copyWith(
+                          style: AppTextStyles.body(context).copyWith(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSurfaceVariant,
@@ -98,7 +98,7 @@ class InfoCard extends StatelessWidget {
                         if (statusText != null)
                           Text(
                             statusText!,
-                            style: SbTextStyles.bodySecondary(context).copyWith(
+                            style: AppTextStyles.body(context, secondary: true).copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),

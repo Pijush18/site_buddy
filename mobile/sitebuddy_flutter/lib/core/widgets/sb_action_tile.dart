@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
@@ -56,9 +57,7 @@ class SbActionTile extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.cardTitle(context).copyWith(
               color: contentColor,
             ),
             textAlign: TextAlign.center,

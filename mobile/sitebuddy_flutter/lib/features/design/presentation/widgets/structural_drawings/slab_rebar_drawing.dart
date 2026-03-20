@@ -49,7 +49,7 @@ class SlabRebarDrawing extends StatelessWidget {
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               'Slab Plan: ${lx.toStringAsFixed(2)}m x ${ly.toStringAsFixed(2)}m',
-              style: AppTextStyles.caption.copyWith(color: textColor),
+              style: AppTextStyles.caption(context).copyWith(color: textColor),
             ),
           ),
         ],

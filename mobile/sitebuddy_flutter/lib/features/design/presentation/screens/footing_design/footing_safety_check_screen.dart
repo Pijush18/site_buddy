@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -48,10 +48,7 @@ class _FootingSafetyCheckScreenState
         children: [
           Text(
             'Step 6 of 6: Design Validation',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
 
@@ -72,9 +69,7 @@ class _FootingSafetyCheckScreenState
                 const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
                 Text(
                   overallSafe ? 'DESIGN IS SAFE' : 'DESIGN UNSAFE',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.screenTitle(context).copyWith(
                     color: overallSafe ? colorScheme.primary : colorScheme.error,
                   ),
                 ),
@@ -230,8 +225,7 @@ class _FootingSafetyCheckScreenState
                   Expanded(
                     child: Text(
                       'Warning: Low SBC detected. Consider detailed settlement analysis.',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.subtitle,
+                        style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.onTertiaryContainer,
                       ),
                     ),

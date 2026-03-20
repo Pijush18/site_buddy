@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -61,7 +61,7 @@ class AppHeader extends ConsumerWidget {
               children: [
                 Text(
                   title,
-                  style: SbTextStyles.title(context).copyWith(
+                  style: AppTextStyles.screenTitle(context).copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurface,
                   ),
@@ -70,7 +70,7 @@ class AppHeader extends ConsumerWidget {
                   const SizedBox(height: AppLayout.xs),
                   Text(
                     subtitle ?? branding.engineerName,
-                    style: SbTextStyles.bodySecondary(context).copyWith(
+                    style: AppTextStyles.body(context, secondary: true).copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),

@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,10 +52,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
         children: [
           Text(
             'Step 2 of 6: Loading Conditions',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg),
           SbCard(
@@ -63,12 +60,9 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Axial Loading',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.cardTitle(context),
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
                 AppNumberField(
@@ -81,11 +75,9 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                   suffixIcon: Icons.arrow_downward,
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                const Text(
+                Text(
                   'End Support Condition',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                  ),
+                  style: AppTextStyles.caption(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbDropdown<EndCondition>(

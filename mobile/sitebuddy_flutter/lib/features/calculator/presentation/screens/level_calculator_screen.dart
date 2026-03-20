@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -52,9 +52,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.sectionTitle(context).copyWith(
                 color: colorScheme.primary,
                 letterSpacing: 1.2,
               ),
@@ -65,9 +63,8 @@ class LevelCalculatorScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             Text(
               '${result.difference.toStringAsFixed(2)} m',
-              style: TextStyle(
-                fontSize: 32, // Preserving headlineLarge-like size
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.screenTitle(context).copyWith(
+                fontSize: 32,
                 color: colorScheme.primary,
               ),
               textAlign: TextAlign.center,
@@ -80,10 +77,8 @@ class LevelCalculatorScreen extends ConsumerWidget {
               ),
               child: Text(
                 directionLabel,
-                style: TextStyle(
-                  fontSize: AppFontSizes.tab,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: directionColor,
-                  fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -94,7 +89,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
           ],
@@ -109,12 +104,9 @@ class LevelCalculatorScreen extends ConsumerWidget {
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-          const Text(
+          Text(
             EngineeringTerms.fieldLevelComparison,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTextStyles.sectionTitle(context),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
@@ -158,8 +150,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,

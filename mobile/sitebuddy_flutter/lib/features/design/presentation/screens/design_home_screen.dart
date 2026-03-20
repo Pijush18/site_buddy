@@ -8,20 +8,23 @@ import 'package:site_buddy/features/design/presentation/widgets/rcc_info_bottom_
 
 /// SCREEN: DesignHomeScreen
 /// PURPOSE: Main hub for structural design information and RCC standards.
-/// RULE: AppScreenWrapper → SbSectionList → SbSection.
+/// RULE: AppScreenWrapper → SbSectionList → SbSection (NO loose widgets).
 class DesignHomeScreen extends ConsumerWidget {
   const DesignHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(designControllerProvider);
-    
+
     return AppScreenWrapper(
       title: 'Structural Design',
       child: SbSectionList(
         sections: [
-          // ── SECTION 1: HERO BANNER ──
-          const _DesignInfoBanner(),
+          // ── SECTION 1: HERO BANNER (FIXED: now wrapped in SbSection) ──
+          const SbSection(
+            title: null, // IMPORTANT: no title, but still behaves as a section
+            child: _DesignInfoBanner(),
+          ),
 
           // ── SECTION 2: DESIGN CATEGORIES ──
           SbSection(
@@ -43,6 +46,8 @@ class DesignHomeScreen extends ConsumerWidget {
 }
 
 /// Banner showing summary info about the Design module.
+/// IMPORTANT: This widget must NOT add external spacing.
+/// Section controls spacing, not this widget.
 class _DesignInfoBanner extends StatelessWidget {
   const _DesignInfoBanner();
 
@@ -51,7 +56,8 @@ class _DesignInfoBanner extends StatelessWidget {
     return const SbModuleHero(
       icon: SbIcons.architecture,
       title: 'Structural Reference',
-      subtitle: 'Quickly access standard engineering RCC specifications for site reference and planning.',
+      subtitle:
+          'Quickly access standard engineering RCC specifications for site reference and planning.',
     );
   }
 }

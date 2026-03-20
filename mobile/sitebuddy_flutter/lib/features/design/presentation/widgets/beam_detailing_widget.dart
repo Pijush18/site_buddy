@@ -1,5 +1,6 @@
 
 import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class BeamDetailingWidget extends StatelessWidget {
             n: numBars,
             dia: barDia,
             spacing: stirrupSpacing,
-            textTheme: Theme.of(context).textTheme,
+            labelStyle: AppTextStyles.caption(context),
           ),
         ),
       ),
@@ -47,7 +48,7 @@ class BeamDetailingWidget extends StatelessWidget {
 class _DetailingPainter extends CustomPainter {
   final double b, d, dia, spacing;
   final int n;
-  final TextTheme textTheme;
+  final TextStyle labelStyle;
 
   _DetailingPainter({
     required this.b,
@@ -55,7 +56,7 @@ class _DetailingPainter extends CustomPainter {
     required this.n,
     required this.dia,
     required this.spacing,
-    required this.textTheme,
+    required this.labelStyle,
   });
 
   @override
@@ -130,7 +131,7 @@ class _DetailingPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: textTheme.labelSmall?.copyWith(color: Colors.grey),
+        style: labelStyle.copyWith(color: Colors.grey),
       ),
       textDirection: TextDirection.ltr,
     );

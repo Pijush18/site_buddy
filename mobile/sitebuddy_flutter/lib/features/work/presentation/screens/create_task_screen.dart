@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -98,10 +98,8 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           Text(
             'PRIORITY',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.cardTitle(context).copyWith(
               color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
@@ -128,10 +126,8 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                   children: [
                     Text(
                       'DUE DATE',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
+                      style: AppTextStyles.cardTitle(context).copyWith(
                         color: colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
@@ -143,7 +139,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                                 .toString()
                                 .split(' ')
                                 .first,
-                      style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                      style: AppTextStyles.body(context),
                     ),
                   ],
                 ),

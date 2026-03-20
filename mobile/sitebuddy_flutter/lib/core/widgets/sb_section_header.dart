@@ -51,9 +51,7 @@ class SbSectionHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: colorScheme.onSurface,
-                ),
+                style: AppTextStyles.sectionTitle(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -73,7 +71,7 @@ class SbSectionHeader extends StatelessWidget {
                     children: [
                       Text(
                         "View All",
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.caption(context).copyWith(
                           color: colorScheme.primary,
                         ),
                       ),

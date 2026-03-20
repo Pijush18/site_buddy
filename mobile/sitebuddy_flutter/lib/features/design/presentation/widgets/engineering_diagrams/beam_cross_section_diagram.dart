@@ -95,14 +95,14 @@ class _Label extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(color: Colors.grey),
+          style: AppTextStyles.caption(context),
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body,
+            style: AppTextStyles.body(context),
           ),
         ),
       ],

@@ -1,11 +1,12 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 
 /// CLASS: AppScreenWrapper
 /// PURPOSE: Standardized layout wrapper for all application screens.
 class AppScreenWrapper extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
+  final List<Widget>? sections; // Native Layout-Driven Engine
   final String? title;
   final Color? backgroundColor;
   final List<Widget>? actions;
@@ -15,7 +16,8 @@ class AppScreenWrapper extends StatelessWidget {
 
   const AppScreenWrapper({
     super.key,
-    required this.child,
+    this.child,
+    this.sections,
     this.title,
     this.backgroundColor,
     this.actions,
@@ -29,6 +31,7 @@ class AppScreenWrapper extends StatelessWidget {
     // Policy: Use the standard surface color from the theme (now white in light, slate in dark).
     final Color effectiveBackgroundColor = backgroundColor ?? Theme.of(context).colorScheme.surface;
     final Color foregroundColor = Theme.of(context).colorScheme.onSurface;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       backgroundColor: effectiveBackgroundColor,
@@ -36,9 +39,8 @@ class AppScreenWrapper extends StatelessWidget {
           ? AppBar(
               title: Text(
                 title!,
-                style: const TextStyle(
-                  fontSize: AppFontSizes.title,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.screenTitle(context).copyWith(
+                  color: colorScheme.onSurface,
                 ),
               ),
               actions: actions,
@@ -63,13 +65,17 @@ class AppScreenWrapper extends StatelessWidget {
                 padding: usePadding 
                     ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
                     : EdgeInsets.zero,
-                child: child,
+                child: sections != null 
+                    ? Column(children: sections!) // If sections is passed, layout controls it automatically. We use raw column here because we'll rely on SbSection's native margins.
+                    : child ?? const SizedBox(),
               )
             : Padding(
                 padding: usePadding 
                     ? const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal, vertical: AppSpacing.screenVertical) 
                     : EdgeInsets.zero,
-                child: child,
+                child: sections != null 
+                    ? Column(children: sections!)
+                    : child ?? const SizedBox(),
               ),
       ),
     );

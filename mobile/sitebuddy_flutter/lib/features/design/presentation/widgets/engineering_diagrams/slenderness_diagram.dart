@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:flutter/material.dart';
 
 class SlendernessDiagram extends StatelessWidget {
   final double slendernessX;
@@ -24,18 +24,19 @@ class SlendernessDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final axisColor = isDark ? Colors.white70 : Colors.black87;
-    final diagramColor = isDark ? Colors.blue.shade300 : Colors.blue.shade600;
+    final theme = Theme.of(context);
+    final axisColor = theme.brightness == Brightness.dark ? Colors.white70 : Colors.black87;
+    final diagramColor = theme.colorScheme.primary;
+    final labelStyle = AppTextStyles.caption(context).copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
 
     return Container(
       padding: AppLayout.paddingMedium,
-
       child: AspectRatio(
-        aspectRatio: 2.5, // Balanced ratio for slenderness visualization
+        aspectRatio: 2.5,
         child: Row(
           children: [
-            // Visual Illustration
             Expanded(
               flex: 3,
               child: CustomPaint(
@@ -47,10 +48,10 @@ class SlendernessDiagram extends StatelessWidget {
                   isCircular: isCircular,
                   axisColor: axisColor,
                   diagramColor: diagramColor,
+                  labelStyle: labelStyle,
                 ),
               ),
             ),
-            // Values Labels
             Expanded(
               flex: 2,
               child: Column(
@@ -97,9 +98,9 @@ class _ValueLabel extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(color: Colors.grey),
+          style: AppTextStyles.caption(context),
         ),
-        Text(value, style: AppTextStyles.cardTitle.copyWith(color: color)),
+        Text(value, style: AppTextStyles.cardTitle(context).copyWith(color: color)),
       ],
     );
   }
@@ -112,6 +113,7 @@ class _SlendernessPainter extends CustomPainter {
   final double d;
   final bool isCircular;
   final Color axisColor;
+  final TextStyle labelStyle;
   final Color diagramColor;
 
   _SlendernessPainter({
@@ -122,6 +124,7 @@ class _SlendernessPainter extends CustomPainter {
     required this.isCircular,
     required this.axisColor,
     required this.diagramColor,
+    required this.labelStyle,
   });
 
   @override
@@ -136,15 +139,12 @@ class _SlendernessPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.5;
 
-    // Draw simple column vertical line (representing effective length)
     final top = Offset(size.width * 0.3, size.height * 0.1);
     final bottom = Offset(size.width * 0.3, size.height * 0.9);
     canvas.drawLine(top, bottom, diagramPaint);
 
-    // Draw dimension lines
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
-    // lex label
     _drawDimension(
       canvas,
       Offset(size.width * 0.1, size.height * 0.1),
@@ -154,7 +154,6 @@ class _SlendernessPainter extends CustomPainter {
       textPainter,
     );
 
-    // Cross-section view at top
     final centerX = size.width * 0.7;
     final centerY = size.height * 0.5;
     final boxSize = size.width * 0.2;
@@ -204,11 +203,9 @@ class _SlendernessPainter extends CustomPainter {
     TextPainter tp,
   ) {
     canvas.drawLine(start, end, paint);
-    // Arrows (simple)
-    // ...
     tp.text = TextSpan(
       text: label,
-      style: TextStyle(color: axisColor),
+      style: labelStyle,
     );
     tp.layout();
     tp.paint(

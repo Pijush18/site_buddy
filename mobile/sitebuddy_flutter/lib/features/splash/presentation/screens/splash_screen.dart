@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,9 +71,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             // App Name
             Text(
               'SiteBuddy',
-              style: TextStyle(
-                fontSize: 32, // headlineMedium equivalent
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.screenTitle(context).copyWith(
+                fontSize: 32,
                 color: colorScheme.primary,
               ),
             ),
@@ -82,8 +81,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             // Tagline
             Text(
               'Civil Engineering Intelligence',
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -97,9 +95,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             const SizedBox(height: AppSpacing.lg * 2), // Replaced AppLayout.vGap48
 
             // Footer
-            const Text(
+            Text(
               '© Pijush Debbarma',
-              style: TextStyle(fontSize: 12), // bodySmall equivalent
+              style: AppTextStyles.caption(context),
             ),
             const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
           ],

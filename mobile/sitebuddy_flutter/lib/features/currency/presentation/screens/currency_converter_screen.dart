@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/app_number_field.dart';
@@ -26,8 +26,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
           children: [
             Text(
               'Converted Amount',
-              style: TextStyle(
-                fontSize: AppFontSizes.tab,
+              style: AppTextStyles.caption(context).copyWith(
                 color: colorScheme.secondary,
               ),
             ),
@@ -36,9 +35,8 @@ class CurrencyConverterScreen extends ConsumerWidget {
               state.convertedAmount != null
                   ? state.convertedAmount!.toStringAsFixed(2)
                   : '-',
-              style: TextStyle(
-                fontSize: 32, // headlineLarge equivalent
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.screenTitle(context).copyWith(
+                fontSize: 32,
                 color: colorScheme.primary,
               ),
             ),
@@ -47,16 +45,14 @@ class CurrencyConverterScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
             Text(
               'Rate: ${state.rate?.toStringAsFixed(6) ?? '-'}',
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
             Text(
               'Last Updated: ${state.lastUpdated != null ? state.lastUpdated!.toLocal().toString().split('.')[0] : '-'}',
-              style: TextStyle(
-                fontSize: AppFontSizes.tab,
+              style: AppTextStyles.caption(context).copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -71,12 +67,9 @@ class CurrencyConverterScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
-          const Text(
+          Text(
             'Market Exchange Rates',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.sectionTitle(context),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
@@ -94,8 +87,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'From',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
+                      style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -126,8 +118,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'To',
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
+                      style: AppTextStyles.caption(context).copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -149,8 +140,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
           if (state.error != null) ...[
             Text(
               state.error!,
-              style: TextStyle(
-                fontSize: AppFontSizes.subtitle,
+              style: AppTextStyles.body(context).copyWith(
                 color: theme.colorScheme.error,
               ),
               textAlign: TextAlign.center,

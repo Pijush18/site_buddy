@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -26,7 +26,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
           children: [
             Text(
               'Components Lab',
-              style: SbTextStyles.title(context),
+              style: AppTextStyles.sectionTitle(context),
             ),
             Row(
               children: [
@@ -48,7 +48,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap24,
 
         // --- BUTTONS ---
-        Text('Buttons', style: SbTextStyles.title(context)),
+        Text('Buttons', style: AppTextStyles.sectionTitle(context)),
         AppLayout.vGap16,
         Wrap(
           spacing: AppLayout.pMedium,
@@ -78,7 +78,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap32,
 
         // --- CARDS ---
-        Text('Containers', style: SbTextStyles.title(context)),
+        Text('Containers', style: AppTextStyles.sectionTitle(context)),
         AppLayout.vGap16,
         Row(
           children: [
@@ -89,7 +89,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   children: [
                     Text(
                       'SbCard',
-                      style: SbTextStyles.body(context),
+                      style: AppTextStyles.body(context),
                     ),
                     AppLayout.vGap8,
                     const Text(
@@ -109,7 +109,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   children: [
                     Text(
                       'Common Decoration',
-                      style: SbTextStyles.body(context),
+                      style: AppTextStyles.body(context),
                     ),
                     AppLayout.vGap8,
                     const Text('Direct use of AppLayout.sbCommonDecoration.'),
@@ -122,7 +122,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
         AppLayout.vGap32,
 
         // --- FORMS ---
-        Text('Form Inputs', style: SbTextStyles.title(context)),
+        Text('Form Inputs', style: AppTextStyles.sectionTitle(context)),
         AppLayout.vGap16,
         SbInput(
           label: 'Standard Input',

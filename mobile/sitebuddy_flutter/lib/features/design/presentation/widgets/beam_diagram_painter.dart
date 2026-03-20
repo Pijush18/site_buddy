@@ -10,7 +10,7 @@ class BeamDiagramPainter extends CustomPainter {
   final String label;
   final Color axisColor;
   final Color labelColor;
-  final TextTheme textTheme;
+  final TextStyle labelStyle;
   final Color primaryColor;
   final Color warningColor;
 
@@ -20,7 +20,7 @@ class BeamDiagramPainter extends CustomPainter {
     required this.label,
     required this.axisColor,
     required this.labelColor,
-    required this.textTheme,
+    required this.labelStyle,
     required this.primaryColor,
     required this.warningColor,
   });
@@ -78,7 +78,7 @@ class BeamDiagramPainter extends CustomPainter {
     final textPainter = TextPainter(
       text: TextSpan(
         text: label,
-        style: textTheme.labelSmall?.copyWith(color: labelColor),
+        style: labelStyle.copyWith(color: labelColor),
       ),
       textDirection: TextDirection.ltr,
     );

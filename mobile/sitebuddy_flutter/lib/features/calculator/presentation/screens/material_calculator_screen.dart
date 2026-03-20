@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -130,8 +130,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,
@@ -179,7 +178,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.concreteVolume.toStringAsFixed(3)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -187,9 +186,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: colorScheme.primary,
                 ),
               ),
@@ -199,7 +196,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.sandVolume.toStringAsFixed(3)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -207,7 +204,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.aggregateVolume.toStringAsFixed(3)} m³',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             const Divider(),
@@ -217,9 +214,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.steelWeight.toStringAsFixed(1)} kg',
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: result.steelWeight > 0 ? colorScheme.secondary : null,
                 ),
               ),
@@ -229,7 +224,7 @@ class _ResultSection extends StatelessWidget {
               onTap: () {},
               trailing: Text(
                 '${result.bindingWire.toStringAsFixed(2)} kg',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             if (result.steelWeight == 0)
@@ -237,9 +232,7 @@ class _ResultSection extends StatelessWidget {
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(
                   EngineeringTerms.steelRatioZeroNote,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: colorScheme.onSurfaceVariant,
+                  style: AppTextStyles.caption(context).copyWith(
                     fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.center,
@@ -250,12 +243,11 @@ class _ResultSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(EngineeringTerms.mixGradeLabel,
-                    style: TextStyle(fontSize: AppFontSizes.tab)),
+                Text(EngineeringTerms.mixGradeLabel,
+                    style: AppTextStyles.caption(context)),
                 Text(
                   result.concreteGrade,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
+                  style: AppTextStyles.caption(context).copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -276,8 +268,7 @@ class _IsCodeNote extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Text(
       EngineeringTerms.concreteCodeRef,
-      style: TextStyle(
-        fontSize: AppFontSizes.tab,
+      style: AppTextStyles.caption(context).copyWith(
         color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         fontStyle: FontStyle.italic,
       ),

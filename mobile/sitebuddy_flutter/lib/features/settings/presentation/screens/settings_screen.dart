@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/widgets/segmented_toggle.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
@@ -24,9 +24,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScreenWrapper(
       title: AppStrings.settings,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      sections: [
           // --- SECTION 1: ACCOUNT ---
           SbSection(
             title: AppStrings.account,
@@ -236,9 +234,8 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg), // Bottom padding
-        ],
-      ),
+          // Bottom padding structurally absorbed by AppScreenWrapper/SbSection natively
+      ],
     );
   }
 
@@ -260,11 +257,11 @@ class SettingsScreen extends StatelessWidget {
                 subscription.isPremium,
               ),
               loading: () => _buildSmallLoadingState(),
-              error: (e, _) => _buildSmallErrorState(ErrorStrings.syncError),
+              error: (e, _) => _buildSmallErrorState(context, ErrorStrings.syncError),
             );
           },
           loading: () => _buildSmallLoadingState(),
-          error: (e, _) => _buildSmallErrorState("Sync error"),
+          error: (e, _) => _buildSmallErrorState(context, "Sync error"),
         );
       },
     );
@@ -278,92 +275,88 @@ class SettingsScreen extends StatelessWidget {
     bool isPremium,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Column(
-      children: [
-        SbCard(
-          padding: const EdgeInsets.all(AppSpacing.lg), // Replaced AppLayout.paddingLg
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 60,
-                height: 60,
-                child: Icon(SbIcons.account, size: 30, color: Colors.grey),
-              ),
-              const SizedBox(width: AppSpacing.md), // Replaced AppLayout.hGap16
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      AppStrings.developerName,
-                      style: TextStyle(
-                        fontSize: AppFontSizes.title,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: -0.2,
+    return SbSection(
+      child: Column(
+        children: [
+          SbCard(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: Icon(SbIcons.account, size: 30, color: Colors.grey),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.developerName,
+                        style: AppTextStyles.sectionTitle(context),
                       ),
-                    ),
-                    Text(
-                      user.email.isEmpty ? AppStrings.noEmailRegistered : user.email,
-                      style: TextStyle(
-                        fontSize: AppFontSizes.tab,
-                        color: colorScheme.onSurfaceVariant,
+                      Text(
+                        user.email.isEmpty
+                            ? AppStrings.noEmailRegistered
+                            : user.email,
+                        style: AppTextStyles.body(context, secondary: true),
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xs,
-                      ),
-                      child: Text(
-                        (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
-                            .toUpperCase(),
-                        style: TextStyle(
-                          fontSize: AppFontSizes.tab,
-                          color: isPremium
-                              ? colorScheme.primary
-                              : colorScheme.onSurfaceVariant,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
+                      const SizedBox(height: AppSpacing.sm),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.sm,
+                          vertical: AppSpacing.xs,
+                        ),
+                        child: Text(
+                          (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
+                              .toUpperCase(),
+                          style: AppTextStyles.caption(context).copyWith(
+                            color: isPremium
+                                ? colorScheme.primary
+                                : colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-        SbCard(
-          padding: EdgeInsets.zero,
-          child: Column(
-            children: [
-              SbSettingsTile(
-                icon: SbIcons.profile,
-                title: AppStrings.editProfile,
-                onTap: () => debugPrint("Profile"),
-              ),
-              const Divider(height: 1, indent: 56),
-              SbSettingsTile(
-                icon: SbIcons.payments,
-                title: AppStrings.subscriptionBilling,
-                onTap: () => context.push('/subscription'),
-              ),
-              const Divider(height: 1, indent: 56),
-              SbSettingsTile(
-                icon: SbIcons.logout,
-                title: AppStrings.logout,
-                iconColor: colorScheme.error,
-                onTap: () async {
-                  await ref.read(authRepositoryProvider).logout();
-                  if (context.mounted) context.go('/login');
-                },
-              ),
-            ],
+          const SizedBox(height: AppSpacing.md),
+          SbCard(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                SbSettingsTile(
+                  icon: SbIcons.profile,
+                  title: AppStrings.editProfile,
+                  onTap: () => debugPrint("Profile"),
+                ),
+                const Divider(height: 1, indent: 56),
+                SbSettingsTile(
+                  icon: SbIcons.payments,
+                  title: AppStrings.subscriptionBilling,
+                  onTap: () => context.push('/subscription'),
+                ),
+                const Divider(height: 1, indent: 56),
+                SbSettingsTile(
+                  icon: SbIcons.logout,
+                  title: AppStrings.logout,
+                  iconColor: colorScheme.error,
+                  onTap: () async {
+                    await ref.read(authRepositoryProvider).logout();
+                    if (context.mounted) context.go('/login');
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -376,14 +369,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSmallErrorState(String message) {
+  Widget _buildSmallErrorState(BuildContext context, String message) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md), // Replaced AppLayout.pMedium
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),
           const SizedBox(width: AppSpacing.sm), // Replaced AppLayout.hGap12
-          Text(message, style: const TextStyle(color: Colors.red)),
+          Text(message, style: AppTextStyles.body(context).copyWith(color: Colors.red)),
         ],
       ),
     );
@@ -415,7 +408,7 @@ class SettingsScreen extends StatelessWidget {
                   const SnackBar(content: Text(AppStrings.settingsResetToDefaults)),
                 );
               },
-              child: const Text(AppStrings.reset, style: TextStyle(color: Colors.red)),
+              child: Text(AppStrings.reset, style: AppTextStyles.body(context).copyWith(color: Colors.red)),
             ),
         ],
       ),

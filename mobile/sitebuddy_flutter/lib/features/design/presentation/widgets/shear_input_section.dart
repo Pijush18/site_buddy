@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -116,8 +117,7 @@ class ShearInputSection extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.caption(context).copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
         ),

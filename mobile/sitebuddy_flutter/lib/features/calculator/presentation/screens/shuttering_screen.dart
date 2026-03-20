@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -98,8 +98,7 @@ class ShutteringScreen extends ConsumerWidget {
           ],
           Text(
             EngineeringTerms.shutteringNote,
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
+            style: AppTextStyles.caption(context).copyWith(
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
               fontStyle: FontStyle.italic,
             ),
@@ -120,9 +119,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label.toUpperCase(),
-      style: TextStyle(
-        fontSize: AppFontSizes.title,
-        fontWeight: FontWeight.w600,
+      style: AppTextStyles.sectionTitle(context).copyWith(
         color: Theme.of(context).colorScheme.primary,
         letterSpacing: 1.1,
       ),
@@ -144,8 +141,7 @@ class _ErrorBanner extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Text(
           message,
-          style: TextStyle(
-            fontSize: AppFontSizes.subtitle,
+          style: AppTextStyles.body(context).copyWith(
             color: colorScheme.error,
           ),
           textAlign: TextAlign.center,
@@ -168,9 +164,7 @@ class _ResultCard extends StatelessWidget {
         children: [
           Text(
             EngineeringTerms.resultSummary,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
               letterSpacing: 1.2,
             ),
@@ -183,11 +177,9 @@ class _ResultCard extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.primary,
-              ),
+              style: AppTextStyles.sectionTitle(context).copyWith(
+              color: colorScheme.primary,
+            ),
             ),
           ),
           SbListItemTile(
@@ -195,7 +187,7 @@ class _ResultCard extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
-              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              style: AppTextStyles.body(context),
             ),
           ),
           SbListItemTile(
@@ -203,7 +195,7 @@ class _ResultCard extends StatelessWidget {
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.depth} m',
-              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              style: AppTextStyles.body(context),
             ),
           ),
         ],

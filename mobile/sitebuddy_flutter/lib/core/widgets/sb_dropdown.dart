@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 class SbDropdown<T> extends StatelessWidget {
   final T? value;
@@ -39,7 +39,7 @@ class SbDropdown<T> extends StatelessWidget {
             SbIcons.chevronDown,
             color: colorScheme.onSurfaceVariant,
           ),
-          style: SbTextStyles.body(context).copyWith(color: colorScheme.onSurface),
+          style: AppTextStyles.body(context).copyWith(color: colorScheme.onSurface),
           dropdownColor: colorScheme.surface,
           borderRadius: AppLayout.borderRadiusInput,
           items: items.map((T item) {
@@ -47,7 +47,7 @@ class SbDropdown<T> extends StatelessWidget {
               value: item,
               child: Text(
                 itemLabelBuilder(item),
-                style: SbTextStyles.body(context).copyWith(color: colorScheme.onSurface),
+                style: AppTextStyles.body(context).copyWith(color: colorScheme.onSurface),
               ),
             );
           }).toList(),

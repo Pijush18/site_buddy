@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -23,14 +23,14 @@ class HomeHeaderSection extends StatelessWidget {
             children: [
               Text(
                 l10n.readyToBuild,
-                style: SbTextStyles.body(context).copyWith(
+                style: AppTextStyles.body(context).copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               AppLayout.vGap4,
               Text(
                 l10n.appName,
-                style: SbTextStyles.headlineLarge(context),
+                style: AppTextStyles.screenTitle(context).copyWith(fontSize: 32),
               ),
             ],
           ),

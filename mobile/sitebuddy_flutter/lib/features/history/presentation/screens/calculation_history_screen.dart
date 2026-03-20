@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
@@ -31,7 +31,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
         error: (err, stack) => Center(
           child: Text(
             'Error loading history: $err',
-            style: const TextStyle(fontSize: AppFontSizes.subtitle),
+            style: AppTextStyles.body(context),
           ),
         ),
         data: (entries) {

@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -59,9 +59,7 @@ class _DesignCalculationScreenState
         children: [
           Text(
             'Step 4 of 6: Structural Design',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -93,20 +91,14 @@ class _DesignCalculationScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Design Configuration',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.title,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyles.sectionTitle(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap12 (closest standard)
                 Text(
                   'Design Method',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyles.caption(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbCard(
@@ -130,19 +122,13 @@ class _DesignCalculationScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Auto-calculate Steel %',
-                            style: TextStyle(
-                              fontSize: AppFontSizes.subtitle,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: AppTextStyles.cardTitle(context),
                           ),
                           Text(
                             'Automatically find minimum steel',
-                            style: TextStyle(
-                              fontSize: AppFontSizes.tab,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
+                            style: AppTextStyles.caption(context),
                           ),
                         ],
                       ),

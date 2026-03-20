@@ -62,9 +62,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     'Steel Arrangement',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: AppTextStyles.caption(context),
                   ),
                   AppLayout.vGap8,
                   Flexible(
@@ -72,7 +70,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                       '$numBars bars Ø${mainBarDia.toInt()}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.cardTitle,
+                      style: AppTextStyles.cardTitle(context),
                     ),
                   ),
                   AppLayout.vGap16,
@@ -80,9 +78,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     'Total Steel Area',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: AppTextStyles.caption(context),
                   ),
                   AppLayout.vGap4,
                   Flexible(
@@ -90,7 +86,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                       'Ast = ${ast.toInt()} mm²',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.cardTitle.copyWith(
+                      style: AppTextStyles.cardTitle(context).copyWith(
                         color: colorScheme.primary,
                       ),
                     ),

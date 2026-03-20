@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -92,7 +93,7 @@ class _OptimizationRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(option.title, style: const TextStyle(fontWeight: FontWeight.w600)),
+            Text(option.title, style: AppTextStyles.caption(context).copyWith(fontWeight: FontWeight.w600)),
             Text(
               rankLabel,
               style: TextStyle(
@@ -163,9 +164,8 @@ class _Bar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 label,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                style: AppTextStyles.caption(context).copyWith(
+                  color: label.toLowerCase().contains('safe') ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -198,7 +198,7 @@ class _LegendItem extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         Text(
           label,
-          style: const TextStyle(fontSize: 10),
+          style: AppTextStyles.caption(context).copyWith(fontSize: 10),
         ),
       ],
     );

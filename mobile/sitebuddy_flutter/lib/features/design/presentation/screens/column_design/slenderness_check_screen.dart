@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,9 +27,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 3 of 6: Slenderness Classification',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -51,12 +49,9 @@ class SlendernessCheckScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
-          const Text(
+          Text(
             'Geometric Visualization',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
-            ),
+          style: AppTextStyles.sectionTitle(context),
           ),
           const SizedBox(height: AppSpacing.md), // Replaced AppLayout.elementGap
           SlendernessDiagram(

@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -84,10 +85,8 @@ class WorkDashboardScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   t.status.name.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 10,
+                  style: AppTextStyles.caption(context).copyWith(
                     fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -129,8 +128,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           ),
           child: Text(
             m.status.name.toUpperCase(),
-            style: TextStyle(
-              fontSize: 10,
+            style: AppTextStyles.caption(context).copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.secondary,
             ),

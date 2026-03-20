@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: app_number_field.dart
@@ -64,7 +64,7 @@ class AppNumberField extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: SbTextStyles.caption(context).copyWith(
+                style: AppTextStyles.caption(context).copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -88,7 +88,7 @@ class AppNumberField extends StatelessWidget {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: onChanged,
           validator: validator,
-          style: SbTextStyles.title(context).copyWith(
+          style: AppTextStyles.sectionTitle(context).copyWith(
             fontWeight: FontWeight.w500,
             color: colorScheme.onSurface,
           ),

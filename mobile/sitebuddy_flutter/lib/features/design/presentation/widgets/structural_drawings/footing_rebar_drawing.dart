@@ -57,7 +57,7 @@ class FootingRebarDrawing extends StatelessWidget {
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               'Footing Detail: ${length.toInt()}x${width.toInt()} mm',
-              style: AppTextStyles.caption.copyWith(color: textColor),
+              style: AppTextStyles.caption(context).copyWith(color: textColor),
             ),
           ),
         ],

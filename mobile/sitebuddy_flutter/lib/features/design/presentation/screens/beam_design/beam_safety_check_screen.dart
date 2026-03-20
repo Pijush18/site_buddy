@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -51,9 +51,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         children: [
           Text(
             'Step 5 of 5: Engineering Validation',
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.screenTitle(context).copyWith(
               color: colorScheme.primary,
             ),
           ),
@@ -303,17 +301,13 @@ class _OverallStatusBadge extends StatelessWidget {
               children: [
                 Text(
                   SafetyUtils.getLabel(status).toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyles.sectionTitle(context),
                 ),
                 Text(
                   status == SafetyStatus.safe
                       ? 'Verified as per IS 456 code standards'
                       : 'Fails to meet safety requirements',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
+                  style: AppTextStyles.caption(context).copyWith(
                     color: color.withValues(alpha: 0.7),
                   ),
                 ),

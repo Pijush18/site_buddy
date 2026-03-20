@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -143,9 +143,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           children: [
             Text(
               'Step 1 of 5: Geometry & Materials',
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.screenTitle(context).copyWith(
                 color: colorScheme.primary,
               ),
             ),
@@ -161,12 +159,9 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     padding: EdgeInsets.zero,
                   ),
 
-                  const Text(
+                  Text(
                     'Beam Type',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.tab,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.cardTitle(context),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   SbDropdown<BeamType>(
@@ -279,10 +274,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: AppFontSizes.tab,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.cardTitle(context),
         ),
         const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
         SbDropdown<String>(

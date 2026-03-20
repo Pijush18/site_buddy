@@ -64,7 +64,7 @@ class BeamRebarDrawing extends StatelessWidget {
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               'Beam Section: ${width.toInt()}x${depth.toInt()} mm',
-              style: AppTextStyles.caption.copyWith(color: textColor),
+              style: AppTextStyles.caption(context).copyWith(color: textColor),
             ),
           ),
         ],

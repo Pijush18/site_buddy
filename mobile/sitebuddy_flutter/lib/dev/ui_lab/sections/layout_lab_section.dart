@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class LayoutLabSection extends StatelessWidget {
       children: [
         Text(
           'Layout & Grid System',
-          style: SbTextStyles.title(context),
+          style: AppTextStyles.sectionTitle(context),
         ),
         AppLayout.vGap16,
         const Text(
@@ -96,7 +96,7 @@ class LayoutLabSection extends StatelessWidget {
           ),
         ),
         AppLayout.vGap16,
-        Text('Layout Rules:', style: SbTextStyles.body(context)),
+        Text('Layout Rules:', style: AppTextStyles.body(context)),
         const Padding(
           padding: EdgeInsets.only(
             left: AppLayout.pSmall,

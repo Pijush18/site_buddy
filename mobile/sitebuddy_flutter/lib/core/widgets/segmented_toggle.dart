@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 
 import 'package:site_buddy/core/theme/app_layout.dart';
 
@@ -60,7 +60,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                   child: Text(
                     labelBuilder(item),
                     maxLines: 1,
-                    style: SbTextStyles.caption(context).copyWith(
+                    style: AppTextStyles.caption(context).copyWith(
                       color: isSelected
                           ? colorScheme.onPrimary
                           : colorScheme.primary,

@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
@@ -41,8 +41,7 @@ class ProjectListScreen extends ConsumerWidget {
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     isOnline ? 'Synced' : 'Offline',
-                    style: TextStyle(
-                      fontSize: AppFontSizes.tab,
+                    style: AppTextStyles.caption(context).copyWith(
                       color: isOnline ? AppColors.success(context) : AppColors.warning(context),
                     ),
                   ),
@@ -56,37 +55,45 @@ class ProjectListScreen extends ConsumerWidget {
       // SbSectionList centralizes the vertical rhythm (24px gap).
       child: SbSectionList(
         physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
         sections: [
           // ── SECTION 1: PRIMARY ACTION ──
-          SbButton.primary(
-            label: 'New Project',
-            icon: Icons.add,
-            onPressed: () => context.push('/projects/create'),
-            width: double.infinity,
+          SbSection(
+            child: SbButton.primary(
+              label: 'New Project',
+              icon: Icons.add,
+              onPressed: () => context.push('/projects/create'),
+              width: double.infinity,
+            ),
           ),
 
           // ── SECTION 2: DATA LIST ──
           if (projects.isEmpty)
-            SbEmptyState(
-              icon: Icons.folder_off_outlined,
-              title: 'No Projects Yet',
-              subtitle: 'Create your first civil engineering project to get started.',
-              actionLabel: 'New Project',
-              onAction: () => context.push('/projects/create'),
+            SbSection(
+              child: SbEmptyState(
+                icon: Icons.folder_off_outlined,
+                title: 'No Projects Yet',
+                subtitle: 'Create your first civil engineering project to get started.',
+                actionLabel: 'New Project',
+                onAction: () => context.push('/projects/create'),
+              ),
             )
           else
-            ...projects.map((project) {
-              final formattedDate = DateFormat('MMM dd, yyyy').format(project.createdAt);
-              return ProjectCard(
-                name: project.name,
-                date: formattedDate,
-                location: project.location,
-                logsCount: 0,
-                calcsCount: 0,
-                onTap: () => context.push('/projects/detail', extra: project),
-              );
-            }),
+            SbSection(
+              child: Column(
+                children: projects.map((project) {
+                  final formattedDate =
+                      DateFormat('MMM dd, yyyy').format(project.createdAt);
+                  return ProjectCard(
+                    name: project.name,
+                    date: formattedDate,
+                    location: project.location,
+                    logsCount: 0,
+                    calcsCount: 0,
+                    onTap: () => context.push('/projects/detail', extra: project),
+                  );
+                }).toList(),
+              ),
+            ),
         ],
       ),
     );

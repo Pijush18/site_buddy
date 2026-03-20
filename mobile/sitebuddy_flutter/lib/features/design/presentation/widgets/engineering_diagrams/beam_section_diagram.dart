@@ -1,167 +1,105 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
-import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
 class BeamSectionDiagram extends StatelessWidget {
-  final double span; // mm
-  final double width; // mm
-  final double depth; // mm
-  final String mu; // kNm
-  final String ast; // mm2
-  final String stirrupInfo;
+  final double b;
+  final double d;
+  final double cover;
+  final List<double> rebars;
 
   const BeamSectionDiagram({
     super.key,
-    required this.span,
-    required this.width,
-    required this.depth,
-    required this.mu,
-    required this.ast,
-    required this.stirrupInfo,
+    required this.b,
+    required this.d,
+    required this.cover,
+    required this.rebars,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final axisColor = colorScheme.onSurfaceVariant;
-    final diagramColor = colorScheme.primary;
+    final theme = Theme.of(context);
+    final axisColor = theme.brightness == Brightness.dark ? Colors.white70 : Colors.black87;
+    final labelStyle = AppTextStyles.caption(context).copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
 
-    return Container(
-      height: 200,
-      padding: AppLayout.paddingMedium,
-
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: CustomPaint(
-              painter: _BeamPainter(
-                span: span,
-                width: width,
-                depth: depth,
-                axisColor: axisColor,
-                diagramColor: diagramColor,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _InfoItem(label: 'Mu', value: '$mu kNm', color: diagramColor),
-                AppLayout.vGap8,
-                _InfoItem(label: 'Ast', value: '$ast mm²', color: diagramColor),
-                AppLayout.vGap8,
-                _InfoItem(
-                  label: 'Stirrups',
-                  value: stirrupInfo,
-                  color: AppColors.success(context),
-                ),
-              ],
-            ),
-          ),
-        ],
+    return AspectRatio(
+      aspectRatio: 1.2,
+      child: CustomPaint(
+        painter: _BeamSectionPainter(
+          b: b,
+          d: d,
+          cover: cover,
+          rebars: rebars,
+          axisColor: axisColor,
+          labelStyle: labelStyle,
+          diagramColor: theme.colorScheme.primary,
+        ),
       ),
     );
   }
 }
 
-class _InfoItem extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color color;
-
-  const _InfoItem({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-        ),
-        Text(value, style: AppTextStyles.body.copyWith(color: color)),
-      ],
-    );
-  }
-}
-
-class _BeamPainter extends CustomPainter {
-  final double span;
-  final double width;
-  final double depth;
+class _BeamSectionPainter extends CustomPainter {
+  final double b;
+  final double d;
+  final double cover;
+  final List<double> rebars;
   final Color axisColor;
+  final TextStyle labelStyle;
   final Color diagramColor;
 
-  _BeamPainter({
-    required this.span,
-    required this.width,
-    required this.depth,
+  _BeamSectionPainter({
+    required this.b,
+    required this.d,
+    required this.cover,
+    required this.rebars,
     required this.axisColor,
     required this.diagramColor,
+    required this.labelStyle,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final axisPaint = Paint()
+    final paint = Paint()
       ..color = axisColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
+      ..strokeWidth = 1.5;
 
-    final diagramPaint = Paint()
+    final rebarPaint = Paint()
       ..color = diagramColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
+      ..style = PaintingStyle.fill;
 
-    // Draw beam longitudinal view
-    final beamRect = Rect.fromLTWH(
-      size.width * 0.1,
-      size.height * 0.4,
-      size.width * 0.8,
-      size.height * 0.2,
+    // Draw beam rectangle
+    final rect = Rect.fromLTWH(
+      size.width * 0.2,
+      size.height * 0.1,
+      size.width * 0.6,
+      size.height * 0.8,
     );
-    canvas.drawRect(beamRect, diagramPaint);
+    canvas.drawRect(rect, paint);
 
-    // Supports
-    canvas.drawPath(
-      Path()
-        ..moveTo(beamRect.left, beamRect.bottom)
-        ..lineTo(beamRect.left - 5, beamRect.bottom + 10)
-        ..lineTo(beamRect.left + 5, beamRect.bottom + 10)
-        ..close(),
-      axisPaint,
-    );
-    canvas.drawPath(
-      Path()
-        ..moveTo(beamRect.right, beamRect.bottom)
-        ..lineTo(beamRect.right - 5, beamRect.bottom + 10)
-        ..lineTo(beamRect.right + 5, beamRect.bottom + 10)
-        ..close(),
-      axisPaint,
-    );
+    // Draw dimension labels
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
-    // Span label
-    final tp = TextPainter(textDirection: TextDirection.ltr);
-    tp.text = TextSpan(
-      text: 'L = ${(span / 1000).toStringAsFixed(2)} m',
-      style: TextStyle(color: axisColor),
-    );
+    // Width label
+    _drawLabel(canvas, Offset(size.width * 0.5, size.height * 0.05), 'b = ${b.toInt()}mm', textPainter);
+
+    // Depth label
+    _drawLabel(canvas, Offset(size.width * 0.9, size.height * 0.5), 'D = ${d.toInt()}mm', textPainter);
+
+    // Draw rebars (simplified visualization)
+    final rebarY = rect.bottom - (cover / d) * rect.height;
+    for (int i = 0; i < rebars.length; i++) {
+      final rebarX = rect.left + (i + 1) * (rect.width / (rebars.length + 1));
+      canvas.drawCircle(Offset(rebarX, rebarY), 4, rebarPaint);
+    }
+  }
+
+  void _drawLabel(Canvas canvas, Offset position, String text, TextPainter tp) {
+    tp.text = TextSpan(text: text, style: labelStyle);
     tp.layout();
-    tp.paint(canvas, Offset(size.width * 0.4, beamRect.top - 15));
-
-    // Cross section view
-    // (Simplified)
+    tp.paint(canvas, position - Offset(tp.width / 2, tp.height / 2));
   }
 
   @override

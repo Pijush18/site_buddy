@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +22,7 @@ class AppReportDialog extends StatelessWidget {
       content: SingleChildScrollView(
         child: SelectableText(
           content,
-          style: const TextStyle(fontFamily: 'monospace'),
+          style: AppTextStyles.body(context).copyWith(fontFamily: 'monospace'),
         ),
       ),
       confirmLabel: 'Close',
@@ -44,7 +44,7 @@ class AppReportDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style: SbTextStyles.title(context)),
+                Text(title, style: AppTextStyles.sectionTitle(context)),
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () => context.pop(),
@@ -56,7 +56,7 @@ class AppReportDialog extends StatelessWidget {
               child: SingleChildScrollView(
                 child: SelectableText(
                   content,
-                  style: SbTextStyles.body(context).copyWith(fontFamily: 'monospace'),
+                  style: AppTextStyles.body(context).copyWith(fontFamily: 'monospace'),
                 ),
               ),
             ),

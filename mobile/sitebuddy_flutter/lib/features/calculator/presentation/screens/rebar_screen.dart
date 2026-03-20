@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +44,7 @@ class RebarScreen extends ConsumerWidget {
           children: [
             Text(
               EngineeringTerms.resultSummary,
-              style: TextStyle(
-                fontSize: AppFontSizes.title,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.sectionTitle(context).copyWith(
                 color: colorScheme.primary,
                 letterSpacing: 1.2,
               ),
@@ -59,9 +57,7 @@ class RebarScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: colorScheme.primary,
                 ),
               ),
@@ -71,7 +67,7 @@ class RebarScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
-                style: const TextStyle(fontSize: AppFontSizes.subtitle),
+                style: AppTextStyles.body(context),
               ),
             ),
             SbListItemTile(
@@ -79,9 +75,7 @@ class RebarScreen extends ConsumerWidget {
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.cardTitle(context).copyWith(
                   color: colorScheme.primary,
                 ),
               ),
@@ -100,9 +94,7 @@ class RebarScreen extends ConsumerWidget {
         children: [
           Text(
             EngineeringTerms.rebarRequirements,
-            style: TextStyle(
-              fontSize: AppFontSizes.title,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.sectionTitle(context).copyWith(
               color: colorScheme.primary,
               letterSpacing: 1.1,
             ),
@@ -173,8 +165,7 @@ class RebarScreen extends ConsumerWidget {
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.error,
                 ),
                 textAlign: TextAlign.center,

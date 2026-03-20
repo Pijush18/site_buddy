@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +41,7 @@ class AiHistoryScreen extends ConsumerWidget {
       return Center(
         child: Text(
           state.error!,
-          style: TextStyle(color: colorScheme.error),
+          style: AppTextStyles.body(context).copyWith(color: colorScheme.error),
           textAlign: TextAlign.center,
         ),
       );

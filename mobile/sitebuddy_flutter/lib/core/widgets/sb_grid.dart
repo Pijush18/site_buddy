@@ -19,9 +19,9 @@ class SbGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: 12.0, // Tighter horizontal gap
-      mainAxisSpacing: AppSpacing.md, // 16px vertical gap
-      childAspectRatio: 1.3, // Shorter, more compact tiles
+      crossAxisSpacing: AppSpacing.sm, // 8px horizontal gap
+      mainAxisSpacing: AppSpacing.sm, // 8px vertical gap
+      childAspectRatio: 1.2, // Optimized for high-density labels
       children: children,
     );
   }

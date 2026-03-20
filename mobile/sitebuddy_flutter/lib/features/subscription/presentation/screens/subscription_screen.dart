@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
@@ -28,19 +28,15 @@ class SubscriptionScreen extends ConsumerWidget {
             _buildCurrentStatus(context, status),
             const SizedBox(height: AppSpacing.lg * 1.5), 
             if (!status.isPremium) ...[
-              const Text(
+              Text(
                 AppStrings.upgradeToPremium,
-                style: TextStyle(
-                  fontSize: AppFontSizes.title,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.screenTitle(context),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.sm), 
               Text(
                 AppStrings.unlockAIPower,
-                style: TextStyle(
-                  fontSize: AppFontSizes.subtitle,
+                style: AppTextStyles.body(context).copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
@@ -55,19 +51,15 @@ class SubscriptionScreen extends ConsumerWidget {
                     children: [
                       Icon(SbIcons.checkFilled, color: AppColors.success(context), size: 48),
                       const SizedBox(height: AppSpacing.md), 
-                      const Text(
+                      Text(
                         AppStrings.premiumUserStatus,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.subtitle,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.sectionTitle(context),
                       ),
                       const SizedBox(height: AppSpacing.sm), 
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: AppFontSizes.subtitle,
+                        style: AppTextStyles.body(context).copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -106,7 +98,7 @@ class SubscriptionScreen extends ConsumerWidget {
         ),
         child: Text(
           status.status.toUpperCase(),
-          style: TextStyle(
+          style: AppTextStyles.caption(context).copyWith(
             fontSize: 10,
             fontWeight: FontWeight.bold,
             color: isActive ? AppColors.success(context) : AppColors.warning(context),
@@ -133,19 +125,16 @@ class SubscriptionScreen extends ConsumerWidget {
               children: [
                 Text(
                   AppStrings.premiumLogic,
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.cardTitle(context).copyWith(
                     letterSpacing: 1.2,
                     color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm), 
-                const Text(
+                Text(
                   AppStrings.monthlyPrice,
-                  style: TextStyle(
+                  style: AppTextStyles.screenTitle(context).copyWith(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -182,7 +171,7 @@ class SubscriptionScreen extends ConsumerWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              style: AppTextStyles.body(context),
             ),
           ),
         ],
@@ -195,12 +184,9 @@ class SubscriptionScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           AppStrings.comparePlans,
-          style: TextStyle(
-            fontSize: AppFontSizes.subtitle,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTextStyles.sectionTitle(context),
         ),
         const SizedBox(height: AppSpacing.md), 
         Divider(color: colorScheme.outline), 
@@ -222,7 +208,7 @@ class SubscriptionScreen extends ConsumerWidget {
           Expanded(
             child: Text(
               feature,
-              style: const TextStyle(fontSize: AppFontSizes.subtitle),
+              style: AppTextStyles.body(context),
             ),
           ),
           Icon(

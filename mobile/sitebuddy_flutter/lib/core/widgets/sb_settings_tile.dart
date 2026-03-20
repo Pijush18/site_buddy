@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -51,9 +52,7 @@ class SbSettingsTile extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                        style: AppTextStyles.sectionTitle(context).copyWith(
                           color: colorScheme.onSurface,
                         ),
                       ),
@@ -64,8 +63,7 @@ class SbSettingsTile extends StatelessWidget {
                   const SizedBox(height: AppSpacing.sm),
                   Text(
                     subtitle!,
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.caption(context).copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),

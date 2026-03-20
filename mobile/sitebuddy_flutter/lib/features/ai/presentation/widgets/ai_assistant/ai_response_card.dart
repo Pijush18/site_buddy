@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -191,7 +191,7 @@ class _MiniActionButton extends StatelessWidget {
           const SizedBox(height: AppLayout.pSmall),
           Text(
             label,
-            style: SbTextStyles.caption(context).copyWith(color: colorScheme.primary),
+            style: AppTextStyles.caption(context).copyWith(color: colorScheme.primary),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -306,7 +306,7 @@ class _ToolSuggestionCard extends StatelessWidget {
           if (message != null) ...[
             Text(
               message!,
-              style: SbTextStyles.body(context),
+              style: AppTextStyles.body(context),
             ),
             const SizedBox(height: AppLayout.sm),
           ],
@@ -349,7 +349,7 @@ class _ErrorCard extends StatelessWidget {
           Expanded(
             child: Text(
               message,
-              style: SbTextStyles.body(context).copyWith(
+              style: AppTextStyles.body(context).copyWith(
                 color: colorScheme.error,
               ),
             ),

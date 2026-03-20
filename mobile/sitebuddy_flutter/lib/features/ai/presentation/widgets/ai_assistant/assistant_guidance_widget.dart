@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/ai/domain/entities/assistant_response.dart';
@@ -82,7 +82,7 @@ class _GuidanceCard extends StatelessWidget {
               const SizedBox(width: AppLayout.xs),
               Text(
                 title.toUpperCase(),
-                style: SbTextStyles.caption(context).copyWith(
+                style: AppTextStyles.caption(context).copyWith(
                   color: color,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.1,
@@ -91,7 +91,7 @@ class _GuidanceCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppLayout.md),
-          Text(message, style: SbTextStyles.body(context)),
+          Text(message, style: AppTextStyles.body(context)),
           if (items != null && items!.isNotEmpty) ...[
             const SizedBox(height: AppLayout.md),
             ...items!.map(
@@ -113,7 +113,7 @@ class _GuidanceCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item,
-                        style: SbTextStyles.bodySecondary(context).copyWith(
+                        style: AppTextStyles.body(context, secondary: true).copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                       ),

@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -60,7 +60,6 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
@@ -77,10 +76,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
         children: [
           Text(
             'Step 1 of 6: Geometry & Materials',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
@@ -91,12 +87,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: AppSpacing.md),
-                const Text(
+                Text(
                   'Section Type',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.cardTitle(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbDropdown<ColumnType>(
@@ -134,12 +127,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                   controller: _lengthController,
                 ),
                 const SizedBox(height: AppSpacing.md), // Replaced AppLayout.vGap16
-                const Text(
+                Text(
                   'End Condition',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.subtitle,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.cardTitle(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 SbDropdown<EndCondition>(
@@ -167,12 +157,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Concrete Grade',
-                            style: TextStyle(
-                              fontSize: AppFontSizes.subtitle,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: AppTextStyles.cardTitle(context),
                           ),
                           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                           SbDropdown<String>(
@@ -191,12 +178,9 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Steel Grade',
-                            style: TextStyle(
-                              fontSize: AppFontSizes.subtitle,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: AppTextStyles.cardTitle(context),
                           ),
                           const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                           SbDropdown<String>(

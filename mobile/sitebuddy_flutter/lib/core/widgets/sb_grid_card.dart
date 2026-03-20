@@ -3,6 +3,7 @@ import 'package:site_buddy/core/theme/app_layout.dart';
 
 import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_text_styles.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 class SbGridCard extends StatefulWidget {
   final IconData icon;
@@ -19,7 +20,7 @@ class SbGridCard extends StatefulWidget {
     required this.color,
     required this.onTap,
     this.isVibrant = false,
-    this.margin,
+    this.margin = EdgeInsets.zero,
   });
 
   @override
@@ -34,11 +35,10 @@ class _SbGridCardState extends State<SbGridCard> {
     final colorScheme = Theme.of(context).colorScheme;
 
     // Premium Border Logic
-    final currentBorderColor = widget.isVibrant 
-        ? colorScheme.onPrimary.withValues(alpha: 0.12) 
-        : colorScheme.outline;
+    // Sky Blue Border Hierarchy (High Visibility: 70% Opacity)
+    final currentBorderColor = AppColors.skyBlue.withValues(alpha: 0.7);
     
-    final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surface;
+    final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surfaceContainerHighest;
     final contentColor = widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurface;
 
     return AnimatedScale(
@@ -59,12 +59,12 @@ class _SbGridCardState extends State<SbGridCard> {
           onTapCancel: () => setState(() => _pressed = false),
           onTap: widget.onTap,
           child: AnimatedContainer(
-            margin: widget.margin ?? const EdgeInsets.all(AppSpacing.sm),
+            margin: widget.margin ?? EdgeInsets.zero,
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOut,
             decoration: BoxDecoration(
               borderRadius: AppLayout.borderRadiusCard,
-              border: Border.all(color: currentBorderColor, width: 1.2),
+              border: Border.all(color: currentBorderColor, width: 1.0),
               gradient: widget.isVibrant
                   ? LinearGradient(
                       colors: [
@@ -82,19 +82,22 @@ class _SbGridCardState extends State<SbGridCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // High-Contrast Clean Icon
-                  Icon(
-                    widget.icon,
-                    color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.primary,
-                    size: 24, 
+                  // High-Contrast Clean Icon with Optical Bias
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2), // Optical bias padding top: 2
+                    child: Icon(
+                      widget.icon,
+                      color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
+                      size: 22, 
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.itemGap), // Standardized gap
                   SizedBox(
-                    height: 40, // Fixed height constraint to ensure multiline/single line labels don't change card sizes.
+                    height: 48, // Fixed height constraint to ensure multiline/single line labels don't change card sizes.
                     child: Center(
                       child: Text(
                         widget.label,
-                        style: AppTextStyles.cardTitle.copyWith(
+                        style: AppTextStyles.cardTitle(context).copyWith(
                           color: contentColor,
                         ),
                         textAlign: TextAlign.center,

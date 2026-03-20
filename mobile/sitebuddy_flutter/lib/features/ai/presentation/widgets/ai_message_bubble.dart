@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_text_styles.dart';
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 /// FILE HEADER
 /// ----------------------------------------------
 /// File: ai_message_bubble.dart
@@ -50,13 +50,13 @@ class AiMessageBubble extends StatelessWidget {
 
             child: Text(
               message.text,
-              style: SbTextStyles.body(context).copyWith(color: textColor),
+              style: AppTextStyles.body(context).copyWith(color: textColor),
             ),
           ),
           AppLayout.vGap4,
           Text(
             _formatTime(message.timestamp),
-            style: SbTextStyles.caption(context).copyWith(
+            style: AppTextStyles.caption(context).copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),

@@ -1,5 +1,5 @@
+import 'package:site_buddy/core/theme/app_text_styles.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -24,8 +24,6 @@ class FootingReinforcementScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(footingDesignControllerProvider);
     final notifier = ref.read(footingDesignControllerProvider.notifier);
-    final colorScheme = Theme.of(context).colorScheme;
-
     return AppScreenWrapper(
       title: 'Reinforcement',
       actions: const [EducationalToggle()],
@@ -34,10 +32,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
         children: [
           Text(
             'Step 5 of 6: Steel Detailing',
-            style: TextStyle(
-              fontSize: AppFontSizes.tab,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyles.caption(context),
           ),
           const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
 
@@ -92,10 +87,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
               children: [
                 Text(
                   'Main Reinforcement (X-Direction)',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyles.caption(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 Row(
@@ -131,10 +123,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.lg), // Replaced AppLayout.vGap24
                 Text(
                   'Distribution Steel (Y-Direction)',
-                  style: TextStyle(
-                    fontSize: AppFontSizes.tab,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyles.caption(context),
                 ),
                 const SizedBox(height: AppSpacing.sm), // Replaced AppLayout.vGap8
                 Row(
