@@ -58,7 +58,7 @@ class SlabIllustrationWidget extends StatelessWidget {
               bottom: SbSpacing.md,
               right: SbSpacing.md,
               child: Container(
-                padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
 
                 child: Text(
                   type.label.toUpperCase(),

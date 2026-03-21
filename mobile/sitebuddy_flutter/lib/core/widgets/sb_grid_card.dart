@@ -18,14 +18,17 @@ class SbGridCard extends StatefulWidget {
     required this.color,
     required this.onTap,
     this.isVibrant = false,
-    this.margin = SbSpacing.zero,
+    this.margin = EdgeInsets.zero,
   });
 
-  @override
+@override
   State<SbGridCard> createState() => _SbGridCardState();
 }
 
 class _SbGridCardState extends State<SbGridCard> {
+  static const double _iconSize = 22.0; // Standard icon size for GridCard
+  static const double _labelHeight = 48.0; // Standard label container height
+  
   bool _pressed = false;
 
   @override
@@ -55,8 +58,8 @@ class _SbGridCardState extends State<SbGridCard> {
           onTapCancel: () => setState(() => _pressed = false),
           onTap: widget.onTap,
           child: AnimatedContainer(
-            margin: widget.margin ?? SbSpacing.zero,
-            padding: SbSpacing.paddingLG,
+            margin: widget.margin ?? EdgeInsets.zero,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOut,
             decoration: BoxDecoration(
@@ -78,16 +81,16 @@ class _SbGridCardState extends State<SbGridCard> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: SbSpacing.verticalXXS.copyWith(bottom: 0),
+                  padding: const EdgeInsets.only(top: SbSpacing.xxs),
                   child: Icon(
                     widget.icon,
                     color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
-                    size: 22, 
+                    size: _iconSize, 
                   ),
                 ),
                 const SizedBox(height: SbSpacing.sm),
                 SizedBox(
-                  height: 48,
+                  height: _labelHeight,
                   child: Center(
                     child: Text(
                       widget.label,

@@ -45,7 +45,7 @@ class SmartSuggestionsCard extends StatelessWidget {
           const SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
             (s) => Container(
-              padding: SbSpacing.verticalLG.copyWith(top: 0),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,7 +60,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                   ),
                   if (s.action.isNotEmpty)
                     Container(
-                      padding: SbSpacing.verticalSM.copyWith(bottom: 0),
+                      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm).copyWith(bottom: 0),
                       child: Text(
                         '➔ ${s.action}',
                         style: Theme.of(context).textTheme.labelMedium!,

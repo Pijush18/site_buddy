@@ -34,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
           SbSection(
             title: AppStrings.appearance,
             child: SbCard(
-              padding: SbSpacing.zero,
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   SbSettingsTile(
@@ -99,7 +99,7 @@ class SettingsScreen extends StatelessWidget {
           SbSection(
             title: AppStrings.engineeringStandards,
             child: SbCard(
-              padding: SbSpacing.zero,
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   SbSettingsTile(
@@ -132,7 +132,7 @@ class SettingsScreen extends StatelessWidget {
           SbSection(
             title: AppStrings.appBehavior,
             child: SbCard(
-              padding: SbSpacing.zero,
+              padding: EdgeInsets.zero,
               child: Consumer(
                 builder: (context, ref, _) {
                   final settings = ref.watch(settingsProvider);
@@ -174,7 +174,7 @@ class SettingsScreen extends StatelessWidget {
           SbSection(
             title: AppStrings.legal,
             child: SbCard(
-              padding: SbSpacing.zero,
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   SbSettingsTile(
@@ -203,7 +203,7 @@ class SettingsScreen extends StatelessWidget {
           SbSection(
             title: AppStrings.about,
             child: SbCard(
-              padding: SbSpacing.zero,
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   const SbSettingsTile(
@@ -278,7 +278,7 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           SbCard(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Row(
               children: [
                 const SizedBox(
@@ -303,7 +303,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: SbSpacing.sm),
                       Container(
-                        padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
+                        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                         child: Text(
                           (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
                               .toUpperCase(),
@@ -318,7 +318,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: SbSpacing.md),
           SbCard(
-            padding: SbSpacing.zero,
+            padding: EdgeInsets.zero,
             child: Column(
               children: [
                 SbSettingsTile(
@@ -351,7 +351,7 @@ class SettingsScreen extends StatelessWidget {
 
   Widget _buildSmallLoadingState() {
     return Container(
-      padding: SbSpacing.paddingMD,
+      padding: const EdgeInsets.all(SbSpacing.md),
       child: const Center(child: CircularProgressIndicator()),
     );
   }
@@ -359,7 +359,7 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSmallErrorState(BuildContext context, String message) {
     final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: SbSpacing.paddingMD,
+      padding: const EdgeInsets.all(SbSpacing.md),
       child: Row(
         children: [
           const Icon(Icons.error_outline, color: Colors.red, size: 20),

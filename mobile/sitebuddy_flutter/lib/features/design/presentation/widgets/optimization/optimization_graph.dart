@@ -160,7 +160,7 @@ class _Bar extends StatelessWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.paddingXS.copyWith(right: 0, top: 0, bottom: 0),
+            padding: const EdgeInsets.all(SbSpacing.xs),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(

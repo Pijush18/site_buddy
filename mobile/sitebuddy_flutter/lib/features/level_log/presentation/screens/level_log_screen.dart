@@ -68,8 +68,7 @@ class LevelLogScreen extends ConsumerWidget {
                 else
                   ListView.separated(
                     shrinkWrap: true,
-                    padding: SbSpacing.zero,
-                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg, horizontal: SbSpacing.md),
                     itemCount: state.entries.length,
                     separatorBuilder: (_, index) =>
                         const SizedBox(height: SbSpacing.lg),
@@ -104,11 +103,10 @@ class _EmptyState extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
-      child: Container(
-        padding: SbSpacing.verticalXXL,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: SbSpacing.xxl),
             Icon(
               SbIcons.list,
               size: 64,
@@ -126,7 +124,6 @@ class _EmptyState extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }
@@ -193,7 +190,7 @@ class _MethodToggle extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: SbSpacing.verticalSM,
+        padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
         decoration: BoxDecoration(
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: SbRadius.borderSmall,

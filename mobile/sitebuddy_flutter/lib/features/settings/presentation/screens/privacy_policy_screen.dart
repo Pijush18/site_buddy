@@ -71,7 +71,8 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: SbSpacing.verticalXXL.copyWith(top: 0),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl)
+.copyWith(top: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -51,7 +51,7 @@ class SaveToProjectDialog extends ConsumerWidget {
             const Center(child: CircularProgressIndicator())
           else if (projectState.projects.isEmpty)
             Container(
-              padding: SbSpacing.verticalLG,
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               child: Center(
                 child: Text(
                   'No projects available.\nCreate a project first!',

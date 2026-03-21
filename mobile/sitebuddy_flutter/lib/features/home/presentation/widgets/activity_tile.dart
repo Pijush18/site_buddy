@@ -39,7 +39,7 @@ class ActivityTile extends StatelessWidget {
 
     return SbListItem(
       leading: Container(
-        padding: SbSpacing.paddingSM,
+        padding: const EdgeInsets.all(SbSpacing.sm),
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryContainer.withValues(alpha: 0.2),
           borderRadius: SbRadius.borderSmall,

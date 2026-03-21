@@ -26,7 +26,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: SbSpacing.paddingLG,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: AspectRatio(
         aspectRatio: 1.5,
         child: Column(
@@ -127,7 +127,7 @@ class _DesignPoint extends StatelessWidget {
           ),
           const SizedBox(height: SbSpacing.xs),
           Container(
-            padding: SbSpacing.paddingXS,
+            padding: const EdgeInsets.all(SbSpacing.xs),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               borderRadius: SbRadius.borderSmall,

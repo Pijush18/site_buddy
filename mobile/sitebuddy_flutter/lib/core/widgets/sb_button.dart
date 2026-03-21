@@ -2,10 +2,7 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Standardized Button Metrics
-const double _buttonHeight = 48.0;
-const double _buttonHeightCompact = 32.0;
-const double _iconSize = 20.0;
+// Standardized Button Metrics moved inside SbButton
 
 enum _SbButtonType { primary, secondary, outline, ghost, icon, compact }
 
@@ -20,6 +17,10 @@ enum SbButtonVariant { primary, secondary, outline }
 /// - Integrated loading spinner states with proper contrast.
 /// - Built-in light haptic feedback on every press.
 class SbButton extends StatelessWidget {
+  static const double _buttonHeight = 48.0;
+  static const double _buttonHeightCompact = 36.0;
+  static const double _iconSize = 20.0;
+
   final String? label;
   final IconData? icon;
   final VoidCallback? onPressed;

@@ -40,7 +40,7 @@ class SbCard extends StatelessWidget {
             : (isSubtle ? colorScheme.surface : colorScheme.surfaceContainer));
 
     return Container(
-      margin: margin ?? SbSpacing.zero,
+      margin: margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: surfaceColor,
         borderRadius: br,
@@ -63,7 +63,7 @@ class SbCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: br,
           child: Padding(
-            padding: padding ?? SbSpacing.paddingMD,
+            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
             child: child,
           ),
         ),

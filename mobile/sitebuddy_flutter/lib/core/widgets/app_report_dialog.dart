@@ -35,7 +35,7 @@ class AppReportDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(borderRadius: SbRadius.borderMedium),
       child: Container(
-        padding: SbSpacing.paddingXXL,
+        padding: const EdgeInsets.all(SbSpacing.xxl),
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           mainAxisSize: MainAxisSize.min,

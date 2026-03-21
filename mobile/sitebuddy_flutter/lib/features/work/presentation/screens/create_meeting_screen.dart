@@ -259,7 +259,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           onTap: onTap,
           borderRadius: BorderRadius.circular(8),
           child: Container(
-            padding: SbSpacing.horizontalLG.add(SbSpacing.verticalSM),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.sm),
             decoration: BoxDecoration(
               border: Border.all(color: colorScheme.outlineVariant),
               borderRadius: BorderRadius.circular(8),

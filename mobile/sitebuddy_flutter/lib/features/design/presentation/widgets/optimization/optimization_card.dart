@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 class OptimizationCard extends StatelessWidget {
   final OptimizationOption option;
@@ -18,7 +18,7 @@ class OptimizationCard extends StatelessWidget {
         : (option.utilization > 0.8 ? colorScheme.tertiary : colorScheme.primary);
 
     return SbCard(
-      padding: SbSpacing.paddingLG,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

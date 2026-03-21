@@ -44,7 +44,7 @@ class LevelProfileGraph extends StatelessWidget {
 
     return Container(
       height: height,
-      padding: SbSpacing.horizontalLG.add(SbSpacing.verticalXXL),
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.xxl),
       child: CustomPaint(
         size: Size.infinite,
         painter: _ProfilePainter(

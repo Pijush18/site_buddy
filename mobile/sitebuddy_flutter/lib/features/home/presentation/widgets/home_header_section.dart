@@ -16,7 +16,7 @@ class HomeHeaderSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      padding: SbSpacing.verticalLG,
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

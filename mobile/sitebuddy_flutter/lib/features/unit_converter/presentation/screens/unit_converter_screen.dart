@@ -188,7 +188,7 @@ class _ConverterBodySection extends ConsumerWidget {
 
   Widget _buildErrorDisplay(String error, BuildContext context) {
     return Container(
-      padding: SbSpacing.verticalXXL.copyWith(bottom: 0),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl).copyWith(bottom: 0),
       child: SbCard(
         child: Text(
           error,
@@ -217,7 +217,7 @@ class _ConverterBodySection extends ConsumerWidget {
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: SbSpacing.paddingXXL,
+      padding: const EdgeInsets.all(SbSpacing.xxl),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -282,7 +282,7 @@ class _ConverterBodySection extends ConsumerWidget {
             runSpacing: SbSpacing.sm,
             children: secondaries.entries.map((e) {
               return Container(
-                padding: SbSpacing.horizontalLG.add(SbSpacing.verticalXS),
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.xs),
                 decoration: BoxDecoration(
                   color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(8),

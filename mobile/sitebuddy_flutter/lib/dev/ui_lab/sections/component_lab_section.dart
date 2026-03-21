@@ -44,7 +44,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
 
         // --- BUTTONS ---
         Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
@@ -74,7 +74,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        SizedBox(height: SbSpacing.xxl),
+        const SizedBox(height: SbSpacing.xxl),
 
         // --- CARDS ---
         Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
@@ -101,7 +101,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: SbCard(
-                padding: SbSpacing.paddingLG,
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -117,7 +117,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        SizedBox(height: SbSpacing.xxl),
+        const SizedBox(height: SbSpacing.xxl),
 
         // --- FORMS ---
         Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),

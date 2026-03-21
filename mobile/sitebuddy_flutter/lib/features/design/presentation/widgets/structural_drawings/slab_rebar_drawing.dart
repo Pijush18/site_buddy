@@ -1,4 +1,3 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -46,7 +45,7 @@ class SlabRebarDrawing extends StatelessWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.verticalSM.copyWith(bottom: 0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Slab Plan: ${lx.toStringAsFixed(2)}m x ${ly.toStringAsFixed(2)}m',
               style: Theme.of(context).textTheme.labelMedium!,

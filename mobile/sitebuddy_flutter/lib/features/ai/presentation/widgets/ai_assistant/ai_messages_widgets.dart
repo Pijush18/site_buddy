@@ -20,7 +20,7 @@ class UserMessageWidget extends StatelessWidget {
           left: SbSpacing.xxl,
           right: SbSpacing.lg,
         ),
-        padding: SbSpacing.paddingLG,
+        padding: const EdgeInsets.all(SbSpacing.lg),
         decoration: BoxDecoration(
           color: colorScheme.primary,
           borderRadius: const BorderRadius.only(
@@ -47,7 +47,7 @@ class AiErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: SbSpacing.verticalXXL.add(SbSpacing.horizontalLG),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl, horizontal: SbSpacing.lg),
       child: Center(
         child: Text(
           error,

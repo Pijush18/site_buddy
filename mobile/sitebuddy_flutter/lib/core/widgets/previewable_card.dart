@@ -33,9 +33,9 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: SbSpacing.verticalXXL,
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
             child: Padding(
-              padding: SbSpacing.horizontalXS.copyWith(left: 6, right: 6), // 6px
+              padding: const EdgeInsets.only(left: 6, right: 6), // 6px
               child: RepaintBoundary(key: previewKey, child: child),
             ),
           ),
@@ -47,7 +47,7 @@ class PreviewableCard extends StatelessWidget {
 
   Widget _buildActionRow(BuildContext context) {
     return Container(
-      padding: SbSpacing.paddingXXL,
+      padding: const EdgeInsets.all(SbSpacing.xxl),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -81,6 +81,8 @@ class PreviewAction {
 class _ActionButton extends StatelessWidget {
   final PreviewAction action;
 
+  static const double _iconSize = 20.0;
+  
   const _ActionButton({required this.action});
 
   @override
@@ -94,7 +96,7 @@ class _ActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          padding: SbSpacing.horizontalXXL.add(SbSpacing.verticalLG),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xxl, vertical: SbSpacing.lg),
           shape: RoundedRectangleBorder(
             borderRadius: SbRadius.borderMedium,
           ),
@@ -113,13 +115,13 @@ class _ActionButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: action.onPressed,
       style: OutlinedButton.styleFrom(
-        padding: SbSpacing.paddingLG,
+        padding: const EdgeInsets.all(SbSpacing.lg),
         side: BorderSide(color: primaryColor),
         shape: RoundedRectangleBorder(
           borderRadius: SbRadius.borderMd,
         ),
       ),
-      icon: Icon(action.icon, color: primaryColor, size: 20),
+      icon: Icon(action.icon, color: primaryColor, size: _iconSize),
       label: Text(
         action.label,
         style: theme.textTheme.labelMedium!,

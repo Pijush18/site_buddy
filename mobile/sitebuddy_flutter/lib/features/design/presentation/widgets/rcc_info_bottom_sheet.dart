@@ -31,7 +31,7 @@ class RccInfoBottomSheet extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: SbSpacing.paddingLG,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class RccInfoBottomSheet extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: SbSpacing.paddingSM,
+                padding: const EdgeInsets.all(SbSpacing.sm),
                 
                 child: Icon(item.icon, color: colorScheme.primary, size: 24),
               ),

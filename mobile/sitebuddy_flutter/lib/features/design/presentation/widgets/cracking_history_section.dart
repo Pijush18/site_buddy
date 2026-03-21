@@ -27,7 +27,7 @@ class CrackingHistorySection extends ConsumerWidget {
         children: history.take(3).map((check) {
           final isSafe = check['isSafe'] as bool;
           return Container(
-            padding: SbSpacing.verticalSM.copyWith(top: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
             child: SbCard(
               child: Row(
                 children: [

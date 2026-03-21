@@ -100,16 +100,16 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
             ),
           Expanded(
             child: ListView(
-              padding: SbSpacing.verticalLG,
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               physics: const BouncingScrollPhysics(),
               children: [
                 if (state.isLoading)
-                Container(
-                  padding: SbSpacing.verticalXXL,
-                  child: const Center(
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                )
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
+                    child: const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
                 else if (state.response != null) ...[
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
@@ -146,14 +146,14 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   AiErrorWidget(error: state.error!)
                 else
                   Container(
-                    padding: SbSpacing.paddingLG,
+                    padding: const EdgeInsets.all(SbSpacing.lg),
                     child: const OnboardingMessage(),
                   ),
               ],
             ),
           ),
           Container(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: AiInputBar(
               onChanged: controller.updateInput,
               onSubmit: () => controller.processInput(context),
@@ -165,8 +165,3 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
     );
   }
 }
-
-
-
-
-

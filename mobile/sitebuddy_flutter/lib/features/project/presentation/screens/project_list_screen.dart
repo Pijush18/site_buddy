@@ -29,7 +29,7 @@ class ProjectListScreen extends ConsumerWidget {
             final statusColor = isOnline ? theme.colorScheme.primary : theme.colorScheme.error;
 
             return Container(
-              padding: SbSpacing.horizontalMD,
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
               child: Row(
                 children: [
                   Icon(

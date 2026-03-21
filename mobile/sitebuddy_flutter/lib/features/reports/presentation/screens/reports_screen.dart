@@ -32,7 +32,7 @@ class ReportsScreen extends StatelessWidget {
           SbSection(
             title: 'How it works',
             child: SbCard(
-              padding: SbSpacing.paddingLG,
+              padding: const EdgeInsets.all(SbSpacing.lg),
               child: Text(
                 'Use the Export PDF option in any calculator or design module to create professional project reports.',
                 style: textTheme.bodyMedium,

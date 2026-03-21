@@ -14,7 +14,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     
     return Container(
-      padding: SbSpacing.horizontalLG,
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

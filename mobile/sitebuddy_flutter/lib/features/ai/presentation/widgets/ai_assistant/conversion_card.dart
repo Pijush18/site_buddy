@@ -27,7 +27,7 @@ class ConversionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             color: colorScheme.primary.withValues(alpha: 0.08),
             child: Row(
               children: [
@@ -41,7 +41,7 @@ class ConversionCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -68,7 +68,7 @@ class ConversionCard extends StatelessWidget {
                 ),
                 if (result.secondaryValues.isNotEmpty) ...[
                   Container(
-                    padding: SbSpacing.verticalLG,
+                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
                     child: const Divider(),
                   ),
                   Text(
@@ -82,7 +82,7 @@ class ConversionCard extends StatelessWidget {
                     children: result.secondaryValues.entries
                         .map(
                           (entry) => Container(
-                            padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
+                            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                             
                             child: Text(
                               '${entry.value.toStringAsFixed(3)} ${entry.key}',

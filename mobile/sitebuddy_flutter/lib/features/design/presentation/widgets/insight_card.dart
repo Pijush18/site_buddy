@@ -3,6 +3,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/design/application/services/calculation_service.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// WIDGET: InsightCard
 /// PURPOSE: Display engineering suggestions with professional styling.
@@ -27,8 +28,8 @@ class InsightCard extends StatelessWidget {
         ...insights.map(
           (insight) => Padding(
             padding: const EdgeInsets.only(bottom: SbSpacing.sm),
-            child: Container(
-              padding: SbSpacing.paddingSM,
+            child: SbCard(
+              padding: const EdgeInsets.all(SbSpacing.sm),
 
               child: Row(
                 children: [

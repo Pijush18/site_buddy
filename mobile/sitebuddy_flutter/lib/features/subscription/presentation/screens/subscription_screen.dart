@@ -104,7 +104,7 @@ class SubscriptionScreen extends ConsumerWidget {
       subtitle: status.plan.toUpperCase(),
       onTap: () {}, 
       trailing: Container(
-        padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
+        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
         decoration: BoxDecoration(
           color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(4),
@@ -125,7 +125,7 @@ class SubscriptionScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainer, // Standard Slate 100 for premium header
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -145,7 +145,7 @@ class SubscriptionScreen extends ConsumerWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.paddingLG,
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               children: [
                 _buildBenefitItem(context, AppStrings.fullAIAssistant),
@@ -167,7 +167,7 @@ class SubscriptionScreen extends ConsumerWidget {
 
   Widget _buildBenefitItem(BuildContext context, String text) {
     return Container(
-      padding: SbSpacing.verticalSM,
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Icon(SbIcons.check, color: AppColors.success(context), size: 20),
@@ -201,7 +201,7 @@ class SubscriptionScreen extends ConsumerWidget {
   Widget _buildComparisonRow(BuildContext context, String feature, bool free, bool premium) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      padding: SbSpacing.verticalSM,
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Expanded(

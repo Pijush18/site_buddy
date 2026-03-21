@@ -12,7 +12,7 @@ class SiteReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbCard(
-      padding: SbSpacing.paddingLG,
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -32,7 +32,7 @@ class SiteReportCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: SbSpacing.verticalLG.copyWith(top: 0),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,7 +40,7 @@ class SiteReportCard extends StatelessWidget {
             Container(
               height: 48,
               width: 48,
-              margin: SbSpacing.horizontalLG.copyWith(left: 0),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg).copyWith(left: 0),
               child: Icon(SbIcons.site, color: colorScheme.primary),
             ),
           ],
@@ -79,7 +79,7 @@ class SiteReportCard extends StatelessWidget {
 
   Widget _buildMetaText(BuildContext context, String label, String value) {
     return Container(
-      padding: SbSpacing.paddingXS.copyWith(left: 0, right: 0, top: 0),
+      padding: const EdgeInsets.all(SbSpacing.sm),
       child: RichText(
         text: TextSpan(
           text: label,
@@ -98,12 +98,12 @@ class SiteReportCard extends StatelessWidget {
   List<Widget> _buildSections(BuildContext context) {
     return report.sections.map((section) {
       return Container(
-        padding: SbSpacing.verticalLG.copyWith(top: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: SbSpacing.paddingSM,
+              padding: const EdgeInsets.all(SbSpacing.sm),
               child: Row(
                 children: [
                   Expanded(
@@ -118,7 +118,7 @@ class SiteReportCard extends StatelessWidget {
             const SizedBox(height: SbSpacing.sm),
             ...section.content.map(
               (text) => Container(
-                padding: SbSpacing.paddingSM.copyWith(right: 0, top: 0),
+                        padding: const EdgeInsets.all(SbSpacing.xs).copyWith(right: 0, top: 0),
                 child: Text(
                   text,
                   style: Theme.of(context).textTheme.bodyLarge!,
@@ -133,7 +133,7 @@ class SiteReportCard extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     return Container(
-      padding: SbSpacing.verticalSM.copyWith(bottom: 0),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm).copyWith(bottom: 0),
       child: Text(
         'Generated natively by Site Buddy',
         style: Theme.of(context).textTheme.bodyMedium!,

@@ -59,7 +59,7 @@ class ColumnRebarDrawing extends StatelessWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.verticalSM.copyWith(bottom: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
             child: Text(
               '${type.label} Section: ${width.toInt()}x${depth.toInt()} mm',
               style: Theme.of(context).textTheme.labelMedium!,

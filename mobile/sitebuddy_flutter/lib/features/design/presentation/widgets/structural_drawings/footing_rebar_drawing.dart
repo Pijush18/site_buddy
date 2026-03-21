@@ -52,7 +52,7 @@ class FootingRebarDrawing extends StatelessWidget {
             ),
           ),
           Container(
-            padding: SbSpacing.verticalSM.copyWith(bottom: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
             child: Text(
               'Footing Detail: ${length.toInt()}x${width.toInt()} mm',
               style: Theme.of(context).textTheme.labelMedium!,
