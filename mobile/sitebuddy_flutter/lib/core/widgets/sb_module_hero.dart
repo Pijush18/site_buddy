@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +64,8 @@ class SbModuleHero extends StatelessWidget {
             // Content with Premium Vertical Flow
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: SbSpacing.xl,
-                vertical: SbSpacing.huge, // Premium vertical breathing room
+                horizontal: SbSpacing.lg,
+                vertical: SbSpacing.xxl, 
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class SbModuleHero extends StatelessWidget {
                     padding: const EdgeInsets.all(SbSpacing.lg),
                     decoration: BoxDecoration(
                       color: colorScheme.primary.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: SbRadius.borderMedium,
                     ),
                     child: Icon(
                       icon,
@@ -81,7 +82,7 @@ class SbModuleHero extends StatelessWidget {
                       size: 34, // Slightly bolder icon
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.xxl),
+                    const SizedBox(height: SbSpacing.lg),
                   Text(
                     title,
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -101,7 +102,7 @@ class SbModuleHero extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (child != null) ...[
-                    const SizedBox(height: SbSpacing.xxl),
+                    const SizedBox(height: SbSpacing.lg),
                     child!,
                   ],
                 ],

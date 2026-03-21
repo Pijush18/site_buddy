@@ -1,5 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,11 +29,11 @@ class UnitConverterScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.md),
           const _SegmentedToggleSection(),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xl),
           const _ConverterBodySection(),
-          const SizedBox(height: SbSpacing.xxl), // Bottom padding
+          const SizedBox(height: SbSpacing.xl), // Bottom padding
         ],
       ),
     );
@@ -122,7 +123,7 @@ class _ConverterBodySection extends ConsumerWidget {
           },
           itemLabelBuilder: (t) => t.name.toUpperCase(),
         ),
-        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
+        const SizedBox(height: SbSpacing.md),
         Row(
           children: [
             Expanded(
@@ -152,7 +153,7 @@ class _ConverterBodySection extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+        const SizedBox(height: SbSpacing.md),
         Row(
           children: [
             const Spacer(),
@@ -188,7 +189,7 @@ class _ConverterBodySection extends ConsumerWidget {
 
   Widget _buildErrorDisplay(String error, BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl).copyWith(bottom: 0),
+      padding: const EdgeInsets.only(top: SbSpacing.xl),
       child: SbCard(
         child: Text(
           error,
@@ -217,7 +218,7 @@ class _ConverterBodySection extends ConsumerWidget {
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.xxl),
+      padding: const EdgeInsets.all(SbSpacing.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -226,7 +227,7 @@ class _ConverterBodySection extends ConsumerWidget {
             size: 48,
             color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.md),
           Text(
             'Try asking the AI:',
             style: Theme.of(context).textTheme.bodyLarge!,
@@ -254,7 +255,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
+        const SizedBox(height: SbSpacing.xl),
         SbCard(
           child: Column(
             children: [
@@ -271,21 +272,21 @@ class _ConverterBodySection extends ConsumerWidget {
           ),
         ),
         if (secondaries.isNotEmpty) ...[
-          const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.xl),
           Text(
             'ALSO EQUALS',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
           const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
           Wrap(
-            spacing: SbSpacing.sm,
-            runSpacing: SbSpacing.sm,
+            spacing: SbSpacing.md,
+            runSpacing: SbSpacing.md,
             children: secondaries.entries.map((e) {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.xs),
                 decoration: BoxDecoration(
                   color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: SbRadius.borderSmall,
                 ),
                 child: Text(
                   '${e.value.toStringAsFixed(2)} ${e.key}',
@@ -307,7 +308,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
+        const SizedBox(height: SbSpacing.xl),
         Text(
           'ESTIMATE: ${query.length} x ${query.width} x ${query.depth} (${query.grade?.label})',
           style: Theme.of(context).textTheme.labelMedium!,

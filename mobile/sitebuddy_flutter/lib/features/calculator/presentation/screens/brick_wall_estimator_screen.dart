@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
@@ -99,7 +100,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: SbSpacing.xxs),
+                            const SizedBox(height: SbSpacing.xs),
                             Text(
                               EngineeringTerms.standardBrickSize,
                               style: theme.textTheme.bodyLarge?.copyWith(
@@ -289,11 +290,11 @@ class _ResultSection extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: SbSpacing.sm,
-                      vertical: SbSpacing.xxs,
+                      vertical: SbSpacing.xs,
                     ),
                     decoration: BoxDecoration(
                       color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: SbRadius.borderSmall,
                     ),
                     child: Text(
                       result.mortarRatio,

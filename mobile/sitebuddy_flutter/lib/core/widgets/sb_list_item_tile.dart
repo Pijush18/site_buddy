@@ -52,8 +52,8 @@ class SbListItemTile extends StatelessWidget {
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: SbSpacing.lg,
-              vertical: isSubtle ? SbSpacing.md : SbSpacing.lg,
+              horizontal: SbSpacing.md,
+              vertical: isSubtle ? SbSpacing.sm : SbSpacing.md,
             ),
             child: Row(
               children: [

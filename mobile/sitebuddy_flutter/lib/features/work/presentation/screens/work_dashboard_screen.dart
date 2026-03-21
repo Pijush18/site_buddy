@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -60,7 +60,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(SbSpacing.xxl),
           decoration: BoxDecoration(
             color: colorScheme.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: SbRadius.borderMd,
           ),
           child: Icon(SbIcons.checkFilled, color: colorScheme.primary),
         ),
@@ -78,7 +78,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: SbRadius.borderSmall,
                 ),
                 child: Text(
                   t.status.name.toUpperCase(),
@@ -116,7 +116,7 @@ class WorkDashboardScreen extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
           decoration: BoxDecoration(
             color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: SbRadius.borderSmall,
           ),
           child: Text(
             m.status.name.toUpperCase(),

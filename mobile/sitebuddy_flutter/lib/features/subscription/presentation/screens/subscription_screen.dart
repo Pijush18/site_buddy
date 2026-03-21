@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -107,7 +108,7 @@ class SubscriptionScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
         decoration: BoxDecoration(
           color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: SbRadius.borderSmall,
         ),
         child: Text(
           status.status.toUpperCase(),
@@ -128,7 +129,7 @@ class SubscriptionScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainer, // Standard Slate 100 for premium header
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius: const BorderRadius.vertical(top: SbRadius.radiusMd),
             ),
             child: Column(
               children: [

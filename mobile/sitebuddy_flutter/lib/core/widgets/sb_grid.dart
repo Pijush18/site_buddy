@@ -24,8 +24,8 @@ class SbGrid extends StatelessWidget {
       padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: SbSpacing.sm,
-      mainAxisSpacing: SbSpacing.sm,
+      crossAxisSpacing: SbSpacing.md, // ENFORCED: md (12px) per new semantic rules
+      mainAxisSpacing: SbSpacing.md, // ENFORCED: md (12px) per new semantic rules
       childAspectRatio: childAspectRatio,
       children: children,
     );

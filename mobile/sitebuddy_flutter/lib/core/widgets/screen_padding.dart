@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: ScreenPadding
 /// PURPOSE: Multi-item wrapper providing global standard horizontal padding (16px).
@@ -11,7 +12,7 @@ class ScreenPadding extends StatelessWidget {
   const ScreenPadding({
     super.key,
     required this.child,
-    this.horizontal = 16.0,
+    this.horizontal = SbSpacing.lg,
     this.top = 0.0,
     this.bottom = 0.0,
   });

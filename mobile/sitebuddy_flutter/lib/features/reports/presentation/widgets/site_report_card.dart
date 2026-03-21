@@ -12,13 +12,13 @@ class SiteReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.md),
           ..._buildSections(context),
           const SizedBox(height: SbSpacing.lg),
           _buildFooter(context),
@@ -40,7 +40,7 @@ class SiteReportCard extends StatelessWidget {
             Container(
               height: 48,
               width: 48,
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg).copyWith(left: 0),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md).copyWith(left: 0),
               child: Icon(SbIcons.site, color: colorScheme.primary),
             ),
           ],
@@ -98,7 +98,7 @@ class SiteReportCard extends StatelessWidget {
   List<Widget> _buildSections(BuildContext context) {
     return report.sections.map((section) {
       return Container(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.md).copyWith(top: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

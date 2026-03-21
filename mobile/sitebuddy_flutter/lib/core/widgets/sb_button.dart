@@ -286,7 +286,7 @@ class SbButton extends StatelessWidget {
       children: [
         if (icon != null) ...[
           Icon(icon, size: 20),
-          if (label != null) const SizedBox(width: 8),
+          if (label != null) const SizedBox(width: SbSpacing.sm),
         ],
         if (label != null)
           Text(

@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -23,11 +24,11 @@ class ActionCard extends StatelessWidget {
 
     return Material(
       color: colorScheme.surface,
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: SbRadius.borderMd,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: SbRadius.borderMd,
         child: Container(
           constraints: const BoxConstraints(
             minHeight: 100, // Fixed 100px height
@@ -35,7 +36,7 @@ class ActionCard extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: SbRadius.borderMd,
             border: Border.all(
               color: colorScheme.outline, // 👈 Standard theme outline
               width: 1.0,

@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -279,7 +279,7 @@ class _OverallStatusBadge extends StatelessWidget {
       padding: const EdgeInsets.all(SbSpacing.lg),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: SbRadius.borderMd,
         border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(

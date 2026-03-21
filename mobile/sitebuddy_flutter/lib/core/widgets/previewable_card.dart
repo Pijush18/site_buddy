@@ -33,9 +33,9 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.md),
             child: Padding(
-              padding: const EdgeInsets.only(left: 6, right: 6), // 6px
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
               child: RepaintBoundary(key: previewKey, child: child),
             ),
           ),
@@ -47,7 +47,7 @@ class PreviewableCard extends StatelessWidget {
 
   Widget _buildActionRow(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.xxl),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -96,7 +96,7 @@ class _ActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xxl, vertical: SbSpacing.lg),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.md),
           shape: RoundedRectangleBorder(
             borderRadius: SbRadius.borderMedium,
           ),
@@ -115,7 +115,7 @@ class _ActionButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: action.onPressed,
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.md),
         side: BorderSide(color: primaryColor),
         shape: RoundedRectangleBorder(
           borderRadius: SbRadius.borderMd,

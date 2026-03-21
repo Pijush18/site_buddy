@@ -59,7 +59,7 @@ class _SbGridCardState extends State<SbGridCard> {
           onTap: widget.onTap,
           child: AnimatedContainer(
             margin: widget.margin ?? EdgeInsets.zero,
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.md),
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOut,
             decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _SbGridCardState extends State<SbGridCard> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: SbSpacing.xxs),
+                  padding: const EdgeInsets.only(top: SbSpacing.xs),
                   child: Icon(
                     widget.icon,
                     color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,

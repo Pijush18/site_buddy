@@ -271,7 +271,7 @@ class _ReportSectionWidget extends StatelessWidget {
               height: 24,
               decoration: BoxDecoration(
                 color: isResult ? colorScheme.primary : colorScheme.secondary,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: SbRadius.borderSmall,
               ),
             ),
             const SizedBox(width: SbSpacing.lg),

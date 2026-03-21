@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -99,7 +99,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   hint: 'Meeting title',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _descriptionController,
                   label: 'Description',
@@ -114,7 +114,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   hint: 'Associated project',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'MEETING TYPE',
                   style: Theme.of(context).textTheme.labelLarge!,
@@ -128,7 +128,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     if (v != null) setState(() => _type = v);
                   },
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'MODE',
                   style: Theme.of(context).textTheme.labelLarge!,
@@ -142,14 +142,14 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     if (v != null) setState(() => _mode = v);
                   },
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 SbInput(
                   controller: _locationController,
                   label: 'Location / Link',
                   hint: 'Where is it happening?',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _participantsController,
                   label: 'Participants',
@@ -213,7 +213,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(width: SbSpacing.lg),
+                    const SizedBox(width: SbSpacing.md),
                     Expanded(
                       child: _buildTimePicker(
                         context,
@@ -257,12 +257,12 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
         const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
         InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: SbRadius.borderSmall,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.sm),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md, vertical: SbSpacing.sm),
             decoration: BoxDecoration(
               border: Border.all(color: colorScheme.outlineVariant),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: SbRadius.borderMd,
             ),
             child: Row(
               children: [

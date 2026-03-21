@@ -61,7 +61,7 @@ class AppScreenWrapper extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 padding: usePadding 
                     ? const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.screenPadding, 
+                        horizontal: SbSpacing.lg, 
                         vertical: SbSpacing.lg,
                       ) 
                     : EdgeInsets.zero,
@@ -72,7 +72,7 @@ class AppScreenWrapper extends StatelessWidget {
             : Padding(
                 padding: usePadding 
                     ? const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.screenPadding, 
+                        horizontal: SbSpacing.lg, 
                         vertical: SbSpacing.lg,
                       ) 
                     : EdgeInsets.zero,

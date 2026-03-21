@@ -129,7 +129,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       onChanged: (v) =>
                           v != null ? notifier.updateType(v) : null,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.md),
                     Row(
                       children: [
                         Expanded(
@@ -140,7 +140,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                                 ValidationHelper.validatePositive(v, 'Lx'),
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
+                        const SizedBox(width: SbSpacing.md),
                         Expanded(
                           child: SbInput(
                             controller: _lyController,
@@ -151,7 +151,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _depthController,
                       label: 'Overall Thickness (D) (mm)',
@@ -180,7 +180,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                             notifier.updateConcreteGrade,
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
+                        const SizedBox(width: SbSpacing.md),
                         Expanded(
                           child: _gradeDropdown(
                             'Steel Grade',
@@ -191,7 +191,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _coverController,
                       label: 'Clear Cover (mm)',

@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 // lib/core/widgets/app_stat_card.dart
@@ -59,7 +60,7 @@ class AppStatCard extends StatelessWidget {
       // Styling and borders
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: SbRadius.borderMd,
         // Subtle outline border
         border: Border.all(
           // Using withValues(alpha: ...) to avoid deprecated withOpacity

@@ -1,5 +1,4 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_button.dart';
@@ -30,7 +29,7 @@ class SbFeedback {
             : colorScheme.inverseSurface,
         behavior: SnackBarBehavior.floating,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(SbSpacing.sm)),
+          borderRadius: BorderRadius.all(SbRadius.radiusMd),
         ),
         duration: duration ?? const Duration(seconds: 3),
       ),
@@ -56,7 +55,7 @@ class SbFeedback {
           title: Text(title, style: Theme.of(context).textTheme.titleMedium!),
           content: content,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SbSpacing.sm),
+            borderRadius: SbRadius.borderMd,
           ),
           actions: [
             if (cancelLabel != null || onCancel != null)
@@ -88,7 +87,7 @@ class SbFeedback {
       useRootNavigator: useRootNavigator,
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(SbSpacing.sm)),
+        borderRadius: BorderRadius.vertical(top: SbRadius.radiusMd),
       ),
       builder: (context) => Padding(
         padding: EdgeInsets.only(

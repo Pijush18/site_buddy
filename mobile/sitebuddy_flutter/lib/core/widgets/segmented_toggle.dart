@@ -1,5 +1,4 @@
-
-
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class SegmentedToggle<T> extends StatelessWidget {
       padding: const EdgeInsets.all(SbSpacing.xs),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: SbRadius.borderMedium,
       ),
       child: Row(
         children: items.map((item) {
@@ -48,7 +47,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: isSelected ? colorScheme.primary : colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16.0 - 4),
+                  borderRadius: SbRadius.borderMd,
                   border: isSelected
                       ? Border.all(color: colorScheme.primary, width: 1)
                       : Border.all(

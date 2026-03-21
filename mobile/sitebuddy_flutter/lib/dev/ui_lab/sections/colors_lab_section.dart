@@ -1,5 +1,6 @@
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -89,7 +90,7 @@ class _ColorCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: data.color,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: SbRadius.borderMd,
           border: Border.all(
             color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
           ),

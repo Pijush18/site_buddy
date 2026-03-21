@@ -193,7 +193,7 @@ class KnowledgeCard extends ConsumerWidget {
                 ] else ...[
                   const Center(
                     child: Padding(
-                      padding: EdgeInsets.all(SbSpacing.xl),
+                      padding: EdgeInsets.all(SbSpacing.md),
                       child: Text(AppStrings.noMatchesFound),
                     ),
                   ),

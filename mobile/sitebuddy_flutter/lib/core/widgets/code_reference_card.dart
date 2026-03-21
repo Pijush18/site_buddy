@@ -1,5 +1,6 @@
 
 
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/models/code_reference.dart';
@@ -51,7 +52,7 @@ class CodeReferenceCard extends StatelessWidget {
               padding: const EdgeInsets.all(SbSpacing.sm),
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: SbRadius.borderSmall,
                 border: Border.all(
                   color: colorScheme.outline.withValues(alpha: 0.1),
                 ),

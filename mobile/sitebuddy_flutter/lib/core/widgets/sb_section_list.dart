@@ -7,7 +7,7 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 /// DESIGN PRINCIPLES:
 /// - Replaces Column for all screen-level layouts.
 /// - SINGLE AUTHORITY: Controls vertical spacing between sections.
-/// - Uses SbSpacing.sectionGap for consistency.
+/// - Uses SbSpacing.xl for section spacing consistency.
 /// - ZERO internal padding (handled by AppScreenWrapper).
 class SbSectionList extends StatelessWidget {
   final List<Widget> sections;
@@ -37,7 +37,7 @@ class SbSectionList extends StatelessWidget {
 
       /// ✅ Centralized spacing system
       separatorBuilder: (context, index) =>
-          const SizedBox(height: SbSpacing.sectionGap),
+          const SizedBox(height: SbSpacing.xl),
 
       itemBuilder: (context, index) => sections[index],
     );

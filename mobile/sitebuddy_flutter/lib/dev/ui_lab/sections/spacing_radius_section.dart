@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_radius.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +8,11 @@ class SpacingLabSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = [
-      _TokenData('xs (pTiny)', SbSpacing.xs),
-      _TokenData('sm (pSmall)', SbSpacing.sm),
-      _TokenData('md (pMedium)', SbSpacing.lg),
-      _TokenData('lg (pLarge)', SbSpacing.xxl),
-      _TokenData('xl (pHuge)', SbSpacing.xl),
+      _TokenData('xs', SbSpacing.xs),
+      _TokenData('sm', SbSpacing.sm),
+      _TokenData('md', SbSpacing.md),
+      _TokenData('lg', SbSpacing.lg),
+      _TokenData('xl', SbSpacing.xl),
       _TokenData('xxl', SbSpacing.xxl),
     ];
 
@@ -35,12 +35,12 @@ class SpacingLabSection extends StatelessWidget {
                 ),
                 Container(
                   height: 24,
-                  width: t.value,
+                  width: t.value * 2, // Scaled for visibility
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
                     ).colorScheme.primary.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: SbRadius.borderSmall,
                   ),
                   child: Center(
                     child: Text(
@@ -76,13 +76,11 @@ class RadiusLabSection extends StatelessWidget {
         const SizedBox(height: SbSpacing.lg),
         const Row(
           children: [
-            _RadiusBox(name: 'Small', radius: AppRadius.sm),
+            _RadiusBox(name: 'Small', radius: SbRadius.small),
             SizedBox(width: SbSpacing.lg),
-            _RadiusBox(name: 'Card', radius: 12.0),
+            _RadiusBox(name: 'Medium', radius: SbRadius.md),
             SizedBox(width: SbSpacing.lg),
-            _RadiusBox(name: 'Input', radius: 12.0),
-            SizedBox(width: SbSpacing.lg),
-            _RadiusBox(name: 'Button', radius: 16.0),
+            _RadiusBox(name: 'Large', radius: SbRadius.medium),
           ],
         ),
       ],
