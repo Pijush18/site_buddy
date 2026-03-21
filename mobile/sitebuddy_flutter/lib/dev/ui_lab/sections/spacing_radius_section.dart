@@ -1,6 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 class SpacingLabSection extends StatelessWidget {
   const SpacingLabSection({super.key});
@@ -102,7 +105,9 @@ class _RadiusBox extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(radius),
-            border: Border.all(color: Theme.of(context).dividerColor),
+            border: Border.all(color: context.colors.outline, width: AppBorder.width),
+
+
           ),
           child: Center(
             child: Text(

@@ -96,11 +96,10 @@ class SbInput extends StatelessWidget {
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
             borderRadius: SbRadius.borderMd,
             border: Border.all(
-              color: errorText != null 
-                  ? colorScheme.error 
-                  : context.colors.outline,
+              color: context.colors.outline,
               width: AppBorder.width,
             ),
+
           ),
           alignment: maxLines == 1 ? Alignment.center : Alignment.topLeft,
           child: Row(

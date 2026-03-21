@@ -198,9 +198,10 @@ class _MethodToggle extends StatelessWidget {
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: SbRadius.borderSmall,
           border: Border.all(
-            color: isActive ? colorScheme.primary : context.colors.outline,
+            color: context.colors.outline,
             width: AppBorder.width,
           ),
+
         ),
         child: Center(
           child: Text(

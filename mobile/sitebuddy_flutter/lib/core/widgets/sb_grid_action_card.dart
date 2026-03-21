@@ -29,9 +29,10 @@ class SBGridActionCard extends StatelessWidget {
         color: context.colors.surface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isHighlighted ? context.colors.primary : context.colors.outline,
+          color: context.colors.outline,
           width: AppBorder.width,
         ),
+
       ),
       clipBehavior: Clip.antiAlias,
       child: Material(
