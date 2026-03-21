@@ -40,7 +40,15 @@ class _OptimizationListState extends State<OptimizationList> {
         return Padding(
           padding: const EdgeInsets.only(bottom: SbSpacing.lg),
           child: SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            onTap: widget.onOptionSelected != null
+                ? () {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                    widget.onOptionSelected!(option);
+                  }
+                : null,
+            padding: const EdgeInsets.all(SbSpacing.md),
             color: isSelected ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3) : null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

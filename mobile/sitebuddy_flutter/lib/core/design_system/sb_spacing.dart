@@ -9,6 +9,6 @@ class SbSpacing {
   static const double sm = 8;  // Small
   static const double md = 12; // Medium
   static const double lg = 16; // Large
-  static const double xl = 24; // Extra Large (Section separation)
-  static const double xxl = 32; // Double Extra Large (Hero separation)
+  static const double xl = 16; // Capped to 16 for compact UI
+  static const double xxl = 16; // Capped to 16 for compact UI
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
 
 /// CLASS: AppScreenWrapper
 /// PURPOSE: Per-screen layout shell. Each screen gets its own [Scaffold].
@@ -68,6 +66,12 @@ class AppScreenWrapper extends StatelessWidget {
               elevation: 0,
               centerTitle: false,
               surfaceTintColor: Colors.transparent,
+              shape: Border(
+                bottom: BorderSide(
+                  color: theme.colorScheme.outlineVariant,
+                  width: 1.0,
+                ),
+              ),
             )
           : null,
       bottomNavigationBar: bottomAction != null
@@ -118,8 +122,8 @@ class _BottomActionBar extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           border: Border(
             top: BorderSide(
-              color: context.colors.outline,
-              width: AppBorder.width,
+              color: Theme.of(context).colorScheme.outlineVariant,
+              width: 1.0,
             ),
           ),
         ),

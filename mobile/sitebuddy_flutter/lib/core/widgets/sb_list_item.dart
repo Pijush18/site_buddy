@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
 /// WIDGET: SbListItem
@@ -25,66 +24,58 @@ class SbListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow,
-        borderRadius: SbRadius.borderMd,
-        border: Border.all(
-          color: context.colors.outline,
-          width: AppBorder.width,
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: SbRadius.borderMd,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: SbRadius.borderMd,
-          child: Padding(
-            padding: const EdgeInsets.all(SbSpacing.md),
-            child: Row(
-              children: [
-                if (leading != null) ...[
-                  leading!,
-                  const SizedBox(width: SbSpacing.md),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        title,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: SbSpacing.xs),
-                        Text(
-                          subtitle!,
-                          style: textTheme.bodyMedium,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                if (trailing != null) ...[
-                  const SizedBox(width: SbSpacing.md),
-                  trailing!,
-                ],
-              ],
-            ),
+    return SbInteractiveCard(
+      onTap: onTap ?? () => debugPrint('TODO: action not implemented'),
+      borderRadius: BorderRadius.circular(SbRadius.standard),
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerLow,
+          borderRadius: BorderRadius.circular(SbRadius.standard),
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 1.0,
           ),
+        ),
+        padding: const EdgeInsets.all(SbSpacing.md),
+        child: Row(
+          children: [
+            if (leading != null) ...[
+              leading!,
+              const SizedBox(width: SbSpacing.md),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: SbSpacing.xs),
+                    Text(
+                      subtitle!,
+                      style: textTheme.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            if (trailing != null) ...[
+              const SizedBox(width: SbSpacing.md),
+              trailing!,
+            ],
+          ],
         ),
       ),
     );

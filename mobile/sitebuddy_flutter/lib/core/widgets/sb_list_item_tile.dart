@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 
 
 /// WIDGET: SbListItemTile
@@ -28,9 +30,8 @@ class SbListItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     Widget? trailingWidget;
     if (trailing is String) {
@@ -44,68 +45,73 @@ class SbListItemTile extends StatelessWidget {
       trailingWidget = trailing as Widget;
     }
 
-    return SizedBox(
-      width: double.infinity,
-      child: Material(
-        color: color ?? Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: SbSpacing.md,
-              vertical: isSubtle ? SbSpacing.sm : SbSpacing.md,
-            ),
-            child: Row(
-              children: [
-                if (icon != null) ...[
-                  SizedBox(
-                    width: 36,
-                    height: 36,
-                    child: Center(
-                      child: Icon(
-                        icon,
-                        color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant,
-                        size: isSubtle ? 18 : 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SbSpacing.md),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        title,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (subtitle != null && subtitle!.isNotEmpty) ...[
-                        const SizedBox(height: SbSpacing.xs),
-                        Text(
-                          subtitle!,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: isSubtle ? colorScheme.onSurfaceVariant.withValues(alpha: 0.7) : null,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ],
+    return SbInteractiveCard(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(isSubtle ? 0 : SbRadius.standard),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: SbSpacing.md,
+          vertical: isSubtle ? SbSpacing.sm : SbSpacing.md,
+        ),
+        decoration: isSubtle
+            ? null
+            : BoxDecoration(
+                color: color ?? colorScheme.surface,
+                borderRadius: BorderRadius.circular(SbRadius.standard),
+                border: Border.all(
+                  color: colorScheme.outlineVariant,
+                  width: 1.0,
+                ),
+              ),
+        child: Row(
+          children: [
+            if (icon != null) ...[
+              SizedBox(
+                width: 36,
+                height: 36,
+                child: Center(
+                  child: Icon(
+                    icon,
+                    color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant,
+                    size: isSubtle ? 18 : 20,
                   ),
                 ),
-                if (trailingWidget != null) ...[
-                  const SizedBox(width: SbSpacing.md),
-                  trailingWidget,
+              ),
+              const SizedBox(width: SbSpacing.md),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    const SizedBox(height: SbSpacing.xs),
+                    Text(
+                      subtitle!,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: isSubtle ? colorScheme.onSurfaceVariant.withValues(alpha: 0.7) : null,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
+            if (trailingWidget != null) ...[
+              const SizedBox(width: SbSpacing.md),
+              trailingWidget,
+            ],
+          ],
         ),
       ),
     );

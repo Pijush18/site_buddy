@@ -5,9 +5,6 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/app_icon_button.dart';
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
-
 
 /// WIDGET: SbInput
 /// PURPOSE: Standardized text input for SiteBuddy.
@@ -71,10 +68,12 @@ class SbInput extends StatelessWidget {
               Expanded(
                 child: Text(
                   label!,
-                  style: textTheme.labelLarge?.copyWith(
+                  style: textTheme.labelMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (onInfoPressed != null)
@@ -85,21 +84,19 @@ class SbInput extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
-
+          const SizedBox(height: SbSpacing.xs), // Compact
         ],
         Container(
-          height: maxLines == 1 ? 44.0 : null,
+          height: maxLines == 1 ? 40.0 : null, // Compact height
 
-          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-            borderRadius: SbRadius.borderMd,
+            borderRadius: BorderRadius.circular(SbRadius.standard),
             border: Border.all(
-              color: context.colors.outline,
-              width: AppBorder.width,
+              color: colorScheme.outlineVariant,
+              width: 1.0,
             ),
-
           ),
           alignment: maxLines == 1 ? Alignment.center : Alignment.topLeft,
           child: Row(
@@ -108,8 +105,8 @@ class SbInput extends StatelessWidget {
               if (prefixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    right: SbSpacing.sm,
-                    top: maxLines == 1 ? 0 : SbSpacing.sm,
+                    right: SbSpacing.xs,
+                    top: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: prefixIcon,
                 ),
@@ -117,7 +114,7 @@ class SbInput extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: maxLines == 1 ? 0 : SbSpacing.sm,
+                    vertical: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: Stack(
                     alignment: Alignment.centerLeft,
@@ -125,7 +122,7 @@ class SbInput extends StatelessWidget {
                       if (hint != null && (controller?.text.isEmpty ?? initialValue == null))
                         Text(
                           hint!,
-                          style: textTheme.bodyLarge?.copyWith(
+                          style: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                           ),
                           maxLines: 1,
@@ -141,7 +138,7 @@ class SbInput extends StatelessWidget {
                         maxLines: maxLines,
                         minLines: minLines,
                         enabled: enabled,
-                        style: textTheme.bodyLarge,
+                        style: textTheme.bodyMedium,
                         decoration: null, // BARE ENGINE
                         cursorColor: colorScheme.primary,
                         textAlignVertical: TextAlignVertical.center,
@@ -153,8 +150,8 @@ class SbInput extends StatelessWidget {
               if (suffixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    left: SbSpacing.sm,
-                    top: maxLines == 1 ? 0 : SbSpacing.sm,
+                    left: SbSpacing.xs,
+                    top: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: suffixIcon,
                 ),
@@ -163,13 +160,15 @@ class SbInput extends StatelessWidget {
           ),
         ),
         if (errorText != null) ...[
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             errorText!,
             style: textTheme.labelSmall?.copyWith(
               color: colorScheme.error,
               fontWeight: FontWeight.w500,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ],

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
 /// WIDGET: SbCard
@@ -32,44 +31,38 @@ class SbCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final br = SbRadius.borderMedium;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Tonal Hierarchy based on prominence
-    final surfaceColor = color ?? 
-        (isElevated 
-            ? colorScheme.surfaceContainerHigh 
-            : colorScheme.surfaceContainer); // Optimized for contrast as per Task 4
+    final surfaceColor = color ??
+        (isElevated
+            ? colorScheme.surfaceContainerHigh
+            : colorScheme.surfaceContainer);
 
-    return Container(
-      margin: margin ?? EdgeInsets.zero,
-      decoration: BoxDecoration(
-        color: surfaceColor,
-        borderRadius: br,
-        border: Border.all(
-          color: context.colors.outline,
-          width: AppBorder.width,
-        ),
-        boxShadow: isElevated ? [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    return SbInteractiveCard(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(SbRadius.standard),
+      child: Container(
+        margin: margin ?? EdgeInsets.zero,
+        padding: padding ?? const EdgeInsets.all(SbSpacing.md),
+        decoration: BoxDecoration(
+          color: surfaceColor,
+          borderRadius: BorderRadius.circular(SbRadius.standard),
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 1.0,
           ),
-        ] : [],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: br,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: br,
-          child: Padding(
-            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
-            child: child,
-          ),
+          boxShadow: (isElevated && !isDark)
+              ? [
+                  BoxShadow(
+                    color: colorScheme.shadow.withValues(alpha: 0.05),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : [],
         ),
+        child: child,
       ),
     );
   }

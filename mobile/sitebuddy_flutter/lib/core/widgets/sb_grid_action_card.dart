@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 
 /// WIDGET: SBGridActionCard
 /// PURPOSE: Standardized card for grid-based actions, tools, and shortcuts.
@@ -24,52 +24,46 @@ class SBGridActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: context.colors.outline,
-          width: AppBorder.width,
-        ),
+    final colorScheme = Theme.of(context).colorScheme;
 
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(SbSpacing.md),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: 28,
-                  color: isPrimary
-                      ? context.colors.primary
-                      : context.colors.onSurfaceVariant,
-                ),
-                const SizedBox(height: SbSpacing.sm),
-                  Text(
-                    label,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: isPrimary
-                              ? context.colors.primary
-                              : context.colors.onSurface,
-                        ),
-
-
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+    return SbInteractiveCard(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(SbRadius.standard),
+      child: Container(
+        padding: const EdgeInsets.all(SbSpacing.md),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(SbRadius.standard),
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 1.0,
           ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 24, // Compact
+              color: isPrimary
+                  ? colorScheme.primary
+                  : colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(height: SbSpacing.sm),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: isPrimary
+                        ? colorScheme.primary
+                        : colorScheme.onSurface,
+                  ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );

@@ -37,8 +37,6 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 
 
@@ -79,8 +77,8 @@ class AppBottomNavigation extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: context.colors.outline,
-            width: AppBorder.width,
+            color: colorScheme.outlineVariant,
+            width: 1.0,
           ),
         ),
       ),

@@ -13,8 +13,7 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 //   )
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
 /// WIDGET: AppStatCard
@@ -56,53 +55,52 @@ class AppStatCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 //     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      // Padding inside the card
-      padding: const EdgeInsets.all(SbSpacing.sm),
-
-      // Styling and borders
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: SbRadius.borderMd,
-        // Subtle outline border
-        border: Border.all(
-          color: context.colors.outline,
-          width: AppBorder.width,
+    return SbInteractiveCard(
+      onTap: () => debugPrint('Stat card tapped'),
+      borderRadius: BorderRadius.circular(SbRadius.standard),
+      child: Container(
+        // Padding inside the card
+        padding: const EdgeInsets.all(SbSpacing.sm),
+        // Styling and borders
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(SbRadius.standard),
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 1.0,
+          ),
         ),
-      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min, // Wrap content vertically
+          children: [
+            // ── Icon ───────────────────────────────────────────────────────────
+            Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // Wrap content vertically
-        children: [
-          // ── Icon ───────────────────────────────────────────────────────────
-          Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
+            // Small gap instead of Expanded to prevent layout errors in Columns
+            const SizedBox(height: SbSpacing.sm),
 
+            // ── Value ──────────────────────────────────────────────────────────
+            Text(
+              value,
+              style: Theme.of(context).textTheme.titleLarge!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
 
-          // Small gap instead of Expanded to prevent layout errors in Columns
-          const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.xs),
 
-          // ── Value ──────────────────────────────────────────────────────────
-          Text(
-            value,
-            style: Theme.of(context).textTheme.titleLarge!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-
-          const SizedBox(height: SbSpacing.xs),
-
-          // ── Title / Caption ────────────────────────────────────────────────
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-
-        ],
+            // ── Title / Caption ────────────────────────────────────────────────
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
