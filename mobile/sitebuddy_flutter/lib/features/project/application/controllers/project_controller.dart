@@ -30,6 +30,7 @@ import 'package:site_buddy/shared/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
 import 'package:site_buddy/features/project/application/state/project_state.dart';
 import 'package:site_buddy/features/project/presentation/providers/project_providers.dart';
+import 'package:site_buddy/features/auth/application/auth_providers.dart';
 
 /// Provider exposing the [ProjectController].
 final projectControllerProvider =
@@ -40,7 +41,21 @@ final projectControllerProvider =
 class ProjectController extends Notifier<ProjectState> {
   @override
   ProjectState build() {
-    // Load initial data asynchronously
+    // 1. Listen for Auth changes to clear/refresh projects
+    ref.listen(authStateProvider, (previous, next) {
+      final user = next.value;
+      final prevUser = previous?.value;
+
+      if (user != null && prevUser == null) {
+        // Logged in: Refresh projects
+        _loadProjects();
+      } else if (user == null && prevUser != null) {
+        // Logged out: Clear projects immediately
+        state = const ProjectState(projects: [], isLoading: false);
+      }
+    });
+
+    // 2. Initial load
     _loadProjects();
 
     return const ProjectState(projects: [], isLoading: true);

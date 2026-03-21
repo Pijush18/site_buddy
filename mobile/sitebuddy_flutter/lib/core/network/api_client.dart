@@ -29,6 +29,11 @@ class ApiResponse<T> {
 
 /// CLASS: ApiClient
 /// PURPOSE: Standardized Dio HTTP client for SiteBuddy backend communication.
+/// 
+/// FEATURES:
+/// - Automated connectivity checks.
+/// - Production-grade Token Management (via AuthInterceptor).
+/// - Centralized error mapping to domain exceptions.
 class ApiClient {
   final ConnectivityService _connectivity;
   final AuthRepository _authRepository;
@@ -53,11 +58,9 @@ class ApiClient {
       ),
     );
 
-    // 1. Auth Interceptor for security
-    _dio.interceptors.add(AuthInterceptor(_authRepository));
-
-    // 2. Logging Interceptor (Enabled in development only if needed)
-    _dio.interceptors.add(
+    // Order matters: Auth (Refresh) should typically be first to catch 401s
+    _dio.interceptors.addAll([
+      AuthInterceptor(_authRepository),
       LogInterceptor(
         request: true,
         requestHeader: true,
@@ -66,7 +69,7 @@ class ApiClient {
         responseBody: true,
         error: true,
       ),
-    );
+    ]);
   }
 
   /// Perform a GET request.
@@ -118,7 +121,7 @@ class ApiClient {
 
   /// Internal request handler with network pre-checks and error mapping.
   Future<ApiResponse<T>> _request<T>(Future<Response> Function() call) async {
-    // Pre-flight check: Is the device online?
+    // 1. Pre-flight check: Is the device online?
     if (!await _connectivity.isOnline) {
       throw const ConnectionException();
     }
@@ -130,38 +133,55 @@ class ApiClient {
         statusCode: response.statusCode,
       );
     } on DioException catch (e) {
+      // 2. Map Dio errors to structured domain-level NetworkExceptions
       throw _handleDioError(e);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      // 3. Unexpected logic error
+      throw ServerException(message: 'Request Error: ${e.toString()}');
     }
   }
 
   /// Maps Dio exceptions to structured domain-level NetworkExceptions.
   NetworkException _handleDioError(DioException e) {
-    switch (e.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return const TimeoutException();
-      case DioExceptionType.badResponse:
-        final status = e.response?.statusCode;
-        if (status == 401) {
-          return const UnauthorizedException();
-        }
-        if (status != null && status >= 500) {
-          return ServerException(statusCode: status);
-        }
-        return ClientException(
-          message: e.response?.data?['message'] ?? 'API request failed.',
-          statusCode: status,
-        );
-      case DioExceptionType.cancel:
-        return const ClientException(message: 'Request manually cancelled.');
-      case DioExceptionType.connectionError:
-        return const ConnectionException();
-      default:
-        return ServerException(message: e.message ?? 'Unknown network error.');
+    if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.sendTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
+      return const TimeoutException();
     }
+
+    if (e.type == DioExceptionType.badResponse) {
+      final status = e.response?.statusCode;
+      final data = e.response?.data;
+      
+      // Detailed error message from server if available
+      final serverMsg = (data is Map) ? data['message']?.toString() : null;
+
+      if (status == 401) {
+        return UnauthorizedException(message: serverMsg ?? 'Unauthorized session.');
+      }
+      
+      if (status != null && status >= 500) {
+        return ServerException(
+          statusCode: status,
+          message: serverMsg ?? 'Backend server error.',
+        );
+      }
+      
+      return ClientException(
+        message: serverMsg ?? 'API request failed with status $status.',
+        statusCode: status,
+      );
+    }
+
+    if (e.type == DioExceptionType.cancel) {
+      return const ClientException(message: 'Request manually cancelled.');
+    }
+
+    if (e.type == DioExceptionType.connectionError) {
+      return const ConnectionException('Failed to connect to the server.');
+    }
+
+    return ServerException(message: e.message ?? 'Unknown networking error.');
   }
 }
 

@@ -30,6 +30,7 @@ import 'package:site_buddy/features/ai/data/repositories/ai_chat_repository_impl
 import 'package:site_buddy/shared/domain/models/ai_chat.dart';
 import 'package:site_buddy/features/ai/domain/repositories/ai_chat_repository.dart';
 import 'package:site_buddy/features/ai/application/controllers/ai_history_state.dart';
+import 'package:site_buddy/features/auth/application/auth_providers.dart';
 
 // -----------------------------------------------------------------------------
 // DEPENDENCY INJECTION (Lightweight Prototype Setup)
@@ -64,7 +65,22 @@ class AiHistoryController extends Notifier<AiHistoryState> {
   @override
   AiHistoryState build() {
     _repository = ref.watch(aiChatRepositoryProvider);
-    // Fire off async fetch immediately
+
+    // 1. Listen for Auth changes to clear history
+    ref.listen(authStateProvider, (previous, next) {
+      final user = next.value;
+      final prevUser = previous?.value;
+
+      if (user != null && prevUser == null) {
+        // Logged in: Refresh chats
+        loadChats();
+      } else if (user == null && prevUser != null) {
+        // Logged out: Clear chats immediately
+        state = const AiHistoryState(chats: [], isLoading: false);
+      }
+    });
+
+    // 2. Initial load
     Future.microtask(() => loadChats());
     return const AiHistoryState();
   }
