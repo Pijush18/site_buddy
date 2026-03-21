@@ -4,6 +4,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/app/bootstrap/app_initializer.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
@@ -36,7 +37,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     // Small delay to ensure smooth transition
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
-        context.go('/');
+        context.go(AppRoutes.home);
       }
     });
   }

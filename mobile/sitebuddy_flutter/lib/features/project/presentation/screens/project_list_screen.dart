@@ -3,10 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
-import 'package:site_buddy/core/network/connectivity_service.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 /// SCREEN: ProjectListScreen
 /// PURPOSE: List all civil engineering projects following the Predefined Layout System.
@@ -16,96 +15,53 @@ class ProjectListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(projectControllerProvider);
-    final projects = state.projects;
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
 
     return SbPage.list(
       title: 'Projects',
       appBarActions: [
-        Consumer(
-          builder: (context, ref, _) {
-            final isOnline = ref.watch(connectivityProvider).value ?? true;
-            final statusColor = isOnline ? theme.colorScheme.primary : theme.colorScheme.error;
-
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
-              child: Row(
-                children: [
-                  Icon(
-                    isOnline ? SbIcons.checkFilled : SbIcons.warning,
-                    size: 16,
-                    color: statusColor,
-                  ),
-                  const SizedBox(width: SbSpacing.xs),
-                  Text(
-                    isOnline ? 'Synced' : 'Offline',
-                    style: textTheme.labelMedium,
-                  ),
-                ],
-              ),
-            );
-          },
+        IconButton(
+          icon: const Icon(SbIcons.add),
+          onPressed: () => context.push(AppRoutes.projectCreate),
         ),
       ],
-      body: SbSectionList(
-        physics: const BouncingScrollPhysics(),
-        sections: [
-          // ── HERO SECTION & PRIMARY CTA ──
-          SbSection(
-            child: SbModuleHero(
-              icon: SbIcons.project,
-              title: 'Project Management',
-              subtitle:
-                  'Track and manage your site projects, dimensions, and engineering logs.',
-              child: ElevatedButton.icon(
-                label: const Text('New Project'),
-                icon: const Icon(Icons.add),
-                onPressed: () => context.push('/projects/create'),
-                style: ElevatedButton.styleFrom(fixedSize: const Size(180, 48)),
-              ),
-
-            ),
-          ),
-
-          if (projects.isEmpty)
-            SbSection(
-              child: SbEmptyState(
-                icon: Icons.folder_off_outlined,
-                title: 'No Projects Yet',
-                subtitle:
-                    'Create your first civil engineering project to get started.',
-                actionLabel: 'New Project',
-                onAction: () => context.push('/projects/create'),
-              ),
-            )
-          else
-            SbSection(
-              title: 'Recent Projects',
-              subtitle: 'Quickly access your recently updated site projects.',
-              padding: EdgeInsets.zero,
-              child: SbListGroup(
-                children: projects.map((project) {
-                  final formattedDate =
-                      DateFormat('MMM dd, yyyy').format(project.createdAt);
-                  return ProjectCard(
-                    name: project.name,
-                    date: formattedDate,
-                    location: project.location,
-                    logsCount: 0,
-                    calcsCount: 0,
-                    onTap: () =>
-                        context.push('/projects/detail', extra: project),
-                  );
-                }).toList(),
-              ),
-            ),
-
-        ],
+      header: SBGridActionCard(
+        icon: SbIcons.addCircle,
+        label: 'New Project',
+        onTap: () => context.push(AppRoutes.projectCreate),
+        isHighlighted: true,
       ),
+      body: _buildContent(context, state),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, dynamic state) {
+    if (state.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (state.failure != null) {
+      return Center(child: Text('Error: ${state.failure}'));
+    }
+
+    if (state.projects.isEmpty) {
+      return const SbEmptyState(
+        icon: SbIcons.project,
+        title: 'No Projects Yet',
+        subtitle: 'Create your first civil engineering project to get started.',
+      );
+    }
+
+    return SbListGroup(
+      children: state.projects.map<Widget>((project) {
+        return ProjectCard(
+          name: project.name,
+          date: DateFormat('MMM dd, yyyy').format(project.createdAt),
+          location: project.location,
+          logsCount: project.logsCount,
+          calcsCount: project.calculationsCount,
+          onTap: () => context.push(AppRoutes.projectDetail(project.id)),
+        );
+      }).toList(),
     );
   }
 }
-
-
-

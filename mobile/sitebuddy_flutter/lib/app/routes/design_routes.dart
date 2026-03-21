@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/navigation/app_transitions.dart';
 import 'package:site_buddy/features/design/presentation/screens/design_home_screen.dart';
 import 'package:site_buddy/features/design/presentation/screens/design_report_screen.dart';
 import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_input_screen.dart';
@@ -32,125 +33,209 @@ import 'package:site_buddy/shared/domain/models/report_data.dart';
 final designRoutes = [
   GoRoute(
     path: '/design',
-    builder: (context, state) => const DesignHomeScreen(),
+    pageBuilder: (context, state) => AppTransitions.fadeSlide(
+      state: state,
+      child: const DesignHomeScreen(),
+    ),
     routes: [
       // Slab Design flow
       GoRoute(
         path: 'slab/input',
-        builder: (context, state) => const SlabInputScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlabInputScreen(),
+        ),
       ),
       GoRoute(
         path: 'slab/load',
-        builder: (context, state) => const SlabLoadScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlabLoadScreen(),
+        ),
       ),
       GoRoute(
         path: 'slab/analysis',
-        builder: (context, state) => const SlabAnalysisScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlabAnalysisScreen(),
+        ),
       ),
       GoRoute(
         path: 'slab/reinforcement',
-        builder: (context, state) => const SlabReinforcementScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlabReinforcementScreen(),
+        ),
       ),
       GoRoute(
         path: 'slab/safety',
-        builder: (context, state) => const SlabSafetyScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlabSafetyScreen(),
+        ),
       ),
       // Beam Design flow
       GoRoute(
         path: 'beam/input',
-        builder: (context, state) => const BeamInputScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const BeamInputScreen(),
+        ),
       ),
       GoRoute(
         path: 'beam/load',
-        builder: (context, state) => const LoadDefinitionScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const LoadDefinitionScreen(),
+        ),
       ),
       GoRoute(
         path: 'beam/analysis',
-        builder: (context, state) => const AnalysisSummaryScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const AnalysisSummaryScreen(),
+        ),
       ),
       GoRoute(
         path: 'beam/rebar',
-        builder: (context, state) => const ReinforcementDesignScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ReinforcementDesignScreen(),
+        ),
       ),
       GoRoute(
         path: 'beam/safety',
-        builder: (context, state) => const BeamSafetyCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const BeamSafetyCheckScreen(),
+        ),
       ),
       // Column Design flow
       GoRoute(
         path: 'column/input',
-        builder: (context, state) => const ColumnInputScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ColumnInputScreen(),
+        ),
         routes: [
           GoRoute(
             path: 'history',
-            builder: (context, state) => const ColumnHistoryScreen(),
+            pageBuilder: (context, state) => AppTransitions.fadeSlide(
+              state: state,
+              child: const ColumnHistoryScreen(),
+            ),
           ),
         ],
       ),
       GoRoute(
         path: 'column/load',
-        builder: (context, state) => const LoadSupportScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const LoadSupportScreen(),
+        ),
       ),
       GoRoute(
         path: 'column/slenderness',
-        builder: (context, state) => const SlendernessCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SlendernessCheckScreen(),
+        ),
       ),
       GoRoute(
         path: 'column/design',
-        builder: (context, state) => const DesignCalculationScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const DesignCalculationScreen(),
+        ),
       ),
       GoRoute(
         path: 'column/detailing',
-        builder: (context, state) => const ReinforcementDetailingScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ReinforcementDetailingScreen(),
+        ),
       ),
       GoRoute(
         path: 'column/safety',
-        builder: (context, state) => const SafetyCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SafetyCheckScreen(),
+        ),
       ),
       // Footing Design flow
       GoRoute(
         path: 'footing/type',
-        builder: (context, state) => const FootingTypeScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingTypeScreen(),
+        ),
       ),
       GoRoute(
         path: 'footing/soil-load',
-        builder: (context, state) => const FootingSoilLoadScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingSoilLoadScreen(),
+        ),
       ),
       GoRoute(
         path: 'footing/geometry',
-        builder: (context, state) => const FootingGeometryScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingGeometryScreen(),
+        ),
       ),
       GoRoute(
         path: 'footing/analysis',
-        builder: (context, state) => const FootingAnalysisScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingAnalysisScreen(),
+        ),
       ),
       GoRoute(
         path: 'footing/reinforcement',
-        builder: (context, state) => const FootingReinforcementScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingReinforcementScreen(),
+        ),
       ),
       GoRoute(
         path: 'footing/safety',
-        builder: (context, state) => const FootingSafetyCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const FootingSafetyCheckScreen(),
+        ),
       ),
       // Common Design Routes
       GoRoute(
         path: 'report',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final report = state.extra as ReportData?;
-          return DesignReportScreen(data: report);
+          return AppTransitions.fadeSlide(
+            state: state,
+            child: DesignReportScreen(data: report),
+          );
         },
       ),
       GoRoute(
         path: 'shear-check',
-        builder: (context, state) => const ShearCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ShearCheckScreen(),
+        ),
       ),
       GoRoute(
         path: 'deflection-check',
-        builder: (context, state) => const DeflectionCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const DeflectionCheckScreen(),
+        ),
       ),
       GoRoute(
         path: 'cracking-check',
-        builder: (context, state) => const CrackingCheckScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const CrackingCheckScreen(),
+        ),
       ),
     ],
   ),

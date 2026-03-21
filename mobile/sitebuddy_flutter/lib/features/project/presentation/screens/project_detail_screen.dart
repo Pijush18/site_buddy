@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
@@ -125,8 +126,8 @@ class ProjectDetailScreen extends ConsumerWidget {
                     child: Icon(
                       SbIcons.terrain,
                       size: 48,
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.5,
+                      color: colorScheme.onSurfaceVariant.withOpacity(
+                        0.5,
                       ),
                     ),
                   ),
@@ -238,7 +239,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                           'dd MMM, hh:mm a',
                         ).format(item['date'] as DateTime),
                         onTap: () {
-                          context.push('/projects/$projectId/history');
+                          context.push(AppRoutes.projectHistory(projectId));
                         },
                       );
                     }).toList(),
@@ -263,7 +264,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                         subtitle:
                             '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
                         onTap: () {
-                          context.push('/projects/$projectId/level-log');
+                          context.push(AppRoutes.projectLevelLog(projectId));
                         },
                       );
                     }).toList(),
@@ -279,7 +280,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   label: AppStrings.newInspection,
                   icon: Icons.add_circle_outline,
                   onPressed: () {
-                    context.push('/projects/$projectId/level-log');
+                    context.push(AppRoutes.projectLevelLog(projectId));
                   },
                   width: double.infinity,
                 ),
@@ -288,7 +289,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   label: AppStrings.editProject,
                   icon: Icons.edit_outlined,
                   onPressed: () {
-                    context.push('/projects/$projectId/edit');
+                    context.push(AppRoutes.projectEdit(projectId));
                   },
                   width: double.infinity,
                 ),

@@ -6,6 +6,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
 import 'package:site_buddy/features/home/domain/models/activity_type.dart';
 
@@ -24,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
       appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.settings),
-          onPressed: () => context.push('/settings'),
+          onPressed: () => context.push(AppRoutes.settings),
           tooltip: 'Settings',
         ),
 
@@ -50,22 +51,22 @@ class HomeScreen extends ConsumerWidget {
                 SBGridActionCard(
                   icon: SbIcons.calculator,
                   label: AppStrings.levelCalculator,
-                  onTap: () => context.push('/tools/calculator'),
+                  onTap: () => context.push(AppRoutes.calculator),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.trendingUp,
                   label: AppStrings.gradientTool,
-                  onTap: () => context.push('/tools/gradient'),
+                  onTap: () => context.push(AppRoutes.gradientCalc),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.sync,
                   label: AppStrings.unitConverter,
-                  onTap: () => context.push('/tools/converter'),
+                  onTap: () => context.push(AppRoutes.unitConverter),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.currencyExchange,
                   label: AppStrings.currencyConverter,
-                  onTap: () => context.push('/tools/currency'),
+                  onTap: () => context.push(AppRoutes.currencyConverter),
                 ),
               ],
             ),
@@ -81,13 +82,13 @@ class HomeScreen extends ConsumerWidget {
                 SBGridActionCard(
                   icon: SbIcons.addCircle,
                   label: AppStrings.newProject,
-                  onTap: () => context.push('/projects/create'),
+                  onTap: () => context.push(AppRoutes.projectCreate),
                   isHighlighted: true,
                 ),
                 SBGridActionCard(
                   icon: SbIcons.iosShare,
                   label: AppStrings.shareReport,
-                  onTap: () => context.push('/reports'),
+                  onTap: () => context.push(AppRoutes.reports),
                   isHighlighted: true,
                 ),
               ],
@@ -99,7 +100,7 @@ class HomeScreen extends ConsumerWidget {
           SbSection(
             title: AppStrings.recentActivity,
             subtitle: 'Your most recent project updates and calculations.',
-            onTap: () => context.push('/projects'),
+            onTap: () => context.push(AppRoutes.projects),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -112,7 +113,7 @@ class HomeScreen extends ConsumerWidget {
                       subtitle: activity.subtitle,
                       icon: _getActivityIcon(activity.type),
                       trailing: _formatTimestamp(activity.timestamp),
-                      onTap: () => context.push('/projects/${activity.title}'),
+                      onTap: () => context.push(AppRoutes.projectDetail(activity.title)),
                       isSubtle: true,
                     );
                   }).toList(),

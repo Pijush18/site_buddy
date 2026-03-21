@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/navigation/app_transitions.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/calculator_hub_screen.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/material_calculator_screen.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/level_calculator_screen.dart';
@@ -14,41 +15,80 @@ import 'package:site_buddy/features/calculator/presentation/screens/shuttering_s
 final calculatorRoutes = [
   GoRoute(
     path: '/calculator',
-    builder: (context, state) => const CalculatorHubScreen(),
+    pageBuilder: (context, state) => AppTransitions.fadeSlide(
+      state: state,
+      child: const CalculatorHubScreen(),
+    ),
     routes: [
       GoRoute(
         path: 'material',
-        builder: (context, state) => const MaterialCalculatorScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const MaterialCalculatorScreen(),
+        ),
       ),
       GoRoute(
         path: 'level',
-        builder: (context, state) => const LevelCalculatorScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const LevelCalculatorScreen(),
+        ),
       ),
       GoRoute(
         path: 'gradient',
-        builder: (context, state) => const GradientScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const GradientScreen(),
+        ),
       ),
       GoRoute(
         path: 'cement',
-        builder: (context, state) => const CementScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const CementScreen(),
+        ),
       ),
-      GoRoute(path: 'sand', builder: (context, state) => const SandScreen()),
-      GoRoute(path: 'rebar', builder: (context, state) => const RebarScreen()),
+      GoRoute(
+        path: 'sand',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const SandScreen(),
+        ),
+      ),
+      GoRoute(
+        path: 'rebar',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const RebarScreen(),
+        ),
+      ),
       GoRoute(
         path: 'brick-wall',
-        builder: (context, state) => const BrickWallEstimatorScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const BrickWallEstimatorScreen(),
+        ),
       ),
       GoRoute(
         path: 'plaster',
-        builder: (context, state) => const PlasterMaterialEstimatorScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const PlasterMaterialEstimatorScreen(),
+        ),
       ),
       GoRoute(
         path: 'excavation',
-        builder: (context, state) => const ExcavationScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ExcavationScreen(),
+        ),
       ),
       GoRoute(
         path: 'shuttering',
-        builder: (context, state) => const ShutteringScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const ShutteringScreen(),
+        ),
       ),
     ],
   ),

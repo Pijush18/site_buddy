@@ -1,11 +1,9 @@
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -57,7 +55,7 @@ class _DesignCalculationScreenState
           PrimaryCTA(
             label: 'Next: Detailing',
             onPressed: () {
-              context.push('/column/detailing');
+              context.push(AppRoutes.columnDetailing);
             },
           ),
           const SizedBox(height: SbSpacing.sm),
@@ -193,14 +191,3 @@ class _DesignCalculationScreenState
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

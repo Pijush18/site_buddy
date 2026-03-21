@@ -4,6 +4,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 import 'package:site_buddy/features/ai/application/controllers/ai_assistant_controller.dart';
 import 'package:site_buddy/features/ai/presentation/widgets/ai_assistant/ai_input_bar.dart';
@@ -72,12 +73,12 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
           icon: SbIcons.task,
           onPressed: () {
             final report = controller.generateReport();
-            context.push('/report/preview', extra: report);
+            context.push(AppRoutes.reportPreview, extra: report);
           },
         ),
         AppIconButton(
           icon: SbIcons.settings,
-          onPressed: () => context.push('/settings/branding'),
+          onPressed: () => context.push(AppRoutes.branding),
         ),
       ],
       body: Column(

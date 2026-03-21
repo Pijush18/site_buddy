@@ -1,13 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
@@ -87,7 +84,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
     // Trigger analysis before navigating
     ref.read(beamDesignControllerProvider.notifier).calculateAnalysis();
 
-    context.push('/beam/load');
+    context.push(AppRoutes.beamLoad);
   }
 
   @override
@@ -260,7 +257,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,
@@ -271,11 +268,3 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-

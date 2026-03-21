@@ -5,12 +5,13 @@ library;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/app/navigation_shell.dart';
 import 'package:site_buddy/dev/ui_lab/ui_lab_screen.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/navigation/app_transitions.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 // Screens
 import 'package:site_buddy/features/home/presentation/screens/home_screen.dart';
@@ -38,22 +39,10 @@ import 'package:site_buddy/app/routes/work_routes.dart';
 import 'package:site_buddy/app/routes/project_routes.dart';
 
 // PAGE TRANSITIONS
-Page<T> fadeTransition<T>({
-  required Widget child,
-  required GoRouterState state,
-}) {
-  return CustomTransitionPage<T>(
-    key: state.pageKey,
-    child: child,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(opacity: animation, child: child);
-    },
-    transitionDuration: const Duration(milliseconds: 300),
-  );
-}
+
 
 final appRouter = GoRouter(
-  initialLocation: '/splash',
+  initialLocation: AppRoutes.splash,
   redirect: (context, state) {
     // 0. Ensure Firebase is initialized before accessing Auth
     if (Firebase.apps.isEmpty) {
@@ -64,15 +53,15 @@ final appRouter = GoRouter(
     final container = ProviderScope.containerOf(context);
     final settings = container.read(settingsProvider);
 
-    final isAuthRoute = state.matchedLocation == '/login' ||
-        state.matchedLocation == '/register' ||
-        state.matchedLocation == '/reset-password';
-    final isSplashRoute = state.matchedLocation == '/splash';
-    final isRootRoute = state.matchedLocation == '/';
+    final isAuthRoute = state.matchedLocation == AppRoutes.login ||
+        state.matchedLocation == AppRoutes.register ||
+        state.matchedLocation == AppRoutes.resetPassword;
+    final isSplashRoute = state.matchedLocation == AppRoutes.splash;
+    final isRootRoute = state.matchedLocation == AppRoutes.home;
 
     // 1. If not authenticated and not on an auth/splash route, go to login
     if (user == null && !isAuthRoute && !isSplashRoute) {
-      return '/login';
+      return AppRoutes.login;
     }
 
     // 2. If authenticated and on an auth/splash/root route, check for restoration
@@ -82,16 +71,16 @@ final appRouter = GoRouter(
         // Only redirect if lastRoute is different from current and not basic routes
         if (lastRoute != null && 
             lastRoute != state.matchedLocation &&
-            lastRoute != '/login' && 
-            lastRoute != '/splash' &&
-            lastRoute != '/reset-password' &&
-            lastRoute != '/register') {
+            lastRoute != AppRoutes.login && 
+            lastRoute != AppRoutes.splash &&
+            lastRoute != AppRoutes.resetPassword &&
+            lastRoute != AppRoutes.register) {
           return lastRoute;
         }
       }
       
       // If on auth route but authenticated, always go home (if not restored)
-      if (isAuthRoute) return '/';
+      if (isAuthRoute) return AppRoutes.home;
     }
 
     return null;
@@ -99,26 +88,38 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/splash',
-      builder: (context, state) => const SplashScreen(),
+      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+        state: state,
+        child: const SplashScreen(),
+      ),
     ),
     GoRoute(
       path: '/login',
-      pageBuilder: (context, state) => fadeTransition(
+      pageBuilder: (context, state) => AppTransitions.fadeSlide(
         state: state,
         child: const LoginScreen(),
       ),
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+        state: state,
+        child: const RegisterScreen(),
+      ),
     ),
     GoRoute(
       path: '/reset-password',
-      builder: (context, state) => const ResetPasswordScreen(),
+      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+        state: state,
+        child: const ResetPasswordScreen(),
+      ),
     ),
     GoRoute(
       path: '/subscription',
-      builder: (context, state) => const SubscriptionScreen(),
+      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+        state: state,
+        child: const SubscriptionScreen(),
+      ),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
@@ -129,28 +130,40 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: '/',
-              pageBuilder: (context, state) => fadeTransition(
+              pageBuilder: (context, state) => AppTransitions.fadeSlide(
                 state: state,
                 child: const HomeScreen(),
               ),
               routes: [
                 GoRoute(
                   path: 'level',
-                  builder: (context, state) => const LevelLogScreen(projectId: 'default'),
+                  pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                    state: state,
+                    child: const LevelLogScreen(projectId: 'default'),
+                  ),
                 ),
                 GoRoute(
                   path: 'reports',
-                  builder: (context, state) => const ReportsScreen(),
+                  pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                    state: state,
+                    child: const ReportsScreen(),
+                  ),
                 ),
                 GoRoute(
                   path: 'settings/branding',
-                  builder: (context, state) => const BrandingSettingsScreen(),
+                  pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                    state: state,
+                    child: const BrandingSettingsScreen(),
+                  ),
                 ),
                 GoRoute(
                   path: 'report/preview',
-                  builder: (context, state) {
+                  pageBuilder: (context, state) {
                     final report = state.extra as SiteReport;
-                    return SiteReportPreviewScreen(report: report);
+                    return AppTransitions.fadeSlide(
+                      state: state,
+                      child: SiteReportPreviewScreen(report: report),
+                    );
                   },
                 ),
                 ...aiRoutes,
@@ -158,16 +171,24 @@ final appRouter = GoRouter(
                 ...workRoutes.where((r) => r.path == '/tasks'),
                 GoRoute(
                   path: 'settings',
-                  builder: (context, state) => const SettingsScreen(),
+                  pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                    state: state,
+                    child: const SettingsScreen(),
+                  ),
                   routes: [
                     GoRoute(
                       path: 'privacy',
-                      builder: (context, state) => const PrivacyPolicyScreen(),
+                      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                        state: state,
+                        child: const PrivacyPolicyScreen(),
+                      ),
                     ),
                     GoRoute(
                       path: 'terms',
-                      builder: (context, state) =>
-                          const TermsConditionsScreen(),
+                      pageBuilder: (context, state) => AppTransitions.fadeSlide(
+                        state: state,
+                        child: const TermsConditionsScreen(),
+                      ),
                     ),
                   ],
                 ),
@@ -185,25 +206,34 @@ final appRouter = GoRouter(
     // GLOBAL ROUTES
     GoRoute(
       path: '/history-detail',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final entry = state.extra as CalculationHistoryEntry;
-        return HistoryDetailScreen(entry: entry);
+        return AppTransitions.fadeSlide(
+          state: state,
+          child: HistoryDetailScreen(entry: entry),
+        );
       },
     ),
     GoRoute(
       path: '/projects/:id/level-log',
       name: 'levelLog',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final projectId = state.pathParameters['id']!;
         final logId = state.extra as String?;
-        return LevelLogScreen(projectId: projectId, logId: logId);
+        return AppTransitions.fadeSlide(
+          state: state,
+          child: LevelLogScreen(projectId: projectId, logId: logId),
+        );
       },
     ),
     GoRoute(
       path: '/projects/:id/history',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final id = state.pathParameters['id']!;
-        return CalculationHistoryScreen(projectId: id);
+        return AppTransitions.fadeSlide(
+          state: state,
+          child: CalculationHistoryScreen(projectId: id),
+        );
       },
     ),
     ...designRedirects,
@@ -216,7 +246,10 @@ final appRouter = GoRouter(
     if (kDebugMode)
       GoRoute(
         path: '/dev/ui-lab',
-        builder: (context, state) => const UiLabScreen(),
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const UiLabScreen(),
+        ),
       ),
   ],
 );
