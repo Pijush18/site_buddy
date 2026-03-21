@@ -31,10 +31,11 @@ class CalculationCard extends ConsumerWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(SbSpacing.lg),
-            color: colorScheme.primary.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             child: Row(
               children: [
-                Icon(SbIcons.architecture, color: colorScheme.primary, size: 24),
+                Icon(SbIcons.architecture, color: colorScheme.onSurfaceVariant, size: 24),
+
                 const SizedBox(width: SbSpacing.md),
                 Text(
                   'Material Estimate',
@@ -125,7 +126,8 @@ class _StatBox extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, size: 20, color: colorScheme.primary),
+              Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
+
               const SizedBox(width: SbSpacing.sm),
               Flexible(
                 child: Text(

@@ -28,10 +28,11 @@ class ConversionCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(SbSpacing.lg),
-            color: colorScheme.primary.withValues(alpha: 0.08),
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             child: Row(
               children: [
-                Icon(SbIcons.swap, color: colorScheme.primary, size: 24),
+                Icon(SbIcons.swap, color: colorScheme.onSurfaceVariant, size: 24),
+
                 const SizedBox(width: SbSpacing.lg),
                 Text(
                   'Unit Conversion',

@@ -187,8 +187,9 @@ class _MiniActionButton extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 20, color: colorScheme.primary),
+          Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
           const SizedBox(height: SbSpacing.sm),
+
           Text(
             label,
             style: Theme.of(context).textTheme.labelMedium!,
@@ -312,9 +313,9 @@ class _ToolSuggestionCard extends StatelessWidget {
           ],
           SbListItemTile(
             icon: icon,
-            color: Theme.of(context).colorScheme.primary,
             title: title,
             subtitle: prefillSummary ?? 'Open the specialized tool for this calculation.',
+
             onTap: () => context.push(route, extra: prefillData),
           ),
           const SizedBox(height: SbSpacing.sm),

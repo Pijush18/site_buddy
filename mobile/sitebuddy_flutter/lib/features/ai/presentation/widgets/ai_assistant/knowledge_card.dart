@@ -52,20 +52,21 @@ class KnowledgeCard extends ConsumerWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(SbSpacing.lg),
-            color: colorScheme.primary,
+            color: colorScheme.surfaceContainerHighest,
             child: Row(
               children: [
-                Icon(SbIcons.book, color: colorScheme.onPrimary, size: 24),
+                Icon(SbIcons.book, color: colorScheme.onSurfaceVariant, size: 24),
                 const SizedBox(width: SbSpacing.sm),
                 Expanded(
                   child: Text(
                     topic.title.toUpperCase(),
-                    style: textTheme.labelLarge,
+                    style: textTheme.labelLarge?.copyWith(color: colorScheme.onSurface),
                   ),
                 ),
               ],
             ),
           ),
+
 
           Padding(
             padding: const EdgeInsets.all(SbSpacing.lg),
@@ -115,8 +116,9 @@ class KnowledgeCard extends ConsumerWidget {
                       .read(aiControllerProvider.notifier)
                       .updateSearch(value),
                   hint: AppStrings.searchInsideTopic,
-                  prefixIcon: Icon(SbIcons.search, color: colorScheme.primary),
+                  prefixIcon: Icon(SbIcons.search, color: colorScheme.onSurfaceVariant),
                 ),
+
                 const SizedBox(height: SbSpacing.lg),
 
                 if (hasResults) ...[
