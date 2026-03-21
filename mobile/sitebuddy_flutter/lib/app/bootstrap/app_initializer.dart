@@ -7,6 +7,7 @@ import 'package:site_buddy/shared/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
 import 'package:site_buddy/core/branding/branding_model.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/domain/models/design/design_report.dart';
 import 'package:site_buddy/features/level_log/data/models/level_entry_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_method_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_log_session_model.dart';
@@ -43,6 +44,14 @@ class AppInitializer {
     }
     if (!Hive.isAdapterRegistered(201)) {
       Hive.registerAdapter(CalculationTypeAdapter());
+    }
+
+    // Standardized Design Reports (typeId 210+)
+    if (!Hive.isAdapterRegistered(210)) {
+      Hive.registerAdapter(DesignReportAdapter());
+    }
+    if (!Hive.isAdapterRegistered(211)) {
+      Hive.registerAdapter(DesignTypeAdapter());
     }
 
     // 3. Initialize Settings Provider to load data
