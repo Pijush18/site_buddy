@@ -5,13 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
 import 'package:site_buddy/features/home/domain/models/activity_type.dart';
 
 /// SCREEN: HomeScreen
-/// PURPOSE: Root dashboard implementation following the Predefined Layout System.
-/// RULE: SbPage → SbSectionList → SbSection.
-/// RULE: No direct Columns, no manual SizedBox heights between sections.
+/// PURPOSE: Root dashboard with refined visual rhythm
+/// RULE: SbPage → SbSectionList → SbSection
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -28,12 +28,21 @@ class HomeScreen extends ConsumerWidget {
           tooltip: 'Settings',
         ),
       ],
-      // ── PREDEFINED LAYOUT SYSTEM ──
-      // SbSectionList centralizes the 24px gap between children.
+
+      /// ── LAYOUT SYSTEM ──
       body: SbSectionList(
         sections: [
-          // ── SECTION 1: SMART ASSISTANT HERO ──
-          const SbSection(title: null, child: SbSmartAssistantCard()),
+          // ── SECTION 1: HERO (ENHANCED DOMINANCE) ──
+          SbSection(
+            title: null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SbSmartAssistantCard(),
+                SizedBox(height: SbSpacing.md),
+              ],
+            ),
+          ),
 
           // ── SECTION 2: FIELD TOOLS ──
           SbSection(
@@ -67,48 +76,60 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
 
-          // ── SECTION 3: QUICK ACTIONS ──
+          // ── SECTION 3: QUICK ACTIONS (HIGHLIGHTED) ──
           SbSection(
             title: AppStrings.quickActions,
             subtitle: 'Common site management workflows.',
-            child: SbCard(
-              isElevated: true, // Stronger surface for primary focus
-              child: SbGrid(
-                children: [
-                  SbActionTile(
-                    icon: SbIcons.addCircle,
-                    label: AppStrings.newProject,
-                    onTap: () => context.push('/projects/create'),
-                    isProminent: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SbCard(
+                  isElevated: true,
+                  child: SbGrid(
+                    children: [
+                      SbActionTile(
+                        icon: SbIcons.addCircle,
+                        label: AppStrings.newProject,
+                        onTap: () => context.push('/projects/create'),
+                        isProminent: true,
+                      ),
+                      SbActionTile(
+                        icon: SbIcons.iosShare,
+                        label: AppStrings.shareReport,
+                        onTap: () => context.push('/reports'),
+                        isProminent: true,
+                      ),
+                    ],
                   ),
-                  SbActionTile(
-                    icon: SbIcons.iosShare,
-                    label: AppStrings.shareReport,
-                    onTap: () => context.push('/reports'),
-                    isProminent: true,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: SbSpacing.sm),
+              ],
             ),
           ),
 
-          // ── SECTION 4: RECENT ACTIVITY ──
+          // ── SECTION 4: RECENT ACTIVITY (SUBTLE) ──
           SbSection(
             title: AppStrings.recentActivity,
             subtitle: 'Your most recent project updates and calculations.',
             onTap: () => context.push('/projects'),
-            child: SbListGroup(
-              isSubtle: true, // Recede this section in the hierarchy
-              children: activities.map((activity) {
-                return SbListItemTile(
-                  title: activity.title,
-                  subtitle: activity.subtitle,
-                  icon: _getActivityIcon(activity.type),
-                  trailing: _formatTimestamp(activity.timestamp),
-                  onTap: () => context.push('/projects/${activity.title}'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: SbSpacing.sm),
+                SbListGroup(
                   isSubtle: true,
-                );
-              }).toList(),
+                  children: activities.map((activity) {
+                    return SbListItemTile(
+                      title: activity.title,
+                      subtitle: activity.subtitle,
+                      icon: _getActivityIcon(activity.type),
+                      trailing: _formatTimestamp(activity.timestamp),
+                      onTap: () => context.push('/projects/${activity.title}'),
+                      isSubtle: true,
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
           ),
         ],
@@ -128,7 +149,7 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 
-  /// HELPER: DateTime Formatting
+  /// HELPER: Date Formatting
   String _formatTimestamp(DateTime timestamp) {
     return DateFormat('MMM dd').format(timestamp);
   }

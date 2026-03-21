@@ -43,7 +43,7 @@ class RccInfoBottomSheet extends StatelessWidget {
               height: 4,
             ),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
 
           // Header
           Row(
@@ -78,13 +78,13 @@ class RccInfoBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
 
           Text(
             item.description,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
 
           // Specs List
           ...item.rccSpecs.map(
@@ -98,7 +98,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
 
           // Action Buttons
           Column(
@@ -130,7 +130,7 @@ class RccInfoBottomSheet extends StatelessWidget {
                     label: 'DESIGN NOW',
                   ),
                 ),
-                const SizedBox(height: SbSpacing.md),
+                SizedBox(height: SbSpacing.md),
               ],
               SizedBox(
                 width: double.infinity,
@@ -147,7 +147,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
         ],
       ),
     );

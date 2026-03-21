@@ -22,7 +22,9 @@ class AppTheme {
       surface: isLight ? SbColors.lightSurface : SbColors.darkSurface,
       surfaceContainer: isLight ? SbColors.lightContainer : SbColors.darkContainer,
       surfaceContainerHigh: isLight ? SbColors.lightContainerHigh : SbColors.darkContainerHigh,
+      outline: isLight ? const Color(0xFF94A3B8) : const Color(0xFF475569), // 🔳 Structured Borders
     );
+
 
     return ThemeData(
       useMaterial3: true,
@@ -46,9 +48,10 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16), // Standardized SbRadius.medium
           side: BorderSide(
-            color: colorScheme.outlineVariant.withValues(alpha: 0.1),
+            color: colorScheme.outline,
             width: 1.0,
           ),
+
         ),
       ),
 

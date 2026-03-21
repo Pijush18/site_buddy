@@ -16,12 +16,12 @@ class LayoutLabSection extends StatelessWidget {
           'Layout & Grid System',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Text(
           'The SiteBuddy grid system enforces a maximum content width of 800px on all primary screens to ensure readability and professional presentation.',
           style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey),
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
 
         // Visualizer
         Container(
@@ -97,7 +97,7 @@ class LayoutLabSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Text('Layout Rules:', style: Theme.of(context).textTheme.bodyLarge!),
         Padding(
           padding: const EdgeInsets.all(SbSpacing.sm),

@@ -27,21 +27,21 @@ class CurrencyConverterScreen extends ConsumerWidget {
               'Converted Amount',
               style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             Text(
               state.convertedAmount != null
                   ? state.convertedAmount!.toStringAsFixed(2)
                   : '-',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             Divider(color: colorScheme.outlineVariant),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             Text(
               'Rate: ${state.rate?.toStringAsFixed(6) ?? '-'}',
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             Text(
               'Last Updated: ${state.lastUpdated != null ? state.lastUpdated!.toLocal().toString().split('.')[0] : '-'}',
               style: Theme.of(context).textTheme.labelMedium!,
@@ -56,19 +56,19 @@ class CurrencyConverterScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           Text(
             'Market Exchange Rates',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           SbInput(
             label: 'Amount to Convert',
             suffixIcon: const Icon(SbIcons.payments),
             onChanged: controller.updateAmount,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -79,7 +79,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
                       'From',
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
-                    const SizedBox(height: SbSpacing.sm / 2),
+                    SizedBox(height: SbSpacing.sm / 2),
                     SbDropdown<String>(
                       value: state.fromCurrency,
                       items: _currencies,
@@ -108,7 +108,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
                       'To',
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
-                    const SizedBox(height: SbSpacing.sm / 2),
+                    SizedBox(height: SbSpacing.sm / 2),
                     SbDropdown<String>(
                       value: state.toCurrency,
                       items: _currencies,
@@ -122,18 +122,18 @@ class CurrencyConverterScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           if (state.error != null) ...[
             Text(
               state.error!,
               style: Theme.of(context).textTheme.bodyLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
           if (state.convertedAmount != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
           SbButton(
             label: state.isLoading ? 'Processing...' : 'Calculate Conversion',

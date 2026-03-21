@@ -40,28 +40,28 @@ class ShutteringScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.elementDimensions),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.length,
             hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbListItemTile(
             title: EngineeringTerms.includeBottomArea,
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
@@ -71,7 +71,7 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -87,19 +87,19 @@ class ShutteringScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
           Text(
             EngineeringTerms.shutteringNote,
             style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -156,7 +156,7 @@ class _ResultCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
             title: EngineeringTerms.totalShutteringArea,

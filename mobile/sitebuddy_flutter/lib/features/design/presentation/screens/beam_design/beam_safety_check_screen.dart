@@ -3,6 +3,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
+
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/core/constants/engineering_terms.dart';
@@ -59,13 +62,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   .generateReport();
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Save to Design History',
             icon: SbIcons.history,
             onPressed: () => _saveDesign(context, ref),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'New Design',
             icon: SbIcons.add,
@@ -74,7 +77,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               context.go('/');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -189,7 +192,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbButton.ghost(
                     label: 'Save Image',
                     icon: SbIcons.image,
@@ -206,7 +209,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                     },
                     width: double.infinity,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbButton.ghost(
                     label: 'Save PDF',
                     icon: SbIcons.pdf,
@@ -280,7 +283,11 @@ class _OverallStatusBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: SbRadius.borderMd,
-        border: Border.all(color: color.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: color,
+          width: AppBorder.width,
+        ),
+
       ),
       child: Row(
         children: [

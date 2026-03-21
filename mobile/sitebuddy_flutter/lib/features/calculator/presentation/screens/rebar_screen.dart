@@ -44,7 +44,7 @@ class RebarScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.numberOfBars,
@@ -87,7 +87,7 @@ class RebarScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.memberLength,
@@ -95,7 +95,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.spacingLabel,
@@ -103,7 +103,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           Wrap(
             spacing: SbSpacing.lg,
@@ -129,7 +129,7 @@ class RebarScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -146,7 +146,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -156,12 +156,12 @@ class RebarScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

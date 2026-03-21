@@ -35,7 +35,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
             onPressed: () => context.push('/slab/reinforcement'),
             icon: Icons.engineering_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -89,7 +89,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
                     size: 64,
                     color: colorScheme.primary.withValues(alpha: 0.5),
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Text(
                     'Maximum moment occurs at the midspan for a simply supported slab.',
                     style: Theme.of(context).textTheme.bodyLarge!,

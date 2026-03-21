@@ -4,6 +4,9 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_button.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// WIDGET: SbInput
 /// PURPOSE: Standardized text input for SiteBuddy.
@@ -81,7 +84,7 @@ class SbInput extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
         ],
         Container(
           height: maxLines == 1 ? 48.0 : null,
@@ -91,9 +94,9 @@ class SbInput extends StatelessWidget {
             borderRadius: SbRadius.borderMd,
             border: Border.all(
               color: errorText != null 
-                  ? colorScheme.error.withValues(alpha: 0.5) 
-                  : colorScheme.outline.withValues(alpha: 0.15),
-              width: 1.5,
+                  ? colorScheme.error 
+                  : context.colors.outline,
+              width: AppBorder.width,
             ),
           ),
           alignment: maxLines == 1 ? Alignment.center : Alignment.topLeft,
@@ -158,7 +161,7 @@ class SbInput extends StatelessWidget {
           ),
         ),
         if (errorText != null) ...[
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Text(
             errorText!,
             style: textTheme.labelSmall?.copyWith(

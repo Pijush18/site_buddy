@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// WIDGET: SbCard
 /// PURPOSE: Standardized surface-based card container.
@@ -37,7 +40,7 @@ class SbCard extends StatelessWidget {
     final surfaceColor = color ?? 
         (isElevated 
             ? colorScheme.surfaceContainerHigh 
-            : (isSubtle ? colorScheme.surface : colorScheme.surfaceContainer));
+            : colorScheme.surfaceContainer); // Optimized for contrast as per Task 4
 
     return Container(
       margin: margin ?? EdgeInsets.zero,
@@ -45,16 +48,16 @@ class SbCard extends StatelessWidget {
         color: surfaceColor,
         borderRadius: br,
         border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: isSubtle ? 0.05 : 0.1),
-          width: 0.8,
+          color: context.colors.outline,
+          width: AppBorder.width,
         ),
-        boxShadow: isSubtle ? null : [
+        boxShadow: isElevated ? [
           BoxShadow(
             color: colorScheme.shadow.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
-        ],
+        ] : [],
       ),
       child: Material(
         color: Colors.transparent,

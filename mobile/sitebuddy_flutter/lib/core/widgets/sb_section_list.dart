@@ -37,7 +37,7 @@ class SbSectionList extends StatelessWidget {
 
       /// ✅ Centralized spacing system
       separatorBuilder: (context, index) =>
-          const SizedBox(height: SbSpacing.xl),
+          SizedBox(height: SbSpacing.xl),
 
       itemBuilder: (context, index) => sections[index],
     );

@@ -38,7 +38,7 @@ class SbSection extends StatelessWidget {
           ),
 
           /// Tighter internal gap: 8 -> 4 (XS) to group header with its content
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
         ],
 
         /// Content only — no bottom spacing (handled by SbSectionList)

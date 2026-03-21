@@ -57,42 +57,42 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: SbSpacing.xxl * 2), 
+            SizedBox(height: SbSpacing.xxl * 2), 
             // Logo
             Icon(
               SbIcons.engineering,
               size: 64, // Standard large icon size
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: SbSpacing.xxl), 
+            SizedBox(height: SbSpacing.xxl), 
 
             // App Name
             Text(
               'SiteBuddy',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+            SizedBox(height: SbSpacing.lg), // Replaced SizedBox(height: SbSpacing.lg)
 
             // Tagline
             Text(
               'Civil Engineering Intelligence',
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: SbSpacing.xxl), 
+            SizedBox(height: SbSpacing.xxl), 
 
             // Loading Indicator
             CircularProgressIndicator(
               color: Theme.of(context).colorScheme.primary,
             ),
             
-            const SizedBox(height: SbSpacing.xxl * 2), 
+            SizedBox(height: SbSpacing.xxl * 2), 
 
             // Footer
             Text(
               '© Pijush Debbarma',
               style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: SbSpacing.xxl), 
+            SizedBox(height: SbSpacing.xxl), 
           ],
         ),
       ),

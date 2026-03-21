@@ -57,7 +57,7 @@ class GradientScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 const Divider(),
                 SbListItemTile(
                   title: EngineeringTerms.percentage,
@@ -84,7 +84,7 @@ class GradientScreen extends ConsumerWidget {
                   ),
                 ),
                 const Divider(),
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.md),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
                   child: Column(
@@ -93,7 +93,7 @@ class GradientScreen extends ConsumerWidget {
                         EngineeringTerms.classification,
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
-                      const SizedBox(height: SbSpacing.sm / 2),
+                      SizedBox(height: SbSpacing.sm / 2),
                       Text(
                         classificationLabel,
                         style: Theme.of(context).textTheme.titleMedium!,
@@ -104,7 +104,7 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +113,7 @@ class GradientScreen extends ConsumerWidget {
                   EngineeringTerms.slopeVisualization,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 SizedBox(
                   height: 120,
                   width: double.infinity,
@@ -150,7 +150,7 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           SbInput(
             label: EngineeringTerms.verticalRise,
@@ -158,7 +158,7 @@ class GradientScreen extends ConsumerWidget {
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.horizontalRun,
@@ -167,7 +167,7 @@ class GradientScreen extends ConsumerWidget {
             errorText: runError,
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           ActionButtonsGroup(
             children: [
@@ -184,7 +184,7 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -194,12 +194,12 @@ class GradientScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xl),
           ],
 
           const _FieldReference(),
@@ -222,7 +222,7 @@ class _FieldReference extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.md)
+        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.md)
         SbCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -237,7 +237,7 @@ class _FieldReference extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
+        SizedBox(height: SbSpacing.xl),
       ],
     );
   }

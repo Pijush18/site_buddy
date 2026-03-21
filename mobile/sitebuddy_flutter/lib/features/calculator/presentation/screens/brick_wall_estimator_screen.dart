@@ -56,7 +56,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: EngineeringTerms.wallHeight,
                     hint: EngineeringTerms.heightHint,
@@ -65,7 +65,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateHeight,
                     errorText: hError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: EngineeringTerms.wallThickness,
                     hint: EngineeringTerms.brickThicknessHint,
@@ -100,7 +100,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: SbSpacing.xs),
+                            SizedBox(height: SbSpacing.xs),
                             Text(
                               EngineeringTerms.standardBrickSize,
                               style: theme.textTheme.bodyLarge?.copyWith(
@@ -129,7 +129,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.md),
                 SbDropdown<MortarRatio>(
                   label: EngineeringTerms.mortarRatio,
                   value: state.selectedRatio,

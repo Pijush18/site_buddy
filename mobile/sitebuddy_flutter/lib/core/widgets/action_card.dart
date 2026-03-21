@@ -1,6 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// CLASS: ActionCard
 /// PURPOSE: Standardized high-density quick action card. (SURFACE MODE RESTORED)
@@ -38,8 +41,8 @@ class ActionCard extends StatelessWidget {
             color: colorScheme.surface,
             borderRadius: SbRadius.borderMd,
             border: Border.all(
-              color: colorScheme.outline, // 👈 Standard theme outline
-              width: 1.0,
+              color: context.colors.outline,
+              width: AppBorder.width,
             ),
             boxShadow: [
               BoxShadow(
@@ -60,7 +63,7 @@ class ActionCard extends StatelessWidget {
                 color: colorScheme.primary,
                 size: 22,
               ),
-              const SizedBox(height: SbSpacing.sm), 
+              SizedBox(height: SbSpacing.sm), 
               Text(
                 label,
                 textAlign: TextAlign.center, 

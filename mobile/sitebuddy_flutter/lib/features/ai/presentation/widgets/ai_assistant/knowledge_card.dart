@@ -117,7 +117,7 @@ class KnowledgeCard extends ConsumerWidget {
                   hint: AppStrings.searchInsideTopic,
                   prefixIcon: Icon(SbIcons.search, color: colorScheme.primary),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
 
                 if (hasResults) ...[
                   if (matchesDefinition) ...[
@@ -125,15 +125,15 @@ class KnowledgeCard extends ConsumerWidget {
                       topic.definition,
                       style: textTheme.bodyLarge,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredKeyPoints.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.keyPoints),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     ...filteredKeyPoints.map(
                       (point) => _BulletPoint(text: point),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredThumbRules.isNotEmpty) ...[
                     _HighlightBox(
@@ -142,11 +142,11 @@ class KnowledgeCard extends ConsumerWidget {
                       color: colorScheme.secondary,
                       items: filteredThumbRules,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredTypes.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.types),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     Wrap(
                       spacing: SbSpacing.sm,
                       runSpacing: SbSpacing.sm,
@@ -161,11 +161,11 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.relatedTopics.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.exploreRelatedTopics),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     Wrap(
                       spacing: SbSpacing.sm,
                       runSpacing: SbSpacing.sm,
@@ -180,7 +180,7 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.siteTip.isNotEmpty) ...[
                     _HighlightBox(
@@ -274,7 +274,7 @@ class _HighlightBox extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           ...items.map(
             (item) =>
                 Text('• $item', style: textTheme.bodyMedium),

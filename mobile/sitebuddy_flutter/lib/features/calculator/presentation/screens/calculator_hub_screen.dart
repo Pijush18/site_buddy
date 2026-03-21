@@ -46,7 +46,7 @@ class CalculatorHubScreen extends StatelessWidget {
                   variant: FeatureCardVariant.primary,
                   isFeatured: true,
                 ),
-                const SizedBox(height: SbSpacing.md),
+                SizedBox(height: SbSpacing.md),
 
                 // SECONDARY LIST: Tight grouping for less common tools
                 SbListGroup(

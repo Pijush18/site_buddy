@@ -39,7 +39,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               context.push('/beam/rebar');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -94,7 +94,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   isBMD: false,
                   isDark: isDark,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 _DiagramCard(
                   label: 'Bending Moment Diagram (BMD)',
                   points: state.bmdPoints,

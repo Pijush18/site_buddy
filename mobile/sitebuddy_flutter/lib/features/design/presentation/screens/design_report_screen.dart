@@ -128,19 +128,19 @@ class _ReportErrorState extends StatelessWidget {
                 size: 64,
                 color: theme.colorScheme.error,
               ),
-              const SizedBox(height: SbSpacing.xxl),
+              SizedBox(height: SbSpacing.xxl),
               Text(
                 'Report data unavailable.',
                 style: Theme.of(context).textTheme.titleMedium!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               Text(
                 'Please try recalculating the design.',
                 style: Theme.of(context).textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: SbSpacing.xxl),
+              SizedBox(height: SbSpacing.xxl),
               SbButton.primary(
                 label: 'Go Back',
                 width: 200,
@@ -192,7 +192,7 @@ class _ReportDocumentHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.xxl),
+        SizedBox(height: SbSpacing.xxl),
         Container(
           padding: const EdgeInsets.all(SbSpacing.lg),
           decoration: BoxDecoration(
@@ -240,7 +240,7 @@ class _HeaderField extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        SizedBox(height: SbSpacing.sm),
         Text(
           value,
           style: Theme.of(context).textTheme.bodyLarge!,
@@ -281,7 +281,7 @@ class _ReportSectionWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         SbCard(
           padding: const EdgeInsets.all(SbSpacing.lg),
           color: isResult
@@ -351,7 +351,7 @@ class _ReportFooter extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Text(
             'DESIGN VERIFIED BY SITE BUDDY PRO',
             style: Theme.of(context).textTheme.labelMedium!,
@@ -384,14 +384,14 @@ class _ReportExportActions extends StatelessWidget {
           icon: SbIcons.share,
           onPressed: onShare,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         SbButton.primary(
           label: 'Download PDF',
           icon: SbIcons.download,
           onPressed: onShare,
         ),
         // Buffer at the bottom to ensure last button is not cut off by SafeArea
-        const SizedBox(height: SbSpacing.xxl),
+        SizedBox(height: SbSpacing.xxl),
       ],
     );
   }

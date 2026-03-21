@@ -56,7 +56,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
             onPressed: _onNext,
             icon: Icons.analytics_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -88,12 +88,12 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                       if (val != null) notifier.updateLoads(pu: val);
                     },
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Text(
                     'End Support Condition',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,

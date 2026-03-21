@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// WIDGET: SmartAssistantInput
 /// PURPOSE: Premium input component for the AI assistant.
@@ -29,8 +32,8 @@ class SmartAssistantInput extends StatelessWidget {
         color: colorScheme.surface, // Pop against Hero background
         borderRadius: SbRadius.borderMedium,
         border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.15), 
-          width: 1.5,
+          color: context.colors.outline,
+          width: AppBorder.width,
         ),
         boxShadow: [
           BoxShadow(

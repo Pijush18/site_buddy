@@ -15,14 +15,14 @@ class CrackingResultSummary extends StatelessWidget {
     return SbCard(
       child: Column(
         children: [
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           ComparisonBar(
             actual: result.crackWidth,
             allowable: 0.3,
             label: 'Estimated Crack Width (w)',
             unit: 'mm',
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Crack Width (w)',
             value: '${result.crackWidth.toStringAsFixed(3)} mm',

@@ -37,7 +37,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateArea,
                   errorText: aError,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 SbInput(
                   label: EngineeringTerms.plasterThickness,
                   hint: EngineeringTerms.diameterHint,
@@ -45,7 +45,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateThickness,
                   errorText: tError,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 Text(
                   EngineeringTerms.typicalThicknessNote,
                   style: Theme.of(context).textTheme.labelMedium!,
@@ -139,7 +139,7 @@ class _ResultSection extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           const Divider(),
 
           SbListItemTile(
@@ -159,7 +159,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
           SbListItemTile(
             title: EngineeringTerms.dryMortarVolume,
             onTap: () {},

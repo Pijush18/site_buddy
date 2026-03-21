@@ -85,7 +85,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                   hint: 'Task title',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _descriptionController,
                   label: 'Description',
@@ -93,14 +93,14 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                   maxLines: 3,
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _projectController,
                   label: 'Project ID',
                   hint: 'e.g., PRJ-001',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'PRIORITY',
                   style: Theme.of(context).textTheme.labelLarge!,
@@ -114,14 +114,14 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                     if (v != null) setState(() => _priority = v);
                   },
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 SbInput(
                   controller: _assignedController,
                   label: 'Assigned To',
                   hint: 'User name or ID',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 Row(
                   children: [
                     Expanded(

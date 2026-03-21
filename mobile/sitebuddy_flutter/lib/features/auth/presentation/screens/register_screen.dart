@@ -136,18 +136,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           SbSection(
             child: Column(
               children: [
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xxl),
                 Icon(
                   SbIcons.engineering,
                   size: 64,
                   color: colorScheme.primary,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 Text(
                   AppStrings.siteBuddy,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -174,7 +174,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
@@ -196,7 +196,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _confirmPasswordController,
                     focusNode: _confirmPasswordFocusNode,
@@ -207,7 +207,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onFieldSubmitted: (_) => _register(),
                     prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: SbSpacing.xxl),
+                  SizedBox(height: SbSpacing.xxl),
                   SbButton.primary(
                     label: AppStrings.register,
                     onPressed: (isLoading ||
@@ -232,7 +232,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               width: double.infinity,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

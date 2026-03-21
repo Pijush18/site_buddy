@@ -44,11 +44,11 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
 
         // --- BUTTONS ---
         Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Wrap(
           spacing: SbSpacing.lg,
           runSpacing: SbSpacing.lg,
@@ -74,11 +74,11 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.xxl),
+        SizedBox(height: SbSpacing.xxl),
 
         // --- CARDS ---
         Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Row(
           children: [
             Expanded(
@@ -90,7 +90,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'SbCard',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     const Text(
                       'This is the standard SiteBuddy card component.',
                     ),
@@ -109,7 +109,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'Common Decoration',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     const Text('Standard card usage from SbCard.'),
                   ],
                 ),
@@ -117,17 +117,17 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.xxl),
+        SizedBox(height: SbSpacing.xxl),
 
         // --- FORMS ---
         Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         SbInput(
           label: 'Standard Input',
           hint: 'Type something...',
           enabled: _isEnabled,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         const SbInput(label: 'Input with Helper', hint: 'Example helper text'),
       ],
     );

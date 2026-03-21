@@ -52,7 +52,7 @@ class CalculationCard extends ConsumerWidget {
                   'Input: $dimensionsTitle',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 Row(
                   children: [
                     Expanded(
@@ -73,7 +73,7 @@ class CalculationCard extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 Container(
                   padding: const EdgeInsets.all(SbSpacing.lg),
                   
@@ -137,7 +137,7 @@ class _StatBox extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Text(
             value,
             style: Theme.of(context).textTheme.titleMedium!,

@@ -91,7 +91,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             onPressed: _onNext,
             icon: Icons.arrow_forward,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -121,7 +121,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       'Slab Behavior',
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     SbDropdown<SlabType>(
                       value: state.type,
                       items: SlabType.values,
@@ -129,7 +129,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       onChanged: (v) =>
                           v != null ? notifier.updateType(v) : null,
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    SizedBox(height: SbSpacing.md),
                     Row(
                       children: [
                         Expanded(
@@ -151,7 +151,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _depthController,
                       label: 'Overall Thickness (D) (mm)',
@@ -191,7 +191,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _coverController,
                       label: 'Clear Cover (mm)',
@@ -217,7 +217,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

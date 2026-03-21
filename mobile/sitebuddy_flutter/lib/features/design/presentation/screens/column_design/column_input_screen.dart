@@ -79,7 +79,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
             label: 'Next: Load Definition',
             onPressed: _onNext,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -107,7 +107,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                     'Section Type',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbDropdown<ColumnType>(
                     value: state.type,
                     items: ColumnType.values,
@@ -115,7 +115,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                     onChanged: (v) =>
                         v != null ? notifier.updateInput(type: v) : null,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -137,17 +137,17 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       ],
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: 'Unsupported Length (L) (mm)',
                     controller: _lengthController,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Text(
                     'End Condition',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,
@@ -179,7 +179,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                               'Concrete Grade',
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
-                            const SizedBox(height: SbSpacing.sm),
+                            SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.concreteGrade,
                               items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
@@ -200,7 +200,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                               'Steel Grade',
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
-                            const SizedBox(height: SbSpacing.sm),
+                            SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.steelGrade,
                               items: const ['Fe415', 'Fe500', 'Fe550'],
@@ -214,7 +214,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: 'Clear Cover (mm)',
                     controller: _coverController,

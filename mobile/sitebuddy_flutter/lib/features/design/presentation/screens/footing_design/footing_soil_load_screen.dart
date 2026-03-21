@@ -93,7 +93,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
             icon: Icons.square_foot,
             onPressed: _onNext,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -125,7 +125,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     controller: _loadController,
                     suffixIcon: const Icon(SbIcons.arrowDown),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -145,19 +145,19 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                   ),
                   if (state.type == FootingType.combined ||
                       state.type == FootingType.strap) ...[
-                    const SizedBox(height: SbSpacing.xxl),
+                    SizedBox(height: SbSpacing.xxl),
                     Divider(color: colorScheme.outlineVariant),
-                    const SizedBox(height: SbSpacing.xxl),
+                    SizedBox(height: SbSpacing.xxl),
                     Text(
                       'Column 2 Loadings',
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: 'Axial Load (P2) (kN)',
                       controller: _load2Controller,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     Row(
                       children: [
                         Expanded(
@@ -193,7 +193,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     controller: _sbcController,
                     suffixIcon: const Icon(SbIcons.terrain),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: 'Foundation Depth (m)',
                     controller: _depthController,

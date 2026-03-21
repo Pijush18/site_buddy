@@ -62,7 +62,7 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             onPressed: _onCalculate,
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -94,14 +94,14 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _llController,
                       label: 'Live Load',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Live Load'),
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     Text(
                       'Note: Load factor of 1.5 will be applied automatically.',
                       style: Theme.of(context).textTheme.labelMedium!,

@@ -27,7 +27,7 @@ class HomeHeaderSection extends StatelessWidget {
                 l10n.readyToBuild,
                 style: textTheme.bodyMedium,
               ),
-              const SizedBox(height: SbSpacing.xs),
+              SizedBox(height: SbSpacing.xs),
               Text(
                 l10n.appName,
                 style: textTheme.displayLarge,

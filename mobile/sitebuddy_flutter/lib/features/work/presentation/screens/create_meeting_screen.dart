@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -107,7 +110,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   maxLines: 3,
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _projectController,
                   label: 'Project ID',
@@ -156,7 +159,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   hint: 'Comma separated names',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xl),
                 // Date Picker
                 Row(
                   children: [
@@ -168,7 +171,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                             'DATE',
                             style: Theme.of(context).textTheme.labelLarge!,
                           ),
-                          const SizedBox(height: SbSpacing.sm),
+                          SizedBox(height: SbSpacing.sm),
                           Text(
                             _date == null
                                 ? 'Not set'
@@ -194,7 +197,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.md),
                 // Time Pickers
                 Row(
                   children: [
@@ -254,14 +257,17 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         InkWell(
           onTap: onTap,
           borderRadius: SbRadius.borderSmall,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md, vertical: SbSpacing.sm),
             decoration: BoxDecoration(
-              border: Border.all(color: colorScheme.outlineVariant),
+              border: Border.all(
+                color: context.colors.outline,
+                width: AppBorder.width,
+              ),
               borderRadius: SbRadius.borderMd,
             ),
             child: Row(

@@ -49,7 +49,7 @@ class ConversionCard extends StatelessWidget {
                   inputTitle,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: SbSpacing.xs),
+                SizedBox(height: SbSpacing.xs),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -75,7 +75,7 @@ class ConversionCard extends StatelessWidget {
                     'ALSO EQUIVALENT TO',
                     style: Theme.of(context).textTheme.bodyMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Wrap(
                     spacing: SbSpacing.sm,
                     runSpacing: SbSpacing.sm,

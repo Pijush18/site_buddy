@@ -82,7 +82,7 @@ class SbModuleHero extends StatelessWidget {
                       size: 34, // Slightly bolder icon
                     ),
                   ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   Text(
                     title,
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -90,7 +90,7 @@ class SbModuleHero extends StatelessWidget {
                       letterSpacing: -0.5,
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Text(
                     subtitle,
                     style: theme.textTheme.bodyLarge?.copyWith(
@@ -102,7 +102,7 @@ class SbModuleHero extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (child != null) ...[
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     child!,
                   ],
                 ],

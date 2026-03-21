@@ -41,7 +41,7 @@ class DesignCategoryCard extends StatelessWidget {
               color: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           // Label
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),

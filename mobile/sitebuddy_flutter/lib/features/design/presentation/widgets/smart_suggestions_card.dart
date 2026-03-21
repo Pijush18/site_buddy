@@ -42,7 +42,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
             (s) => Container(
               padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
@@ -53,7 +53,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                     s.title,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.xs),
+                  SizedBox(height: SbSpacing.xs),
                   Text(
                     s.description,
                     style: Theme.of(context).textTheme.bodyMedium!,

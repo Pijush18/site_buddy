@@ -4,7 +4,7 @@ class AppBorder {
   AppBorder._();
 
   /// Standard border width for cards and interactive surfaces.
-  static const double width = 1.5;
+  static const double width = 1.0;
 }
 
 

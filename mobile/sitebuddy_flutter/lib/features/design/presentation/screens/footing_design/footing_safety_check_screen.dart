@@ -56,19 +56,19 @@ class _FootingSafetyCheckScreenState
                   .generateReport();
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Save Design',
             icon: Icons.save_outlined,
             onPressed: () => context.go('/design'),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'New Design',
             icon: Icons.add,
             onPressed: () => context.go('/'),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -196,7 +196,7 @@ class _FootingSafetyCheckScreenState
                       ),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -216,7 +216,7 @@ class _FootingSafetyCheckScreenState
                           }
                         },
                       ),
-                      const SizedBox(height: SbSpacing.sm),
+                      SizedBox(height: SbSpacing.sm),
                       SbButton.ghost(
                         label: 'Save PDF',
                         icon: Icons.picture_as_pdf_outlined,

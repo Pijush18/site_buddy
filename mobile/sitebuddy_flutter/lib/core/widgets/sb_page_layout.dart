@@ -39,7 +39,7 @@ class SbPageLayout extends StatelessWidget {
             // ── SINGLE SPACING AUTHORITY ──
             // Exactly 24px (lg) between all children sections.
             if (i < sections.length - 1) 
-              const SizedBox(height: SbSpacing.xxl),
+              SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

@@ -2,6 +2,8 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 class SbGridCard extends StatefulWidget {
   final IconData icon;
@@ -35,9 +37,6 @@ class _SbGridCardState extends State<SbGridCard> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    // Premium Border Logic
-    final currentBorderColor = AppColors.skyBlue.withValues(alpha: 0.7);
-    
     final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surfaceContainerHighest;
 
     return AnimatedScale(
@@ -64,7 +63,10 @@ class _SbGridCardState extends State<SbGridCard> {
             curve: Curves.easeOut,
             decoration: BoxDecoration(
               borderRadius: SbRadius.borderMedium,
-              border: Border.all(color: currentBorderColor, width: 1.0),
+              border: Border.all(
+                color: context.colors.outline,
+                width: AppBorder.width,
+              ),
               gradient: widget.isVibrant
                   ? LinearGradient(
                       colors: [
@@ -88,7 +90,7 @@ class _SbGridCardState extends State<SbGridCard> {
                     size: _iconSize, 
                   ),
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 SizedBox(
                   height: _labelHeight,
                   child: Center(

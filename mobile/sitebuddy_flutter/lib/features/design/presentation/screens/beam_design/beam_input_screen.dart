@@ -125,7 +125,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -155,7 +155,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       'Beam Type',
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    SizedBox(height: SbSpacing.sm),
                     SbDropdown<BeamType>(
                       value: state.type,
                       items: BeamType.values,
@@ -166,14 +166,14 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                         }
                       },
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _spanController,
                       label: 'Clear Span (L) (mm)',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Span'),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.md),
                     Row(
                       children: [
                         Expanded(
@@ -232,7 +232,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _coverController,
                       label: 'Clear Cover (mm)',
@@ -262,7 +262,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         SbDropdown<String>(
           value: value,
           items: items,

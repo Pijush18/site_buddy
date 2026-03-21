@@ -65,14 +65,14 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: EngineeringTerms.width,
                     suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: EngineeringTerms.thicknessDepth,
                     suffixIcon: const Icon(SbIcons.layers),
@@ -143,7 +143,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
           const SbSection(
             child: _IsCodeNote(),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

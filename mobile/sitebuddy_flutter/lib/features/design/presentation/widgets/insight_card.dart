@@ -24,7 +24,7 @@ class InsightCard extends StatelessWidget {
           'SMART INSIGHTS',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        SizedBox(height: SbSpacing.sm),
         ...insights.map(
           (insight) => Padding(
             padding: const EdgeInsets.only(bottom: SbSpacing.sm),

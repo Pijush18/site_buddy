@@ -23,7 +23,7 @@ class RecentActivitySection extends ConsumerWidget {
         for (int i = 0; i < state.recentActivities.length; i++) ...[
           ActivityTile(activity: state.recentActivities[i]),
           if (i < state.recentActivities.length - 1)
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
         ],
       ],
     );

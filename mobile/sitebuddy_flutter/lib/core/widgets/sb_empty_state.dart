@@ -43,7 +43,7 @@ class SbEmptyState extends StatelessWidget {
               ),
               child: Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
 
             // Title
             Text(
@@ -54,7 +54,7 @@ class SbEmptyState extends StatelessWidget {
 
             // Subtitle
             if (subtitle != null) ...[
-              const SizedBox(height: SbSpacing.xs),
+              SizedBox(height: SbSpacing.xs),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
                 child: Text(
@@ -67,7 +67,7 @@ class SbEmptyState extends StatelessWidget {
 
             // Action
             if (actionLabel != null && onAction != null) ...[
-              const SizedBox(height: SbSpacing.lg),
+              SizedBox(height: SbSpacing.lg),
               SbButton.primary(
                 label: actionLabel!,
                 onPressed: onAction,

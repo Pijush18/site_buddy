@@ -49,9 +49,13 @@ class CalculationHistoryScreen extends ConsumerWidget {
             ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
           return Column(
-            children: sortedEntries
-                .map((entry) => _HistoryEntryCard(entry: entry))
-                .toList(),
+            children: [
+              for (var i = 0; i < sortedEntries.length; i++) ...[
+                _HistoryEntryCard(entry: sortedEntries[i]),
+                if (i < sortedEntries.length - 1)
+                  SizedBox(height: SbSpacing.sm),
+              ],
+            ],
           );
         },
       ),

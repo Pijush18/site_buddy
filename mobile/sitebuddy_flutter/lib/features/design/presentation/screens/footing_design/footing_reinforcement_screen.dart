@@ -33,7 +33,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
             label: 'Next: Final Safety Checks',
             onPressed: () => context.push('/footing/safety'),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -109,7 +109,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                     'Main Reinforcement (X-Direction)',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Row(
                     children: [
                       Expanded(
@@ -147,12 +147,12 @@ class FootingReinforcementScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.xxl),
+                  SizedBox(height: SbSpacing.xxl),
                   Text(
                     'Distribution Steel (Y-Direction)',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Row(
                     children: [
                       Expanded(

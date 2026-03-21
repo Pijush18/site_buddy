@@ -85,7 +85,7 @@ class _BrandingSettingsScreenState
             onPressed: _saveBranding,
             width: double.infinity,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           SbButton.ghost(
             label: 'Reset to Site Buddy Defaults',
             onPressed: _resetBranding,
@@ -103,14 +103,14 @@ class _BrandingSettingsScreenState
                   'Enterprise Profile',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 Text(
                   'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xl),
                 _buildInputLabel(context, 'Company / Enterprise Name'),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _companyController,
                   hint: 'e.g., ABC Infra Pvt Ltd',
@@ -118,9 +118,9 @@ class _BrandingSettingsScreenState
                   label: 'COMPANY NAME',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.md),
                 _buildInputLabel(context, 'Lead Engineer Name'),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _engineerController,
                   hint: 'e.g., Er. Pijush Debbarma',

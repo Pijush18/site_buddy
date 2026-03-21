@@ -125,7 +125,7 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
             isLoading: _isLoading,
           ),
           if (_result != null) ...[
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             SbButton.ghost(
               label: 'Share Report',
               onPressed: _shareResult,

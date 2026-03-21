@@ -44,7 +44,7 @@ class SlabSafetyScreen extends ConsumerWidget {
                 .generateReport(),
             icon: Icons.picture_as_pdf_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),

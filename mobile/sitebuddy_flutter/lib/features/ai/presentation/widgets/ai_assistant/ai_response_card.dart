@@ -118,7 +118,7 @@ class AiResponseCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           child,
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Row(
             children: [
               if (onSaveToProject != null)
@@ -188,7 +188,7 @@ class _MiniActionButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 20, color: colorScheme.primary),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Text(
             label,
             style: Theme.of(context).textTheme.labelMedium!,
@@ -308,7 +308,7 @@ class _ToolSuggestionCard extends StatelessWidget {
               message!,
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
           ],
           SbListItemTile(
             icon: icon,
@@ -317,7 +317,7 @@ class _ToolSuggestionCard extends StatelessWidget {
             subtitle: prefillSummary ?? 'Open the specialized tool for this calculation.',
             onTap: () => context.push(route, extra: prefillData),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Launch $title',
             icon: SbIcons.assistant,

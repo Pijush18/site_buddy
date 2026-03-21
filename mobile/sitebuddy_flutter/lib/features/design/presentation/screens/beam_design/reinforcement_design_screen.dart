@@ -35,7 +35,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               context.push('/beam/safety');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -85,7 +85,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                     'Main Bar Diameter',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbDropdown<double>(
                     value: state.mainBarDia,
                     items: const [12, 16, 20, 25, 32],

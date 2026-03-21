@@ -51,7 +51,7 @@ class AiMessageBubble extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Text(
             _formatTime(message.timestamp),
             style: Theme.of(context).textTheme.labelMedium!,

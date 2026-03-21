@@ -23,5 +23,24 @@ class AppColors {
   static Color premium(BuildContext context) => const Color(0xFFF59E0B); // Global Premium Amber
 }
 
+/// EXTENSION: AppContext
+/// PURPOSE: Provides semantic color access via context.colors.
+extension AppContext on BuildContext {
+  _AppColors get colors => _AppColors(this);
+}
+
+class _AppColors {
+  final BuildContext _context;
+  _AppColors(this._context);
+
+  Color get outline => AppColors.outline(_context);
+  Color get surface => AppColors.surface(_context);
+  Color get background => AppColors.background(_context);
+  Color get success => AppColors.success(_context);
+  Color get warning => AppColors.warning(_context);
+  Color get premium => AppColors.premium(_context);
+}
+
+
 
 

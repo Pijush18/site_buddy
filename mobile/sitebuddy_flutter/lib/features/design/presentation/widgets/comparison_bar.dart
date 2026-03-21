@@ -37,7 +37,7 @@ class ComparisonBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.sm),
+        SizedBox(height: SbSpacing.sm),
         Stack(
           children: [
             Container(height: 8),

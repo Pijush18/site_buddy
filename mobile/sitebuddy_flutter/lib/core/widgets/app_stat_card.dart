@@ -13,6 +13,9 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 //   )
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// WIDGET: AppStatCard
 ///
@@ -63,9 +66,8 @@ class AppStatCard extends StatelessWidget {
         borderRadius: SbRadius.borderMd,
         // Subtle outline border
         border: Border.all(
-          // Using withValues(alpha: ...) to avoid deprecated withOpacity
-          color: colorScheme.outline.withValues(alpha: 0.2),
-          width: 1.0,
+          color: context.colors.outline,
+          width: AppBorder.width,
         ),
       ),
 
@@ -77,7 +79,7 @@ class AppStatCard extends StatelessWidget {
           Icon(icon, size: 28, color: colorScheme.primary),
 
           // Small gap instead of Expanded to prevent layout errors in Columns
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           // ── Value ──────────────────────────────────────────────────────────
           Text(
@@ -87,7 +89,7 @@ class AppStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
 
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
 
           // ── Title / Caption ────────────────────────────────────────────────
           Text(

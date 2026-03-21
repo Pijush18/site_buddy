@@ -76,7 +76,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             Text(
               interactionRatio <= 1.0
                   ? 'Design point is within the safe envelope.'
@@ -125,7 +125,7 @@ class _DesignPoint extends StatelessWidget {
               border: Border.all(color: colorScheme.surface, width: 2),
             ),
           ),
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Container(
             padding: const EdgeInsets.all(SbSpacing.xs),
             decoration: BoxDecoration(

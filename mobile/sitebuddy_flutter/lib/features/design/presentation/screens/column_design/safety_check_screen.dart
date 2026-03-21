@@ -48,7 +48,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   .optimizeDesign();
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Export PDF Report',
             icon: Icons.picture_as_pdf_outlined,
@@ -58,7 +58,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   .generateReport();
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.primary(
             label: 'Save to History',
             icon: Icons.history,
@@ -72,7 +72,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               );
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'New Design',
             icon: Icons.add,
@@ -81,7 +81,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               context.go('/');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -205,7 +205,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbButton.ghost(
                     label: 'Save Image',
                     icon: Icons.image_outlined,
@@ -222,7 +222,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     },
                     width: double.infinity,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbButton.ghost(
                     label: 'Save PDF',
                     icon: Icons.picture_as_pdf_outlined,

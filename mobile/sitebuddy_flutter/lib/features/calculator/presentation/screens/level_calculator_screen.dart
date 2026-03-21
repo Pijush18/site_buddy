@@ -50,15 +50,15 @@ class LevelCalculatorScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             Text(
               '${result.difference.toStringAsFixed(2)} m',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: SbSpacing.lg,
@@ -70,7 +70,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.md),
             SbListItemTile(
               title: EngineeringTerms.absoluteDifference,
               onTap: () {}, // Detail view entry
@@ -90,13 +90,13 @@ class LevelCalculatorScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.xl),
           Text(
             EngineeringTerms.fieldLevelComparison,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           SbInput(
             label: EngineeringTerms.startLevel,
@@ -104,7 +104,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.endLevel,
@@ -113,7 +113,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             errorText: eError,
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           ActionButtonsGroup(
             children: [
@@ -131,7 +131,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -141,12 +141,12 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

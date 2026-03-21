@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/level_log/application/controllers/level_log_controller.dart';
@@ -45,7 +48,7 @@ class LevelLogScreen extends ConsumerWidget {
             onPressed: notifier.addEntry,
             width: double.infinity,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           SbButton.outline(
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
@@ -71,7 +74,7 @@ class LevelLogScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg, horizontal: SbSpacing.md),
                     itemCount: state.entries.length,
                     separatorBuilder: (_, index) =>
-                        const SizedBox(height: SbSpacing.lg),
+                        SizedBox(height: SbSpacing.sm),
                     itemBuilder: (context, i) => SbCard(
                       child: _StationCardContent(
                         entry: state.entries[i],
@@ -84,7 +87,7 @@ class LevelLogScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xl),
               ],
             ),
           ),
@@ -106,18 +109,18 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
             Icon(
               SbIcons.list,
               size: 64,
               color: colorScheme.outlineVariant,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.md),
             Text(
               l10n.noLevelingLogsYet,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             Text(
               l10n.tapAddStationToStart,
               style: Theme.of(context).textTheme.bodyLarge!,
@@ -145,7 +148,7 @@ class _MethodSelectorCard extends StatelessWidget {
             l10n.calculationMethod.toUpperCase(),
             style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -195,7 +198,8 @@ class _MethodToggle extends StatelessWidget {
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: SbRadius.borderSmall,
           border: Border.all(
-            color: isActive ? colorScheme.primary : colorScheme.outlineVariant,
+            color: isActive ? colorScheme.primary : context.colors.outline,
+            width: AppBorder.width,
           ),
         ),
         child: Center(
@@ -272,9 +276,9 @@ class _StationCardContent extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Divider(color: colorScheme.outlineVariant),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
 
         Row(
           children: [
@@ -309,7 +313,7 @@ class _StationCardContent extends StatelessWidget {
         ),
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Text(
             entry.remark!,
             style: Theme.of(context).textTheme.labelMedium!,
@@ -342,7 +346,7 @@ class _ReadingPill extends StatelessWidget {
             label,
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
             style: Theme.of(context).textTheme.labelMedium!,

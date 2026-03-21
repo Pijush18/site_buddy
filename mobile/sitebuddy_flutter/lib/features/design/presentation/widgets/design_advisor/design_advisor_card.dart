@@ -41,22 +41,22 @@ class DesignAdvisorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Text(
             advisorResult.explanation,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
           if (advisorResult.warnings.isNotEmpty) ...[
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             ...advisorResult.warnings.map((warning) => _AdvisoryItem(
                   text: warning,
                   isWarning: true,
                 )),
           ],
           if (advisorResult.suggestions.isNotEmpty) ...[
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             ...advisorResult.suggestions.map((suggestion) => _AdvisoryItem(
                   text: suggestion,
                   isWarning: false,

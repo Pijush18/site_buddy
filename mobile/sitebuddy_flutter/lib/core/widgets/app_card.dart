@@ -1,5 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// WIDGET: AppCard
 /// PURPOSE: Standardized surface-based card container. (SURFACE MODE RESTORED)
@@ -8,8 +11,8 @@ class AppCard extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final Color? color;
   final double? borderRadius;
-  final BorderSide? border;
   final VoidCallback? onTap;
+
 
   const AppCard({
     super.key,
@@ -17,8 +20,8 @@ class AppCard extends StatelessWidget {
     this.padding,
     this.color,
     this.borderRadius,
-    this.border,
     this.onTap,
+
   });
 
   @override
@@ -33,8 +36,8 @@ class AppCard extends StatelessWidget {
         color: color ?? colorScheme.surface,
         borderRadius: BorderRadius.circular(radius),
         border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.15),
-          width: 1.0,
+          color: context.colors.outline,
+          width: AppBorder.width,
         ),
         boxShadow: [
           BoxShadow(

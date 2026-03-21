@@ -36,15 +36,15 @@ class SandScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.sm),
+            SizedBox(height: SbSpacing.sm),
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
               onTap: () {}, // Detail view entry
@@ -62,9 +62,9 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               const Divider(),
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -89,7 +89,7 @@ class SandScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.length,
@@ -97,7 +97,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.width,
@@ -105,7 +105,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.depth,
@@ -113,7 +113,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.ratePerUnit,
@@ -121,7 +121,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateRate,
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
@@ -139,7 +139,7 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
@@ -152,12 +152,12 @@ class SandScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

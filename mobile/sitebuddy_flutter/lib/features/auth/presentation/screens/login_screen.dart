@@ -155,11 +155,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SbSection(
             child: Column(
               children: [
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xxl),
                 Icon(SbIcons.engineering, size: 64, color: colorScheme.primary),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 Text(AppStrings.siteBuddy, style: theme.textTheme.titleLarge),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -185,7 +185,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
@@ -211,7 +211,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       child: const Text(AppStrings.forgotPassword),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbButton.primary(
                     label: AppStrings.signIn,
                     onPressed: (isLoading ||
@@ -243,7 +243,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const Expanded(child: Divider()),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.xl),
+                SizedBox(height: SbSpacing.xl),
                 SbButton.secondary(
                   label: AppStrings.continueWithGoogle,
                   icon: SbIcons.google,
@@ -251,7 +251,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   width: double.infinity,
                 ),
                 if (Platform.isIOS) ...[
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   const SbButton.secondary(
                     label: AppStrings.continueWithApple,
                     icon: SbIcons.apple,
@@ -284,7 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

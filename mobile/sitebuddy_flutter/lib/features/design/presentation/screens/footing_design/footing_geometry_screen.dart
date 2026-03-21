@@ -89,7 +89,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
             icon: Icons.analytics_outlined,
             onPressed: _onNext,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -130,7 +130,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Text(
                     'Critical for shear and bending calculations at face.',
                     style: Theme.of(context).textTheme.labelMedium!,
@@ -164,7 +164,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: 'Overall Thickness (D) (mm)',
                     controller: _thicknessController,
@@ -172,7 +172,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                   ),
                   if (state.type == FootingType.combined ||
                       state.type == FootingType.strap) ...[
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: 'Column C/C Spacing (mm)',
                       controller: _spacingController,

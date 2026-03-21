@@ -111,12 +111,12 @@ class ProjectDetailScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Text(
                     proj.name,
                     style: Theme.of(context).textTheme.titleMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   // Cover Image Mock
                   SizedBox(
                     height: 120,
@@ -131,7 +131,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -273,7 +273,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     },
                     width: double.infinity,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbButton.secondary(
                     label: AppStrings.editProject,
                     icon: Icons.edit_outlined,
@@ -325,12 +325,12 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Text(
             value,
             style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
           Text(
             subtext,
             style: Theme.of(context).textTheme.labelMedium!,

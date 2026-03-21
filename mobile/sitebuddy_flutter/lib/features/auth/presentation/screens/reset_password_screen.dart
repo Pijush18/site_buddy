@@ -107,18 +107,18 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           SbSection(
             child: Column(
               children: [
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xxl),
                 Icon(
                   SbIcons.engineering,
                   size: 64,
                   color: colorScheme.primary,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 Text(
                   AppStrings.siteBuddy,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -138,7 +138,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     AppStrings.enterEmailToReset,
                     style: theme.textTheme.bodyMedium,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _emailController,
                     focusNode: _emailFocusNode,
@@ -150,7 +150,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: SbSpacing.xl),
+                  SizedBox(height: SbSpacing.xl),
                   SbButton.primary(
                     label: AppStrings.sendResetLink,
                     onPressed:
@@ -173,7 +173,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               width: double.infinity,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

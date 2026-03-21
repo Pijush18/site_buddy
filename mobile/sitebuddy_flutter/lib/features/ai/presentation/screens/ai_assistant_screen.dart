@@ -114,7 +114,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
                     AssistantGuidanceWidget(response: state.assistantResponse!),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                   ],
                   AiResponseCard(
                     response: state.response!,

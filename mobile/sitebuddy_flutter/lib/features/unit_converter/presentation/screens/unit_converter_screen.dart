@@ -29,11 +29,11 @@ class UnitConverterScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.md),
+          SizedBox(height: SbSpacing.md),
           const _SegmentedToggleSection(),
-          const SizedBox(height: SbSpacing.xl),
+          SizedBox(height: SbSpacing.xl),
           const _ConverterBodySection(),
-          const SizedBox(height: SbSpacing.xl), // Bottom padding
+          SizedBox(height: SbSpacing.xl), // Bottom padding
         ],
       ),
     );
@@ -114,7 +114,7 @@ class _ConverterBodySection extends ConsumerWidget {
           'CATEGORY',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         SbDropdown<UnitType>(
           value: state.selectedType,
           items: UnitType.values,
@@ -123,7 +123,7 @@ class _ConverterBodySection extends ConsumerWidget {
           },
           itemLabelBuilder: (t) => t.name.toUpperCase(),
         ),
-        const SizedBox(height: SbSpacing.md),
+        SizedBox(height: SbSpacing.md),
         Row(
           children: [
             Expanded(
@@ -141,7 +141,7 @@ class _ConverterBodySection extends ConsumerWidget {
                     'FROM',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+                  SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.fromUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -153,7 +153,7 @@ class _ConverterBodySection extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.md),
+        SizedBox(height: SbSpacing.md),
         Row(
           children: [
             const Spacer(),
@@ -171,7 +171,7 @@ class _ConverterBodySection extends ConsumerWidget {
                     'TO',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+                  SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.toUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -227,12 +227,12 @@ class _ConverterBodySection extends ConsumerWidget {
             size: 48,
             color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
-          const SizedBox(height: SbSpacing.md),
+          SizedBox(height: SbSpacing.md),
           Text(
             'Try asking the AI:',
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
           Text(
             '"50 kg to lbs"\n"10x12x0.5 ft m25"\n"100 sqm sqft"',
             textAlign: TextAlign.center,
@@ -255,7 +255,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xl),
+        SizedBox(height: SbSpacing.xl),
         SbCard(
           child: Column(
             children: [
@@ -272,12 +272,12 @@ class _ConverterBodySection extends ConsumerWidget {
           ),
         ),
         if (secondaries.isNotEmpty) ...[
-          const SizedBox(height: SbSpacing.xl),
+          SizedBox(height: SbSpacing.xl),
           Text(
             'ALSO EQUALS',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
           Wrap(
             spacing: SbSpacing.md,
             runSpacing: SbSpacing.md,
@@ -308,12 +308,12 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xl),
+        SizedBox(height: SbSpacing.xl),
         Text(
           'ESTIMATE: ${query.length} x ${query.width} x ${query.depth} (${query.grade?.label})',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced const SizedBox(height: SbSpacing.sm)
+        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         SbCard(
           child: Column(
             children: [

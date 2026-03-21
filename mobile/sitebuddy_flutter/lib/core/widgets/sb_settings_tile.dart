@@ -56,14 +56,14 @@ class SbSettingsTile extends StatelessWidget {
                   ],
                 ),
                 if (subtitle != null) ...[
-                  const SizedBox(height: SbSpacing.xs),
+                  SizedBox(height: SbSpacing.xs),
                   Text(
                     subtitle!,
                     style: textTheme.bodyMedium,
                   ),
                 ],
                 if (trailing != null) ...[
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   trailing!,
                 ],
               ],

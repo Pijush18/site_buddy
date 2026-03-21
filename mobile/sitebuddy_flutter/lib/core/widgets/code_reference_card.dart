@@ -3,7 +3,10 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
 import 'package:site_buddy/core/models/code_reference.dart';
+
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: CodeReferenceCard
@@ -35,18 +38,18 @@ class CodeReferenceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           Text(
             reference.title,
             style: textTheme.labelMedium,
           ),
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Text(
             reference.description,
             style: textTheme.bodyMedium,
           ),
           if (reference.formula != null) ...[
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(SbSpacing.sm),
@@ -54,7 +57,8 @@ class CodeReferenceCard extends StatelessWidget {
                 color: colorScheme.surfaceContainerHighest,
                 borderRadius: SbRadius.borderSmall,
                 border: Border.all(
-                  color: colorScheme.outline.withValues(alpha: 0.1),
+                  color: context.colors.outline,
+                  width: AppBorder.width,
                 ),
               ),
               child: Center(

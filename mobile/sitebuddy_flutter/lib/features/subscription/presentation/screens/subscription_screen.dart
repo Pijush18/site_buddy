@@ -39,7 +39,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodyLarge!,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     _buildPremiumCard(context, ref),
                   ],
                 ),
@@ -55,12 +55,12 @@ class SubscriptionScreen extends ConsumerWidget {
                         color: AppColors.success(context),
                         size: 48,
                       ),
-                      const SizedBox(height: SbSpacing.lg),
+                      SizedBox(height: SbSpacing.lg),
                       Text(
                         AppStrings.premiumUserStatus,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
-                      const SizedBox(height: SbSpacing.sm),
+                      SizedBox(height: SbSpacing.sm),
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
@@ -137,7 +137,7 @@ class SubscriptionScreen extends ConsumerWidget {
                   AppStrings.premiumLogic,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: SbSpacing.sm), 
+                SizedBox(height: SbSpacing.sm), 
                 Text(
                   AppStrings.monthlyPrice,
                   style: Theme.of(context).textTheme.titleLarge!,
@@ -153,7 +153,7 @@ class SubscriptionScreen extends ConsumerWidget {
                 _buildBenefitItem(context, AppStrings.cloudSync),
                 _buildBenefitItem(context, AppStrings.advancedSteelDesign),
                 _buildBenefitItem(context, AppStrings.multiProjectManagement),
-                const SizedBox(height: SbSpacing.xxl), 
+                SizedBox(height: SbSpacing.md), 
                 SbButton.primary(
                   label: AppStrings.subscribeNow,
                   onPressed: () => ref.read(subscriptionRepositoryProvider).purchasePremium(),
@@ -216,7 +216,7 @@ class SubscriptionScreen extends ConsumerWidget {
             color: free ? AppColors.success(context) : colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(width: SbSpacing.xxl), 
+          const SizedBox(width: SbSpacing.lg), 
           Icon(
             premium ? Icons.check_circle : Icons.cancel,
             color: premium ? AppColors.premium(context) : colorScheme.onSurfaceVariant,

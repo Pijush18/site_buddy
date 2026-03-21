@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
+
+
 
 /// WIDGET: SbListGroup
 /// PURPOSE: Standardized container for a vertical list of items.
@@ -29,11 +32,14 @@ class SbListGroup extends StatelessWidget {
             children[i],
             if (i < children.length - 1)
               Divider(
-                height: 1, 
-                indent: SbSpacing.lg, 
+                height: 1,
+                thickness: 1,
+                indent: SbSpacing.lg,
                 endIndent: SbSpacing.lg,
-                color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: isSubtle ? 0.3 : 0.5),
+                color: context.colors.outline,
               ),
+
+
           ],
         ],
       ),

@@ -172,7 +172,7 @@ class FeatureCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         if (description != null) ...[
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Text(
             description!,
             style: descriptionStyle,

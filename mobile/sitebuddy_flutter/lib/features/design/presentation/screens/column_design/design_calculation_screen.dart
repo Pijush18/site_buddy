@@ -60,7 +60,7 @@ class _DesignCalculationScreenState
               context.push('/column/detailing');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -109,7 +109,7 @@ class _DesignCalculationScreenState
                     'Design Method',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   SbDropdown<DesignMethod>(
                     value: state.designMethod,
                     items: DesignMethod.values,
@@ -117,7 +117,7 @@ class _DesignCalculationScreenState
                     onChanged: (v) =>
                         v != null ? notifier.updateDesignMethod(v) : null,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -143,7 +143,7 @@ class _DesignCalculationScreenState
                     ],
                   ),
                   if (!state.isAutoSteel) ...[
-                    const SizedBox(height: SbSpacing.lg),
+                    SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: 'Manual Steel (%)',
                       hint: 'e.g. 1.20',

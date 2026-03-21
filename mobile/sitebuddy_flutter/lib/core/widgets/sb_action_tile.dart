@@ -62,7 +62,7 @@ class SbActionTile extends StatelessWidget {
                     size: 24, // Balanced size to avoid overflow
                   ),
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                SizedBox(height: SbSpacing.sm),
                 
                 // Tightened text with overflow protection
                 Flexible(

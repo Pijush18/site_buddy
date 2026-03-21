@@ -55,7 +55,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Generate a formatted daily report',
                   onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.message,
@@ -63,7 +63,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Send a quick text summary link',
                   onTap: () => debugPrint('Sharing Text for ${proj.name}'),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.copy,
@@ -71,7 +71,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Copy project stats to clipboard',
                   onTap: () => debugPrint('Copying data for ${proj.name}'),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.table,
@@ -79,7 +79,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Download raw calculations and logs',
                   onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
                 ),
-                const SizedBox(height: SbSpacing.xxl),
+                SizedBox(height: SbSpacing.xxl),
               ],
             ),
           ),
@@ -116,7 +116,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   title,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: SbSpacing.xs),
+                SizedBox(height: SbSpacing.xs),
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.labelMedium!,

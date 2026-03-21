@@ -77,7 +77,7 @@ class DesignResultCard extends StatelessWidget {
                       ],
                     ),
                     if (item.subtitle != null) ...[
-                      const SizedBox(height: SbSpacing.xs),
+                      SizedBox(height: SbSpacing.xs),
                       Text(
                         item.subtitle!,
                         style: Theme.of(context).textTheme.labelMedium!,
@@ -89,7 +89,7 @@ class DesignResultCard extends StatelessWidget {
             ),
             if (codeReference != null) ...[
               const Divider(),
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               Row(
                 children: [
                   Icon(

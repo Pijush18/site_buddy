@@ -31,7 +31,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
               context.push('/column/design');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),

@@ -2,6 +2,9 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 /// CLASS: SegmentedToggle
 /// PURPOSE: Reusable multi-option slider toggle with theme-aware styling.
@@ -49,10 +52,10 @@ class SegmentedToggle<T> extends StatelessWidget {
                   color: isSelected ? colorScheme.primary : colorScheme.surface,
                   borderRadius: SbRadius.borderMd,
                   border: isSelected
-                      ? Border.all(color: colorScheme.primary, width: 1)
+                      ? Border.all(color: colorScheme.primary, width: AppBorder.width)
                       : Border.all(
-                          color: colorScheme.outline.withValues(alpha: 0.5),
-                          width: 1,
+                          color: context.colors.outline,
+                          width: AppBorder.width,
                         ),
                 ),
                 child: Center(

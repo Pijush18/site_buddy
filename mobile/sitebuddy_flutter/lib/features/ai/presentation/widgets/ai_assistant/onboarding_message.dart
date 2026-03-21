@@ -9,15 +9,15 @@ class OnboardingMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: SbSpacing.xxl),
+        SizedBox(height: SbSpacing.xxl),
         Icon(SbIcons.engineering, size: 64, color: Theme.of(context).colorScheme.outlineVariant),
-        const SizedBox(height: SbSpacing.md),
+        SizedBox(height: SbSpacing.md),
         Text(
           'How can I assist your site today?',
           style: Theme.of(context).textTheme.titleLarge!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         Text(
           'Try asking:\n\n'
           '• "What is a retaining wall?"\n'

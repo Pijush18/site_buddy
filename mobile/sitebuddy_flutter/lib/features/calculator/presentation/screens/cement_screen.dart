@@ -34,7 +34,7 @@ class CementScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
@@ -69,9 +69,9 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               const Divider(),
-              const SizedBox(height: SbSpacing.sm),
+              SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -96,34 +96,34 @@ class CementScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.xl),
           SbInput(
             label: EngineeringTerms.wallLength,
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.width,
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.depth,
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           Text(
             EngineeringTerms.ratioFormat,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.md),
           Wrap(
             spacing: SbSpacing.lg,
             runSpacing: SbSpacing.lg,
@@ -163,7 +163,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          SizedBox(height: SbSpacing.lg),
           Wrap(
             spacing: SbSpacing.lg,
             runSpacing: SbSpacing.lg,
@@ -190,7 +190,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -206,7 +206,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
@@ -215,11 +215,11 @@ class CementScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xl),
           ],
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

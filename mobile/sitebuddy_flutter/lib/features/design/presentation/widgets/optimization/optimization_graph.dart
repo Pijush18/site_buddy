@@ -35,7 +35,7 @@ class OptimizationGraph extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: options.length,
-              separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.xxl),
+              separatorBuilder: (context, index) => SizedBox(height: SbSpacing.xxl),
               itemBuilder: (context, index) {
                 final option = options[index];
                 return _OptimizationRow(
@@ -45,7 +45,7 @@ class OptimizationGraph extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: SbSpacing.lg),
+            SizedBox(height: SbSpacing.lg),
             _buildLegend(context),
           ],
         ),
@@ -105,13 +105,13 @@ class _OptimizationRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.sm),
+        SizedBox(height: SbSpacing.sm),
         _Bar(
           label: 'Util: ${(utilPercentage * 100).toInt()}%',
           percentage: utilPercentage,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(height: SbSpacing.xs),
+        SizedBox(height: SbSpacing.xs),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,

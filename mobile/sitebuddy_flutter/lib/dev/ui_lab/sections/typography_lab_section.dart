@@ -25,7 +25,7 @@ class TypographyLabSection extends StatelessWidget {
           'Typography System',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        SizedBox(height: SbSpacing.lg),
         ...styles.map(
           (style) => Padding(
             padding: const EdgeInsets.all(SbSpacing.sm),

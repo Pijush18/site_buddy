@@ -15,6 +15,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
+
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -38,8 +41,8 @@ class BottomNavBar extends StatelessWidget {
         // 🔬 Elevation Strategy: Border + Shadow for "Lift"
         border: Border(
           top: BorderSide(
-            color: colorScheme.outline, 
-            width: 1.0,
+            color: context.colors.outline,
+            width: AppBorder.width,
           ),
         ),
         boxShadow: [
@@ -114,7 +117,7 @@ class _NavItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: itemColor, size: 24),
-          const SizedBox(height: SbSpacing.xs),
+          SizedBox(height: SbSpacing.xs),
           Text(
             label.toUpperCase(),
             style: Theme.of(context).textTheme.bodyMedium!,

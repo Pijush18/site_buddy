@@ -41,30 +41,30 @@ class ExcavationScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.pitDimensions),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.wallLength,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.pitDepthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           const _SectionLabel(label: EngineeringTerms.parameters),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.clearance,
             hint: EngineeringTerms.widthHint,
@@ -75,7 +75,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.clearanceInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.swellFactor,
             hint: EngineeringTerms.swellFactorHint,
@@ -86,7 +86,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: EngineeringTerms.swellFactorInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           ActionButtonsGroup(
             children: [
               SbButton.outline(
@@ -102,12 +102,12 @@ class ExcavationScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          SizedBox(height: SbSpacing.xl),
           if (state.failure != null)
             _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: SbSpacing.xxl),
+            SizedBox(height: SbSpacing.md),
           ],
         ],
       ),
@@ -165,7 +165,7 @@ class _ResultCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced const SizedBox(height: SbSpacing.lg)
+          SizedBox(height: SbSpacing.lg), // Replaced SizedBox(height: SbSpacing.lg)
           const Divider(),
           SbListItemTile(
             title: EngineeringTerms.totalVolumeLoose,
@@ -184,7 +184,7 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const SizedBox(height: SbSpacing.xxl), // Replaced SbSpacing.xxl
+          SizedBox(height: SbSpacing.md),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

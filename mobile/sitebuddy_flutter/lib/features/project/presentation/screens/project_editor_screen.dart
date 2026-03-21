@@ -50,7 +50,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                SizedBox(height: SbSpacing.lg),
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',

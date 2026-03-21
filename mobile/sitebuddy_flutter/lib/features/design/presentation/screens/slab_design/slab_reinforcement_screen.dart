@@ -33,7 +33,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
             onPressed: () => context.push('/slab/safety'),
             icon: Icons.security_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          SizedBox(height: SbSpacing.sm),
           SbButton.ghost(
             label: 'Back',
             onPressed: () => context.pop(),
@@ -103,7 +103,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
                     size: 64,
                     color: colorScheme.secondary.withValues(alpha: 0.5),
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  SizedBox(height: SbSpacing.sm),
                   Text(
                     'Rebar spacing should not exceed 3d or 300mm for main rebar.',
                     style: Theme.of(context).textTheme.bodyLarge!,
