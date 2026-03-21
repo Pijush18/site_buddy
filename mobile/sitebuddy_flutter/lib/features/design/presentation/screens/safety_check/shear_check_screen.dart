@@ -130,6 +130,11 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
               label: 'Share Report',
               onPressed: _shareResult,
             ),
+            const SizedBox(height: SbSpacing.sm),
+            GhostButton(
+              label: 'Reset Form',
+              onPressed: _reset,
+            ),
           ],
         ],
       ),
@@ -181,16 +186,6 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
                 child: PlaceholderCard(
                   icon: SbIcons.analytics,
                   message: 'Enter parameters to generate report',
-                ),
-              ),
-
-            // ── SECONDARY ACTIONS ──
-            if (_result != null)
-              SbSection(
-                child: GhostButton(
-                  label: 'Reset Form',
-                  onPressed: _reset,
-                  width: double.infinity,
                 ),
               ),
 

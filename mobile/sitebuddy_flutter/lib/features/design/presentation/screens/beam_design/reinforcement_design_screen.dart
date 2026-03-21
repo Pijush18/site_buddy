@@ -29,11 +29,11 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Safety Checks',
-            icon: Icons.verified_user_outlined,
+            label: 'Calculate Results',
             onPressed: () {
               context.push('/beam/safety');
             },
+            icon: Icons.calculate_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(

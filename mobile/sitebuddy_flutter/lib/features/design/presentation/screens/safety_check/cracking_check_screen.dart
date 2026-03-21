@@ -125,6 +125,11 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
               label: 'Share Report',
               onPressed: _shareResult,
             ),
+            const SizedBox(height: SbSpacing.sm),
+            GhostButton(
+              label: 'Reset Form',
+              onPressed: _reset,
+            ),
           ],
         ],
       ),
@@ -180,16 +185,6 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
                 child: PlaceholderCard(
                   icon: SbIcons.visibility,
                   message: 'Calculate crack width for durability',
-                ),
-              ),
-
-            // ── SECONDARY ACTIONS ──
-            if (_result != null)
-              SbSection(
-                child: GhostButton(
-                  label: 'Reset Form',
-                  onPressed: _reset,
-                  width: double.infinity,
                 ),
               ),
 

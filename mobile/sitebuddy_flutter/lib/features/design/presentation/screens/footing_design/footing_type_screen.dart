@@ -19,10 +19,23 @@ class FootingTypeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SbPage.form(
       title: 'Footing Design',
-      primaryAction: GhostButton(
-        label: 'Back',
-        onPressed: () => context.pop(),
-        width: double.infinity,
+      primaryAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          PrimaryCTA(
+            label: 'Next: Soil & Load',
+            icon: Icons.navigate_next,
+            onPressed: () {
+              context.push('/footing/soil-load');
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
+            label: 'Back',
+            onPressed: () => context.pop(),
+          ),
+        ],
       ),
       body: SbSectionList(
         sections: [
@@ -58,7 +71,6 @@ class FootingTypeScreen extends ConsumerWidget {
                     ref
                         .read(footingDesignControllerProvider.notifier)
                         .updateType(type);
-                    context.push('/footing/soil-load');
                   },
                 );
               },

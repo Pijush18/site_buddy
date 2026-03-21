@@ -72,6 +72,10 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
             onPressed: () => _handleShare(reportData),
           ),
       ],
+      primaryAction: _ReportExportActions(
+        isExporting: _isExporting,
+        onShare: () => _handleShare(reportData),
+      ),
       // ── PREDEFINED LAYOUT SYSTEM ──
       // SbSectionList centralizes the 24px gap between sections.
       body: SbSectionList(
@@ -91,14 +95,6 @@ class _DesignReportScreenState extends State<DesignReportScreen> {
           // ── SECTION: FOOTER ──
           const SbSection(
             child: _ReportFooter(),
-          ),
-
-          // ── SECTION: EXPORT ACTIONS ──
-          SbSection(
-            child: _ReportExportActions(
-              isExporting: _isExporting,
-              onShare: () => _handleShare(reportData),
-            ),
           ),
         ],
       ),

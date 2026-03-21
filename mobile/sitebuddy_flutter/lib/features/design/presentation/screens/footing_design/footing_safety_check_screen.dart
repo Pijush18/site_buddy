@@ -70,6 +70,40 @@ class _FootingSafetyCheckScreenState
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
+            label: 'Save Image',
+            icon: Icons.image_outlined,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                await ShareHelper.shareXFile(
+                  bytes: bytes,
+                  name: 'Footing_Reinforcement.png',
+                  mimeType: 'image/png',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
+            label: 'Save PDF',
+            icon: Icons.picture_as_pdf_outlined,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                final pdfBytes = await DrawingExportService.generateDrawingPdf(
+                  bytes,
+                  'Footing Reinforcement',
+                  'Layout: ${state.footingLength.toInt()}x${state.footingWidth.toInt()} mm',
+                );
+                await Printing.sharePdf(
+                  bytes: pdfBytes,
+                  filename: 'Footing_Reinforcement_Drawing.pdf',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -195,50 +229,6 @@ class _FootingSafetyCheckScreenState
                         spacing: state.mainBarSpacing,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      GhostButton(
-                        label: 'Save Image',
-                        icon: Icons.image_outlined,
-                        onPressed: () async {
-                          final bytes = await WidgetCaptureHelper.capture(
-                            _drawingKey,
-                          );
-                          if (bytes != null) {
-                            await ShareHelper.shareXFile(
-                              bytes: bytes,
-                              name: 'Footing_Reinforcement.png',
-                              mimeType: 'image/png',
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(height: SbSpacing.sm),
-                      GhostButton(
-                        label: 'Save PDF',
-                        icon: Icons.picture_as_pdf_outlined,
-                        onPressed: () async {
-                          final bytes = await WidgetCaptureHelper.capture(
-                            _drawingKey,
-                          );
-                          if (bytes != null) {
-                            final pdfBytes =
-                                await DrawingExportService.generateDrawingPdf(
-                              bytes,
-                              'Footing Reinforcement',
-                              'Layout: ${state.footingLength.toInt()}x${state.footingWidth.toInt()} mm',
-                            );
-                            await Printing.sharePdf(
-                              bytes: pdfBytes,
-                              filename: 'Footing_Reinforcement_Drawing.pdf',
-                            );
-                          }
-                        },
-                      ),
-                    ],
                   ),
                 ],
               ),

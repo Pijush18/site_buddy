@@ -104,6 +104,7 @@ class AppScaffold extends ConsumerWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingActionButton,
+      resizeToAvoidBottomInset: true,
       body: content,
     );
   }

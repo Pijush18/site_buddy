@@ -122,6 +122,11 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
               label: 'Share Report',
               onPressed: _shareResult,
             ),
+            const SizedBox(height: SbSpacing.sm),
+            GhostButton(
+              label: 'Reset Form',
+              onPressed: _reset,
+            ),
           ],
         ],
       ),
@@ -169,16 +174,6 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
                 child: PlaceholderCard(
                   icon: Icons.query_stats,
                   message: 'Calculate ratio to check safety',
-                ),
-              ),
-
-            // ── SECONDARY ACTIONS ──
-            if (_result != null)
-              SbSection(
-                child: GhostButton(
-                  label: 'Reset Form',
-                  onPressed: _reset,
-                  width: double.infinity,
                 ),
               ),
 

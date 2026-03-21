@@ -30,8 +30,9 @@ class FootingReinforcementScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Final Safety Checks',
+            label: 'Calculate Results',
             onPressed: () => context.push('/footing/safety'),
+            icon: Icons.calculate_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(

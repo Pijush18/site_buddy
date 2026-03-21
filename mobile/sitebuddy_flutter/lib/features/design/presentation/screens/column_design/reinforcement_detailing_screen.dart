@@ -26,10 +26,11 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Safety Checks',
+            label: 'Calculate Results',
             onPressed: () {
               context.push('/column/safety');
             },
+            icon: Icons.calculate_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(

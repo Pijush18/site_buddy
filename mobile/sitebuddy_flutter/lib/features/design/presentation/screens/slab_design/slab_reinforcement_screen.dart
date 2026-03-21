@@ -29,9 +29,9 @@ class SlabReinforcementScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Safety Check',
+            label: 'Calculate Results',
             onPressed: () => context.push('/slab/safety'),
-            icon: Icons.security_outlined,
+            icon: Icons.calculate_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(

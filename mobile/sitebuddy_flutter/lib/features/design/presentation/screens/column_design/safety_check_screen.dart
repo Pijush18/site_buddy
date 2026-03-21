@@ -83,6 +83,40 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
+            label: 'Save Image',
+            icon: Icons.image_outlined,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                await ShareHelper.shareXFile(
+                  bytes: bytes,
+                  name: 'Column_Reinforcement.png',
+                  mimeType: 'image/png',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
+            label: 'Save PDF',
+            icon: Icons.picture_as_pdf_outlined,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                final pdfBytes = await DrawingExportService.generateDrawingPdf(
+                  bytes,
+                  'Column Reinforcement',
+                  '${state.type.label} Section: ${state.b.toInt()}x${state.d.toInt()} mm',
+                );
+                await Printing.sharePdf(
+                  bytes: pdfBytes,
+                  filename: 'Column_Reinforcement_Drawing.pdf',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -204,45 +238,6 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                         type: state.type,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-                  GhostButton(
-                    label: 'Save Image',
-                    icon: Icons.image_outlined,
-                    onPressed: () async {
-                      final bytes =
-                          await WidgetCaptureHelper.capture(_drawingKey);
-                      if (bytes != null) {
-                        await ShareHelper.shareXFile(
-                          bytes: bytes,
-                          name: 'Column_Reinforcement.png',
-                          mimeType: 'image/png',
-                        );
-                      }
-                    },
-                    width: double.infinity,
-                  ),
-                  const SizedBox(height: SbSpacing.sm),
-                  GhostButton(
-                    label: 'Save PDF',
-                    icon: Icons.picture_as_pdf_outlined,
-                    onPressed: () async {
-                      final bytes =
-                          await WidgetCaptureHelper.capture(_drawingKey);
-                      if (bytes != null) {
-                        final pdfBytes =
-                            await DrawingExportService.generateDrawingPdf(
-                          bytes,
-                          'Column Reinforcement',
-                          '${state.type.label} Section: ${state.b.toInt()}x${state.d.toInt()} mm',
-                        );
-                        await Printing.sharePdf(
-                          bytes: pdfBytes,
-                          filename: 'Column_Reinforcement_Drawing.pdf',
-                        );
-                      }
-                    },
-                    width: double.infinity,
                   ),
                 ],
               ),

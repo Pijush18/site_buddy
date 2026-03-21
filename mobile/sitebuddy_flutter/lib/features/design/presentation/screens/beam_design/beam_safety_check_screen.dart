@@ -81,6 +81,40 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
+            label: 'Save Image',
+            icon: SbIcons.image,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                await ShareHelper.shareXFile(
+                  bytes: bytes,
+                  name: 'Beam_Reinforcement.png',
+                  mimeType: 'image/png',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
+            label: 'Save PDF',
+            icon: SbIcons.pdf,
+            onPressed: () async {
+              final bytes = await WidgetCaptureHelper.capture(_drawingKey);
+              if (bytes != null) {
+                final pdfBytes = await DrawingExportService.generateDrawingPdf(
+                  bytes,
+                  'Beam Reinforcement',
+                  'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
+                );
+                await Printing.sharePdf(
+                  bytes: pdfBytes,
+                  filename: 'Beam_Reinforcement_Drawing.pdf',
+                );
+              }
+            },
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -193,45 +227,6 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                         stirrupSpacing: state.stirrupSpacing,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
-                  GhostButton(
-                    label: 'Save Image',
-                    icon: SbIcons.image,
-                    onPressed: () async {
-                      final bytes =
-                          await WidgetCaptureHelper.capture(_drawingKey);
-                      if (bytes != null) {
-                        await ShareHelper.shareXFile(
-                          bytes: bytes,
-                          name: 'Beam_Reinforcement.png',
-                          mimeType: 'image/png',
-                        );
-                      }
-                    },
-                    width: double.infinity,
-                  ),
-                  const SizedBox(height: SbSpacing.sm),
-                  GhostButton(
-                    label: 'Save PDF',
-                    icon: SbIcons.pdf,
-                    onPressed: () async {
-                      final bytes =
-                          await WidgetCaptureHelper.capture(_drawingKey);
-                      if (bytes != null) {
-                        final pdfBytes =
-                            await DrawingExportService.generateDrawingPdf(
-                          bytes,
-                          'Beam Reinforcement',
-                          'Section: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
-                        );
-                        await Printing.sharePdf(
-                          bytes: pdfBytes,
-                          filename: 'Beam_Reinforcement_Drawing.pdf',
-                        );
-                      }
-                    },
-                    width: double.infinity,
                   ),
                 ],
               ),
