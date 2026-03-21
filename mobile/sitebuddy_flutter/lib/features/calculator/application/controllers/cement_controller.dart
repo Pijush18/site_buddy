@@ -17,9 +17,13 @@ library;
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/cement_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_cement_usecase.dart';
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 class Failure {
   final String message;
@@ -165,6 +169,30 @@ class CementController extends Notifier<CementState> {
     state = const CementState();
   }
 
+  void restore(Map<String, dynamic> params) {
+    state = state.copyWith(
+      length: params['length'] as double?,
+      width: params['width'] as double?,
+      depth: params['depth'] as double?,
+      wastePercent: params['waste'] as double?,
+      clearResult: true,
+      clearFailure: true,
+    );
+
+    final mixString = params['mix'] as String?;
+    if (mixString != null) {
+      final parts = mixString.split(':');
+      if (parts.length == 3) {
+        state = state.copyWith(
+          mixCement: int.tryParse(parts[0]),
+          mixSand: int.tryParse(parts[1]),
+          mixAggregate: int.tryParse(parts[2]),
+        );
+      }
+    }
+    calculate();
+  }
+
   Future<void> calculate() async {
     final length = state.length;
     final width = state.width;
@@ -197,6 +225,29 @@ class CementController extends Notifier<CementState> {
         pricePerBag: price ?? 0,
       );
       state = state.copyWith(result: res, isLoading: false);
+
+      // --- PERSISTENCE: Save to Unified Calculation Repository ---
+      final selectedProject = ref.read(projectControllerProvider).selectedProject;
+      if (selectedProject != null) {
+        final entry = CalculationHistoryEntry(
+          id: const Uuid().v4(),
+          projectId: selectedProject.id,
+          calculationType: CalculationType.cement,
+          timestamp: DateTime.now(),
+          inputParameters: {
+            'length': length,
+            'width': width,
+            'depth': depth,
+            'mix': '$mixCement:$mixSand:$mixAggregate',
+            'waste': waste,
+          },
+          resultSummary: '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
+          resultData: res.toMap(),
+        );
+
+        // Background save
+        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

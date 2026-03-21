@@ -54,6 +54,3 @@ class LevelLogSessionModelAdapter extends TypeAdapter<LevelLogSessionModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

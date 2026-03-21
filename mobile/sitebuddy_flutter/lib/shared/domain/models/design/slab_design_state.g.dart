@@ -26,13 +26,16 @@ class SlabDesignStateAdapter extends TypeAdapter<SlabDesignState> {
       result: fields[6] as SlabDesignResult?,
       error: fields[7] as String?,
       projectId: fields[8] as String?,
+      concreteGrade: fields[9] as String,
+      steelGrade: fields[10] as String,
+      cover: fields[11] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, SlabDesignState obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.type)
       ..writeByte(1)
@@ -50,7 +53,13 @@ class SlabDesignStateAdapter extends TypeAdapter<SlabDesignState> {
       ..writeByte(7)
       ..write(obj.error)
       ..writeByte(8)
-      ..write(obj.projectId);
+      ..write(obj.projectId)
+      ..writeByte(9)
+      ..write(obj.concreteGrade)
+      ..writeByte(10)
+      ..write(obj.steelGrade)
+      ..writeByte(11)
+      ..write(obj.cover);
   }
 
   @override
@@ -63,6 +72,3 @@ class SlabDesignStateAdapter extends TypeAdapter<SlabDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

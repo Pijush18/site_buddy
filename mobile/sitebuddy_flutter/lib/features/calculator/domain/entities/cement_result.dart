@@ -28,6 +28,16 @@ class CementResult {
     required this.numberOfBags,
     this.totalCost,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'wetVolume': wetVolume,
+      'dryVolume': dryVolume,
+      'cementWeight': cementWeight,
+      'numberOfBags': numberOfBags,
+      'totalCost': totalCost,
+    };
+  }
 }
 
 

@@ -24,7 +24,7 @@ class _BrandingSettingsScreenState
   @override
   void initState() {
     super.initState();
-    final branding = ref.read(brandingProvider);
+    final branding = ref.read(brandingProvider).profile;
     _companyController = TextEditingController(text: branding.companyName);
     _engineerController = TextEditingController(text: branding.engineerName);
   }
@@ -48,9 +48,15 @@ class _BrandingSettingsScreenState
       return;
     }
 
-    await ref
-        .read(brandingProvider.notifier)
-        .updateFields(companyName: company, engineerName: engineer);
+    try {
+      await ref.read(brandingProvider.notifier).updateProfile(
+            companyName: company,
+            engineerName: engineer,
+          );
+      if (mounted) context.pop();
+    } catch (_) {
+      // Error handled by provider listener
+    }
 
     if (mounted) {
       SbFeedback.showToast(
@@ -64,7 +70,7 @@ class _BrandingSettingsScreenState
   Future<void> _resetBranding() async {
     await ref.read(brandingProvider.notifier).resetToDefault();
     if (mounted) {
-      final branding = ref.read(brandingProvider);
+      final branding = ref.read(brandingProvider).profile;
       _companyController.text = branding.companyName;
       _engineerController.text = branding.engineerName;
       setState(() {});
@@ -74,6 +80,27 @@ class _BrandingSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final brandingState = ref.watch(brandingProvider);
+    final isSyncing = brandingState.isLoading;
+
+    // Listen for sync results to show global feedback
+    ref.listen(brandingProvider, (previous, next) {
+      if (previous?.isLoading == true && !next.isLoading) {
+        if (next.errorMessage != null) {
+          SbFeedback.showToast(
+            context: context,
+            message: 'Sync Failed: ${next.errorMessage}',
+            isError: true,
+          );
+        } else if (next.isSuccess) {
+          SbFeedback.showToast(
+            context: context,
+            message: 'Profile Synced Successfully',
+          );
+        }
+      }
+    });
+
     return SbPage.form(
       title: 'Report Branding',
       primaryAction: Column(
@@ -81,16 +108,20 @@ class _BrandingSettingsScreenState
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ElevatedButton(
-            onPressed: _saveBranding,
-            child: const Text('Save Branding Profile'),
+            onPressed: isSyncing ? null : _saveBranding,
+            child: isSyncing
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Text('Save Branding Profile'),
           ),
           const SizedBox(height: SbSpacing.sm),
-
           TextButton(
-            onPressed: _resetBranding,
+            onPressed: isSyncing ? null : _resetBranding,
             child: const Text('Reset to Site Buddy Defaults'),
           ),
-
         ],
       ),
       body: SbSectionList(

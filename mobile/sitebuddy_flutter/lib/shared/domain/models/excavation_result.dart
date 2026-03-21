@@ -20,6 +20,28 @@ class ExcavationResult {
     required this.swellFactor,
   });
 
+  factory ExcavationResult.fromMap(Map<String, dynamic> map) {
+    return ExcavationResult(
+      volumeM3: (map['volumeM3'] as num).toDouble(),
+      length: (map['length'] as num).toDouble(),
+      width: (map['width'] as num).toDouble(),
+      depth: (map['depth'] as num).toDouble(),
+      clearance: (map['clearance'] as num).toDouble(),
+      swellFactor: (map['swellFactor'] as num).toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'volumeM3': volumeM3,
+      'length': length,
+      'width': width,
+      'depth': depth,
+      'clearance': clearance,
+      'swellFactor': swellFactor,
+    };
+  }
+
   factory ExcavationResult.empty() {
     return const ExcavationResult(
       volumeM3: 0,
@@ -31,6 +53,3 @@ class ExcavationResult {
     );
   }
 }
-
-
-

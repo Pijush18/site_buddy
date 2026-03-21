@@ -16,6 +16,24 @@ class ShutteringResult {
     required this.depth,
   });
 
+  factory ShutteringResult.fromMap(Map<String, dynamic> map) {
+    return ShutteringResult(
+      areaM2: (map['areaM2'] as num).toDouble(),
+      length: (map['length'] as num).toDouble(),
+      width: (map['width'] as num).toDouble(),
+      depth: (map['depth'] as num).toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'areaM2': areaM2,
+      'length': length,
+      'width': width,
+      'depth': depth,
+    };
+  }
+
   factory ShutteringResult.empty() {
     return const ShutteringResult(areaM2: 0, length: 0, width: 0, depth: 0);
   }

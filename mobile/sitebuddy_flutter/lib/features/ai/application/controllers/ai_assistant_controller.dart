@@ -214,7 +214,7 @@ class AiController extends Notifier<AiState> {
     return generateUseCase.execute(
       projectId: currentProjectId ?? 'general',
       projectName: projectName,
-      branding: branding,
+      branding: branding.profile,
       projectChats: projectChats,
       unitSystem: unitSystem,
     );

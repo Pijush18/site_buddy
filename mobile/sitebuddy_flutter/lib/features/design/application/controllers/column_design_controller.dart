@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -108,7 +109,7 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
     // Record calculation history snapshot
     final historyRepo = ref.read(sharedHistoryRepositoryProvider);
     final entry = CalculationHistoryEntry(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: const Uuid().v4(),
       projectId: state.projectId!,
       calculationType: CalculationType.column,
       timestamp: DateTime.now(),
@@ -123,6 +124,12 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
       },
       resultSummary:
           "Column saved (${state.b.toInt()}x${state.d.toInt()} mm). Interaction Ratio: ${state.interactionRatio.toStringAsFixed(2)}",
+      resultData: {
+        'interactionRatio': state.interactionRatio,
+        'astProvided': state.astProvided,
+        'isCapacitySafe': state.isCapacitySafe,
+        'failureMode': state.failureMode.index,
+      },
     );
     await historyRepo.addEntry(entry);
   }

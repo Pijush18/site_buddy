@@ -27,6 +27,12 @@ class RebarResult {
     required this.totalLength,
     required this.totalWeight,
   });
+
+  Map<String, dynamic> toMap() => {
+        'numberOfBars': numberOfBars,
+        'totalLength': totalLength,
+        'totalWeight': totalWeight,
+      };
 }
 
 

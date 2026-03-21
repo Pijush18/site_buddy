@@ -12,12 +12,17 @@
 /// - Stores a potential path for a custom logo asset or file.
 /// - Supports JSON serialization for local persistence storage mapping.
 /// ----------------------------------------------
-library;
+import 'package:hive/hive.dart';
 
+part 'branding_model.g.dart';
 
+@HiveType(typeId: 5)
 class BrandingModel {
+  @HiveField(0)
   final String companyName;
+  @HiveField(1)
   final String engineerName;
+  @HiveField(2)
   final String? logoPath;
 
   const BrandingModel({
@@ -29,8 +34,8 @@ class BrandingModel {
   /// Factory generic fallback "Site Buddy" template.
   factory BrandingModel.defaultBranding() {
     return const BrandingModel(
-      companyName: 'Site Buddy',
-      engineerName: 'Er. Pijush Debbarma',
+      companyName: '',
+      engineerName: '',
       logoPath: null,
     );
   }
@@ -38,8 +43,8 @@ class BrandingModel {
   /// Deserialization from map (e.g. SharedPreferences JSON strings)
   factory BrandingModel.fromMap(Map<String, dynamic> map) {
     return BrandingModel(
-      companyName: map['companyName'] ?? 'Site Buddy',
-      engineerName: map['engineerName'] ?? 'Er. Pijush Debbarma',
+      companyName: map['companyName'] ?? '',
+      engineerName: map['engineerName'] ?? '',
       logoPath: map['logoPath'],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
@@ -33,7 +34,7 @@ class FootingDesignController extends Notifier<FootingDesignState> {
     // Record calculation history snapshot
     final historyRepo = ref.read(sharedHistoryRepositoryProvider);
     final entry = CalculationHistoryEntry(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: const Uuid().v4(),
       projectId: state.projectId!,
       calculationType: CalculationType.footing,
       timestamp: DateTime.now(),
@@ -48,6 +49,13 @@ class FootingDesignController extends Notifier<FootingDesignState> {
       },
       resultSummary:
           "Footing design saved (${state.footingLength}m x ${state.footingWidth}m). Max Pressure: ${state.maxSoilPressure.toStringAsFixed(1)} kN/m²",
+      resultData: {
+        'maxSoilPressure': state.maxSoilPressure,
+        'isOneWayShearSafe': state.isOneWayShearSafe,
+        'isPunchingShearSafe': state.isPunchingShearSafe,
+        'isBendingSafe': state.isBendingSafe,
+        'astProvided': state.astProvidedX,
+      },
     );
     await historyRepo.addEntry(entry);
   }

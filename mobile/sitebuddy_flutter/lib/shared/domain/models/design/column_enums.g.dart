@@ -225,6 +225,3 @@ class ColumnFailureModeAdapter extends TypeAdapter<ColumnFailureMode> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

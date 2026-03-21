@@ -49,6 +49,3 @@ class SlabTypeAdapter extends TypeAdapter<SlabType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

@@ -24,13 +24,14 @@ class CalculationHistoryEntryAdapter
       timestamp: fields[3] as DateTime,
       inputParameters: (fields[4] as Map).cast<String, dynamic>(),
       resultSummary: fields[5] as String,
+      resultData: (fields[6] as Map).cast<String, dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, CalculationHistoryEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -42,7 +43,9 @@ class CalculationHistoryEntryAdapter
       ..writeByte(4)
       ..write(obj.inputParameters)
       ..writeByte(5)
-      ..write(obj.resultSummary);
+      ..write(obj.resultSummary)
+      ..writeByte(6)
+      ..write(obj.resultData);
   }
 
   @override
@@ -73,6 +76,20 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
         return CalculationType.footing;
       case 4:
         return CalculationType.levelLog;
+      case 5:
+        return CalculationType.cement;
+      case 6:
+        return CalculationType.rebar;
+      case 7:
+        return CalculationType.brick;
+      case 8:
+        return CalculationType.plaster;
+      case 9:
+        return CalculationType.excavation;
+      case 10:
+        return CalculationType.shuttering;
+      case 11:
+        return CalculationType.sand;
       default:
         return CalculationType.column;
     }
@@ -96,6 +113,27 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
       case CalculationType.levelLog:
         writer.writeByte(4);
         break;
+      case CalculationType.cement:
+        writer.writeByte(5);
+        break;
+      case CalculationType.rebar:
+        writer.writeByte(6);
+        break;
+      case CalculationType.brick:
+        writer.writeByte(7);
+        break;
+      case CalculationType.plaster:
+        writer.writeByte(8);
+        break;
+      case CalculationType.excavation:
+        writer.writeByte(9);
+        break;
+      case CalculationType.shuttering:
+        writer.writeByte(10);
+        break;
+      case CalculationType.sand:
+        writer.writeByte(11);
+        break;
     }
   }
 
@@ -109,6 +147,3 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

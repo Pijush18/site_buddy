@@ -64,6 +64,3 @@ class FootingTypeAdapter extends TypeAdapter<FootingType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

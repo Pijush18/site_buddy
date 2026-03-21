@@ -77,7 +77,7 @@ class AppScaffold extends ConsumerWidget {
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
                   Text(
-                    branding.engineerName,
+                    branding.profile.engineerName,
                     style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ],

@@ -1,9 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/excavation_state.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 final excavationProvider = NotifierProvider<ExcavationController, ExcavationState>(
   ExcavationController.new,
@@ -59,9 +63,43 @@ class ExcavationController extends Notifier<ExcavationState> {
         swellFactor: s.value ?? 1.25,
       );
       state = state.copyWith(isLoading: false, result: res);
+
+      // --- PERSISTENCE: Save to Unified Calculation Repository ---
+      final selectedProject = ref.read(projectControllerProvider).selectedProject;
+      if (selectedProject != null) {
+        final entry = CalculationHistoryEntry(
+          id: const Uuid().v4(),
+          projectId: selectedProject.id,
+          calculationType: CalculationType.excavation,
+          timestamp: DateTime.now(),
+          inputParameters: {
+            'length': l.value,
+            'width': w.value,
+            'depth': d.value,
+            'clearance': c.value,
+            'swell': s.value,
+          },
+          resultSummary: '${res.volumeM3.toStringAsFixed(1)} m³ Volume Estimated',
+          resultData: res.toMap(),
+        );
+        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      }
     } catch (e) {
       _onError(AppFailure(e.toString()));
     }
+  }
+
+  void restore(Map<String, dynamic> params) {
+    state = state.copyWith(
+      lengthInput: params['length']?.toString() ?? '',
+      widthInput: params['width']?.toString() ?? '',
+      depthInput: params['depth']?.toString() ?? '',
+      clearanceInput: params['clearance']?.toString() ?? '',
+      swellFactorInput: params['swell']?.toString() ?? '',
+      clearResult: true,
+      clearFailure: true,
+    );
+    calculate();
   }
 
   void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);

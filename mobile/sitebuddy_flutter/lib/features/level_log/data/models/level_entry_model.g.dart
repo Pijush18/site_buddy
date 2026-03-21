@@ -69,6 +69,3 @@ class LevelEntryModelAdapter extends TypeAdapter<LevelEntryModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

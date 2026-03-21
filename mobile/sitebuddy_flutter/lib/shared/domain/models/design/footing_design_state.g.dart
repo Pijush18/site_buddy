@@ -183,6 +183,3 @@ class FootingDesignStateAdapter extends TypeAdapter<FootingDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

@@ -1,17 +1,18 @@
 import 'package:hive/hive.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
-import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
+import 'package:site_buddy/shared/domain/repositories/calculation_repository.dart';
 import 'package:site_buddy/core/backend/backend_client.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'dart:developer' as developer;
 
-class HiveHistoryRepository implements HistoryRepository {
+/// UNIFIED REPOSITORY for all engineering calculations (structural + material estimators).
+class HiveCalculationRepository implements CalculationRepository {
   static const String _boxName = 'calculation_history_box';
 
   final BackendClient? _backendClient;
   final ConnectivityService? _connectivityService;
 
-  HiveHistoryRepository({
+  HiveCalculationRepository({
     BackendClient? backendClient,
     ConnectivityService? connectivityService,
   })  : _backendClient = backendClient,
@@ -21,6 +22,8 @@ class HiveHistoryRepository implements HistoryRepository {
   Future<void> addEntry(CalculationHistoryEntry entry) async {
     final box = await Hive.openBox<CalculationHistoryEntry>(_boxName);
     await box.put(entry.id, entry);
+    // Note: We don't close the box immediately in production patterns 
+    // to avoid overhead, but following existing patterns for now.
     await box.close();
   }
 
@@ -51,24 +54,20 @@ class HiveHistoryRepository implements HistoryRepository {
 
   @override
   Future<void> syncCalculations(String projectId) async {
-    // 1. Guard against missing dependencies or offline status
     if (_backendClient == null || _connectivityService == null) return;
     
     if (!await _connectivityService.isOnline) {
-      developer.log('Calculation sync aborted: Device is offline', name: 'HiveHistoryRepository');
+      developer.log('Calculation sync aborted: Device is offline', name: 'HiveCalculationRepository');
       return;
     }
 
     try {
-      // 2. Fetch local calculations for this project
       final localEntries = await getEntriesByProject(projectId);
       if (localEntries.isEmpty) return;
 
-      // 3. Fetch remote calculations from backend
       final remoteEntries = await _backendClient.fetchCalculations(projectId);
       final remoteIds = remoteEntries.map((e) => e.id).toSet();
 
-      // 4. Upload missing calculations
       int syncCount = 0;
       for (final entry in localEntries) {
         if (!remoteIds.contains(entry.id)) {
@@ -77,15 +76,9 @@ class HiveHistoryRepository implements HistoryRepository {
         }
       }
 
-      developer.log('Calculation sync complete: $syncCount records uploaded for project $projectId', name: 'HiveHistoryRepository');
+      developer.log('Calculation sync complete: $syncCount records uploaded for project $projectId', name: 'HiveCalculationRepository');
     } catch (e) {
-      // Offline-first: log failure but don't crash the user flow
-      developer.log('Calculation cloud sync failed: $e', name: 'HiveHistoryRepository', error: e);
+      developer.log('Calculation cloud sync failed: $e', name: 'HiveCalculationRepository', error: e);
     }
   }
 }
-
-// Riverpod provider moved to shared/presentation/providers/history_providers.dart
-
-
-

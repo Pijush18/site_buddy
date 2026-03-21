@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:site_buddy/core/design_engines/models/design_io.dart';
 import 'package:site_buddy/core/providers/engine_providers.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
@@ -37,7 +38,7 @@ class SlabDesignController extends Notifier<SlabDesignState> {
     // Record calculation history
     final historyRepo = ref.read(sharedHistoryRepositoryProvider);
     final entry = CalculationHistoryEntry(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: const Uuid().v4(),
       projectId: state.projectId!,
       calculationType: CalculationType.slab,
       timestamp: DateTime.now(),
@@ -52,6 +53,12 @@ class SlabDesignController extends Notifier<SlabDesignState> {
         'steel': state.steelGrade,
       },
       resultSummary: "Slab design saved (${state.lx}m x ${state.ly}m)",
+      resultData: state.result?.props.isNotEmpty == true ? {
+        'bendingMoment': state.result?.bendingMoment,
+        'mainRebar': state.result?.mainRebar,
+        'astProvided': state.result?.astProvided,
+        'isDeflectionSafe': state.result?.isDeflectionSafe,
+      } : {},
     );
     await historyRepo.addEntry(entry);
   }

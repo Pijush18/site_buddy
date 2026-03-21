@@ -62,10 +62,10 @@ class AppHeader extends ConsumerWidget {
                   title,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                if ((subtitle ?? branding.engineerName).isNotEmpty) ...[
+                if ((subtitle ?? branding.profile.engineerName).isNotEmpty) ...[
                   const SizedBox(height: SbSpacing.xs),
                   Text(
-                    subtitle ?? branding.engineerName,
+                    subtitle ?? branding.profile.engineerName,
                     style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ],

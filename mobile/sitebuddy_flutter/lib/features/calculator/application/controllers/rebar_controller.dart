@@ -24,10 +24,15 @@ library;
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/rebar_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_rebar_usecase.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
+import 'package:site_buddy/core/errors/app_failure.dart';
 
 /// Failure wrapper used by calculator controllers.
 class Failure {
@@ -168,13 +173,46 @@ class RebarController extends Notifier<RebarState> {
         diameter: diameter,
         wastePercent: waste,
       );
-      state = state.copyWith(result: res, isLoading: false);
+      state = state.copyWith(isLoading: false, result: res);
+
+      // --- PERSISTENCE: Save to Unified Calculation Repository ---
+      final selectedProject = ref.read(projectControllerProvider).selectedProject;
+      if (selectedProject != null) {
+        final entry = CalculationHistoryEntry(
+          id: const Uuid().v4(),
+          projectId: selectedProject.id,
+          calculationType: CalculationType.rebar,
+          timestamp: DateTime.now(),
+          inputParameters: {
+            'memberLength': memberLength,
+            'diameter': diameter,
+            'spacing': spacing,
+            'wastePercent': waste,
+          },
+          resultSummary: '${res.totalWeight.toStringAsFixed(1)} kg Rebar Estimated',
+          resultData: res.toMap(),
+        );
+
+        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
         failure: Failure(e.toString().replaceAll('Exception: ', '')),
       );
     }
+  }
+
+  void restore(Map<String, dynamic> params) {
+    state = state.copyWith(
+      memberLength: (params['memberLength'] as num?)?.toDouble(),
+      diameter: (params['diameter'] as num?)?.toDouble(),
+      spacing: (params['spacing'] as num?)?.toDouble(),
+      wastePercent: (params['wastePercent'] as num?)?.toDouble() ?? 5.0,
+      clearResult: true,
+      clearFailure: true,
+    );
+    calculate();
   }
 
   void reset() => state = const RebarState();

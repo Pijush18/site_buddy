@@ -5,6 +5,8 @@ import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/services/data_migration_service.dart';
 import 'package:site_buddy/shared/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/core/branding/branding_model.dart';
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/features/level_log/data/models/level_entry_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_method_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_log_session_model.dart';
@@ -33,6 +35,15 @@ class AppInitializer {
     if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(LevelEntryModelAdapter());
     if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(LevelLogSessionModelAdapter());
     if (!Hive.isAdapterRegistered(4)) Hive.registerAdapter(LevelMethodModelAdapter());
+    if (!Hive.isAdapterRegistered(5)) Hive.registerAdapter(BrandingModelAdapter());
+    
+    // History & Design Extensions (typeId 200+)
+    if (!Hive.isAdapterRegistered(200)) {
+      Hive.registerAdapter(CalculationHistoryEntryAdapter());
+    }
+    if (!Hive.isAdapterRegistered(201)) {
+      Hive.registerAdapter(CalculationTypeAdapter());
+    }
 
     // 3. Initialize Settings Provider to load data
     container.read(settingsProvider);

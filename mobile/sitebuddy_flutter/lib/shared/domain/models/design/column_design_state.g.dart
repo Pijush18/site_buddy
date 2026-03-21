@@ -150,6 +150,3 @@ class ColumnDesignStateAdapter extends TypeAdapter<ColumnDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

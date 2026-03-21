@@ -23,6 +23,8 @@ class SlabDesignResultAdapter extends TypeAdapter<SlabDesignResult> {
       isShearSafe: fields[4] as bool,
       isDeflectionSafe: fields[5] as bool,
       isCrackingSafe: fields[6] as bool,
+      astProvided: fields[7] as double,
+      astRequired: fields[8] as double,
       projectId: fields[3] as String?,
     );
   }
@@ -30,7 +32,7 @@ class SlabDesignResultAdapter extends TypeAdapter<SlabDesignResult> {
   @override
   void write(BinaryWriter writer, SlabDesignResult obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.bendingMoment)
       ..writeByte(1)
@@ -44,7 +46,11 @@ class SlabDesignResultAdapter extends TypeAdapter<SlabDesignResult> {
       ..writeByte(5)
       ..write(obj.isDeflectionSafe)
       ..writeByte(6)
-      ..write(obj.isCrackingSafe);
+      ..write(obj.isCrackingSafe)
+      ..writeByte(7)
+      ..write(obj.astProvided)
+      ..writeByte(8)
+      ..write(obj.astRequired);
   }
 
   @override
@@ -57,6 +63,3 @@ class SlabDesignResultAdapter extends TypeAdapter<SlabDesignResult> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

@@ -88,22 +88,30 @@ class _HistoryEntryCard extends StatelessWidget {
 
   IconData _getTypeIcon(CalculationType type) {
     switch (type) {
-      case CalculationType.column:
-        return SbIcons.viewColumn;
       case CalculationType.beam:
         return SbIcons.viewArray;
+      case CalculationType.column:
+        return SbIcons.viewColumn;
       case CalculationType.slab:
         return SbIcons.layers;
       case CalculationType.footing:
         return SbIcons.foundation;
+      case CalculationType.rebar:
+        return SbIcons.rebar;
+      case CalculationType.cement:
+      case CalculationType.brick:
+      case CalculationType.plaster:
+      case CalculationType.sand:
+        return SbIcons.grain;
       case CalculationType.levelLog:
-        return SbIcons.layers; // Using layers for level log as well for now
+        return SbIcons.terrain;
+      case CalculationType.excavation:
+        return SbIcons.construction;
+      case CalculationType.shuttering:
+        return SbIcons.layers;
     }
   }
 }
-
-
-
 
 
 

@@ -15,73 +15,158 @@
 library;
 
 
-import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:site_buddy/core/branding/branding_model.dart';
+import 'package:site_buddy/core/branding/branding_state.dart';
+import 'package:site_buddy/features/auth/application/auth_providers.dart';
+import 'package:site_buddy/core/backend/backend_client.dart';
+import 'dart:developer' as developer;
 
-const String _brandingPrefsKey = 'sitebuddy_global_branding';
+const String _brandingBoxName = 'brandingBox';
+const String _brandingKey = 'current_profile';
 
-class BrandingNotifier extends Notifier<BrandingModel> {
+/// NOTIFIER: BrandingNotifier
+/// PURPOSE: Manages the professional profile with secure backend synchronization.
+class BrandingNotifier extends Notifier<BrandingState> {
   @override
-  BrandingModel build() {
-    // Default synchronous return
-    // Real initialization happens async in `_loadFromPrefs`.
-    Future.microtask(() => _loadFromPrefs());
-    return BrandingModel.defaultBranding();
+  BrandingState build() {
+    // 1. Initial local load (non-blocking for UI)
+    Future.microtask(() => _initialize());
+
+    // 2. React to Auth changes to refresh profile
+    ref.listen(authStateProvider, (previous, next) {
+      final user = next.value;
+      if (user != null && previous?.value == null) {
+        // Refresh from cloud on fresh login
+        _fetchFromBackend();
+      } else if (user == null && previous?.value != null) {
+        // Reset to default on logout
+        state = BrandingState.initial();
+      }
+    });
+
+    return BrandingState.initial();
   }
 
-  /// Loads persisted JSON data offdisk into the active state.
-  Future<void> _loadFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonStr = prefs.getString(_brandingPrefsKey);
-
-    if (jsonStr != null && jsonStr.isNotEmpty) {
-      try {
-        final decoded = jsonDecode(jsonStr) as Map<String, dynamic>;
-        state = BrandingModel.fromMap(decoded);
-      } catch (e) {
-        // Fallback natively to default on corruption.
-        state = BrandingModel.defaultBranding();
-      }
+  /// Composite initialization: Hive Load -> Background Cloud Sync.
+  Future<void> _initialize() async {
+    await _loadFromHive();
+    
+    // Background sync if authenticated
+    if (ref.read(authStateProvider).value != null) {
+      _fetchFromBackend();
     }
   }
 
-  /// Overwrites the running state entirely and saves immediately to disk.
-  Future<void> updateBranding(BrandingModel newBranding) async {
-    state = newBranding;
-    final prefs = await SharedPreferences.getInstance();
-
-    final jsonStr = jsonEncode(state.toMap());
-    await prefs.setString(_brandingPrefsKey, jsonStr);
+  /// Loads the persisted profile from the dedicated Hive box.
+  Future<void> _loadFromHive() async {
+    try {
+      final box = await Hive.openBox<BrandingModel>(_brandingBoxName);
+      final profile = box.get(_brandingKey);
+      if (profile != null) {
+        state = state.copyWith(profile: profile);
+      }
+    } catch (e) {
+      developer.log('Failed to load branding from Hive: $e', name: 'BrandingNotifier');
+    }
   }
 
-  /// Merges partial updates onto the existing object cleanly.
-  Future<void> updateFields({
+  /// Fetches profile from backend and persists locally.
+  Future<void> _fetchFromBackend() async {
+    try {
+      final backend = ref.read(backendClientProvider);
+      final rawData = await backend.fetchProfile();
+      
+      if (rawData.isNotEmpty) {
+        final serverProfile = BrandingModel.fromMap(rawData);
+        
+        // Save to Hive
+        final box = await Hive.openBox<BrandingModel>(_brandingBoxName);
+        await box.put(_brandingKey, serverProfile);
+        
+        // Update State
+        state = state.copyWith(profile: serverProfile);
+        developer.log('Cloud profile synced successfully', name: 'BrandingNotifier');
+      }
+    } catch (e) {
+      developer.log('Background profile sync failed: $e', name: 'BrandingNotifier');
+    }
+  }
+
+  /// PRODUCTION UPDATE FLOW: API First -> On Success: Update Local Cache & State.
+  Future<void> updateProfile({
     String? companyName,
     String? engineerName,
     String? logoPath,
     bool clearLogo = false,
   }) async {
-    final updated = state.copyWith(
-      companyName: companyName,
-      engineerName: engineerName,
-      logoPath: logoPath,
-      clearLogo: clearLogo,
-    );
-    await updateBranding(updated);
+    // 1. Prevent duplicate submissions
+    if (state.isLoading) return;
+
+    // 2. Set Loading State
+    state = state.copyWith(syncStatus: const AsyncLoading());
+
+    try {
+      // 3. Prepare Payload
+      final candidateProfile = state.profile.copyWith(
+        companyName: companyName,
+        engineerName: engineerName,
+        logoPath: logoPath,
+        clearLogo: clearLogo,
+      );
+
+      // 4. API CALL (Backend as Source of Truth)
+      final backend = ref.read(backendClientProvider);
+      await backend.updateProfile(candidateProfile.toMap());
+
+      // 5. ON SUCCESS: Update Hive + State
+      final box = await Hive.openBox<BrandingModel>(_brandingBoxName);
+      await box.put(_brandingKey, candidateProfile);
+
+      state = state.copyWith(
+        profile: candidateProfile,
+        syncStatus: const AsyncData(null),
+      );
+      
+      developer.log('Profile updated and synced successfully', name: 'BrandingNotifier');
+    } catch (e, stack) {
+      // 6. ON FAILURE: Reset status without changing local profile data
+      developer.log('Profile update failed: $e', name: 'BrandingNotifier');
+      state = state.copyWith(
+        syncStatus: AsyncError(e, stack),
+      );
+      rethrow; // Allow UI to handle if needed
+    }
   }
 
-  /// Removes customization cleanly, restoring enterprise defaults.
+  /// Triggers a manual refresh from the cloud.
+  Future<void> refresh() async {
+    await _fetchFromBackend();
+  }
+
+  /// Wipes local and remote profile to defaults.
   Future<void> resetToDefault() async {
-    state = BrandingModel.defaultBranding();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_brandingPrefsKey);
+    try {
+      final defaultProfile = BrandingModel.defaultBranding();
+      
+      // Try to sync with backend if possible
+      final backend = ref.read(backendClientProvider);
+      await backend.updateProfile(defaultProfile.toMap());
+
+      final box = await Hive.openBox<BrandingModel>(_brandingBoxName);
+      await box.delete(_brandingKey);
+      
+      state = BrandingState.initial();
+    } catch (e) {
+      developer.log('Reset failed: $e', name: 'BrandingNotifier');
+    }
   }
 }
 
-final brandingProvider = NotifierProvider<BrandingNotifier, BrandingModel>(() {
+/// GLOBAL PROVIDER: brandingProvider
+/// Now returns [BrandingState] which includes sync status.
+final brandingProvider = NotifierProvider<BrandingNotifier, BrandingState>(() {
   return BrandingNotifier();
 });
 

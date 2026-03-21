@@ -66,6 +66,3 @@ class ProjectAdapter extends TypeAdapter<Project> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

@@ -16,7 +16,10 @@ class DiagramPointAdapter extends TypeAdapter<DiagramPoint> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return DiagramPoint(fields[0] as double, fields[1] as double);
+    return DiagramPoint(
+      fields[0] as double,
+      fields[1] as double,
+    );
   }
 
   @override
@@ -224,6 +227,3 @@ class BeamDesignStateAdapter extends TypeAdapter<BeamDesignState> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-
-

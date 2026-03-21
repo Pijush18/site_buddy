@@ -130,6 +130,22 @@ class BackendClient {
     );
   }
 
+  /// FETCHES the user's professional profile from the cloud.
+  Future<Map<String, dynamic>> fetchProfile() async {
+    final response = await _apiClient.get<Map<String, dynamic>>(
+      BackendEndpoints.userProfile,
+    );
+    return response.data ?? {};
+  }
+
+  /// UPDATES the user's professional profile in the cloud.
+  Future<void> updateProfile(Map<String, dynamic> data) async {
+    await _apiClient.post(
+      BackendEndpoints.userProfile,
+      data: data,
+    );
+  }
+
   /// CHECKS backend health status.
   Future<bool> checkHealth() async {
     try {

@@ -12,6 +12,13 @@ import 'package:site_buddy/features/design/application/controllers/column_design
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/cement_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/rebar_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/brick_wall_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/plaster_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/excavation_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/shuttering_controller.dart';
+import 'package:site_buddy/features/calculator/application/controllers/sand_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
@@ -185,6 +192,34 @@ class HistoryDetailScreen extends ConsumerWidget {
               'Level Log versioning is handled via the Project Saved Sessions.',
         );
         return;
+
+      case CalculationType.cement:
+        ref.read(cementControllerProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.rebar:
+        ref.read(rebarControllerProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.brick:
+        ref.read(brickWallProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.plaster:
+        ref.read(plasterProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.excavation:
+        ref.read(excavationProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.shuttering:
+        ref.read(shutteringProvider.notifier).restore(params);
+        break;
+
+      case CalculationType.sand:
+        ref.read(sandControllerProvider.notifier).restore(params);
+        break;
     }
 
     SbFeedback.showToast(

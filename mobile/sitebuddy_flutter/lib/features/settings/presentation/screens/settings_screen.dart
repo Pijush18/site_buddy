@@ -11,6 +11,7 @@ import 'package:site_buddy/core/constants/error_strings.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/features/auth/domain/auth_repository.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
+import 'package:site_buddy/core/branding/branding_provider.dart';
 import 'package:go_router/go_router.dart';
 
 /// SCREEN: SettingsScreen
@@ -246,13 +247,19 @@ class SettingsScreen extends StatelessWidget {
           data: (user) {
             if (user == null) return const SizedBox.shrink();
             return subscriptionAsync.when(
-              data: (subscription) => _buildProfileCard(
-                context,
-                ref,
-                user,
-                subscription.plan,
-                subscription.isPremium,
-              ),
+              data: (subscription) {
+                // WATCH the branding provider to get reactive updates of the profile
+                final branding = ref.watch(brandingProvider);
+                
+                return _buildProfileCard(
+                  context,
+                  ref,
+                  user,
+                  branding.profile.engineerName, // USE the real name from branding system
+                  subscription.plan,
+                  subscription.isPremium,
+                );
+              },
               loading: () => _buildSmallLoadingState(),
               error: (e, _) => _buildSmallErrorState(context, ErrorStrings.syncError),
             );
@@ -268,6 +275,7 @@ class SettingsScreen extends StatelessWidget {
     BuildContext context,
     WidgetRef ref,
     SiteUser user,
+    String displayName, // REPLACED developer name with dynamic name
     String plan,
     bool isPremium,
   ) {
@@ -292,7 +300,7 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        AppStrings.developerName,
+                        displayName, // NOW displays either the saved name or "Er. Pijush Debbarma" (default)
                         style: textTheme.titleMedium,
                       ),
                       Text(
@@ -324,7 +332,7 @@ class SettingsScreen extends StatelessWidget {
                 SbSettingsTile(
                   icon: SbIcons.profile,
                   title: AppStrings.editProfile,
-                  onTap: () => debugPrint("Profile"),
+                  onTap: () => context.push('/settings/branding'), // FIXED: Now navigates to edit screen
                 ),
                 const Divider(height: 1, indent: 56),
                 SbSettingsTile(

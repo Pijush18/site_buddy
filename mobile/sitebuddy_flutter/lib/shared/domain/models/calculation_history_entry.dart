@@ -22,6 +22,9 @@ class CalculationHistoryEntry {
   @HiveField(5)
   final String resultSummary;
 
+  @HiveField(6)
+  final Map<String, dynamic> resultData;
+
   CalculationHistoryEntry({
     required this.id,
     required this.projectId,
@@ -29,6 +32,7 @@ class CalculationHistoryEntry {
     required this.timestamp,
     required this.inputParameters,
     required this.resultSummary,
+    this.resultData = const {},
   });
 
   /// Deserializes from backend JSON
@@ -43,6 +47,7 @@ class CalculationHistoryEntry {
       timestamp: DateTime.parse(json['created_at'] as String),
       inputParameters: json['input_data'] as Map<String, dynamic>,
       resultSummary: json['result_summary'] ?? '',
+      resultData: json['result_data'] as Map<String, dynamic>? ?? {},
     );
   }
 
@@ -54,7 +59,7 @@ class CalculationHistoryEntry {
       'type': calculationType.name,
       'created_at': timestamp.toIso8601String(),
       'input_data': inputParameters,
-      'result_data': {'summary': resultSummary}, // Backend expects result_data as JSONB
+      'result_data': resultData.isEmpty ? {'summary': resultSummary} : resultData,
       'result_summary': resultSummary,
     };
   }
@@ -72,6 +77,20 @@ enum CalculationType {
   footing,
   @HiveField(4)
   levelLog,
+  @HiveField(5)
+  cement,
+  @HiveField(6)
+  rebar,
+  @HiveField(7)
+  brick,
+  @HiveField(8)
+  plaster,
+  @HiveField(9)
+  excavation,
+  @HiveField(10)
+  shuttering,
+  @HiveField(11)
+  sand,
 }
 
 
