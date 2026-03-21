@@ -36,8 +36,11 @@ class ConversionCard extends StatelessWidget {
                 const SizedBox(width: SbSpacing.lg),
                 Text(
                   'Unit Conversion',
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
+
               ],
             ),
           ),

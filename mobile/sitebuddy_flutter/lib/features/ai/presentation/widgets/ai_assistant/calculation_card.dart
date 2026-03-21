@@ -39,8 +39,11 @@ class CalculationCard extends ConsumerWidget {
                 const SizedBox(width: SbSpacing.md),
                 Text(
                   'Material Estimate',
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
+
               ],
             ),
           ),

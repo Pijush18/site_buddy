@@ -78,7 +78,10 @@ class SbListItemTile extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: isSubtle ? textTheme.bodyLarge : textTheme.titleMedium,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

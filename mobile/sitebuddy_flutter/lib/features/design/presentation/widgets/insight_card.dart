@@ -22,7 +22,10 @@ class InsightCard extends StatelessWidget {
       children: [
         Text(
           'SMART INSIGHTS',
-          style: Theme.of(context).textTheme.titleMedium!,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+
         ),
         const SizedBox(height: SbSpacing.sm),
         ...insights.map(

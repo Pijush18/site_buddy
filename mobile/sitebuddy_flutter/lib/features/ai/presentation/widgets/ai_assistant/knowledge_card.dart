@@ -60,8 +60,12 @@ class KnowledgeCard extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     topic.title.toUpperCase(),
-                    style: textTheme.labelLarge?.copyWith(color: colorScheme.onSurface),
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface,
+                    ),
                   ),
+
                 ),
               ],
             ),

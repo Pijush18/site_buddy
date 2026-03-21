@@ -53,15 +53,15 @@ class SBGridActionCard extends StatelessWidget {
                       : context.colors.onSurfaceVariant,
                 ),
                 const SizedBox(height: SbSpacing.sm),
-                Text(
-                  label,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight:
-                            isHighlighted ? FontWeight.bold : FontWeight.w600,
-                        color: isPrimary
-                            ? context.colors.primary
-                            : context.colors.onSurface,
-                      ),
+                  Text(
+                    label,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: isPrimary
+                              ? context.colors.primary
+                              : context.colors.onSurface,
+                        ),
+
 
                   textAlign: TextAlign.center,
                   maxLines: 2,

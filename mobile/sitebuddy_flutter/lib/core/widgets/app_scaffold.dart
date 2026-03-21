@@ -60,7 +60,15 @@ class AppScaffold extends ConsumerWidget {
               surfaceTintColor: Colors.transparent,
               forceElevated: innerBoxIsScrolled,
               centerTitle: false,
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(1),
+                child: Container(
+                  height: 1,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ),
               title: Column(
+
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [

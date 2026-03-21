@@ -51,8 +51,11 @@ class SiteReportCard extends StatelessWidget {
               children: [
                 Text(
                   'SITE BUDDY REPORT',
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
+
                 const SizedBox(height: SbSpacing.sm),
                 _buildMetaText(
                   context,

@@ -37,7 +37,10 @@ class DesignAdvisorCard extends StatelessWidget {
                 advisorResult.recommendedOption != null 
                   ? 'ENGINEERING ADVISOR' 
                   : 'ACTION REQUIRED',
-                style: Theme.of(context).textTheme.titleMedium!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+
               ),
             ],
           ),

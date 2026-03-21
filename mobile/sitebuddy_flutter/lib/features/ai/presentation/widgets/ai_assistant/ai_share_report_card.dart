@@ -57,7 +57,10 @@ class AiShareReportCard extends StatelessWidget {
                 children: [
                   Text(
                     'SITE BUDDY REPORT',
-                    style: theme.textTheme.titleMedium!,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+
                   ),
                   const SizedBox(height: SbSpacing.xs),
                   Text(
@@ -76,7 +79,10 @@ class AiShareReportCard extends StatelessWidget {
             // BODY: Question
             Text(
               'Question:',
-              style: theme.textTheme.titleMedium!,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+
             ),
             const SizedBox(height: SbSpacing.sm),
             Text(question, style: theme.textTheme.bodyLarge!),
@@ -86,7 +92,10 @@ class AiShareReportCard extends StatelessWidget {
             // BODY: Answer
             Text(
               'Answer:',
-              style: theme.textTheme.titleMedium!,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+
             ),
             const SizedBox(height: SbSpacing.sm),
             Text(answer, style: theme.textTheme.bodyLarge!),

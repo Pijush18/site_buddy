@@ -50,7 +50,10 @@ class SbSettingsTile extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: textTheme.titleMedium,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+
                       ),
                     ),
                   ],

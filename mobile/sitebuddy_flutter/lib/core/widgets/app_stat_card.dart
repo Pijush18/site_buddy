@@ -95,10 +95,13 @@ class AppStatCard extends StatelessWidget {
           // ── Title / Caption ────────────────────────────────────────────────
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium!,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
+
         ],
       ),
     );
