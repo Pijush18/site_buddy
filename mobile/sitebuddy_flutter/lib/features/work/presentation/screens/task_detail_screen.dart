@@ -117,7 +117,8 @@ class TaskDetailScreen extends ConsumerWidget {
                     color: colorScheme.primary.withValues(alpha: 0.1),
                     child: Row(
                       children: [
-                        Icon(SbIcons.checkFilled, color: colorScheme.primary),
+                        Icon(SbIcons.checkFilled, color: colorScheme.onSurfaceVariant),
+
                         const SizedBox(width: SbSpacing.lg),
                         Text(
                           'Task Completed',

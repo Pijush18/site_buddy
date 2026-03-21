@@ -156,8 +156,8 @@ class WorkDashboardScreen extends ConsumerWidget {
                 children: [
                   SbListItemTile(
                     icon: SbIcons.addTask,
-                    iconColor: colorScheme.primary,
                     title: 'Create Task',
+
                     onTap: () {
                       context.pop();
                       context.push('/tasks/create');
@@ -165,8 +165,8 @@ class WorkDashboardScreen extends ConsumerWidget {
                   ),
                   SbListItemTile(
                     icon: SbIcons.meeting,
-                    iconColor: colorScheme.secondary,
                     title: 'Schedule Meeting',
+
                     onTap: () {
                       context.pop();
                       context.push('/meetings/create');

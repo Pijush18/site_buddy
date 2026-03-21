@@ -30,7 +30,8 @@ class CodeReferenceCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.menu_book, size: 16, color: colorScheme.primary),
+              Icon(Icons.menu_book, size: 16, color: colorScheme.onSurfaceVariant),
+
               const SizedBox(width: SbSpacing.sm),
               Text(
                 'IS 456:2000 REFERENCE',

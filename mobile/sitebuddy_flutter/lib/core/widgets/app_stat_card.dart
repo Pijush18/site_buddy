@@ -76,7 +76,8 @@ class AppStatCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min, // Wrap content vertically
         children: [
           // ── Icon ───────────────────────────────────────────────────────────
-          Icon(icon, size: 28, color: colorScheme.primary),
+          Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
+
 
           // Small gap instead of Expanded to prevent layout errors in Columns
           const SizedBox(height: SbSpacing.sm),

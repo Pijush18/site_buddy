@@ -258,8 +258,8 @@ class ProjectDetailScreen extends ConsumerWidget {
                     children: logItems.map((item) {
                       return SbListItemTile(
                         icon: SbIcons.layers,
-                        iconColor: colorScheme.secondary,
                         title: item.name,
+
                         subtitle:
                             '${item.method.name} • ${DateFormat('dd MMM, hh:mm a').format(item.date)}',
                         onTap: () {

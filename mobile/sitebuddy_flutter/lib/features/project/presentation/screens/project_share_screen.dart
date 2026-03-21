@@ -105,7 +105,8 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(SbSpacing.sm),
-            child: Icon(icon, color: colorScheme.primary),
+            child: Icon(icon, color: colorScheme.onSurfaceVariant),
+
           ),
           const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
           Expanded(

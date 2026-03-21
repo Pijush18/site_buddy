@@ -11,8 +11,8 @@ class SbSettingsTile extends StatelessWidget {
   final String? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
-  final Color? iconColor;
   final bool isVertical;
+  final bool isPrimary;
 
   const SbSettingsTile({
     super.key,
@@ -21,8 +21,8 @@ class SbSettingsTile extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.onTap,
-    this.iconColor,
     this.isVertical = false,
+    this.isPrimary = false,
   });
 
   @override
@@ -44,7 +44,7 @@ class SbSettingsTile extends StatelessWidget {
                 Row(
                   children: [
                     if (icon != null) ...[
-                      Icon(icon, color: iconColor ?? colorScheme.primary, size: 24),
+                      Icon(icon, color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant, size: 24),
                       const SizedBox(width: SbSpacing.sm),
                     ],
                     Expanded(
@@ -75,14 +75,11 @@ class SbSettingsTile extends StatelessWidget {
 
     return SbListItemTile(
       icon: icon,
-      iconColor: iconColor,
       title: title,
       subtitle: subtitle,
       onTap: onTap ?? () {},
+      isPrimary: isPrimary,
       trailing: trailing ?? (onTap != null ? Icon(SbIcons.chevronRight, size: 20, color: colorScheme.onSurfaceVariant) : null),
     );
   }
 }
-
-
-

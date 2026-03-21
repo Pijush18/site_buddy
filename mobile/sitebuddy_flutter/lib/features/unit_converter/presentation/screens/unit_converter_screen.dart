@@ -263,7 +263,8 @@ class _ConverterBodySection extends ConsumerWidget {
                 fromLabel,
                 style: Theme.of(context).textTheme.bodyLarge!,
               ),
-              Icon(SbIcons.arrowDown, color: colorScheme.primary, size: 20),
+              Icon(SbIcons.arrowDown, color: colorScheme.onSurfaceVariant, size: 20),
+
               Text(
                 '${mainValue.toStringAsFixed(2)} $toSymbol',
                 style: Theme.of(context).textTheme.titleLarge!,

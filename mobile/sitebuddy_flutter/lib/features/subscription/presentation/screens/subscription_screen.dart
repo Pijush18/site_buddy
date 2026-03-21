@@ -94,14 +94,14 @@ class SubscriptionScreen extends ConsumerWidget {
   }
 
   Widget _buildCurrentStatus(BuildContext context, dynamic status) {
-    final colorScheme = Theme.of(context).colorScheme;
+
     final isPremium = status.isPremium;
     final bool isActive = status.status == 'active';
 
     return SbListItemTile(
       icon: isPremium ? SbIcons.premium : SbIcons.account,
-      iconColor: isPremium ? AppColors.premium(context) : colorScheme.onSurfaceVariant,
       title: AppStrings.currentPlan,
+
       subtitle: status.plan.toUpperCase(),
       onTap: () {}, 
       trailing: Container(

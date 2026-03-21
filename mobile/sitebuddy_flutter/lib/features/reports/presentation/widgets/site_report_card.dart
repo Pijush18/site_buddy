@@ -41,7 +41,8 @@ class SiteReportCard extends StatelessWidget {
               height: 48,
               width: 48,
               padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md).copyWith(left: 0),
-              child: Icon(SbIcons.site, color: colorScheme.primary),
+              child: Icon(SbIcons.site, color: colorScheme.onSurfaceVariant),
+
             ),
           ],
           Expanded(

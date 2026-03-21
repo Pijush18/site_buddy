@@ -58,10 +58,11 @@ class SBGridActionCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight:
                             isHighlighted ? FontWeight.bold : FontWeight.w600,
-                        color: isHighlighted
+                        color: isPrimary
                             ? context.colors.primary
                             : context.colors.onSurface,
                       ),
+
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

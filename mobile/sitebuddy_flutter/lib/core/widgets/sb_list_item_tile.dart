@@ -10,9 +10,9 @@ class SbListItemTile extends StatelessWidget {
   final String? subtitle;
   final dynamic trailing;
   final VoidCallback onTap;
-  final Color? iconColor;
   final Color? color;
   final bool isSubtle;
+  final bool isPrimary;
 
   const SbListItemTile({
     super.key,
@@ -21,9 +21,9 @@ class SbListItemTile extends StatelessWidget {
     this.subtitle,
     this.trailing,
     required this.onTap,
-    this.iconColor,
     this.color,
     this.isSubtle = false,
+    this.isPrimary = false,
   });
 
   @override
@@ -64,7 +64,7 @@ class SbListItemTile extends StatelessWidget {
                     child: Center(
                       child: Icon(
                         icon,
-                        color: iconColor ?? colorScheme.primary.withValues(alpha: isSubtle ? 0.5 : 0.8),
+                        color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant,
                         size: isSubtle ? 18 : 20,
                       ),
                     ),
