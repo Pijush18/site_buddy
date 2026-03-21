@@ -23,13 +23,13 @@ class FootingAnalysisScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Reinforcement',
             icon: Icons.grid_view_outlined,
             onPressed: () => context.push('/footing/reinforcement'),
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -112,7 +112,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                     ),
                   ),
                   if (state.type == FootingType.pile) ...[
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     SbListItemTile(
                       title: 'Piles Required',
                       onTap: () {}, // Detail view entry

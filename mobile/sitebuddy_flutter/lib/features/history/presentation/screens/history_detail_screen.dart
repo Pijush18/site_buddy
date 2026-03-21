@@ -40,13 +40,13 @@ class HistoryDetailScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildParametersList(context),
-                SizedBox(height: SbSpacing.md),
-                SbButton.primary(
+                const SizedBox(height: SbSpacing.md),
+                PrimaryCTA(
                   onPressed: () => _restoreVersion(context, ref),
                   label: 'Restore this Version',
                   width: double.infinity,
                 ),
-                SizedBox(height: SbSpacing.md),
+                const SizedBox(height: SbSpacing.md),
               ],
             ),
           ),
@@ -64,13 +64,13 @@ class HistoryDetailScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.labelMedium!,
           ),
           const Divider(height: SbSpacing.lg), // Replaced Divider(16)
-          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
           Text(
             entry.resultSummary,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium!,
           ),
-          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
           Text(
             dateStr,
             style: Theme.of(context).textTheme.labelMedium!,

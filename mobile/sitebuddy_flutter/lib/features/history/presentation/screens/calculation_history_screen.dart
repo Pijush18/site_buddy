@@ -53,7 +53,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
               for (var i = 0; i < sortedEntries.length; i++) ...[
                 _HistoryEntryCard(entry: sortedEntries[i]),
                 if (i < sortedEntries.length - 1)
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
               ],
             ],
           );

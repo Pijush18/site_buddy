@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -12,28 +12,24 @@ class SbHomeQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SbSection(
       title: AppStrings.quickActions,
-      child: Row(
+      child: SbGrid(
         children: [
-          Expanded(
-            child: SbActionTile(
-              icon: SbIcons.addCircle,
-              label: AppStrings.newProject,
-              onTap: () => context.push('/projects/create'),
-            ),
+          SBGridActionCard(
+            icon: SbIcons.addCircle,
+            label: AppStrings.newProject,
+            onTap: () => context.push('/projects/create'),
           ),
-          const SizedBox(width: SbSpacing.lg),
-          Expanded(
-            child: SbActionTile(
-              icon: SbIcons.iosShare,
-              label: AppStrings.shareReport,
-              onTap: () => context.push('/reports'),
-            ),
+          SBGridActionCard(
+            icon: SbIcons.iosShare,
+            label: AppStrings.shareReport,
+            onTap: () => context.push('/reports'),
           ),
         ],
       ),
     );
   }
 }
+
 
 
 

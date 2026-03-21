@@ -37,15 +37,15 @@ class SlabSafetyScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Export PDF Design Report',
             onPressed: () => ref
                 .read(slabDesignControllerProvider.notifier)
                 .generateReport(),
             icon: Icons.picture_as_pdf_outlined,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),

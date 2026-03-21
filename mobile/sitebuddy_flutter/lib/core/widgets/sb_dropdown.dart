@@ -40,7 +40,8 @@ class SbDropdown<T> extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.sm),
+
         ],
         Material(
           color: Colors.transparent,
@@ -81,7 +82,8 @@ class SbDropdown<T> extends StatelessWidget {
             },
             borderRadius: SbRadius.borderMd,
             child: Container(
-              height: 48,
+              height: 44.0,
+
               padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),

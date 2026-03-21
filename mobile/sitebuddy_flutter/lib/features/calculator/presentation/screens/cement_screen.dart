@@ -34,7 +34,7 @@ class CementScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
@@ -69,9 +69,9 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               const Divider(),
-              SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -96,34 +96,34 @@ class CementScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.xl),
           SbInput(
             label: EngineeringTerms.wallLength,
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.width,
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.depth,
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.xl),
           Text(
             EngineeringTerms.ratioFormat,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           Wrap(
             spacing: SbSpacing.lg,
             runSpacing: SbSpacing.lg,
@@ -163,7 +163,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Wrap(
             spacing: SbSpacing.lg,
             runSpacing: SbSpacing.lg,
@@ -190,15 +190,15 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.xl),
           ActionButtonsGroup(
             children: [
-              SbButton.outline(
+              SecondaryButton(isOutlined: true, 
                 label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
-              SbButton.primary(
+              PrimaryCTA(
                 label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
@@ -206,7 +206,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.xl),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
@@ -215,11 +215,11 @@ class CementScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: SbSpacing.xl),
+            const SizedBox(height: SbSpacing.xl),
           ],
           if (state.result != null) ...[
             buildResultCard(),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

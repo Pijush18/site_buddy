@@ -64,7 +64,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Flexible(
                     child: Text(
                       '$numBars bars Ø${mainBarDia.toInt()}',
@@ -73,14 +73,14 @@ class RebarLayoutDiagram extends StatelessWidget {
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Text(
                     'Total Steel Area',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Flexible(
                     child: Text(
                       'Ast = ${ast.toInt()} mm²',

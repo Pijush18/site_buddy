@@ -40,7 +40,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Optimize Section',
             onPressed: () {
               ref
@@ -48,8 +48,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   .optimizeDesign();
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.primary(
+          const SizedBox(height: SbSpacing.sm),
+          PrimaryCTA(
             label: 'Export PDF Report',
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () {
@@ -58,8 +58,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   .generateReport();
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.primary(
+          const SizedBox(height: SbSpacing.sm),
+          PrimaryCTA(
             label: 'Save to History',
             icon: Icons.history,
             onPressed: () {
@@ -72,8 +72,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               );
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'New Design',
             icon: Icons.add,
             onPressed: () {
@@ -81,8 +81,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               context.go('/');
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -205,8 +205,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: SbSpacing.lg),
-                  SbButton.ghost(
+                  const SizedBox(height: SbSpacing.lg),
+                  GhostButton(
                     label: 'Save Image',
                     icon: Icons.image_outlined,
                     onPressed: () async {
@@ -222,8 +222,8 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                     },
                     width: double.infinity,
                   ),
-                  SizedBox(height: SbSpacing.sm),
-                  SbButton.ghost(
+                  const SizedBox(height: SbSpacing.sm),
+                  GhostButton(
                     label: 'Save PDF',
                     icon: Icons.picture_as_pdf_outlined,
                     onPressed: () async {

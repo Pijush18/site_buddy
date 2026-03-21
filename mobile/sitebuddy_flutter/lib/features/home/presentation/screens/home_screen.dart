@@ -22,90 +22,78 @@ class HomeScreen extends ConsumerWidget {
     return SbPage.scaffold(
       title: AppStrings.appName,
       appBarActions: [
-        SbButton.icon(
-          icon: SbIcons.settings,
+        IconButton(
+          icon: const Icon(SbIcons.settings),
           onPressed: () => context.push('/settings'),
           tooltip: 'Settings',
         ),
+
       ],
 
       /// ── LAYOUT SYSTEM ──
       body: SbSectionList(
         sections: [
           // ── SECTION 1: HERO (ENHANCED DOMINANCE) ──
-          SbSection(
-            title: null,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SbSmartAssistantCard(),
-                SizedBox(height: SbSpacing.md),
-              ],
-            ),
+          const SbSection(
+            padding: EdgeInsets.zero,
+            child: SbSmartAssistantCard(),
           ),
+
+
 
           // ── SECTION 2: FIELD TOOLS ──
           SbSection(
             title: AppStrings.fieldTools,
             subtitle: 'Essential calculators and survey tools for on-site use.',
-            child: SbCard(
-              child: SbGrid(
-                children: [
-                  SbActionTile(
-                    icon: SbIcons.calculator,
-                    label: AppStrings.levelCalculator,
-                    onTap: () => context.push('/tools/calculator'),
-                  ),
-                  SbActionTile(
-                    icon: SbIcons.trendingUp,
-                    label: AppStrings.gradientTool,
-                    onTap: () => context.push('/tools/gradient'),
-                  ),
-                  SbActionTile(
-                    icon: SbIcons.sync,
-                    label: AppStrings.unitConverter,
-                    onTap: () => context.push('/tools/converter'),
-                  ),
-                  SbActionTile(
-                    icon: SbIcons.currencyExchange,
-                    label: AppStrings.currencyConverter,
-                    onTap: () => context.push('/tools/currency'),
-                  ),
-                ],
-              ),
+            child: SbGrid(
+              children: [
+                SBGridActionCard(
+                  icon: SbIcons.calculator,
+                  label: AppStrings.levelCalculator,
+                  onTap: () => context.push('/tools/calculator'),
+                ),
+                SBGridActionCard(
+                  icon: SbIcons.trendingUp,
+                  label: AppStrings.gradientTool,
+                  onTap: () => context.push('/tools/gradient'),
+                ),
+                SBGridActionCard(
+                  icon: SbIcons.sync,
+                  label: AppStrings.unitConverter,
+                  onTap: () => context.push('/tools/converter'),
+                ),
+                SBGridActionCard(
+                  icon: SbIcons.currencyExchange,
+                  label: AppStrings.currencyConverter,
+                  onTap: () => context.push('/tools/currency'),
+                ),
+              ],
             ),
           ),
+
 
           // ── SECTION 3: QUICK ACTIONS (HIGHLIGHTED) ──
           SbSection(
             title: AppStrings.quickActions,
             subtitle: 'Common site management workflows.',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: SbGrid(
               children: [
-                SbCard(
-                  isElevated: true,
-                  child: SbGrid(
-                    children: [
-                      SbActionTile(
-                        icon: SbIcons.addCircle,
-                        label: AppStrings.newProject,
-                        onTap: () => context.push('/projects/create'),
-                        isProminent: true,
-                      ),
-                      SbActionTile(
-                        icon: SbIcons.iosShare,
-                        label: AppStrings.shareReport,
-                        onTap: () => context.push('/reports'),
-                        isProminent: true,
-                      ),
-                    ],
-                  ),
+                SBGridActionCard(
+                  icon: SbIcons.addCircle,
+                  label: AppStrings.newProject,
+                  onTap: () => context.push('/projects/create'),
+                  isHighlighted: true,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                SBGridActionCard(
+                  icon: SbIcons.iosShare,
+                  label: AppStrings.shareReport,
+                  onTap: () => context.push('/reports'),
+                  isHighlighted: true,
+                ),
               ],
             ),
           ),
+
 
           // ── SECTION 4: RECENT ACTIVITY (SUBTLE) ──
           SbSection(
@@ -115,7 +103,7 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbListGroup(
                   isSubtle: true,
                   children: activities.map((activity) {

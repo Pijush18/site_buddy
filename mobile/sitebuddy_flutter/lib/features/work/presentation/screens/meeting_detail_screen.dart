@@ -44,7 +44,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
 
     return SbPage.form(
       title: 'Meeting Details',
-      primaryAction: SbButton.primary(
+      primaryAction: PrimaryCTA(
         label: 'Save & Mark Completed',
         icon: SbIcons.check,
         onPressed: () async {

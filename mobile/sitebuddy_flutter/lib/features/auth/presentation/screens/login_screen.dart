@@ -118,8 +118,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             },
             child: const Text(AppStrings.backToLogin),
           ),
-          SbButton.primary(
-            label: AppStrings.resendEmail,
+
+          ElevatedButton(
             onPressed: () async {
               try {
                 await user.sendEmailVerification();
@@ -135,8 +135,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 }
               }
             },
+            child: const Text(AppStrings.resendEmail),
           ),
         ],
+
       ),
     );
   }
@@ -155,11 +157,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SbSection(
             child: Column(
               children: [
-                SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Icon(SbIcons.engineering, size: 64, color: colorScheme.primary),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 Text(AppStrings.siteBuddy, style: theme.textTheme.titleLarge),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -185,7 +187,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
@@ -194,15 +196,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: _obscurePassword,
                     prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                     suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? SbIcons.visibility
-                            : SbIcons.visibilityOff,
-                        color: colorScheme.outline,
-                      ),
+                      icon: Icon(_obscurePassword
+                          ? SbIcons.visibility
+                          : SbIcons.visibilityOff),
                       onPressed: () =>
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
+
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -210,17 +210,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: () => context.go('/reset-password'),
                       child: const Text(AppStrings.forgotPassword),
                     ),
+
                   ),
-                  SizedBox(height: SbSpacing.lg),
-                  SbButton.primary(
-                    label: AppStrings.signIn,
-                    onPressed: (isLoading ||
-                            _emailController.text.isEmpty ||
-                            _passwordController.text.isEmpty)
-                        ? null
-                        : _login,
-                    isLoading: isLoading,
+                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(
                     width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: (isLoading ||
+                              _emailController.text.isEmpty ||
+                              _passwordController.text.isEmpty)
+                          ? null
+                          : _login,
+                      child: isLoading 
+                        ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        : const Text(AppStrings.signIn),
+                    ),
                   ),
                 ],
               ),
@@ -243,25 +248,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const Expanded(child: Divider()),
                   ],
                 ),
-                SizedBox(height: SbSpacing.xl),
-                SbButton.secondary(
-                  label: AppStrings.continueWithGoogle,
-                  icon: SbIcons.google,
-                  onPressed: isLoading ? null : _loginWithGoogle,
+                const SizedBox(height: SbSpacing.xl),
+                SizedBox(
                   width: double.infinity,
+                  height: 44,
+                  child: OutlinedButton.icon(
+                    label: const Text(AppStrings.continueWithGoogle),
+                    icon: const Icon(SbIcons.google),
+                    onPressed: isLoading ? null : _loginWithGoogle,
+                  ),
                 ),
                 if (Platform.isIOS) ...[
-                  SizedBox(height: SbSpacing.lg),
-                  const SbButton.secondary(
-                    label: AppStrings.continueWithApple,
-                    icon: SbIcons.apple,
-                    onPressed: null,
+                  const SizedBox(height: SbSpacing.lg),
+                  SizedBox(
                     width: double.infinity,
+                    height: 44,
+                    child: OutlinedButton.icon(
+
+                      label: const Text(AppStrings.continueWithApple),
+                      icon: const Icon(SbIcons.apple),
+                      onPressed: null,
+                    ),
                   ),
                 ],
               ],
             ),
           ),
+
 
           // ── FOOTER LINK ──
           SbSection(
@@ -284,7 +297,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ),
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

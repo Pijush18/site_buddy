@@ -63,7 +63,7 @@ class ActionCard extends StatelessWidget {
                 color: colorScheme.primary,
                 size: 22,
               ),
-              SizedBox(height: SbSpacing.sm), 
+              const SizedBox(height: SbSpacing.sm), 
               Text(
                 label,
                 textAlign: TextAlign.center, 

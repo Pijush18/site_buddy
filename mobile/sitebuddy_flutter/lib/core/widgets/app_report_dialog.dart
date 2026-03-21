@@ -51,7 +51,7 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             Flexible(
               child: SingleChildScrollView(
                 child: SelectableText(
@@ -60,8 +60,8 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: SbSpacing.xxl),
-            SbButton.primary(label: 'Close', onPressed: () => context.pop()),
+            const SizedBox(height: SbSpacing.xxl),
+            PrimaryCTA(label: 'Close', onPressed: () => context.pop()),
           ],
         ),
       ),

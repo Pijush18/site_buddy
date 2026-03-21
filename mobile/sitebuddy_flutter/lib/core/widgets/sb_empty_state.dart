@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_button.dart';
-import 'package:site_buddy/core/widgets/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
 
 /// WIDGET: SbEmptyState
 /// PURPOSE: Standardized empty-state display for list screens.
@@ -43,7 +43,7 @@ class SbEmptyState extends StatelessWidget {
               ),
               child: Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // Title
             Text(
@@ -54,7 +54,7 @@ class SbEmptyState extends StatelessWidget {
 
             // Subtitle
             if (subtitle != null) ...[
-              SizedBox(height: SbSpacing.xs),
+              const SizedBox(height: SbSpacing.xs),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
                 child: Text(
@@ -67,8 +67,8 @@ class SbEmptyState extends StatelessWidget {
 
             // Action
             if (actionLabel != null && onAction != null) ...[
-              SizedBox(height: SbSpacing.lg),
-              SbButton.primary(
+              const SizedBox(height: SbSpacing.lg),
+              PrimaryCTA(
                 label: actionLabel!,
                 onPressed: onAction,
                 width: double.infinity,

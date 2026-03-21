@@ -52,7 +52,7 @@ class SbSectionHeader extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null) ...[
-                    SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: SbSpacing.xs),
                     Text(
                       subtitle!,
                       style: textTheme.bodySmall?.copyWith(

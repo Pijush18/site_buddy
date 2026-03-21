@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/widgets/sb_card.dart';
+
 
 
 
@@ -21,28 +20,21 @@ class SbListGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     if (children.isEmpty) return const SizedBox.shrink();
 
-    return SbCard(
-      padding: EdgeInsets.zero,
-      isSubtle: isSubtle,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (var i = 0; i < children.length; i++) ...[
-            children[i],
-            if (i < children.length - 1)
-              Divider(
-                height: 1,
-                thickness: 1,
-                indent: SbSpacing.lg,
-                endIndent: SbSpacing.lg,
-                color: context.colors.outline,
-              ),
-
-
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < children.length; i++) ...[
+          children[i],
+          if (i < children.length - 1)
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: context.colors.outline,
+            ),
         ],
-      ),
+      ],
     );
   }
 }
+

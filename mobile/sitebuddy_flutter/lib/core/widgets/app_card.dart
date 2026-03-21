@@ -28,8 +28,8 @@ class AppCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
-    final radius = borderRadius ?? 10.0;
+
+    final radius = borderRadius ?? 8.0;
 
     return Container(
       decoration: BoxDecoration(
@@ -39,13 +39,6 @@ class AppCard extends StatelessWidget {
           color: context.colors.outline,
           width: AppBorder.width,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: isDark ? 0.08 : 0.05),
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Material(
@@ -54,7 +47,7 @@ class AppCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(radius),
           child: Padding(
-            padding: padding ?? const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.sm),
+            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
             child: child,
           ),
         ),
@@ -62,6 +55,7 @@ class AppCard extends StatelessWidget {
     );
   }
 }
+
 
 
 

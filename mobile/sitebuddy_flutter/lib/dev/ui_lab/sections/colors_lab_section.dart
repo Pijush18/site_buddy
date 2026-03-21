@@ -39,7 +39,7 @@ class ColorsLabSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Color System', style: Theme.of(context).textTheme.titleMedium!),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

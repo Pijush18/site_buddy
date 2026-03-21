@@ -26,7 +26,7 @@ class SbActionButtonContent extends StatelessWidget {
           color: color,
           size: 28,
         ),
-        SizedBox(height: SbSpacing.xs),
+        const SizedBox(height: SbSpacing.xs),
         Text(
           label,
           textAlign: TextAlign.center,

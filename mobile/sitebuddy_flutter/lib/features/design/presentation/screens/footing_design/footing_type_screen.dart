@@ -19,7 +19,7 @@ class FootingTypeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SbPage.form(
       title: 'Footing Design',
-      primaryAction: SbButton.ghost(
+      primaryAction: GhostButton(
         label: 'Back',
         onPressed: () => context.pop(),
         width: double.infinity,

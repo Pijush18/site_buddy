@@ -15,14 +15,14 @@ class DeflectionResultSummary extends StatelessWidget {
     return SbCard(
       child: Column(
         children: [
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ComparisonBar(
             actual: result.actualRatio,
             allowable: result.allowableRatio,
             label: 'Span/Depth Ratio',
             unit: '',
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Actual Ratio',
             value: result.actualRatio.toStringAsFixed(2),

@@ -79,7 +79,7 @@ class _AiInputBarState extends ConsumerState<AiInputBar> {
             width: 48,
             height: 48,
 
-            child: SbButton.icon(
+            child: AppIconButton(
               icon: isLoading ? SbIcons.hourglass : SbIcons.arrowUp,
               onPressed: isLoading ? null : _send,
               isLoading: isLoading,

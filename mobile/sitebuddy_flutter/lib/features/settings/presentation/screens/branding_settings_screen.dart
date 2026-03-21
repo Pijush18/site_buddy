@@ -80,17 +80,17 @@ class _BrandingSettingsScreenState
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
-            label: 'Save Branding Profile',
+          ElevatedButton(
             onPressed: _saveBranding,
-            width: double.infinity,
+            child: const Text('Save Branding Profile'),
           ),
-          SizedBox(height: SbSpacing.lg),
-          SbButton.ghost(
-            label: 'Reset to Site Buddy Defaults',
+          const SizedBox(height: SbSpacing.sm),
+
+          TextButton(
             onPressed: _resetBranding,
-            width: double.infinity,
+            child: const Text('Reset to Site Buddy Defaults'),
           ),
+
         ],
       ),
       body: SbSectionList(
@@ -103,14 +103,14 @@ class _BrandingSettingsScreenState
                   'Enterprise Profile',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                SizedBox(height: SbSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 _buildInputLabel(context, 'Company / Enterprise Name'),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _companyController,
                   hint: 'e.g., ABC Infra Pvt Ltd',
@@ -118,9 +118,9 @@ class _BrandingSettingsScreenState
                   label: 'COMPANY NAME',
                   onChanged: (v) {},
                 ),
-                SizedBox(height: SbSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 _buildInputLabel(context, 'Lead Engineer Name'),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _engineerController,
                   hint: 'e.g., Er. Pijush Debbarma',

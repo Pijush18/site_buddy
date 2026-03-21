@@ -117,7 +117,7 @@ class _NavItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: itemColor, size: 24),
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             label.toUpperCase(),
             style: Theme.of(context).textTheme.bodyMedium!,

@@ -29,7 +29,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Reinforcement Design',
             icon: Icons.iron_rounded,
             onPressed: () {
@@ -39,8 +39,8 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               context.push('/beam/rebar');
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -94,7 +94,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   isBMD: false,
                   isDark: isDark,
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 _DiagramCard(
                   label: 'Bending Moment Diagram (BMD)',
                   points: state.bmdPoints,

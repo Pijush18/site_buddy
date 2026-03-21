@@ -36,15 +36,15 @@ class SandScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
-            SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             SbListItemTile(
               title: EngineeringTerms.wetVolume,
               onTap: () {}, // Detail view entry
@@ -62,9 +62,9 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               const Divider(),
-              SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: EngineeringTerms.estimatedCost,
                 onTap: () {}, // Detail view entry
@@ -89,7 +89,7 @@ class SandScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.length,
@@ -97,7 +97,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.width,
@@ -105,7 +105,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.depth,
@@ -113,7 +113,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
             label: EngineeringTerms.ratePerUnit,
@@ -121,16 +121,16 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateRate,
           ),
 
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
-              SbButton.outline(
+              SecondaryButton(isOutlined: true, 
                 label: 'Clear All',
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
-              SbButton.primary(
+              PrimaryCTA(
                 label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
@@ -139,7 +139,7 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
@@ -152,12 +152,12 @@ class SandScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

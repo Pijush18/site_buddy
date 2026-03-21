@@ -37,12 +37,12 @@ class OptimizationCard extends StatelessWidget {
                 Icon(Icons.warning, color: colorScheme.error, size: 16),
             ],
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             option.description,
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               _StatItem(

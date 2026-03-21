@@ -32,11 +32,14 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
   Widget build(BuildContext context) {
     return SbPage.form(
       title: 'Project Info',
-      primaryAction: SbButton.primary(
-        label: 'Save Project',
-        onPressed: () => Navigator.pop(context),
+      primaryAction: SizedBox(
         width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Save Project'),
+        ),
       ),
+
       body: SbSectionList(
         sections: [
           SbSection(
@@ -50,7 +53,7 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',

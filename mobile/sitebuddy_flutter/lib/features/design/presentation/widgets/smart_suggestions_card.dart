@@ -36,13 +36,13 @@ class SmartSuggestionsCard extends StatelessWidget {
               ),
               const Spacer(),
               if (onOptimize != null)
-                SbButton.ghost(
+                GhostButton(
                   label: 'AUTO-FIX', 
                   onPressed: onOptimize,
                 ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
             (s) => Container(
               padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
@@ -53,7 +53,7 @@ class SmartSuggestionsCard extends StatelessWidget {
                     s.title,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     s.description,
                     style: Theme.of(context).textTheme.bodyMedium!,

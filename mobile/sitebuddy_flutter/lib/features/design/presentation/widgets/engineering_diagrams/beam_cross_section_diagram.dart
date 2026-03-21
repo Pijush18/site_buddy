@@ -56,15 +56,15 @@ class BeamCrossSectionDiagram extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _Label(label: 'Width', value: '${width.toInt()} mm'),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   _Label(label: 'Depth', value: '${depth.toInt()} mm'),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   _Label(
                     label: 'Main Steel',
                     value: '$numBars bars Ø${barDia.toInt()}',
                     isBold: true,
                   ),
-                  SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   _Label(
                     label: 'Stirrups',
                     value: '@ ${stirrupSpacing.toInt()} mm c/c',

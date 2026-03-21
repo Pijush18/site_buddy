@@ -38,18 +38,18 @@ class CodeReferenceCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             reference.title,
             style: textTheme.labelMedium,
           ),
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             reference.description,
             style: textTheme.bodyMedium,
           ),
           if (reference.formula != null) ...[
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(SbSpacing.sm),

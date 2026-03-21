@@ -27,7 +27,7 @@ class TaskDetailScreen extends ConsumerWidget {
       title: 'Task Details',
       primaryAction: isCompleted
           ? null
-          : SbButton.primary(
+          : PrimaryCTA(
               label: 'Mark as Completed',
               icon: SbIcons.checkFilled,
               onPressed: () async {

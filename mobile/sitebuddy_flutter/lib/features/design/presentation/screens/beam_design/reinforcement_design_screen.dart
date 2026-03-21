@@ -28,15 +28,15 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Safety Checks',
             icon: Icons.verified_user_outlined,
             onPressed: () {
               context.push('/beam/safety');
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -85,7 +85,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                     'Main Bar Diameter',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<double>(
                     value: state.mainBarDia,
                     items: const [12, 16, 20, 25, 32],

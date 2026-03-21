@@ -39,15 +39,15 @@ class OptimizationList extends StatelessWidget {
                       option.title,
                       style: Theme.of(context).textTheme.titleMedium!,
                     ),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Text(
                       option.description,
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     const Divider(height: 1),
-                    SizedBox(height: SbSpacing.lg),
-                    SbButton.primary(
+                    const SizedBox(height: SbSpacing.lg),
+                    PrimaryCTA(
                       label: AppStrings.selectOption,
                       onPressed: onOptionSelected != null
                           ? () => onOptionSelected!(option)

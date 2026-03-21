@@ -41,7 +41,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
 
     return SbPage.form(
       title: 'Create Task',
-      primaryAction: SbButton.primary(
+      primaryAction: PrimaryCTA(
         label: 'Create Task',
         icon: SbIcons.addTask,
         onPressed: () async {
@@ -142,7 +142,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                         ],
                       ),
                     ),
-                    SbButton.ghost(
+                    GhostButton(
                       label: 'Select',
                       icon: SbIcons.calendar,
                       onPressed: () async {

@@ -20,7 +20,7 @@ class SpacingLabSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Spacing Tokens', style: Theme.of(context).textTheme.titleMedium!),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         ...tokens.map(
           (t) => Padding(
             padding: const EdgeInsets.only(bottom: SbSpacing.sm),
@@ -73,20 +73,13 @@ class RadiusLabSection extends StatelessWidget {
           'Radius & Elevation',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        SizedBox(height: SbSpacing.lg),
-        const Row(
-          children: [
-            _RadiusBox(name: 'Small', radius: SbRadius.small),
-            SizedBox(width: SbSpacing.lg),
-            _RadiusBox(name: 'Medium', radius: SbRadius.md),
-            SizedBox(width: SbSpacing.lg),
-            _RadiusBox(name: 'Large', radius: SbRadius.medium),
-          ],
-        ),
+        const SizedBox(height: SbSpacing.lg),
+        const _RadiusBox(name: 'Standard', radius: SbRadius.standard),
       ],
     );
   }
 }
+
 
 class _TokenData {
   final String name;
@@ -118,7 +111,7 @@ class _RadiusBox extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: SbSpacing.xs),
+        const SizedBox(height: SbSpacing.xs),
         Text(name, style: const TextStyle(fontSize: 10)),
       ],
     );

@@ -27,7 +27,8 @@ class SmartAssistantInput extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      height: 52,
+      height: 48, // Standard Large (Rule 48)
+
       decoration: BoxDecoration(
         color: colorScheme.surface, // Pop against Hero background
         borderRadius: SbRadius.borderMedium,

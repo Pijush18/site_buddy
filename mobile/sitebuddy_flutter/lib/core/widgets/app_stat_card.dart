@@ -79,7 +79,7 @@ class AppStatCard extends StatelessWidget {
           Icon(icon, size: 28, color: colorScheme.primary),
 
           // Small gap instead of Expanded to prevent layout errors in Columns
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           // ── Value ──────────────────────────────────────────────────────────
           Text(
@@ -89,7 +89,7 @@ class AppStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
 
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
 
           // ── Title / Caption ────────────────────────────────────────────────
           Text(

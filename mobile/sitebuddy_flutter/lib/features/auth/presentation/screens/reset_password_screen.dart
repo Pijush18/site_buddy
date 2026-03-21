@@ -83,7 +83,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           '${AppStrings.passwordResetLinkSentPrefix}$email${AppStrings.passwordResetLinkSentSuffix}',
         ),
         actions: [
-          SbButton.primary(
+          PrimaryCTA(
             label: AppStrings.backToLogin,
             onPressed: () => context.go('/login'),
             width: double.infinity,
@@ -107,18 +107,18 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           SbSection(
             child: Column(
               children: [
-                SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Icon(
                   SbIcons.engineering,
                   size: 64,
                   color: colorScheme.primary,
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 Text(
                   AppStrings.siteBuddy,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -138,7 +138,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     AppStrings.enterEmailToReset,
                     style: theme.textTheme.bodyMedium,
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _emailController,
                     focusNode: _emailFocusNode,
@@ -150,8 +150,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  SizedBox(height: SbSpacing.xl),
-                  SbButton.primary(
+                  const SizedBox(height: SbSpacing.xl),
+                  PrimaryCTA(
                     label: AppStrings.sendResetLink,
                     onPressed:
                         (isLoading || _emailController.text.isEmpty)
@@ -167,13 +167,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
 
           // ── ACTIONS ──
           SbSection(
-            child: SbButton.secondary(
+            child: SecondaryButton(
               label: AppStrings.backToSignIn,
               onPressed: () => context.go('/login'),
               width: double.infinity,
             ),
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

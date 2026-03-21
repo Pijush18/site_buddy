@@ -58,12 +58,13 @@ class ProjectListScreen extends ConsumerWidget {
               title: 'Project Management',
               subtitle:
                   'Track and manage your site projects, dimensions, and engineering logs.',
-              child: SbButton.primary(
-                label: 'New Project',
-                icon: Icons.add,
+              child: ElevatedButton.icon(
+                label: const Text('New Project'),
+                icon: const Icon(Icons.add),
                 onPressed: () => context.push('/projects/create'),
-                width: 180, // More controlled width for visibility
+                style: ElevatedButton.styleFrom(fixedSize: const Size(180, 48)),
               ),
+
             ),
           ),
 
@@ -82,6 +83,7 @@ class ProjectListScreen extends ConsumerWidget {
             SbSection(
               title: 'Recent Projects',
               subtitle: 'Quickly access your recently updated site projects.',
+              padding: EdgeInsets.zero,
               child: SbListGroup(
                 children: projects.map((project) {
                   final formattedDate =
@@ -98,6 +100,7 @@ class ProjectListScreen extends ConsumerWidget {
                 }).toList(),
               ),
             ),
+
         ],
       ),
     );

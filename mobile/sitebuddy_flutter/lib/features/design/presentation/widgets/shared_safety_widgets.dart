@@ -154,7 +154,7 @@ class PlaceholderCard extends StatelessWidget {
               size: 48,
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             Text(
               message,
               textAlign: TextAlign.center,

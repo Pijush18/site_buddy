@@ -90,7 +90,7 @@ class _SbGridCardState extends State<SbGridCard> {
                     size: _iconSize, 
                   ),
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SizedBox(
                   height: _labelHeight,
                   child: Center(

@@ -57,13 +57,13 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Analysis Summary',
             onPressed: _onCalculate,
             icon: Icons.calculate_outlined,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -94,14 +94,14 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
-                    SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _llController,
                       label: 'Live Load',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Live Load'),
                     ),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Text(
                       'Note: Load factor of 1.5 will be applied automatically.',
                       style: Theme.of(context).textTheme.labelMedium!,

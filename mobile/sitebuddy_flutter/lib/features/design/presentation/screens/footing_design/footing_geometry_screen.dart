@@ -84,13 +84,13 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Soil Analysis',
             icon: Icons.analytics_outlined,
             onPressed: _onNext,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -130,7 +130,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Text(
                     'Critical for shear and bending calculations at face.',
                     style: Theme.of(context).textTheme.labelMedium!,
@@ -164,7 +164,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: 'Overall Thickness (D) (mm)',
                     controller: _thicknessController,
@@ -172,7 +172,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                   ),
                   if (state.type == FootingType.combined ||
                       state.type == FootingType.strap) ...[
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: 'Column C/C Spacing (mm)',
                       controller: _spacingController,

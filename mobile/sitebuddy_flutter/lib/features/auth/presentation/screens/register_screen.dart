@@ -109,7 +109,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         title: const Text(AppStrings.accountCreated),
         content: const Text(AppStrings.verifyEmailToSignIn),
         actions: [
-          SbButton.primary(
+          PrimaryCTA(
             label: AppStrings.backToLogin,
             onPressed: () {
               ref.read(authRepositoryProvider).logout();
@@ -136,18 +136,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           SbSection(
             child: Column(
               children: [
-                SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Icon(
                   SbIcons.engineering,
                   size: 64,
                   color: colorScheme.primary,
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 Text(
                   AppStrings.siteBuddy,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -174,7 +174,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
@@ -196,7 +196,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _confirmPasswordController,
                     focusNode: _confirmPasswordFocusNode,
@@ -207,8 +207,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onFieldSubmitted: (_) => _register(),
                     prefixIcon: Icon(SbIcons.lock, color: colorScheme.primary),
                   ),
-                  SizedBox(height: SbSpacing.xxl),
-                  SbButton.primary(
+                  const SizedBox(height: SbSpacing.xxl),
+                  PrimaryCTA(
                     label: AppStrings.register,
                     onPressed: (isLoading ||
                             _emailController.text.isEmpty ||
@@ -226,13 +226,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
           // ── ACTIONS ──
           SbSection(
-            child: SbButton.secondary(
+            child: SecondaryButton(
               label: AppStrings.alreadyHaveAccountSignIn,
               onPressed: () => context.go('/login'),
               width: double.infinity,
             ),
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

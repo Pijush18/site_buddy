@@ -178,9 +178,9 @@ class SbPage extends StatelessWidget {
         children: [
           if (listHeader != null) ...[
             listHeader!,
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(height: 1),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
           listBody!,
         ],

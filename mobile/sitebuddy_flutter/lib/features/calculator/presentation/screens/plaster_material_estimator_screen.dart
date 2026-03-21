@@ -37,7 +37,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateArea,
                   errorText: aError,
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 SbInput(
                   label: EngineeringTerms.plasterThickness,
                   hint: EngineeringTerms.diameterHint,
@@ -45,7 +45,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
                   onChanged: controller.updateThickness,
                   errorText: tError,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   EngineeringTerms.typicalThicknessNote,
                   style: Theme.of(context).textTheme.labelMedium!,
@@ -88,7 +88,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
 
           // ── ACTION SECTION ──
           SbSection(
-            child: SbButton.primary(
+            child: PrimaryCTA(
               label: state.isLoading 
                   ? AppStrings.calculating 
                   : EngineeringTerms.calculateMaterials,
@@ -101,7 +101,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
 
           // ── RESET ACTION ──
           SbSection(
-            child: SbButton.outline(
+            child: SecondaryButton(isOutlined: true, 
               label: AppStrings.reset,
               icon: SbIcons.refresh,
               onPressed: controller.reset,
@@ -139,7 +139,7 @@ class _ResultSection extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
 
           SbListItemTile(
@@ -159,7 +159,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           const Divider(),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
           SbListItemTile(
             title: EngineeringTerms.dryMortarVolume,
             onTap: () {},

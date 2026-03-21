@@ -55,14 +55,14 @@ class CrackingInputSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           SbInput(
             controller: fsController,
             label: 'Steel Stress (fs) [MPa]',
             suffixIcon: const Icon(Icons.speed),
             validator: (v) => ValidationHelper.validatePositive(v, 'Stress'),
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -102,7 +102,7 @@ class CrackingInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

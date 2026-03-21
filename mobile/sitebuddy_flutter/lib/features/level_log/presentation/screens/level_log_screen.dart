@@ -42,14 +42,14 @@ class LevelLogScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: l10n.addStation,
             icon: SbIcons.locationAdd,
             onPressed: notifier.addEntry,
             width: double.infinity,
           ),
-          SizedBox(height: SbSpacing.lg),
-          SbButton.outline(
+          const SizedBox(height: SbSpacing.lg),
+          SecondaryButton(isOutlined: true, 
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
             onPressed: notifier.exportReport,
@@ -74,7 +74,7 @@ class LevelLogScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg, horizontal: SbSpacing.md),
                     itemCount: state.entries.length,
                     separatorBuilder: (_, index) =>
-                        SizedBox(height: SbSpacing.sm),
+                        const SizedBox(height: SbSpacing.sm),
                     itemBuilder: (context, i) => SbCard(
                       child: _StationCardContent(
                         entry: state.entries[i],
@@ -87,7 +87,7 @@ class LevelLogScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                SizedBox(height: SbSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
               ],
             ),
           ),
@@ -109,18 +109,18 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
             Icon(
               SbIcons.list,
               size: 64,
               color: colorScheme.outlineVariant,
             ),
-            SizedBox(height: SbSpacing.md),
+            const SizedBox(height: SbSpacing.md),
             Text(
               l10n.noLevelingLogsYet,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               l10n.tapAddStationToStart,
               style: Theme.of(context).textTheme.bodyLarge!,
@@ -148,7 +148,7 @@ class _MethodSelectorCard extends StatelessWidget {
             l10n.calculationMethod.toUpperCase(),
             style: Theme.of(context).textTheme.titleMedium!,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -276,9 +276,9 @@ class _StationCardContent extends StatelessWidget {
               ),
           ],
         ),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Divider(color: colorScheme.outlineVariant),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
 
         Row(
           children: [
@@ -313,7 +313,7 @@ class _StationCardContent extends StatelessWidget {
         ),
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             entry.remark!,
             style: Theme.of(context).textTheme.labelMedium!,
@@ -346,7 +346,7 @@ class _ReadingPill extends StatelessWidget {
             label,
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
             style: Theme.of(context).textTheme.labelMedium!,

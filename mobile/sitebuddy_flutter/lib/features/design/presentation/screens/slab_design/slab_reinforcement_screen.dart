@@ -28,13 +28,13 @@ class SlabReinforcementScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Safety Check',
             onPressed: () => context.push('/slab/safety'),
             icon: Icons.security_outlined,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -103,7 +103,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
                     size: 64,
                     color: colorScheme.secondary.withValues(alpha: 0.5),
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Text(
                     'Rebar spacing should not exceed 3d or 300mm for main rebar.',
                     style: Theme.of(context).textTheme.bodyLarge!,

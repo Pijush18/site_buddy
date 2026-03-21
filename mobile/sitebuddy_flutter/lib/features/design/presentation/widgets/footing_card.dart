@@ -22,14 +22,14 @@ class FootingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FeatureCard(
-      title: title,
-      description: description,
+    return SBGridActionCard(
+      label: title,
       icon: icon,
       onTap: onTap,
     );
   }
 }
+
 
 
 

@@ -47,7 +47,7 @@ class _FootingSafetyCheckScreenState
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Calculation Sheet',
             icon: Icons.description_outlined,
             onPressed: () {
@@ -56,20 +56,20 @@ class _FootingSafetyCheckScreenState
                   .generateReport();
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.primary(
+          const SizedBox(height: SbSpacing.sm),
+          PrimaryCTA(
             label: 'Save Design',
             icon: Icons.save_outlined,
             onPressed: () => context.go('/design'),
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'New Design',
             icon: Icons.add,
             onPressed: () => context.go('/'),
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -196,11 +196,11 @@ class _FootingSafetyCheckScreenState
                       ),
                     ),
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SbButton.ghost(
+                      GhostButton(
                         label: 'Save Image',
                         icon: Icons.image_outlined,
                         onPressed: () async {
@@ -216,8 +216,8 @@ class _FootingSafetyCheckScreenState
                           }
                         },
                       ),
-                      SizedBox(height: SbSpacing.sm),
-                      SbButton.ghost(
+                      const SizedBox(height: SbSpacing.sm),
+                      GhostButton(
                         label: 'Save PDF',
                         icon: Icons.picture_as_pdf_outlined,
                         onPressed: () async {

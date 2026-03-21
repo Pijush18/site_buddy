@@ -98,7 +98,7 @@ class _AiInputBarState extends State<AiInputBar> {
           SizedBox(
             width: 44,
             height: 44,
-            child: SbButton.icon(
+            child: AppIconButton(
               icon: SbIcons.send,
               onPressed: canSubmit ? _handleSubmit : null,
               isLoading: widget.isLoading,

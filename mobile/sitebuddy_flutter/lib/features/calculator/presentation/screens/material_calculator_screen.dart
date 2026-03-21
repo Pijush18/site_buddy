@@ -65,14 +65,14 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: EngineeringTerms.width,
                     suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: EngineeringTerms.thicknessDepth,
                     suffixIcon: const Icon(SbIcons.layers),
@@ -115,12 +115,12 @@ class MaterialCalculatorScreen extends ConsumerWidget {
           SbSection(
             child: ActionButtonsGroup(
               children: [
-                SbButton.outline(
+                SecondaryButton(isOutlined: true, 
                   label: AppStrings.clearAll,
                   icon: SbIcons.refresh,
                   onPressed: controller.reset,
                 ),
-                SbButton.primary(
+                PrimaryCTA(
                   label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                   icon: state.isLoading ? null : SbIcons.calculator,
                   isLoading: state.isLoading,
@@ -143,7 +143,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
           const SbSection(
             child: _IsCodeNote(),
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

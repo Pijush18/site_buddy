@@ -114,14 +114,14 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: _result != null ? 'Check Again' : 'Check Cracking',
             onPressed: _calculate,
             isLoading: _isLoading,
           ),
           if (_result != null) ...[
-            SizedBox(height: SbSpacing.sm),
-            SbButton.ghost(
+            const SizedBox(height: SbSpacing.sm),
+            GhostButton(
               label: 'Share Report',
               onPressed: _shareResult,
             ),
@@ -186,7 +186,7 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
             // ── SECONDARY ACTIONS ──
             if (_result != null)
               SbSection(
-                child: SbButton.ghost(
+                child: GhostButton(
                   label: 'Reset Form',
                   onPressed: _reset,
                   width: double.infinity,

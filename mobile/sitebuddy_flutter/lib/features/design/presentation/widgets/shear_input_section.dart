@@ -59,7 +59,7 @@ class ShearInputSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -83,7 +83,7 @@ class ShearInputSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           SbInput(
             controller: vuController,
             label: 'Shear Force (Vu) [kN]',
@@ -91,7 +91,7 @@ class ShearInputSection extends StatelessWidget {
             validator: (v) =>
                 ValidationHelper.validatePositive(v, 'Shear Force'),
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           SbInput(
             controller: ptController,
             label: 'Steel Per. (pt) [%]',
@@ -118,7 +118,7 @@ class ShearInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

@@ -120,13 +120,13 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Load Definition',
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -147,102 +147,100 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             // ── GEOMETRY SECTION ──
             SbSection(
               title: 'Geometry',
-              child: SbCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Beam Type',
-                      style: Theme.of(context).textTheme.labelLarge!,
-                    ),
-                    SizedBox(height: SbSpacing.sm),
-                    SbDropdown<BeamType>(
-                      value: state.type,
-                      items: BeamType.values,
-                      itemLabelBuilder: (t) => t.label,
-                      onChanged: (v) {
-                        if (v != null) {
-                          notifier.updateInputs(type: v);
-                        }
-                      },
-                    ),
-                    SizedBox(height: SbSpacing.md),
-                    SbInput(
-                      controller: _spanController,
-                      label: 'Clear Span (L) (mm)',
-                      validator: (v) =>
-                          ValidationHelper.validatePositive(v, 'Span'),
-                    ),
-                    SizedBox(height: SbSpacing.md),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SbInput(
-                            controller: _widthController,
-                            label: 'Width (b) (mm)',
-                            validator: (v) =>
-                                ValidationHelper.validatePositive(v, 'Width'),
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Beam Type',
+                    style: Theme.of(context).textTheme.labelLarge!,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  SbDropdown<BeamType>(
+                    value: state.type,
+                    items: BeamType.values,
+                    itemLabelBuilder: (t) => t.label,
+                    onChanged: (v) {
+                      if (v != null) {
+                        notifier.updateInputs(type: v);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  SbInput(
+                    controller: _spanController,
+                    label: 'Clear Span (L) (mm)',
+                    validator: (v) =>
+                        ValidationHelper.validatePositive(v, 'Span'),
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SbInput(
+                          controller: _widthController,
+                          label: 'Width (b) (mm)',
+                          validator: (v) =>
+                              ValidationHelper.validatePositive(v, 'Width'),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
-                        Expanded(
-                          child: SbInput(
-                            controller: _depthController,
-                            label: 'Total Depth (D) (mm)',
-                            validator: (v) =>
-                                ValidationHelper.validatePositive(v, 'Depth'),
-                          ),
+                      ),
+                      const SizedBox(width: SbSpacing.lg),
+                      Expanded(
+                        child: SbInput(
+                          controller: _depthController,
+                          label: 'Total Depth (D) (mm)',
+                          validator: (v) =>
+                              ValidationHelper.validatePositive(v, 'Depth'),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
+
 
             // ── MATERIALS SECTION ──
             SbSection(
               title: 'Materials',
-              child: SbCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildGradeDropdown(
-                            'Concrete Grade',
-                            state.concreteGrade,
-                            ['M20', 'M25', 'M30', 'M35', 'M40'],
-                            (v) => ref
-                                .read(beamDesignControllerProvider.notifier)
-                                .updateInputs(concrete: v),
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildGradeDropdown(
+                          'Concrete Grade',
+                          state.concreteGrade,
+                          ['M20', 'M25', 'M30', 'M35', 'M40'],
+                          (v) => ref
+                              .read(beamDesignControllerProvider.notifier)
+                              .updateInputs(concrete: v),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
-                        Expanded(
-                          child: _buildGradeDropdown(
-                            'Steel Grade',
-                            state.steelGrade,
-                            ['Fe415', 'Fe500'],
-                            (v) => ref
-                                .read(beamDesignControllerProvider.notifier)
-                                .updateInputs(steel: v),
-                          ),
+                      ),
+                      const SizedBox(width: SbSpacing.lg),
+                      Expanded(
+                        child: _buildGradeDropdown(
+                          'Steel Grade',
+                          state.steelGrade,
+                          ['Fe415', 'Fe500'],
+                          (v) => ref
+                              .read(beamDesignControllerProvider.notifier)
+                              .updateInputs(steel: v),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: SbSpacing.md),
-                    SbInput(
-                      controller: _coverController,
-                      label: 'Clear Cover (mm)',
-                      validator: (v) =>
-                          ValidationHelper.validatePositive(v, 'Cover'),
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  SbInput(
+                    controller: _coverController,
+                    label: 'Clear Cover (mm)',
+                    validator: (v) =>
+                        ValidationHelper.validatePositive(v, 'Cover'),
+                  ),
+                ],
               ),
             ),
+
           ],
         ),
       ),
@@ -262,7 +260,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         SbDropdown<String>(
           value: value,
           items: items,

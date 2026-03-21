@@ -1,19 +1,17 @@
-import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
-
 import 'package:flutter/material.dart';
+
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 
-
 /// CLASS: SegmentedToggle
-/// PURPOSE: Reusable multi-option slider toggle with theme-aware styling.
-/// REFINED: Supports any number of options and generic types.
+/// PURPOSE: Unified, production-grade segmented control system.
+/// ENFORCEMENT: 36px height, zero-gap, strict state colors.
 class SegmentedToggle<T> extends StatelessWidget {
   final List<T> items;
   final T value;
   final String Function(T) labelBuilder;
   final Function(T) onChanged;
+  final double? width;
 
   const SegmentedToggle({
     super.key,
@@ -21,6 +19,7 @@ class SegmentedToggle<T> extends StatelessWidget {
     required this.value,
     required this.labelBuilder,
     required this.onChanged,
+    this.width,
   });
 
   @override
@@ -29,13 +28,19 @@ class SegmentedToggle<T> extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      height: 44, // Professional height (40–44px)
-      padding: const EdgeInsets.all(SbSpacing.xs),
+      height: 36,
+      width: width,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        borderRadius: SbRadius.borderMedium,
+        color: colorScheme.surfaceContainer, // Solid unselected base
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: context.colors.outline,
+          width: AppBorder.width,
+        ),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: items.map((item) {
           final isSelected = item == value;
           return Expanded(
@@ -48,36 +53,27 @@ class SegmentedToggle<T> extends StatelessWidget {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected ? colorScheme.primary : colorScheme.surface,
-                  borderRadius: SbRadius.borderMd,
-                  border: isSelected
-                      ? Border.all(color: colorScheme.primary, width: AppBorder.width)
-                      : Border.all(
-                          color: context.colors.outline,
-                          width: AppBorder.width,
-                        ),
+                  color: isSelected ? context.colors.primary : context.colors.surface,
                 ),
-                child: Center(
-                  child: Text(
-                    labelBuilder(item),
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.labelMedium!,
+                child: Text(
+                  labelBuilder(item),
+                  maxLines: 1,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: isSelected 
+                        ? context.colors.onPrimary 
+                        : context.colors.onSurface,
                   ),
                 ),
+
               ),
             ),
           );
         }).toList(),
       ),
     );
+
   }
 }
-
-
-
-
-
-
-
-

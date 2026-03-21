@@ -59,7 +59,7 @@ class AiShareReportCard extends StatelessWidget {
                     'SITE BUDDY REPORT',
                     style: theme.textTheme.titleMedium!,
                   ),
-                  SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     'Project: $projectName',
                     style: theme.textTheme.labelMedium!,
@@ -71,27 +71,27 @@ class AiShareReportCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // BODY: Question
             Text(
               'Question:',
               style: theme.textTheme.titleMedium!,
             ),
-            SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(question, style: theme.textTheme.bodyLarge!),
 
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // BODY: Answer
             Text(
               'Answer:',
               style: theme.textTheme.titleMedium!,
             ),
-            SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(answer, style: theme.textTheme.bodyLarge!),
 
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // FOOTER BRANDING
             Container(

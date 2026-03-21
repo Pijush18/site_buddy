@@ -18,9 +18,9 @@ class SiteReportCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          SizedBox(height: SbSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           ..._buildSections(context),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _buildFooter(context),
         ],
       ),
@@ -52,7 +52,7 @@ class SiteReportCard extends StatelessWidget {
                   'SITE BUDDY REPORT',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 _buildMetaText(
                   context,
                   'Company: ',
@@ -115,7 +115,7 @@ class SiteReportCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             ...section.content.map(
               (text) => Container(
                         padding: const EdgeInsets.all(SbSpacing.xs).copyWith(right: 0, top: 0),

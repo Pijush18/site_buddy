@@ -84,7 +84,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
   Widget build(BuildContext context) {
     return SbPage.form(
       title: 'Schedule Meeting',
-      primaryAction: SbButton.primary(
+      primaryAction: PrimaryCTA(
         label: 'Schedule Meeting',
         icon: SbIcons.calendar,
         onPressed: () => _submit(context),
@@ -171,7 +171,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                             'DATE',
                             style: Theme.of(context).textTheme.labelLarge!,
                           ),
-                          SizedBox(height: SbSpacing.sm),
+                          const SizedBox(height: SbSpacing.sm),
                           Text(
                             _date == null
                                 ? 'Not set'
@@ -181,7 +181,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                         ],
                       ),
                     ),
-                    SbButton.ghost(
+                    GhostButton(
                       label: 'Select',
                       icon: SbIcons.calendar,
                       onPressed: () async {
@@ -197,7 +197,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: SbSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 // Time Pickers
                 Row(
                   children: [
@@ -257,7 +257,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
         InkWell(
           onTap: onTap,
           borderRadius: SbRadius.borderSmall,

@@ -53,7 +53,7 @@ class DeflectionInputSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _buildLabelledDropdown(
             context,
             'Span Type',
@@ -61,7 +61,7 @@ class DeflectionInputSection extends StatelessWidget {
             spanTypes,
             onSpanTypeChanged,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -109,7 +109,7 @@ class DeflectionInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

@@ -44,7 +44,7 @@ class RebarScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: EngineeringTerms.numberOfBars,
@@ -87,7 +87,7 @@ class RebarScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.memberLength,
@@ -95,7 +95,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: EngineeringTerms.spacingLabel,
@@ -103,7 +103,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           Wrap(
             spacing: SbSpacing.lg,
@@ -129,16 +129,16 @@ class RebarScreen extends ConsumerWidget {
             ],
           ),
 
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           ActionButtonsGroup(
             children: [
-              SbButton.outline(
+              SecondaryButton(isOutlined: true, 
                 label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
-              SbButton.primary(
+              PrimaryCTA(
                 label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
@@ -146,7 +146,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           if (state.failure != null) ...[
             SbCard(
@@ -156,12 +156,12 @@ class RebarScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

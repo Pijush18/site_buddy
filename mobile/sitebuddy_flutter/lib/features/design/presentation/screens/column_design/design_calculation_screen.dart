@@ -54,14 +54,14 @@ class _DesignCalculationScreenState
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Detailing',
             onPressed: () {
               context.push('/column/detailing');
             },
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -109,7 +109,7 @@ class _DesignCalculationScreenState
                     'Design Method',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<DesignMethod>(
                     value: state.designMethod,
                     items: DesignMethod.values,
@@ -117,7 +117,7 @@ class _DesignCalculationScreenState
                     onChanged: (v) =>
                         v != null ? notifier.updateDesignMethod(v) : null,
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -143,7 +143,7 @@ class _DesignCalculationScreenState
                     ],
                   ),
                   if (!state.isAutoSteel) ...[
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: 'Manual Steel (%)',
                       hint: 'e.g. 1.20',

@@ -83,7 +83,7 @@ class SbListItemTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (subtitle != null && subtitle!.isNotEmpty) ...[
-                        SizedBox(height: SbSpacing.xs),
+                        const SizedBox(height: SbSpacing.xs),
                         Text(
                           subtitle!,
                           style: textTheme.bodyMedium?.copyWith(

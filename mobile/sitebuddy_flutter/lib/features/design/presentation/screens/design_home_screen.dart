@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/design_controller.dart';
-import 'package:site_buddy/features/design/presentation/widgets/design_category_card.dart';
+
+
 import 'package:site_buddy/features/design/presentation/widgets/rcc_info_bottom_sheet.dart';
 
 /// SCREEN: DesignHomeScreen
@@ -20,26 +21,25 @@ class DesignHomeScreen extends ConsumerWidget {
       title: 'Structural Design',
       body: SbSectionList(
         sections: [
-          // ── SECTION 1: HERO BANNER (FIXED: now wrapped in SbSection) ──
+          // ── SECTION 1: HERO BANNER ──
           const SbSection(
-            title: null, // IMPORTANT: no title, but still behaves as a section
+            padding: EdgeInsets.zero,
             child: _DesignInfoBanner(),
           ),
+
 
           // ── SECTION 2: DESIGN CATEGORIES ──
           SbSection(
             title: 'Design Categories',
             subtitle: 'RCC standards and reinforcement guides.',
-            child: SbCard(
-              child: SbGrid(
-                children: state.items.map((item) {
-                  return DesignCategoryCard(
-                    icon: item.icon,
-                    label: item.title,
-                    onTap: () => RccInfoBottomSheet.show(context, item),
-                  );
-                }).toList(),
-              ),
+            child: SbGrid(
+              children: state.items.map((item) {
+                return SBGridActionCard(
+                  icon: item.icon,
+                  label: item.title,
+                  onTap: () => RccInfoBottomSheet.show(context, item),
+                );
+              }).toList(),
             ),
           ),
 
@@ -47,19 +47,17 @@ class DesignHomeScreen extends ConsumerWidget {
           SbSection(
             title: 'Key References',
             subtitle: 'Access national structural design codes.',
-            child: SbListGroup(
+            child: SbGrid(
               children: [
-                SbListItemTile(
+                SBGridActionCard(
                   icon: SbIcons.description,
-                  title: 'IS 456:2000',
-                  subtitle: 'Plain and Reinforced Concrete Code',
-                  onTap: () {},
+                  label: 'IS 456:2000',
+                  onTap: () {}, // TODO: action
                 ),
-                SbListItemTile(
+                SBGridActionCard(
                   icon: SbIcons.description,
-                  title: 'IS 800:2007',
-                  subtitle: 'Steel Construction Code of Practice',
-                  onTap: () {},
+                  label: 'IS 800:2007',
+                  onTap: () {}, // TODO: action
                 ),
               ],
             ),
@@ -69,6 +67,7 @@ class DesignHomeScreen extends ConsumerWidget {
     );
   }
 }
+
 
 /// Banner showing summary info about the Design module.
 /// IMPORTANT: This widget must NOT add external spacing.

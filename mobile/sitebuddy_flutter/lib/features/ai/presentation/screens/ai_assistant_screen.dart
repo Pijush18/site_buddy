@@ -68,14 +68,14 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
       title: 'Smart Assistant',
       usePadding: false,
       appBarActions: [
-        SbButton.icon(
+        AppIconButton(
           icon: SbIcons.task,
           onPressed: () {
             final report = controller.generateReport();
             context.push('/report/preview', extra: report);
           },
         ),
-        SbButton.icon(
+        AppIconButton(
           icon: SbIcons.settings,
           onPressed: () => context.push('/settings/branding'),
         ),
@@ -114,7 +114,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
                     AssistantGuidanceWidget(response: state.assistantResponse!),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   AiResponseCard(
                     response: state.response!,

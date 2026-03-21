@@ -301,7 +301,7 @@ class SettingsScreen extends StatelessWidget {
                             : user.email,
                         style: textTheme.bodyMedium,
                       ),
-                      SizedBox(height: SbSpacing.sm),
+                      const SizedBox(height: SbSpacing.sm),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                         child: Text(
@@ -316,7 +316,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: SbSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           SbCard(
             padding: EdgeInsets.zero,
             child: Column(

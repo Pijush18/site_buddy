@@ -25,7 +25,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
             color: colorScheme.primary,
           ),
           if (response.warnings.isNotEmpty) ...[
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             _GuidanceCard(
               title: 'Attention Required',
               message: 'Potential issues detected in calculations:',
@@ -35,7 +35,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
             ),
           ],
           if (response.suggestions.isNotEmpty) ...[
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             _GuidanceCard(
               title: 'Optimization Suggestions',
               message: 'Recommendations for better design performance:',
@@ -44,7 +44,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
               color: colorScheme.error, // Mapping to error or a standard warning color from theme
             ),
           ],
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -84,10 +84,10 @@ class _GuidanceCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(message, style: Theme.of(context).textTheme.bodyLarge!),
           if (items != null && items!.isNotEmpty) ...[
-            SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             ...items!.map(
               (item) => Padding(
                 padding: const EdgeInsets.only(bottom: SbSpacing.sm),

@@ -24,7 +24,7 @@ class SharedActionButtons extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SbButton.primary(
+          child: PrimaryCTA(
             label: isLoading ? 'Calculating...' : calculateLabel,
             onPressed: isLoading ? null : onCalculate,
           ),
@@ -43,7 +43,7 @@ class SharedActionButtons extends StatelessWidget {
     VoidCallback onTap,
   ) {
     return SbCard(
-      child: SbButton.icon(icon: icon, onPressed: onTap),
+      child: AppIconButton(icon: icon, onPressed: onTap),
     );
   }
 }

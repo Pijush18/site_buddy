@@ -56,7 +56,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  SizedBox(height: SbSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: EngineeringTerms.wallHeight,
                     hint: EngineeringTerms.heightHint,
@@ -65,7 +65,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateHeight,
                     errorText: hError,
                   ),
-                  SizedBox(height: SbSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: EngineeringTerms.wallThickness,
                     hint: EngineeringTerms.brickThicknessHint,
@@ -100,7 +100,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: SbSpacing.xs),
+                            const SizedBox(height: SbSpacing.xs),
                             Text(
                               EngineeringTerms.standardBrickSize,
                               style: theme.textTheme.bodyLarge?.copyWith(
@@ -116,7 +116,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      SbButton.icon(
+                      AppIconButton(
                         icon: SbIcons.info,
                         tooltip: EngineeringTerms.brickStandardRef,
                         onPressed: () {
@@ -129,7 +129,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: SbSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbDropdown<MortarRatio>(
                   label: EngineeringTerms.mortarRatio,
                   value: state.selectedRatio,
@@ -148,12 +148,12 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           // ── SECTION 3: ACTIONS ─────────────────────────────────────────
           ActionButtonsGroup(
             children: [
-              SbButton.outline(
+              SecondaryButton(isOutlined: true, 
                 label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
-              SbButton.primary(
+              PrimaryCTA(
                 label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,

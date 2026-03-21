@@ -2,7 +2,8 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/widgets/sb_button.dart';
+import 'package:site_buddy/core/widgets/app_icon_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -77,17 +78,19 @@ class SbInput extends StatelessWidget {
                 ),
               ),
               if (onInfoPressed != null)
-                SbButton.icon(
+                AppIconButton(
                   icon: SbIcons.info,
                   onPressed: onInfoPressed,
                   compact: true,
                 ),
             ],
           ),
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.sm),
+
         ],
         Container(
-          height: maxLines == 1 ? 48.0 : null,
+          height: maxLines == 1 ? 44.0 : null,
+
           padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
@@ -161,7 +164,7 @@ class SbInput extends StatelessWidget {
           ),
         ),
         if (errorText != null) ...[
-          SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             errorText!,
             style: textTheme.labelSmall?.copyWith(

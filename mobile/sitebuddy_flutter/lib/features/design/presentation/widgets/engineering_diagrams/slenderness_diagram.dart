@@ -61,7 +61,7 @@ class SlendernessDiagram extends StatelessWidget {
                     value: slendernessX.toStringAsFixed(2),
                     color: diagramColor,
                   ),
-                  SizedBox(height: SbSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   if (!isCircular)
                     _ValueLabel(
                       label: 'λy = ley / b',

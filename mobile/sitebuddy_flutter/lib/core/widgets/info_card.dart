@@ -68,7 +68,7 @@ class InfoCard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

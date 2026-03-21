@@ -2,30 +2,18 @@ import 'package:flutter/material.dart';
 
 /// CLASS: SbRadius
 /// PURPOSE: Standardized border radius scale for SiteBuddy.
-///
-/// Scale:
-/// - small  -> 8 px
-/// - medium -> 16 px
+/// UPDATED: Strict 8px Global System.
 class SbRadius {
   SbRadius._();
 
-  /// 8 px — Small border radius.
-  static const double small = 8.0;
+  /// 8 px — Global standard border radius.
+  static const double standard = 8.0;
 
-  /// 12 px — Medium-small/Medium border radius (Inputs, Dropdowns).
-  static const double md = 12.0;
+  static const Radius radiusSmall = Radius.circular(standard);
+  static const Radius radiusMd = Radius.circular(standard);
+  static const Radius radiusMedium = Radius.circular(standard);
 
-  /// 16 px — Medium border radius (Cards).
-  static const double medium = 16.0;
-
-  static const Radius radiusSmall = Radius.circular(small);
-  static const Radius radiusMd = Radius.circular(md);
-  static const Radius radiusMedium = Radius.circular(medium);
-
-  static final BorderRadius borderSmall = BorderRadius.circular(small);
-  static final BorderRadius borderMd = BorderRadius.circular(md);
-  static final BorderRadius borderMedium = BorderRadius.circular(medium);
+  static final BorderRadius borderSmall = BorderRadius.circular(standard);
+  static final BorderRadius borderMd = BorderRadius.circular(standard);
+  static final BorderRadius borderMedium = BorderRadius.circular(standard);
 }
-
-
-

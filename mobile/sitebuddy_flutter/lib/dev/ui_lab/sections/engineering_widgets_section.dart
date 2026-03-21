@@ -15,7 +15,7 @@ class EngineeringWidgetsSection extends StatelessWidget {
           'Engineering Results',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         const DesignResultCard(
           title: 'Foundation Safety Check',
           isSafe: true,
@@ -34,7 +34,7 @@ class EngineeringWidgetsSection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         const DesignResultCard(
           title: 'Failed Analysis Example',
           isSafe: false,

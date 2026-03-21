@@ -1,7 +1,8 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/widgets/sb_button.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
 
 /// CLASS: SbFeedback
 /// PURPOSE: Centralized utility for user notifications and interaction dialogs.
@@ -59,12 +60,12 @@ class SbFeedback {
           ),
           actions: [
             if (cancelLabel != null || onCancel != null)
-              SbButton.ghost(
+              GhostButton(
                 label: cancelLabel ?? 'Cancel',
                 onPressed: onCancel ?? () => context.pop(),
               ),
             if (confirmLabel != null || onConfirm != null)
-              SbButton.primary(
+              PrimaryCTA(
                 label: confirmLabel ?? 'Confirm',
                 onPressed: onConfirm,
               ),

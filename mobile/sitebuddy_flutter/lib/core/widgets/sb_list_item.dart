@@ -64,7 +64,7 @@ class SbListItem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (subtitle != null) ...[
-                        SizedBox(height: SbSpacing.xs),
+                        const SizedBox(height: SbSpacing.xs),
                         Text(
                           subtitle!,
                           style: textTheme.bodyMedium,

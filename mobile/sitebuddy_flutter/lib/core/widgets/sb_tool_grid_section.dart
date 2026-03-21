@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
 
 /// Model class for items in the Tool Grid.
 class ToolGridItem {
@@ -33,29 +33,19 @@ class SbToolGridSection extends StatelessWidget {
 
     return SbSection(
       title: title,
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: SbSpacing.lg,
-          crossAxisSpacing: SbSpacing.lg,
-          childAspectRatio: 1.0,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return SbActionTile(
+      child: SbGrid(
+        children: items.map((item) {
+          return SBGridActionCard(
             icon: item.icon,
             label: item.label,
             onTap: () => context.push(item.route),
           );
-        },
+        }).toList(),
       ),
     );
   }
 }
+
 
 
 

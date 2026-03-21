@@ -39,7 +39,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodyLarge!,
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     _buildPremiumCard(context, ref),
                   ],
                 ),
@@ -55,12 +55,12 @@ class SubscriptionScreen extends ConsumerWidget {
                         color: AppColors.success(context),
                         size: 48,
                       ),
-                      SizedBox(height: SbSpacing.lg),
+                      const SizedBox(height: SbSpacing.lg),
                       Text(
                         AppStrings.premiumUserStatus,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
-                      SizedBox(height: SbSpacing.sm),
+                      const SizedBox(height: SbSpacing.sm),
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
@@ -137,7 +137,7 @@ class SubscriptionScreen extends ConsumerWidget {
                   AppStrings.premiumLogic,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                SizedBox(height: SbSpacing.sm), 
+                const SizedBox(height: SbSpacing.sm), 
                 Text(
                   AppStrings.monthlyPrice,
                   style: Theme.of(context).textTheme.titleLarge!,
@@ -153,8 +153,8 @@ class SubscriptionScreen extends ConsumerWidget {
                 _buildBenefitItem(context, AppStrings.cloudSync),
                 _buildBenefitItem(context, AppStrings.advancedSteelDesign),
                 _buildBenefitItem(context, AppStrings.multiProjectManagement),
-                SizedBox(height: SbSpacing.md), 
-                SbButton.primary(
+                const SizedBox(height: SbSpacing.md), 
+                PrimaryCTA(
                   label: AppStrings.subscribeNow,
                   onPressed: () => ref.read(subscriptionRepositoryProvider).purchasePremium(),
                 ),

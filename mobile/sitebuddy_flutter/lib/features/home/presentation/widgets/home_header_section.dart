@@ -27,7 +27,7 @@ class HomeHeaderSection extends StatelessWidget {
                 l10n.readyToBuild,
                 style: textTheme.bodyMedium,
               ),
-              SizedBox(height: SbSpacing.xs),
+              const SizedBox(height: SbSpacing.xs),
               Text(
                 l10n.appName,
                 style: textTheme.displayLarge,
@@ -35,7 +35,7 @@ class HomeHeaderSection extends StatelessWidget {
             ],
           ),
 
-          SbButton.icon(
+          AppIconButton(
             icon: SbIcons.account,
             onPressed: () => debugPrint('TODO: action - Profile Settings'),
           ),

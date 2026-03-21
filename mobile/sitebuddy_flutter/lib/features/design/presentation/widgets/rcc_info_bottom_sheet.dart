@@ -43,7 +43,7 @@ class RccInfoBottomSheet extends StatelessWidget {
               height: 4,
             ),
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           // Header
           Row(
@@ -69,7 +69,7 @@ class RccInfoBottomSheet extends StatelessWidget {
                   ],
                 ),
               ),
-              SbButton.icon(
+              AppIconButton(
                 icon: SbIcons.close,
                 onPressed: () {
                   debugPrint('ACTION: Closing RccInfoBottomSheet via X');
@@ -78,13 +78,13 @@ class RccInfoBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           Text(
             item.description,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           // Specs List
           ...item.rccSpecs.map(
@@ -98,7 +98,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           // Action Buttons
           Column(
@@ -109,7 +109,7 @@ class RccInfoBottomSheet extends StatelessWidget {
                   item.id == 'footing') ...[
                 SizedBox(
                   width: double.infinity,
-                  child: SbButton.primary(
+                  child: PrimaryCTA(
                     onPressed: () {
                       // determine destination based on selected item id
                       final route = switch (item.id) {
@@ -130,11 +130,11 @@ class RccInfoBottomSheet extends StatelessWidget {
                     label: 'DESIGN NOW',
                   ),
                 ),
-                SizedBox(height: SbSpacing.md),
+                const SizedBox(height: SbSpacing.md),
               ],
               SizedBox(
                 width: double.infinity,
-                child: SbButton.outline(
+                child: SecondaryButton(isOutlined: true, 
                   onPressed: () {
                     debugPrint(
                       'ACTION: Closing RccInfoBottomSheet via GOT IT button',
@@ -147,7 +147,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );

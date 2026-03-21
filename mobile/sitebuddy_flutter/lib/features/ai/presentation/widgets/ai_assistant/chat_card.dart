@@ -122,7 +122,7 @@ class ChatCard extends StatelessWidget {
                     ],
                   )
                 else
-                  SbButton.outline(
+                  SecondaryButton(isOutlined: true, 
                     label: 'Save to Project',
                     icon: SbIcons.bookmarkAdd,
                     onPressed: onSaveToProject,

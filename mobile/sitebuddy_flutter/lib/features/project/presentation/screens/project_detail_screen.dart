@@ -11,6 +11,8 @@ import 'package:site_buddy/features/project/presentation/controllers/project_det
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+
 
 /// CLASS: ProjectDetailScreen
 /// PURPOSE: Deep-dive view into a specific project.
@@ -90,136 +92,141 @@ class ProjectDetailScreen extends ConsumerWidget {
         sections: [
           // ── Status Header ──
           SbSection(
-            child: SbCard(
-              padding: const EdgeInsets.all(SbSpacing.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppStrings.status,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppStrings.status,
+                      style: Theme.of(context).textTheme.labelMedium!,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                      child: Text(
+                        proj.status.label,
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
-                        child: Text(
-                          proj.status.label,
-                          style: Theme.of(context).textTheme.labelMedium!,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: SbSpacing.lg),
-                  Text(
-                    proj.name,
-                    style: Theme.of(context).textTheme.titleMedium!,
-                  ),
-                  SizedBox(height: SbSpacing.lg),
-                  // Cover Image Mock
-                  SizedBox(
-                    height: 120,
-                    width: double.infinity,
-                    child: Center(
-                      child: Icon(
-                        SbIcons.terrain,
-                        size: 48,
-                        color: colorScheme.onSurfaceVariant.withValues(
-                          alpha: 0.5,
-                        ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                Text(
+                  proj.name,
+                  style: Theme.of(context).textTheme.titleMedium!,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                // Cover Image Mock
+                SizedBox(
+                  height: 120,
+                  width: double.infinity,
+                  child: Center(
+                    child: Icon(
+                      SbIcons.terrain,
+                      size: 48,
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.5,
                       ),
                     ),
                   ),
-                  SizedBox(height: SbSpacing.lg),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppStrings.created,
-                            style: Theme.of(context).textTheme.labelMedium!,
-                          ),
-                          Text(
-                            formattedDate,
-                            style: Theme.of(context).textTheme.bodyLarge!,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            AppStrings.location,
-                            style: Theme.of(context).textTheme.labelMedium!,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                SbIcons.location,
-                                size: 20,
-                                color: colorScheme.primary,
-                              ),
-                              const SizedBox(width: SbSpacing.sm),
-                              Text(
-                                proj.location,
-                                style: Theme.of(context).textTheme.bodyLarge!,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppStrings.created,
+                          style: Theme.of(context).textTheme.labelMedium!,
+                        ),
+                        Text(
+                          formattedDate,
+                          style: Theme.of(context).textTheme.bodyLarge!,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          AppStrings.location,
+                          style: Theme.of(context).textTheme.labelMedium!,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              SbIcons.location,
+                              size: 20,
+                              color: colorScheme.primary,
+                            ),
+                            const SizedBox(width: SbSpacing.sm),
+                            Text(
+                              proj.location,
+                              style: Theme.of(context).textTheme.bodyLarge!,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+
+          // Description block if available
+          if (proj.description != null && proj.description!.isNotEmpty)
+            SbSection(
+              title: AppStrings.description,
+              child: Text(
+                proj.description!,
+                style: Theme.of(context).textTheme.bodyLarge!,
+              ),
+            ),
+
+
+          // Stats grid section (Sole source of inter-section truth)
+          SbSection(
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _StatItem(
+                      icon: Icons.description,
+                      label: 'LOGS',
+                      value: proj.logsCount.toString(),
+                      subtext: 'Entries',
+                    ),
+                  ),
+                  VerticalDivider(
+                    width: SbSpacing.xl,
+                    thickness: 1,
+                    color: context.colors.outline,
+                  ),
+                  Expanded(
+                    child: _StatItem(
+                      icon: Icons.calculate,
+                      label: 'CALCS',
+                      value: proj.calculationsCount.toString(),
+                      subtext: 'Saved Runs',
+                    ),
                   ),
                 ],
               ),
             ),
           ),
 
-          // Description block if available
-          if (proj.description != null && proj.description!.isNotEmpty)
-            SbSection(
-              title: AppStrings.description,
-              child: SbCard(
-                child: Text(
-                  proj.description!,
-                  style: Theme.of(context).textTheme.bodyLarge!,
-                ),
-              ),
-            ),
-
-          // Stats grid section (Sole source of inter-section truth)
-          SbSection(
-            title: null,
-            child: Row(
-              children: [
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.description,
-                    label: 'LOGS',
-                    value: proj.logsCount.toString(),
-                    subtext: 'Entries',
-                  ),
-                ),
-                const SizedBox(width: SbSpacing.lg),
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.calculate,
-                    label: 'CALCS',
-                    value: proj.calculationsCount.toString(),
-                    subtext: 'Saved Runs',
-                  ),
-                ),
-              ],
-            ),
-          ),
 
           SbSection(
             title: AppStrings.design,
+            padding: EdgeInsets.zero,
             child: calcItems.isEmpty
-                ? const SbCard(
+                ? const Padding(
+                    padding: EdgeInsets.all(SbSpacing.md),
                     child: Text(AppStrings.noEntriesFound),
                   )
                 : SbListGroup(
@@ -238,10 +245,13 @@ class ProjectDetailScreen extends ConsumerWidget {
                   ),
           ),
 
+
           SbSection(
             title: AppStrings.fieldSurveying,
+            padding: EdgeInsets.zero,
             child: logItems.isEmpty
-                ? const SbCard(
+                ? const Padding(
+                    padding: EdgeInsets.all(SbSpacing.md),
                     child: Text(AppStrings.noEntriesFound),
                   )
                 : SbListGroup(
@@ -260,77 +270,74 @@ class ProjectDetailScreen extends ConsumerWidget {
                   ),
           ),
 
+
           SbSection(
             title: 'Management',
-            child: SbCard(
-              child: Column(
-                children: [
-                  SbButton.primary(
-                    label: AppStrings.newInspection,
-                    icon: Icons.add_circle_outline,
-                    onPressed: () {
-                      context.push('/projects/$projectId/level-log');
-                    },
-                    width: double.infinity,
-                  ),
-                  SizedBox(height: SbSpacing.lg),
-                  SbButton.secondary(
-                    label: AppStrings.editProject,
-                    icon: Icons.edit_outlined,
-                    onPressed: () {
-                      context.push('/projects/$projectId/edit');
-                    },
-                    width: double.infinity,
-                  ),
-                ],
-              ),
+            child: Column(
+              children: [
+                PrimaryCTA(
+                  label: AppStrings.newInspection,
+                  icon: Icons.add_circle_outline,
+                  onPressed: () {
+                    context.push('/projects/$projectId/level-log');
+                  },
+                  width: double.infinity,
+                ),
+                const SizedBox(height: SbSpacing.lg),
+                SecondaryButton(
+                  label: AppStrings.editProject,
+                  icon: Icons.edit_outlined,
+                  onPressed: () {
+                    context.push('/projects/$projectId/edit');
+                  },
+                  width: double.infinity,
+                ),
+              ],
             ),
           ),
+
         ],
       ),
     );
   }
 }
 
-class _StatCard extends StatelessWidget {
+class _StatItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
   final String subtext;
 
-  const _StatCard({
+  const _StatItem({
     required this.icon,
     required this.label,
     required this.value,
     required this.subtext,
   });
 
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+    return SbSection(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: colorScheme.primary, size: 20),
+              Icon(icon, color: Theme.of(context).colorScheme.primary, size: 20),
               Text(
                 label,
-                  style: Theme.of(context).textTheme.labelMedium!,
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             value,
             style: Theme.of(context).textTheme.titleLarge!,
           ),
-          SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: SbSpacing.sm),
           Text(
             subtext,
             style: Theme.of(context).textTheme.labelMedium!,
@@ -340,6 +347,7 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
+
 
 IconData _getTypeIcon(String? type) {
   switch (type) {

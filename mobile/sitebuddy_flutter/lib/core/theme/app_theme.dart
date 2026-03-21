@@ -46,8 +46,9 @@ class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16), // Standardized SbRadius.medium
+          borderRadius: BorderRadius.circular(8), // Global Standard Radius
           side: BorderSide(
+
             color: colorScheme.outline,
             width: 1.0,
           ),
@@ -69,13 +70,50 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
-          elevation: 0,
+          minimumSize: const Size(0, 48),
+          elevation: 2,
+          shadowColor: colorScheme.primary.withValues(alpha: 0.3),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0), // SbSpacing.lg
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+
+          textStyle: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.1,
+          ),
         ),
       ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: colorScheme.onSurface,
+          minimumSize: const Size(0, 44),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(color: colorScheme.outline),
+          textStyle: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: colorScheme.onSurface,
+          minimumSize: const Size(0, 44),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+
+
     );
   }
 }
-
-
-

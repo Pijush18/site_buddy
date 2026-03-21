@@ -40,28 +40,28 @@ class ShutteringScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SectionLabel(label: EngineeringTerms.elementDimensions),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.length,
             hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.width,
             hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: EngineeringTerms.depth,
             hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbListItemTile(
             title: EngineeringTerms.includeBottomArea,
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
@@ -71,15 +71,15 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
           ActionButtonsGroup(
             children: [
-              SbButton.outline(
+              SecondaryButton(isOutlined: true, 
                 label: AppStrings.clearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
-              SbButton.primary(
+              PrimaryCTA(
                 label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
@@ -87,19 +87,19 @@ class ShutteringScreen extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
           Text(
             EngineeringTerms.shutteringNote,
             style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );
@@ -156,7 +156,7 @@ class _ResultCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
             title: EngineeringTerms.totalShutteringArea,

@@ -15,14 +15,14 @@ class ShearResultSummary extends StatelessWidget {
     return SbCard(
       child: Column(
         children: [
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ComparisonBar(
             actual: result.tv,
             allowable: result.tc,
             label: 'Shear Stress (τv vs τc)',
             unit: 'N/mm²',
           ),
-          SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ResultDetailRow(
             label: 'Nominal Stress (τv)',
             value: '${result.tv.toStringAsFixed(3)} N/mm²',

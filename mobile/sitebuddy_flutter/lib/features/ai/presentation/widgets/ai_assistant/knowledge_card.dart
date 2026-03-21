@@ -82,7 +82,7 @@ class KnowledgeCard extends ConsumerWidget {
 
                         return Row(
                           children: [
-                            SbButton.ghost(
+                            GhostButton(
                               label: title,
                               onPressed: () => ref
                                   .read(aiControllerProvider.notifier)
@@ -117,7 +117,7 @@ class KnowledgeCard extends ConsumerWidget {
                   hint: AppStrings.searchInsideTopic,
                   prefixIcon: Icon(SbIcons.search, color: colorScheme.primary),
                 ),
-                SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
 
                 if (hasResults) ...[
                   if (matchesDefinition) ...[
@@ -125,15 +125,15 @@ class KnowledgeCard extends ConsumerWidget {
                       topic.definition,
                       style: textTheme.bodyLarge,
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredKeyPoints.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.keyPoints),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     ...filteredKeyPoints.map(
                       (point) => _BulletPoint(text: point),
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredThumbRules.isNotEmpty) ...[
                     _HighlightBox(
@@ -142,17 +142,17 @@ class KnowledgeCard extends ConsumerWidget {
                       color: colorScheme.secondary,
                       items: filteredThumbRules,
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (filteredTypes.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.types),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Wrap(
                       spacing: SbSpacing.sm,
                       runSpacing: SbSpacing.sm,
                       children: filteredTypes
                           .map(
-                            (t) => SbButton.outline(
+                            (t) => SecondaryButton(isOutlined: true, 
                               label: t,
                               onPressed: () => ref
                                   .read(aiControllerProvider.notifier)
@@ -161,17 +161,17 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.relatedTopics.isNotEmpty) ...[
                     const _SectionHeader(title: AppStrings.exploreRelatedTopics),
-                    SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Wrap(
                       spacing: SbSpacing.sm,
                       runSpacing: SbSpacing.sm,
                       children: topic.relatedTopics
                           .map(
-                            (t) => SbButton.outline(
+                            (t) => SecondaryButton(isOutlined: true, 
                               label: t,
                               onPressed: () => ref
                                   .read(aiControllerProvider.notifier)
@@ -180,7 +180,7 @@ class KnowledgeCard extends ConsumerWidget {
                           )
                           .toList(),
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   if (topic.siteTip.isNotEmpty) ...[
                     _HighlightBox(
@@ -274,7 +274,7 @@ class _HighlightBox extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           ...items.map(
             (item) =>
                 Text('• $item', style: textTheme.bodyMedium),

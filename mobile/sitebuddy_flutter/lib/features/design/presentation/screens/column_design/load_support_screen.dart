@@ -51,13 +51,13 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Next: Slenderness Check',
             onPressed: _onNext,
             icon: Icons.analytics_outlined,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -88,12 +88,12 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                       if (val != null) notifier.updateLoads(pu: val);
                     },
                   ),
-                  SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Text(
                     'End Support Condition',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,

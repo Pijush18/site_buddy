@@ -90,13 +90,13 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SbButton.primary(
+          PrimaryCTA(
             label: 'Calculate & View Analysis',
             onPressed: _onNext,
             icon: SbIcons.analytics,
           ),
-          SizedBox(height: SbSpacing.sm),
-          SbButton.ghost(
+          const SizedBox(height: SbSpacing.sm),
+          GhostButton(
             label: 'Back',
             onPressed: () => context.pop(),
           ),
@@ -127,14 +127,14 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       controller: _llController,
                       label: 'Live Load (kN/m)',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Live Load'),
                     ),
-                    SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       controller: _plController,
                       label: 'Point Load (Optional) (kN)',
