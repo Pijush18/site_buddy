@@ -4,7 +4,6 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/ai/domain/entities/assistant_response.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 
 class AssistantGuidanceWidget extends StatelessWidget {
   final AssistantResponse response;
@@ -14,8 +13,8 @@ class AssistantGuidanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+    return Container(
+      padding: SbSpacing.horizontalLG,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,7 +41,7 @@ class AssistantGuidanceWidget extends StatelessWidget {
               message: 'Recommendations for better design performance:',
               items: response.suggestions,
               icon: SbIcons.lightbulb,
-              color: AppColors.warning(context), // 👈 Standardized semantic warning
+              color: colorScheme.error, // Mapping to error or a standard warning color from theme
             ),
           ],
           const SizedBox(height: SbSpacing.xxl),
@@ -96,7 +95,7 @@ class _GuidanceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: SbSpacing.sm),
+                      margin: const EdgeInsets.only(top: SbSpacing.sm + 2),
                       width: 4,
                       height: 4,
                       decoration: BoxDecoration(

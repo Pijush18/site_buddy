@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
@@ -33,9 +33,9 @@ class AppReportDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      shape: RoundedRectangleBorder(borderRadius: AppLayout.borderRadiusCard),
+      shape: RoundedRectangleBorder(borderRadius: SbRadius.borderMedium),
       child: Container(
-        padding: const EdgeInsets.all(SbSpacing.xxl),
+        padding: SbSpacing.paddingXXL,
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           mainAxisSize: MainAxisSize.min,

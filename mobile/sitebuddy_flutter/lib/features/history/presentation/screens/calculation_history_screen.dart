@@ -68,8 +68,8 @@ class _HistoryEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+    return Container(
+      padding: SbSpacing.verticalSM.copyWith(top: 0),
       child: SbListItemTile(
         icon: _getTypeIcon(entry.calculationType),
         title: entry.resultSummary,

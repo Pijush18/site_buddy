@@ -97,11 +97,11 @@ class _OptimizationRow extends StatelessWidget {
             Text(option.title, style: Theme.of(context).textTheme.labelMedium!),
             Text(
               rankLabel,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: _getRankColor(context, rankLabel),
-              ),
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: _getRankColor(context, rankLabel),
+                    fontSize: 10,
+                  ),
             ),
           ],
         ),
@@ -159,8 +159,8 @@ class _Bar extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: SbSpacing.sm),
+          Container(
+            padding: SbSpacing.paddingXS.copyWith(right: 0, top: 0, bottom: 0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(

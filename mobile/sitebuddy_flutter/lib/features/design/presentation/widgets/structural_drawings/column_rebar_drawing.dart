@@ -30,9 +30,9 @@ class ColumnRebarDrawing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = isDark ? Colors.blue.shade300 : Colors.blue.shade700;
-    final textColor = isDark ? Colors.white70 : Colors.black87;
+    final colorScheme = Theme.of(context).colorScheme;
+    final primaryColor = colorScheme.primary;
+    final textColor = colorScheme.onSurface;
 
     return AspectRatio(
       aspectRatio: 1,
@@ -58,8 +58,8 @@ class ColumnRebarDrawing extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: SbSpacing.sm),
+          Container(
+            padding: SbSpacing.verticalSM.copyWith(bottom: 0),
             child: Text(
               '${type.label} Section: ${width.toInt()}x${depth.toInt()} mm',
               style: Theme.of(context).textTheme.labelMedium!,

@@ -1,6 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -9,13 +7,11 @@ class OnboardingMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-
     return Column(
       children: [
-        AppLayout.vGap32,
-        Icon(SbIcons.engineering, size: 64, color: Colors.grey.shade300),
-        const SizedBox(height: AppLayout.sectionGap),
+        const SizedBox(height: SbSpacing.xxxl),
+        Icon(SbIcons.engineering, size: 64, color: Theme.of(context).colorScheme.outlineVariant),
+        const SizedBox(height: SbSpacing.lg),
         Text(
           'How can I assist your site today?',
           style: Theme.of(context).textTheme.titleLarge!,
@@ -34,12 +30,3 @@ class OnboardingMessage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-

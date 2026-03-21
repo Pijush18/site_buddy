@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
-import 'package:site_buddy/core/widgets/sb_list_item.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/home/domain/models/activity_type.dart';
 import 'package:site_buddy/features/home/domain/models/activity_item.dart';
@@ -38,10 +39,10 @@ class ActivityTile extends StatelessWidget {
 
     return SbListItem(
       leading: Container(
-        padding: const EdgeInsets.all(SbSpacing.sm),
+        padding: SbSpacing.paddingSM,
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryContainer.withValues(alpha: 0.2),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: SbRadius.borderSmall,
         ),
         child: Icon(
           _getIconForType(activity.type),

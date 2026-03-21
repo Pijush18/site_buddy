@@ -22,9 +22,9 @@ class SlabRebarDrawing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = isDark ? Colors.teal.shade300 : Colors.teal.shade700;
-    final textColor = isDark ? Colors.white70 : Colors.black87;
+    final colorScheme = Theme.of(context).colorScheme;
+    final primaryColor = colorScheme.primary;
+    final textColor = colorScheme.onSurface;
 
     return AspectRatio(
       aspectRatio: lx / ly > 1.5 ? 1.5 : (lx / ly < 0.6 ? 0.6 : lx / ly),
@@ -45,8 +45,8 @@ class SlabRebarDrawing extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: SbSpacing.sm),
+          Container(
+            padding: SbSpacing.verticalSM.copyWith(bottom: 0),
             child: Text(
               'Slab Plan: ${lx.toStringAsFixed(2)}m x ${ly.toStringAsFixed(2)}m',
               style: Theme.of(context).textTheme.labelMedium!,

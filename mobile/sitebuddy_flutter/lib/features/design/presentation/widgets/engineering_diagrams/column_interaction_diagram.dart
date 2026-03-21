@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(AppLayout.cardPadding),
+      padding: SbSpacing.paddingLG,
       child: AspectRatio(
         aspectRatio: 1.5,
         child: Column(
@@ -76,7 +76,7 @@ class ColumnInteractionDiagram extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppLayout.elementGap),
+            const SizedBox(height: SbSpacing.lg),
             Text(
               interactionRatio <= 1.0
                   ? 'Design point is within the safe envelope.'
@@ -127,10 +127,10 @@ class _DesignPoint extends StatelessWidget {
           ),
           const SizedBox(height: SbSpacing.xs),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs, vertical: SbSpacing.xs),
+            padding: SbSpacing.paddingXS,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: SbRadius.borderSmall,
             ),
             child: Text(
               'Pu=${pu.toInt()}, Mu=${mu.toInt()}',

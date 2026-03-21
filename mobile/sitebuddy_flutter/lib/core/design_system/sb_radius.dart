@@ -18,6 +18,10 @@ class SbRadius {
   /// 16 px — Medium border radius (Cards).
   static const double medium = 16.0;
 
+  static const Radius radiusSmall = Radius.circular(small);
+  static const Radius radiusMd = Radius.circular(md);
+  static const Radius radiusMedium = Radius.circular(medium);
+
   static final BorderRadius borderSmall = BorderRadius.circular(small);
   static final BorderRadius borderMd = BorderRadius.circular(md);
   static final BorderRadius borderMedium = BorderRadius.circular(medium);

@@ -19,13 +19,15 @@ class CrackingHistorySection extends ConsumerWidget {
 
     if (history.isEmpty) return const SizedBox.shrink();
 
+    final theme = Theme.of(context);
+
     return SbSection(
       title: 'Recent Cracking Checks',
       child: Column(
         children: history.take(3).map((check) {
           final isSafe = check['isSafe'] as bool;
-          return Padding(
-            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+          return Container(
+            padding: SbSpacing.verticalSM.copyWith(top: 0),
             child: SbCard(
               child: Row(
                 children: [
@@ -41,13 +43,12 @@ class CrackingHistorySection extends ConsumerWidget {
                       children: [
                         Text(
                           'w: ${check['crackWidth'].toStringAsFixed(3)} mm',
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           DateTime.parse(check['date']).toString().substring(0, 16),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: theme.textTheme.bodySmall!.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -55,9 +56,9 @@ class CrackingHistorySection extends ConsumerWidget {
                   ),
                   Text(
                     isSafe ? 'SAFE' : 'FAIL',
-                    style: TextStyle(
+                    style: theme.textTheme.labelMedium!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
+                      color: isSafe ? AppColors.success(context) : theme.colorScheme.error,
                     ),
                   ),
                 ],

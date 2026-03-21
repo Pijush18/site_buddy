@@ -21,10 +21,7 @@ class SafetyStatusHeader extends StatelessWidget {
     final icon = isSafe ? Icons.check_circle : Icons.warning;
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
-      ),
+      padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: SbRadius.borderMd,
@@ -59,8 +56,8 @@ class SafetyInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
+    return Container(
+      padding: SbSpacing.verticalXS,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -144,8 +141,8 @@ class PlaceholderCard extends StatelessWidget {
           color: colorScheme.outlineVariant.withValues(alpha: 0.5),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(SbSpacing.xxl),
+      child: Container(
+        padding: SbSpacing.paddingXXL,
         child: Column(
           children: [
             Icon(

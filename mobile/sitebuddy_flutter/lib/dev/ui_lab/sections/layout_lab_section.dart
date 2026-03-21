@@ -1,7 +1,7 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+
+const double _maxContentWidth = 800.0;
 
 class LayoutLabSection extends StatelessWidget {
   const LayoutLabSection({super.key});
@@ -16,11 +16,11 @@ class LayoutLabSection extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium!,
         ),
         const SizedBox(height: SbSpacing.lg),
-        const Text(
+        Text(
           'The SiteBuddy grid system enforces a maximum content width of 800px on all primary screens to ensure readability and professional presentation.',
-          style: TextStyle(fontSize: 12, color: Colors.grey),
+          style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey),
         ),
-        AppLayout.vGap24,
+        SizedBox(height: SbSpacing.lg),
 
         // Visualizer
         Container(
@@ -59,7 +59,7 @@ class LayoutLabSection extends StatelessWidget {
                     children: [
                       Text(
                         'maxContentWidth',
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
                           fontSize: 10,
@@ -67,7 +67,7 @@ class LayoutLabSection extends StatelessWidget {
                       ),
                       Text(
                         '800.0',
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 8,
                         ),
@@ -77,20 +77,20 @@ class LayoutLabSection extends StatelessWidget {
                 ),
               ),
 
-              const Positioned(
+              Positioned(
                 top: 8,
                 left: 8,
                 child: Text(
                   'Screen Edge',
-                  style: TextStyle(fontSize: 8, color: Colors.grey),
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(fontSize: 8, color: Colors.grey),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 bottom: 8,
                 right: 8,
                 child: Text(
                   'Responsive Gutter',
-                  style: TextStyle(fontSize: 8, color: Colors.grey),
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(fontSize: 8, color: Colors.grey),
                 ),
               ),
             ],
@@ -98,25 +98,22 @@ class LayoutLabSection extends StatelessWidget {
         ),
         const SizedBox(height: SbSpacing.lg),
         Text('Layout Rules:', style: Theme.of(context).textTheme.bodyLarge!),
-        const Padding(
-          padding: EdgeInsets.only(
-            left: SbSpacing.sm,
-            top: SbSpacing.sm,
-          ),
+        Padding(
+          padding: SbSpacing.paddingSM,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 '• All feature screen content must be centered.',
-                style: TextStyle(fontSize: 12),
+                style: Theme.of(context).textTheme.bodySmall!,
               ),
               Text(
                 '• Sidebar navigation must remain fixed (not part of content width).',
                 style: TextStyle(fontSize: 12),
               ),
               Text(
-                '• Use ConstrainedBox with AppLayout.maxContentWidth.',
-                style: TextStyle(fontSize: 12),
+                '• Use ConstrainedBox with $_maxContentWidth.',
+                style: Theme.of(context).textTheme.bodySmall!,
               ),
             ],
           ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:site_buddy/core/widgets/previewable_card.dart';
 import 'package:site_buddy/core/utils/share_formatter.dart';
 import 'package:site_buddy/core/utils/share_image_generator.dart';
 import 'package:site_buddy/features/ai/presentation/widgets/ai_assistant/ai_share_report_card.dart';

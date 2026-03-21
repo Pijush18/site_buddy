@@ -28,7 +28,7 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/shared/domain/models/project.dart';
 
-import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 class SaveToProjectDialog extends ConsumerWidget {
   /// Defines the action when a user picks a project from the list.
@@ -50,8 +50,8 @@ class SaveToProjectDialog extends ConsumerWidget {
           if (projectState.isLoading)
             const Center(child: CircularProgressIndicator())
           else if (projectState.projects.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
+            Container(
+              padding: SbSpacing.verticalLG,
               child: Center(
                 child: Text(
                   'No projects available.\nCreate a project first!',

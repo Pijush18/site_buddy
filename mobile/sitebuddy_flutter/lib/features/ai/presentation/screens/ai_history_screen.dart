@@ -56,7 +56,7 @@ class AiHistoryScreen extends ConsumerWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: state.chats.length,
       separatorBuilder: (context, index) =>
-          const SizedBox(height: SbSpacing.lg), // Replaced AppLayout.elementGap
+          const SizedBox(height: SbSpacing.lg), // Replaced SbSpacing.lg
       itemBuilder: (context, index) {
         final chat = state.chats[index];
         return ChatCard(

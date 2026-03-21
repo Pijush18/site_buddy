@@ -106,14 +106,14 @@ class AiResponseCard extends StatelessWidget {
         onExportPdf != null;
 
     if (!hasAnyAction) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
+      return Container(
+        padding: SbSpacing.horizontalSM,
         child: child,
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
+    return Container(
+      padding: SbSpacing.horizontalSM,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -183,7 +183,7 @@ class _MiniActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.sm),
+      padding: SbSpacing.paddingSM,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

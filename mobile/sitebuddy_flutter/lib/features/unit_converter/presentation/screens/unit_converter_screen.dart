@@ -122,7 +122,7 @@ class _ConverterBodySection extends ConsumerWidget {
           },
           itemLabelBuilder: (t) => t.name.toUpperCase(),
         ),
-        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
         Row(
           children: [
             Expanded(
@@ -187,8 +187,8 @@ class _ConverterBodySection extends ConsumerWidget {
   }
 
   Widget _buildErrorDisplay(String error, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: SbSpacing.xxl),
+    return Container(
+      padding: SbSpacing.verticalXXL.copyWith(bottom: 0),
       child: SbCard(
         child: Text(
           error,
@@ -216,8 +216,8 @@ class _ConverterBodySection extends ConsumerWidget {
 
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(SbSpacing.xxl), // Replaced const EdgeInsets.all(SbSpacing.xxl)
+    return Container(
+      padding: SbSpacing.paddingXXL,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -254,7 +254,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
         SbCard(
           child: Column(
             children: [
@@ -271,7 +271,7 @@ class _ConverterBodySection extends ConsumerWidget {
           ),
         ),
         if (secondaries.isNotEmpty) ...[
-          const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+          const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
           Text(
             'ALSO EQUALS',
             style: Theme.of(context).textTheme.labelMedium!,
@@ -282,10 +282,7 @@ class _ConverterBodySection extends ConsumerWidget {
             runSpacing: SbSpacing.sm,
             children: secondaries.entries.map((e) {
               return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.lg,
-                  vertical: SbSpacing.sm / 2,
-                ),
+                padding: SbSpacing.horizontalLG.add(SbSpacing.verticalXS),
                 decoration: BoxDecoration(
                   color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(8),
@@ -310,7 +307,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
         Text(
           'ESTIMATE: ${query.length} x ${query.width} x ${query.depth} (${query.grade?.label})',
           style: Theme.of(context).textTheme.labelMedium!,

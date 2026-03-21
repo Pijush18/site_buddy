@@ -1,4 +1,3 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
@@ -28,7 +27,7 @@ class ConversionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            padding: SbSpacing.paddingLG,
             color: colorScheme.primary.withValues(alpha: 0.08),
             child: Row(
               children: [
@@ -41,8 +40,8 @@ class ConversionCard extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+          Container(
+            padding: SbSpacing.paddingLG,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -68,9 +67,9 @@ class ConversionCard extends StatelessWidget {
                   ],
                 ),
                 if (result.secondaryValues.isNotEmpty) ...[
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: SbSpacing.lg),
-                    child: Divider(),
+                  Container(
+                    padding: SbSpacing.verticalLG,
+                    child: const Divider(),
                   ),
                   Text(
                     'ALSO EQUIVALENT TO',
@@ -83,10 +82,7 @@ class ConversionCard extends StatelessWidget {
                     children: result.secondaryValues.entries
                         .map(
                           (entry) => Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: SbSpacing.sm,
-                              vertical: AppLayout.spaceXS,
-                            ),
+                            padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
                             
                             child: Text(
                               '${entry.value.toStringAsFixed(3)} ${entry.key}',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_button.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 
 /// CLASS: HomeHeaderSection
@@ -15,8 +15,8 @@ class HomeHeaderSection extends StatelessWidget {
     final textTheme = theme.textTheme;
     final l10n = AppLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
+    return Container(
+      padding: SbSpacing.verticalLG,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

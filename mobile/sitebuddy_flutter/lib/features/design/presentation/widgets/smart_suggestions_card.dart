@@ -3,7 +3,6 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// WIDGET: SmartSuggestionsCard
 /// PURPOSE: Displays engineering advice based on the current design state.
@@ -20,7 +19,8 @@ class SmartSuggestionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (suggestions.isEmpty) return const SizedBox.shrink();
-    final warningColor = AppColors.warning(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final warningColor = colorScheme.error;
 
     return SbCard(
       child: Column(
@@ -44,8 +44,8 @@ class SmartSuggestionsCard extends StatelessWidget {
           ),
           const SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
-            (s) => Padding(
-              padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+            (s) => Container(
+              padding: SbSpacing.verticalLG.copyWith(top: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,8 +59,8 @@ class SmartSuggestionsCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                   if (s.action.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: SbSpacing.sm),
+                    Container(
+                      padding: SbSpacing.verticalSM.copyWith(bottom: 0),
                       child: Text(
                         '➔ ${s.action}',
                         style: Theme.of(context).textTheme.labelMedium!,
@@ -75,12 +75,3 @@ class SmartSuggestionsCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-

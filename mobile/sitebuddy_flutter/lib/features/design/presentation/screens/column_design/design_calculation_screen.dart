@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/core/widgets/code_reference_card.dart';
 import 'package:site_buddy/core/data/code_references/is_456_references.dart';
 import 'package:site_buddy/core/services/educational_mode_service.dart';
 

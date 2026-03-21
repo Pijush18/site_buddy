@@ -26,10 +26,10 @@ class ProjectListScreen extends ConsumerWidget {
         Consumer(
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
-            final statusColor = isOnline ? Colors.green : Colors.orange;
+            final statusColor = isOnline ? theme.colorScheme.primary : theme.colorScheme.error;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+            return Container(
+              padding: SbSpacing.horizontalMD,
               child: Row(
                 children: [
                   Icon(

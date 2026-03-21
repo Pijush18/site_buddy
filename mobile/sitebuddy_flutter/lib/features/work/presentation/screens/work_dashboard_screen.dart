@@ -57,7 +57,7 @@ class WorkDashboardScreen extends ConsumerWidget {
         },
         background: Container(
           alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(SbSpacing.xxl),
+          padding: SbSpacing.paddingXXL,
           decoration: BoxDecoration(
             color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
@@ -75,10 +75,7 @@ class WorkDashboardScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.sm,
-                  vertical: SbSpacing.xs,
-                ),
+                padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(4),
@@ -116,10 +113,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           context.push('/meetings/detail', extra: m);
         },
         trailing: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: SbSpacing.sm,
-            vertical: SbSpacing.xs,
-          ),
+          padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
           decoration: BoxDecoration(
             color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(4),

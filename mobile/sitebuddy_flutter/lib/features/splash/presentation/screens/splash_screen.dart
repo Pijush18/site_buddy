@@ -57,14 +57,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: SbSpacing.xxl * 2), // Replaced AppLayout.vGap64
+            const SizedBox(height: SbSpacing.xxl * 2), 
             // Logo
             Icon(
               SbIcons.engineering,
               size: 64, // Standard large icon size
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), 
 
             // App Name
             Text(
@@ -78,21 +78,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               'Civil Engineering Intelligence',
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), 
 
             // Loading Indicator
             CircularProgressIndicator(
               color: Theme.of(context).colorScheme.primary,
             ),
             
-            const SizedBox(height: SbSpacing.xxl * 2), // Replaced const SizedBox(height: SbSpacing.xs)8
+            const SizedBox(height: SbSpacing.xxl * 2), 
 
             // Footer
             Text(
               '© Pijush Debbarma',
               style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+            const SizedBox(height: SbSpacing.xxl), 
           ],
         ),
       ),

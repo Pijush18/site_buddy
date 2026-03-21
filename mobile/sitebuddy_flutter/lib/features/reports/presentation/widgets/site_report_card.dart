@@ -1,6 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/shared/domain/models/site_report.dart';
@@ -13,15 +12,15 @@ class SiteReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: SbSpacing.paddingLG,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          AppLayout.vGap24,
+          const SizedBox(height: SbSpacing.lg),
           ..._buildSections(context),
-          AppLayout.vGap24,
+          const SizedBox(height: SbSpacing.lg),
           _buildFooter(context),
         ],
       ),
@@ -33,7 +32,7 @@ class SiteReportCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+      padding: SbSpacing.verticalLG.copyWith(top: 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +40,7 @@ class SiteReportCard extends StatelessWidget {
             Container(
               height: 48,
               width: 48,
-              margin: const EdgeInsets.only(right: SbSpacing.lg),
+              margin: SbSpacing.horizontalLG.copyWith(left: 0),
               child: Icon(SbIcons.site, color: colorScheme.primary),
             ),
           ],
@@ -79,8 +78,8 @@ class SiteReportCard extends StatelessWidget {
   }
 
   Widget _buildMetaText(BuildContext context, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.xs),
+    return Container(
+      padding: SbSpacing.paddingXS.copyWith(left: 0, right: 0, top: 0),
       child: RichText(
         text: TextSpan(
           text: label,
@@ -98,13 +97,13 @@ class SiteReportCard extends StatelessWidget {
 
   List<Widget> _buildSections(BuildContext context) {
     return report.sections.map((section) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+      return Container(
+        padding: SbSpacing.verticalLG.copyWith(top: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(SbSpacing.sm),
+              padding: SbSpacing.paddingSM,
               child: Row(
                 children: [
                   Expanded(
@@ -118,11 +117,8 @@ class SiteReportCard extends StatelessWidget {
             ),
             const SizedBox(height: SbSpacing.sm),
             ...section.content.map(
-              (text) => Padding(
-                padding: const EdgeInsets.only(
-                  bottom: SbSpacing.sm,
-                  left: SbSpacing.sm,
-                ),
+              (text) => Container(
+                padding: SbSpacing.paddingSM.copyWith(right: 0, top: 0),
                 child: Text(
                   text,
                   style: Theme.of(context).textTheme.bodyLarge!,
@@ -137,7 +133,7 @@ class SiteReportCard extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: SbSpacing.sm),
+      padding: SbSpacing.verticalSM.copyWith(bottom: 0),
       child: Text(
         'Generated natively by Site Buddy',
         style: Theme.of(context).textTheme.bodyMedium!,

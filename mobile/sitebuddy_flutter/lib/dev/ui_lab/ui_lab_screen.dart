@@ -76,11 +76,11 @@ class _DesignTokensTab extends StatelessWidget {
       padding: const EdgeInsets.all(SbSpacing.lg),
       children: const [
         ColorsLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
         TypographyLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
         SpacingLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
         RadiusLabSection(),
       ],
     );
@@ -94,7 +94,7 @@ class _ComponentsTab extends StatelessWidget {
       padding: const EdgeInsets.all(SbSpacing.lg),
       children: const [
         ComponentLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap32
+        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
         EngineeringWidgetsSection(),
       ],
     );

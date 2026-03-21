@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
@@ -9,7 +9,7 @@ class SbGridCard extends StatefulWidget {
   final Color color;
   final VoidCallback onTap;
   final bool isVibrant;
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? margin;
 
   const SbGridCard({
     super.key,
@@ -18,7 +18,7 @@ class SbGridCard extends StatefulWidget {
     required this.color,
     required this.onTap,
     this.isVibrant = false,
-    this.margin = EdgeInsets.zero,
+    this.margin = SbSpacing.zero,
   });
 
   @override
@@ -33,7 +33,6 @@ class _SbGridCardState extends State<SbGridCard> {
     final colorScheme = Theme.of(context).colorScheme;
 
     // Premium Border Logic
-    // Sky Blue Border Hierarchy (High Visibility: 70% Opacity)
     final currentBorderColor = AppColors.skyBlue.withValues(alpha: 0.7);
     
     final backgroundColor = widget.isVibrant ? widget.color : colorScheme.surfaceContainerHighest;
@@ -44,10 +43,10 @@ class _SbGridCardState extends State<SbGridCard> {
       curve: Curves.easeOut,
       child: Material(
         color: backgroundColor,
-        borderRadius: AppLayout.borderRadiusCard,
+        borderRadius: SbRadius.borderMedium,
         elevation: 0,
         child: InkWell(
-          borderRadius: AppLayout.borderRadiusCard,
+          borderRadius: SbRadius.borderMedium,
           onTapDown: (_) => setState(() => _pressed = true),
           onTapUp: (_) {
             setState(() => _pressed = false);
@@ -56,53 +55,50 @@ class _SbGridCardState extends State<SbGridCard> {
           onTapCancel: () => setState(() => _pressed = false),
           onTap: widget.onTap,
           child: AnimatedContainer(
-            margin: widget.margin ?? EdgeInsets.zero,
+            margin: widget.margin ?? SbSpacing.zero,
+            padding: SbSpacing.paddingLG,
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeOut,
             decoration: BoxDecoration(
-              borderRadius: AppLayout.borderRadiusCard,
+              borderRadius: SbRadius.borderMedium,
               border: Border.all(color: currentBorderColor, width: 1.0),
               gradient: widget.isVibrant
                   ? LinearGradient(
                       colors: [
                         widget.color,
-                        widget.color.withValues(alpha: 0.9), // Subtle shift
+                        widget.color.withValues(alpha: 0.9),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     )
                   : null,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(SbSpacing.lg),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // High-Contrast Clean Icon with Optical Bias
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2), // Optical bias padding top: 2
-                    child: Icon(
-                      widget.icon,
-                      color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
-                      size: 22, 
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: SbSpacing.verticalXXS.copyWith(bottom: 0),
+                  child: Icon(
+                    widget.icon,
+                    color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
+                    size: 22, 
+                  ),
+                ),
+                const SizedBox(height: SbSpacing.sm),
+                SizedBox(
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      widget.label,
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.sm), // Standardized gap
-                  SizedBox(
-                    height: 48, // Fixed height constraint to ensure multiline/single line labels don't change card sizes.
-                    child: Center(
-                      child: Text(
-                        widget.label,
-                        style: Theme.of(context).textTheme.labelLarge!,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -110,5 +106,3 @@ class _SbGridCardState extends State<SbGridCard> {
     );
   }
 }
-
-

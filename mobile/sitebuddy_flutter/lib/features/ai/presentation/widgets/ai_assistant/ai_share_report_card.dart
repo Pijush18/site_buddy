@@ -41,17 +41,17 @@ class AiShareReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
+    return Container(
+      padding: SbSpacing.horizontalSM,
       child: SbCard(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: SbSpacing.paddingLG,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min, // Keep card wrapped safely around text
           children: [
             // HEADER
             Container(
-              padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+              padding: SbSpacing.verticalSM.copyWith(top: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,7 +95,7 @@ class AiShareReportCard extends StatelessWidget {
 
             // FOOTER BRANDING
             Container(
-              padding: const EdgeInsets.only(top: SbSpacing.sm),
+              padding: SbSpacing.verticalSM.copyWith(bottom: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

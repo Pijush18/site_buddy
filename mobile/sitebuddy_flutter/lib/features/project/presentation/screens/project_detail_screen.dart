@@ -76,7 +76,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
-              margin: const EdgeInsets.only(right: SbSpacing.lg),
+              margin: SbSpacing.horizontalLG.copyWith(left: 0),
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
@@ -91,7 +91,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           // ── Status Header ──
           SbSection(
             child: SbCard(
-              padding: const EdgeInsets.all(SbSpacing.lg),
+              padding: SbSpacing.paddingLG,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -103,10 +103,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SbSpacing.lg,
-                          vertical: SbSpacing.sm / 2,
-                        ),
+                        padding: (SbSpacing.horizontalLG.add(SbSpacing.verticalSM.copyWith(bottom: 0))) * 0.5,
                         child: Text(
                           proj.status.label,
                           style: Theme.of(context).textTheme.labelMedium!,
@@ -314,7 +311,7 @@ class _StatCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: SbSpacing.paddingLG,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

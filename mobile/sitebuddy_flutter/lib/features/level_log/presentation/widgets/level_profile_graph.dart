@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
@@ -44,16 +44,12 @@ class LevelProfileGraph extends StatelessWidget {
 
     return Container(
       height: height,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppLayout.spaceL,
-        vertical: AppLayout.spaceXL,
-      ),
+      padding: SbSpacing.horizontalLG.add(SbSpacing.verticalXXL),
       child: CustomPaint(
         size: Size.infinite,
         painter: _ProfilePainter(
           points: validPoints,
-          isDark: Theme.of(context).brightness == Brightness.dark,
-          primaryColor: Theme.of(context).colorScheme.primary,
+          colorScheme: Theme.of(context).colorScheme,
           labelStyle: Theme.of(context).textTheme.labelMedium!,
         ),
       ),
@@ -71,14 +67,12 @@ class _ProfilePoint {
 
 class _ProfilePainter extends CustomPainter {
   final List<_ProfilePoint> points;
-  final bool isDark;
-  final Color primaryColor;
+  final ColorScheme colorScheme;
   final TextStyle labelStyle;
 
   _ProfilePainter({
     required this.points,
-    required this.isDark,
-    required this.primaryColor,
+    required this.colorScheme,
     required this.labelStyle,
   });
 
@@ -87,21 +81,21 @@ class _ProfilePainter extends CustomPainter {
     if (points.isEmpty) return;
 
     final axisPaint = Paint()
-      ..color = isDark ? Colors.white24 : Colors.black12
+      ..color = colorScheme.outlineVariant
       ..strokeWidth = 1;
 
     final linePaint = Paint()
-      ..color = primaryColor
+      ..color = colorScheme.primary
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
     final fillPaint = Paint()
-      ..color = primaryColor.withValues(alpha: 0.1)
+      ..color = colorScheme.primary.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final dotPaint = Paint()
-      ..color = primaryColor
+      ..color = colorScheme.primary
       ..style = PaintingStyle.fill;
 
     // Find bounds for normalization
@@ -136,7 +130,7 @@ class _ProfilePainter extends CustomPainter {
         text: TextSpan(
           text: labelValue.toStringAsFixed(1),
           style: labelStyle.copyWith(
-            color: isDark ? Colors.white70 : Colors.black87,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         textDirection: TextDirection.ltr,
@@ -183,9 +177,7 @@ class _ProfilePainter extends CustomPainter {
         text: TextSpan(
           text: p.label,
           style: labelStyle.copyWith(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.7)
-                : Colors.black.withValues(alpha: 0.7),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
           ),
         ),
         textDirection: TextDirection.ltr,

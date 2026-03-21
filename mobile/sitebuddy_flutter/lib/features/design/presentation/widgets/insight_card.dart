@@ -28,7 +28,7 @@ class InsightCard extends StatelessWidget {
           (insight) => Padding(
             padding: const EdgeInsets.only(bottom: SbSpacing.sm),
             child: Container(
-              padding: const EdgeInsets.all(SbSpacing.sm),
+              padding: SbSpacing.paddingSM,
 
               child: Row(
                 children: [
@@ -36,7 +36,7 @@ class InsightCard extends StatelessWidget {
                     insight.isWarning
                         ? SbIcons.lightbulb
                         : SbIcons.info,
-                    color: insight.isWarning ? Colors.orange : Colors.blue,
+                    color: insight.isWarning ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.primary,
                     size: 20,
                   ),
                   const SizedBox(width: SbSpacing.sm),

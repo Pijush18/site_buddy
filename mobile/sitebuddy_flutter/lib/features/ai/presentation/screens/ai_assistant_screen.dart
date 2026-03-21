@@ -68,15 +68,15 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
       title: 'Smart Assistant',
       usePadding: false,
       appBarActions: [
-        IconButton(
-          icon: const Icon(SbIcons.task),
+        SbButton.icon(
+          icon: SbIcons.task,
           onPressed: () {
             final report = controller.generateReport();
             context.push('/report/preview', extra: report);
           },
         ),
-        IconButton(
-          icon: const Icon(SbIcons.settings),
+        SbButton.icon(
+          icon: SbIcons.settings,
           onPressed: () => context.push('/settings/branding'),
         ),
       ],
@@ -100,16 +100,16 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
             ),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
+              padding: SbSpacing.verticalLG,
               physics: const BouncingScrollPhysics(),
               children: [
                 if (state.isLoading)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: SbSpacing.xxl),
-                    child: Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
+                Container(
+                  padding: SbSpacing.verticalXXL,
+                  child: const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
                 else if (state.response != null) ...[
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
@@ -145,15 +145,15 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                 else if (state.error != null)
                   AiErrorWidget(error: state.error!)
                 else
-                  const Padding(
-                    padding: EdgeInsets.all(SbSpacing.lg),
-                    child: OnboardingMessage(),
+                  Container(
+                    padding: SbSpacing.paddingLG,
+                    child: const OnboardingMessage(),
                   ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+          Container(
+            padding: SbSpacing.paddingLG,
             child: AiInputBar(
               onChanged: controller.updateInput,
               onSubmit: () => controller.processInput(context),

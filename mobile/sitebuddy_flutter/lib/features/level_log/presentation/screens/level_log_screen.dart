@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class LevelLogScreen extends ConsumerWidget {
                 else
                   ListView.separated(
                     shrinkWrap: true,
-                    padding: EdgeInsets.zero,
+                    padding: SbSpacing.zero,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: state.entries.length,
                     separatorBuilder: (_, index) =>
@@ -103,8 +104,8 @@ class _EmptyState extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
+      child: Container(
+        padding: SbSpacing.verticalXXL,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -192,10 +193,10 @@ class _MethodToggle extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+        padding: SbSpacing.verticalSM,
         decoration: BoxDecoration(
           color: isActive ? colorScheme.primary : colorScheme.surface,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: SbRadius.borderSmall,
           border: Border.all(
             color: isActive ? colorScheme.primary : colorScheme.outlineVariant,
           ),

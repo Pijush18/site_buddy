@@ -18,19 +18,21 @@ class DeflectionHistorySection extends ConsumerWidget {
 
     if (history.isEmpty) return const SizedBox.shrink();
 
+    final theme = Theme.of(context);
+
     return SbSection(
       title: 'Recent Deflection Checks',
       child: Column(
         children: history.take(3).map((check) {
           final isSafe = check['isSafe'] as bool;
-          return Padding(
-            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+          return Container(
+            padding: SbSpacing.verticalSM.copyWith(top: 0),
             child: SbCard(
               child: Row(
                 children: [
                   Icon(
                     isSafe ? SbIcons.checkFilled : SbIcons.error,
-                    color: isSafe ? Colors.green : Colors.red,
+                    color: isSafe ? theme.colorScheme.primary : theme.colorScheme.error,
                     size: 20,
                   ),
                   const SizedBox(width: SbSpacing.lg),
@@ -40,13 +42,12 @@ class DeflectionHistorySection extends ConsumerWidget {
                       children: [
                         Text(
                           'L/d: ${check['actual'].toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           DateTime.parse(check['date']).toString().substring(0, 16),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: theme.textTheme.bodySmall!.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -54,9 +55,9 @@ class DeflectionHistorySection extends ConsumerWidget {
                   ),
                   Text(
                     isSafe ? 'SAFE' : 'FAIL',
-                    style: TextStyle(
+                    style: theme.textTheme.labelMedium!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isSafe ? Colors.green : Colors.red,
+                      color: isSafe ? theme.colorScheme.primary : theme.colorScheme.error,
                     ),
                   ),
                 ],

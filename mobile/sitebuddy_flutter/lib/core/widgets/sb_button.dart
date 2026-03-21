@@ -1,7 +1,11 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Standardized Button Metrics
+const double _buttonHeight = 48.0;
+const double _buttonHeightCompact = 32.0;
+const double _iconSize = 20.0;
 
 enum _SbButtonType { primary, secondary, outline, ghost, icon, compact }
 
@@ -191,8 +195,8 @@ class SbButton extends StatelessWidget {
     }
 
     final spinner = SizedBox(
-      height: AppLayout.iconSize,
-      width: AppLayout.iconSize,
+      height: _iconSize,
+      width: _iconSize,
       child: CircularProgressIndicator(
         strokeWidth: 2,
         valueColor: AlwaysStoppedAnimation<Color>(loadingColor),
@@ -205,7 +209,7 @@ class SbButton extends StatelessWidget {
           width: width,
           child: ElevatedButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
-            style: ElevatedButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
+            style: ElevatedButton.styleFrom(minimumSize: const Size(0, _buttonHeight)),
             child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
@@ -217,7 +221,7 @@ class SbButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: colorScheme.secondaryContainer,
               foregroundColor: colorScheme.onSecondaryContainer,
-              minimumSize: const Size(0, AppLayout.buttonHeight),
+              minimumSize: const Size(0, _buttonHeight),
             ),
             child: isLoading ? spinner : _buildLabelRow(context),
           ),
@@ -227,7 +231,7 @@ class SbButton extends StatelessWidget {
           width: width,
           child: OutlinedButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
-            style: OutlinedButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
+            style: OutlinedButton.styleFrom(minimumSize: const Size(0, _buttonHeight)),
             child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
@@ -236,23 +240,23 @@ class SbButton extends StatelessWidget {
           width: width,
           child: TextButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
-            style: TextButton.styleFrom(minimumSize: const Size(0, AppLayout.buttonHeight)),
+            style: TextButton.styleFrom(minimumSize: const Size(0, _buttonHeight)),
             child: isLoading ? spinner : _buildLabelRow(context),
           ),
         );
       case _SbButtonType.icon:
         // IconButton replacement ensuring 48x48 hit box minimum
         return SizedBox(
-          height: AppLayout.buttonHeight,
-          width: AppLayout.buttonHeight,
+          height: _buttonHeight,
+          width: _buttonHeight,
           child: IconButton(
             tooltip: tooltip,
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
-            iconSize: AppLayout.iconSize,
+            iconSize: _iconSize,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(
-              minWidth: AppLayout.buttonHeight,
-              minHeight: AppLayout.buttonHeight,
+              minWidth: _buttonHeight,
+              minHeight: _buttonHeight,
             ),
             icon: isLoading
                 ? spinner
@@ -261,7 +265,7 @@ class SbButton extends StatelessWidget {
         );
       case _SbButtonType.compact:
         return SizedBox(
-          height: AppLayout.buttonHeightCompact,
+          height: _buttonHeightCompact,
           child: TextButton(
             onPressed: (isLoading || onPressed == null) ? null : _handlePress,
             style: TextButton.styleFrom(

@@ -1,4 +1,3 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
@@ -45,7 +44,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        AppLayout.vGap24,
+        SizedBox(height: SbSpacing.lg),
 
         // --- BUTTONS ---
         Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
@@ -75,7 +74,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        AppLayout.vGap32,
+        SizedBox(height: SbSpacing.xxl),
 
         // --- CARDS ---
         Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
@@ -101,9 +100,8 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
             const SizedBox(width: SbSpacing.lg),
             Expanded(
-              child: Container(
-                decoration: AppLayout.sbCommonDecoration(context),
-                padding: const EdgeInsets.all(SbSpacing.lg),
+              child: SbCard(
+                padding: SbSpacing.paddingLG,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -112,14 +110,14 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
                     const SizedBox(height: SbSpacing.sm),
-                    const Text('Direct use of AppLayout.sbCommonDecoration.'),
+                    const Text('Standard card usage from SbCard.'),
                   ],
                 ),
               ),
             ),
           ],
         ),
-        AppLayout.vGap32,
+        SizedBox(height: SbSpacing.xxl),
 
         // --- FORMS ---
         Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),

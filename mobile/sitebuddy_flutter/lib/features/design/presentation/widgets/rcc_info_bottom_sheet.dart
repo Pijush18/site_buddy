@@ -1,4 +1,3 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
@@ -31,8 +30,8 @@ class RccInfoBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+    return Container(
+      padding: SbSpacing.paddingLG,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +43,13 @@ class RccInfoBottomSheet extends StatelessWidget {
               height: 4,
             ),
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: SbSpacing.lg),
 
           // Header
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(SbSpacing.sm),
+                padding: SbSpacing.paddingSM,
                 
                 child: Icon(item.icon, color: colorScheme.primary, size: 24),
               ),
@@ -79,13 +78,13 @@ class RccInfoBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: SbSpacing.lg),
 
           Text(
             item.description,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          AppLayout.vGap24,
+          const SizedBox(height: SbSpacing.lg),
 
           // Specs List
           ...item.rccSpecs.map(
@@ -99,7 +98,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ),
           ),
 
-          AppLayout.vGap32,
+          const SizedBox(height: SbSpacing.xxl),
 
           // Action Buttons
           Column(

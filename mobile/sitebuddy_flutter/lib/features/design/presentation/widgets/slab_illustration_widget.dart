@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -34,7 +34,7 @@ class SlabIllustrationWidget extends StatelessWidget {
       height: 180,
 
       child: ClipRRect(
-        borderRadius: AppLayout.borderRadiusCard,
+        borderRadius: SbRadius.borderMedium,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -55,13 +55,10 @@ class SlabIllustrationWidget extends StatelessWidget {
 
             // Label Overlay
             Positioned(
-              bottom: AppLayout.spaceM,
-              right: AppLayout.spaceM,
+              bottom: SbSpacing.md,
+              right: SbSpacing.md,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.sm,
-                  vertical: AppLayout.spaceXS,
-                ),
+                padding: SbSpacing.horizontalSM.add(SbSpacing.verticalXS),
 
                 child: Text(
                   type.label.toUpperCase(),
@@ -147,7 +144,7 @@ class _OneWayPainter extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 0, size.width, size.height),
-        const Radius.circular(4),
+        SbRadius.radiusSmall,
       ),
       outlinePaint,
     );
@@ -182,7 +179,7 @@ class _TwoWayPainter extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 0, size.width, size.height),
-        const Radius.circular(4),
+        SbRadius.radiusSmall,
       ),
       outlinePaint,
     );

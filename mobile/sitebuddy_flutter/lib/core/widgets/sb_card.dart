@@ -9,8 +9,8 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 /// - Adaptive padding logic.
 class SbCard extends StatelessWidget {
   final Widget child;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Color? color;
   final VoidCallback? onTap;
   final bool isElevated;
@@ -31,7 +31,7 @@ class SbCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final br = BorderRadius.circular(SbRadius.medium);
+    final br = SbRadius.borderMedium;
 
     // Tonal Hierarchy based on prominence
     final surfaceColor = color ?? 
@@ -40,7 +40,7 @@ class SbCard extends StatelessWidget {
             : (isSubtle ? colorScheme.surface : colorScheme.surfaceContainer));
 
     return Container(
-      margin: margin ?? EdgeInsets.zero,
+      margin: margin ?? SbSpacing.zero,
       decoration: BoxDecoration(
         color: surfaceColor,
         borderRadius: br,
@@ -63,7 +63,7 @@ class SbCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: br,
           child: Padding(
-            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
+            padding: padding ?? SbSpacing.paddingMD,
             child: child,
           ),
         ),

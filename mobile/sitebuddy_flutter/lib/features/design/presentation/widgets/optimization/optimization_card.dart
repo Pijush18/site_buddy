@@ -15,10 +15,10 @@ class OptimizationCard extends StatelessWidget {
 
     final utilColor = option.utilization > 0.95
         ? colorScheme.error
-        : (option.utilization > 0.8 ? Colors.orange : colorScheme.primary);
+        : (option.utilization > 0.8 ? colorScheme.tertiary : colorScheme.primary);
 
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: SbSpacing.paddingLG,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,7 +32,7 @@ class OptimizationCard extends StatelessWidget {
                 ),
               ),
               if (option.utilization <= 1.0)
-                const Icon(Icons.check_circle, color: Colors.green, size: 16)
+                Icon(Icons.check_circle, color: colorScheme.primary, size: 16)
               else
                 Icon(Icons.warning, color: colorScheme.error, size: 16),
             ],

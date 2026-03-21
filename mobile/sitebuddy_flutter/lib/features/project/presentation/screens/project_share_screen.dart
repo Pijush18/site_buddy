@@ -100,11 +100,11 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
 
     return SbCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(SbSpacing.xxl), // Replaced SbSpacing.xxl
+      padding: SbSpacing.paddingXXL,
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(SbSpacing.sm), // Replaced SbSpacing.sm
+            padding: SbSpacing.paddingSM,
             child: Icon(icon, color: colorScheme.primary),
           ),
           const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
@@ -116,7 +116,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   title,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: SbSpacing.sm / 2), // Replaced const SizedBox(height: SbSpacing.xs)
+                const SizedBox(height: SbSpacing.xs),
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.labelMedium!,

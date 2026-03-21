@@ -11,6 +11,8 @@ export 'sb_section.dart';
 export 'sb_section_header.dart';
 export 'sb_grid.dart';
 export 'sb_list_group.dart';
+export 'sb_tool_grid_section.dart';
+export 'screen_padding.dart';
 
 // 🎨 Surfaces & Cards
 export 'sb_card.dart';
@@ -19,6 +21,10 @@ export 'sb_module_hero.dart';
 export 'feature_card.dart';
 export 'project_card.dart';
 export 'sb_smart_assistant_card.dart';
+export 'code_reference_card.dart';
+export 'previewable_card.dart';
+export 'info_card.dart';
+export 'action_card.dart';
 
 // ⌨️ Inputs & Controls
 export 'sb_button.dart';
@@ -27,6 +33,7 @@ export 'sb_dropdown.dart';
 export 'sb_selection.dart';
 export 'segmented_toggle.dart';
 export 'educational_toggle.dart';
+export 'smart_assistant_input.dart';
 
 // 📝 List Items & Tiles
 export 'sb_list_item_tile.dart';

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_layout.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -33,11 +33,9 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
+            padding: SbSpacing.verticalXXL,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: SbSpacing.xs + 2,
-              ), // 6px
+              padding: SbSpacing.horizontalXS.copyWith(left: 6, right: 6), // 6px
               child: RepaintBoundary(key: previewKey, child: child),
             ),
           ),
@@ -49,7 +47,7 @@ class PreviewableCard extends StatelessWidget {
 
   Widget _buildActionRow(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.xxl),
+      padding: SbSpacing.paddingXXL,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -96,12 +94,9 @@ class _ActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          padding: const EdgeInsets.symmetric(
-            horizontal: SbSpacing.xxl,
-            vertical: SbSpacing.lg,
-          ),
+          padding: SbSpacing.horizontalXXL.add(SbSpacing.verticalLG),
           shape: RoundedRectangleBorder(
-            borderRadius: AppLayout.borderRadiusCard,
+            borderRadius: SbRadius.borderMedium,
           ),
         ),
         icon: Icon(
@@ -118,13 +113,10 @@ class _ActionButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: action.onPressed,
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SbSpacing.lg,
-          vertical: SbSpacing.lg,
-        ),
+        padding: SbSpacing.paddingLG,
         side: BorderSide(color: primaryColor),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: SbRadius.borderMd,
         ),
       ),
       icon: Icon(action.icon, color: primaryColor, size: 20),

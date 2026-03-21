@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
@@ -14,15 +15,19 @@ class UserMessageWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: const EdgeInsets.only(bottom: SbSpacing.lg, left: SbSpacing.xxl, right: SbSpacing.lg),
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        margin: const EdgeInsets.only(
+          bottom: SbSpacing.lg,
+          left: SbSpacing.xxl,
+          right: SbSpacing.lg,
+        ),
+        padding: SbSpacing.paddingLG,
         decoration: BoxDecoration(
           color: colorScheme.primary,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
-            bottomRight: Radius.circular(4),
+            topLeft: SbRadius.radiusMedium,
+            topRight: SbRadius.radiusMedium,
+            bottomLeft: SbRadius.radiusMedium,
+            bottomRight: SbRadius.radiusSmall,
           ),
         ),
         child: Text(
@@ -41,8 +46,8 @@ class AiErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl, horizontal: SbSpacing.lg),
+    return Container(
+      padding: SbSpacing.verticalXXL.add(SbSpacing.horizontalLG),
       child: Center(
         child: Text(
           error,

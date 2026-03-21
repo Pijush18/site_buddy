@@ -11,6 +11,7 @@ class ShearHistorySection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
     final history = ref
         .watch(safetyCheckControllerProvider)
         .history
@@ -24,14 +25,14 @@ class ShearHistorySection extends ConsumerWidget {
       child: Column(
         children: history.take(3).map((check) {
     final isSafe = check['isSafe'] as bool;
-          return Padding(
-            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+          return Container(
+            padding: SbSpacing.verticalSM.copyWith(top: 0),
             child: SbCard(
               child: Row(
                 children: [
                   Icon(
                     isSafe ? SbIcons.checkFilled : SbIcons.error,
-                    color: isSafe ? Colors.green : Colors.red,
+                    color: isSafe ? colorScheme.primary : colorScheme.error,
                     size: 20,
                   ),
                   const SizedBox(width: SbSpacing.lg),

@@ -70,8 +70,8 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.xxl),
+    return Container(
+      padding: SbSpacing.verticalXXL.copyWith(top: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

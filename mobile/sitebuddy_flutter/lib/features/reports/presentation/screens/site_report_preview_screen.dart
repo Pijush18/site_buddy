@@ -19,7 +19,6 @@ import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-import 'package:site_buddy/core/widgets/previewable_card.dart';
 import 'package:site_buddy/core/utils/site_report_pdf_generator.dart';
 import 'package:site_buddy/core/utils/site_report_image_generator.dart';
 import 'package:site_buddy/shared/domain/models/site_report.dart';

@@ -91,8 +91,8 @@ class HistoryDetailScreen extends ConsumerWidget {
 
     return Column(
       children: params.entries.map((e) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+        return Container(
+          padding: SbSpacing.verticalSM.copyWith(top: 0),
           child: SbListItemTile(
             title: e.key,
             onTap: () {}, // Immutable detail view

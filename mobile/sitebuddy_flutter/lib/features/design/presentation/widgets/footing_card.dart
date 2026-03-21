@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/feature_card.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// WIDGET: FootingCard
 /// A premium-styled card used on the footing type selection screen.

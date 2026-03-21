@@ -49,9 +49,23 @@ class SbSpacing {
   static const EdgeInsets paddingMD = EdgeInsets.all(md);
   static const EdgeInsets paddingLG = EdgeInsets.all(lg);
   static const EdgeInsets paddingXL = EdgeInsets.all(xl);
+  static const EdgeInsets paddingXXL = EdgeInsets.all(xxl);
 
+  static const EdgeInsets horizontalXS = EdgeInsets.symmetric(horizontal: xs);
   static const EdgeInsets horizontalSM = EdgeInsets.symmetric(horizontal: sm);
+  static const EdgeInsets horizontalMD = EdgeInsets.symmetric(horizontal: md);
   static const EdgeInsets horizontalLG = EdgeInsets.symmetric(horizontal: lg);
+  static const EdgeInsets horizontalXL = EdgeInsets.symmetric(horizontal: xl);
+  static const EdgeInsets horizontalXXL = EdgeInsets.symmetric(horizontal: xxl);
+
+  static const EdgeInsets verticalXXS = EdgeInsets.symmetric(vertical: xxs);
+  static const EdgeInsets verticalXS = EdgeInsets.symmetric(vertical: xs);
   static const EdgeInsets verticalSM = EdgeInsets.symmetric(vertical: sm);
+  static const EdgeInsets verticalMD = EdgeInsets.symmetric(vertical: md);
   static const EdgeInsets verticalLG = EdgeInsets.symmetric(vertical: lg);
+  static const EdgeInsets verticalXL = EdgeInsets.symmetric(vertical: xl);
+  static const EdgeInsets verticalXXL = EdgeInsets.symmetric(vertical: xxl);
+  static const EdgeInsets verticalXXXL = EdgeInsets.symmetric(vertical: xxxl);
+
+  static const EdgeInsets zero = EdgeInsets.zero;
 }

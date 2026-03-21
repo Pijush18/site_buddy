@@ -10,7 +10,6 @@ import 'package:site_buddy/features/design/application/controllers/footing_desig
 
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/footing_reinforcement_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
-import 'package:site_buddy/core/widgets/code_reference_card.dart';
 import 'package:site_buddy/core/data/code_references/is_456_references.dart';
 import 'package:site_buddy/core/services/educational_mode_service.dart';
 

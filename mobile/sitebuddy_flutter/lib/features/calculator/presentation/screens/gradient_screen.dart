@@ -237,7 +237,7 @@ class _FieldReference extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.xxl), // Replaced AppLayout.vGap24
+        const SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.lg)
       ],
     );
   }
