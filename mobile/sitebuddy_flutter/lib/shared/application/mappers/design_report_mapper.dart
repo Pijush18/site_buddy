@@ -5,11 +5,44 @@ import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+
 /// MAPPER: DesignReportMapper
 /// PURPOSE: Decouples domain entities from the report system by providing centralized
 /// transformation logic.
 class DesignReportMapper {
   static const _uuid = Uuid();
+
+  /// NEW: Converts a legacy [CalculationHistoryEntry] to a unified [DesignReport].
+  static DesignReport fromHistoryEntry(CalculationHistoryEntry entry) {
+    return DesignReport(
+      id: entry.id,
+      designType: _mapCalculationType(entry.calculationType),
+      timestamp: entry.timestamp,
+      projectId: entry.projectId,
+      inputs: entry.inputParameters,
+      results: entry.resultData,
+      summary: entry.resultSummary,
+      isSafe: true, // Default to safe for history entries unless otherwise specified
+    );
+  }
+
+  static DesignType _mapCalculationType(CalculationType type) {
+    switch (type) {
+      case CalculationType.beam: return DesignType.beam;
+      case CalculationType.slab: return DesignType.slab;
+      case CalculationType.column: return DesignType.column;
+      case CalculationType.footing: return DesignType.footing;
+      case CalculationType.cement: return DesignType.cement;
+      case CalculationType.rebar: return DesignType.rebar;
+      case CalculationType.brick: return DesignType.brick;
+      case CalculationType.plaster: return DesignType.plaster;
+      case CalculationType.excavation: return DesignType.excavation;
+      case CalculationType.shuttering: return DesignType.shuttering;
+      case CalculationType.sand: return DesignType.sand;
+      case CalculationType.levelLog: return DesignType.levelLog;
+    }
+  }
 
   /// Converts [BeamDesignState] to a unified [DesignReport].
   static DesignReport fromBeam(BeamDesignState state) {

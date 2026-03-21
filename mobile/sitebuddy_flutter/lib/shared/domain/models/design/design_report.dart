@@ -14,6 +14,22 @@ enum DesignType {
   column,
   @HiveField(3)
   footing,
+  @HiveField(4)
+  levelLog,
+  @HiveField(5)
+  cement,
+  @HiveField(6)
+  rebar,
+  @HiveField(7)
+  brick,
+  @HiveField(8)
+  plaster,
+  @HiveField(9)
+  excavation,
+  @HiveField(10)
+  shuttering,
+  @HiveField(11)
+  sand,
 }
 
 /// ENTITY: DesignReport
@@ -66,6 +82,14 @@ class DesignReport extends HiveObject {
       case DesignType.slab: return 'Slab Design';
       case DesignType.column: return 'Column Design';
       case DesignType.footing: return 'Footing Design';
+      case DesignType.cement: return 'Cement Calculator';
+      case DesignType.rebar: return 'Rebar Calculator';
+      case DesignType.brick: return 'Brick Wall Calculator';
+      case DesignType.plaster: return 'Plaster Calculator';
+      case DesignType.excavation: return 'Excavation Calculator';
+      case DesignType.shuttering: return 'Shuttering Calculator';
+      case DesignType.sand: return 'Sand Calculator';
+      case DesignType.levelLog: return 'Level Log';
     }
   }
 }

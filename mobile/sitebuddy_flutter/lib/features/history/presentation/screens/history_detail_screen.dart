@@ -1,13 +1,13 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
+import 'package:site_buddy/shared/presentation/widgets/design_report_view.dart';
+
+// Controllers (Required for Restore logic)
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
@@ -19,12 +19,21 @@ import 'package:site_buddy/features/calculator/application/controllers/plaster_c
 import 'package:site_buddy/features/calculator/application/controllers/excavation_controller.dart';
 import 'package:site_buddy/features/calculator/application/controllers/shuttering_controller.dart';
 import 'package:site_buddy/features/calculator/application/controllers/sand_controller.dart';
+
+// States (Required for Restore logic)
 import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 
+/// SCREEN: HistoryDetailScreen
+/// PURPOSE: Displays the details of a historical calculation using the unified DesignReport system.
+/// 
+/// FEATURES:
+/// - Uses [DesignReportMapper] for data conversion.
+/// - Uses [DesignReportView] for standardized rendering.
+/// - RESTORE Logic: Allows users to reload a past calculation into the active workspace.
 class HistoryDetailScreen extends ConsumerWidget {
   final CalculationHistoryEntry entry;
 
@@ -32,95 +41,41 @@ class HistoryDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateStr = DateFormat('MMM dd, yyyy - HH:mm').format(entry.timestamp);
+    // Convert entry to standardized report for rendering
+    final report = DesignReportMapper.fromHistoryEntry(entry);
 
     return SbPage.detail(
       title: 'History Detail',
-      body: SbSectionList(
-        sections: [
-          SbSection(
-            child: _buildHeader(context, dateStr),
-          ),
-          SbSection(
-            title: 'Input Parameters',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildParametersList(context),
-                const SizedBox(height: SbSpacing.md),
-                PrimaryCTA(
-                  onPressed: () => _restoreVersion(context, ref),
-                  label: 'Restore this Version',
-                  width: double.infinity,
-                ),
-                const SizedBox(height: SbSpacing.md),
-              ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(SbSpacing.md),
+        child: Column(
+          children: [
+            // Standardized Report View
+            DesignReportView(report: report),
+            
+            const SizedBox(height: SbSpacing.lg),
+            
+            // Interaction Section (Restore)
+            PrimaryCTA(
+              onPressed: () => _handleRestore(context, ref),
+              label: 'Restore this Version',
+              width: double.infinity,
+              icon: Icons.restore_rounded,
             ),
-          ),
-        ],
+            const SizedBox(height: SbSpacing.xl),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context, String dateStr) {
-    return SbCard(
-      child: Column(
-        children: [
-          Text(
-            entry.calculationType.name.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
-          const Divider(height: SbSpacing.lg), // Replaced Divider(16)
-          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
-          Text(
-            entry.resultSummary,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium!,
-          ),
-          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
-          Text(
-            dateStr,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildParametersList(BuildContext context) {
-    final params = entry.inputParameters;
-    if (params.isEmpty) {
-      return Text(
-        'No parameters recorded.',
-        style: Theme.of(context).textTheme.bodyLarge!,
-      );
-    }
-
-    return Column(
-      children: params.entries.map((e) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
-          child: SbListItemTile(
-            title: e.key,
-            onTap: () {}, // Immutable detail view
-            trailing: Text(
-              e.value.toString(),
-              style: Theme.of(context).textTheme.labelMedium!,
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  void _restoreVersion(BuildContext context, WidgetRef ref) {
+  /// Restores the history entry values back into the active controllers.
+  void _handleRestore(BuildContext context, WidgetRef ref) {
     final params = entry.inputParameters;
 
     switch (entry.calculationType) {
       case CalculationType.column:
-        ref
-            .read(columnDesignControllerProvider.notifier)
-            .restore(
+        ref.read(columnDesignControllerProvider.notifier).restore(
               ColumnDesignState(
                 projectId: entry.projectId,
                 type: params['type'] != null
@@ -137,9 +92,7 @@ class HistoryDetailScreen extends ConsumerWidget {
         break;
 
       case CalculationType.beam:
-        ref
-            .read(beamDesignControllerProvider.notifier)
-            .restore(
+        ref.read(beamDesignControllerProvider.notifier).restore(
               BeamDesignState(
                 projectId: entry.projectId,
                 span: (params['span'] as num?)?.toDouble() ?? 4000.0,
@@ -153,9 +106,7 @@ class HistoryDetailScreen extends ConsumerWidget {
         break;
 
       case CalculationType.slab:
-        ref
-            .read(slabDesignControllerProvider.notifier)
-            .restore(
+        ref.read(slabDesignControllerProvider.notifier).restore(
               SlabDesignState(
                 projectId: entry.projectId,
                 lx: (params['lx'] as num?)?.toDouble() ?? 4.0,
@@ -168,58 +119,46 @@ class HistoryDetailScreen extends ConsumerWidget {
         break;
 
       case CalculationType.footing:
-        ref
-            .read(footingDesignControllerProvider.notifier)
-            .restore(
+        ref.read(footingDesignControllerProvider.notifier).restore(
               FootingDesignState(
                 projectId: entry.projectId,
-                columnLoad:
-                    (params['columnLoad'] as num?)?.toDouble() ?? 1000.0,
+                columnLoad: (params['columnLoad'] as num?)?.toDouble() ?? 1000.0,
                 sbc: (params['sbc'] as num?)?.toDouble() ?? 200.0,
                 footingLength: (params['length'] as num?)?.toDouble() ?? 2.0,
                 footingWidth: (params['width'] as num?)?.toDouble() ?? 2.0,
-                footingThickness:
-                    (params['thickness'] as num?)?.toDouble() ?? 500.0,
+                footingThickness: (params['thickness'] as num?)?.toDouble() ?? 500.0,
                 columnSpacing: (params['spacing'] as num?)?.toDouble() ?? 0.0,
               ),
             );
         break;
 
-      case CalculationType.levelLog:
-        SbFeedback.showToast(
-          context: context,
-          message:
-              'Level Log versioning is handled via the Project Saved Sessions.',
-        );
-        return;
-
       case CalculationType.cement:
         ref.read(cementControllerProvider.notifier).restore(params);
         break;
-
       case CalculationType.rebar:
         ref.read(rebarControllerProvider.notifier).restore(params);
         break;
-
       case CalculationType.brick:
         ref.read(brickWallProvider.notifier).restore(params);
         break;
-
       case CalculationType.plaster:
         ref.read(plasterProvider.notifier).restore(params);
         break;
-
       case CalculationType.excavation:
         ref.read(excavationProvider.notifier).restore(params);
         break;
-
       case CalculationType.shuttering:
         ref.read(shutteringProvider.notifier).restore(params);
         break;
-
       case CalculationType.sand:
         ref.read(sandControllerProvider.notifier).restore(params);
         break;
+      case CalculationType.levelLog:
+        SbFeedback.showToast(
+          context: context,
+          message: 'Level Log versioning is handled via Project Sessions.',
+        );
+        return;
     }
 
     SbFeedback.showToast(
@@ -230,13 +169,3 @@ class HistoryDetailScreen extends ConsumerWidget {
     context.pop();
   }
 }
-
-
-
-
-
-
-
-
-
-

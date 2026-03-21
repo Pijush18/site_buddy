@@ -76,6 +76,22 @@ class DesignTypeAdapter extends TypeAdapter<DesignType> {
         return DesignType.column;
       case 3:
         return DesignType.footing;
+      case 4:
+        return DesignType.levelLog;
+      case 5:
+        return DesignType.cement;
+      case 6:
+        return DesignType.rebar;
+      case 7:
+        return DesignType.brick;
+      case 8:
+        return DesignType.plaster;
+      case 9:
+        return DesignType.excavation;
+      case 10:
+        return DesignType.shuttering;
+      case 11:
+        return DesignType.sand;
       default:
         return DesignType.beam;
     }
@@ -95,6 +111,30 @@ class DesignTypeAdapter extends TypeAdapter<DesignType> {
         break;
       case DesignType.footing:
         writer.writeByte(3);
+        break;
+      case DesignType.levelLog:
+        writer.writeByte(4);
+        break;
+      case DesignType.cement:
+        writer.writeByte(5);
+        break;
+      case DesignType.rebar:
+        writer.writeByte(6);
+        break;
+      case DesignType.brick:
+        writer.writeByte(7);
+        break;
+      case DesignType.plaster:
+        writer.writeByte(8);
+        break;
+      case DesignType.excavation:
+        writer.writeByte(9);
+        break;
+      case DesignType.shuttering:
+        writer.writeByte(10);
+        break;
+      case DesignType.sand:
+        writer.writeByte(11);
         break;
     }
   }
