@@ -11,11 +11,20 @@ import 'package:site_buddy/features/design/presentation/widgets/optimization/opt
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/core/services/design_advisor_service.dart';
 
-class SlabSafetyScreen extends ConsumerWidget {
+import 'package:site_buddy/core/optimization/optimization_option.dart';
+
+class SlabSafetyScreen extends ConsumerStatefulWidget {
   const SlabSafetyScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SlabSafetyScreen> createState() => _SlabSafetyScreenState();
+}
+
+class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
+  OptimizationOption? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(slabDesignControllerProvider);
 
     if (state.result == null) {
@@ -39,9 +48,30 @@ class SlabSafetyScreen extends ConsumerWidget {
         children: [
           PrimaryCTA(
             label: 'Export PDF Design Report',
-            onPressed: () => ref
-                .read(slabDesignControllerProvider.notifier)
-                .generateReport(),
+            onPressed: () async {
+              debugPrint('CTA CLICKED: Export PDF');
+              
+              final optimizationResult = ref.read(slabOptimizationProvider);
+              if (optimizationResult.options.isNotEmpty && _selectedOption == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please select an option first')),
+                );
+                return;
+              }
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Generating PDF Report...')),
+              );
+              try {
+                await ref.read(slabDesignControllerProvider.notifier).generateReport();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                  );
+                }
+              }
+            },
             icon: Icons.picture_as_pdf_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
@@ -55,8 +85,24 @@ class SlabSafetyScreen extends ConsumerWidget {
         IconButton(
           icon: const Icon(Icons.share_outlined),
           tooltip: 'Share Report',
-          onPressed: () =>
-              ref.read(slabDesignControllerProvider.notifier).generateReport(),
+          onPressed: () async {
+            final optimizationResult = ref.read(slabOptimizationProvider);
+            if (optimizationResult.options.isNotEmpty && _selectedOption == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please select an option first')),
+              );
+              return;
+            }
+            try {
+              await ref.read(slabDesignControllerProvider.notifier).generateReport();
+            } catch (e) {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                );
+              }
+            }
+          },
         ),
       ],
       body: SbSectionList(
@@ -110,6 +156,10 @@ class SlabSafetyScreen extends ConsumerWidget {
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
+                  debugPrint('OPTION CLICKED: Select Option ($opt)');
+                  setState(() {
+                    _selectedOption = opt;
+                  });
                   final thickness = opt.parameters['thickness'] as double;
                   ref
                       .read(slabDesignControllerProvider.notifier)

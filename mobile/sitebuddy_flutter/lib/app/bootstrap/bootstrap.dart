@@ -17,31 +17,19 @@ Future<void> bootstrap() async {
   // Initialize other services if Firebase is available
   try {
     if (Firebase.apps.isNotEmpty) {
-      // 1.1 Configure Crashlytics
+      // 1.1 Configure Crashlytics (synchronous — no network)
     if (!kIsWeb) {
       FlutterError.onError = (errorDetails) {
         FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
       };
-      // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
       PlatformDispatcher.instance.onError = (error, stack) {
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
         return true;
       };
     }
-
-    // 1.2 Log App Open with Analytics
-    await FirebaseAnalytics.instance.logAppOpen();
-
-    // 1.3 Initialize Remote Config
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(hours: 1),
-    ));
-    await remoteConfig.fetchAndActivate();
     }
   } catch (e) {
-    debugPrint('Firebase initialization failed: $e');
+    debugPrint('Firebase Crashlytics setup failed: $e');
   }
 
   // 2. Pre-initialize dependencies needed for Provider overrides
@@ -82,10 +70,31 @@ Future<void> bootstrap() async {
     }
   });
 
-  // 6. Trigger initialization pipeline
+  // 6. Firebase network services (non-blocking — runs AFTER UI is up)
+  _initFirebaseNetworkServices();
+
+  // 7. Trigger initialization pipeline
   // Note: We don't await this here so the UI (SplashScreen) can show up immediately.
   initializer.initialize();
 }
 
+/// Fire-and-forget: Analytics + Remote Config.
+/// These require network and MUST NOT block runApp().
+Future<void> _initFirebaseNetworkServices() async {
+  try {
+    if (Firebase.apps.isEmpty) return;
 
+    // Log app open
+    await FirebaseAnalytics.instance.logAppOpen();
 
+    // Remote Config with short timeout
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 1),
+    ));
+    await remoteConfig.fetchAndActivate();
+  } catch (e) {
+    debugPrint('Firebase network services init failed (non-fatal): $e');
+  }
+}

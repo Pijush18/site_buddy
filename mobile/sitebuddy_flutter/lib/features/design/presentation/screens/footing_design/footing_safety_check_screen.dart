@@ -50,10 +50,19 @@ class _FootingSafetyCheckScreenState
           PrimaryCTA(
             label: 'Calculation Sheet',
             icon: Icons.description_outlined,
-            onPressed: () {
-              ref
-                  .read(footingDesignControllerProvider.notifier)
-                  .generateReport();
+            onPressed: () async {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Generating PDF Report...')),
+              );
+              try {
+                await ref.read(footingDesignControllerProvider.notifier).generateReport();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                  );
+                }
+              }
             },
           ),
           const SizedBox(height: SbSpacing.sm),

@@ -33,13 +33,19 @@ class DesignReportService {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(32),
-        build: (context) => [
-          _buildHeader(title, subtitle, projectName, reference),
-          pw.SizedBox(height: 20),
-          ...content,
-          pw.Spacer(),
-          _buildFooter(context),
-        ],
+        header: (context) => pw.Column(
+          children: [
+            _buildHeader(title, subtitle, projectName, reference),
+            pw.SizedBox(height: 20),
+          ],
+        ),
+        footer: (context) => pw.Column(
+          children: [
+            pw.SizedBox(height: 20),
+            _buildFooter(context),
+          ],
+        ),
+        build: (context) => content,
       ),
     );
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 
-import 'package:site_buddy/core/theme/app_border.dart';
 import 'package:site_buddy/core/widgets/app_scaffold.dart';
+import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
 
 
 /// ENUM: SbPageType
@@ -131,28 +130,16 @@ class SbPage extends StatelessWidget {
 
   // ── Form ──────────────────────────────────────────────────────────────────
   Widget _buildFormPage(BuildContext context) {
-    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    // Resulting content-to-edge distance: 16px (Page) + 8px (Card Int) = 24px.
-    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
-    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
-
-    return AppScaffold(
+    // SINGLE SCAFFOLD PATTERN: AppScreenWrapper owns the Scaffold.
+    // CTA is pinned via AppScreenWrapper.bottomAction → Scaffold.bottomNavigationBar.
+    // Scrolling is explicitly enabled for form screens.
+    return AppScreenWrapper(
       title: title,
       actions: appBarActions,
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      padding: EdgeInsets.zero,
-      bottomNavigationBar:
-          bottomAction != null ? _BottomActionBar(child: bottomAction!) : null,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.only(
-          left: horizontalPadding,
-          right: horizontalPadding,
-          top: edgePadding,
-          bottom: edgePadding,
-        ),
-        child: formBody!,
-      ),
+      bottomAction: bottomAction,
+      usePadding: usePadding,
+      isScrollable: true,
+      child: formBody!,
     );
   }
 
@@ -214,53 +201,15 @@ class SbPage extends StatelessWidget {
 
   // ── Scaffold ──────────────────────────────────────────────────────────────
   Widget _buildScaffoldPage(BuildContext context) {
-    // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
-    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
-
-    return AppScaffold(
+    // SINGLE SCAFFOLD PATTERN: AppScreenWrapper owns the Scaffold.
+    return AppScreenWrapper(
       title: title,
       actions: appBarActions,
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      bottomNavigationBar: bottomAction != null
-          ? _BottomActionBar(child: bottomAction!)
-          : null,
-      padding: EdgeInsets.only(
-        left: horizontalPadding,
-        right: horizontalPadding,
-        top: edgePadding,
-        bottom: edgePadding,
-      ),
-      body: formBody!,
+      bottomAction: bottomAction,
+      usePadding: usePadding,
+      isScrollable: true,
+      child: formBody!,
     );
   }
 }
-
-class _BottomActionBar extends StatelessWidget {
-  final Widget child;
-  const _BottomActionBar({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.all(SbSpacing.lg),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          border: Border(
-            top: BorderSide(
-              color: context.colors.outline,
-              width: AppBorder.width,
-            ),
-          ),
-        ),
-        child: child,
-      ),
-    );
-  }
-}
-
-
-
-
 

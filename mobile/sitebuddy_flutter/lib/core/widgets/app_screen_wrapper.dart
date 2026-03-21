@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/theme/app_border.dart';
 
 /// CLASS: AppScreenWrapper
-/// PURPOSE: Standardized layout wrapper for all application screens.
+/// PURPOSE: Per-screen layout shell. Each screen gets its own [Scaffold].
+///
+/// ARCHITECTURE:
+///   - Nested Scaffolds are correct and expected in Flutter.
+///   - NavigationShell owns the outer Scaffold (bottom tab bar).
+///   - Each screen owns its inner Scaffold (AppBar + body + CTA).
+///   - Flutter handles this nesting automatically.
+///
+/// PARAMETERS:
+///   [title]        — AppBar title. If null, no AppBar is rendered.
+///   [actions]      — AppBar trailing actions.
+///   [bottomAction] — Pinned CTA via [Scaffold.bottomNavigationBar].
+///   [isScrollable] — Wraps child in [SingleChildScrollView] when true.
+///   [usePadding]   — Applies standard edge insets (SbSpacing.lg).
 class AppScreenWrapper extends StatelessWidget {
   final Widget? child;
   final List<Widget>? sections;
   final String? title;
   final Color? backgroundColor;
   final List<Widget>? actions;
-  final Widget? footer;
+
+  /// Pinned bottom-bar widget for primary actions (Calculate, Next, etc.).
+  /// Rendered via [Scaffold.bottomNavigationBar] so it never scrolls away
+  /// and is never hidden by the keyboard.
+  final Widget? bottomAction;
+
   final bool isScrollable;
   final bool usePadding;
 
@@ -20,8 +40,8 @@ class AppScreenWrapper extends StatelessWidget {
     this.title,
     this.backgroundColor,
     this.actions,
-    this.footer,
-    this.isScrollable = true,
+    this.bottomAction,
+    this.isScrollable = false,
     this.usePadding = true,
   });
 
@@ -29,11 +49,13 @@ class AppScreenWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final effectiveBackgroundColor = backgroundColor ?? theme.colorScheme.surface;
+    final effectiveBackgroundColor =
+        backgroundColor ?? theme.colorScheme.surface;
     final foregroundColor = theme.colorScheme.onSurface;
 
     return Scaffold(
       backgroundColor: effectiveBackgroundColor,
+      resizeToAvoidBottomInset: true,
       appBar: title != null
           ? AppBar(
               title: Text(
@@ -48,35 +70,32 @@ class AppScreenWrapper extends StatelessWidget {
               surfaceTintColor: Colors.transparent,
             )
           : null,
-      bottomNavigationBar: footer != null
-          ? SafeArea(
-              top: false,
-              child: footer!,
-            )
+      bottomNavigationBar: bottomAction != null
+          ? _BottomActionBar(child: bottomAction!)
           : null,
       body: SafeArea(
         bottom: false,
         child: isScrollable
             ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: usePadding 
+                padding: usePadding
                     ? const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.lg, 
+                        horizontal: SbSpacing.lg,
                         vertical: SbSpacing.lg,
-                      ) 
+                      )
                     : EdgeInsets.zero,
-                child: sections != null 
+                child: sections != null
                     ? Column(children: sections!)
                     : child ?? const SizedBox(),
               )
             : Padding(
-                padding: usePadding 
+                padding: usePadding
                     ? const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.lg, 
+                        horizontal: SbSpacing.lg,
                         vertical: SbSpacing.lg,
-                      ) 
+                      )
                     : EdgeInsets.zero,
-                child: sections != null 
+                child: sections != null
                     ? Column(children: sections!)
                     : child ?? const SizedBox(),
               ),
@@ -85,5 +104,27 @@ class AppScreenWrapper extends StatelessWidget {
   }
 }
 
+/// Styled bottom bar with top border, matching the app's design system.
+class _BottomActionBar extends StatelessWidget {
+  final Widget child;
+  const _BottomActionBar({required this.child});
 
-
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.all(SbSpacing.lg),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          border: Border(
+            top: BorderSide(
+              color: context.colors.outline,
+              width: AppBorder.width,
+            ),
+          ),
+        ),
+        child: child,
+      ),
+    );
+  }
+}

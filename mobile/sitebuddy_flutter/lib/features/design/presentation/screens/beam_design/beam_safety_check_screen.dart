@@ -58,10 +58,19 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           PrimaryCTA(
             label: 'Export PDF Report',
             icon: SbIcons.pdf,
-            onPressed: () {
-              ref
-                  .read(beamDesignControllerProvider.notifier)
-                  .generateReport();
+            onPressed: () async {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Generating PDF Report...')),
+              );
+              try {
+                await ref.read(beamDesignControllerProvider.notifier).generateReport();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                  );
+                }
+              }
             },
           ),
           const SizedBox(height: SbSpacing.sm),
