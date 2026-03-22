@@ -6,61 +6,58 @@ import 'package:site_buddy/features/project/presentation/screens/project_editor_
 import 'package:site_buddy/features/project/presentation/screens/project_detail_screen.dart';
 
 final projectRoutes = [
+  GoRoute(
+    path: '/projects',
+    pageBuilder: (context, state) => AppTransitions.fadeSlide(
+      state: state,
+      child: const ProjectListScreen(),
+    ),
+    routes: [
       GoRoute(
-        path: '/projects',
-        pageBuilder: (context, state) => AppTransitions.fadeSlide(
-          state: state,
-          child: const ProjectListScreen(),
-        ),
-        routes: [
-          GoRoute(
-            path: 'create',
-            pageBuilder: (context, state) => AppTransitions.fadeSlide(
-              state: state,
-              child: const ProjectEditorScreen(),
-            ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: '/projects/detail/:id',
-        pageBuilder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return AppTransitions.fadeSlide(
-            state: state,
-            child: ProjectDetailScreen(projectId: id),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/projects/:id/edit',
-        pageBuilder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return AppTransitions.fadeSlide(
-            state: state,
-            child: ProjectEditorScreen(projectId: id),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/projects/:id/share',
-        name: 'projectShare',
-        pageBuilder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return AppTransitions.fadeSlide(
-            state: state,
-            child: ProjectShareScreen(projectId: id),
-          );
-        },
-      ),
-      GoRoute(
-        path: 'project/create', // Branch 0 version
+        path: 'create',
         pageBuilder: (context, state) => AppTransitions.fadeSlide(
           state: state,
           child: const ProjectEditorScreen(),
         ),
       ),
+    ],
+  ),
+  // FIX: Removed projectId from route - must use session
+  GoRoute(
+    path: '/projects/detail',
+    pageBuilder: (context, state) {
+      return AppTransitions.fadeSlide(
+        state: state,
+        child: const ProjectDetailScreen(),
+      );
+    },
+  ),
+  GoRoute(
+    path: '/projects/:id/edit',
+    pageBuilder: (context, state) {
+      final id = state.pathParameters['id']!;
+      return AppTransitions.fadeSlide(
+        state: state,
+        child: ProjectEditorScreen(projectId: id),
+      );
+    },
+  ),
+  GoRoute(
+    path: '/projects/:id/share',
+    name: 'projectShare',
+    pageBuilder: (context, state) {
+      final id = state.pathParameters['id']!;
+      return AppTransitions.fadeSlide(
+        state: state,
+        child: ProjectShareScreen(projectId: id),
+      );
+    },
+  ),
+  GoRoute(
+    path: 'project/create', // Branch 0 version
+    pageBuilder: (context, state) => AppTransitions.fadeSlide(
+      state: state,
+      child: const ProjectEditorScreen(),
+    ),
+  ),
 ];
-
-
-

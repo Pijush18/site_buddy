@@ -213,25 +213,25 @@ final appRouter = GoRouter(
         );
       },
     ),
+    // FIX: Removed projectId from route - must use session
     GoRoute(
       path: '/projects/:id/level-log',
       name: 'levelLog',
       pageBuilder: (context, state) {
-        final projectId = state.pathParameters['id']!;
         final logId = state.extra as String?;
         return AppTransitions.fadeSlide(
           state: state,
-          child: LevelLogScreen(projectId: projectId, logId: logId),
+          child: LevelLogScreen(logId: logId),
         );
       },
     ),
+    // FIX: Removed projectId from route - must use session
     GoRoute(
       path: '/projects/:id/history',
       pageBuilder: (context, state) {
-        final id = state.pathParameters['id']!;
         return AppTransitions.fadeSlide(
           state: state,
-          child: CalculationHistoryScreen(projectId: id),
+          child: const CalculationHistoryScreen(),
         );
       },
     ),

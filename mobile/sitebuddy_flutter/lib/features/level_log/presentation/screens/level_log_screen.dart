@@ -15,21 +15,20 @@ import 'package:site_buddy/core/utils/ui_formatters.dart';
 
 /// SCREEN: LevelLogScreen
 /// PURPOSE: Dedicated interface for recording and viewing high-precision level measurements.
+/// FIX: projectId now comes from ProjectSessionService only - no constructor parameter
 class LevelLogScreen extends ConsumerWidget {
   final String? logId;
-  final String?
-  projectId; // Made nullable - will get from session if not provided
 
-  const LevelLogScreen({super.key, this.logId, this.projectId});
+  const LevelLogScreen({super.key, this.logId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    // FIX: Pass projectId to family provider - null means use session
-    final state = ref.watch(levelLogControllerProvider(projectId));
-    final notifier = ref.read(levelLogControllerProvider(projectId).notifier);
+    // FIX: Get projectId from session only - no parameter
+    final state = ref.watch(levelLogControllerProvider);
+    final notifier = ref.read(levelLogControllerProvider.notifier);
 
     return SbPage.form(
       title: l10n.levelLogSession,

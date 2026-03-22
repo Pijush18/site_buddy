@@ -13,24 +13,20 @@ import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
-
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
 
 /// CLASS: ProjectDetailScreen
-/// PURPOSE: Deep-dive view into a specific project.
+/// FIX: projectId comes from session only - no route parameter
 class ProjectDetailScreen extends ConsumerWidget {
-  final String projectId;
-
-  const ProjectDetailScreen({super.key, required this.projectId});
+  const ProjectDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    /// Fetch project using projectId from route
-    final proj = ref
-        .read(projectControllerProvider.notifier)
-        .getProjectById(projectId);
+    /// FIX: Get project from session
+    final proj = ref.read(projectSessionServiceProvider).getActiveProject();
 
     if (proj == null) {
       return const SbPage.detail(
@@ -39,7 +35,8 @@ class ProjectDetailScreen extends ConsumerWidget {
       );
     }
 
-    final detailState = ref.watch(projectDetailControllerProvider(projectId));
+    final projectId = proj.id;
+    final detailState = ref.watch(projectDetailControllerProvider);
     final calculations = detailState.calculations;
     final columns = calculations['columns'] as List;
     final beams = calculations['beams'] as List;
@@ -79,7 +76,9 @@ class ProjectDetailScreen extends ConsumerWidget {
           builder: (context, ref, _) {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg).copyWith(left: 0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: SbSpacing.lg,
+              ).copyWith(left: 0),
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
@@ -104,7 +103,9 @@ class ProjectDetailScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SbSpacing.lg,
+                      ),
                       child: Text(
                         proj.status.label,
                         style: Theme.of(context).textTheme.labelMedium!,
@@ -126,9 +127,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     child: Icon(
                       SbIcons.terrain,
                       size: 48,
-                      color: colorScheme.onSurfaceVariant.withOpacity(
-                        0.5,
-                      ),
+                      color: colorScheme.onSurfaceVariant.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -178,7 +177,6 @@ class ProjectDetailScreen extends ConsumerWidget {
             ),
           ),
 
-
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty)
             SbSection(
@@ -188,7 +186,6 @@ class ProjectDetailScreen extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyLarge!,
               ),
             ),
-
 
           // Stats grid section (Sole source of inter-section truth)
           SbSection(
@@ -221,7 +218,6 @@ class ProjectDetailScreen extends ConsumerWidget {
             ),
           ),
 
-
           SbSection(
             title: AppStrings.design,
             padding: EdgeInsets.zero,
@@ -245,7 +241,6 @@ class ProjectDetailScreen extends ConsumerWidget {
                     }).toList(),
                   ),
           ),
-
 
           SbSection(
             title: AppStrings.fieldSurveying,
@@ -271,7 +266,6 @@ class ProjectDetailScreen extends ConsumerWidget {
                   ),
           ),
 
-
           SbSection(
             title: 'Management',
             child: Column(
@@ -296,7 +290,6 @@ class ProjectDetailScreen extends ConsumerWidget {
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -316,7 +309,6 @@ class _StatItem extends StatelessWidget {
     required this.subtext,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return SbSection(
@@ -326,29 +318,23 @@ class _StatItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: Theme.of(context).colorScheme.primary, size: 20),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.labelMedium!,
+              Icon(
+                icon,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
               ),
+              Text(label, style: Theme.of(context).textTheme.labelMedium!),
             ],
           ),
           const SizedBox(height: SbSpacing.lg),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.titleLarge!,
-          ),
+          Text(value, style: Theme.of(context).textTheme.titleLarge!),
           const SizedBox(height: SbSpacing.sm),
-          Text(
-            subtext,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
+          Text(subtext, style: Theme.of(context).textTheme.labelMedium!),
         ],
       ),
     );
   }
 }
-
 
 IconData _getTypeIcon(String? type) {
   switch (type) {
@@ -364,12 +350,3 @@ IconData _getTypeIcon(String? type) {
       return SbIcons.calculator;
   }
 }
-
-
-
-
-
-
-
-
-

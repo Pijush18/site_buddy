@@ -7,22 +7,27 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 
-/// Provider to fetch history entries for a specific project.
-/// Decouples UI from Repository implementation.
-final projectHistoryProvider = FutureProvider.family.autoDispose<List<CalculationHistoryEntry>, String>((ref, projectId) {
-  return ref.read(sharedHistoryRepositoryProvider).getEntriesByProject(projectId);
-});
+/// FIX: Get history entries from session - no projectId parameter
+final projectHistoryProvider =
+    FutureProvider.autoDispose<List<CalculationHistoryEntry>>((ref) {
+      // Get projectId from session - throws if no active project
+      final projectId = ref
+          .read(projectSessionServiceProvider)
+          .getActiveProjectId();
+      return ref
+          .read(sharedHistoryRepositoryProvider)
+          .getEntriesByProject(projectId);
+    });
 
 class CalculationHistoryScreen extends ConsumerWidget {
-  final String projectId;
-
-  const CalculationHistoryScreen({super.key, required this.projectId});
+  const CalculationHistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final historyAsync = ref.watch(projectHistoryProvider(projectId));
+    final historyAsync = ref.watch(projectHistoryProvider);
 
     return SbPage.list(
       title: 'Calculation History',
@@ -73,7 +78,9 @@ class _HistoryEntryCard extends StatelessWidget {
     final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm).copyWith(top: 0),
+      padding: const EdgeInsets.symmetric(
+        vertical: SbSpacing.sm,
+      ).copyWith(top: 0),
       child: SbListItemTile(
         icon: _getTypeIcon(entry.calculationType),
         title: entry.resultSummary,
@@ -118,4 +125,3 @@ class _HistoryEntryCard extends StatelessWidget {
     }
   }
 }
-
