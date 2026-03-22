@@ -17,17 +17,19 @@ import 'package:site_buddy/core/utils/ui_formatters.dart';
 /// PURPOSE: Dedicated interface for recording and viewing high-precision level measurements.
 class LevelLogScreen extends ConsumerWidget {
   final String? logId;
-  final String projectId;
+  final String?
+  projectId; // Made nullable - will get from session if not provided
 
-  const LevelLogScreen({super.key, this.logId, required this.projectId});
+  const LevelLogScreen({super.key, this.logId, this.projectId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final state = ref.watch(levelLogControllerProvider);
-    final notifier = ref.read(levelLogControllerProvider.notifier);
+    // FIX: Pass projectId to family provider - null means use session
+    final state = ref.watch(levelLogControllerProvider(projectId));
+    final notifier = ref.read(levelLogControllerProvider(projectId).notifier);
 
     return SbPage.form(
       title: l10n.levelLogSession,
@@ -49,7 +51,8 @@ class LevelLogScreen extends ConsumerWidget {
             width: double.infinity,
           ),
           const SizedBox(height: SbSpacing.lg),
-          SecondaryButton(isOutlined: true, 
+          SecondaryButton(
+            isOutlined: true,
             label: l10n.exportPdfReport,
             icon: SbIcons.pdf,
             onPressed: notifier.exportReport,
@@ -71,7 +74,10 @@ class LevelLogScreen extends ConsumerWidget {
                 else
                   ListView.separated(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg, horizontal: SbSpacing.md),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: SbSpacing.lg,
+                      horizontal: SbSpacing.md,
+                    ),
                     itemCount: state.entries.length,
                     separatorBuilder: (_, index) =>
                         const SizedBox(height: SbSpacing.sm),
@@ -108,25 +114,21 @@ class _EmptyState extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: SbSpacing.xxl),
-            Icon(
-              SbIcons.list,
-              size: 64,
-              color: colorScheme.outlineVariant,
-            ),
-            const SizedBox(height: SbSpacing.md),
-            Text(
-              l10n.noLevelingLogsYet,
-              style: Theme.of(context).textTheme.titleLarge!,
-            ),
-            const SizedBox(height: SbSpacing.sm),
-            Text(
-              l10n.tapAddStationToStart,
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-          ],
-        ),
+        children: [
+          const SizedBox(height: SbSpacing.xxl),
+          Icon(SbIcons.list, size: 64, color: colorScheme.outlineVariant),
+          const SizedBox(height: SbSpacing.md),
+          Text(
+            l10n.noLevelingLogsYet,
+            style: Theme.of(context).textTheme.titleLarge!,
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          Text(
+            l10n.tapAddStationToStart,
+            style: Theme.of(context).textTheme.bodyLarge!,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -201,13 +203,9 @@ class _MethodToggle extends StatelessWidget {
             color: context.colors.outline,
             width: AppBorder.width,
           ),
-
         ),
         child: Center(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
+          child: Text(label, style: Theme.of(context).textTheme.labelMedium!),
         ),
       ),
     );
@@ -315,10 +313,7 @@ class _StationCardContent extends StatelessWidget {
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
           const SizedBox(height: SbSpacing.lg),
-          Text(
-            entry.remark!,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
+          Text(entry.remark!, style: Theme.of(context).textTheme.labelMedium!),
         ],
       ],
     );
@@ -343,10 +338,7 @@ class _ReadingPill extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium!,
-          ),
+          Text(label, style: Theme.of(context).textTheme.labelMedium!),
           const SizedBox(height: SbSpacing.sm),
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),

@@ -151,21 +151,18 @@ class HistoryDetailScreen extends ConsumerWidget {
         ref.read(shutteringProvider.notifier).restore(params);
         break;
       case CalculationType.sand:
-        ref.read(sandControllerProvider.notifier).restore(params);
-        break;
       case CalculationType.levelLog:
-        SbFeedback.showToast(
-          context: context,
-          message: 'Level Log versioning is handled via Project Sessions.',
-        );
-        return;
+      case CalculationType.gradient:
+      case CalculationType.unitConverter:
+      case CalculationType.currencyConverter:
+        break;
     }
 
-    SbFeedback.showToast(
-      context: context,
-      message: '${entry.calculationType.name.toUpperCase()} version restored.',
-    );
-    context.pop();
-    context.pop();
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${entry.calculationType.name.toUpperCase()} version restored.')),
+      );
+      context.pop();
+    }
   }
 }

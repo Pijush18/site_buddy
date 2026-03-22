@@ -30,6 +30,12 @@ enum DesignType {
   shuttering,
   @HiveField(11)
   sand,
+  @HiveField(12)
+  gradient,
+  @HiveField(13)
+  unitConverter,
+  @HiveField(14)
+  currencyConverter,
 }
 
 /// ENTITY: DesignReport
@@ -50,7 +56,7 @@ class DesignReport extends HiveObject {
   final DateTime timestamp;
 
   @HiveField(3)
-  final String? projectId;
+  final String projectId;
 
   @HiveField(4)
   final Map<String, dynamic> inputs;
@@ -64,16 +70,28 @@ class DesignReport extends HiveObject {
   @HiveField(7)
   final bool isSafe;
 
+  @HiveField(8)
+  final DateTime updatedAt;
+
+  @HiveField(9)
+  final bool isSynced;
+
   DesignReport({
     required this.id,
     required this.designType,
     required this.timestamp,
-    this.projectId,
+    required this.projectId,
     required this.inputs,
     required this.results,
     required this.summary,
     this.isSafe = false,
-  });
+    DateTime? updatedAt,
+    this.isSynced = false,
+  }) : updatedAt = updatedAt ?? timestamp {
+    if (projectId.isEmpty) {
+      throw ArgumentError('DesignReport must be linked to a valid projectId');
+    }
+  }
 
   /// User-friendly label for the design type.
   String get typeLabel {
@@ -89,7 +107,35 @@ class DesignReport extends HiveObject {
       case DesignType.excavation: return 'Excavation Calculator';
       case DesignType.shuttering: return 'Shuttering Calculator';
       case DesignType.sand: return 'Sand Calculator';
-      case DesignType.levelLog: return 'Level Log';
+      case DesignType.levelLog: return 'Level Calculator';
+      case DesignType.gradient: return 'Gradient Tool';
+      case DesignType.unitConverter: return 'Unit Converter';
+      case DesignType.currencyConverter: return 'Currency Converter';
     }
+  }
+  DesignReport copyWith({
+    String? id,
+    DesignType? designType,
+    DateTime? timestamp,
+    String? projectId,
+    Map<String, dynamic>? inputs,
+    Map<String, dynamic>? results,
+    String? summary,
+    bool? isSafe,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) {
+    return DesignReport(
+      id: id ?? this.id,
+      designType: designType ?? this.designType,
+      timestamp: timestamp ?? this.timestamp,
+      projectId: projectId ?? this.projectId,
+      inputs: inputs ?? this.inputs,
+      results: results ?? this.results,
+      summary: summary ?? this.summary,
+      isSafe: isSafe ?? this.isSafe,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+    );
   }
 }

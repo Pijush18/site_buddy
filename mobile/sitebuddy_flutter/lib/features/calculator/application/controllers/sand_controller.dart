@@ -4,8 +4,9 @@ import 'package:uuid/uuid.dart';
 import 'package:site_buddy/features/calculator/domain/entities/sand_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_sand_usecase.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 final sandControllerProvider = NotifierProvider<SandController, SandState>(
   SandController.new,
@@ -141,24 +142,28 @@ class SandController extends Notifier<SandState> {
       );
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: selectedProject.id,
-          calculationType: CalculationType.sand,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'length': length,
-            'width': width,
-            'depth': depth,
-            'rate': state.ratePerCubicMeter,
-          },
-          resultSummary: '${result.dryVolume.toStringAsFixed(1)} m³ Sand Estimated',
-          resultData: result.toMap(),
-        );
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
-      }
+      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
+      
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.sand,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'length': length,
+          'width': width,
+          'depth': depth,
+          'rate': state.ratePerCubicMeter,
+        },
+        resultSummary: '${result.dryVolume.toStringAsFixed(1)} m³ Sand Estimated',
+        resultData: result.toMap(),
+      );
+
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromSand(result.toMap(), entry.inputParameters, projectId);
+      await ref.read(historyRepositoryProvider).save(report);
     } on ArgumentError catch (e) {
       state = state.copyWith(
         isLoading: false,

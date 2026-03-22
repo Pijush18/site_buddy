@@ -15,15 +15,16 @@
 /// ----------------------------------------------
 library;
 
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/cement_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_cement_usecase.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 class Failure {
   final String message;
@@ -227,11 +228,20 @@ class CementController extends Notifier<CementState> {
       state = state.copyWith(result: res, isLoading: false);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
+      final projectId = ref
+          .read(projectSessionServiceProvider)
+          .getActiveProjectId();
+
+      // Validate projectId before saving - skip if no active project
+      if (projectId.isEmpty) {
+        AppLogger.warning(
+          'No active project selected, skipping cement calculation save',
+          tag: 'CementController',
+        );
+      } else {
         final entry = CalculationHistoryEntry(
           id: const Uuid().v4(),
-          projectId: selectedProject.id,
+          projectId: projectId,
           calculationType: CalculationType.cement,
           timestamp: DateTime.now(),
           inputParameters: {
@@ -241,12 +251,20 @@ class CementController extends Notifier<CementState> {
             'mix': '$mixCement:$mixSand:$mixAggregate',
             'waste': waste,
           },
-          resultSummary: '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
+          resultSummary:
+              '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
           resultData: res.toMap(),
         );
 
-        // Background save
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+        await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+        // --- SYNC: Save to Unified Design Report System ---
+        final report = DesignReportMapper.fromCement(
+          res.toMap(),
+          entry.inputParameters,
+          projectId,
+        );
+        await ref.read(historyRepositoryProvider).save(report);
       }
     } catch (e) {
       state = state.copyWith(
@@ -256,6 +274,3 @@ class CementController extends Notifier<CementState> {
     }
   }
 }
-
-
-

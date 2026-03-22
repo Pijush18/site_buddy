@@ -59,6 +59,10 @@ class Project extends Equatable {
   final List<String> linkedChatIds;
   @HiveField(9)
   final String? clientName;
+  @HiveField(10)
+  final DateTime updatedAt;
+  @HiveField(11)
+  final DateTime? lastAccessedAt;
 
   const Project({
     required this.id,
@@ -67,7 +71,9 @@ class Project extends Equatable {
     this.clientName,
     this.description,
     required this.createdAt,
+    required this.updatedAt,
     required this.status,
+    this.lastAccessedAt,
     this.logsCount = 0,
     this.calculationsCount = 0,
     this.linkedChatIds = const [],
@@ -76,11 +82,13 @@ class Project extends Equatable {
   /// METHOD: initial
   /// PURPOSE: Factory for new empty project form state
   factory Project.initial() {
+    final now = DateTime.now();
     return Project(
       id: '',
       name: '',
       location: '',
-      createdAt: DateTime.now(),
+      createdAt: now,
+      updatedAt: now,
       status: ProjectStatus.planning,
       linkedChatIds: const [],
       clientName: '',
@@ -95,6 +103,8 @@ class Project extends Equatable {
     String? location,
     String? description,
     DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? lastAccessedAt,
     ProjectStatus? status,
     int? logsCount,
     int? calculationsCount,
@@ -108,6 +118,8 @@ class Project extends Equatable {
       clientName: clientName ?? this.clientName,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      lastAccessedAt: lastAccessedAt ?? this.lastAccessedAt,
       status: status ?? this.status,
       logsCount: logsCount ?? this.logsCount,
       calculationsCount: calculationsCount ?? this.calculationsCount,
@@ -122,6 +134,8 @@ class Project extends Equatable {
     location,
     description,
     createdAt,
+    updatedAt,
+    lastAccessedAt,
     status,
     logsCount,
     calculationsCount,
@@ -132,13 +146,20 @@ class Project extends Equatable {
   /// METHOD: fromJson
   /// PURPOSE: Deserialization from backend JSON
   factory Project.fromJson(Map<String, dynamic> json) {
+    final createdAt = DateTime.parse(json['created_at'] as String);
     return Project(
       id: json['id'] as String,
       name: json['name'] as String,
       location: json['location'] as String? ?? '',
       clientName: json['client_name'] as String?,
       description: json['description'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: createdAt,
+      updatedAt: json['updated_at'] != null 
+          ? DateTime.parse(json['updated_at'] as String) 
+          : createdAt,
+      lastAccessedAt: json['last_accessed_at'] != null 
+          ? DateTime.parse(json['last_accessed_at'] as String) 
+          : null,
       status: ProjectStatus.fromString(json['status'] as String? ?? 'active'),
       logsCount: json['logs_count'] as int? ?? 0,
       calculationsCount: json['calculations_count'] as int? ?? 0,
@@ -155,6 +176,8 @@ class Project extends Equatable {
       'client_name': clientName,
       'description': description,
       'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+      'last_accessed_at': lastAccessedAt?.toIso8601String(),
       'status': status.name,
     };
   }

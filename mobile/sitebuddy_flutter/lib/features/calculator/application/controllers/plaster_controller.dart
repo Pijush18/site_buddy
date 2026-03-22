@@ -6,8 +6,9 @@ import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/plaster_state.dart';
 import 'package:site_buddy/shared/domain/models/plaster_ratio.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 final plasterProvider = NotifierProvider<PlasterController, PlasterState>(
   PlasterController.new,
@@ -82,24 +83,27 @@ class PlasterController extends Notifier<PlasterState> {
       state = state.copyWith(isLoading: false, result: result);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: selectedProject.id,
-          calculationType: CalculationType.plaster,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'area': areaParse.value,
-            'thickness': thicknessMm,
-            'mortarRatio': state.selectedRatio.ratioString,
-          },
-          resultSummary: '${result.cementBags.toStringAsFixed(1)} Bags Estimated',
-          resultData: result.toMap(),
-        );
+      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
+      
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.plaster,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'area': areaParse.value,
+          'thickness': thicknessMm,
+          'mortarRatio': state.selectedRatio.ratioString,
+        },
+        resultSummary: '${result.cementBags.toStringAsFixed(1)} Bags Estimated',
+        resultData: result.toMap(),
+      );
 
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
-      }
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromPlaster(result.toMap(), entry.inputParameters, projectId);
+      await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

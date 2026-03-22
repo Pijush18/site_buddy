@@ -41,30 +41,42 @@ class LevelLogState {
 class LevelLogController extends StateNotifier<LevelLogState> {
   final LevelCalculationService _calculationService;
   final Ref _ref;
+  final String? _explicitProjectId; // Optional projectId from route parameter
 
-  LevelLogController(this._calculationService, this._ref)
-    : super(
-        LevelLogState(
-          entries: [
-            const LevelEntry(
-              station: 'BM 1',
-              chainage: 0,
-              rl: 100.0,
-              remark: 'Initial Bench Mark',
-            ),
-            const LevelEntry(station: 'STN 1', chainage: 20),
-          ],
-          slopes: [null, null],
-          method: LevelMethod.heightOfInstrument,
-        ),
-      ) {
+  LevelLogController(
+    this._calculationService,
+    this._ref, [
+    this._explicitProjectId,
+  ]) : super(
+         LevelLogState(
+           entries: [
+             const LevelEntry(
+               station: 'BM 1',
+               chainage: 0,
+               rl: 100.0,
+               remark: 'Initial Bench Mark',
+             ),
+             const LevelEntry(station: 'STN 1', chainage: 20),
+           ],
+           slopes: [null, null],
+           method: LevelMethod.heightOfInstrument,
+         ),
+       ) {
     _initProject();
     recalculate();
   }
 
   void _initProject() {
-    final project = _ref.read(activeProjectProvider);
-    state = state.copyWith(projectId: project?.id);
+    // FIX: Use ProjectSessionService which throws if no active project
+    // This enforces fail-fast behavior - no silent fallbacks
+    // If _explicitProjectId is provided (from route), use that; otherwise use session
+    final String projectId;
+    if (_explicitProjectId != null) {
+      projectId = _explicitProjectId;
+    } else {
+      projectId = _ref.read(projectSessionServiceProvider).getActiveProjectId();
+    }
+    state = state.copyWith(projectId: projectId);
   }
 
   void addEntry() {
@@ -170,11 +182,13 @@ final levelCalculationServiceProvider = Provider(
 
 final levelHistoryServiceProvider = Provider((ref) => LevelHistoryService());
 
+// FIX: Use family provider to accept optional projectId from route
+// If projectId is null, controller will get from session (throws if no session)
 final levelLogControllerProvider =
-    StateNotifierProvider<LevelLogController, LevelLogState>((ref) {
+    StateNotifierProvider.family<LevelLogController, LevelLogState, String?>((
+      ref,
+      projectId,
+    ) {
       final service = ref.watch(levelCalculationServiceProvider);
-      return LevelLogController(service, ref);
+      return LevelLogController(service, ref, projectId);
     });
-
-
-

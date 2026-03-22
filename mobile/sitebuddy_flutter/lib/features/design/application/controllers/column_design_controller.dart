@@ -6,9 +6,25 @@ import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
 import 'package:site_buddy/features/design/application/services/column_design_service.dart';
 import 'package:site_buddy/features/design/application/services/column_validator.dart';
 import 'package:site_buddy/core/services/design_report_service.dart';
-import 'package:site_buddy/shared/application/providers/project_providers.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/features/design/domain/usecases/save_column_design_usecase.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+
+final saveColumnDesignUseCaseProvider = Provider<SaveColumnDesignUseCase>((
+  ref,
+) {
+  final structuralRepo = ref.watch(structuralRepositoryProvider);
+  final calculationRepo = ref.watch(sharedHistoryRepositoryProvider);
+  final designReportRepo = ref.watch(historyRepositoryProvider);
+  final projectSession = ref.watch(projectSessionServiceProvider);
+
+  return SaveColumnDesignUseCase(
+    structuralRepository: structuralRepo,
+    calculationRepository: calculationRepo,
+    designReportRepository: designReportRepo,
+    projectSession: projectSession,
+  );
+});
 
 /// PROVIDER: columnDesignControllerProvider
 final columnDesignControllerProvider =
@@ -100,38 +116,8 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
   }
 
   Future<void> saveToHistory(String name) async {
-    if (state.projectId == null) return;
-
-    // Save to structural repository (active designs)
-    final repo = ref.read(structuralRepositoryProvider);
-    await repo.saveColumn(state);
-
-    // Record calculation history snapshot
-    final historyRepo = ref.read(sharedHistoryRepositoryProvider);
-    final entry = CalculationHistoryEntry(
-      id: const Uuid().v4(),
-      projectId: state.projectId!,
-      calculationType: CalculationType.column,
-      timestamp: DateTime.now(),
-      inputParameters: {
-        'type': state.type.index,
-        'b': state.b,
-        'd': state.d,
-        'length': state.length,
-        'pu': state.pu,
-        'mx': state.mx,
-        'my': state.my,
-      },
-      resultSummary:
-          "Column saved (${state.b.toInt()}x${state.d.toInt()} mm). Interaction Ratio: ${state.interactionRatio.toStringAsFixed(2)}",
-      resultData: {
-        'interactionRatio': state.interactionRatio,
-        'astProvided': state.astProvided,
-        'isCapacitySafe': state.isCapacitySafe,
-        'failureMode': state.failureMode.index,
-      },
-    );
-    await historyRepo.addEntry(entry);
+    final useCase = ref.read(saveColumnDesignUseCaseProvider);
+    await useCase.execute(state);
   }
 
   Future<void> generateReport() async {
@@ -156,6 +142,3 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
     );
   }
 }
-
-
-

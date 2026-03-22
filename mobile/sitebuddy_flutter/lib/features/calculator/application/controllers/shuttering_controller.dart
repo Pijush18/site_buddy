@@ -6,8 +6,9 @@ import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/shuttering_state.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 final shutteringProvider = NotifierProvider<ShutteringController, ShutteringState>(
   ShutteringController.new,
@@ -61,24 +62,28 @@ class ShutteringController extends Notifier<ShutteringState> {
       state = state.copyWith(isLoading: false, result: res);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: selectedProject.id,
-          calculationType: CalculationType.shuttering,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'length': l.value,
-            'width': w.value,
-            'depth': d.value,
-            'includeBottom': state.includeBottom,
-          },
-          resultSummary: '${res.areaM2.toStringAsFixed(1)} m² Shuttering Estimated',
-          resultData: res.toMap(),
-        );
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
-      }
+      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
+      
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.shuttering,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'length': l.value,
+          'width': w.value,
+          'depth': d.value,
+          'includeBottom': state.includeBottom,
+        },
+        resultSummary: '${res.areaM2.toStringAsFixed(1)} m² Shuttering Estimated',
+        resultData: res.toMap(),
+      );
+
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromShuttering(res.toMap(), entry.inputParameters, projectId);
+      await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       _onError(AppFailure(e.toString()));
     }

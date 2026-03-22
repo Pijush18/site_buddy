@@ -1,4 +1,4 @@
-import 'package:site_buddy/features/project/domain/repositories/project_repository.dart';
+import 'package:site_buddy/shared/domain/repositories/project_repository.dart';
 
 class DeleteProjectUseCase {
   final ProjectRepository repository;

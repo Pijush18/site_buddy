@@ -90,6 +90,12 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
         return CalculationType.shuttering;
       case 11:
         return CalculationType.sand;
+      case 12:
+        return CalculationType.gradient;
+      case 13:
+        return CalculationType.unitConverter;
+      case 14:
+        return CalculationType.currencyConverter;
       default:
         return CalculationType.column;
     }
@@ -133,6 +139,15 @@ class CalculationTypeAdapter extends TypeAdapter<CalculationType> {
         break;
       case CalculationType.sand:
         writer.writeByte(11);
+        break;
+      case CalculationType.gradient:
+        writer.writeByte(12);
+        break;
+      case CalculationType.unitConverter:
+        writer.writeByte(13);
+        break;
+      case CalculationType.currencyConverter:
+        writer.writeByte(14);
         break;
     }
   }

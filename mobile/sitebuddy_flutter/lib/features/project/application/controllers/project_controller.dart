@@ -23,14 +23,15 @@ library;
 /// - Add Firebase sync logic.
 /// ----------------------------------------------
 
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/shared/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
 import 'package:site_buddy/features/project/application/state/project_state.dart';
 import 'package:site_buddy/features/project/presentation/providers/project_providers.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
 
 /// Provider exposing the [ProjectController].
 final projectControllerProvider =
@@ -88,9 +89,10 @@ class ProjectController extends Notifier<ProjectState> {
   }) async {
     state = state.copyWith(isLoading: true, clearFailure: true);
 
-    // Mock ID generation
-    final newId = DateTime.now().millisecondsSinceEpoch.toString();
+    // FIX: Use proper UUID instead of timestamp-based ID
+    final newId = const Uuid().v4();
 
+    final now = DateTime.now();
     final newProj = Project(
       id: newId,
       name: name,
@@ -98,7 +100,8 @@ class ProjectController extends Notifier<ProjectState> {
       clientName: clientName,
       description: description,
       status: status,
-      createdAt: DateTime.now(),
+      createdAt: now,
+      updatedAt: now,
       logsCount: 0,
       calculationsCount: 0,
     );
@@ -106,9 +109,14 @@ class ProjectController extends Notifier<ProjectState> {
     final useCase = ref.read(createProjectUseCaseProvider);
     await useCase.execute(newProj);
 
+    // --- INTEGRATION: Set as active and record activity ---
+    await ref.read(projectSessionServiceProvider).setActiveProject(newProj);
+    await ref.read(recentActivityRepositoryProvider).addProject(newProj);
+
     state = state.copyWith(
       isLoading: false,
       projects: [...state.projects, newProj],
+      selectedProject: newProj, // Also select automatically in UI controller
     );
   }
 
@@ -189,6 +197,3 @@ class ProjectController extends Notifier<ProjectState> {
     }
   }
 }
-
-
-

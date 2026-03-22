@@ -108,11 +108,14 @@ class _HistoryEntryCard extends StatelessWidget {
       case CalculationType.excavation:
         return SbIcons.construction;
       case CalculationType.shuttering:
-        return SbIcons.layers;
+        return SbIcons.construction;
+      case CalculationType.gradient:
+        return Icons.auto_graph_rounded;
+      case CalculationType.unitConverter:
+        return Icons.transform_rounded;
+      case CalculationType.currencyConverter:
+        return Icons.currency_exchange_rounded;
     }
   }
 }
-
-
-
 

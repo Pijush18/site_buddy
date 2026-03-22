@@ -20,18 +20,20 @@ class DesignReportAdapter extends TypeAdapter<DesignReport> {
       id: fields[0] as String,
       designType: fields[1] as DesignType,
       timestamp: fields[2] as DateTime,
-      projectId: fields[3] as String?,
+      projectId: fields[3] as String,
       inputs: (fields[4] as Map).cast<String, dynamic>(),
       results: (fields[5] as Map).cast<String, dynamic>(),
       summary: fields[6] as String,
       isSafe: fields[7] as bool,
+      updatedAt: fields[8] as DateTime?,
+      isSynced: fields[9] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, DesignReport obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class DesignReportAdapter extends TypeAdapter<DesignReport> {
       ..writeByte(6)
       ..write(obj.summary)
       ..writeByte(7)
-      ..write(obj.isSafe);
+      ..write(obj.isSafe)
+      ..writeByte(8)
+      ..write(obj.updatedAt)
+      ..writeByte(9)
+      ..write(obj.isSynced);
   }
 
   @override
@@ -92,6 +98,12 @@ class DesignTypeAdapter extends TypeAdapter<DesignType> {
         return DesignType.shuttering;
       case 11:
         return DesignType.sand;
+      case 12:
+        return DesignType.gradient;
+      case 13:
+        return DesignType.unitConverter;
+      case 14:
+        return DesignType.currencyConverter;
       default:
         return DesignType.beam;
     }
@@ -135,6 +147,15 @@ class DesignTypeAdapter extends TypeAdapter<DesignType> {
         break;
       case DesignType.sand:
         writer.writeByte(11);
+        break;
+      case DesignType.gradient:
+        writer.writeByte(12);
+        break;
+      case DesignType.unitConverter:
+        writer.writeByte(13);
+        break;
+      case DesignType.currencyConverter:
+        writer.writeByte(14);
         break;
     }
   }

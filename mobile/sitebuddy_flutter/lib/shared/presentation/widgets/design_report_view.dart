@@ -237,12 +237,15 @@ class _ReportRow extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: SbSpacing.sm),
-              Text(
-                value,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onSurface,
+              const SizedBox(width: SbSpacing.md),
+              Flexible(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
             ],

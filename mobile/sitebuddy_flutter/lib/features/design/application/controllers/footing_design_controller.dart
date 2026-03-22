@@ -1,13 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/services/footing_design_service.dart';
 import 'package:site_buddy/core/services/design_report_service.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/features/design/domain/usecases/save_footing_design_usecase.dart';
+
+final saveFootingDesignUseCaseProvider = Provider<SaveFootingDesignUseCase>((ref) {
+  final structuralRepo = ref.watch(structuralRepositoryProvider);
+  final calculationRepo = ref.watch(sharedHistoryRepositoryProvider);
+  final designReportRepo = ref.watch(historyRepositoryProvider);
+  final projectSession = ref.watch(projectSessionServiceProvider);
+
+  return SaveFootingDesignUseCase(
+    structuralRepository: structuralRepo,
+    calculationRepository: calculationRepo,
+    designReportRepository: designReportRepo,
+    projectSession: projectSession,
+  );
+});
 
 /// PROVIDER: footingDesignControllerProvider
 final footingDesignControllerProvider =
@@ -27,37 +40,8 @@ class FootingDesignController extends Notifier<FootingDesignState> {
   }
 
   Future<void> saveToHistory(String name) async {
-    if (state.projectId == null) return;
-    final repo = ref.read(structuralRepositoryProvider);
-    await repo.saveFooting(state);
-
-    // Record calculation history snapshot
-    final historyRepo = ref.read(sharedHistoryRepositoryProvider);
-    final entry = CalculationHistoryEntry(
-      id: const Uuid().v4(),
-      projectId: state.projectId!,
-      calculationType: CalculationType.footing,
-      timestamp: DateTime.now(),
-      inputParameters: {
-        'type': state.type.index,
-        'length': state.footingLength,
-        'width': state.footingWidth,
-        'thickness': state.footingThickness,
-        'spacing': state.columnSpacing,
-        'sbc': state.sbc,
-        'columnLoad': state.columnLoad,
-      },
-      resultSummary:
-          "Footing design saved (${state.footingLength}m x ${state.footingWidth}m). Max Pressure: ${state.maxSoilPressure.toStringAsFixed(1)} kN/m²",
-      resultData: {
-        'maxSoilPressure': state.maxSoilPressure,
-        'isOneWayShearSafe': state.isOneWayShearSafe,
-        'isPunchingShearSafe': state.isPunchingShearSafe,
-        'isBendingSafe': state.isBendingSafe,
-        'astProvided': state.astProvidedX,
-      },
-    );
-    await historyRepo.addEntry(entry);
+    final useCase = ref.read(saveFootingDesignUseCaseProvider);
+    await useCase.execute(state);
   }
 
   void updateType(FootingType type) {

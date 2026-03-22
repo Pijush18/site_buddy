@@ -23,7 +23,9 @@ class ProjectAdapter extends TypeAdapter<Project> {
       clientName: fields[9] as String?,
       description: fields[3] as String?,
       createdAt: fields[4] as DateTime,
+      updatedAt: fields[10] as DateTime,
       status: fields[5] as ProjectStatus,
+      lastAccessedAt: fields[11] as DateTime?,
       logsCount: fields[6] as int,
       calculationsCount: fields[7] as int,
       linkedChatIds: (fields[8] as List).cast<String>(),
@@ -33,7 +35,7 @@ class ProjectAdapter extends TypeAdapter<Project> {
   @override
   void write(BinaryWriter writer, Project obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +55,11 @@ class ProjectAdapter extends TypeAdapter<Project> {
       ..writeByte(8)
       ..write(obj.linkedChatIds)
       ..writeByte(9)
-      ..write(obj.clientName);
+      ..write(obj.clientName)
+      ..writeByte(10)
+      ..write(obj.updatedAt)
+      ..writeByte(11)
+      ..write(obj.lastAccessedAt);
   }
 
   @override

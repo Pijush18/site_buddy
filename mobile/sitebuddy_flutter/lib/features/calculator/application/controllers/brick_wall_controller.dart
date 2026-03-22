@@ -7,8 +7,10 @@ import 'package:site_buddy/features/calculator/application/state/brick_wall_stat
 import 'package:site_buddy/shared/domain/models/mortar_ratio.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 final brickWallProvider = NotifierProvider<BrickWallController, BrickWallState>(
   BrickWallController.new,
@@ -28,7 +30,7 @@ class BrickWallController extends Notifier<BrickWallState> {
       clearFailure: true,
       clearResult: true,
     );
-    
+
     if (data.length != null && data.height != null && data.thickness != null) {
       calculate();
     }
@@ -97,11 +99,20 @@ class BrickWallController extends Notifier<BrickWallState> {
       state = state.copyWith(isLoading: false, result: result);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
+      final projectId = ref
+          .read(projectSessionServiceProvider)
+          .getActiveProjectId();
+
+      // Validate projectId before saving - skip if no active project
+      if (projectId.isEmpty) {
+        AppLogger.warning(
+          'No active project selected, skipping brick calculation save',
+          tag: 'BrickWallController',
+        );
+      } else {
         final entry = CalculationHistoryEntry(
           id: const Uuid().v4(),
-          projectId: selectedProject.id,
+          projectId: projectId,
           calculationType: CalculationType.brick,
           timestamp: DateTime.now(),
           inputParameters: {
@@ -114,7 +125,15 @@ class BrickWallController extends Notifier<BrickWallState> {
           resultData: result.toMap(),
         );
 
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+        await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+        // --- SYNC: Save to Unified Design Report System ---
+        final report = DesignReportMapper.fromBrick(
+          result.toMap(),
+          entry.inputParameters,
+          projectId,
+        );
+        await ref.read(historyRepositoryProvider).save(report);
       }
     } catch (e) {
       state = state.copyWith(
@@ -142,6 +161,3 @@ class BrickWallController extends Notifier<BrickWallState> {
     state = BrickWallState.initial();
   }
 }
-
-
-

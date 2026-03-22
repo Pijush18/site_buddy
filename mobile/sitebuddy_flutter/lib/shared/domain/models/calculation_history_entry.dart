@@ -63,6 +63,25 @@ class CalculationHistoryEntry {
       'result_summary': resultSummary,
     };
   }
+  CalculationHistoryEntry copyWith({
+    String? id,
+    String? projectId,
+    CalculationType? calculationType,
+    DateTime? timestamp,
+    Map<String, dynamic>? inputParameters,
+    String? resultSummary,
+    Map<String, dynamic>? resultData,
+  }) {
+    return CalculationHistoryEntry(
+      id: id ?? this.id,
+      projectId: projectId ?? this.projectId,
+      calculationType: calculationType ?? this.calculationType,
+      timestamp: timestamp ?? this.timestamp,
+      inputParameters: inputParameters ?? this.inputParameters,
+      resultSummary: resultSummary ?? this.resultSummary,
+      resultData: resultData ?? this.resultData,
+    );
+  }
 }
 
 @HiveType(typeId: 201)
@@ -91,6 +110,12 @@ enum CalculationType {
   shuttering,
   @HiveField(11)
   sand,
+  @HiveField(12)
+  gradient,
+  @HiveField(13)
+  unitConverter,
+  @HiveField(14)
+  currencyConverter,
 }
 
 

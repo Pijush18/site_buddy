@@ -1,34 +1,8 @@
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: home_controller.dart
-/// Feature: home
-/// Layer: application
-///
-/// PURPOSE:
-/// Aggregate activities from different features into a unified state for the Home Dashboard.
-///
-/// RESPONSIBILITIES:
-/// - Connects to diverse data sources (Calculator, Leveling, Project).
-/// - Transforms models into ActivityItem entities.
-/// - Sorts and manages the state data.
-///
-/// DEPENDENCIES:
-/// - Riverpod for Notifier lifecycle and DI.
-/// - HomeState and Activity models.
-///
-library;
-
-/// - Connect real feature providers instead of using mocks.
-/// - Add pagination logic.
-/// - Add AI suggestions based on recent patterns.
-/// ----------------------------------------------
-
-
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:site_buddy/features/home/domain/models/activity_type.dart';
-import 'package:site_buddy/features/home/domain/models/activity_item.dart';
 import 'package:site_buddy/features/home/application/controllers/home_state.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 /// PROVIDER: homeProvider
 /// PURPOSE: Allows presentation layer to read and watch HomeState.
@@ -38,49 +12,48 @@ final homeProvider = NotifierProvider<HomeController, HomeState>(
 
 /// CLASS: HomeController
 /// PURPOSE: StateNotifier managing the aggregation of application activity.
+/// Refreshes automatically when the active project switches.
 class HomeController extends Notifier<HomeState> {
-  /// METHOD: build
-  /// PURPOSE: Initializes the state of the controller.
+  
   @override
   HomeState build() {
-    // Generate initial activities immediately on mount.
-    final activities = _buildActivities();
-    return HomeState(recentActivities: activities);
+    // 1. Listen to ProjectSessionService for changes
+    // This ensures HomeController rebuilds whenever setActiveProject is called
+    final session = ref.watch(projectSessionServiceProvider);
+    final projectId = session.getActiveProjectId();
+    
+    AppLogger.info('HomeController building for Project: $projectId', tag: 'HomeCtrl');
+
+    // 2. Initial Activities
+    // Note: build() cannot be async, so we use a side-effect to load data
+    _loadActivities(projectId);
+
+    return const HomeState(recentActivities: []);
   }
 
-  /// METHOD: _buildActivities
-  /// PURPOSE: Mocks data gathering and aggregation from sub-features.
-  /// WHY: Provides structured timeline data mapped to the ActivityItem entity.
-  List<ActivityItem> _buildActivities() {
-    // In the future this will read from `ref.watch(projectProvider)` etc.
+  /// METHOD: _loadActivities
+  /// PURPOSE: Asynchronously fetches and updates the state with real project data.
+  Future<void> _loadActivities(String projectId) async {
+    try {
+      final repository = ref.read(recentActivityRepositoryProvider);
+      
+      // Fetch latest activities (limit to top 5)
+      final activities = await repository.getRecentActivities(projectId);
+      
+      // Sort is handled by repository but ensuring here for safety
+      activities.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-    final activities = <ActivityItem>[
-      ActivityItem(
-        type: ActivityType.calculator,
-        title: 'Last Calculation',
-        subtitle: 'Concrete Vol: 4.5 m³',
-        timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
-      ),
-      ActivityItem(
-        type: ActivityType.project,
-        title: 'Last Project',
-        subtitle: 'Bridge Pier A - In Progress',
-        timestamp: DateTime.now().subtract(const Duration(hours: 2)),
-      ),
-      ActivityItem(
-        type: ActivityType.leveling,
-        title: 'Leveling Data',
-        subtitle: 'RL: 104.22m',
-        timestamp: DateTime.now().subtract(const Duration(days: 1)),
-      ),
-    ];
+      state = HomeState(recentActivities: activities);
+      
+      AppLogger.info('HomeController loaded ${activities.length} activities for $projectId', tag: 'HomeCtrl');
+    } catch (e, stack) {
+      AppLogger.error('Failed to load home activities', tag: 'HomeCtrl', error: e, stackTrace: stack);
+    }
+  }
 
-    // Sort descending (newest first).
-    activities.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    return activities;
+  /// REFRESH: Manual refresh trigger (e.g., Pull-to-refresh)
+  Future<void> refresh() async {
+    final session = ref.read(projectSessionServiceProvider);
+    await _loadActivities(session.getActiveProjectId());
   }
 }
-
-
-

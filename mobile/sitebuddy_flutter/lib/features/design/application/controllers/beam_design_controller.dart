@@ -9,10 +9,20 @@ import 'package:site_buddy/shared/presentation/providers/history_providers.dart'
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 
-final saveBeamDesignUseCaseProvider = Provider((ref) {
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+
+final saveBeamDesignUseCaseProvider = Provider<SaveBeamDesignUseCase>((ref) {
   final structuralRepo = ref.watch(structuralRepositoryProvider);
-  final historyRepo = ref.watch(sharedHistoryRepositoryProvider);
-  return SaveBeamDesignUseCase(structuralRepo, historyRepo);
+  final calculationRepo = ref.watch(sharedHistoryRepositoryProvider);
+  final designReportRepo = ref.watch(historyRepositoryProvider);
+  final projectSession = ref.watch(projectSessionServiceProvider);
+
+  return SaveBeamDesignUseCase(
+    structuralRepository: structuralRepo,
+    calculationRepository: calculationRepo,
+    designReportRepository: designReportRepo,
+    projectSession: projectSession,
+  );
 });
 
 /// PROVIDER: beamDesignControllerProvider

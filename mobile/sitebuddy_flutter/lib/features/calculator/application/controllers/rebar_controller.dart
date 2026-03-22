@@ -30,9 +30,9 @@ import 'package:site_buddy/features/calculator/domain/entities/rebar_result.dart
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_rebar_usecase.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
-import 'package:site_buddy/core/errors/app_failure.dart';
 
 /// Failure wrapper used by calculator controllers.
 class Failure {
@@ -176,25 +176,28 @@ class RebarController extends Notifier<RebarState> {
       state = state.copyWith(isLoading: false, result: res);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final selectedProject = ref.read(projectControllerProvider).selectedProject;
-      if (selectedProject != null) {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: selectedProject.id,
-          calculationType: CalculationType.rebar,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'memberLength': memberLength,
-            'diameter': diameter,
-            'spacing': spacing,
-            'wastePercent': waste,
-          },
-          resultSummary: '${res.totalWeight.toStringAsFixed(1)} kg Rebar Estimated',
-          resultData: res.toMap(),
-        );
+      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
+      
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.rebar,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'memberLength': memberLength,
+          'diameter': diameter,
+          'spacing': spacing,
+          'wastePercent': waste,
+        },
+        resultSummary: '${res.totalWeight.toStringAsFixed(1)} kg Rebar Estimated',
+        resultData: res.toMap(),
+      );
 
-        ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
-      }
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromRebar(res.toMap(), entry.inputParameters, projectId);
+      await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

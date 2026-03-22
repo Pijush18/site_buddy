@@ -40,7 +40,6 @@ import 'package:site_buddy/app/routes/project_routes.dart';
 
 // PAGE TRANSITIONS
 
-
 final appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   redirect: (context, state) {
@@ -53,7 +52,8 @@ final appRouter = GoRouter(
     final container = ProviderScope.containerOf(context);
     final settings = container.read(settingsProvider);
 
-    final isAuthRoute = state.matchedLocation == AppRoutes.login ||
+    final isAuthRoute =
+        state.matchedLocation == AppRoutes.login ||
         state.matchedLocation == AppRoutes.register ||
         state.matchedLocation == AppRoutes.resetPassword;
     final isSplashRoute = state.matchedLocation == AppRoutes.splash;
@@ -67,18 +67,20 @@ final appRouter = GoRouter(
     // 2. If authenticated and on an auth/splash/root route, check for restoration
     if (user != null && (isAuthRoute || isSplashRoute || isRootRoute)) {
       if (settings.restoreLastScreen) {
-        final lastRoute = container.read(settingsProvider.notifier).getLastRoute();
+        final lastRoute = container
+            .read(settingsProvider.notifier)
+            .getLastRoute();
         // Only redirect if lastRoute is different from current and not basic routes
-        if (lastRoute != null && 
+        if (lastRoute != null &&
             lastRoute != state.matchedLocation &&
-            lastRoute != AppRoutes.login && 
+            lastRoute != AppRoutes.login &&
             lastRoute != AppRoutes.splash &&
             lastRoute != AppRoutes.resetPassword &&
             lastRoute != AppRoutes.register) {
           return lastRoute;
         }
       }
-      
+
       // If on auth route but authenticated, always go home (if not restored)
       if (isAuthRoute) return AppRoutes.home;
     }
@@ -88,24 +90,18 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/splash',
-      pageBuilder: (context, state) => AppTransitions.fadeSlide(
-        state: state,
-        child: const SplashScreen(),
-      ),
+      pageBuilder: (context, state) =>
+          AppTransitions.fadeSlide(state: state, child: const SplashScreen()),
     ),
     GoRoute(
       path: '/login',
-      pageBuilder: (context, state) => AppTransitions.fadeSlide(
-        state: state,
-        child: const LoginScreen(),
-      ),
+      pageBuilder: (context, state) =>
+          AppTransitions.fadeSlide(state: state, child: const LoginScreen()),
     ),
     GoRoute(
       path: '/register',
-      pageBuilder: (context, state) => AppTransitions.fadeSlide(
-        state: state,
-        child: const RegisterScreen(),
-      ),
+      pageBuilder: (context, state) =>
+          AppTransitions.fadeSlide(state: state, child: const RegisterScreen()),
     ),
     GoRoute(
       path: '/reset-password',
@@ -139,7 +135,10 @@ final appRouter = GoRouter(
                   path: 'level',
                   pageBuilder: (context, state) => AppTransitions.fadeSlide(
                     state: state,
-                    child: const LevelLogScreen(projectId: 'default'),
+                    // FIX: Removed hardcoded fallback 'default' projectId
+                    // LevelLogScreen requires a valid projectId - navigation should only occur
+                    // after user selects a project from the project list
+                    child: const LevelLogScreen(),
                   ),
                 ),
                 GoRoute(
@@ -246,13 +245,8 @@ final appRouter = GoRouter(
     if (kDebugMode)
       GoRoute(
         path: '/dev/ui-lab',
-        pageBuilder: (context, state) => AppTransitions.fadeSlide(
-          state: state,
-          child: const UiLabScreen(),
-        ),
+        pageBuilder: (context, state) =>
+            AppTransitions.fadeSlide(state: state, child: const UiLabScreen()),
       ),
   ],
 );
-
-
-
