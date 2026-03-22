@@ -140,11 +140,17 @@ class LevelLogController extends StateNotifier<LevelLogState> {
 
     await repo.saveSession(session);
 
+    // FIX: Get fresh projectId from session at save time - not from cached state
+    // This ensures we use the correct project even if active project changed
+    final projectId = _ref
+        .read(projectSessionServiceProvider)
+        .getActiveProjectId();
+
     // Record calculation history
     final historyRepo = _ref.read(sharedHistoryRepositoryProvider);
     final entry = CalculationHistoryEntry(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      projectId: state.projectId!,
+      projectId: projectId,
       calculationType: CalculationType.levelLog,
       timestamp: DateTime.now(),
       inputParameters: {

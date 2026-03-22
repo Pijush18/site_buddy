@@ -10,9 +10,10 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
-final excavationProvider = NotifierProvider<ExcavationController, ExcavationState>(
-  ExcavationController.new,
-);
+final excavationProvider =
+    NotifierProvider<ExcavationController, ExcavationState>(
+      ExcavationController.new,
+    );
 
 class ExcavationController extends Notifier<ExcavationState> {
   final _service = MaterialEstimationService();
@@ -28,33 +29,45 @@ class ExcavationController extends Notifier<ExcavationState> {
       clearFailure: true,
       clearResult: true,
     );
-    
+
     if (data.length != null && data.width != null && data.depth != null) {
       calculate();
     }
   }
 
-  void updateLength(String value) => state = state.copyWith(lengthInput: value, clearFailure: true);
-  void updateWidth(String value) => state = state.copyWith(widthInput: value, clearFailure: true);
-  void updateDepth(String value) => state = state.copyWith(depthInput: value, clearFailure: true);
-  void updateClearance(String value) => state = state.copyWith(clearanceInput: value, clearFailure: true);
-  void updateSwellFactor(String value) => state = state.copyWith(swellFactorInput: value, clearFailure: true);
+  void updateLength(String value) =>
+      state = state.copyWith(lengthInput: value, clearFailure: true);
+  void updateWidth(String value) =>
+      state = state.copyWith(widthInput: value, clearFailure: true);
+  void updateDepth(String value) =>
+      state = state.copyWith(depthInput: value, clearFailure: true);
+  void updateClearance(String value) =>
+      state = state.copyWith(clearanceInput: value, clearFailure: true);
+  void updateSwellFactor(String value) =>
+      state = state.copyWith(swellFactorInput: value, clearFailure: true);
 
   Future<void> calculate() async {
-    state = state.copyWith(isLoading: true, clearFailure: true, clearResult: true);
+    state = state.copyWith(
+      isLoading: true,
+      clearFailure: true,
+      clearResult: true,
+    );
 
     final l = Validators.parsePositiveNumber(state.lengthInput, 'Length');
     final w = Validators.parsePositiveNumber(state.widthInput, 'Width');
     final d = Validators.parsePositiveNumber(state.depthInput, 'Depth');
     final c = Validators.parsePositiveNumber(state.clearanceInput, 'Clearance');
-    final s = Validators.parsePositiveNumber(state.swellFactorInput, 'Swell Factor');
+    final s = Validators.parsePositiveNumber(
+      state.swellFactorInput,
+      'Swell Factor',
+    );
 
     if (l.failure != null) return _onError(l.failure!);
     if (w.failure != null) return _onError(w.failure!);
     if (d.failure != null) return _onError(d.failure!);
 
     await Future.delayed(const Duration(milliseconds: 300));
-    
+
     try {
       final res = _service.calculateExcavationVolume(
         length: l.value!,
@@ -66,8 +79,8 @@ class ExcavationController extends Notifier<ExcavationState> {
       state = state.copyWith(isLoading: false, result: res);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
-      
+      final projectId = ref.watch(activeProjectIdProvider);
+
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),
         projectId: projectId,
@@ -87,7 +100,11 @@ class ExcavationController extends Notifier<ExcavationState> {
       await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
 
       // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromExcavation(res.toMap(), entry.inputParameters, projectId);
+      final report = DesignReportMapper.fromExcavation(
+        res.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
       await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       _onError(AppFailure(e.toString()));
@@ -107,9 +124,7 @@ class ExcavationController extends Notifier<ExcavationState> {
     calculate();
   }
 
-  void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
+  void _onError(AppFailure f) =>
+      state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ExcavationState.initial();
 }
-
-
-

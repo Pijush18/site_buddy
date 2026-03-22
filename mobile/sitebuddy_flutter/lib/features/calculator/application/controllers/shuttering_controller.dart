@@ -10,9 +10,10 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
-final shutteringProvider = NotifierProvider<ShutteringController, ShutteringState>(
-  ShutteringController.new,
-);
+final shutteringProvider =
+    NotifierProvider<ShutteringController, ShutteringState>(
+      ShutteringController.new,
+    );
 
 class ShutteringController extends Notifier<ShutteringState> {
   final _service = MaterialEstimationService();
@@ -28,19 +29,27 @@ class ShutteringController extends Notifier<ShutteringState> {
       clearFailure: true,
       clearResult: true,
     );
-    
+
     if (data.length != null && data.width != null && data.depth != null) {
       calculate();
     }
   }
 
-  void updateLength(String value) => state = state.copyWith(lengthInput: value, clearFailure: true);
-  void updateWidth(String value) => state = state.copyWith(widthInput: value, clearFailure: true);
-  void updateDepth(String value) => state = state.copyWith(depthInput: value, clearFailure: true);
-  void updateIncludeBottom(bool value) => state = state.copyWith(includeBottom: value, clearFailure: true);
+  void updateLength(String value) =>
+      state = state.copyWith(lengthInput: value, clearFailure: true);
+  void updateWidth(String value) =>
+      state = state.copyWith(widthInput: value, clearFailure: true);
+  void updateDepth(String value) =>
+      state = state.copyWith(depthInput: value, clearFailure: true);
+  void updateIncludeBottom(bool value) =>
+      state = state.copyWith(includeBottom: value, clearFailure: true);
 
   Future<void> calculate() async {
-    state = state.copyWith(isLoading: true, clearFailure: true, clearResult: true);
+    state = state.copyWith(
+      isLoading: true,
+      clearFailure: true,
+      clearResult: true,
+    );
 
     final l = Validators.parsePositiveNumber(state.lengthInput, 'Length');
     final w = Validators.parsePositiveNumber(state.widthInput, 'Width');
@@ -51,7 +60,7 @@ class ShutteringController extends Notifier<ShutteringState> {
     if (d.failure != null) return _onError(d.failure!);
 
     await Future.delayed(const Duration(milliseconds: 300));
-    
+
     try {
       final res = _service.calculateShutteringArea(
         length: l.value!,
@@ -62,8 +71,8 @@ class ShutteringController extends Notifier<ShutteringState> {
       state = state.copyWith(isLoading: false, result: res);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
-      
+      final projectId = ref.watch(activeProjectIdProvider);
+
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),
         projectId: projectId,
@@ -75,14 +84,19 @@ class ShutteringController extends Notifier<ShutteringState> {
           'depth': d.value,
           'includeBottom': state.includeBottom,
         },
-        resultSummary: '${res.areaM2.toStringAsFixed(1)} m² Shuttering Estimated',
+        resultSummary:
+            '${res.areaM2.toStringAsFixed(1)} m² Shuttering Estimated',
         resultData: res.toMap(),
       );
 
       await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
 
       // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromShuttering(res.toMap(), entry.inputParameters, projectId);
+      final report = DesignReportMapper.fromShuttering(
+        res.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
       await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       _onError(AppFailure(e.toString()));
@@ -101,9 +115,7 @@ class ShutteringController extends Notifier<ShutteringState> {
     calculate();
   }
 
-  void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
+  void _onError(AppFailure f) =>
+      state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ShutteringState.initial();
 }
-
-
-

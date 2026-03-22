@@ -11,12 +11,11 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 
 /// FIX: Get history entries from session - no projectId parameter
+/// Uses activeProjectIdProvider for reactivity - auto-updates when project switches
 final projectHistoryProvider =
     FutureProvider.autoDispose<List<CalculationHistoryEntry>>((ref) {
-      // Get projectId from session - throws if no active project
-      final projectId = ref
-          .read(projectSessionServiceProvider)
-          .getActiveProjectId();
+      // Watch session for reactivity - rebuilds when project changes
+      final projectId = ref.watch(activeProjectIdProvider);
       return ref
           .read(sharedHistoryRepositoryProvider)
           .getEntriesByProject(projectId);

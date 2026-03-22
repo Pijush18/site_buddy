@@ -13,17 +13,26 @@ export 'package:site_buddy/features/project/presentation/providers/project_provi
 /// PROVIDER: projectSessionServiceProvider
 /// PURPOSE: Central access point for managing the active project session.
 /// USES: ChangeNotifierProvider to allow notifications on project switch.
-final projectSessionServiceProvider = ChangeNotifierProvider<ProjectSessionService>((ref) {
-  final repository = ref.watch(projectRepositoryProvider);
-  return ProjectSessionService(repository: repository);
+final projectSessionServiceProvider =
+    ChangeNotifierProvider<ProjectSessionService>((ref) {
+      final repository = ref.watch(projectRepositoryProvider);
+      return ProjectSessionService(repository: repository);
+    });
+
+/// PROVIDER: activeProjectIdProvider
+/// PURPOSE: Reactive provider that returns the active project ID.
+/// Watches session changes and auto-updates when project switches.
+/// THROWS: StateError if no active project (fail-fast)
+final activeProjectIdProvider = Provider<String>((ref) {
+  ref.watch(projectSessionServiceProvider);
+  return ref.read(projectSessionServiceProvider).getActiveProjectId();
 });
 
 /// PROVIDER: recentActivityRepositoryProvider
 /// PURPOSE: Standardized access to project-filtered activity feed.
-final recentActivityRepositoryProvider = Provider<RecentActivityRepository>((ref) {
+final recentActivityRepositoryProvider = Provider<RecentActivityRepository>((
+  ref,
+) {
   final historyRepo = ref.watch(historyRepositoryProvider);
   return HiveRecentActivityRepository(historyRepository: historyRepo);
 });
-
-
-

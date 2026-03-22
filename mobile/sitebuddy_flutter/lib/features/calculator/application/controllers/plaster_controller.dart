@@ -83,8 +83,8 @@ class PlasterController extends Notifier<PlasterState> {
       state = state.copyWith(isLoading: false, result: result);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
-      
+      final projectId = ref.watch(activeProjectIdProvider);
+
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),
         projectId: projectId,
@@ -102,7 +102,11 @@ class PlasterController extends Notifier<PlasterState> {
       await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
 
       // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromPlaster(result.toMap(), entry.inputParameters, projectId);
+      final report = DesignReportMapper.fromPlaster(
+        result.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
       await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
@@ -129,6 +133,3 @@ class PlasterController extends Notifier<PlasterState> {
     state = PlasterState.initial();
   }
 }
-
-
-

@@ -142,8 +142,8 @@ class SandController extends Notifier<SandState> {
       );
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
-      
+      final projectId = ref.watch(activeProjectIdProvider);
+
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),
         projectId: projectId,
@@ -155,14 +155,19 @@ class SandController extends Notifier<SandState> {
           'depth': depth,
           'rate': state.ratePerCubicMeter,
         },
-        resultSummary: '${result.dryVolume.toStringAsFixed(1)} m³ Sand Estimated',
+        resultSummary:
+            '${result.dryVolume.toStringAsFixed(1)} m³ Sand Estimated',
         resultData: result.toMap(),
       );
 
       await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
 
       // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromSand(result.toMap(), entry.inputParameters, projectId);
+      final report = DesignReportMapper.fromSand(
+        result.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
       await ref.read(historyRepositoryProvider).save(report);
     } on ArgumentError catch (e) {
       state = state.copyWith(
@@ -191,6 +196,3 @@ class SandController extends Notifier<SandState> {
     calculate();
   }
 }
-
-
-

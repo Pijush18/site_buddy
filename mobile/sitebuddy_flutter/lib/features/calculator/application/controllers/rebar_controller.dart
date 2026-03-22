@@ -22,7 +22,6 @@
 /// ----------------------------------------------
 library;
 
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -104,7 +103,7 @@ class RebarController extends Notifier<RebarState> {
       clearFailure: true,
       clearResult: true,
     );
-    
+
     if (data.length != null && data.diameter != null && data.spacing != null) {
       calculate();
     }
@@ -176,8 +175,8 @@ class RebarController extends Notifier<RebarState> {
       state = state.copyWith(isLoading: false, result: res);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.read(projectSessionServiceProvider).getActiveProjectId();
-      
+      final projectId = ref.watch(activeProjectIdProvider);
+
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),
         projectId: projectId,
@@ -189,14 +188,19 @@ class RebarController extends Notifier<RebarState> {
           'spacing': spacing,
           'wastePercent': waste,
         },
-        resultSummary: '${res.totalWeight.toStringAsFixed(1)} kg Rebar Estimated',
+        resultSummary:
+            '${res.totalWeight.toStringAsFixed(1)} kg Rebar Estimated',
         resultData: res.toMap(),
       );
 
       await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
 
       // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromRebar(res.toMap(), entry.inputParameters, projectId);
+      final report = DesignReportMapper.fromRebar(
+        res.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
       await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
@@ -220,6 +224,3 @@ class RebarController extends Notifier<RebarState> {
 
   void reset() => state = const RebarState();
 }
-
-
-
