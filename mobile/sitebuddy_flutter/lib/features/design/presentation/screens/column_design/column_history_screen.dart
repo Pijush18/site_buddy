@@ -6,7 +6,6 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
-import 'package:site_buddy/shared/application/services/project_session_service.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';

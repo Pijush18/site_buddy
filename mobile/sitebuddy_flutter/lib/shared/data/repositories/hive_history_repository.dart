@@ -144,6 +144,36 @@ class HiveHistoryRepository implements HistoryRepository {
   }
 
   @override
+  /// Deletes ALL design reports for a specific project.
+  /// Called when a project is deleted to prevent orphaned data.
+  Future<void> deleteByProjectId(String projectId) async {
+    try {
+      // 1. Get all reports for this project
+      final reportsToDelete = _box.values
+          .where((r) => r.projectId == projectId)
+          .toList();
+      
+      if (reportsToDelete.isEmpty) {
+        AppLogger.debug('No design reports found for project: $projectId', tag: 'HistoryRepo');
+        return;
+      }
+
+      // 2. Delete from Hive
+      for (final report in reportsToDelete) {
+        await _box.delete(report.id);
+      }
+      
+      // 3. Clear project cache
+      _projectCaches.remove(projectId);
+      
+      AppLogger.info('Deleted ${reportsToDelete.length} design reports for project: $projectId', tag: 'HistoryRepo');
+    } catch (e, stack) {
+      AppLogger.error('Failed to delete design reports for project: $projectId', tag: 'HistoryRepo', error: e, stackTrace: stack);
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> clear() async {
     try {
       await _box.clear();

@@ -4,7 +4,6 @@ import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
 import 'package:site_buddy/features/design/domain/services/beam_design_domain_service.dart';
 import 'package:site_buddy/features/design/domain/usecases/save_beam_design_usecase.dart';
 import 'package:site_buddy/core/services/design_report_service.dart';
-import 'package:site_buddy/shared/application/providers/active_project_provider.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';

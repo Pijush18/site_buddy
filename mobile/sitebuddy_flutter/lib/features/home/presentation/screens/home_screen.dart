@@ -136,7 +136,7 @@ class HomeScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurfaceVariant.withOpacity(0.5),
+                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                         fontStyle: FontStyle.italic,
                       ),
                     ),

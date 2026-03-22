@@ -78,7 +78,7 @@ class _ReportHeader extends StatelessWidget {
               Text(
                 dateStr,
                 style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),
+                  color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -113,7 +113,7 @@ class _ReportSummaryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(SbSpacing.sm),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -256,7 +256,7 @@ class _ReportRow extends StatelessWidget {
             height: 1,
             thickness: 0.5,
             indent: SbSpacing.md,
-            color: theme.dividerColor.withOpacity(0.05),
+            color: theme.dividerColor.withValues(alpha: 0.05),
           ),
       ],
     );
@@ -274,9 +274,9 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         isSafe ? 'SAFE' : 'UNSAFE',

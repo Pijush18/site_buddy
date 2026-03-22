@@ -50,15 +50,11 @@ class HiveCalculationRepository implements CalculationRepository {
     }
 
     try {
-      // DEBUG: Trace history save with project ID
-      developer.log('[History] Saving for project: ${entry.projectId}', name: 'HiveCalculationRepository');
-      AppLogger.debug('[History] Saving for project: ${entry.projectId} - entry: ${entry.id} (${entry.calculationType})', tag: 'CalcRepo');
-      
-      // 2. Update Hive
+      // 2. Update Hive - await ensures write completes before logging success
       final box = await _getBox();
       await box.put(entry.id, entry);
       
-      // 3. Update Cache
+      // 3. Update Cache - only after Hive write succeeds
       final currentCache = await _getCache();
       final index = currentCache.indexWhere((e) => e.id == entry.id);
       
@@ -72,6 +68,8 @@ class HiveCalculationRepository implements CalculationRepository {
       // 4. Update Project Activity
       await _projectRepository?.setLastAccessed(entry.projectId);
 
+      // LOG INTEGRITY: Only log AFTER successful write
+      developer.log('[History] Saved for project: ${entry.projectId}', name: 'HiveCalculationRepository');
       AppLogger.info('[History] Saved entry: ${entry.id} for project: ${entry.projectId}', tag: 'CalcRepo');
     } catch (e, stack) {
       AppLogger.error('Failed to add calculation entry: ${entry.id}', tag: 'CalcRepo', error: e, stackTrace: stack);
@@ -114,6 +112,35 @@ class HiveCalculationRepository implements CalculationRepository {
       cache.removeWhere((e) => e.id == id);
     } catch (e) {
       developer.log('HiveCalculationRepository.deleteEntry failed', error: e);
+      rethrow;
+    }
+  }
+
+  @override
+  /// Deletes ALL calculation history entries for a specific project.
+  /// Called when a project is deleted to prevent orphaned data.
+  Future<void> deleteByProjectId(String projectId) async {
+    try {
+      // 1. Get all entries for this project
+      final entriesToDelete = _cache?.where((e) => e.projectId == projectId).toList() ?? [];
+      
+      if (entriesToDelete.isEmpty) {
+        AppLogger.debug('No history entries found for project: $projectId', tag: 'CalcRepo');
+        return;
+      }
+
+      // 2. Delete from Hive
+      final box = await _getBox();
+      for (final entry in entriesToDelete) {
+        await box.delete(entry.id);
+      }
+      
+      // 3. Update Cache
+      _cache?.removeWhere((e) => e.projectId == projectId);
+      
+      AppLogger.info('Deleted ${entriesToDelete.length} history entries for project: $projectId', tag: 'CalcRepo');
+    } catch (e, stack) {
+      AppLogger.error('Failed to delete history for project: $projectId', tag: 'CalcRepo', error: e, stackTrace: stack);
       rethrow;
     }
   }

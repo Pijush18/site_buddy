@@ -15,6 +15,10 @@ abstract class HistoryRepository {
   /// REMOVES a specific report from history by its unique identifier.
   Future<void> delete(String id);
 
+  /// Deletes ALL design reports for a specific project.
+  /// Called when a project is deleted to prevent orphaned data.
+  Future<void> deleteByProjectId(String projectId);
+
   /// CLEARS all historical records from the system.
   Future<void> clear();
 

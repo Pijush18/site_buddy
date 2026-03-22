@@ -30,9 +30,9 @@ import 'package:uuid/uuid.dart';
 import 'package:site_buddy/shared/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
 import 'package:site_buddy/features/project/application/state/project_state.dart';
-import 'package:site_buddy/features/project/presentation/providers/project_providers.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
 /// Provider exposing the [ProjectController].
 final projectControllerProvider =
@@ -155,6 +155,7 @@ class ProjectController extends Notifier<ProjectState> {
   /// METHOD: deleteProject
   /// PURPOSE: Removal from local storage and state.
   /// FIX: Ensure session never holds deleted project.
+  /// ALSO: Delete all related history to prevent orphaned data.
   Future<void> deleteProject(String id) async {
     // DEBUG: Trace delete
     debugPrint('[Project] Deleting: $id');
@@ -168,15 +169,24 @@ class ProjectController extends Notifier<ProjectState> {
       wasActiveProject = false;
     }
 
-    // 2. Delete from storage
+    // 2. Delete all related history (calculation + design reports) - prevents orphaned data
+    try {
+      await ref.read(sharedHistoryRepositoryProvider).deleteByProjectId(id);
+      await ref.read(historyRepositoryProvider).deleteByProjectId(id);
+    } catch (e) {
+      // Log but continue - project deletion should succeed even if history cleanup fails
+      debugPrint('[Project] Warning: Failed to delete history for $id: $e');
+    }
+
+    // 3. Delete from storage
     state = state.copyWith(isLoading: true);
     final useCase = ref.read(deleteProjectUseCaseProvider);
     await useCase.execute(id);
 
-    // 3. Filter out deleted project from local state
+    // 4. Filter out deleted project from local state
     final remainingProjects = state.projects.where((p) => p.id != id).toList();
 
-    // 4. FIX: Handle session - never keep deleted project in session
+    // 5. FIX: Handle session - never keep deleted project in session
     if (wasActiveProject) {
       if (remainingProjects.isNotEmpty) {
         // Set next project as active (first one = most recently accessed)

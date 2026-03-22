@@ -80,8 +80,10 @@ class AppLogger {
 
     // 5. Console fallback if developer tool isn't attached (optional for developer experience)
     if (kDebugMode && level == LogLevel.error) {
-      print('❌ ERROR [$tag]: $message');
-      if (error != null) print('   Error: $error');
+      // ignore: avoid_print
+      debugPrint('❌ ERROR [$tag]: $message');
+      // ignore: avoid_print
+      if (error != null) debugPrint('   Error: $error');
     }
   }
 

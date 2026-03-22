@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unused_local_variable, always_use_package_imports
+
 import 'package:site_buddy/core/qa/qa_test_runner.dart';
 import 'package:site_buddy/features/level_calculator/application/services/level_calculator_service.dart';
 import 'package:site_buddy/features/gradient_tool/application/services/gradient_calculator_service.dart';

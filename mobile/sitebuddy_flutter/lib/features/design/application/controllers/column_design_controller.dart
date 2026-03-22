@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -40,9 +39,10 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
 
   @override
   ColumnDesignState build() {
-    // Initialize with selected project if any
-    final project = ref.watch(activeProjectProvider);
-    return ColumnDesignState(projectId: project?.id);
+    // Initialize with selected project if any - Session-based architecture
+    final projectSession = ref.watch(projectSessionServiceProvider);
+    final activeProject = projectSession.getActiveProject();
+    return ColumnDesignState(projectId: activeProject?.id);
   }
 
   void updateInput({

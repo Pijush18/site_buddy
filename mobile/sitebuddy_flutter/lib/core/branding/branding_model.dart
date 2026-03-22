@@ -1,17 +1,20 @@
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: branding_model.dart
-/// Feature: core/branding
-/// Layer: domain/models
-///
-/// PURPOSE:
-/// Represents the visual identity and authorship details for generated reports.
-///
-/// RESPONSIBILITIES:
-/// - Holds the core text branding (company, engineer name).
-/// - Stores a potential path for a custom logo asset or file.
-/// - Supports JSON serialization for local persistence storage mapping.
-/// ----------------------------------------------
+// FILE HEADER
+// ----------------------------------------------
+// File: branding_model.dart
+// Feature: core/branding
+// Layer: domain/models
+//
+// PURPOSE:
+// Represents the visual identity and authorship details for generated reports.
+//
+// RESPONSIBILITIES:
+// - Holds the core text branding (company, engineer name).
+// - Stores a potential path for a custom logo asset or file.
+// - Supports JSON serialization for local persistence storage mapping.
+// ----------------------------------------------
+
+library;
+
 import 'package:hive/hive.dart';
 
 part 'branding_model.g.dart';

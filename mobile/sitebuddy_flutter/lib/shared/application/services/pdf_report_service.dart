@@ -123,8 +123,7 @@ class PdfReportService {
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _buildMetaRow('Date Generated:', _dateFormat.format(report.timestamp)),
-        if (report.projectId != null)
-          _buildMetaRow('Project ID:', report.projectId!),
+        _buildMetaRow('Project ID:', report.projectId),
         _buildMetaRow('Report ID:', report.id),
       ],
     );
@@ -151,7 +150,7 @@ class PdfReportService {
         ),
         pw.Divider(thickness: 1, color: PdfColors.grey300),
         pw.SizedBox(height: 8),
-        ...data.entries.map((group) {
+        ...data.entries.map<pw.Widget>((group) {
           // If value is a Map but NOT a structured field, it's a Group
           if (group.value is Map<String, dynamic> &&
               !group.value.containsKey('label')) {
@@ -159,7 +158,7 @@ class PdfReportService {
           }
           // Otherwise build a single row
           return _buildFieldRow(group.value);
-        }).toList(),
+        }),
       ],
     );
   }
@@ -216,9 +215,9 @@ class PdfReportService {
   static pw.Widget _buildSummary(DesignReport report) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(12),
-      decoration: pw.BoxDecoration(
+      decoration: const pw.BoxDecoration(
         color: PdfColors.blue50,
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
+        borderRadius: pw.BorderRadius.all(pw.Radius.circular(4)),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,

@@ -347,7 +347,7 @@ class DesignReportMapper {
     return {
       'label': label,
       'value': value,
-      if (unit != null) 'unit': unit,
+      ...?unit != null ? {'unit': unit} : null,
     };
   }
 

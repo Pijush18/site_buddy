@@ -126,7 +126,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     child: Icon(
                       SbIcons.terrain,
                       size: 48,
-                      color: colorScheme.onSurfaceVariant.withOpacity(0.5),
+                      color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
