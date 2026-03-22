@@ -1,23 +1,67 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 /// SCREEN: ProjectEditorScreen
-class ProjectEditorScreen extends StatefulWidget {
+class ProjectEditorScreen extends ConsumerStatefulWidget {
   final String? projectId;
   const ProjectEditorScreen({super.key, this.projectId});
 
   @override
-  State<ProjectEditorScreen> createState() => _ProjectEditorScreenState();
+  ConsumerState<ProjectEditorScreen> createState() => _ProjectEditorScreenState();
 }
 
-class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
+class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
   final _nameController = TextEditingController();
   final _locController = TextEditingController();
   final _clientController = TextEditingController();
   final _descController = TextEditingController();
   ProjectStatus _selectedStatus = ProjectStatus.active;
+  bool _isSaving = false;
+
+  bool get _isFormValid =>
+      _nameController.text.trim().isNotEmpty &&
+      _locController.text.trim().isNotEmpty;
+
+  Future<void> _saveProject() async {
+    if (!_isFormValid || _isSaving) return;
+
+    setState(() => _isSaving = true);
+
+    try {
+      await ref.read(projectControllerProvider.notifier).createProject(
+            name: _nameController.text.trim(),
+            location: _locController.text.trim(),
+            clientName: _clientController.text.trim().isNotEmpty
+                ? _clientController.text.trim()
+                : null,
+            description: _descController.text.trim().isNotEmpty
+                ? _descController.text.trim()
+                : null,
+            status: _selectedStatus,
+          );
+
+      if (mounted && Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save project: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -35,8 +79,14 @@ class _ProjectEditorScreenState extends State<ProjectEditorScreen> {
       primaryAction: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Save Project'),
+          onPressed: _isSaving ? null : _saveProject,
+          child: _isSaving
+              ? const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Text('Save Project'),
         ),
       ),
 

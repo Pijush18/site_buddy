@@ -24,8 +24,8 @@ class ProjectDetailScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    /// FIX: Get project from session
-    final proj = ref.read(projectSessionServiceProvider).getActiveProject();
+    /// FIX: Get project from session - watch for reactivity
+    final proj = ref.watch(projectSessionServiceProvider).getActiveProject();
 
     if (proj == null) {
       return const SbPage.detail(

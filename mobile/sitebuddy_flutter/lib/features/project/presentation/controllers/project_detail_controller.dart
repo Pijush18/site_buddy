@@ -14,9 +14,9 @@ class ProjectDetailState {
 
 /// FIX: Get projectId from session ONLY - no family parameter
 final projectDetailControllerProvider = Provider<ProjectDetailState>((ref) {
-  // Get projectId from session - throws if no active project
+  // Get projectId from session - watch for reactivity, throws if no active project
   final projectId = ref
-      .read(projectSessionServiceProvider)
+      .watch(projectSessionServiceProvider)
       .getActiveProjectId();
 
   final structuralUseCase = ref.watch(
