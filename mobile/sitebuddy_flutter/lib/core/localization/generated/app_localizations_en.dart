@@ -69,6 +69,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get length => 'Length';
 
   @override
+  String get diameter => 'Diameter';
+
+  @override
+  String get load => 'Load';
+
+  @override
+  String get reinforcement => 'Reinforcement';
+
+  @override
+  String get spacing => 'Spacing';
+
+  @override
   String get calculate => 'Calculate';
 
   @override

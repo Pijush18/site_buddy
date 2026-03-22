@@ -218,6 +218,30 @@ abstract class AppLocalizations {
   /// **'Length'**
   String get length;
 
+  /// No description provided for @diameter.
+  ///
+  /// In en, this message translates to:
+  /// **'Diameter'**
+  String get diameter;
+
+  /// No description provided for @load.
+  ///
+  /// In en, this message translates to:
+  /// **'Load'**
+  String get load;
+
+  /// No description provided for @reinforcement.
+  ///
+  /// In en, this message translates to:
+  /// **'Reinforcement'**
+  String get reinforcement;
+
+  /// No description provided for @spacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Spacing'**
+  String get spacing;
+
   /// No description provided for @calculate.
   ///
   /// In en, this message translates to:

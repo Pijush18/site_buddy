@@ -69,6 +69,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get length => 'लंबाई';
 
   @override
+  String get diameter => 'व्यास';
+
+  @override
+  String get load => 'लोड';
+
+  @override
+  String get reinforcement => 'सुदृढीकरण';
+
+  @override
+  String get spacing => 'स्पेसिंग';
+
+  @override
   String get calculate => 'गणना करें';
 
   @override
