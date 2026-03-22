@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/domain/repositories/calculation_repository.dart';
 import 'package:site_buddy/shared/data/repositories/hive_calculation_repository.dart';
 import 'package:site_buddy/shared/data/repositories/hive_history_repository.dart';
 import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/core/backend/backend_client.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
@@ -65,3 +65,5 @@ final projectHistoryProvider =
           .read(sharedHistoryRepositoryProvider)
           .getEntriesByProject(projectId);
     });
+
+

@@ -28,7 +28,7 @@ import 'package:site_buddy/features/ai/application/controllers/ai_state.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/features/ai/domain/entities/ai_message.dart';
 import 'package:site_buddy/features/ai/domain/usecases/process_ai_query_usecase.dart';
-import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 /// PROVIDER: aiProvider
@@ -118,6 +118,7 @@ class AiController extends Notifier<AiState> {
     }
   }
 }
+
 
 
 

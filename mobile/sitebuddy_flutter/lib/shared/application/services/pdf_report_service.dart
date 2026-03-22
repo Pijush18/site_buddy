@@ -2,7 +2,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 
 /// SERVICE: PdfReportService
@@ -275,3 +275,4 @@ class PdfReportService {
     );
   }
 }
+

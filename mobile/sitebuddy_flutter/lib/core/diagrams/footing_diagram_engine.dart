@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:site_buddy/core/diagrams/diagram_models.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
 
 /// ENGINE: FootingDiagramEngine
 /// PURPOSE: Generates geometry for RC Footing (Isolated) plan view.
@@ -55,6 +55,7 @@ class FootingDiagramEngine {
     );
   }
 }
+
 
 
 

@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/features/shuttering_estimator/domain/models/shuttering_estimator_result.dart';
 
@@ -18,3 +18,4 @@ class ShutteringEstimatorMapper {
     );
   }
 }
+

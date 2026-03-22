@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
+import 'package:site_buddy/features/structural/shared/presentation/providers/design_providers.dart';
 import 'package:site_buddy/features/level_log/presentation/providers/level_log_providers.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_log_session.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
@@ -29,3 +29,4 @@ final projectDetailControllerProvider = Provider<ProjectDetailState>((ref) {
     logs: logUseCase.execute(projectId).cast<LevelLogSession>(),
   );
 });
+

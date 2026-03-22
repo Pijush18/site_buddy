@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/domain/repositories/calculation_repository.dart';
 import 'package:site_buddy/shared/domain/repositories/project_repository.dart';
 import 'package:site_buddy/core/backend/backend_client.dart';
@@ -180,3 +180,4 @@ class HiveCalculationRepository implements CalculationRepository {
     }
   }
 }
+

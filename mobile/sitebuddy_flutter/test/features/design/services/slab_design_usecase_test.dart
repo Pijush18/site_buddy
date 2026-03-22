@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:site_buddy/features/design/domain/usecases/slab_design_usecase.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
+import 'package:site_buddy/features/structural/slab/domain/usecases/slab_design_usecase.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_type.dart';
 
 void main() {
   final useCase = SlabDesignUseCase();
@@ -66,3 +66,5 @@ void main() {
     });
   });
 }
+
+

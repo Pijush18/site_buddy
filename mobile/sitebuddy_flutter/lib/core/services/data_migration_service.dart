@@ -2,17 +2,17 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
+import 'package:site_buddy/features/structural/shared/presentation/providers/design_providers.dart';
 import 'package:site_buddy/features/level_log/presentation/providers/level_log_providers.dart';
 
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_design_result.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_result.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
 
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_type.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_type.dart';
 
 import 'package:site_buddy/features/level_log/domain/entities/level_log_session.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
@@ -174,6 +174,10 @@ class DataMigrationService {
     await prefs.remove('level_log_history');
   }
 }
+
+
+
+
 
 
 

@@ -25,7 +25,7 @@ library;
 
 
 import 'package:equatable/equatable.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 
 /// CLASS: ProjectState
@@ -72,6 +72,7 @@ class ProjectState extends Equatable {
   @override
   List<Object?> get props => [projects, selectedProject, isLoading, failure];
 }
+
 
 
 

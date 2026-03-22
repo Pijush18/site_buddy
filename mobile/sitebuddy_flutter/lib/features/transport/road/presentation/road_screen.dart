@@ -7,7 +7,7 @@ import 'package:site_buddy/features/transport/road/application/road_calculator.d
 
 /// lib/features/transport/road/presentation/road_screen.dart
 ///
-/// Minimal UI for Road Pavement Design.
+/// Advanced UI for IRC Flexible Pavement Design.
 class RoadScreen extends ConsumerWidget {
   const RoadScreen({super.key});
 
@@ -18,11 +18,11 @@ class RoadScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return SbPage.scaffold(
-      title: 'Road Pavement Design',
+      title: 'Advanced Road Design',
       body: SbSectionList(
         sections: [
           SbSection(
-            title: 'Subgrade Properties',
+            title: 'Design Parameters (IRC:37)',
             child: SbCard(
               child: Column(
                 children: [
@@ -36,8 +36,8 @@ class RoadScreen extends ConsumerWidget {
                   SbInput(
                     label: 'Design Traffic (msa)',
                     suffixIcon: const Icon(SbIcons.truck),
-                    onChanged: controller.updateTraffic,
-                    hint: 'e.g. 10.0',
+                    onChanged: controller.updateMSA,
+                    hint: 'e.g. 20.0',
                   ),
                 ],
               ),
@@ -60,7 +60,7 @@ class RoadScreen extends ConsumerWidget {
                     label: 'Design Pavement',
                     icon: state.isLoading ? null : SbIcons.calculator,
                     isLoading: state.isLoading,
-                    onPressed: controller.calculate,
+                    onPressed: controller.calculatePavement,
                   ),
                 ),
               ],
@@ -75,34 +75,60 @@ class RoadScreen extends ConsumerWidget {
                 ),
               ),
             ),
-          if (state.result != null)
+          if (state.result != null) ...[
             SbSection(
-              title: 'Design Results (${state.result!.designCode})',
+              title: 'Pavement Composition',
+              child: SbCard(
+                child: Column(
+                  children: [
+                    Text(
+                      'Safety: ${state.result!.safetyClassification}',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: state.result!.safetyClassification.contains('SAFE') 
+                          ? Colors.green 
+                          : Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(),
+                    ...state.result!.layers.map((l) => SbListItemTile(
+                      title: l.name,
+                      onTap: () {},
+                      trailing: Text(
+                        '${l.thickness.toStringAsFixed(0)} mm',
+                        style: TextStyle(
+                          color: l.isLocked ? theme.colorScheme.outline : null,
+                          fontStyle: l.isLocked ? FontStyle.italic : null,
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+            SbSection(
+              title: 'Design Summary',
               child: SbListGroup(
                 children: [
                   SbListItemTile(
-                    title: 'Total Thickness',
+                    title: 'Total Crust Thickness',
                     onTap: () {},
                     trailing: Text('${state.result!.totalThickness.toStringAsFixed(0)} mm'),
                   ),
                   SbListItemTile(
-                    title: 'Bituminous Layer',
+                    title: 'Design MSA',
                     onTap: () {},
-                    trailing: Text('${state.result!.bituminousThickness.toStringAsFixed(0)} mm'),
+                    trailing: Text('${state.result!.msaDesign} msa'),
                   ),
                   SbListItemTile(
-                    title: 'Granular Base (WMM)',
+                    title: 'Subgrade CBR',
                     onTap: () {},
-                    trailing: Text('${state.result!.baseThickness.toStringAsFixed(0)} mm'),
-                  ),
-                  SbListItemTile(
-                    title: 'Granular Sub-base (GSB)',
-                    onTap: () {},
-                    trailing: Text('${state.result!.subBaseThickness.toStringAsFixed(0)} mm'),
+                    trailing: Text('${state.result!.cbrProvided}%'),
                   ),
                 ],
               ),
             ),
+          ]
         ],
       ),
     );

@@ -27,8 +27,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:site_buddy/shared/domain/models/project.dart';
-import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/features/project/application/state/project_state.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
@@ -233,3 +233,5 @@ class ProjectController extends Notifier<ProjectState> {
     }
   }
 }
+
+

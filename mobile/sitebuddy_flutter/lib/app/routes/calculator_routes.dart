@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/navigation/app_transitions.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/calculator_hub_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/material_calculator_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/level_calculator_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/gradient_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/rebar_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/cement_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/sand_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/brick_wall_estimator_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/plaster_material_estimator_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/excavation_screen.dart';
-import 'package:site_buddy/features/calculator/presentation/screens/shuttering_screen.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/estimation/presentation/estimation_hub_screen.dart';
+import 'package:site_buddy/features/estimation/concrete/presentation/concrete_estimator_screen.dart';
+import 'package:site_buddy/features/surveying/level/presentation/level_calculator_screen.dart';
+import 'package:site_buddy/features/surveying/gradient/presentation/gradient_screen.dart';
+import 'package:site_buddy/features/estimation/rebar/presentation/rebar_screen.dart';
+import 'package:site_buddy/features/estimation/cement/presentation/cement_screen.dart';
+import 'package:site_buddy/features/estimation/sand/presentation/sand_screen.dart';
+import 'package:site_buddy/features/estimation/brick/presentation/brick_wall_estimator_screen.dart';
+import 'package:site_buddy/features/estimation/plaster/presentation/plaster_material_estimator_screen.dart';
+import 'package:site_buddy/features/estimation/excavation/presentation/excavation_screen.dart';
+import 'package:site_buddy/features/estimation/shuttering/presentation/shuttering_screen.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/features/history/presentation/screens/history_detail_screen.dart';
 
 final calculatorRoutes = [
@@ -22,7 +22,7 @@ final calculatorRoutes = [
       state: state,
       // Using uri.toString() is more sensitive to navigation events
       // than matchedLocation which is just a static pattern string.
-      child: CalculatorHubScreen(key: ValueKey(state.uri.toString())),
+      child: EstimationHubScreen(key: ValueKey(state.uri.toString())),
     ),
     routes: [
       GoRoute(
@@ -108,6 +108,10 @@ final calculatorRoutes = [
     ],
   ),
 ];
+
+
+
+
 
 
 

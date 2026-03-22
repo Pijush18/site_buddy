@@ -1,8 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:site_buddy/features/home/domain/models/activity_item.dart';
 import 'package:site_buddy/features/home/domain/models/activity_type.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
 import 'package:site_buddy/shared/domain/repositories/recent_activity_repository.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
@@ -122,21 +122,22 @@ class HiveRecentActivityRepository implements RecentActivityRepository {
       case DesignType.slab:
       case DesignType.column:
       case DesignType.footing:
-        return ActivityType
-            .calculator; // Structural design belongs to calculator category in Home View
-      case DesignType.levelLog:
+        return ActivityType.calculator;
+      case DesignType.siteLeveling:
         return ActivityType.leveling;
-      case DesignType.cement:
-      case DesignType.rebar:
       case DesignType.brick:
+      case DesignType.concrete:
       case DesignType.plaster:
       case DesignType.excavation:
       case DesignType.shuttering:
-      case DesignType.sand:
-      case DesignType.gradient:
-      case DesignType.unitConverter:
-      case DesignType.currencyConverter:
+      case DesignType.steel:
+      case DesignType.currency:
+      case DesignType.siteGradient:
+      case DesignType.road:
+      case DesignType.irrigation:
         return ActivityType.calculator;
     }
   }
 }
+
+

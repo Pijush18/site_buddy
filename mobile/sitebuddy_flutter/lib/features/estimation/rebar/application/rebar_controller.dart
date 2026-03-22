@@ -1,0 +1,243 @@
+/// FILE HEADER
+/// ----------------------------------------------
+/// File: rebar_controller.dart
+/// Feature: calculator
+/// Layer: application/controllers
+///
+/// PURPOSE:
+/// Manages state for the Rebar Length Estimator screen using Riverpod.
+///
+/// RESPONSIBILITIES:
+/// - Store input fields (memberLength, spacing, diameter, wastePercent).
+/// - Invoke [CalculateRebarUseCase] on calculate requests.
+/// - Handle validation errors and update state.
+///
+/// DEPENDENCIES:
+/// - Riverpod NotifierProvider
+/// - Domain use case [CalculateRebarUseCase]
+/// - Domain entity [RebarResult]
+///
+/// FUTURE IMPROVEMENTS:
+/// - Persist previous estimations
+/// ----------------------------------------------
+library;
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
+
+import 'package:site_buddy/features/estimation/rebar/domain/rebar_result.dart';
+import 'package:site_buddy/features/estimation/rebar/domain/calculate_rebar_usecase.dart';
+import 'package:site_buddy/core/models/prefill_data.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
+import 'package:site_buddy/shared/application/services/history_saver.dart';
+
+/// Failure wrapper used by calculator controllers.
+class Failure {
+  final String message;
+  const Failure(this.message);
+}
+
+/// State for the rebar estimator.
+class RebarState {
+  final double? memberLength;
+  final double? spacing;
+  final double? diameter;
+  final double wastePercent;
+  final RebarResult? result;
+  final Failure? failure;
+  final bool isLoading;
+  final bool hasSaved;
+
+  const RebarState({
+    this.memberLength,
+    this.spacing,
+    this.diameter,
+    this.wastePercent = 5,
+    this.result,
+    this.failure,
+    this.isLoading = false,
+    this.hasSaved = false,
+  });
+
+  RebarState copyWith({
+    double? memberLength,
+    double? spacing,
+    double? diameter,
+    double? wastePercent,
+    RebarResult? result,
+    Failure? failure,
+    bool? isLoading,
+    bool? hasSaved,
+    bool clearResult = false,
+    bool clearFailure = false,
+  }) {
+    return RebarState(
+      memberLength: memberLength ?? this.memberLength,
+      spacing: spacing ?? this.spacing,
+      diameter: diameter ?? this.diameter,
+      wastePercent: wastePercent ?? this.wastePercent,
+      result: clearResult ? null : (result ?? this.result),
+      failure: clearFailure ? null : (failure ?? this.failure),
+      isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
+    );
+  }
+}
+
+/// Provider for rebar controller.
+final rebarControllerProvider = NotifierProvider<RebarController, RebarState>(
+  RebarController.new,
+);
+
+class RebarController extends Notifier<RebarState> {
+  final _useCase = const CalculateRebarUseCase();
+
+  @override
+  RebarState build() {
+    return const RebarState();
+  }
+
+  void initializeWithPrefill(SteelWeightPrefillData data) {
+    state = state.copyWith(
+      memberLength: data.length ?? state.memberLength,
+      diameter: data.diameter ?? state.diameter,
+      spacing: data.spacing ?? state.spacing,
+      clearFailure: true,
+      clearResult: true,
+      hasSaved: false,
+    );
+
+    if (data.length != null && data.diameter != null && data.spacing != null) {
+      calculate();
+    }
+  }
+
+  void updateMemberLength(String value) {
+    if (value.isEmpty) {
+      state = state.copyWith(memberLength: null, clearResult: true, hasSaved: false);
+      return;
+    }
+    final v = double.tryParse(value);
+    if (v != null) {
+      state = state.copyWith(memberLength: v, clearFailure: true, hasSaved: false);
+    }
+  }
+
+  void updateSpacing(String value) {
+    if (value.isEmpty) {
+      state = state.copyWith(spacing: null, clearResult: true, hasSaved: false);
+      return;
+    }
+    final v = double.tryParse(value);
+    if (v != null) {
+      state = state.copyWith(spacing: v, clearFailure: true, hasSaved: false);
+    }
+  }
+
+  void updateDiameter(String value) {
+    if (value.isEmpty) {
+      state = state.copyWith(diameter: null, clearResult: true, hasSaved: false);
+      return;
+    }
+    final v = double.tryParse(value);
+    if (v != null) {
+      state = state.copyWith(diameter: v, clearFailure: true, hasSaved: false);
+    }
+  }
+
+  void updateWaste(String value) {
+    final v = double.tryParse(value);
+    if (v != null) {
+      state = state.copyWith(wastePercent: v, clearFailure: true, hasSaved: false);
+    }
+  }
+
+  Future<void> calculate() async {
+    final memberLength = state.memberLength;
+    final spacing = state.spacing;
+    final diameter = state.diameter;
+    final waste = state.wastePercent;
+
+    if (memberLength == null || spacing == null || diameter == null) {
+      state = state.copyWith(
+        failure: const Failure('All fields except waste must be filled.'),
+        clearResult: true,
+      );
+      return;
+    }
+
+    state = state.copyWith(isLoading: true, clearFailure: true);
+
+    try {
+      final res = _useCase.execute(
+        memberLength: memberLength,
+        spacing: spacing,
+        diameter: diameter,
+        wastePercent: waste,
+      );
+
+      state = state.copyWith(
+        isLoading: false, 
+        result: res,
+        hasSaved: false,
+      );
+
+      await _saveToHistory(res);
+
+    } catch (e, st) {
+      AppLogger.error('Calculation failed', error: e, stackTrace: st);
+      state = state.copyWith(
+        isLoading: false,
+        failure: Failure(e.toString().replaceAll('Exception: ', '')),
+      );
+    }
+  }
+
+  Future<void> _saveToHistory(RebarResult result) async {
+    if (state.hasSaved) return;
+
+    final project = ref.read(activeProjectProvider);
+    if (project == null) return;
+
+    try {
+      final inputParams = {
+        'memberLength': state.memberLength,
+        'diameter': state.diameter,
+        'spacing': state.spacing,
+        'wastePercent': state.wastePercent,
+      };
+
+      final report = DesignReportMapper.fromRebar(
+        result.toMap(),
+        inputParams,
+        project.id,
+      );
+
+      await HistorySaver.save(
+        ref: ref,
+        report: report,
+      );
+
+      state = state.copyWith(hasSaved: true);
+
+    } catch (e) {
+      AppLogger.error('Save failed', error: e);
+    }
+  }
+
+  void restore(Map<String, dynamic> params) {
+    state = state.copyWith(
+      memberLength: (params['memberLength'] as num?)?.toDouble(),
+      diameter: (params['diameter'] as num?)?.toDouble(),
+      spacing: (params['spacing'] as num?)?.toDouble(),
+      wastePercent: (params['wastePercent'] as num?)?.toDouble() ?? 5.0,
+      clearResult: true,
+      clearFailure: true,
+      hasSaved: false,
+    );
+    calculate();
+  }
+
+  void reset() => state = const RebarState();
+}

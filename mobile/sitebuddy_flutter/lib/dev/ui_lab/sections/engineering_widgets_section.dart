@@ -1,7 +1,7 @@
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
+import 'package:site_buddy/features/structural/shared/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
 class EngineeringWidgetsSection extends StatelessWidget {
   const EngineeringWidgetsSection({super.key});
@@ -52,6 +52,7 @@ class EngineeringWidgetsSection extends StatelessWidget {
     );
   }
 }
+
 
 
 

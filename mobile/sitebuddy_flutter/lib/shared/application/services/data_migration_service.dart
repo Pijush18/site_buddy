@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-import 'package:site_buddy/shared/domain/models/project_status.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart'; // Contains DesignType
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project_status.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart'; // Contains DesignType
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 
 /// SERVICE: DataMigrationService
@@ -141,3 +141,6 @@ class _MigrationStats {
   final int corrupted;
   _MigrationStats(this.total, this.migrated, this.corrupted);
 }
+
+
+

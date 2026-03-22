@@ -1,5 +1,5 @@
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
 
 class AddHistoryEntryUseCase {
@@ -13,6 +13,7 @@ class AddHistoryEntryUseCase {
     return repository.save(report);
   }
 }
+
 
 
 

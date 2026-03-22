@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
 /// SERVICE: HistorySaver
@@ -19,3 +19,4 @@ class HistorySaver {
     ref.invalidate(projectHistoryProvider);
   }
 }
+

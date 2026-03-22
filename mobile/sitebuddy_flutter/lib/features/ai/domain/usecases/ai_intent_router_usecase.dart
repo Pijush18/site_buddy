@@ -5,7 +5,7 @@ library;
 
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent_result.dart';
-import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/core/models/prefill_data.dart';
 import 'package:site_buddy/shared/domain/services/query_parameter_parser.dart';
 
 class AiIntentRouterUseCase {
@@ -203,6 +203,7 @@ class AiIntentRouterUseCase {
     return const AiIntentResult(intent: AiIntent.unknown);
   }
 }
+
 
 
 

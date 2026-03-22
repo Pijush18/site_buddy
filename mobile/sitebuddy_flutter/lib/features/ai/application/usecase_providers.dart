@@ -5,7 +5,7 @@ import 'package:site_buddy/features/ai/domain/usecases/process_ai_request_usecas
 import 'package:site_buddy/features/ai/domain/repositories/knowledge_repository.dart';
 import 'package:site_buddy/features/ai/data/repositories/knowledge_repository_impl.dart';
 import 'package:site_buddy/features/unit_converter/application/providers/unit_usecase_providers.dart';
-import 'package:site_buddy/features/calculator/application/providers/calculator_usecase_providers.dart';
+import 'package:site_buddy/features/estimation/application/providers/estimation_usecase_providers.dart';
 
 import 'package:site_buddy/core/services/knowledge_service.dart';
 
@@ -40,6 +40,7 @@ final processAiRequestUseCaseProvider = Provider<ProcessAiRequestUseCase>((
     convertUnitUseCase: convertUnit,
   );
 });
+
 
 
 

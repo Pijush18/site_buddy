@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 
 /// REPOSITORY: ProjectRepository
 /// PURPOSE: Abstract contract for managing construction projects.
@@ -24,3 +24,4 @@ abstract class ProjectRepository {
   /// SYNC: Synchronizes local projects with the cloud backend.
   Future<void> syncProjects();
 }
+

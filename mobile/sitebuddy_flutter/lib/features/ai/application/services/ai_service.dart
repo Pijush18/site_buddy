@@ -27,7 +27,7 @@ library;
 import 'dart:convert';
 
 import 'package:site_buddy/features/ai/domain/entities/ai_result.dart';
-import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
+import 'package:site_buddy/core/engineering/models/concrete_grade.dart';
 
 /// CLASS: AiService
 /// PURPOSE: Executes complex NLP parsing by delegating to an LLM.
@@ -153,6 +153,7 @@ class AiService {
     return '{ "error": "unrecognized input" }';
   }
 }
+
 
 
 

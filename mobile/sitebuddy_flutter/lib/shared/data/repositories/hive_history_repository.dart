@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/shared/domain/repositories/project_repository.dart';
@@ -195,3 +195,4 @@ class HiveHistoryRepository implements HistoryRepository {
     return _box.containsKey(id);
   }
 }
+

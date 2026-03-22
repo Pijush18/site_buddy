@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_engines/models/design_io.dart';
-import 'package:site_buddy/features/design/column/column_models.dart';
-import 'package:site_buddy/features/design/column/column_design_service.dart';
+import 'package:site_buddy/features/structural/column/domain/column_models.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
 
 /// ENGINE: ColumnDesignEngine
 /// Pure orchestrator that delegates engineering logic to ColumnDesignService.
@@ -40,6 +40,7 @@ class ColumnDesignEngine {
     );
   }
 }
+
 
 
 

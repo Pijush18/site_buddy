@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:site_buddy/features/design/application/services/column_design_service.dart';
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
+import 'package:site_buddy/features/structural/column/domain/column_models.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
 import 'package:site_buddy/core/engineering/standards/rcc/is_456_standard.dart';
 
 void main() {
@@ -9,65 +9,78 @@ void main() {
 
   group('ColumnDesignService Verification', () {
     test('Case 1: Short Axial Column - Pure Compression', () {
-      final state = ColumnDesignState(
+      const input = ColumnInput(
         type: ColumnType.rectangular,
-        loadType: LoadType.axial,
-        length: 3000,
+        endCondition: EndCondition.fixed,
         b: 300,
         d: 300,
+        length: 3000,
         pu: 1200, // 1200 kN factored
         concreteGrade: 'M25',
         steelGrade: 'Fe500',
         steelPercentage: 1.0,
+        cover: 40,
       );
 
-      final slenderness = service.calculateSlenderness(state);
-      expect(slenderness.isShort, true); // 3000/300 = 10 < 12
-
-      final design = service.calculateDesign(slenderness);
-      // Puz = (0.45 * 25 * Ac + 0.75 * fy * Asc)
-      // Ag = 90000, Asc = 900, Ac = 89100
-      // Puz = (0.45 * 25 * 89100 + 0.75 * 500 * 900) / 1000 = 1002.3 + 337.5 = 1339.8 kN
-      expect(design.interactionRatio, lessThan(1.0));
-      expect(design.isCapacitySafe, true);
+      final result = service.designColumn(input);
+      
+      expect(result.isShort, true); 
+      expect(result.interactionRatio, lessThan(1.0));
+      expect(result.isCapacitySafe, true);
     });
 
     test('Case 2: Slender Column - Moment Magnification', () {
-      final state = ColumnDesignState(
+      const input = ColumnInput(
         type: ColumnType.rectangular,
-        length: 6000, // 6m (Slender)
+        endCondition: EndCondition.pinned,
+        length: 5000, 
         b: 300,
         d: 300,
         pu: 500,
         mx: 20,
-        endCondition: EndCondition.pinned,
+        concreteGrade: 'M25',
+        steelGrade: 'Fe500',
+        cover: 40,
       );
 
-      final slenderness = service.calculateSlenderness(state);
-      expect(slenderness.isShort, false);
-      expect(slenderness.magnifiedMx, greaterThan(20.0)); // Should be amplified
+      final result = service.designColumn(input);
+      
+      expect(result.isShort, false);
+      expect(result.magnifiedMx, greaterThan(20.0));
     });
 
     test('Case 3: Circular Column - Minimum Reinforcement', () {
-      final state = ColumnDesignState(
+      const input = ColumnInput(
         type: ColumnType.circular,
+        endCondition: EndCondition.fixed,
         b: 400, // Diameter
-        astRequired: 100, // Very low req
+        length: 3000,
+        pu: 200,
+        concreteGrade: 'M25',
+        steelGrade: 'Fe500',
+        cover: 40,
+        isAutoSteel: true,
       );
 
-      final detailing = service.calculateDetailing(state);
-      // IS 456 requires min 6 bars for circular column
-      expect(detailing.numBars, greaterThanOrEqualTo(6));
+      final result = service.designColumn(input);
+      expect(result.numBars, greaterThanOrEqualTo(6));
     });
 
-    test('Case 4: Invalid Inputs - Zero Dimensions', () {
-      final state = ColumnDesignState(b: 0, d: 0, pu: 500);
-      final design = service.calculateDesign(state);
-      expect(design.ag, 0);
-      expect(
-        design.interactionRatio.isInfinite || design.interactionRatio.isNaN,
-        true,
+    test('Case 4: Invalid Inputs - Near Zero Dimensions', () {
+      const input = ColumnInput(
+        type: ColumnType.rectangular,
+        endCondition: EndCondition.fixed,
+        b: 0.1, 
+        d: 0.1,
+        length: 3000,
+        pu: 500,
+        concreteGrade: 'M25',
+        steelGrade: 'Fe500',
+        cover: 40,
       );
+      
+      final result = service.designColumn(input);
+      expect(result.isCapacitySafe, false);
     });
   });
 }

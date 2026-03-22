@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/features/currency/domain/models/currency_converter_result.dart';
 
@@ -10,7 +10,7 @@ class CurrencyConverterMapper {
     String projectId,
   ) {
     return DesignReportMapper.fromGenericCalculator(
-      type: DesignType.currencyConverter,
+      type: DesignType.currency,
       inputs: inputs,
       results: result.toMap(),
       summary: 'Currency: ${inputs['amount']} ${inputs['from']} = ${result.amount.toStringAsFixed(2)} ${result.currency}',
@@ -18,3 +18,5 @@ class CurrencyConverterMapper {
     );
   }
 }
+
+

@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:site_buddy/core/engineering/standards/rcc/is_456_standard.dart';
-import 'package:site_buddy/features/design/brick/brick_design_service.dart';
-import 'package:site_buddy/features/design/brick/brick_models.dart';
-import 'package:site_buddy/features/design/concrete/concrete_design_service.dart';
-import 'package:site_buddy/features/design/concrete/concrete_models.dart';
-import 'package:site_buddy/features/design/plaster/plaster_design_service.dart';
-import 'package:site_buddy/features/design/plaster/plaster_models.dart';
+import 'package:site_buddy/features/estimation/brick/domain/brick_design_service.dart';
+import 'package:site_buddy/features/estimation/brick/domain/brick_models.dart';
+import 'package:site_buddy/features/estimation/concrete/domain/concrete_design_service.dart';
+import 'package:site_buddy/features/estimation/concrete/domain/concrete_models.dart';
+import 'package:site_buddy/features/estimation/plaster/domain/plaster_design_service.dart';
+import 'package:site_buddy/features/estimation/plaster/domain/plaster_models.dart';
 import 'package:site_buddy/core/constants/concrete_mix_constants.dart';
 
 void main() {
@@ -80,3 +80,4 @@ void main() {
     });
   });
 }
+

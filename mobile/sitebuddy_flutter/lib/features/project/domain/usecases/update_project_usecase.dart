@@ -1,5 +1,5 @@
 import 'package:site_buddy/shared/domain/repositories/project_repository.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 
 class UpdateProjectUseCase {
   final ProjectRepository repository;
@@ -10,6 +10,7 @@ class UpdateProjectUseCase {
     return repository.updateProject(project);
   }
 }
+
 
 
 

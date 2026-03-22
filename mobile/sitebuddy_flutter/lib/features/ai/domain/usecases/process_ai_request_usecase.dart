@@ -6,11 +6,11 @@ library;
 
 import 'package:site_buddy/features/ai/domain/entities/parsed_ai_input.dart';
 import 'package:site_buddy/features/ai/domain/usecases/get_knowledge_usecase.dart';
-import 'package:site_buddy/features/calculator/domain/usecases/calculate_material_usecase.dart';
+import 'package:site_buddy/features/estimation/concrete/domain/calculate_material_usecase.dart';
 import 'package:site_buddy/features/unit_converter/application/usecases/convert_unit_usecase.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/shared/domain/models/ai_response.dart';
-import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
+import 'package:site_buddy/core/engineering/models/concrete_grade.dart';
 import 'package:site_buddy/core/utils/ui_formatters.dart';
 import 'package:site_buddy/features/level_log/domain/usecases/level_calculation_service.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
@@ -213,6 +213,8 @@ Using HI Surveying Method:
     }
   }
 }
+
+
 
 
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:site_buddy/core/diagrams/diagram_models.dart';
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
 
 /// ENGINE: ColumnDiagramEngine
 /// PURPOSE: Generates geometry for RC Column cross-sections.
@@ -83,6 +83,8 @@ class ColumnDiagramEngine {
     }
   }
 }
+
+
 
 
 

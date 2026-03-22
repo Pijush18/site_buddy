@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:site_buddy/core/diagrams/diagram_models.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_state.dart';
 
 /// ENGINE: SlabDiagramEngine
 /// PURPOSE: Generates geometry for RC Slab sections (plan view representation).
@@ -48,6 +48,7 @@ class SlabDiagramEngine {
     );
   }
 }
+
 
 
 

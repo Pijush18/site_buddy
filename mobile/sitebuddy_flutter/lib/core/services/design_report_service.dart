@@ -4,20 +4,20 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:site_buddy/core/optimization/optimization_engine.dart';
 import 'package:site_buddy/core/optimization/optimization_result.dart';
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_state.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
 import 'package:site_buddy/core/diagrams/column_diagram_engine.dart';
 import 'package:site_buddy/core/diagrams/beam_diagram_engine.dart';
 
 import 'package:site_buddy/core/diagrams/slab_diagram_engine.dart';
 import 'package:site_buddy/core/diagrams/footing_diagram_engine.dart';
 import 'package:site_buddy/core/engineering/standards/rcc/design_standard.dart';
-import 'package:site_buddy/features/design/beam/beam_design_service.dart';
-import 'package:site_buddy/features/design/slab/slab_design_service.dart';
-import 'package:site_buddy/features/design/column/column_design_service.dart';
-import 'package:site_buddy/features/design/footing/footing_design_service.dart' as domain;
+import 'package:site_buddy/features/structural/beam/domain/beam_design_service.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_service.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_service.dart' as domain;
 
 /// SERVICE: DesignReportService
 /// PURPOSE: Professional PDF report generation for structural design modules.
@@ -769,6 +769,8 @@ class DesignReportService {
     );
   }
 }
+
+
 
 
 

@@ -8,7 +8,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 
 /// SCREEN: ProjectListScreen
 /// PURPOSE: List all civil engineering projects following the Predefined Layout System.
@@ -79,3 +79,4 @@ class ProjectListScreen extends ConsumerWidget {
     context.push(AppRoutes.projectDetail());
   }
 }
+

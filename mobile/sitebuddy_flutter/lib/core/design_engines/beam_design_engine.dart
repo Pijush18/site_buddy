@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_engines/models/design_io.dart';
-import 'package:site_buddy/features/design/beam/beam_models.dart';
-import 'package:site_buddy/features/design/beam/beam_design_service.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_models.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_service.dart';
 
 /// ENGINE: BeamDesignEngine
 /// Pure orchestrator that delegates engineering logic to BeamDesignService.
@@ -42,6 +42,7 @@ class BeamDesignEngine {
     );
   }
 }
+
 
 
 

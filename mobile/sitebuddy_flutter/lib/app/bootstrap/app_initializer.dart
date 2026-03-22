@@ -4,8 +4,8 @@ import 'package:site_buddy/core/logging/app_logger.dart';
 
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/services/data_migration_service.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
-import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/features/level_log/data/models/level_entry_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_method_model.dart';
 import 'package:site_buddy/features/level_log/data/models/level_log_session_model.dart';
@@ -15,8 +15,8 @@ import 'package:site_buddy/core/backend/backend_client.dart';
 import 'package:site_buddy/core/services/knowledge_service.dart';
 import 'package:site_buddy/shared/application/services/data_migration_service.dart' as project_migration;
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart'; // Contains DesignType
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart'; // Contains DesignType
 
 
 /// Provider to track the initialization state of the application.
@@ -49,12 +49,12 @@ class AppInitializer {
       Hive.registerAdapter(CalculationTypeAdapter());
     }
 
-    // Standardized Design Reports (typeId 210+)
-    if (!Hive.isAdapterRegistered(210)) {
-      Hive.registerAdapter(DesignReportAdapter());
-    }
-    if (!Hive.isAdapterRegistered(211)) {
+    // Standardized Design Reports (typeId 20+)
+    if (!Hive.isAdapterRegistered(20)) {
       Hive.registerAdapter(DesignTypeAdapter());
+    }
+    if (!Hive.isAdapterRegistered(21)) {
+      Hive.registerAdapter(DesignReportAdapter());
     }
 
     // ── Open Essential Boxes ──
@@ -98,6 +98,9 @@ class AppInitializer {
     container.read(initializationProvider.notifier).state = true;
   }
 }
+
+
+
 
 
 

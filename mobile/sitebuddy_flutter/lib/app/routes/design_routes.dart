@@ -1,33 +1,33 @@
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/navigation/app_transitions.dart';
-import 'package:site_buddy/features/design/presentation/screens/design_home_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/design_report_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_input_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_load_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_analysis_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_reinforcement_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/slab_design/slab_safety_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/beam_design/beam_input_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/beam_design/load_definition_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/beam_design/analysis_summary_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/beam_design/reinforcement_design_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/beam_design/beam_safety_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/column_input_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/column_history_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/load_support_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/slenderness_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/design_calculation_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/reinforcement_detailing_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/column_design/safety_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_type_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_soil_load_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_geometry_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_analysis_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_reinforcement_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/footing_design/footing_safety_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/safety_check/shear_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/safety_check/deflection_check_screen.dart';
-import 'package:site_buddy/features/design/presentation/screens/safety_check/cracking_check_screen.dart';
+import 'package:site_buddy/features/home/presentation/screens/home_screen.dart';
+import 'package:site_buddy/features/structural/shared/presentation/screens/design_report_screen.dart';
+import 'package:site_buddy/features/structural/slab/presentation/screens/slab_input_screen.dart';
+import 'package:site_buddy/features/structural/slab/presentation/screens/slab_load_screen.dart';
+import 'package:site_buddy/features/structural/slab/presentation/screens/slab_analysis_screen.dart';
+import 'package:site_buddy/features/structural/slab/presentation/screens/slab_reinforcement_screen.dart';
+import 'package:site_buddy/features/structural/slab/presentation/screens/slab_safety_screen.dart';
+import 'package:site_buddy/features/structural/beam/presentation/screens/beam_input_screen.dart';
+import 'package:site_buddy/features/structural/beam/presentation/screens/load_definition_screen.dart';
+import 'package:site_buddy/features/structural/beam/presentation/screens/analysis_summary_screen.dart';
+import 'package:site_buddy/features/structural/beam/presentation/screens/reinforcement_design_screen.dart';
+import 'package:site_buddy/features/structural/beam/presentation/screens/beam_safety_check_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/column_input_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/column_history_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/load_support_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/slenderness_check_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/design_calculation_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/reinforcement_detailing_screen.dart';
+import 'package:site_buddy/features/structural/column/presentation/screens/safety_check_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_type_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_soil_load_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_geometry_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_analysis_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_reinforcement_screen.dart';
+import 'package:site_buddy/features/structural/footing/presentation/screens/footing_safety_check_screen.dart';
+import 'package:site_buddy/features/structural/shared/presentation/screens/shear_check_screen.dart';
+import 'package:site_buddy/features/structural/shared/presentation/screens/deflection_check_screen.dart';
+import 'package:site_buddy/features/structural/shared/presentation/screens/cracking_check_screen.dart';
 import 'package:site_buddy/shared/domain/models/report_data.dart';
 
 final designRoutes = [
@@ -35,7 +35,7 @@ final designRoutes = [
     path: '/design',
     pageBuilder: (context, state) => AppTransitions.fadeSlide(
       state: state,
-      child: const DesignHomeScreen(),
+      child: const HomeScreen(),
     ),
     routes: [
       // Slab Design flow
@@ -321,6 +321,8 @@ final designRedirects = [
     redirect: (context, state) => '/design/footing/type',
   ),
 ];
+
+
 
 
 

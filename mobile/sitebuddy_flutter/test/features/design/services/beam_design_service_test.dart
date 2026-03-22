@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:site_buddy/features/design/domain/services/beam_design_domain_service.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_domain_service.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_type.dart';
 
 void main() {
   final service = BeamDesignDomainService();
@@ -89,3 +89,5 @@ void main() {
     });
   });
 }
+
+

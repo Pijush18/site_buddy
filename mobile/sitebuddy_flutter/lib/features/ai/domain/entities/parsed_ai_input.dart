@@ -5,7 +5,7 @@ library;
 
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/shared/domain/models/ai_query.dart';
-import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/core/models/prefill_data.dart';
 
 class ParsedAiInput {
   final AiIntent intent;
@@ -24,6 +24,7 @@ class ParsedAiInput {
     this.prefillData,
   });
 }
+
 
 
 

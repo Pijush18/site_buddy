@@ -21,7 +21,7 @@
 library;
 
 
-import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
+import 'package:site_buddy/core/engineering/models/concrete_grade.dart';
 
 /// CLASS: AiQuery
 /// PURPOSE: Data wrapper separating raw string intent into structured computable arguments.
@@ -61,6 +61,7 @@ class AiQuery {
   bool get hasValidDimensions =>
       length != null && width != null && depth != null;
 }
+
 
 
 

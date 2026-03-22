@@ -7,15 +7,15 @@ import 'package:site_buddy/core/design_engines/beam_design_engine.dart';
 import 'package:site_buddy/core/design_engines/column_design_engine.dart';
 
 import 'package:site_buddy/core/engineering/standards/rcc/design_standard.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
-import 'package:site_buddy/features/design/beam/beam_design_service.dart';
-import 'package:site_buddy/features/design/slab/slab_design_service.dart';
-import 'package:site_buddy/features/design/column/column_design_service.dart';
-import 'package:site_buddy/features/design/footing/footing_models.dart';
-import 'package:site_buddy/features/design/footing/footing_design_service.dart' as domain;
+import 'package:site_buddy/features/structural/beam/domain/beam_type.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_type.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_type.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_service.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_service.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_models.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_service.dart' as domain;
 
 /// ENGINE: OptimizationEngine
 /// Provides automated structural optimization for RCC components using a pluggable DesignStandard.
@@ -228,6 +228,9 @@ class OptimizationEngine {
     return OptimizationResult(options: candidates.take(3).toList());
   }
 }
+
+
+
 
 
 

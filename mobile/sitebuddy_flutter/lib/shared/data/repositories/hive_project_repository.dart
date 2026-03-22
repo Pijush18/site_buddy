@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 import 'package:site_buddy/shared/domain/repositories/project_repository.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 
@@ -155,3 +155,4 @@ class HiveProjectRepository implements ProjectRepository {
     AppLogger.info('Sync requested (Not implemented yet)', tag: 'ProjectRepo');
   }
 }
+

@@ -20,7 +20,7 @@
 library;
 
 
-import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
+import 'package:site_buddy/core/engineering/models/concrete_grade.dart';
 
 /// CLASS: AiResult
 /// PURPOSE: Holds the data parsed from messy natural language input.
@@ -42,6 +42,7 @@ class AiResult {
     required this.message,
   });
 }
+
 
 
 

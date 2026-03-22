@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/domain/repositories/history_repository.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 
@@ -78,7 +78,10 @@ class SyncService {
           AppLogger.debug('Synced new remote report: ${remote.id}', tag: 'SyncService');
         } else {
           // Conflict Resolution: Latest UpdatedAt wins
-          if (remote.updatedAt.isAfter(local.updatedAt)) {
+          final remoteUpdate = remote.updatedAt;
+          final localUpdate = local.updatedAt;
+          
+          if (remoteUpdate != null && (localUpdate == null || remoteUpdate.isAfter(localUpdate))) {
             await _repository.save(remote);
             AppLogger.debug('Resolved conflict for ${remote.id}: Remote updated.', tag: 'SyncService');
           }
@@ -91,17 +94,7 @@ class SyncService {
 
   /// Helper to create a synced version of a report.
   DesignReport _markAsSynced(DesignReport report) {
-    return DesignReport(
-      id: report.id,
-      designType: report.designType,
-      timestamp: report.timestamp,
-      projectId: report.projectId,
-      inputs: report.inputs,
-      results: report.results,
-      summary: report.summary,
-      isSafe: report.isSafe,
-      updatedAt: report.updatedAt,
-      isSynced: true,
-    );
+    return report.copyWith(isSynced: true);
   }
 }
+

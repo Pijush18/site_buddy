@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 
 abstract class CalculationRepository {
   Future<void> addEntry(CalculationHistoryEntry entry);
@@ -12,3 +12,4 @@ abstract class CalculationRepository {
   
   Future<void> syncCalculations(String projectId);
 }
+

@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/presentation/widgets/design_report_view.dart';
+import 'package:site_buddy/features/structural/shared/presentation/widgets/design_report_view.dart';
 
 // Controllers (Required for Restore logic)
-import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
-import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
-import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
-import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/cement_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/rebar_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/brick_wall_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/plaster_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/excavation_controller.dart';
-import 'package:site_buddy/features/calculator/application/controllers/shuttering_controller.dart';
+import 'package:site_buddy/features/structural/column/application/column_design_controller.dart';
+import 'package:site_buddy/features/structural/beam/application/beam_design_controller.dart';
+import 'package:site_buddy/features/structural/slab/application/slab_design_controller.dart';
+import 'package:site_buddy/features/structural/footing/application/footing_design_controller.dart';
+import 'package:site_buddy/features/estimation/cement/application/cement_controller.dart';
+import 'package:site_buddy/features/estimation/rebar/application/rebar_controller.dart';
+import 'package:site_buddy/features/estimation/brick/application/brick_wall_controller.dart';
+import 'package:site_buddy/features/estimation/plaster/application/plaster_controller.dart';
+import 'package:site_buddy/features/estimation/excavation/application/excavation_controller.dart';
+import 'package:site_buddy/features/estimation/shuttering/application/shuttering_controller.dart';
 
 // States (Required for Restore logic)
-import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
 
 /// SCREEN: HistoryDetailScreen
 /// PURPOSE: Displays the details of a historical calculation using the unified DesignReport system.
@@ -140,6 +140,8 @@ class HistoryDetailScreen extends ConsumerWidget {
       case CalculationType.gradient:
       case CalculationType.unitConverter:
       case CalculationType.currencyConverter:
+      case CalculationType.road:
+      case CalculationType.irrigation:
         break;
     }
 
@@ -151,3 +153,7 @@ class HistoryDetailScreen extends ConsumerWidget {
     }
   }
 }
+
+
+
+

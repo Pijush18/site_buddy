@@ -6,7 +6,7 @@ import 'package:site_buddy/features/level_log/domain/usecases/level_calculation_
 import 'package:site_buddy/features/level_log/domain/usecases/level_log_report_service.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/features/level_log/application/services/level_history_service.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/features/level_log/presentation/providers/level_log_providers.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
@@ -189,3 +189,4 @@ final levelLogControllerProvider =
       final service = ref.watch(levelCalculationServiceProvider);
       return LevelLogController(service, ref);
     });
+

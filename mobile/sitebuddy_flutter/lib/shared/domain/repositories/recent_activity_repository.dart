@@ -1,5 +1,5 @@
 import 'package:site_buddy/features/home/domain/models/activity_item.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 
 /// REPOSITORY INTERFACE: RecentActivityRepository
 /// PURPOSE: Contract for fetching summarized activity feed filtered by project.
@@ -13,3 +13,4 @@ abstract class RecentActivityRepository {
   /// INVALIDATE: Clears any internal caches for a specific project.
   void invalidateCache(String projectId);
 }
+

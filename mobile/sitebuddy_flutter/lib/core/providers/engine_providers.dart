@@ -7,18 +7,27 @@ import 'package:site_buddy/core/design_engines/beam_design_engine.dart';
 import 'package:site_buddy/core/design_engines/column_design_engine.dart';
 import 'package:site_buddy/core/optimization/optimization_engine.dart';
 import 'package:site_buddy/core/services/design_report_service.dart';
-import 'package:site_buddy/features/design/beam/beam_design_service.dart';
-import 'package:site_buddy/features/design/slab/slab_design_service.dart';
-import 'package:site_buddy/features/design/column/column_design_service.dart';
-import 'package:site_buddy/features/design/footing/footing_design_service.dart' as domain;
-import 'package:site_buddy/features/design/brick/brick_design_service.dart';
-import 'package:site_buddy/features/design/concrete/concrete_design_service.dart';
-import 'package:site_buddy/features/design/plaster/plaster_design_service.dart';
-import 'package:site_buddy/features/design/excavation/excavation_design_service.dart';
-import 'package:site_buddy/features/design/shuttering/shuttering_design_service.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_service.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_service.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_service.dart' as domain;
+import 'package:site_buddy/features/estimation/brick/domain/brick_design_service.dart';
+import 'package:site_buddy/features/estimation/concrete/domain/concrete_design_service.dart';
+import 'package:site_buddy/features/estimation/plaster/domain/plaster_design_service.dart';
+import 'package:site_buddy/features/estimation/excavation/domain/excavation_design_service.dart';
+import 'package:site_buddy/features/estimation/shuttering/domain/shuttering_design_service.dart';
 import 'package:site_buddy/core/engineering/standards/transport/road_standard.dart';
-import 'package:site_buddy/core/engineering/standards/transport/irc_standard.dart';
-import 'package:site_buddy/features/transport/road/domain/services/road_design_service.dart';
+import 'package:site_buddy/core/engineering/standards/transport/irc_37_2018.dart';
+import 'package:site_buddy/features/transport/road/domain/services/traffic_analysis_service.dart';
+import 'package:site_buddy/features/transport/road/domain/services/pavement_design_service.dart';
+import 'package:site_buddy/features/transport/road/domain/services/camber_design_service.dart';
+import 'package:site_buddy/core/engineering/standards/hydrology/hydrology_standard.dart';
+import 'package:site_buddy/core/engineering/standards/hydrology/basic_hydrology_standard.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/irrigation_design_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/manning_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/canal_design_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/flow_simulation_service.dart';
+import 'package:site_buddy/features/report/application/report_generator.dart';
 
 /// Provider for current DesignCode
 final designCodeProvider = StateProvider<DesignCode>((ref) {
@@ -131,13 +140,45 @@ final shutteringDesignServiceProvider = Provider<ShutteringDesignService>((ref) 
 });
 
 final roadStandardProvider = Provider<RoadStandard>((ref) {
-  return IRCStandard();
+  return IRC37Standard();
 });
 
-final roadDesignServiceProvider = Provider<RoadDesignService>((ref) {
+final trafficAnalysisServiceProvider = Provider<TrafficAnalysisService>((ref) {
   final standard = ref.watch(roadStandardProvider);
-  return RoadDesignService(standard);
+  return TrafficAnalysisService(standard);
 });
 
+final pavementDesignServiceProvider = Provider<PavementDesignService>((ref) {
+  final standard = ref.watch(roadStandardProvider);
+  return PavementDesignService(standard);
+});
 
+final camberDesignServiceProvider = Provider<CamberDesignService>((ref) {
+  return CamberDesignService();
+});
 
+final hydrologyStandardProvider = Provider<HydrologyStandard>((ref) {
+  return BasicHydrologyStandard();
+});
+
+final irrigationServiceProvider = Provider<IrrigationDesignService>((ref) {
+  final standard = ref.watch(hydrologyStandardProvider);
+  return IrrigationDesignService(standard);
+});
+
+final manningServiceProvider = Provider<ManningService>((ref) {
+  return ManningService();
+});
+
+final canalDesignServiceProvider = Provider<CanalDesignService>((ref) {
+  final standard = ref.watch(hydrologyStandardProvider);
+  final manning = ref.watch(manningServiceProvider);
+  return CanalDesignService(standard, manning);
+});
+
+final reportGeneratorProvider = Provider<ReportGenerator>((ref) {
+  return ReportGenerator();
+});
+final flowSimulationServiceProvider = Provider<FlowSimulationService>((ref) {
+  return FlowSimulationService();
+});

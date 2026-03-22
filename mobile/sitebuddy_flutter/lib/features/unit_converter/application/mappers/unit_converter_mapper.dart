@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/features/unit_converter/domain/models/unit_converter_result.dart';
 
@@ -10,7 +10,7 @@ class UnitConverterMapper {
     String projectId,
   ) {
     return DesignReportMapper.fromGenericCalculator(
-      type: DesignType.unitConverter,
+      type: DesignType.currency,
       inputs: inputs,
       results: result.toMap(),
       summary: 'Unit Conversion: ${inputs['value']} ${inputs['from']} = ${result.value.toStringAsFixed(4)} ${result.unit}',
@@ -18,3 +18,5 @@ class UnitConverterMapper {
     );
   }
 }
+
+

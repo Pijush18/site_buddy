@@ -1,11 +1,11 @@
 import 'package:uuid/uuid.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_state.dart';
+import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
+import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
 
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 
 /// MAPPER: DesignReportMapper
@@ -20,6 +20,7 @@ class DesignReportMapper {
     return DesignReport(
       id: entry.id,
       designType: _mapCalculationType(entry.calculationType),
+      typeLabel: entry.calculationType.name.toUpperCase(),
       timestamp: entry.timestamp,
       projectId: entry.projectId,
       inputs: _normalize(entry.inputParameters),
@@ -35,17 +36,19 @@ class DesignReportMapper {
       case CalculationType.slab: return DesignType.slab;
       case CalculationType.column: return DesignType.column;
       case CalculationType.footing: return DesignType.footing;
-      case CalculationType.cement: return DesignType.cement;
-      case CalculationType.rebar: return DesignType.rebar;
+      case CalculationType.cement: return DesignType.concrete; // Mapped to concrete in new enum
+      case CalculationType.rebar: return DesignType.steel;   // Mapped to steel in new enum
       case CalculationType.brick: return DesignType.brick;
       case CalculationType.plaster: return DesignType.plaster;
       case CalculationType.excavation: return DesignType.excavation;
       case CalculationType.shuttering: return DesignType.shuttering;
-      case CalculationType.sand: return DesignType.sand;
-      case CalculationType.levelLog: return DesignType.levelLog;
-      case CalculationType.gradient: return DesignType.gradient;
-      case CalculationType.unitConverter: return DesignType.unitConverter;
-      case CalculationType.currencyConverter: return DesignType.currencyConverter;
+      case CalculationType.sand: return DesignType.concrete;   // Fallback
+      case CalculationType.levelLog: return DesignType.siteLeveling;
+      case CalculationType.gradient: return DesignType.siteGradient;
+      case CalculationType.unitConverter: return DesignType.currency; // Fallback or new category
+      case CalculationType.currencyConverter: return DesignType.currency;
+      case CalculationType.road: return DesignType.road;
+      case CalculationType.irrigation: return DesignType.irrigation;
     }
   }
 
@@ -56,6 +59,7 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.beam,
+      typeLabel: 'BEAM DESIGN',
       timestamp: DateTime.now(),
       projectId: projectId,
       isSafe: state.isFlexureSafe && state.isShearSafe && state.isDeflectionSafe,
@@ -90,7 +94,7 @@ class DesignReportMapper {
     );
   }
 
-  /// Converts [SlabDesignState] to a unified [DesignReport].
+  /// Converts [SlabDesignResult] to a unified [DesignReport].
   static DesignReport fromSlab(SlabDesignState state, String projectId) {
     final id = _uuid.v4();
     AppLogger.debug('Mapping SlabDesignState to DesignReport (Project: $projectId)', tag: 'Mapper');
@@ -98,6 +102,7 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.slab,
+      typeLabel: 'SLAB DESIGN',
       timestamp: DateTime.now(),
       projectId: projectId,
       isSafe: result?.isShearSafe ?? false,
@@ -133,6 +138,7 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.column,
+      typeLabel: 'COLUMN DESIGN',
       timestamp: DateTime.now(),
       projectId: projectId,
       isSafe: state.isCapacitySafe && state.isReinforcementSafe,
@@ -172,6 +178,7 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.footing,
+      typeLabel: 'FOOTING DESIGN',
       timestamp: DateTime.now(),
       projectId: projectId,
       isSafe: state.isAreaSafe && state.isPunchingShearSafe && state.isBendingSafe,
@@ -213,7 +220,8 @@ class DesignReportMapper {
     
     return DesignReport(
       id: _uuid.v4(),
-      designType: DesignType.cement,
+      designType: DesignType.concrete,
+      typeLabel: 'CEMENT ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
       summary: '${inputs['length']}x${inputs['width']}m Cement estimation',
@@ -230,9 +238,10 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.plaster,
+      typeLabel: 'PLASTER ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
-      isSafe: true, // Assuming plaster calculations are generally "safe" if completed
+      isSafe: true, 
       summary: 'Plaster estimation for ${inputs['area'] ?? 'N/A'}',
       inputs: _normalize(inputs),
       results: _normalize(resultsMap),
@@ -247,9 +256,10 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.excavation,
+      typeLabel: 'EXCAVATION ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
-      isSafe: true, // Assuming excavation calculations are generally "safe" if completed
+      isSafe: true, 
       summary: 'Excavation volume: ${resultsMap['volume'] ?? 'N/A'}',
       inputs: _normalize(inputs),
       results: _normalize(resultsMap),
@@ -264,9 +274,10 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: DesignType.shuttering,
+      typeLabel: 'SHUTTERING ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
-      isSafe: true, // Assuming shuttering calculations are generally "safe" if completed
+      isSafe: true, 
       summary: 'Shuttering area: ${resultsMap['area'] ?? 'N/A'}',
       inputs: _normalize(inputs),
       results: _normalize(resultsMap),
@@ -280,10 +291,11 @@ class DesignReportMapper {
     final resultsMap = result is Map<String, dynamic> ? result : (result is Map ? result.cast<String, dynamic>() : <String, dynamic>{});
     return DesignReport(
       id: id,
-      designType: DesignType.sand,
+      designType: DesignType.concrete,
+      typeLabel: 'SAND ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
-      isSafe: true, // Assuming sand calculations are generally "safe" if completed
+      isSafe: true, 
       summary: 'Sand estimation for ${inputs['area'] ?? 'N/A'}',
       inputs: _normalize(inputs),
       results: _normalize(resultsMap),
@@ -296,7 +308,8 @@ class DesignReportMapper {
     final resultsMap = result is Map<String, dynamic> ? result : (result is Map ? result.cast<String, dynamic>() : <String, dynamic>{});
     return DesignReport(
       id: _uuid.v4(),
-      designType: DesignType.rebar,
+      designType: DesignType.steel,
+      typeLabel: 'REBAR ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
       summary: '${resultsMap['totalWeight'] ?? '0'} kg Rebar Estimated',
@@ -312,6 +325,7 @@ class DesignReportMapper {
     return DesignReport(
       id: _uuid.v4(),
       designType: DesignType.brick,
+      typeLabel: 'BRICK ESTIMATION',
       timestamp: DateTime.now(),
       projectId: projectId,
       summary: '${resultsMap['numberOfBricks'] ?? '0'} Bricks Estimated',
@@ -332,6 +346,7 @@ class DesignReportMapper {
     return DesignReport(
       id: _uuid.v4(),
       designType: type,
+      typeLabel: type.name.toUpperCase(),
       timestamp: DateTime.now(),
       projectId: projectId,
       summary: summary,
@@ -353,10 +368,11 @@ class DesignReportMapper {
     return DesignReport(
       id: id,
       designType: type,
+      typeLabel: '${type.name.toUpperCase()} SELECTION',
       timestamp: DateTime.now(),
       projectId: projectId,
-      isSafe: true, // Selected options from optimization are assumed safe
-      summary: '${type.name.toUpperCase()} Selection: ${option['title'] ?? 'Optimized Variant'}',
+      isSafe: true, 
+      summary: 'Selection: ${option['title'] ?? 'Optimized Variant'}',
       inputs: _normalize(params),
       results: _normalize(option),
     );
@@ -404,3 +420,5 @@ class DesignReportMapper {
         .join(' ');
   }
 }
+
+

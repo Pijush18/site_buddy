@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
@@ -153,6 +153,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
     );
   }
 }
+
 
 
 

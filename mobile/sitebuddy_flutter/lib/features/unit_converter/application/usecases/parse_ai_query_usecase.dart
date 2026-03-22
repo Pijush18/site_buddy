@@ -23,7 +23,7 @@ library;
 
 
 import 'package:site_buddy/shared/domain/models/ai_query.dart';
-import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
+import 'package:site_buddy/core/engineering/models/concrete_grade.dart';
 
 /// CLASS: ParseAiQueryUseCase
 /// PURPOSE: NLP RegEx parser returning strictly typed data.
@@ -108,6 +108,7 @@ class ParseAiQueryUseCase {
     );
   }
 }
+
 
 
 

@@ -1,6 +1,6 @@
-import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
-import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_type.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_type.dart';
+import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
 import 'package:site_buddy/shared/domain/models/design_result.dart';
 
 /// BASE: DesignInput
@@ -184,6 +184,8 @@ class ColumnDesignOutputs extends DesignResult {
     'isSlendernessSafe': isSlendernessSafe,
   };
 }
+
+
 
 
 

@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -88,6 +88,7 @@ class SaveToProjectDialog extends ConsumerWidget {
     );
   }
 }
+
 
 
 

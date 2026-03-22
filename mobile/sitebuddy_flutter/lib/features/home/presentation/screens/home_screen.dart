@@ -8,13 +8,12 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
 import 'package:site_buddy/features/home/domain/models/activity_type.dart';
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 
 /// SCREEN: HomeScreen
 /// PURPOSE: Root dashboard with refined visual rhythm
-/// RULE: SbPage → SbSectionList → SbSection
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -32,17 +31,12 @@ class HomeScreen extends ConsumerWidget {
           tooltip: 'Settings',
         ),
       ],
-
-      /// ── LAYOUT SYSTEM ──
       body: SbSectionList(
         sections: [
-          // ── SECTION 1: HERO (ENHANCED DOMINANCE) ──
           const SbSection(
             padding: EdgeInsets.zero,
             child: SbSmartAssistantCard(),
           ),
-
-          // ── SECTION 2: FIELD TOOLS ──
           SbSection(
             title: 'Tools',
             subtitle: 'Calculators and survey tools.',
@@ -71,8 +65,6 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-
-          // ── SECTION 3: QUICK ACTIONS (HIGHLIGHTED) ──
           SbSection(
             title: 'Actions',
             subtitle: 'Site workflows.',
@@ -93,8 +85,6 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-
-          // ── SECTION 4: RECENT ACTIVITY (SUBTLE) ──
           SbSection(
             title: 'Activity',
             subtitle: 'Recent updates.',
@@ -119,8 +109,6 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-
-          // ── SECTION 5: CALCULATION HISTORY (NEW) ──
           SbSection(
             title: 'History',
             subtitle: 'Engineering reports.',
@@ -132,9 +120,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Text(
                       'No history yet',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -173,10 +159,7 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  /// HELPER: Navigation to Report Detail
   void _navigateToReport(BuildContext context, DesignReport report) {
-    // Audit Fix: Reuse the existing HistoryDetailScreen flow by passing the required entry
-    // Note: projectId is now a required field in DesignReport, no fallback needed
     final entry = CalculationHistoryEntry(
       id: report.id,
       projectId: report.projectId,
@@ -190,75 +173,57 @@ class HomeScreen extends ConsumerWidget {
     context.push(AppRoutes.historyDetail, extra: entry);
   }
 
-  /// HELPER: Internal Mapper for Navigation Fallback
   CalculationType _mapDesignToCalculationType(DesignType type) {
     switch (type) {
-      case DesignType.beam:
-        return CalculationType.beam;
-      case DesignType.slab:
-        return CalculationType.slab;
-      case DesignType.column:
-        return CalculationType.column;
-      case DesignType.footing:
-        return CalculationType.footing;
-      case DesignType.cement:
-        return CalculationType.cement;
-      case DesignType.rebar:
-        return CalculationType.rebar;
-      case DesignType.brick:
-        return CalculationType.brick;
-      case DesignType.plaster:
-        return CalculationType.plaster;
-      case DesignType.excavation:
-        return CalculationType.excavation;
-      case DesignType.shuttering:
-        return CalculationType.shuttering;
-      case DesignType.sand:
-        return CalculationType.sand;
-      case DesignType.levelLog:
-        return CalculationType.levelLog;
-      case DesignType.gradient:
-        return CalculationType.gradient;
-      case DesignType.unitConverter:
-        return CalculationType.unitConverter;
-      case DesignType.currencyConverter:
-        return CalculationType.currencyConverter;
+      case DesignType.beam: return CalculationType.beam;
+      case DesignType.slab: return CalculationType.slab;
+      case DesignType.column: return CalculationType.column;
+      case DesignType.footing: return CalculationType.footing;
+      case DesignType.concrete: return CalculationType.cement;
+      case DesignType.steel: return CalculationType.rebar;
+      case DesignType.brick: return CalculationType.brick;
+      case DesignType.plaster: return CalculationType.plaster;
+      case DesignType.excavation: return CalculationType.excavation;
+      case DesignType.shuttering: return CalculationType.shuttering;
+      case DesignType.siteLeveling: return CalculationType.levelLog;
+      case DesignType.siteGradient: return CalculationType.gradient;
+      case DesignType.currency: return CalculationType.currencyConverter;
+      case DesignType.road: return CalculationType.road;
+      case DesignType.irrigation: return CalculationType.irrigation;
     }
   }
 
-  /// HELPER: Activity Icon Mapping
   IconData _getActivityIcon(ActivityType type) {
     switch (type) {
-      case ActivityType.calculator:
-        return SbIcons.calculator;
-      case ActivityType.leveling:
-        return SbIcons.ruler;
-      case ActivityType.project:
-        return SbIcons.project;
+      case ActivityType.calculator: return SbIcons.calculator;
+      case ActivityType.leveling: return SbIcons.ruler;
+      case ActivityType.project: return SbIcons.project;
     }
   }
 
-  /// HELPER: Report Icon Mapping
   IconData _getReportIcon(DesignType type) {
     switch (type) {
       case DesignType.beam:
       case DesignType.slab:
       case DesignType.column:
       case DesignType.footing:
+      case DesignType.road:
+      case DesignType.irrigation:
         return SbIcons.architecture;
-      case DesignType.levelLog:
+      case DesignType.siteLeveling:
         return SbIcons.ruler;
-      case DesignType.sand:
-      case DesignType.gradient:
-      case DesignType.unitConverter:
-      case DesignType.currencyConverter:
-        return SbIcons.calculator;
-      default:
+      case DesignType.concrete:
+      case DesignType.steel:
+      case DesignType.brick:
+      case DesignType.plaster:
+      case DesignType.excavation:
+      case DesignType.shuttering:
+      case DesignType.siteGradient:
+      case DesignType.currency:
         return SbIcons.calculator;
     }
   }
 
-  /// HELPER: Date Formatting
   String _formatTimestamp(DateTime timestamp) {
     return DateFormat('MMM dd').format(timestamp);
   }

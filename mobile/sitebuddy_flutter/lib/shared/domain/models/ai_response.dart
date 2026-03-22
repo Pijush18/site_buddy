@@ -7,7 +7,7 @@ import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/shared/domain/models/knowledge_topic.dart';
 import 'package:site_buddy/shared/domain/models/material_result.dart';
 import 'package:site_buddy/shared/domain/models/conversion_result.dart';
-import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/core/models/prefill_data.dart';
 
 /// Aggregates the evaluated result from the AI parser and downstream engines.
 class AiResponse {

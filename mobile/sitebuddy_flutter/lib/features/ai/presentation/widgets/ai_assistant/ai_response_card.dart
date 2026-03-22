@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/shared/domain/models/ai_intent.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/ai_response.dart';
-import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/core/models/prefill_data.dart';
 import 'package:site_buddy/features/ai/presentation/widgets/ai_assistant/knowledge_card.dart';
 import 'package:site_buddy/features/ai/presentation/widgets/ai_assistant/conversion_card.dart';
 import 'package:site_buddy/features/ai/presentation/widgets/ai_assistant/calculation_card.dart';
@@ -358,6 +358,7 @@ class _ErrorCard extends StatelessWidget {
     );
   }
 }
+
 
 
 

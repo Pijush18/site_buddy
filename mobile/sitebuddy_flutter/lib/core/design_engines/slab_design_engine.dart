@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_engines/models/design_io.dart';
-import 'package:site_buddy/features/design/slab/slab_models.dart';
-import 'package:site_buddy/features/design/slab/slab_design_service.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_models.dart';
+import 'package:site_buddy/features/structural/slab/domain/slab_design_service.dart';
 
 /// ENGINE: SlabDesignEngine
 /// Pure orchestrator that delegates engineering logic to SlabDesignService.
@@ -69,6 +69,7 @@ class SlabDesignEngine {
     return options;
   }
 }
+
 
 
 

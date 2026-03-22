@@ -35,10 +35,10 @@ import 'package:site_buddy/features/unit_converter/domain/enums/unit_type.dart';
 import 'package:site_buddy/features/unit_converter/application/controllers/converter_state.dart';
 import 'package:site_buddy/features/unit_converter/application/controllers/converter_mode_provider.dart';
 import 'package:site_buddy/features/unit_converter/application/providers/unit_usecase_providers.dart';
-import 'package:site_buddy/features/calculator/application/providers/calculator_usecase_providers.dart';
+import 'package:site_buddy/features/estimation/application/providers/estimation_usecase_providers.dart';
 import 'package:site_buddy/features/unit_converter/application/usecases/convert_unit_usecase.dart';
 import 'package:site_buddy/features/unit_converter/application/usecases/parse_ai_query_usecase.dart';
-import 'package:site_buddy/features/calculator/domain/usecases/calculate_material_usecase.dart';
+import 'package:site_buddy/features/estimation/concrete/domain/calculate_material_usecase.dart';
 
 /// Provider exposing the Smart Converter logic to the presentation layer.
 final converterControllerProvider =
@@ -240,6 +240,7 @@ class ConverterController extends Notifier<ConverterState> {
     }
   }
 }
+
 
 
 

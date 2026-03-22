@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:site_buddy/core/diagrams/diagram_models.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
+import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
 
 /// ENGINE: BeamDiagramEngine
 /// PURPOSE: Generates geometry for RC Beam cross-sections.
@@ -57,6 +57,7 @@ class BeamDiagramEngine {
     );
   }
 }
+
 
 
 

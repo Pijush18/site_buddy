@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/features/steel_estimator/domain/models/steel_weight_result.dart';
 
@@ -10,7 +10,7 @@ class SteelWeightMapper {
     String projectId,
   ) {
     return DesignReportMapper.fromGenericCalculator(
-      type: DesignType.rebar,
+      type: DesignType.steel,
       inputs: inputs,
       results: result.toMap(),
       summary: 'Steel Weight: ${result.weight.toStringAsFixed(2)} kg (${inputs['diameter']}mm @ ${inputs['length']}m)',
@@ -18,3 +18,5 @@ class SteelWeightMapper {
     );
   }
 }
+
+

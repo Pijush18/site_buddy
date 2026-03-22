@@ -1,4 +1,4 @@
-import 'package:site_buddy/shared/domain/models/design/design_report.dart';
+import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 
 /// REPOSITORY INTERFACE: HistoryRepository
 /// PURPOSE: Contract for managing the global persistent history of all calculations.
@@ -25,3 +25,4 @@ abstract class HistoryRepository {
   /// CHECKS if a specific report already exists in history.
   bool exists(String id);
 }
+

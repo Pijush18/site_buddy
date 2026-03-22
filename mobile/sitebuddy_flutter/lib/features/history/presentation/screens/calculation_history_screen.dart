@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 
 /// FIX: Get history entries from session - Session-based architecture
@@ -112,6 +112,10 @@ class _HistoryEntryCard extends StatelessWidget {
         return Icons.transform_rounded;
       case CalculationType.currencyConverter:
         return Icons.currency_exchange_rounded;
+      case CalculationType.road:
+      case CalculationType.irrigation:
+        return SbIcons.architecture;
     }
   }
 }
+

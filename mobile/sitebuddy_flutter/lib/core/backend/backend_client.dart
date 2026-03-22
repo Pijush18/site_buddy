@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/network/api_client.dart';
 import 'package:site_buddy/core/backend/backend_endpoints.dart';
-import 'package:site_buddy/shared/domain/models/project.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/project/domain/models/project.dart';
+import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/domain/models/site_report.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -156,6 +156,7 @@ class BackendClient {
     }
   }
 }
+
 
 
 
