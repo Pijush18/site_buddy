@@ -20,7 +20,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
     final historyAsync = ref.watch(projectHistoryProvider);
 
     return SbPage.list(
-      title: 'Calculation History',
+      title: 'History',
       body: historyAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
@@ -35,7 +35,7 @@ class CalculationHistoryScreen extends ConsumerWidget {
               icon: Icons.history_toggle_off_outlined,
               title: 'No Calculations Found',
               subtitle:
-                  'Results from your engineering designs will appear here as you save them.',
+                  'Results appear here as you save them.',
             );
           }
 

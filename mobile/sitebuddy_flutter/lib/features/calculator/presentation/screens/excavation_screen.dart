@@ -3,7 +3,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+// import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -36,28 +36,28 @@ class ExcavationScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: ScreenTitles.excavationCalculator,
+      title: 'Excavation',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: EngineeringTerms.pitDimensions),
+          const _SectionLabel(label: 'Dimensions'),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.wallLength,
+            label: 'Length (m)',
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.width,
+            label: 'Width (m)',
             hint: EngineeringTerms.pitLengthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.depth,
+            label: 'Depth (m)',
             hint: EngineeringTerms.pitDepthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
@@ -66,7 +66,7 @@ class ExcavationScreen extends ConsumerWidget {
           const _SectionLabel(label: EngineeringTerms.parameters),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.clearance,
+            label: 'Clearance (m)',
             hint: EngineeringTerms.widthHint,
             initialValue: '0.3',
             onChanged: controller.updateClearance,
@@ -77,7 +77,7 @@ class ExcavationScreen extends ConsumerWidget {
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.swellFactor,
+            label: 'Swell Factor',
             hint: EngineeringTerms.swellFactorHint,
             initialValue: '1.25',
             onChanged: controller.updateSwellFactor,
@@ -95,7 +95,7 @@ class ExcavationScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -169,14 +169,14 @@ class _ResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.resultSummary,
+            'Summary',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.lg), // Replaced SizedBox(height: SbSpacing.lg)
           const Divider(),
           SbListItemTile(
-            title: EngineeringTerms.totalVolumeLoose,
+            title: 'Total Volume',
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.volumeM3.toStringAsFixed(2)} m³',
@@ -184,7 +184,7 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.bankVolumeNatural,
+            title: 'Bank Volume',
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${(result.volumeM3 / result.swellFactor).toStringAsFixed(2)} m³',

@@ -2,7 +2,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
+// import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -40,14 +40,14 @@ class RebarScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              EngineeringTerms.resultSummary,
+              'Summary',
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
-              title: EngineeringTerms.numberOfBars,
+              title: 'Bars',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBars.toStringAsFixed(0),
@@ -55,7 +55,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.totalLength,
+              title: 'Total Length',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalLength.toStringAsFixed(2)} m',
@@ -63,7 +63,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.totalWeight,
+              title: 'Total Weight',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.totalWeight.toStringAsFixed(2)} kg',
@@ -78,19 +78,19 @@ class RebarScreen extends ConsumerWidget {
     final bool isValid = state.memberLength != null && state.spacing != null && state.diameter != null;
 
     return SbPage.scaffold(
-      title: AppStrings.steelWeightEstimatorTitle,
+      title: 'Rebar',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.rebarRequirements,
+            'Structure',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.sm),
 
           SbInput(
-            label: EngineeringTerms.memberLength,
+            label: 'Length (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateMemberLength,
             errorText: lError,
@@ -98,7 +98,7 @@ class RebarScreen extends ConsumerWidget {
           const SizedBox(height: SbSpacing.sm),
 
           SbInput(
-            label: EngineeringTerms.spacingLabel,
+            label: 'Spacing (m)',
             suffixIcon: const Icon(SbIcons.spacing),
             onChanged: controller.updateSpacing,
             errorText: sError,
@@ -112,7 +112,7 @@ class RebarScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: SbInput(
-                  label: EngineeringTerms.diameterLabel,
+                  label: 'Diameter (mm)',
                   suffixIcon: const Icon(SbIcons.diameter),
                   onChanged: controller.updateDiameter,
                   errorText: dError,
@@ -121,7 +121,7 @@ class RebarScreen extends ConsumerWidget {
               SizedBox(
                 width: 160,
                 child: SbInput(
-                  label: EngineeringTerms.wastePercent,
+                  label: 'Waste (%)',
                   suffixIcon: const Icon(SbIcons.percent),
                   onChanged: controller.updateWaste,
                 ),
@@ -139,7 +139,7 @@ class RebarScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

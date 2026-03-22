@@ -46,7 +46,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              EngineeringTerms.resultSummary,
+              'Summary',
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
@@ -72,7 +72,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ),
             const SizedBox(height: SbSpacing.md),
             SbListItemTile(
-              title: EngineeringTerms.absoluteDifference,
+              title: 'Difference',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
@@ -85,21 +85,21 @@ class LevelCalculatorScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: EngineeringTerms.levelCalculator,
+      title: 'Level',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
           const SizedBox(height: SbSpacing.xl),
           Text(
-            EngineeringTerms.fieldLevelComparison,
+            'Comparison',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.xl),
 
           SbInput(
-            label: EngineeringTerms.startLevel,
+            label: 'Start (m)',
             suffixIcon: const Icon(SbIcons.arrowUp),
             onChanged: controller.updateStartLevel,
             errorText: sError,
@@ -107,7 +107,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
           const SizedBox(height: SbSpacing.sm),
 
           SbInput(
-            label: EngineeringTerms.endLevel,
+            label: 'End (m)',
             suffixIcon: const Icon(SbIcons.arrowDown),
             onChanged: controller.updateEndLevel,
             errorText: eError,
@@ -123,7 +123,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

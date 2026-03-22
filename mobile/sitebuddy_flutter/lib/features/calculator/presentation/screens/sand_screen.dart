@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
+// import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +32,7 @@ class SandScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              EngineeringTerms.resultSummary,
+              'Summary',
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
@@ -46,7 +46,7 @@ class SandScreen extends ConsumerWidget {
             ),
             const SizedBox(height: SbSpacing.lg),
             SbListItemTile(
-              title: EngineeringTerms.wetVolume,
+              title: 'Wet Volume',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
@@ -54,7 +54,7 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.sandCubicFeet,
+              title: 'Sand (ft³)',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
@@ -80,19 +80,19 @@ class SandScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: EngineeringTerms.sandQuantityEstimator,
+      title: 'Sand',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.volumeAndRate,
+            'Dimensions',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
-            label: EngineeringTerms.length,
+            label: 'Length (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
@@ -100,7 +100,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
-            label: EngineeringTerms.width,
+            label: 'Width (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
@@ -108,7 +108,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
-            label: EngineeringTerms.depth,
+            label: 'Depth (m)',
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
@@ -116,7 +116,7 @@ class SandScreen extends ConsumerWidget {
           const SizedBox(height: SbSpacing.lg / 1.5),
 
           SbInput(
-            label: EngineeringTerms.ratePerUnit,
+            label: 'Rate (opt)',
             suffixIcon: const Icon(SbIcons.payments),
             onChanged: controller.updateRate,
           ),
@@ -131,7 +131,7 @@ class SandScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

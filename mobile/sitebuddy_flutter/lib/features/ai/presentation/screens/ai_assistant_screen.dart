@@ -66,7 +66,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
     final controller = ref.read(aiControllerProvider.notifier);
 
     return SbPage.scaffold(
-      title: 'Smart Assistant',
+      title: 'AI Assistant',
       usePadding: false,
       appBarActions: [
         AppIconButton(
@@ -93,7 +93,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     question: state.query,
                     answer: state.response!.knowledge?.definition ??
                         state.response!.conversion?.mainValue.toString() ??
-                        'Calculation Result',
+                        'Result',
                     projectName: controller.currentProjectName,
                   ),
                 ),

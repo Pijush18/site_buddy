@@ -24,13 +24,13 @@ class AnalysisSummaryScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SbPage.form(
-      title: 'Analysis Summary',
+      title: 'Analysis',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Reinforcement Design',
+            label: 'Next',
             icon: Icons.iron_rounded,
             onPressed: () {
               ref
@@ -51,20 +51,20 @@ class AnalysisSummaryScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3 of 5: Engineering Analysis',
+              'Step 3: Analysis',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── PRINCIPAL FORCES ──
           SbSection(
-            title: 'Principal Design Forces',
+            title: 'Principal Forces',
             child: DesignResultCard(
-              title: 'ULS State Forces',
+              title: 'ULS Forces',
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Bending Moment (Mu)',
+                  label: 'Moment (Mu)',
                   value: '${state.mu.toStringAsFixed(2)} kNm',
                   isCritical: true,
                 ),
@@ -74,7 +74,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'ULS Load (wu)',
+                  label: 'Total Load (wu)',
                   value: '${state.wu.toStringAsFixed(2)} kN/m',
                 ),
               ],
@@ -84,19 +84,19 @@ class AnalysisSummaryScreen extends ConsumerWidget {
 
           // ── ENGINEERING DIAGRAMS ──
           SbSection(
-            title: 'Engineering Diagrams',
+            title: 'Diagrams',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _DiagramCard(
-                  label: 'Shear Force Diagram (SFD)',
+                  label: 'SFD (Shear)',
                   points: state.sfdPoints,
                   isBMD: false,
                   isDark: isDark,
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 _DiagramCard(
-                  label: 'Bending Moment Diagram (BMD)',
+                  label: 'BMD (Moment)',
                   points: state.bmdPoints,
                   isBMD: true,
                   isDark: isDark,

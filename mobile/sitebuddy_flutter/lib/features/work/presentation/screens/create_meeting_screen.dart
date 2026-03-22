@@ -83,9 +83,9 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
   @override
   Widget build(BuildContext context) {
     return SbPage.form(
-      title: 'Schedule Meeting',
+      title: 'New Meeting',
       primaryAction: PrimaryCTA(
-        label: 'Schedule Meeting',
+        label: 'Schedule',
         icon: SbIcons.calendar,
         onPressed: () => _submit(context),
         width: double.infinity,
@@ -113,13 +113,13 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _projectController,
-                  label: 'Project ID',
+                  label: 'Project',
                   hint: 'Associated project',
                   onChanged: (v) {},
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Text(
-                  'MEETING TYPE',
+                  'Type',
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
                 const SizedBox(height: SbSpacing.sm),
@@ -133,7 +133,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Text(
-                  'MODE',
+                  'Mode',
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
                 const SizedBox(height: SbSpacing.sm),
@@ -148,7 +148,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 const SizedBox(height: SbSpacing.xl),
                 SbInput(
                   controller: _locationController,
-                  label: 'Location / Link',
+                  label: 'Location',
                   hint: 'Where is it happening?',
                   onChanged: (v) {},
                 ),
@@ -168,7 +168,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'DATE',
+                            'Date',
                             style: Theme.of(context).textTheme.labelLarge!,
                           ),
                           const SizedBox(height: SbSpacing.sm),
@@ -204,7 +204,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     Expanded(
                       child: _buildTimePicker(
                         context,
-                        'START TIME',
+                        'Start',
                         _start == null ? 'Not set' : _start!.format(context),
                         () async {
                           final t = await showTimePicker(
@@ -220,7 +220,7 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                     Expanded(
                       child: _buildTimePicker(
                         context,
-                        'END TIME',
+                        'End',
                         _end == null ? 'Not set' : _end!.format(context),
                         () async {
                           final t = await showTimePicker(

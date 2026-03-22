@@ -1,4 +1,5 @@
-/// FILE: engineering_constants.dart
+/// FILE:/// Engineering constants for UI and Painter usage.
+library;
 /// PURPOSE: Centralized source of truth for non-localized engineering symbols and units.
 /// LAYER: Core / Engineering
 

@@ -20,13 +20,13 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Reinforcement Detailing',
+      title: 'Reinforcement',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate Results',
+            label: 'Calculate',
             onPressed: () {
               context.push('/column/safety');
             },
@@ -44,14 +44,14 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 5 of 6: Steel Arrangement',
+              'Step 5: Detailing',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── REBAR LAYOUT SECTION ──
           SbSection(
-            title: 'Sectional Arrangement',
+            title: 'Detailing',
             child: RebarLayoutDiagram(
               type: state.type,
               width: state.b,
@@ -64,13 +64,13 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── MAIN LONGITUDINAL BARS ──
           SbSection(
-            title: 'Main Longitudinal Bars',
+            title: 'Main Bars',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Bar Diameter',
+                    'Bar Dia',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -91,7 +91,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── LONGITUDINAL RESULTS ──
           SbSection(
-            title: 'Steel Area Provided',
+            title: 'Results',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.astProvided >= state.astRequired,
@@ -102,12 +102,12 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
                   unit: 'Nos',
                 ),
                 DesignResultItem(
-                  label: 'Required Ast',
+                  label: 'Ast Req',
                   value: state.astRequired.toStringAsFixed(0),
                   unit: 'mm²',
                 ),
                 DesignResultItem(
-                  label: 'Provided Ast',
+                  label: 'Ast Prov',
                   value: state.astProvided.toStringAsFixed(0),
                   unit: 'mm²',
                   isCritical: true,
@@ -118,18 +118,18 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── TRANSVERSE TIES ──
           SbSection(
-            title: 'Transverse Ties (Links)',
+            title: 'Lateral Ties',
             child: DesignResultCard(
               title: 'Detailing',
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Tie Diameter (min)',
+                  label: 'Tie Dia (min)',
                   value: state.tieDia.toStringAsFixed(0),
                   unit: 'mm',
                 ),
                 DesignResultItem(
-                  label: 'Max Spacing (s)',
+                  label: 'Spacing (s)',
                   value: state.tieSpacing.toStringAsFixed(0),
                   unit: 'mm c/c',
                   isCritical: true,

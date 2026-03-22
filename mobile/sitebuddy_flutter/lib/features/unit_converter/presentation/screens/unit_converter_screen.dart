@@ -20,12 +20,12 @@ class UnitConverterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SbPage.scaffold(
-      title: 'Smart Converter',
+      title: 'Converter',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Conversion Assistant',
+            'Assistant',
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
@@ -50,7 +50,7 @@ class _SegmentedToggleSection extends ConsumerWidget {
       items: const [ConverterMode.ai, ConverterMode.manual],
       value: mode,
       labelBuilder: (m) =>
-          m == ConverterMode.ai ? 'AI Assistant' : 'Manual Mode',
+          m == ConverterMode.ai ? 'AI' : 'Manual',
       onChanged: (newMode) {
         ref.read(converterModeProvider.notifier).setMode(newMode);
       },
@@ -111,7 +111,7 @@ class _ConverterBodySection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'CATEGORY',
+          'Category',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
         const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
@@ -138,7 +138,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'FROM',
+                    'From',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
                   const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
@@ -168,7 +168,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'TO',
+                    'To',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
                   const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
@@ -209,7 +209,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return SbInput(
       onChanged: onChanged,
       onFieldSubmitted: (_) => onSubmit(),
-      hint: 'e.g., "10 ft to m" or "10x5x0.2 slab m20"',
+      hint: 'e.g., 10 ft to m',
       prefixIcon: const Icon(SbIcons.assistant),
       suffixIcon: IconButton(icon: const Icon(SbIcons.send), onPressed: onSubmit),
     );
@@ -229,7 +229,7 @@ class _ConverterBodySection extends ConsumerWidget {
           ),
           const SizedBox(height: SbSpacing.md),
           Text(
-            'Try asking the AI:',
+            'Try:',
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
           const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
@@ -275,7 +275,7 @@ class _ConverterBodySection extends ConsumerWidget {
         if (secondaries.isNotEmpty) ...[
           const SizedBox(height: SbSpacing.xl),
           Text(
-            'ALSO EQUALS',
+            'Equals',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
           const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
@@ -311,7 +311,7 @@ class _ConverterBodySection extends ConsumerWidget {
       children: [
         const SizedBox(height: SbSpacing.xl),
         Text(
-          'ESTIMATE: ${query.length} x ${query.width} x ${query.depth} (${query.grade?.label})',
+          'Estimate',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
         const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)

@@ -85,13 +85,13 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
     final state = ref.watch(beamDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Load Definition',
+      title: 'Loads',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate & View Analysis',
+            label: 'Calculate',
             onPressed: _onNext,
             icon: SbIcons.analytics,
           ),
@@ -109,7 +109,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 2 of 5: Applied Loads',
+                'Step 2: Loads',
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
@@ -123,7 +123,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                   children: [
                     SbInput(
                       controller: _dlController,
-                      label: 'Dead Load (incl. Self-weight) (kN/m)',
+                      label: 'Dead Load (kN/m)',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
@@ -137,7 +137,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       controller: _plController,
-                      label: 'Point Load (Optional) (kN)',
+                      label: 'Point Load (kN)',
                     ),
                   ],
                 ),
@@ -146,7 +146,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
 
             // ── LIMIT STATE SECTION ──
             SbSection(
-              title: 'Design Limit State',
+              title: 'Limit State',
               child: SbCard(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +155,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state.isULS ? 'ULS (Factor 1.5)' : 'SLS (Factor 1.0)',
+                          state.isULS ? 'ULS' : 'SLS',
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ],

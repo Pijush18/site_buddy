@@ -81,13 +81,13 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
     });
 
     return SbPage.form(
-      title: 'Slab Input',
+      title: 'Slab',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Load Definition',
+            label: 'Next',
             onPressed: _onNext,
             icon: Icons.arrow_forward,
           ),
@@ -105,7 +105,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 1 of 5: Geometry & Materials',
+                'Step 1: Geometry',
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
@@ -118,7 +118,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Slab Behavior',
+                      'Type',
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
                     const SizedBox(height: SbSpacing.sm),
@@ -135,7 +135,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         Expanded(
                           child: SbInput(
                             controller: _lxController,
-                            label: 'Short Span (Lx) (m)',
+                            label: 'Lx (m)',
                             validator: (v) =>
                                 ValidationHelper.validatePositive(v, 'Lx'),
                           ),
@@ -144,7 +144,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         Expanded(
                           child: SbInput(
                             controller: _lyController,
-                            label: 'Long Span (Ly) (m)',
+                            label: 'Ly (m)',
                             validator: (v) =>
                                 ValidationHelper.validatePositive(v, 'Ly'),
                           ),
@@ -154,7 +154,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                     const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _depthController,
-                      label: 'Overall Thickness (D) (mm)',
+                      label: 'Thickness (D) (mm)',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Thickness'),
                     ),
@@ -174,7 +174,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       children: [
                         Expanded(
                           child: _gradeDropdown(
-                            'Concrete Grade',
+                            'Concrete',
                             state.concreteGrade,
                             const ['M20', 'M25', 'M30', 'M35'],
                             notifier.updateConcreteGrade,
@@ -183,7 +183,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         const SizedBox(width: SbSpacing.md),
                         Expanded(
                           child: _gradeDropdown(
-                            'Steel Grade',
+                            'Steel',
                             state.steelGrade,
                             const ['Fe415', 'Fe500', 'Fe550'],
                             notifier.updateSteelGrade,
@@ -194,7 +194,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                     const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _coverController,
-                      label: 'Clear Cover (mm)',
+                      label: 'Cover (mm)',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Cover'),
                     ),

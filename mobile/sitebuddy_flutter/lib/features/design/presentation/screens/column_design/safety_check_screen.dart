@@ -39,13 +39,13 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
     final optimizationResult = ref.watch(columnOptimizationProvider);
 
     return SbPage.form(
-      title: 'Safety Check',
+      title: 'Verification',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Optimize Section',
+            label: 'Optimize',
             onPressed: () {
               ref
                   .read(columnDesignControllerProvider.notifier)
@@ -54,7 +54,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           PrimaryCTA(
-            label: 'Export PDF Report',
+            label: 'Export PDF',
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () async {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -97,7 +97,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save PDF',
+            label: 'Save Drawing',
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -126,7 +126,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 6 of 6: Final Verification',
+              'Step 6: Validation',
               style: theme.textTheme.titleLarge!,
             ),
           ),
@@ -154,7 +154,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── INTERACTION VISUALIZATION ──
           SbSection(
-            title: 'Interaction Visualization',
+            title: 'Visualization',
             child: ColumnInteractionDiagram(
               pu: state.pu,
               mu: max(state.mx, state.my),
@@ -164,7 +164,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── CAPACITY VERIFICATION ──
           SbSection(
-            title: 'Capacity Verification',
+            title: 'Capacity',
             child: DesignResultCard(
               title: 'Demand vs Capacity',
               isSafe: state.isCapacitySafe,
@@ -186,13 +186,13 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── STABILITY & DETAILING ──
           SbSection(
-            title: 'Stability & Detailing',
+            title: 'Stability',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isSlendernessSafe && state.isReinforcementSafe,
               items: [
                 DesignResultItem(
-                  label: 'Slenderness (λmax)',
+                    label: 'Slenderness',
                   value: max(
                     state.slendernessX,
                     state.slendernessY,
@@ -217,7 +217,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── REINFORCEMENT DETAIL ──
           SbSection(
-            title: 'Reinforcement Detail',
+            title: 'Drawing',
             child: SbCard(
               child: Column(
                 children: [
@@ -246,7 +246,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Economical Alternatives',
+              title: 'Optimization',
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
@@ -265,7 +265,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── SMART INSIGHTS ──
           SbSection(
-            title: 'Smart Engineering Insights',
+            title: 'Insights',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: ColumnInsightService.getSuggestions(state)

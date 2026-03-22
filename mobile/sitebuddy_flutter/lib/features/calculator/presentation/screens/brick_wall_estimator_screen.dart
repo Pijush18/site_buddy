@@ -3,7 +3,7 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+// import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -39,17 +39,17 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.heightInput.isNotEmpty && state.thicknessInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: ScreenTitles.brickWallEstimator,
+      title: 'Brick Wall',
       body: SbSectionList(
         sections: [
           // ── SECTION 1: DIMENSIONS ─────────────────────────────────────────
           SbSection(
-            title: EngineeringTerms.wallDimensions,
+            title: 'Dimensions',
             child: SbCard(
               child: Column(
                 children: [
                   SbInput(
-                    label: EngineeringTerms.wallLength,
+                    label: 'Length (m)',
                     hint: EngineeringTerms.lengthHint,
                     suffixIcon: Icon(SbIcons.ruler, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -58,7 +58,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: EngineeringTerms.wallHeight,
+                    label: 'Height (m)',
                     hint: EngineeringTerms.heightHint,
                     suffixIcon: Icon(SbIcons.height, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -67,7 +67,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: EngineeringTerms.wallThickness,
+                    label: 'Thickness (mm)',
                     hint: EngineeringTerms.brickThicknessHint,
                     suffixIcon: Icon(SbIcons.layers, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -81,7 +81,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
           // ── SECTION 2: BRICK & MORTAR ─────────────────────────────────────
           SbSection(
-            title: EngineeringTerms.brickAndMortar,
+            title: 'Masonry',
             child: Column(
               children: [
                 SbCard(
@@ -94,7 +94,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              EngineeringTerms.brickSize,
+                              'Brick Size',
                               style: theme.textTheme.labelMedium?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                                 fontWeight: FontWeight.w600,
@@ -131,7 +131,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbDropdown<MortarRatio>(
-                  label: EngineeringTerms.mortarRatio,
+                  label: 'Ratio',
                   value: state.selectedRatio,
                   items: MortarRatio.values,
                   itemLabelBuilder: (r) => r.label,
@@ -154,7 +154,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -219,14 +219,14 @@ class _ResultSection extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SbSection(
-      title: EngineeringTerms.resultSummary,
+      title: 'Summary',
       child: SbCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Bricks
             SbListItemTile(
-              title: EngineeringTerms.numberOfBricks,
+              title: 'Bricks',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 result.numberOfBricks.toString(),
@@ -237,7 +237,7 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.brickVolume,
+              title: 'Brick Vol',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.brickVolume.toStringAsFixed(3)} m³',
@@ -252,7 +252,7 @@ class _ResultSection extends StatelessWidget {
 
             // Cement & Sand
             SbListItemTile(
-              title: EngineeringTerms.cementBags,
+              title: 'Cement',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
@@ -263,7 +263,7 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.sandVolume,
+              title: 'Sand',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.sandVolume.toStringAsFixed(3)} m³',
@@ -278,7 +278,7 @@ class _ResultSection extends StatelessWidget {
 
             // Totals
             SbListItemTile(
-              title: EngineeringTerms.wallVolume,
+              title: 'Total Vol',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.wallVolume.toStringAsFixed(3)} m³',

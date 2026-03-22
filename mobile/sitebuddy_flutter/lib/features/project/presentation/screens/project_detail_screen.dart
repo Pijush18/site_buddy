@@ -9,8 +9,6 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 
@@ -29,8 +27,8 @@ class ProjectDetailScreen extends ConsumerWidget {
 
     if (proj == null) {
       return const SbPage.detail(
-        title: ScreenTitles.projectNotFound,
-        body: Center(child: Text(AppStrings.projectNotFoundDesc)),
+        title: 'Not Found',
+        body: Center(child: Text('Project not found')),
       );
     }
 
@@ -46,22 +44,18 @@ class ProjectDetailScreen extends ConsumerWidget {
       ...columns.map(
         (c) => {
           'type': 'column',
-          'name': 'Column Design',
+          'name': 'Column',
           'date': DateTime.now(),
         },
       ),
       ...beams.map(
-        (b) => {'type': 'beam', 'name': 'Beam Design', 'date': DateTime.now()},
+        (b) => {'type': 'beam', 'name': 'Beam', 'date': DateTime.now()},
       ),
       ...slabs.map(
-        (s) => {'type': 'slab', 'name': 'Slab Design', 'date': DateTime.now()},
+        (s) => {'type': 'slab', 'name': 'Slab', 'date': DateTime.now()},
       ),
       ...footings.map(
-        (f) => {
-          'type': 'footing',
-          'name': 'Footing Design',
-          'date': DateTime.now(),
-        },
+        (f) => {'type': 'footing', 'name': 'Footing', 'date': DateTime.now()},
       ),
     ];
 
@@ -98,7 +92,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppStrings.status,
+                      'Status',
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
                     Container(
@@ -138,7 +132,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppStrings.created,
+                          'Created',
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Text(
@@ -151,7 +145,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          AppStrings.location,
+                          'Location',
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Row(
@@ -179,7 +173,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty)
             SbSection(
-              title: AppStrings.description,
+              title: 'Description',
               child: Text(
                 proj.description!,
                 style: Theme.of(context).textTheme.bodyLarge!,
@@ -218,12 +212,12 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: AppStrings.design,
+            title: 'Design',
             padding: EdgeInsets.zero,
             child: calcItems.isEmpty
                 ? const Padding(
                     padding: EdgeInsets.all(SbSpacing.md),
-                    child: Text(AppStrings.noEntriesFound),
+                    child: Text('No records found'),
                   )
                 : SbListGroup(
                     children: calcItems.map((item) {
@@ -242,12 +236,12 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: AppStrings.fieldSurveying,
+            title: 'Surveying',
             padding: EdgeInsets.zero,
             child: logItems.isEmpty
                 ? const Padding(
                     padding: EdgeInsets.all(SbSpacing.md),
-                    child: Text(AppStrings.noEntriesFound),
+                    child: Text('No records found'),
                   )
                 : SbListGroup(
                     children: logItems.map((item) {
@@ -270,7 +264,7 @@ class ProjectDetailScreen extends ConsumerWidget {
             child: Column(
               children: [
                 PrimaryCTA(
-                  label: AppStrings.newInspection,
+                  label: 'New Entry',
                   icon: Icons.add_circle_outline,
                   onPressed: () {
                     context.push(AppRoutes.projectLevelLog(projectId));
@@ -279,7 +273,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 SecondaryButton(
-                  label: AppStrings.editProject,
+                  label: 'Edit',
                   icon: Icons.edit_outlined,
                   onPressed: () {
                     context.push(AppRoutes.projectEdit());

@@ -173,7 +173,7 @@ class _ReportDocumentHeader extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
                 Text(
-                  'ENGINEERING COMPUTATION SHEET',
+                  'COMPUTATION SHEET',
                   style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
@@ -198,7 +198,7 @@ class _ReportDocumentHeader extends StatelessWidget {
           child: Row(
             children: [
                Expanded(
-                child: _HeaderField(label: 'PROJECT', value: data.projectName),
+                child: _HeaderField(label: 'Project', value: data.projectName),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
@@ -210,7 +210,7 @@ class _ReportDocumentHeader extends StatelessWidget {
               ),
               Expanded(
                 child: _HeaderField(
-                  label: 'DATE',
+                  label: 'Date',
                   value: DateFormat('dd MMM yyyy').format(data.date),
                 ),
               ),
@@ -349,11 +349,11 @@ class _ReportFooter extends StatelessWidget {
           ),
           const SizedBox(height: SbSpacing.sm),
           Text(
-            'DESIGN VERIFIED BY SITE BUDDY PRO',
+            'VERIFIED BY SITEBUDDY',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
           Text(
-            'Structural Engineering Computation Suite v2.0',
+            'Engineering Suite v2.0',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
         ],
@@ -376,13 +376,13 @@ class _ReportExportActions extends StatelessWidget {
     return Column(
       children: [
         PrimaryCTA(
-          label: 'Share as PDF',
+          label: 'Share PDF',
           icon: SbIcons.share,
           onPressed: onShare,
         ),
         const SizedBox(height: SbSpacing.lg),
         PrimaryCTA(
-          label: 'Download PDF',
+          label: 'Download',
           icon: SbIcons.download,
           onPressed: onShare,
         ),

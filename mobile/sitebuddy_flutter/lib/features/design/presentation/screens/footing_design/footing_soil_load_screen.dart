@@ -83,13 +83,13 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SbPage.form(
-      title: 'Soil & Load',
+      title: 'Footing',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Geometry Design',
+            label: 'Next',
             icon: Icons.square_foot,
             onPressed: _onNext,
           ),
@@ -105,7 +105,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 2 of 6: Parameters',
+              'Step 2: Loads',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -115,7 +115,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
             title: state.type == FootingType.combined ||
                     state.type == FootingType.strap
                 ? 'Column 1 Loadings'
-                : 'Column Loadings',
+                : 'Column Loading',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -189,13 +189,13 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SbInput(
-                    label: 'Safe Bearing Capacity (SBC) (kN/m²)',
+                    label: 'Bearing Capacity (kN/m²)',
                     controller: _sbcController,
                     suffixIcon: const Icon(SbIcons.terrain),
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Foundation Depth (m)',
+                    label: 'Depth (m)',
                     controller: _depthController,
                     suffixIcon: const Icon(SbIcons.arrowDown),
                   ),

@@ -116,7 +116,7 @@ class _BrandingSettingsScreenState
     });
 
     return SbPage.form(
-      title: 'Report Branding',
+      title: 'Branding',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -129,12 +129,12 @@ class _BrandingSettingsScreenState
                     width: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Text('Save Branding Profile'),
+                : const Text('Save'),
           ),
           const SizedBox(height: SbSpacing.sm),
           TextButton(
             onPressed: isSyncing ? null : _resetBranding,
-            child: const Text('Reset to Site Buddy Defaults'),
+            child: const Text('Reset Defaults'),
           ),
         ],
       ),
@@ -145,32 +145,32 @@ class _BrandingSettingsScreenState
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Enterprise Profile',
+                  'Profile',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 const SizedBox(height: SbSpacing.sm),
                 Text(
-                  'Customize the identity projected natively across multi-page Site Reports and PDF deployments securely.',
+                  'Customize report identity.',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const SizedBox(height: SbSpacing.xl),
-                _buildInputLabel(context, 'Company / Enterprise Name'),
+                _buildInputLabel(context, 'Company Name'),
                 const SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _companyController,
                   hint: 'e.g., ABC Infra Pvt Ltd',
                   keyboardType: TextInputType.text,
-                  label: 'COMPANY NAME',
+                  label: 'Company',
                   onChanged: (v) {},
                 ),
                 const SizedBox(height: SbSpacing.md),
-                _buildInputLabel(context, 'Lead Engineer Name'),
+                _buildInputLabel(context, 'Lead Engineer'),
                 const SizedBox(height: SbSpacing.sm),
                 SbInput(
                   controller: _engineerController,
                   hint: 'e.g., Er. Pijush Debbarma',
                   keyboardType: TextInputType.name,
-                  label: 'ENGINEER NAME',
+                  label: 'Lead Engineer',
                   onChanged: (v) {},
                 ),
               ],

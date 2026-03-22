@@ -20,13 +20,13 @@ class SlendernessCheckScreen extends ConsumerWidget {
     final state = ref.watch(columnDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Slenderness Check',
+      title: 'Slenderness',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Design Calculation',
+            label: 'Next',
             onPressed: () {
               context.push('/column/design');
             },
@@ -43,14 +43,14 @@ class SlendernessCheckScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3 of 6: Slenderness Check',
+              'Step 3: Stability',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── CLASSIFICATION SECTION ──
           SbSection(
-            title: 'Column Classification',
+            title: 'Classification',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isShort,
@@ -61,7 +61,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Classification Rule',
+                   label: 'Rule',
                   value: state.isShort ? 'λ < 12' : 'λ ≥ 12',
                   subtitle: 'Based on IS 456 Cl 39.7.1',
                 ),
@@ -71,7 +71,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
 
           // ── VISUALIZATION SECTION ──
           SbSection(
-            title: 'Geometric Visualization',
+            title: 'Geometry',
             child: SlendernessDiagram(
               slendernessX: state.slendernessX,
               slendernessY: state.slendernessY,
@@ -91,12 +91,12 @@ class SlendernessCheckScreen extends ConsumerWidget {
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'lex (Major Axis)',
+                  label: 'lex (Major)',
                   value: state.lex.toInt().toString(),
                   unit: 'mm',
                 ),
                 DesignResultItem(
-                  label: 'ley (Minor Axis)',
+                  label: 'ley (Minor)',
                   value: state.ley.toInt().toString(),
                   unit: 'mm',
                 ),

@@ -79,13 +79,13 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
     final state = ref.watch(footingDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Geometry & Sizing',
+      title: 'Footing',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Soil Analysis',
+            label: 'Next',
             icon: Icons.analytics_outlined,
             onPressed: _onNext,
           ),
@@ -101,14 +101,14 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3 of 6: Dimensioning (${state.type.label})',
+              'Step 3: Geometry (${state.type.label})',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── COLUMN DIMENSIONS ──
           SbSection(
-            title: 'Column Dimensions',
+            title: 'Column',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -142,7 +142,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
 
           // ── FOOTING DIMENSIONS ──
           SbSection(
-            title: 'Footing Dimensions',
+            title: 'Dimensions',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -166,7 +166,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Overall Thickness (D) (mm)',
+                    label: 'Thickness (D) (mm)',
                     controller: _thicknessController,
                     suffixIcon: const Icon(SbIcons.layers),
                   ),

@@ -17,19 +17,19 @@ class SlabReinforcementScreen extends ConsumerWidget {
 
     if (state.result == null) {
       return const SbPage.scaffold(
-        title: 'Reinforcement Design',
+        title: 'Reinforcement',
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return SbPage.form(
-      title: 'Reinforcement Details',
+      title: 'Reinforcement',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate Results',
+            label: 'Calculate',
             onPressed: () => context.push('/slab/safety'),
             icon: Icons.calculate_outlined,
           ),

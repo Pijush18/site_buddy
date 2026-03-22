@@ -46,13 +46,13 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Load & Support',
+      title: 'Column',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Slenderness Check',
+            label: 'Next',
             onPressed: _onNext,
             icon: Icons.analytics_outlined,
           ),
@@ -68,7 +68,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 2 of 6: Loading & Support',
+              'Step 2: Loads',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -81,7 +81,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SbInput(
-                    label: 'Factored Axial Load Pu (kN)',
+                    label: 'Axial Load (Pu) (kN)',
                     controller: _loadController,
                     onChanged: (v) {
                       final val = double.tryParse(v);

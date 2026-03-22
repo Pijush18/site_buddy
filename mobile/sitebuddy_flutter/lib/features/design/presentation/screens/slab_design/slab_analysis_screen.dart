@@ -17,7 +17,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
 
     if (state.result == null) {
       return const SbPage.scaffold(
-        title: 'Analysis Summary',
+        title: 'Analysis',
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -25,13 +25,13 @@ class SlabAnalysisScreen extends ConsumerWidget {
     final totalLoad = (state.deadLoad + state.liveLoad) * 1.5;
 
     return SbPage.form(
-      title: 'Analysis Summary',
+      title: 'Analysis',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Reinforcement Design',
+            label: 'Next',
             onPressed: () => context.push('/slab/reinforcement'),
             icon: Icons.engineering_outlined,
           ),
@@ -47,30 +47,30 @@ class SlabAnalysisScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3 of 5: Bending Capacity',
+              'Step 3: Analysis',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── ANALYSIS RESULTS ──
           SbSection(
-            title: 'Analysis Results',
+            title: 'Results',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Total Factored Load (wu)',
+                  label: 'Total Load (wu)',
                   value: '${totalLoad.toStringAsFixed(2)} kN/m²',
                 ),
                 DesignResultItem(
-                  label: 'Factored Moment (Mu)',
+                  label: 'Moment (Mu)',
                   value:
                       '${state.result!.bendingMoment.toStringAsFixed(2)} kNm/m',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Slab behavior',
+                  label: 'Type',
                   value: state.type.label,
                 ),
               ],
@@ -80,7 +80,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
 
           // ── INSIGHTS ──
           SbSection(
-            title: 'Engineering Insights',
+            title: 'Insights',
             child: SbCard(
               child: Column(
                 children: [

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
@@ -25,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
     final reportsAsync = ref.watch(recentReportsProvider);
 
     return SbPage.scaffold(
-      title: AppStrings.appName,
+      title: 'SiteBuddy',
       appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.settings),
@@ -45,28 +44,28 @@ class HomeScreen extends ConsumerWidget {
 
           // ── SECTION 2: FIELD TOOLS ──
           SbSection(
-            title: AppStrings.fieldTools,
-            subtitle: 'Essential calculators and survey tools for on-site use.',
+            title: 'Tools',
+            subtitle: 'Calculators and survey tools.',
             child: SbGrid(
               children: [
                 SBGridActionCard(
                   icon: SbIcons.calculator,
-                  label: AppStrings.levelCalculator,
+                  label: 'Levels',
                   onTap: () => context.push(AppRoutes.calculator),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.trendingUp,
-                  label: AppStrings.gradientTool,
+                  label: 'Gradient',
                   onTap: () => context.push(AppRoutes.gradientCalc),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.sync,
-                  label: AppStrings.unitConverter,
+                  label: 'Units',
                   onTap: () => context.push(AppRoutes.unitConverter),
                 ),
                 SBGridActionCard(
                   icon: SbIcons.currencyExchange,
-                  label: AppStrings.currencyConverter,
+                  label: 'Currency',
                   onTap: () => context.push(AppRoutes.currencyConverter),
                 ),
               ],
@@ -75,19 +74,19 @@ class HomeScreen extends ConsumerWidget {
 
           // ── SECTION 3: QUICK ACTIONS (HIGHLIGHTED) ──
           SbSection(
-            title: AppStrings.quickActions,
-            subtitle: 'Common site management workflows.',
+            title: 'Actions',
+            subtitle: 'Site workflows.',
             child: SbGrid(
               children: [
                 SBGridActionCard(
                   icon: SbIcons.addCircle,
-                  label: AppStrings.newProject,
+                  label: 'New Project',
                   onTap: () => context.push(AppRoutes.projectCreate),
                   isHighlighted: true,
                 ),
                 SBGridActionCard(
                   icon: SbIcons.iosShare,
-                  label: AppStrings.shareReport,
+                  label: 'Report',
                   onTap: () => context.push(AppRoutes.reports),
                   isHighlighted: true,
                 ),
@@ -97,8 +96,8 @@ class HomeScreen extends ConsumerWidget {
 
           // ── SECTION 4: RECENT ACTIVITY (SUBTLE) ──
           SbSection(
-            title: AppStrings.recentActivity,
-            subtitle: 'Your most recent project updates and calculations.',
+            title: 'Activity',
+            subtitle: 'Recent updates.',
             onTap: () => context.push(AppRoutes.projects),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,9 +122,8 @@ class HomeScreen extends ConsumerWidget {
 
           // ── SECTION 5: CALCULATION HISTORY (NEW) ──
           SbSection(
-            title: 'Calculation History',
-            subtitle:
-                'Standardized engineering reports and calculation outputs.',
+            title: 'History',
+            subtitle: 'Engineering reports.',
             child: reportsAsync.when(
               data: (reports) {
                 if (reports.isEmpty) {

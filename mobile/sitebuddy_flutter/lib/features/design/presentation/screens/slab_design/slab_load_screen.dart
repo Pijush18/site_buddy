@@ -53,13 +53,13 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
   @override
   Widget build(BuildContext context) {
     return SbPage.form(
-      title: 'Slab Loading',
+      title: 'Slab',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Analysis Summary',
+            label: 'Next',
             onPressed: _onCalculate,
             icon: Icons.calculate_outlined,
           ),
@@ -77,21 +77,21 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 2 of 5: Load Definition',
+                'Step 2: Loads',
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
 
             // ── LOADS SECTION ──
             SbSection(
-              title: 'Vertical Loads (kN/m²)',
+              title: 'Loads (kN/m²)',
               child: SbCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SbInput(
                       controller: _dlController,
-                      label: 'Dead Load (inc. Finishes)',
+                      label: 'Dead Load',
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
@@ -104,7 +104,7 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                     ),
                     const SizedBox(height: SbSpacing.sm),
                     Text(
-                      'Note: Load factor of 1.5 will be applied automatically.',
+                      'Factor: 1.5 applied.',
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
                   ],

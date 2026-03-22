@@ -46,7 +46,7 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Export PDF Design Report',
+            label: 'Export PDF',
             onPressed: () async {
               debugPrint('CTA CLICKED: Export PDF');
               
@@ -109,7 +109,7 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Final Step: Engineering Validation',
+              'Step: Validation',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -118,23 +118,23 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
           SbSection(
             title: 'Critical Safety Status',
             child: DesignResultCard(
-              title: 'Verification Details',
+              title: 'Details',
               isSafe:
                   state.result!.isDeflectionSafe && state.result!.isShearSafe,
               items: [
                 DesignResultItem(
-                  label: 'Deflection Check',
+                  label: 'Deflection',
                   value: state.result!.isDeflectionSafe
                       ? 'SAFE'
                       : 'ACTION REQUIRED',
                   isCritical: !state.result!.isDeflectionSafe,
                 ),
                 DesignResultItem(
-                  label: 'Shear Check',
+                  label: 'Shear',
                   value: state.result!.isShearSafe ? 'PASS' : 'FAIL',
                 ),
                 DesignResultItem(
-                  label: 'Cracking Limit',
+                  label: 'Cracking',
                   value: state.result!.isCrackingSafe ? 'OK' : 'FAIL',
                 ),
               ],

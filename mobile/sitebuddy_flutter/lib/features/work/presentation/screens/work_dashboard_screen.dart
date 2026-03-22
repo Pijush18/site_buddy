@@ -145,7 +145,7 @@ class WorkDashboardScreen extends ConsumerWidget {
     }
 
     return SbPage.list(
-      title: 'Work Management',
+      title: 'Work',
       appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.add),
@@ -157,7 +157,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                 children: [
                   SbListItemTile(
                     icon: SbIcons.addTask,
-                    title: 'Create Task',
+                    title: 'New Task',
 
                     onTap: () {
                       context.pop();
@@ -166,7 +166,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                   ),
                   SbListItemTile(
                     icon: SbIcons.meeting,
-                    title: 'Schedule Meeting',
+                    title: 'New Meeting',
 
                     onTap: () {
                       context.pop();
@@ -193,7 +193,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           : bodyItems.isEmpty
               ? const SbEmptyState(
                   icon: SbIcons.task,
-                  title: 'No Items Yet',
+                  title: 'Nothing found',
                   subtitle: 'Tap the "+" icon to create one.',
                 )
               : SbListGroup(

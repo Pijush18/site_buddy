@@ -3,7 +3,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+// import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
@@ -38,11 +38,11 @@ class MaterialCalculatorScreen extends ConsumerWidget {
     final bool isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: ScreenTitles.materialCalculator,
+      title: 'Materials',
       body: SbSectionList(
         sections: [
           SbSection(
-            title: EngineeringTerms.concreteGrade,
+            title: 'Grade',
             child: SbCard(
               child: SbDropdown<ConcreteGrade>(
                 value: state.grade,
@@ -55,26 +55,26 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             ),
           ),
           SbSection(
-            title: EngineeringTerms.dimensions,
+            title: 'Dimensions',
             child: SbCard(
               child: Column(
                 children: [
                   SbInput(
-                    label: EngineeringTerms.wallLength,
+                    label: 'Length (m)',
                     suffixIcon: const Icon(SbIcons.ruler),
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: EngineeringTerms.width,
+                    label: 'Width (m)',
                     suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: EngineeringTerms.thicknessDepth,
+                    label: 'Thickness (m)',
                     suffixIcon: const Icon(SbIcons.layers),
                     onChanged: controller.updateDepth,
                     errorText: dError,
@@ -84,7 +84,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             ),
           ),
           SbSection(
-            title: EngineeringTerms.reinforcementAndWaste,
+            title: 'Spec',
             child: SbCard(
               child: Wrap(
                 spacing: SbSpacing.lg,
@@ -93,7 +93,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                   SizedBox(
                     width: 160,
                     child: SbInput(
-                      label: EngineeringTerms.steelRatioPercent,
+                      label: 'Steel (%)',
                       hint: EngineeringTerms.steelRatioHint,
                       suffixIcon: const Icon(SbIcons.rebarVertical),
                       onChanged: controller.updateSteelRatio,
@@ -102,7 +102,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                   SizedBox(
                     width: 160,
                     child: SbInput(
-                      label: EngineeringTerms.wasteFactorPercent,
+                      label: 'Waste (%)',
                       hint: EngineeringTerms.wasteFactorHint,
                       suffixIcon: const Icon(SbIcons.percent),
                       onChanged: controller.updateWasteFactor,
@@ -121,7 +121,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                   onPressed: controller.reset,
                 ),
                 PrimaryCTA(
-                  label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                  label: 'Calculate',
                   icon: state.isLoading ? null : SbIcons.calculator,
                   isLoading: state.isLoading,
                   onPressed: isValid ? controller.calculate : null,
@@ -166,11 +166,11 @@ class _ResultSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbSection(
-      title: EngineeringTerms.resultSummary,
+      title: 'Summary',
       child: SbListGroup(
         children: [
           SbListItemTile(
-            title: EngineeringTerms.concreteVolume,
+            title: 'Volume',
             onTap: () {},
             trailing: Text(
               '${result.concreteVolume.toStringAsFixed(3)} m³',
@@ -178,7 +178,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.cementBags,
+            title: 'Cement',
             onTap: () {},
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
@@ -186,7 +186,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.sandVolume,
+            title: 'Sand',
             onTap: () {},
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
@@ -194,7 +194,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.aggregateVolume,
+            title: 'Aggregate',
             onTap: () {},
             trailing: Text(
               '${result.aggregateVolume.toStringAsFixed(3)} m³',
@@ -202,7 +202,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.steelWeight,
+            title: 'Steel',
             onTap: () {},
             trailing: Text(
               '${result.steelWeight.toStringAsFixed(1)} kg',
@@ -210,7 +210,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.bindingWire,
+            title: 'Wire',
             onTap: () {},
             trailing: Text(
               '${result.bindingWire.toStringAsFixed(2)} kg',

@@ -23,7 +23,7 @@ class ReportsScreen extends StatelessWidget {
               icon: SbIcons.report,
               title: 'No Reports Yet',
               subtitle:
-                  'Reports generated from engineering calculations and design tools will appear here automatically.',
+                  'Reports appear here automatically.',
               actionLabel: 'Go to Calculators',
               onAction: () => context.go('/calculator'),
             ),
@@ -34,7 +34,7 @@ class ReportsScreen extends StatelessWidget {
             child: SbCard(
               padding: const EdgeInsets.all(SbSpacing.lg),
               child: Text(
-                'Use the Export PDF option in any calculator or design module to create professional project reports.',
+                'Use Export PDF in any module.',
                 style: textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),

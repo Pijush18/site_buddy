@@ -51,7 +51,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to save project: ${e.toString()}'),
+            content: Text('Save failed: ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -75,7 +75,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return SbPage.form(
-      title: 'Project Info',
+      title: 'Project',
       primaryAction: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
@@ -86,7 +86,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
                   width: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Save Project'),
+              : const Text('Save'),
         ),
       ),
 
@@ -99,7 +99,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
                 SbInput(
                   controller: _nameController,
                   hint: 'e.g. Skyline Apartments',
-                  label: 'PROJECT NAME',
+                  label: 'Project Name',
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
@@ -107,7 +107,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',
-                  label: 'LOCATION',
+                  label: 'Location',
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
@@ -119,7 +119,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
             child: SbInput(
               controller: _clientController,
               hint: 'Contracting Authority / Client',
-              label: 'CLIENT',
+              label: 'Client',
               textInputAction: TextInputAction.next,
               onChanged: (v) {},
             ),
@@ -143,7 +143,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
               controller: _descController,
               maxLines: 5,
               hint: 'Enter detailed project scope...',
-              label: 'DESCRIPTION',
+              label: 'Description',
               onChanged: (v) {},
             ),
           ),

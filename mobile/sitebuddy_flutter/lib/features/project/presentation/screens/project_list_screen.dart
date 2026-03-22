@@ -49,7 +49,7 @@ class ProjectListScreen extends ConsumerWidget {
       return const SbEmptyState(
         icon: SbIcons.project,
         title: 'No Projects Yet',
-        subtitle: 'Create your first civil engineering project to get started.',
+        subtitle: 'Create a project to start.',
       );
     }
 

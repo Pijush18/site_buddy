@@ -29,7 +29,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate Results',
+            label: 'Calculate',
             onPressed: () {
               context.push('/beam/safety');
             },
@@ -47,14 +47,14 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4 of 5: Steel Detailing',
+              'Step 4: Steel',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── DETAILING PREVIEW ──
           SbSection(
-            title: 'Cross-Section Arrangement',
+            title: 'Cross-Section',
             child: BeamCrossSectionDiagram(
               width: state.width,
               depth: state.overallDepth,
@@ -67,7 +67,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           // ── SMART SUGGESTIONS ──
           if (state.suggestions.isNotEmpty)
             SbSection(
-              title: 'Design Insights',
+              title: 'Insights',
               child: SmartSuggestionsCard(
                 suggestions: state.suggestions,
                 onOptimize: () => notifier.optimize(),
@@ -76,13 +76,13 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── STEEL SPECIFICATION ──
           SbSection(
-            title: 'Steel Specification',
+            title: 'Steel Specs',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Main Bar Diameter',
+                    'Bar Dia',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -112,17 +112,17 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── RESULTS: FLEXURE ──
           SbSection(
-            title: 'Flexural Analysis',
+            title: 'Flexure',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isFlexureSafe,
               items: [
                 DesignResultItem(
-                  label: 'Ast Required',
+                  label: 'Ast Req',
                   value: '${state.astRequired.toInt()} mm²',
                 ),
                 DesignResultItem(
-                  label: 'Ast Provided',
+                  label: 'Ast Prov',
                   value: '${state.astProvided.toInt()} mm²',
                   isCritical: true,
                 ),
@@ -137,7 +137,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── RESULTS: SHEAR ──
           SbSection(
-            title: 'Shear Reinforcement',
+            title: 'Shear',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isShearSafe,
@@ -147,7 +147,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   value: '${state.vu.toStringAsFixed(1)} kN',
                 ),
                 DesignResultItem(
-                  label: 'Shear Stress (τv)',
+                  label: 'Shear Stress',
                   value: '${state.tv.toStringAsFixed(2)} N/mm²',
                 ),
                 DesignResultItem(

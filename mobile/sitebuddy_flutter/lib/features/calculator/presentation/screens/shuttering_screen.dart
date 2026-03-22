@@ -35,35 +35,35 @@ class ShutteringScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: EngineeringTerms.shutteringAreaEstimator,
+      title: 'Shuttering',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: EngineeringTerms.elementDimensions),
+          const _SectionLabel(label: 'Dimensions'),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.length,
+            label: 'Length (m)',
             hint: EngineeringTerms.lengthHint,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.width,
+            label: 'Width (m)',
             hint: EngineeringTerms.widthHint,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.depth,
+            label: 'Depth (m)',
             hint: EngineeringTerms.depthHint,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbListItemTile(
-            title: EngineeringTerms.includeBottomArea,
+            title: 'Include Bottom?',
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
             trailing: Switch(
               value: state.includeBottom,
@@ -80,7 +80,7 @@ class ShutteringScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -160,14 +160,14 @@ class _ResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.resultSummary,
+            'Summary',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
-            title: EngineeringTerms.totalShutteringArea,
+            title: 'Total Area',
             onTap: () {},
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
@@ -175,7 +175,7 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.perimeter,
+            title: 'Perimeter',
             onTap: () {},
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',

@@ -64,7 +64,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Column Input',
+      title: 'Column',
       appBarActions: [
         IconButton(
           icon: const Icon(Icons.history),
@@ -76,7 +76,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Load Definition',
+            label: 'Next',
             onPressed: _onNext,
           ),
           const SizedBox(height: SbSpacing.sm),
@@ -91,7 +91,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 1 of 6: Geometry & Materials',
+              'Step 1: Geometry',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -104,7 +104,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Section Type',
+                    'Type',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -121,8 +121,8 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       Expanded(
                         child: SbInput(
                           label: state.type == ColumnType.circular
-                              ? 'Diameter [mm]'
-                              : 'Width (b) [mm]',
+                              ? 'Dia (mm)'
+                              : 'Width (b) (mm)',
                           controller: _widthController,
                         ),
                       ),
@@ -139,7 +139,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Unsupported Length (L) (mm)',
+                    label: 'Length (L) (mm)',
                     controller: _lengthController,
                   ),
                   const SizedBox(height: SbSpacing.lg),
@@ -176,7 +176,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Concrete Grade',
+                              'Concrete',
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
                             const SizedBox(height: SbSpacing.sm),
@@ -197,7 +197,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Steel Grade',
+                              'Steel',
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
                             const SizedBox(height: SbSpacing.sm),
@@ -216,7 +216,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Clear Cover (mm)',
+                    label: 'Cover (mm)',
                     controller: _coverController,
                   ),
                 ],

@@ -23,14 +23,14 @@ class FootingReinforcementScreen extends ConsumerWidget {
     final state = ref.watch(footingDesignControllerProvider);
     final notifier = ref.read(footingDesignControllerProvider.notifier);
     return SbPage.form(
-      title: 'Reinforcement',
+      title: 'Footing',
       appBarActions: const [EducationalToggle()],
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate Results',
+            label: 'Calculate',
             onPressed: () => context.push('/footing/safety'),
             icon: Icons.calculate_outlined,
           ),

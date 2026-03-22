@@ -40,9 +40,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
     final controller = ref.read(workControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Create Task',
+      title: 'New Task',
       primaryAction: PrimaryCTA(
-        label: 'Create Task',
+        label: 'Create',
         icon: SbIcons.addTask,
         onPressed: () async {
           if (_titleController.text.isEmpty) {
@@ -96,13 +96,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
                   controller: _projectController,
-                  label: 'Project ID',
+                  label: 'Project',
                   hint: 'e.g., PRJ-001',
                   onChanged: (v) {},
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Text(
-                  'PRIORITY',
+                  'Priority',
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
                 const SizedBox(height: SbSpacing.sm),
@@ -129,7 +129,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'DUE DATE',
+                            'Due Date',
                             style: Theme.of(context).textTheme.labelLarge!,
                           ),
                           const SizedBox(height: SbSpacing.sm),

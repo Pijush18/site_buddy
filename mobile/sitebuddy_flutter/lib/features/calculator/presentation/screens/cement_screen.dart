@@ -2,7 +2,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+// import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -30,14 +30,14 @@ class CementScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              EngineeringTerms.resultSummary,
+              'Summary',
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
-              title: EngineeringTerms.wetVolume,
+              title: 'Wet Vol',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
@@ -45,7 +45,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.dryVolume,
+              title: 'Dry Vol',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
@@ -53,7 +53,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.cementWeight,
+              title: 'Weight',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
@@ -61,7 +61,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: EngineeringTerms.numberOfBags,
+              title: 'Bags',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
@@ -87,39 +87,39 @@ class CementScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: ScreenTitles.cementBagEstimator,
+      title: 'Cement',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.volumeAndDimensions,
+            'Dimensions',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.xl),
           SbInput(
-            label: EngineeringTerms.wallLength,
+            label: 'Length (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.width,
+            label: 'Width (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: EngineeringTerms.depth,
+            label: 'Depth (m)',
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
           const SizedBox(height: SbSpacing.xl),
           Text(
-            EngineeringTerms.ratioFormat,
+            'Ratio (C:S:A)',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
@@ -199,7 +199,7 @@ class CementScreen extends ConsumerWidget {
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: 'Calculate',
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,

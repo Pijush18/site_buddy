@@ -31,7 +31,7 @@ class DesignHomeScreen extends ConsumerWidget {
           // ── SECTION 2: DESIGN CATEGORIES ──
           SbSection(
             title: 'Design Categories',
-            subtitle: 'RCC standards and reinforcement guides.',
+            subtitle: 'RCC standards.',
             child: SbGrid(
               children: state.items.map((item) {
                 return SBGridActionCard(
@@ -46,7 +46,7 @@ class DesignHomeScreen extends ConsumerWidget {
           // ── SECTION 3: ENGINEERING STANDARDS ──
           SbSection(
             title: 'Key References',
-            subtitle: 'Access national structural design codes.',
+            subtitle: 'Design codes.',
             child: SbGrid(
               children: [
                 SBGridActionCard(
@@ -79,9 +79,8 @@ class _DesignInfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SbModuleHero(
       icon: SbIcons.architecture,
-      title: 'Structural Reference',
-      subtitle:
-          'Quickly access standard engineering RCC specifications for site reference and planning.',
+      title: 'Reference',
+      subtitle: 'RCC specifications.',
     );
   }
 }

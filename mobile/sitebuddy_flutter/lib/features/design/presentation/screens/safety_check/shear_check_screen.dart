@@ -120,19 +120,19 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: _result != null ? 'Calculate Again' : 'Calculate Shear',
+            label: 'Calculate',
             onPressed: _calculate,
             isLoading: _isLoading,
           ),
           if (_result != null) ...[
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
-              label: 'Share Report',
+              label: 'Report',
               onPressed: _shareResult,
             ),
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
-              label: 'Reset Form',
+              label: 'Reset',
               onPressed: _reset,
             ),
           ],
@@ -145,7 +145,7 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
             // ── HEADER ──
             SbSection(
               child: Text(
-                'Structural Shear Capacity Assessment',
+                'Assessment',
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),

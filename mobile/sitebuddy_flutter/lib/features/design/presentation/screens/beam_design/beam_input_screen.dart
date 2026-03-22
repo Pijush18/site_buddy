@@ -112,13 +112,13 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
     });
 
     return SbPage.form(
-      title: 'Beam Input',
+      title: 'Beam',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Load Definition',
+            label: 'Next',
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
@@ -136,7 +136,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 1 of 5: Geometry & Materials',
+                'Step 1: Geometry',
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
@@ -148,7 +148,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Beam Type',
+                    'Type',
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -165,7 +165,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
                     controller: _spanController,
-                    label: 'Clear Span (L) (mm)',
+                    label: 'Span (L) (mm)',
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Span'),
                   ),
@@ -184,7 +184,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       Expanded(
                         child: SbInput(
                           controller: _depthController,
-                          label: 'Total Depth (D) (mm)',
+                          label: 'Depth (D) (mm)',
                           validator: (v) =>
                               ValidationHelper.validatePositive(v, 'Depth'),
                         ),
@@ -206,7 +206,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     children: [
                       Expanded(
                         child: _buildGradeDropdown(
-                          'Concrete Grade',
+                          'Concrete',
                           state.concreteGrade,
                           ['M20', 'M25', 'M30', 'M35', 'M40'],
                           (v) => ref
@@ -217,7 +217,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: _buildGradeDropdown(
-                          'Steel Grade',
+                          'Steel',
                           state.steelGrade,
                           ['Fe415', 'Fe500'],
                           (v) => ref
@@ -230,7 +230,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
                     controller: _coverController,
-                    label: 'Clear Cover (mm)',
+                    label: 'Cover (mm)',
                     validator: (v) =>
                         ValidationHelper.validatePositive(v, 'Cover'),
                   ),

@@ -18,13 +18,13 @@ class FootingAnalysisScreen extends ConsumerWidget {
     final state = ref.watch(footingDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Soil Analysis',
+      title: 'Analysis',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Reinforcement',
+            label: 'Next',
             icon: Icons.grid_view_outlined,
             onPressed: () => context.push('/footing/reinforcement'),
           ),
@@ -40,7 +40,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4 of 6: Pressure Distribution',
+              'Step 4: Analysis',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -53,13 +53,13 @@ class FootingAnalysisScreen extends ConsumerWidget {
               isSafe: state.isAreaSafe,
               items: [
                 DesignResultItem(
-                  label: 'Required Area',
+                  label: 'Area Req',
                   value: state.requiredArea.toStringAsFixed(2),
                   unit: 'm²',
                   subtitle: 'Includes 10% self-weight',
                 ),
                 DesignResultItem(
-                  label: 'Provided Area',
+                  label: 'Area Prov',
                   value: state.providedArea.toStringAsFixed(2),
                   unit: 'm²',
                   isCritical: true,
@@ -72,22 +72,22 @@ class FootingAnalysisScreen extends ConsumerWidget {
           SbSection(
             title: 'Soil Pressure',
             child: DesignResultCard(
-              title: 'Pressure Check',
+              title: 'Pressure',
               isSafe: state.maxSoilPressure <= state.sbc,
               items: [
                 DesignResultItem(
-                  label: 'Max. Pressure (q_max)',
+                  label: 'Max Pressure',
                   value: state.maxSoilPressure.toStringAsFixed(2),
                   unit: 'kN/m²',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Min. Pressure (q_min)',
+                  label: 'Min Pressure',
                   value: state.minSoilPressure.toStringAsFixed(2),
                   unit: 'kN/m²',
                 ),
                 DesignResultItem(
-                  label: 'Allowable (SBC)',
+                  label: 'Allowable',
                   value: state.sbc.toStringAsFixed(2),
                   unit: 'kN/m²',
                   subtitle: 'Serviceability Limit State',
@@ -98,7 +98,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
 
           // ── DISTRIBUTION DETAILS ──
           SbSection(
-            title: 'Distribution Details',
+            title: 'Details',
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

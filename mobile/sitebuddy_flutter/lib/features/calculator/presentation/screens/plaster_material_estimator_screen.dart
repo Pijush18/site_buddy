@@ -21,17 +21,17 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
     final tError = state.failure?.message.contains('Thickness') == true ? state.failure?.message : null;
 
     return SbPage.scaffold(
-      title: EngineeringTerms.plasterEstimator,
+      title: 'Plaster',
       body: SbSectionList(
         sections: [
           // ── INPUT SECTION ──
           SbSection(
-            title: EngineeringTerms.plasterArea,
+            title: 'Area',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SbInput(
-                  label: EngineeringTerms.wallArea,
+                  label: 'Wall Area (m²)',
                   hint: EngineeringTerms.areaHint,
                   suffixIcon: const Icon(SbIcons.area),
                   onChanged: controller.updateArea,
@@ -39,7 +39,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 SbInput(
-                  label: EngineeringTerms.plasterThickness,
+                  label: 'Thickness (mm)',
                   hint: EngineeringTerms.diameterHint,
                   suffixIcon: const Icon(SbIcons.layers),
                   onChanged: controller.updateThickness,
@@ -56,7 +56,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
 
           // ── RATIO SECTION ──
           SbSection(
-            title: EngineeringTerms.mortarRatio,
+            title: 'Ratio',
             child: SbDropdown<PlasterRatio>(
               value: state.selectedRatio,
               items: PlasterRatio.values,
@@ -89,9 +89,7 @@ class PlasterMaterialEstimatorScreen extends ConsumerWidget {
           // ── ACTION SECTION ──
           SbSection(
             child: PrimaryCTA(
-              label: state.isLoading 
-                  ? AppStrings.calculating 
-                  : EngineeringTerms.calculateMaterials,
+              label: 'Calculate',
               icon: SbIcons.calculator,
               isLoading: state.isLoading,
               onPressed: controller.calculate,
@@ -135,7 +133,7 @@ class _ResultSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            EngineeringTerms.resultSummary,
+            'Summary',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
@@ -143,7 +141,7 @@ class _ResultSection extends StatelessWidget {
           const Divider(),
 
           SbListItemTile(
-            title: EngineeringTerms.cementBags,
+            title: 'Cement',
             onTap: () {},
             trailing: Text(
               '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
@@ -151,7 +149,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.sandVolume,
+            title: 'Sand',
             onTap: () {},
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
@@ -161,7 +159,7 @@ class _ResultSection extends StatelessWidget {
           const Divider(),
           const SizedBox(height: SbSpacing.xxl),
           SbListItemTile(
-            title: EngineeringTerms.dryMortarVolume,
+            title: 'Dry Volume',
             onTap: () {},
             trailing: Text(
               '${result.dryVolume.toStringAsFixed(3)} m³',

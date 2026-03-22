@@ -54,13 +54,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         : SafetyStatus.fail;
 
     return SbPage.form(
-      title: 'Safety Verification',
+      title: 'Verification',
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Export PDF Report',
+            label: 'Export PDF',
             icon: SbIcons.pdf,
             onPressed: () async {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -103,7 +103,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save PDF',
+            label: 'Save Drawing',
             icon: SbIcons.pdf,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -132,7 +132,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 5 of 5: Engineering Validation',
+              'Step 5: Validation',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -144,13 +144,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── FLEXURE CHECK ──
           SbSection(
-            title: 'Limit State of Flexure',
+            title: 'Flexure',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isFlexureSafe,
               items: [
                 DesignResultItem(
-                  label: 'Design Moment (Mu)',
+                  label: 'Moment (Mu)',
                   value: '${state.mu.toStringAsFixed(2)} kNm',
                 ),
                 DesignResultItem(
@@ -171,7 +171,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── SHEAR CHECK ──
           SbSection(
-            title: 'Limit State of Shear',
+            title: 'Shear',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isShearSafe,
@@ -192,17 +192,17 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── DEFLECTION CHECK ──
           SbSection(
-            title: 'Control of Deflection',
+            title: 'Deflection',
             child: DesignResultCard(
               title: 'Verification',
               isSafe: state.isDeflectionSafe,
               items: [
                 DesignResultItem(
-                  label: 'L/d Ratio provided',
+                  label: 'L/d Ratio',
                   value: (state.span / state.overallDepth).toStringAsFixed(2),
                 ),
                 DesignResultItem(
-                  label: 'Safety Status',
+                  label: 'Status',
                   value:
                       state.isDeflectionSafe ? 'PERMISSIBLE' : 'EXCEEDS LIMIT',
                   isCritical: true,
@@ -243,7 +243,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Economical Alternatives',
+              title: 'Optimization',
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
@@ -310,8 +310,8 @@ class _OverallStatusBadge extends StatelessWidget {
                 ),
                 Text(
                   status == SafetyStatus.safe
-                      ? 'Verified as per IS 456 code standards'
-                      : 'Fails to meet safety requirements',
+                      ? 'IS 456 verified'
+                      : 'Requirements failed',
                   style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
