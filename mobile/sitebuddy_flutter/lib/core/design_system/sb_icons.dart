@@ -142,6 +142,7 @@ class SbIcons {
   static const IconData google = Icons.account_tree_outlined; // Use a distinct icon for Google placeholder if not available
   static const IconData apple = Icons.apple;
   static const IconData logout = Icons.logout;
+  static const IconData truck = Icons.local_shipping_outlined;
 }
 
 

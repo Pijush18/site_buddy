@@ -16,6 +16,9 @@ import 'package:site_buddy/features/design/concrete/concrete_design_service.dart
 import 'package:site_buddy/features/design/plaster/plaster_design_service.dart';
 import 'package:site_buddy/features/design/excavation/excavation_design_service.dart';
 import 'package:site_buddy/features/design/shuttering/shuttering_design_service.dart';
+import 'package:site_buddy/core/engineering/standards/transport/road_standard.dart';
+import 'package:site_buddy/core/engineering/standards/transport/irc_standard.dart';
+import 'package:site_buddy/features/transport/road/domain/services/road_design_service.dart';
 
 /// Provider for current DesignCode
 final designCodeProvider = StateProvider<DesignCode>((ref) {
@@ -125,6 +128,15 @@ final excavationDesignServiceProvider = Provider<ExcavationDesignService>((ref) 
 final shutteringDesignServiceProvider = Provider<ShutteringDesignService>((ref) {
   final standard = ref.watch(designStandardProvider);
   return ShutteringDesignService(standard);
+});
+
+final roadStandardProvider = Provider<RoadStandard>((ref) {
+  return IRCStandard();
+});
+
+final roadDesignServiceProvider = Provider<RoadDesignService>((ref) {
+  final standard = ref.watch(roadStandardProvider);
+  return RoadDesignService(standard);
 });
 
 
