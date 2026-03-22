@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +86,8 @@ class AppInitializer {
     if (projects.isNotEmpty) {
       // Set the most recently accessed project as active
       await sessionService.setActiveProject(projects.first);
+      // DEBUG: Log persistence restoration
+      debugPrint('[Session] Restored: ${projects.first.id}');
     }
 
     // 8. Run Legacy SharedPreferences to Hive Migration

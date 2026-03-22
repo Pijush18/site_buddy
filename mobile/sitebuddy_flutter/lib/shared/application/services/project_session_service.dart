@@ -18,6 +18,8 @@ class ProjectSessionService extends ChangeNotifier {
   Future<void> setActiveProject(Project project) async {
     if (_activeProject?.id == project.id) return;
 
+    // DEBUG: Log session set
+    debugPrint('[Session] Switching to: ${project.id} (${project.name})');
     AppLogger.info(
       'Switching Active Project: ${project.name} (${project.id})',
       tag: 'ProjectSession',

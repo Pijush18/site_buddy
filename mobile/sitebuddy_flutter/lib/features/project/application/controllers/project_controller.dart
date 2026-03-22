@@ -23,6 +23,7 @@ library;
 /// - Add Firebase sync logic.
 /// ----------------------------------------------
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -89,6 +90,9 @@ class ProjectController extends Notifier<ProjectState> {
   }) async {
     state = state.copyWith(isLoading: true, clearFailure: true);
 
+    // DEBUG: Trace project creation
+    debugPrint('[Project] Creating: $name');
+
     // FIX: Use proper UUID instead of timestamp-based ID
     final newId = const Uuid().v4();
 
@@ -108,6 +112,9 @@ class ProjectController extends Notifier<ProjectState> {
 
     final useCase = ref.read(createProjectUseCaseProvider);
     await useCase.execute(newProj);
+
+    // DEBUG: Trace project created
+    debugPrint('[Project] Created: $newId');
 
     // --- INTEGRATION: Set as active and record activity ---
     await ref.read(projectSessionServiceProvider).setActiveProject(newProj);
@@ -149,6 +156,9 @@ class ProjectController extends Notifier<ProjectState> {
   /// PURPOSE: Removal from local storage and state.
   /// FIX: Ensure session never holds deleted project.
   Future<void> deleteProject(String id) async {
+    // DEBUG: Trace delete
+    debugPrint('[Project] Deleting: $id');
+
     // 1. Check if this is the active project in session (fail-safe)
     final sessionService = ref.read(projectSessionServiceProvider);
     bool wasActiveProject = false;
@@ -171,11 +181,15 @@ class ProjectController extends Notifier<ProjectState> {
       if (remainingProjects.isNotEmpty) {
         // Set next project as active (first one = most recently accessed)
         await sessionService.setActiveProject(remainingProjects.first);
+        debugPrint('[Session] After delete: ${remainingProjects.first.id}');
       } else {
         // No projects left - clear session entirely
         sessionService.clearActiveProject();
+        debugPrint('[Session] After delete: cleared');
       }
     }
+
+    debugPrint('[Project] Deleted: $id');
 
     state = state.copyWith(
       isLoading: false,

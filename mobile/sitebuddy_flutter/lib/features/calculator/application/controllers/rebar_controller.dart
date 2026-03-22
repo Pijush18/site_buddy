@@ -181,7 +181,8 @@ class RebarController extends Notifier<RebarState> {
       final projectSession = ref.watch(projectSessionServiceProvider);
       final projectId = projectSession.getActiveProjectId();
 
-      // DEBUG: Log history save
+      // DEBUG: Log data usage and save
+      debugPrint('[Usage] Using project: $projectId');
       debugPrint('[History] Saving for project: $projectId');
 
       final entry = CalculationHistoryEntry(
