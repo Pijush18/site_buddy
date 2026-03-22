@@ -112,8 +112,7 @@ class HomeScreen extends ConsumerWidget {
                       subtitle: activity.subtitle,
                       icon: _getActivityIcon(activity.type),
                       trailing: _formatTimestamp(activity.timestamp),
-                      onTap: () =>
-                          context.push(AppRoutes.projectDetail(activity.title)),
+                      onTap: () => context.push(AppRoutes.projectDetail()),
                       isSubtle: true,
                     );
                   }).toList(),

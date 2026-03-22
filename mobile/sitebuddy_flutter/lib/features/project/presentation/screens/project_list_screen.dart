@@ -6,6 +6,8 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/domain/models/project.dart';
 
 /// SCREEN: ProjectListScreen
 /// PURPOSE: List all civil engineering projects following the Predefined Layout System.
@@ -30,11 +32,11 @@ class ProjectListScreen extends ConsumerWidget {
         onTap: () => context.push(AppRoutes.projectCreate),
         isHighlighted: true,
       ),
-      body: _buildContent(context, state),
+      body: _buildContent(context, ref, state),
     );
   }
 
-  Widget _buildContent(BuildContext context, dynamic state) {
+  Widget _buildContent(BuildContext context, WidgetRef ref, dynamic state) {
     if (state.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -59,9 +61,20 @@ class ProjectListScreen extends ConsumerWidget {
           location: project.location,
           logsCount: project.logsCount,
           calcsCount: project.calculationsCount,
-          onTap: () => context.push(AppRoutes.projectDetail(project.id)),
+          // FIX: Set active project before navigating
+          onTap: () => _navigateToProjectDetail(context, ref, project),
         );
       }).toList(),
     );
+  }
+
+  // Helper to set active project before navigation
+  void _navigateToProjectDetail(
+    BuildContext context,
+    WidgetRef ref,
+    Project project,
+  ) {
+    ref.read(projectSessionServiceProvider).setActiveProject(project);
+    context.push(AppRoutes.projectDetail());
   }
 }
