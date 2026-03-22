@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
@@ -10,14 +9,14 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/domain/models/brick_wall_result.dart';
 import 'package:site_buddy/shared/application/services/history_saver.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
+import 'package:site_buddy/features/design/brick/brick_models.dart';
 
 final brickWallProvider = NotifierProvider<BrickWallController, BrickWallState>(
   BrickWallController.new,
 );
 
 class BrickWallController extends Notifier<BrickWallState> {
-  final _service = MaterialEstimationService();
-
   @override
   BrickWallState build() => BrickWallState.initial();
 
@@ -53,47 +52,32 @@ class BrickWallController extends Notifier<BrickWallState> {
   }
 
   Future<void> calculate() async {
-    final lParse = Validators.parsePositiveNumber(
-      state.lengthInput,
-      'Wall Length',
-    );
-    if (lParse.failure != null) {
-      state = state.copyWith(isLoading: false, failure: lParse.failure);
+    final lParse = Validators.parsePositiveNumber(state.lengthInput, 'Wall Length');
+    final hParse = Validators.parsePositiveNumber(state.heightInput, 'Wall Height');
+    final tParse = Validators.parsePositiveNumber(state.thicknessInput, 'Wall Thickness');
+
+    if (lParse.failure != null || hParse.failure != null || tParse.failure != null) {
+      state = state.copyWith(
+        isLoading: false, 
+        failure: lParse.failure ?? hParse.failure ?? tParse.failure,
+      );
       return;
     }
 
-    final hParse = Validators.parsePositiveNumber(
-      state.heightInput,
-      'Wall Height',
-    );
-    if (hParse.failure != null) {
-      state = state.copyWith(isLoading: false, failure: hParse.failure);
-      return;
-    }
-
-    final tParse = Validators.parsePositiveNumber(
-      state.thicknessInput,
-      'Wall Thickness',
-    );
-    if (tParse.failure != null) {
-      state = state.copyWith(isLoading: false, failure: tParse.failure);
-      return;
-    }
-
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-    );
+    state = state.copyWith(isLoading: true, clearFailure: true);
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final result = _service.calculateBrickWallMaterials(
+      final service = ref.read(brickDesignServiceProvider);
+      final input = BrickInput(
         length: lParse.value!,
         height: hParse.value!,
         thickness: tParse.value!,
-        mortarRatioString: state.selectedRatio.ratioString,
+        mortarRatio: state.selectedRatio.ratioString,
       );
+
+      final result = service.calculateMaterials(input);
 
       state = state.copyWith(
         isLoading: false, 

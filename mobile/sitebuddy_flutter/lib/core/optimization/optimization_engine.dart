@@ -6,19 +6,36 @@ import 'package:site_buddy/core/design_engines/slab_design_engine.dart';
 import 'package:site_buddy/core/design_engines/beam_design_engine.dart';
 import 'package:site_buddy/core/design_engines/column_design_engine.dart';
 
-import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
-import 'package:site_buddy/features/design/application/services/footing_design_service.dart';
-import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
+import 'package:site_buddy/core/engineering/standards/rcc/design_standard.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
+import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
+import 'package:site_buddy/features/design/beam/beam_design_service.dart';
+import 'package:site_buddy/features/design/slab/slab_design_service.dart';
+import 'package:site_buddy/features/design/column/column_design_service.dart';
+import 'package:site_buddy/features/design/footing/footing_models.dart';
+import 'package:site_buddy/features/design/footing/footing_design_service.dart' as domain;
 
 /// ENGINE: OptimizationEngine
-/// Provides automated structural optimization for RCC components as per IS 456.
+/// Provides automated structural optimization for RCC components using a pluggable DesignStandard.
 class OptimizationEngine {
-  final _columnEngine = const ColumnDesignEngine();
-  final _beamEngine = const BeamDesignEngine();
-  final _slabEngine = const SlabDesignEngine();
-  final _footingService = FootingDesignService();
+  final DesignStandard standard;
+  final ColumnDesignEngine _columnEngine;
+  final BeamDesignEngine _beamEngine;
+  final SlabDesignEngine _slabEngine;
+  final domain.FootingDesignService _footingService;
+
+  OptimizationEngine(
+    this.standard, {
+    required BeamDesignService beamService,
+    required SlabDesignService slabService,
+    required ColumnDesignService columnService,
+    required domain.FootingDesignService footingService,
+  }) : _columnEngine = ColumnDesignEngine(columnService),
+       _beamEngine = BeamDesignEngine(beamService),
+       _slabEngine = SlabDesignEngine(slabService),
+       _footingService = footingService;
 
   /// METHOD: optimizeColumnSection
   /// Generates top 3 column design options based on Pu/Mu loads.
@@ -176,28 +193,29 @@ class OptimizationEngine {
 
     for (double dim = 1000; dim <= 4000; dim += 250) {
       for (double t = 300; t <= 900; t += 150) {
-        FootingDesignState state = FootingDesignState(
+        final input = FootingInput(
+          type: FootingType.isolated, // Default for square optimization
           columnLoad: columnLoad,
           sbc: sbc,
           footingLength: dim,
           footingWidth: dim,
+          footingThickness: t,
           concreteGrade: concreteGrade,
           steelGrade: steelGrade,
-          footingThickness: t,
           momentX: momentX,
           momentY: momentY,
         );
 
-        state = _footingService.runPipeline(state);
+        final result = _footingService.designFooting(input);
 
-        if (state.isAreaSafe && state.isPunchingShearSafe) {
-          final utilization = state.maxSoilPressure / sbc;
+        if (result.isAreaSafe && result.isPunchingShearSafe) {
+          final utilization = result.maxSoilPressure / sbc;
           candidates.add(
             OptimizationOption(
               title:
                   '${(dim / 1000).toStringAsFixed(1)}m Square x ${t.toInt()}mm',
               description: 'SBC Utilization: ${(utilization * 100).toInt()}%',
-              steelArea: state.astProvidedX,
+              steelArea: result.astProvidedX,
               utilization: utilization,
               parameters: {'length': dim, 'width': dim, 'thickness': t},
             ),

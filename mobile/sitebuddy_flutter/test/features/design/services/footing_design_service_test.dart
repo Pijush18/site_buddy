@@ -2,9 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:site_buddy/features/design/application/services/footing_design_service.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
+import 'package:site_buddy/core/engineering/standards/rcc/is_456_standard.dart';
 
 void main() {
-  final service = FootingDesignService();
+  final service = FootingDesignService(IS456Standard());
 
   group('FootingDesignService Verification', () {
     test('Case 1: Isolated Footing - Basic Soil Pressure', () {

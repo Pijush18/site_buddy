@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
 import 'package:site_buddy/features/design/application/services/footing_design_service.dart';
-import 'package:site_buddy/core/services/design_report_service.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/features/design/domain/usecases/save_footing_design_usecase.dart';
@@ -28,13 +28,14 @@ final footingDesignControllerProvider =
       return FootingDesignController();
     });
 
-/// CONTROLLER: FootingDesignController
-/// PURPOSE: Manages Footing Design state and business logic coordination.
 class FootingDesignController extends Notifier<FootingDesignState> {
-  final _service = FootingDesignService();
+  late final FootingDesignService _service;
 
   @override
   FootingDesignState build() {
+    final standard = ref.watch(designStandardProvider);
+    _service = FootingDesignService(standard);
+
     final project = ref.read(activeProjectProvider);
     return FootingDesignState(projectId: project?.id);
   }
@@ -126,7 +127,8 @@ class FootingDesignController extends Notifier<FootingDesignState> {
   }
 
   Future<void> generateReport() async {
-    await DesignReportService.generateFootingReport(state);
+    final reportService = ref.read(designReportServiceProvider);
+    await reportService.generateFootingReport(state);
   }
 
   // Restore state from history (used by HistoryDetailScreen)

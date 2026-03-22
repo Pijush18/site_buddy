@@ -1,18 +1,4 @@
-/// FILE HEADER
-/// ----------------------------------------------
-/// File: excavation_controller.dart
-/// Feature: calculator
-/// Layer: application/controllers
-///
-/// PURPOSE:
-/// Manages state for the Excavation Volume Estimator with Save on Calculate behavior.
-///
-/// ----------------------------------------------
-library;
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
@@ -22,15 +8,14 @@ import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart'
 import 'package:site_buddy/shared/application/services/history_saver.dart';
 import 'package:site_buddy/shared/domain/models/excavation_result.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
+import 'package:site_buddy/features/design/excavation/excavation_models.dart';
 
-final excavationProvider =
-    NotifierProvider<ExcavationController, ExcavationState>(
-      ExcavationController.new,
-    );
+final excavationProvider = NotifierProvider<ExcavationController, ExcavationState>(
+  ExcavationController.new,
+);
 
 class ExcavationController extends Notifier<ExcavationState> {
-  final _service = MaterialEstimationService();
-
   @override
   ExcavationState build() => ExcavationState.initial();
 
@@ -49,46 +34,38 @@ class ExcavationController extends Notifier<ExcavationState> {
     }
   }
 
-  void updateLength(String value) =>
-      state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
-  void updateWidth(String value) =>
-      state = state.copyWith(widthInput: value, clearFailure: true, hasSaved: false);
-  void updateDepth(String value) =>
-      state = state.copyWith(depthInput: value, clearFailure: true, hasSaved: false);
-  void updateClearance(String value) =>
-      state = state.copyWith(clearanceInput: value, clearFailure: true, hasSaved: false);
-  void updateSwellFactor(String value) =>
-      state = state.copyWith(swellFactorInput: value, clearFailure: true, hasSaved: false);
+  void updateLength(String value) => state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
+  void updateWidth(String value) => state = state.copyWith(widthInput: value, clearFailure: true, hasSaved: false);
+  void updateDepth(String value) => state = state.copyWith(depthInput: value, clearFailure: true, hasSaved: false);
+  void updateClearance(String value) => state = state.copyWith(clearanceInput: value, clearFailure: true, hasSaved: false);
+  void updateSwellFactor(String value) => state = state.copyWith(swellFactorInput: value, clearFailure: true, hasSaved: false);
 
   Future<void> calculate() async {
     final l = Validators.parsePositiveNumber(state.lengthInput, 'Length');
     final w = Validators.parsePositiveNumber(state.widthInput, 'Width');
     final d = Validators.parsePositiveNumber(state.depthInput, 'Depth');
     final c = Validators.parsePositiveNumber(state.clearanceInput, 'Clearance');
-    final s = Validators.parsePositiveNumber(
-      state.swellFactorInput,
-      'Swell Factor',
-    );
+    final s = Validators.parsePositiveNumber(state.swellFactorInput, 'Swell Factor');
 
     if (l.failure != null) return _onError(l.failure!);
     if (w.failure != null) return _onError(w.failure!);
     if (d.failure != null) return _onError(d.failure!);
 
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-    );
+    state = state.copyWith(isLoading: true, clearFailure: true);
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final res = _service.calculateExcavationVolume(
+      final service = ref.read(excavationDesignServiceProvider);
+      final input = ExcavationInput(
         length: l.value!,
         width: w.value!,
         depth: d.value!,
         clearance: c.value ?? 0.3,
         swellFactor: s.value ?? 1.25,
       );
+
+      final res = service.calculateVolume(input);
 
       state = state.copyWith(
         isLoading: false, 
@@ -125,10 +102,7 @@ class ExcavationController extends Notifier<ExcavationState> {
         project.id,
       );
 
-      await HistorySaver.save(
-        ref: ref,
-        report: report,
-      );
+      await HistorySaver.save(ref: ref, report: report);
 
       state = state.copyWith(hasSaved: true);
 
@@ -151,7 +125,6 @@ class ExcavationController extends Notifier<ExcavationState> {
     calculate();
   }
 
-  void _onError(AppFailure f) =>
-      state = state.copyWith(isLoading: false, failure: f);
+  void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ExcavationState.initial();
 }

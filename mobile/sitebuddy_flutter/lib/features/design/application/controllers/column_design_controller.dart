@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
-import 'package:site_buddy/features/design/application/services/column_design_service.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
 import 'package:site_buddy/features/design/application/services/column_validator.dart';
-import 'package:site_buddy/core/services/design_report_service.dart';
+import 'package:site_buddy/features/design/application/services/column_design_service.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/features/design/domain/usecases/save_column_design_usecase.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
@@ -31,14 +31,15 @@ final columnDesignControllerProvider =
       return ColumnDesignController();
     });
 
-/// CONTROLLER: ColumnDesignController
-/// PURPOSE: Manages Column Design state and business logic coordination.
 class ColumnDesignController extends Notifier<ColumnDesignState> {
-  final _service = ColumnDesignService();
+  late final ColumnDesignService _service;
   final _validator = ColumnValidator();
 
   @override
   ColumnDesignState build() {
+    final standard = ref.watch(designStandardProvider);
+    _service = ColumnDesignService(standard);
+
     // Initialize with selected project if any - Session-based architecture
     final projectSession = ref.watch(projectSessionServiceProvider);
     final activeProject = projectSession.getActiveProject();
@@ -124,7 +125,8 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
   }
 
   Future<void> generateReport() async {
-    await DesignReportService.generateColumnReport(state);
+    final reportService = ref.read(designReportServiceProvider);
+    await reportService.generateColumnReport(state);
   }
 
   // Restore state from history (used by HistoryDetailScreen)

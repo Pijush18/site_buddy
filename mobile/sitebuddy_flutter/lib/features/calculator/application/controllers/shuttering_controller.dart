@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
@@ -9,15 +8,14 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/application/services/history_saver.dart';
 import 'package:site_buddy/shared/domain/models/shuttering_result.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
+import 'package:site_buddy/features/design/shuttering/shuttering_models.dart';
 
-final shutteringProvider =
-    NotifierProvider<ShutteringController, ShutteringState>(
-      ShutteringController.new,
-    );
+final shutteringProvider = NotifierProvider<ShutteringController, ShutteringState>(
+  ShutteringController.new,
+);
 
 class ShutteringController extends Notifier<ShutteringState> {
-  final _service = MaterialEstimationService();
-
   @override
   ShutteringState build() => ShutteringState.initial();
 
@@ -36,14 +34,10 @@ class ShutteringController extends Notifier<ShutteringState> {
     }
   }
 
-  void updateLength(String value) =>
-      state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
-  void updateWidth(String value) =>
-      state = state.copyWith(widthInput: value, clearFailure: true, hasSaved: false);
-  void updateDepth(String value) =>
-      state = state.copyWith(depthInput: value, clearFailure: true, hasSaved: false);
-  void updateIncludeBottom(bool value) =>
-      state = state.copyWith(includeBottom: value, clearFailure: true, hasSaved: false);
+  void updateLength(String value) => state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
+  void updateWidth(String value) => state = state.copyWith(widthInput: value, clearFailure: true, hasSaved: false);
+  void updateDepth(String value) => state = state.copyWith(depthInput: value, clearFailure: true, hasSaved: false);
+  void updateIncludeBottom(bool value) => state = state.copyWith(includeBottom: value, clearFailure: true, hasSaved: false);
 
   Future<void> calculate() async {
     final l = Validators.parsePositiveNumber(state.lengthInput, 'Length');
@@ -54,21 +48,20 @@ class ShutteringController extends Notifier<ShutteringState> {
     if (w.failure != null) return _onError(w.failure!);
     if (d.failure != null) return _onError(d.failure!);
 
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-      clearResult: true,
-    );
+    state = state.copyWith(isLoading: true, clearFailure: true, clearResult: true);
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final res = _service.calculateShutteringArea(
+      final service = ref.read(shutteringDesignServiceProvider);
+      final input = ShutteringInput(
         length: l.value!,
         width: w.value!,
         depth: d.value!,
         includeBottom: state.includeBottom,
       );
+
+      final res = service.calculateArea(input);
 
       state = state.copyWith(
         isLoading: false, 
@@ -104,10 +97,7 @@ class ShutteringController extends Notifier<ShutteringState> {
         project.id,
       );
 
-      await HistorySaver.save(
-        ref: ref,
-        report: report,
-      );
+      await HistorySaver.save(ref: ref, report: report);
 
       state = state.copyWith(hasSaved: true);
 
@@ -129,7 +119,6 @@ class ShutteringController extends Notifier<ShutteringState> {
     calculate();
   }
 
-  void _onError(AppFailure f) =>
-      state = state.copyWith(isLoading: false, failure: f);
+  void _onError(AppFailure f) => state = state.copyWith(isLoading: false, failure: f);
   void reset() => state = ShutteringState.initial();
 }

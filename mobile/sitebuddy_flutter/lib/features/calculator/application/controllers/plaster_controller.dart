@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
@@ -9,14 +8,14 @@ import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/application/services/history_saver.dart';
 import 'package:site_buddy/shared/domain/models/plaster_material_result.dart';
+import 'package:site_buddy/core/providers/engine_providers.dart';
+import 'package:site_buddy/features/design/plaster/plaster_models.dart';
 
 final plasterProvider = NotifierProvider<PlasterController, PlasterState>(
   PlasterController.new,
 );
 
 class PlasterController extends Notifier<PlasterState> {
-  final _service = MaterialEstimationService();
-
   @override
   PlasterState build() => PlasterState.initial();
 
@@ -33,19 +32,13 @@ class PlasterController extends Notifier<PlasterState> {
   }
 
   Future<void> calculate() async {
-    final areaParse = Validators.parsePositiveNumber(
-      state.areaInput,
-      'Wall Area',
-    );
+    final areaParse = Validators.parsePositiveNumber(state.areaInput, 'Wall Area');
+    final thicknessParse = Validators.parsePositiveNumber(state.thicknessInput, 'Plaster Thickness');
+
     if (areaParse.failure != null) {
       state = state.copyWith(isLoading: false, failure: areaParse.failure);
       return;
     }
-
-    final thicknessParse = Validators.parsePositiveNumber(
-      state.thicknessInput,
-      'Plaster Thickness',
-    );
     if (thicknessParse.failure != null) {
       state = state.copyWith(isLoading: false, failure: thicknessParse.failure);
       return;
@@ -55,30 +48,26 @@ class PlasterController extends Notifier<PlasterState> {
     if (thicknessMm > 50.0) {
       state = state.copyWith(
         isLoading: false,
-        failure: AppFailure(
-          'Plaster Thickness seems high (${thicknessMm.toStringAsFixed(0)} mm). '
-          'Typical range is 6–20 mm. Please verify your input.',
-        ),
+        failure: AppFailure('Plaster Thickness seems high (${thicknessMm.toStringAsFixed(0)} mm). Typical range is 6–20 mm.'),
       );
       return;
     }
 
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-      clearResult: true,
-    );
+    state = state.copyWith(isLoading: true, clearFailure: true, clearResult: true);
 
     final double thicknessM = thicknessMm / 1000.0;
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final result = _service.calculatePlasterMaterials(
+      final service = ref.read(plasterDesignServiceProvider);
+      final input = PlasterInput(
         area: areaParse.value!,
         thickness: thicknessM,
-        mortarRatioString: state.selectedRatio.ratioString,
+        mortarRatio: state.selectedRatio.ratioString,
       );
+
+      final result = service.calculateMaterials(input);
 
       state = state.copyWith(
         isLoading: false, 
@@ -116,10 +105,7 @@ class PlasterController extends Notifier<PlasterState> {
         project.id,
       );
 
-      await HistorySaver.save(
-        ref: ref,
-        report: report,
-      );
+      await HistorySaver.save(ref: ref, report: report);
 
       state = state.copyWith(hasSaved: true);
 

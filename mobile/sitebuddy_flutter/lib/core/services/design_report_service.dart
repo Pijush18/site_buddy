@@ -13,14 +13,33 @@ import 'package:site_buddy/core/diagrams/beam_diagram_engine.dart';
 
 import 'package:site_buddy/core/diagrams/slab_diagram_engine.dart';
 import 'package:site_buddy/core/diagrams/footing_diagram_engine.dart';
+import 'package:site_buddy/core/engineering/standards/rcc/design_standard.dart';
+import 'package:site_buddy/features/design/beam/beam_design_service.dart';
+import 'package:site_buddy/features/design/slab/slab_design_service.dart';
+import 'package:site_buddy/features/design/column/column_design_service.dart';
+import 'package:site_buddy/features/design/footing/footing_design_service.dart' as domain;
 
 /// SERVICE: DesignReportService
 /// PURPOSE: Professional PDF report generation for structural design modules.
-/// DESIGN: Provides shared layout components and orchestration for Column, Beam, Slab, and Footing reports.
 class DesignReportService {
-  static final _optimizationEngine = OptimizationEngine();
+  final DesignStandard standard;
+  final OptimizationEngine _optimizationEngine;
 
-  static Future<void> generateAndShare({
+  DesignReportService(
+    this.standard, {
+    required BeamDesignService beamService,
+    required SlabDesignService slabService,
+    required ColumnDesignService columnService,
+    required domain.FootingDesignService footingService,
+  }) : _optimizationEngine = OptimizationEngine(
+         standard,
+         beamService: beamService,
+         slabService: slabService,
+         columnService: columnService,
+         footingService: footingService,
+       );
+
+  Future<void> generateAndShare({
     required String title,
     required String subtitle,
     required List<pw.Widget> content,
@@ -56,7 +75,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildHeader(
+  pw.Widget _buildHeader(
     String title,
     String subtitle,
     String projectName,
@@ -125,7 +144,7 @@ class DesignReportService {
               style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 11),
             ),
             pw.Text(
-              'CODE: IS 456:2000',
+              'CODE: ${standard.displayName}',
               style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 11),
             ),
           ],
@@ -134,7 +153,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildFooter(pw.Context context) {
+  pw.Widget _buildFooter(pw.Context context) {
     return pw.Column(
       children: [
         pw.Divider(thickness: 0.5, color: PdfColors.grey400),
@@ -157,7 +176,7 @@ class DesignReportService {
 
   // --- Helper Components for Reports ---
 
-  static pw.Widget sectionTitle(String title) {
+  pw.Widget sectionTitle(String title) {
     return pw.Padding(
       padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
       child: pw.Column(
@@ -178,7 +197,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget infoTable(List<List<String>> data) {
+  pw.Widget infoTable(List<List<String>> data) {
     return pw.TableHelper.fromTextArray(
       data: data,
       cellAlignment: pw.Alignment.centerLeft,
@@ -189,7 +208,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget safetyBadge(bool isSafe, String label) {
+  pw.Widget safetyBadge(bool isSafe, String label) {
     return pw.Container(
       padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: pw.BoxDecoration(
@@ -207,7 +226,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildOptimizationSection(OptimizationResult result) {
+  pw.Widget _buildOptimizationSection(OptimizationResult result) {
     final labels = ['Economical', 'Balanced', 'High Safety'];
     final descriptions = [
       'Minimum steel consumption',
@@ -220,7 +239,7 @@ class DesignReportService {
       children: [
         sectionTitle('5. Design Alternatives (AI Optimization)'),
         pw.Text(
-          'The following options were generated based on structural efficiency and Indian Standard (IS 456) constraints.',
+          'The following options were generated based on structural efficiency and ${standard.displayName} constraints.',
           style: pw.TextStyle(fontSize: 9, fontStyle: pw.FontStyle.italic),
         ),
         pw.SizedBox(height: 8),
@@ -238,7 +257,7 @@ class DesignReportService {
     );
   }
 
-  static Future<void> generateColumnReport(ColumnDesignState state) async {
+  Future<void> generateColumnReport(ColumnDesignState state) async {
     final content = [
       sectionTitle('1. Input Parameters'),
       infoTable([
@@ -330,7 +349,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildColumnDiagram(ColumnDesignState state) {
+  pw.Widget _buildColumnDiagram(ColumnDesignState state) {
     return pw.Container(
       width: 200,
       height: 200,
@@ -373,7 +392,7 @@ class DesignReportService {
     );
   }
 
-  static Future<void> generateBeamReport(BeamDesignState state) async {
+  Future<void> generateBeamReport(BeamDesignState state) async {
     final content = [
       sectionTitle('1. Input Parameters'),
       infoTable([
@@ -467,7 +486,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildBeamDiagram(BeamDesignState state) {
+  pw.Widget _buildBeamDiagram(BeamDesignState state) {
     return pw.Container(
       width: 250,
       height: 180,
@@ -518,7 +537,7 @@ class DesignReportService {
     );
   }
 
-  static Future<void> generateSlabReport(SlabDesignState state) async {
+  Future<void> generateSlabReport(SlabDesignState state) async {
     final content = [
       sectionTitle('1. Slab Parameters'),
       infoTable([
@@ -592,7 +611,7 @@ class DesignReportService {
     );
   }
 
-  static Future<void> generateFootingReport(FootingDesignState state) async {
+  Future<void> generateFootingReport(FootingDesignState state) async {
     final content = [
       sectionTitle('1. Input & Soil Parameters'),
       infoTable([
@@ -679,7 +698,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildSlabDiagram(SlabDesignState state) {
+  pw.Widget _buildSlabDiagram(SlabDesignState state) {
     return pw.Container(
       width: 250,
       height: 150,
@@ -716,7 +735,7 @@ class DesignReportService {
     );
   }
 
-  static pw.Widget _buildFootingDiagram(FootingDesignState state) {
+  pw.Widget _buildFootingDiagram(FootingDesignState state) {
     return pw.Container(
       width: 200,
       height: 200,

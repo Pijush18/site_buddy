@@ -1,6 +1,6 @@
 // lib/models/brick_wall_result.dart
 //
-// Immutable result model returned by [MaterialEstimationService.calculateBrickWallMaterials].
+// Immutable result model returned by [BrickDesignService].
 // Covers both brick masonry and the mortar (cement + sand) needed for jointing.
 //
 // Conventions:
@@ -16,9 +16,8 @@ import 'package:flutter/foundation.dart';
 ///
 /// Example:
 /// ```dart
-/// final result = MaterialEstimationService().calculateBrickWallMaterials(
-///   length: 10.0, height: 3.0, thickness: 0.23,
-///   mortarRatio: '1:6',
+/// final result = ref.read(brickDesignServiceProvider).calculateMaterials(
+///   BrickInput(length: 10.0, height: 3.0, thickness: 0.23, mortarRatio: '1:6')
 /// );
 /// print('Bricks needed: ${result.numberOfBricks}');
 /// ```

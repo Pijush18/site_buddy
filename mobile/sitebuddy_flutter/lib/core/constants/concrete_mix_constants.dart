@@ -45,7 +45,7 @@ class ConcreteMix {
 ///
 /// Wet concrete has a bulking factor of approximately 1.54 (dry to wet
 /// volume conversion). This is **not** stored here — it lives in
-/// [MaterialEstimationService] to keep this file purely declarative.
+/// [DesignStandard] and is used by [ConcreteDesignService].
 class ConcreteMixConstants {
   ConcreteMixConstants._(); // prevent instantiation
 

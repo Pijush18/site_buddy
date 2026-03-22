@@ -1,6 +1,6 @@
 // lib/models/concrete_material_result.dart
 //
-// Immutable result model returned by [MaterialEstimationService.calculateConcreteMaterials].
+// Immutable result model returned by [ConcreteDesignService].
 // All volume values are in cubic metres (m³).
 // All weight values are in kilograms (kg).
 // Cement is also expressed in standard 50-kg bags for field convenience.
@@ -13,8 +13,8 @@ import 'package:flutter/foundation.dart';
 ///
 /// Example:
 /// ```dart
-/// final result = MaterialEstimationService().calculateConcreteMaterials(
-///   length: 5.0, width: 3.0, depth: 0.15, grade: ConcreteMixConstants.m20,
+/// final result = ref.read(concreteDesignServiceProvider).calculateMaterials(
+///   ConcreteInput(length: 5.0, width: 3.0, depth: 0.15, grade: ConcreteMixConstants.m20)
 /// );
 /// print('Cement bags: ${result.cementBags}');
 /// ```

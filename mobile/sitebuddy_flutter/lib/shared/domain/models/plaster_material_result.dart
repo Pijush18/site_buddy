@@ -16,8 +16,8 @@ import 'package:flutter/foundation.dart';
 ///
 /// Example:
 /// ```dart
-/// final result = MaterialEstimationService().calculatePlasterMaterials(
-///   area: 120.0, thickness: 0.012, mortarRatio: '1:4',
+/// final result = ref.read(plasterDesignServiceProvider).calculateMaterials(
+///   PlasterInput(area: 120.0, thickness: 0.012, mortarRatio: '1:4')
 /// );
 /// print('Cement bags: ${result.cementBags}');
 /// ```

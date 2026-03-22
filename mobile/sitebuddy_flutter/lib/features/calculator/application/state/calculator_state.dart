@@ -64,7 +64,7 @@ class CalculatorState {
   /// [MaterialResult] does not break.
   final MaterialResult result;
 
-  /// Full, richly-typed result from [MaterialEstimationService].
+  /// Full, richly-typed result from [ConcreteDesignService].
   /// Null until the first successful calculation on this screen.
   final ConcreteMaterialResult? concreteResult;
 

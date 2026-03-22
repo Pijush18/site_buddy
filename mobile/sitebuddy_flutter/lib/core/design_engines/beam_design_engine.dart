@@ -1,69 +1,45 @@
 import 'package:site_buddy/core/design_engines/models/design_io.dart';
-import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
+import 'package:site_buddy/features/design/beam/beam_models.dart';
+import 'package:site_buddy/features/design/beam/beam_design_service.dart';
 
+/// ENGINE: BeamDesignEngine
+/// Pure orchestrator that delegates engineering logic to BeamDesignService.
 class BeamDesignEngine {
-  const BeamDesignEngine();
+  final BeamDesignService service;
+
+  BeamDesignEngine(this.service);
 
   /// METHOD: calculate
-  /// Performs analysis and reinforcement design for a beam.
+  /// Orchestrates the design process for a beam.
   BeamDesignOutputs calculate(BeamDesignInputs inputs) {
-    // 1. Load Factoring
-    final totalLoad = (inputs.deadLoad + inputs.liveLoad) * 1.5;
-    final factoredPointLoad = inputs.pointLoad * 1.5;
-
-    // 2. Analysis (Bending Moment and Shear Force)
-    double bendingMoment = 0.0;
-    double shearForce = 0.0;
-    final L = inputs.span / 1000; // mm to m
-
-    if (inputs.type == BeamType.simplySupported) {
-      bendingMoment = (totalLoad * L * L / 8) + (factoredPointLoad * L / 4);
-      shearForce = (totalLoad * L / 2) + (factoredPointLoad / 2);
-    } else if (inputs.type == BeamType.cantilever) {
-      bendingMoment = (totalLoad * L * L / 2) + (factoredPointLoad * L);
-      shearForce = (totalLoad * L) + factoredPointLoad;
-    } else {
-      // Continuous / Fixed (simplified)
-      bendingMoment = (totalLoad * L * L / 12);
-      shearForce = (totalLoad * L / 2);
-    }
-
-    // 3. Reinforcement Design (simplified logic)
-    final d = inputs.overallDepth - inputs.cover;
-    final bottomRebar = _calculateBottomRebar(bendingMoment, d);
-    final topRebar = "2 - 12mm Hangers"; // Standard practice
-    final stirrups = "8mm @ 150mm c/c";
-
-    // 4. Safety Checks
-    final isDeflectionSafe = _checkDeflection(inputs);
-
-    return BeamDesignOutputs(
-      bendingMoment: bendingMoment,
-      shearForce: shearForce,
-      topRebar: topRebar,
-      bottomRebar: bottomRebar,
-      stirrups: stirrups,
-      isFlexureSafe: true, // Simplified
-      isShearSafe: true, // Simplified
-      isDeflectionSafe: isDeflectionSafe,
+    // 1. Convert Inputs (Strongly typed domain models)
+    final input = BeamInput(
+      type: inputs.type,
+      span: inputs.span,
+      width: inputs.width,
+      overallDepth: inputs.overallDepth,
+      cover: inputs.cover,
+      concreteGrade: inputs.concreteGrade,
+      steelGrade: inputs.steelGrade,
+      deadLoad: inputs.deadLoad,
+      liveLoad: inputs.liveLoad,
+      pointLoad: inputs.pointLoad,
     );
-  }
 
-  String _calculateBottomRebar(double moment, double depth) {
-    if (moment < 20) return "2 - 12mm bars";
-    if (moment < 50) return "2 - 16mm bars";
-    if (moment < 100) return "3 - 16mm bars";
-    return "4 - 20mm bars";
-  }
+    // 2. Delegate to Service
+    final result = service.designBeam(input);
 
-  bool _checkDeflection(BeamDesignInputs inputs) {
-    // IS 456 Cl. 23.2.1: Basic L/d ratios
-    final ratio = inputs.span / (inputs.overallDepth - inputs.cover);
-    double limit = 20.0; // Simply Supported
-    if (inputs.type == BeamType.cantilever) limit = 7.0;
-    if (inputs.type == BeamType.continuous) limit = 26.0;
-
-    return ratio <= limit;
+    // 3. Return Outputs
+    return BeamDesignOutputs(
+      bendingMoment: result.bendingMoment,
+      shearForce: result.shearForce,
+      topRebar: result.topRebar,
+      bottomRebar: result.bottomRebar,
+      stirrups: result.stirrups,
+      isFlexureSafe: result.isFlexureSafe,
+      isShearSafe: result.isShearSafe,
+      isDeflectionSafe: result.isDeflectionSafe,
+    );
   }
 }
 

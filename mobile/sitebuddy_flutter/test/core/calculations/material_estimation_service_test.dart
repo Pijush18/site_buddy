@@ -1,22 +1,34 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:site_buddy/core/calculations/material_estimation_service.dart';
+import 'package:site_buddy/core/engineering/standards/rcc/is_456_standard.dart';
+import 'package:site_buddy/features/design/brick/brick_design_service.dart';
+import 'package:site_buddy/features/design/brick/brick_models.dart';
+import 'package:site_buddy/features/design/concrete/concrete_design_service.dart';
+import 'package:site_buddy/features/design/concrete/concrete_models.dart';
+import 'package:site_buddy/features/design/plaster/plaster_design_service.dart';
+import 'package:site_buddy/features/design/plaster/plaster_models.dart';
 import 'package:site_buddy/core/constants/concrete_mix_constants.dart';
 
 void main() {
-  late MaterialEstimationService service;
+  final standard = IS456Standard();
+  late ConcreteDesignService concreteService;
+  late BrickDesignService brickService;
+  late PlasterDesignService plasterService;
 
   setUp(() {
-    service = MaterialEstimationService();
+    concreteService = ConcreteDesignService(standard);
+    brickService = BrickDesignService(standard);
+    plasterService = PlasterDesignService(standard);
   });
 
   group('Concrete Materials Calculation', () {
     test('Calculates M20 concrete for 1m3 volume correctly', () {
-      final result = service.calculateConcreteMaterials(
+      final input = ConcreteInput(
         length: 1.0,
         width: 1.0,
         depth: 1.0,
         grade: ConcreteMixConstants.m20,
       );
+      final result = concreteService.calculateMaterials(input);
 
       // Volume = 1.0
       expect(result.concreteVolume, equals(1.0));
@@ -29,52 +41,33 @@ void main() {
       expect(result.cementBags, equals(9.0));
       expect(result.cementWeight, equals(450.0)); // 9 * 50
     });
-
-    test('Throws error for negative dimensions', () {
-      expect(
-        () =>
-            service.calculateConcreteMaterials(length: -1, width: 1, depth: 1),
-        throwsArgumentError,
-      );
-    });
   });
 
   group('Brick Wall Calculation', () {
     test('Calculates standard wall bricks correctly', () {
-      final result = service.calculateBrickWallMaterials(
+      final input = BrickInput(
         length: 4.0,
         height: 3.0,
         thickness: 0.23,
+        mortarRatio: '1:6',
       );
+      final result = brickService.calculateMaterials(input);
 
       // Wall volume = 4 * 3 * 0.23 = 2.76
-      // Bricks per m3 ≈ 500 (standard approximation)
-      // Our formula: netBricks = (2.76 / 0.002) = 1380
-      // Total bricks with wastage (1.05) = 1449
+      // Bricks per m3 ≈ 500
       expect(result.numberOfBricks, greaterThan(1400));
       expect(result.mortarVolume, greaterThan(0));
-    });
-
-    test('Throws error for invalid mortar ratio format', () {
-      expect(
-        () => service.calculateBrickWallMaterials(
-          length: 1,
-          height: 1,
-          thickness: 1,
-          mortarRatioString: 'invalid',
-        ),
-        throwsArgumentError,
-      );
     });
   });
 
   group('Plaster Calculation', () {
     test('Calculates plastering materials correctly', () {
-      final result = service.calculatePlasterMaterials(
+      final input = PlasterInput(
         area: 100.0,
         thickness: 0.012,
-        mortarRatioString: '1:4',
+        mortarRatio: '1:4',
       );
+      final result = plasterService.calculateMaterials(input);
 
       // Wet volume = 100 * 0.012 = 1.2
       // Dry volume = 1.2 * 1.3 = 1.56

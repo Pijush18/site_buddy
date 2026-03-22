@@ -5,7 +5,6 @@ import 'package:site_buddy/features/design/presentation/providers/design_provide
 import 'package:site_buddy/shared/domain/models/design/slab_design_result.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
-import 'package:site_buddy/core/services/design_report_service.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/features/design/domain/usecases/save_slab_design_usecase.dart';
@@ -91,7 +90,8 @@ class SlabDesignController extends Notifier<SlabDesignState> {
   }
 
   Future<void> generateReport() async {
-    await DesignReportService.generateSlabReport(state);
+    final reportService = ref.read(designReportServiceProvider);
+    await reportService.generateSlabReport(state);
   }
 
   void restore(SlabDesignState newState) {

@@ -3,13 +3,13 @@
 import 'dart:math';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/core/engineering/standards/rcc/design_standard.dart';
 
 /// SERVICE: ColumnDesignService
 /// PURPOSE: IS 456:2000 calculations for Column Design.
 class ColumnDesignService {
-  static final ColumnDesignService _instance = ColumnDesignService._internal();
-  factory ColumnDesignService() => _instance;
-  ColumnDesignService._internal();
+  final DesignStandard standard;
+  ColumnDesignService(this.standard);
 
   /// METHOD: calculateSlenderness
   ColumnDesignState calculateSlenderness(ColumnDesignState state) {
@@ -42,9 +42,9 @@ class ColumnDesignService {
     // IS 456 Cl 25.1.2: Short if l/D < 12
     final isShort = sx < 12 && sy < 12;
 
-    // Minimum Eccentricity Cl 25.4
-    final eminX = max(state.length / 500 + dimensionX / 30, 20.0);
-    final eminY = max(state.length / 500 + dimensionY / 30, 20.0);
+    // Minimum Eccentricity
+    final eminX = max(state.length / standard.eccentricityFactorL + dimensionX / standard.eccentricityFactorD, standard.eccentricityMin);
+    final eminY = max(state.length / standard.eccentricityFactorL + dimensionY / standard.eccentricityFactorD, standard.eccentricityMin);
 
     // Moment Magnification for Slender Columns (Cl 39.7.1)
     // Ma = (Pu * D / 2000) * (le/D)^2
@@ -87,8 +87,8 @@ class ColumnDesignService {
     final asc = p * ag;
     final ac = ag - asc;
 
-    // Uzal Capacity (Puz) Cl 39.6 - Pure axial capacity
-    final puz = (0.45 * fck * ac + 0.75 * fy * asc) / 1000; // kN
+    // Uzal Capacity (Puz) - Pure axial capacity
+    final puz = (standard.stressBlockFactor * fck * ac + standard.compressionSteelFactor * fy * asc) / 1000; // kN
 
     // Moment Capacities (Mux1, Muy1) - Simplified based on SP-16 assumptions
     // For a given Pu, we find Mux1 and Muy1
@@ -152,11 +152,11 @@ class ColumnDesignService {
     final areaPerBar = (pi * pow(state.mainBarDia, 2)) / 4;
     int n = (state.astRequired / areaPerBar).ceil();
 
-    // Cl 26.5.3.1 (h): Min 4 bars (Rect), 6 (Circular)
+    // Detailing
     if (state.type == ColumnType.circular) {
-      n = max(n, 6);
+      n = max(n, standard.minBarsCircular);
     } else {
-      n = max(n, 4);
+      n = max(n, standard.minBarsRectangular);
       if (n % 2 != 0) n++; // Symmetry
     }
 
