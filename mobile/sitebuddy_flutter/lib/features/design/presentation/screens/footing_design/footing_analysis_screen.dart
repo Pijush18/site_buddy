@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -15,22 +16,23 @@ class FootingAnalysisScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(footingDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Analysis',
+      title: l10n.titleAnalysis,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             icon: Icons.grid_view_outlined,
             onPressed: () => context.push('/footing/reinforcement'),
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -40,26 +42,26 @@ class FootingAnalysisScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4: Analysis',
+              l10n.labelStep4Analysis,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── AREA COMPARISON ──
           SbSection(
-            title: 'Bearing Area',
+            title: l10n.labelBearingArea,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isAreaSafe,
               items: [
                 DesignResultItem(
-                  label: 'Area Req',
+                  label: l10n.labelAreaReq,
                   value: state.requiredArea.toStringAsFixed(2),
                   unit: 'm²',
-                  subtitle: 'Includes 10% self-weight',
+                  subtitle: l10n.msgSelfWeightIncluded,
                 ),
                 DesignResultItem(
-                  label: 'Area Prov',
+                  label: l10n.labelAreaProv,
                   value: state.providedArea.toStringAsFixed(2),
                   unit: 'm²',
                   isCritical: true,
@@ -70,27 +72,27 @@ class FootingAnalysisScreen extends ConsumerWidget {
 
           // ── PRESSURE ANALYSIS ──
           SbSection(
-            title: 'Soil Pressure',
+            title: l10n.labelSoilPressure,
             child: DesignResultCard(
-              title: 'Pressure',
+              title: l10n.labelPressure,
               isSafe: state.maxSoilPressure <= state.sbc,
               items: [
                 DesignResultItem(
-                  label: 'Max Pressure',
+                  label: l10n.labelMaxPressure,
                   value: state.maxSoilPressure.toStringAsFixed(2),
                   unit: 'kN/m²',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Min Pressure',
+                  label: l10n.labelMinPressure,
                   value: state.minSoilPressure.toStringAsFixed(2),
                   unit: 'kN/m²',
                 ),
                 DesignResultItem(
-                  label: 'Allowable',
+                  label: l10n.labelAllowable,
                   value: state.sbc.toStringAsFixed(2),
                   unit: 'kN/m²',
-                  subtitle: 'Serviceability Limit State',
+                  subtitle: l10n.msgSlsLimit,
                 ),
               ],
             ),
@@ -98,13 +100,13 @@ class FootingAnalysisScreen extends ConsumerWidget {
 
           // ── DISTRIBUTION DETAILS ──
           SbSection(
-            title: 'Details',
+            title: l10n.labelDetails,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SbListItemTile(
-                    title: 'Eccentricity (ex)',
+                    title: l10n.labelEccentricity,
                     onTap: () {}, // Detail view entry
                     trailing: Text(
                       '${state.eccentricityX.toStringAsFixed(1)} mm',
@@ -114,7 +116,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                   if (state.type == FootingType.pile) ...[
                     const SizedBox(height: SbSpacing.sm),
                     SbListItemTile(
-                      title: 'Piles Required',
+                      title: l10n.labelPilesRequired,
                       onTap: () {}, // Detail view entry
                       trailing: Text(
                         '${state.pileCount}',

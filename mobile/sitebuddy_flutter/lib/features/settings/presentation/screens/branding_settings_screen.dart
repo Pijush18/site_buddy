@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/branding/branding_provider.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/features/auth/application/user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +49,7 @@ class _BrandingSettingsScreenState
     if (company.isEmpty || engineer.isEmpty) {
       SbFeedback.showToast(
         context: context,
-        message: 'Company and Engineer names cannot be blank.',
+        message: context.l10n.brandingErrorBlankFields,
       );
       return;
     }
@@ -66,7 +67,7 @@ class _BrandingSettingsScreenState
       if (mounted) {
         SbFeedback.showToast(
           context: context,
-          message: 'Profile updated successfully!',
+          message: context.l10n.brandingSuccessUpdate,
         );
         context.pop();
       }
@@ -74,23 +75,13 @@ class _BrandingSettingsScreenState
       if (mounted) {
         SbFeedback.showToast(
           context: context,
-          message: 'Update failed: $e',
+          message: context.l10n.brandingErrorUpdate(e.toString()),
           isError: true,
         );
       }
     }
   }
 
-  Future<void> _resetBranding() async {
-    await ref.read(brandingProvider.notifier).resetToDefault();
-    if (mounted) {
-      final branding = ref.read(brandingProvider).profile;
-      _companyController.text = branding.companyName;
-      _engineerController.text = branding.engineerName;
-      setState(() {});
-      SbFeedback.showToast(context: context, message: 'Defaults Restored');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,20 +94,20 @@ class _BrandingSettingsScreenState
         if (next.errorMessage != null) {
           SbFeedback.showToast(
             context: context,
-            message: 'Sync Failed: ${next.errorMessage}',
+            message: context.l10n.brandingErrorSync(next.errorMessage!),
             isError: true,
           );
         } else if (next.isSuccess) {
           SbFeedback.showToast(
             context: context,
-            message: 'Profile Synced Successfully',
+            message: context.l10n.brandingSuccessSync,
           );
         }
       }
     });
 
     return SbPage.form(
-      title: 'Branding',
+      title: context.l10n.brandingSettingsTitle,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -129,12 +120,12 @@ class _BrandingSettingsScreenState
                     width: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Text('Save'),
+                : Text(context.l10n.actionSave),
           ),
           const SizedBox(height: SbSpacing.sm),
           TextButton(
-            onPressed: isSyncing ? null : _resetBranding,
-            child: const Text('Reset Defaults'),
+            onPressed: isSyncing ? null : () => ref.read(brandingProvider.notifier).resetToDefault(),
+            child: Text(context.l10n.actionResetDefaults),
           ),
         ],
       ),

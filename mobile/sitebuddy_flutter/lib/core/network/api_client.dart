@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/network/network_exceptions.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
 import 'package:site_buddy/core/network/auth_interceptor.dart';
 import 'package:site_buddy/core/backend/backend_config.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/features/auth/domain/auth_repository.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
 
@@ -135,15 +135,11 @@ class ApiClient {
       );
     } on DioException catch (e) {
       // 2. Map Dio errors to structured domain-level NetworkExceptions
-      debugPrint('🚨 API ERROR [${e.type}]: ${e.message}');
-      if (e.response != null) {
-        debugPrint('   ↳ Status: ${e.response?.statusCode}');
-        debugPrint('   ↳ Data: ${e.response?.data}');
-      }
+      AppLogger.error('API ERROR', tag: 'ApiClient', error: e, stackTrace: e.stackTrace);
       throw _handleDioError(e);
-    } catch (e) {
+    } catch (e, st) {
       // 3. Unexpected logic error
-      debugPrint('🚨 UNEXPECTED API ERROR: $e');
+      AppLogger.error('UNEXPECTED API ERROR', tag: 'ApiClient', error: e, stackTrace: st);
       throw ServerException(message: 'Request Error: ${e.toString()}');
     }
   }

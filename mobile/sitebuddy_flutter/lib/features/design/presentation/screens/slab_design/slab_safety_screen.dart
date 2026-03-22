@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_safety_controller.dart';
@@ -27,9 +28,9 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
     final state = ref.watch(slabDesignControllerProvider);
 
     if (state.result == null) {
-      return const SbPage.scaffold(
-        title: 'Safety Check',
-        body: Center(child: CircularProgressIndicator()),
+      return SbPage.scaffold(
+        title: context.l10n.titleSafetyCheck,
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -39,27 +40,29 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
       optimizationResult: optimizationResult,
     );
 
+    final l10n = context.l10n;
+
     return SbPage.form(
-      title: 'Safety Check',
+      title: l10n.titleSafetyCheck,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Export PDF',
+            label: l10n.actionExportPdf,
             onPressed: () async {
               debugPrint('CTA CLICKED: Export PDF');
               
               final safetyState = ref.read(slabSafetyControllerProvider);
               if (optimizationResult.options.isNotEmpty && safetyState.selectedOption == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Please select an option first')),
+                  SnackBar(content: Text(l10n.snackbarSelectOption)),
                 );
                 return;
               }
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Generating PDF Report...')),
+                SnackBar(content: Text(l10n.snackbarGeneratingReport)),
               );
               try {
                 await ref.read(slabDesignControllerProvider.notifier).generateReport();
@@ -73,9 +76,9 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
             },
             icon: Icons.picture_as_pdf_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -83,12 +86,12 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
       appBarActions: [
         IconButton(
           icon: const Icon(Icons.share_outlined),
-          tooltip: 'Share Report',
+          tooltip: l10n.labelShareReport,
           onPressed: () async {
             final safetyState = ref.read(slabSafetyControllerProvider);
             if (optimizationResult.options.isNotEmpty && safetyState.selectedOption == null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Please select an option first')),
+                SnackBar(content: Text(l10n.snackbarSelectOption)),
               );
               return;
             }
@@ -109,33 +112,33 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step: Validation',
+              l10n.labelStepValidation,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── SAFETY STATUS ──
           SbSection(
-            title: 'Critical Safety Status',
+            title: l10n.labelCriticalSafetyStatus,
             child: DesignResultCard(
-              title: 'Details',
+              title: l10n.labelDetails,
               isSafe:
                   state.result!.isDeflectionSafe && state.result!.isShearSafe,
               items: [
                 DesignResultItem(
-                  label: 'Deflection',
+                  label: l10n.labelDeflection,
                   value: state.result!.isDeflectionSafe
-                      ? 'SAFE'
-                      : 'ACTION REQUIRED',
+                      ? l10n.labelSafeCaps
+                      : l10n.labelActionRequired,
                   isCritical: !state.result!.isDeflectionSafe,
                 ),
                 DesignResultItem(
-                  label: 'Shear',
-                  value: state.result!.isShearSafe ? 'PASS' : 'FAIL',
+                  label: l10n.labelShear,
+                  value: state.result!.isShearSafe ? l10n.labelPass : l10n.labelFail,
                 ),
                 DesignResultItem(
-                  label: 'Cracking',
-                  value: state.result!.isCrackingSafe ? 'OK' : 'FAIL',
+                  label: l10n.labelCracking,
+                  value: state.result!.isCrackingSafe ? l10n.labelOk : l10n.labelFail,
                 ),
               ],
               codeReference: 'IS 456 Cl. 23.2.1',
@@ -144,14 +147,14 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
 
           // ── ADVISOR ──
           SbSection(
-            title: 'Design Advisor',
+            title: l10n.labelDesignAdvisorService,
             child: DesignAdvisorCard(advisorResult: advisorResult),
           ),
 
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Economical Alternatives',
+              title: l10n.labelEconomicalAlternatives,
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {

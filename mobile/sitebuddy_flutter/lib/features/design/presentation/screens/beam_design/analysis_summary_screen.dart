@@ -1,4 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -20,17 +21,18 @@ class AnalysisSummaryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SbPage.form(
-      title: 'Analysis',
+      title: l10n.titleAnalysis,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             icon: Icons.iron_rounded,
             onPressed: () {
               ref
@@ -39,9 +41,9 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               context.push(AppRoutes.beamReinforcement);
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -51,30 +53,30 @@ class AnalysisSummaryScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3: Analysis',
+              l10n.labelStep3Analysis,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── PRINCIPAL FORCES ──
           SbSection(
-            title: 'Principal Forces',
+            title: l10n.labelPrincipalForces,
             child: DesignResultCard(
-              title: 'ULS Forces',
+              title: l10n.labelULSForces,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Moment (Mu)',
+                  label: l10n.labelMomentMu,
                   value: '${state.mu.toStringAsFixed(2)} kNm',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Shear Force (Vu)',
+                  label: l10n.labelShearVu,
                   value: '${state.vu.toStringAsFixed(2)} kN',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Total Load (wu)',
+                  label: l10n.labelTotalLoadWu,
                   value: '${state.wu.toStringAsFixed(2)} kN/m',
                 ),
               ],
@@ -84,7 +86,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
 
           // ── ENGINEERING DIAGRAMS ──
           SbSection(
-            title: 'Diagrams',
+            title: l10n.labelDiagrams,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

@@ -1,8 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-// import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -18,6 +16,7 @@ class SandScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(sandControllerProvider);
     final controller = ref.read(sandControllerProvider.notifier);
+    final l10n = context.l10n;
 
     final lError = state.error?.toLowerCase().contains('length') == true ? state.error : null;
     final wError = state.error?.toLowerCase().contains('width') == true ? state.error : null;
@@ -32,7 +31,7 @@ class SandScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Summary',
+              l10n.labelEstimationResults,
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
@@ -46,7 +45,7 @@ class SandScreen extends ConsumerWidget {
             ),
             const SizedBox(height: SbSpacing.lg),
             SbListItemTile(
-              title: 'Wet Volume',
+              title: l10n.labelWetVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
@@ -54,7 +53,7 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Sand (ft³)',
+              title: '${l10n.labelSand} (ft³)',
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.cubicFeet.toStringAsFixed(2),
@@ -66,7 +65,7 @@ class SandScreen extends ConsumerWidget {
               const Divider(),
               const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
-                title: EngineeringTerms.estimatedCost,
+                title: l10n.labelEstimatedCost,
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
@@ -80,58 +79,58 @@ class SandScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: 'Sand',
+      title: l10n.titleSandEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Dimensions',
+            l10n.labelDimensions,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: 'Length (m)',
+            label: '${l10n.labelLength} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: 'Width (m)',
+            label: '${l10n.labelWidth} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: 'Depth (m)',
+            label: '${l10n.labelDepth} (m)',
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.lg / 1.5),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: 'Rate (opt)',
+            label: '${l10n.labelRate} (opt)',
             suffixIcon: const Icon(SbIcons.payments),
             onChanged: controller.updateRate,
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.lg),
 
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: 'Clear All',
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -139,7 +138,7 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.lg),
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
@@ -152,26 +151,15 @@ class SandScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

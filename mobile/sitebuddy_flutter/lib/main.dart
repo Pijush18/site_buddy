@@ -6,6 +6,7 @@ import 'package:site_buddy/core/theme/app_theme.dart';
 import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:site_buddy/app/router.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -15,9 +16,8 @@ void main() async {
   // Initialize Firebase (Assuming default options or configured via native files)
   try {
     await Firebase.initializeApp();
-  } catch (e) {
-    debugPrint('CRITICAL: Firebase initialization failed: $e');
-    debugPrint('The app will continue in offline/limited mode.');
+  } catch (e, st) {
+    AppLogger.error('Firebase initialization failed', error: e, stackTrace: st);
   }
 
   // Delegate to bootstrap layer

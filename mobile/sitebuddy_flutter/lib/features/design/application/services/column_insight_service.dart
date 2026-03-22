@@ -1,43 +1,32 @@
+import 'package:site_buddy/core/localization/generated/app_localizations.dart';
 import 'package:site_buddy/shared/domain/models/design/column_design_state.dart';
 
 class ColumnInsightService {
-  static List<String> getSuggestions(ColumnDesignState state) {
+  static List<String> getSuggestions(ColumnDesignState state, AppLocalizations l10n) {
     final suggestions = <String>[];
 
     if (!state.isCapacitySafe) {
       if (state.interactionRatio > 1.5) {
-        suggestions.add(
-          'Significant over-stress detected. Increase column cross-section dimensions.',
-        );
+        suggestions.add(l10n.msgSignificantOverStress);
       } else {
-        suggestions.add(
-          'Minor over-stress. Try increasing Concrete Grade (e.g., M30 to M35) or Steel %.',
-        );
+        suggestions.add(l10n.msgMinorOverStress);
       }
     }
 
     if (!state.isSlendernessSafe) {
-      suggestions.add(
-        'Column is too slender. Increase lateral dimensions (b or D) to reduce λ.',
-      );
+      suggestions.add(l10n.msgColumnTooSlender);
     }
 
     if (state.steelPercentage < 0.8) {
-      suggestions.add(
-        'Steel percentage is below IS 456 minimum (0.8%). Increase number of bars or diameter.',
-      );
+      suggestions.add(l10n.msgSteelBelowMin);
     }
 
     if (state.steelPercentage > 4.0) {
-      suggestions.add(
-        'Steel percentage is high (>4%). Consider increasing column size to reduce congestion.',
-      );
+      suggestions.add(l10n.msgSteelHighCongestion);
     }
 
     if (state.interactionRatio < 0.5 && state.isCapacitySafe) {
-      suggestions.add(
-        'Section is potentially over-designed. You may reduce dimensions for economy.',
-      );
+      suggestions.add(l10n.msgSectionOverDesigned);
     }
 
     return suggestions;

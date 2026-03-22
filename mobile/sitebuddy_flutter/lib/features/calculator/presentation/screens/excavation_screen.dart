@@ -1,9 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-// import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -12,6 +9,7 @@ import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/shared/domain/models/excavation_result.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 class ExcavationScreen extends ConsumerWidget {
   const ExcavationScreen({super.key});
@@ -20,6 +18,7 @@ class ExcavationScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(excavationProvider);
     final controller = ref.read(excavationProvider.notifier);
+    final l10n = context.l10n;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -36,86 +35,86 @@ class ExcavationScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: 'Excavation',
+      title: l10n.titleExcavationEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: 'Dimensions'),
+          _SectionLabel(label: l10n.labelDimensions),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: 'Length (m)',
-            hint: EngineeringTerms.pitLengthHint,
+            label: '${l10n.labelLength} (m)',
+            hint: l10n.hintPitLength,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Width (m)',
-            hint: EngineeringTerms.pitLengthHint,
+            label: '${l10n.labelWidth} (m)',
+            hint: l10n.hintPitLength,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Depth (m)',
-            hint: EngineeringTerms.pitDepthHint,
+            label: '${l10n.labelDepth} (m)',
+            hint: l10n.hintPitDepth,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xl),
-          const _SectionLabel(label: EngineeringTerms.parameters),
+          const SizedBox(height: SbSpacing.lg),
+          _SectionLabel(label: l10n.labelParameters),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: 'Clearance (m)',
-            hint: EngineeringTerms.widthHint,
+            label: '${l10n.labelClearance} (m)',
+            hint: l10n.hintWidth,
             initialValue: '0.3',
             onChanged: controller.updateClearance,
             onInfoPressed: () => SbFeedback.showToast(
               context: context,
-              message: EngineeringTerms.clearanceInfo,
+              message: l10n.msgClearanceInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Swell Factor',
-            hint: EngineeringTerms.swellFactorHint,
+            label: l10n.labelSwellFactor,
+            hint: l10n.hintSwellFactor,
             initialValue: '1.25',
             onChanged: controller.updateSwellFactor,
             onInfoPressed: () => SbFeedback.showToast(
               context: context,
-              message: EngineeringTerms.swellFactorInfo,
+              message: l10n.msgSwellFactorInfo,
             ),
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           if (state.failure != null)
             _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
             const SizedBox(height: SbSpacing.md),
             PrimaryCTA(
-              label: 'Export PDF',
+              label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
               onPressed: () {
-                debugPrint("Export PDF clicked - TODO: implement");
+                AppLogger.info('Export PDF clicked - implementation pending', tag: 'ExcavationUI');
               },
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),
@@ -164,58 +163,69 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Summary',
-            style: Theme.of(context).textTheme.titleMedium!,
+            l10n.labelEstimationResults,
+            style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg), // Replaced SizedBox(height: SbSpacing.lg)
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
-            title: 'Total Volume',
+            title: l10n.labelTotalVolume,
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${result.volumeM3.toStringAsFixed(2)} m³',
-              style: Theme.of(context).textTheme.titleMedium!,
+              style: theme.textTheme.titleMedium!,
             ),
           ),
           SbListItemTile(
-            title: 'Bank Volume',
+            title: l10n.labelBankVolumeNatural,
             onTap: () {}, // Detail view entry
             trailing: Text(
               '${(result.volumeM3 / result.swellFactor).toStringAsFixed(2)} m³',
-              style: Theme.of(context).textTheme.bodyLarge!,
+              style: theme.textTheme.bodyLarge!,
             ),
           ),
           const Divider(),
           const SizedBox(height: SbSpacing.md),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                EngineeringTerms.clearanceLabel,
-                style: Theme.of(context).textTheme.labelMedium!,
+              Expanded(
+                child: Text(
+                  l10n.labelClearance,
+                  style: theme.textTheme.labelMedium!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+              const SizedBox(width: SbSpacing.md),
               Text(
                 '${result.clearance} m',
-                style: Theme.of(context).textTheme.labelMedium!,
+                style: theme.textTheme.labelMedium!,
               ),
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                EngineeringTerms.swellFactorLabel,
-                style: Theme.of(context).textTheme.labelMedium!,
+              Expanded(
+                child: Text(
+                  l10n.labelSwellFactor,
+                  style: theme.textTheme.labelMedium!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+              const SizedBox(width: SbSpacing.md),
               Text(
                 '${result.swellFactor}',
-                style: Theme.of(context).textTheme.labelMedium!,
+                style: theme.textTheme.labelMedium!,
               ),
             ],
           ),
@@ -224,14 +234,3 @@ class _ResultCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -15,51 +12,52 @@ class CalculatorHubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return SbPage.scaffold(
-      title: ScreenTitles.engineeringToolbox,
+      title: l10n.titleToolbox,
       body: SbSectionList(
         sections: [
           // ── PREMIUM HERO BANNER ──
-          const SbSection(
+          SbSection(
             padding: EdgeInsets.zero,
             child: SbModuleHero(
               icon: SbIcons.calculator,
-              title: ScreenTitles.engineeringToolbox,
-              subtitle:
-                  'Precision estimating and surveying tools designed for real-world site conditions.',
+              title: l10n.titleToolbox,
+              subtitle: l10n.msgCalculatorHeroSubtitle,
             ),
           ),
 
 
           // ── SECTION 1: CORE ESTIMATORS ──
           SbSection(
-            title: AppStrings.quantityTools,
-            subtitle: 'Specialized calculators for volume and weight.',
+            title: l10n.labelQuantityTools,
+            subtitle: l10n.msgQuantityToolsSubtitle,
             child: SbGrid(
               children: [
                 SBGridActionCard(
-                  label: AppStrings.concreteMaterialEstimatorTitle,
+                  label: l10n.titleConcreteEstimator,
                   icon: SbIcons.calculator,
                   onTap: () => context.push('/calculator/material'),
                   isHighlighted: true,
                 ),
                 SBGridActionCard(
-                  label: AppStrings.brickWallEstimatorTitle,
+                  label: l10n.titleBrickWallEstimator,
                   icon: SbIcons.gridView,
                   onTap: () => context.push('/calculator/brick-wall'),
                 ),
                 SBGridActionCard(
-                  label: AppStrings.excavationEstimatorTitle,
+                  label: l10n.titleExcavationEstimator,
                   icon: SbIcons.terrain,
                   onTap: () => context.push('/calculator/excavation'),
                 ),
                 SBGridActionCard(
-                  label: EngineeringTerms.sandQuantityEstimator,
+                  label: l10n.titleSandEstimator,
                   icon: SbIcons.terrain,
                   onTap: () => context.push('/calculator/sand'),
                 ),
                 SBGridActionCard(
-                  label: EngineeringTerms.plasterEstimator,
+                  label: l10n.titlePlasterEstimator,
                   icon: SbIcons.layers,
                   onTap: () => context.push('/calculator/plaster'),
                 ),
@@ -69,20 +67,20 @@ class CalculatorHubScreen extends StatelessWidget {
  
           // ── SECTION 2: OTHER TOOLS ──
           SbSection(
-            title: 'Other Tools',
-            subtitle: 'Quick material and geometry calculations.',
+            title: l10n.labelOtherTools,
+            subtitle: l10n.msgOtherToolsSubtitle,
             child: SbGrid(
               children: [
                 // Steel Weight
                 SBGridActionCard(
-                  label: AppStrings.steelWeightEstimatorTitle,
+                  label: l10n.titleRebarEstimator,
                   icon: SbIcons.rebar,
                   onTap: () => context.push('/calculator/rebar'),
                 ),
  
                 // Shuttering Area
                 SBGridActionCard(
-                  label: AppStrings.shutteringAreaTitle,
+                  label: l10n.titleShutteringEstimator,
                   icon: SbIcons.layers,
                   onTap: () => context.push('/calculator/shuttering'),
                 ),

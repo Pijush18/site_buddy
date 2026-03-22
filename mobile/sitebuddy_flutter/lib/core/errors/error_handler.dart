@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_feedback.dart';
 import 'package:site_buddy/core/errors/app_error.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 /// CLASS: AppErrorHandler
 /// PURPOSE: Centralized utility for mapping backend/logic failures to user-friendly UI feedback.
@@ -18,10 +19,7 @@ class AppErrorHandler {
     final AppError appError = _mapToAppError(error);
 
     // Log the error for internal debugging
-    debugPrint('🛑 [AppErrorHandler] Handled Error: ${appError.message}');
-    if (appError.originalError != null) {
-      debugPrint('   Original context: ${appError.originalError}');
-    }
+    AppLogger.error('Handled Error: ${appError.message}', tag: 'ErrorHandler', error: appError.originalError);
 
     // Trigger UI feedback if context is present
     if (context != null) {

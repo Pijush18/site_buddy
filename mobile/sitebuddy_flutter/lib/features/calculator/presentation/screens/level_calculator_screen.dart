@@ -1,8 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -21,6 +19,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
     final state = ref.watch(levelControllerProvider);
     final controller = ref.read(levelControllerProvider.notifier);
     final colorScheme = theme.colorScheme;
+    final l10n = context.l10n;
 
     final sError = state.failure?.message.toLowerCase().contains('start') == true ? state.failure?.message : null;
     final eError = state.failure?.message.toLowerCase().contains('end') == true ? state.failure?.message : null;
@@ -31,13 +30,13 @@ class LevelCalculatorScreen extends ConsumerWidget {
       String directionLabel;
       switch (result.direction) {
         case LevelDirection.rise:
-          directionLabel = EngineeringTerms.rise;
+          directionLabel = l10n.labelRise;
           break;
         case LevelDirection.fall:
-          directionLabel = EngineeringTerms.fall;
+          directionLabel = l10n.labelFall;
           break;
         case LevelDirection.flat:
-          directionLabel = EngineeringTerms.flat;
+          directionLabel = l10n.labelFlat;
           break;
       }
 
@@ -46,8 +45,8 @@ class LevelCalculatorScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Summary',
-              style: Theme.of(context).textTheme.titleMedium!,
+              l10n.labelEstimationResults,
+              style: theme.textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SbSpacing.lg),
@@ -55,7 +54,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             const SizedBox(height: SbSpacing.lg),
             Text(
               '${result.difference.toStringAsFixed(2)} m',
-              style: Theme.of(context).textTheme.titleLarge!,
+              style: theme.textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SbSpacing.sm),
@@ -66,17 +65,17 @@ class LevelCalculatorScreen extends ConsumerWidget {
               ),
               child: Text(
                 directionLabel,
-                style: Theme.of(context).textTheme.labelLarge!,
+                style: theme.textTheme.labelLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: SbSpacing.md),
             SbListItemTile(
-              title: 'Difference',
+              title: l10n.labelDifference,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.absoluteDifference.toStringAsFixed(2)} m',
-                style: Theme.of(context).textTheme.bodyLarge!,
+                style: theme.textTheme.bodyLarge!,
               ),
             ),
           ],
@@ -85,45 +84,45 @@ class LevelCalculatorScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: 'Level',
+      title: l10n.titleLevelEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           Text(
-            'Comparison',
-            style: Theme.of(context).textTheme.titleMedium!,
+            l10n.labelComparison,
+            style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           SbInput(
-            label: 'Start (m)',
+            label: '${l10n.labelStart} (m)',
             suffixIcon: const Icon(SbIcons.arrowUp),
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: 'End (m)',
+            label: '${l10n.labelEnd} (m)',
             suffixIcon: const Icon(SbIcons.arrowDown),
             onChanged: controller.updateEndLevel,
             errorText: eError,
           ),
 
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -131,36 +130,25 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: Theme.of(context).textTheme.bodyLarge!,
+                style: theme.textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xl),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

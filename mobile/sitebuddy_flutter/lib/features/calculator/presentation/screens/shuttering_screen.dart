@@ -1,7 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -10,6 +9,7 @@ import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/shared/domain/models/shuttering_result.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 class ShutteringScreen extends ConsumerWidget {
   const ShutteringScreen({super.key});
@@ -19,6 +19,7 @@ class ShutteringScreen extends ConsumerWidget {
     final state = ref.watch(shutteringProvider);
     final controller = ref.read(shutteringProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -35,35 +36,35 @@ class ShutteringScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: 'Shuttering',
+      title: l10n.titleShutteringEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionLabel(label: 'Dimensions'),
+          _SectionLabel(label: l10n.labelDimensions),
           const SizedBox(height: SbSpacing.sm),
           SbInput(
-            label: 'Length (m)',
-            hint: EngineeringTerms.lengthHint,
+            label: '${l10n.labelLength} (m)',
+            hint: l10n.hintLength,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Width (m)',
-            hint: EngineeringTerms.widthHint,
+            label: '${l10n.labelWidth} (m)',
+            hint: l10n.hintWidth,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Depth (m)',
-            hint: EngineeringTerms.depthHint,
+            label: '${l10n.labelDepth} (m)',
+            hint: l10n.hintDepth,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbListItemTile(
-            title: 'Include Bottom?',
+            title: l10n.labelIncludeBottom,
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
             trailing: Switch(
               value: state.includeBottom,
@@ -71,39 +72,39 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.lg),
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
             const SizedBox(height: SbSpacing.md),
             PrimaryCTA(
-              label: 'Export PDF',
+              label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
               onPressed: () {
-                debugPrint("Export PDF clicked - TODO: implement");
+                AppLogger.info('Export PDF clicked - implementation pending', tag: 'ShutteringUI');
               },
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
           Text(
-            EngineeringTerms.shutteringNote,
+            l10n.msgShutteringNote,
             style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
@@ -155,39 +156,42 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
     return SbCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Summary',
-            style: Theme.of(context).textTheme.titleMedium!,
+            l10n.labelEstimationResults,
+            style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
-            title: 'Total Area',
+            title: l10n.labelTotalArea,
             onTap: () {},
             trailing: Text(
               '${result.areaM2.toStringAsFixed(2)} m²',
-              style: Theme.of(context).textTheme.titleMedium!,
+              style: theme.textTheme.titleMedium!,
             ),
           ),
           SbListItemTile(
-            title: 'Perimeter',
+            title: l10n.labelPerimeter,
             onTap: () {},
             trailing: Text(
               '${(2 * (result.length + result.width)).toStringAsFixed(2)} m',
-              style: Theme.of(context).textTheme.bodyLarge!,
+              style: theme.textTheme.bodyLarge!,
             ),
           ),
           SbListItemTile(
-            title: EngineeringTerms.depth,
+            title: l10n.labelDepth,
             onTap: () {},
             trailing: Text(
               '${result.depth} m',
-              style: Theme.of(context).textTheme.bodyLarge!,
+              style: theme.textTheme.bodyLarge!,
             ),
           ),
         ],

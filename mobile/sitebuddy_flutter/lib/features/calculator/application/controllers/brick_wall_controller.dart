@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/brick_wall_state.dart';
 import 'package:site_buddy/shared/domain/models/mortar_ratio.dart';
@@ -104,8 +104,7 @@ class BrickWallController extends Notifier<BrickWallState> {
       await _saveToHistory(result);
 
     } catch (e, st) {
-      debugPrint("❌ Calculation failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Calculation failed', error: e, stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         failure: AppFailure('Calculation error: ${e.toString()}'),
@@ -141,7 +140,7 @@ class BrickWallController extends Notifier<BrickWallState> {
       state = state.copyWith(hasSaved: true);
 
     } catch (e) {
-      debugPrint("❌ Save failed: $e");
+      AppLogger.error('Save failed', error: e);
     }
   }
 

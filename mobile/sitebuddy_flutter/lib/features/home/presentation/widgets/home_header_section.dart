@@ -20,19 +20,27 @@ class HomeHeaderSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.readyToBuild,
-                style: textTheme.bodyMedium,
-              ),
-              const SizedBox(height: SbSpacing.xs),
-              Text(
-                l10n.appName,
-                style: textTheme.displayLarge,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.readyToBuild,
+                  style: textTheme.bodyMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: SbSpacing.xs),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    l10n.appName,
+                    style: textTheme.displayLarge,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           AppIconButton(

@@ -1,8 +1,10 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
@@ -42,25 +44,27 @@ class _DesignCalculationScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Design Calculation',
+      title: l10n.titleDesignCalculation,
       appBarActions: const [EducationalToggle()],
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next: Detailing',
+            label: l10n.actionNext,
             onPressed: () {
               context.push(AppRoutes.columnDetailing);
             },
+            icon: Icons.navigate_next,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -70,27 +74,25 @@ class _DesignCalculationScreenState
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4 of 6: Structural Design',
+              l10n.labelStep4StructuralDesign,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── SECTION PROPERTIES ──
           SbSection(
-            title: 'Section Properties',
+            title: l10n.labelSectionProperties,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Gross Area (Ag)',
+                  label: l10n.labelGrossAreaAgUnit,
                   value: state.ag.toInt().toString(),
-                  unit: 'mm²',
                 ),
                 DesignResultItem(
-                  label: 'Target Steel %',
+                  label: l10n.labelTargetSteelPercentUnit,
                   value: state.steelPercentage.toStringAsFixed(2),
-                  unit: '%',
                 ),
               ],
             ),
@@ -98,13 +100,13 @@ class _DesignCalculationScreenState
 
           // ── DESIGN CONFIGURATION ──
           SbSection(
-            title: 'Design Configuration',
+            title: l10n.labelDesignConfiguration,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Design Method',
+                    l10n.labelDesignMethod,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -123,11 +125,11 @@ class _DesignCalculationScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Auto-calculate Steel %',
+                              l10n.labelAutoCalculateSteel,
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
                             Text(
-                              'Automatically find minimum steel',
+                              l10n.labelAutoSteelDescription,
                               style: Theme.of(context).textTheme.labelMedium!,
                             ),
                           ],
@@ -143,8 +145,8 @@ class _DesignCalculationScreenState
                   if (!state.isAutoSteel) ...[
                     const SizedBox(height: SbSpacing.lg),
                     SbInput(
-                      label: 'Manual Steel (%)',
-                      hint: 'e.g. 1.20',
+                      label: l10n.labelManualSteelUnit,
+                      hint: l10n.hintSteelRatio,
                       controller: _steelPercentageController,
                       onChanged: (v) {
                         final p = double.tryParse(v);
@@ -169,15 +171,14 @@ class _DesignCalculationScreenState
 
           // ── REINFORCEMENT REQUIREMENT ──
           SbSection(
-            title: 'Reinforcement Requirement',
+            title: l10n.labelReinforcementRequirement,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.astRequired > 0,
               items: [
                 DesignResultItem(
-                  label: 'Required Steel Area (Asc)',
+                  label: l10n.labelRequiredSteelAreaAscUnit,
                   value: state.astRequired.toInt().toString(),
-                  unit: 'mm²',
                   isCritical: true,
                 ),
               ],

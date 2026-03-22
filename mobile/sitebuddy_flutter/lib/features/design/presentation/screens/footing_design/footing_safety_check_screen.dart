@@ -6,6 +6,7 @@ import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 
@@ -35,35 +36,40 @@ class _FootingSafetyCheckScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final state = ref.watch(footingDesignControllerProvider);
     final optimizationResult = ref.watch(footingOptimizationProvider);
-    final overallSafe =
-        state.isBendingSafe &&
+    final overallSafe = state.isBendingSafe &&
         state.isAreaSafe &&
         state.isOneWayShearSafe &&
         state.isPunchingShearSafe;
 
     return SbPage.form(
-      title: 'Safety Checks',
+      title: l10n.titleSafetyChecks,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculation Sheet',
+            label: l10n.actionCalculationSheet,
             icon: Icons.description_outlined,
             onPressed: () async {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Generating PDF Report...')),
+                SnackBar(content: Text(l10n.msgGeneratingReport)),
               );
               try {
-                await ref.read(footingDesignControllerProvider.notifier).generateReport();
+                await ref
+                    .read(footingDesignControllerProvider.notifier)
+                    .generateReport();
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                    SnackBar(
+                      content: Text(l10n.errorGeneratingReport(e.toString())),
+                      backgroundColor: Colors.red,
+                    ),
                   );
                 }
               }
@@ -71,13 +77,13 @@ class _FootingSafetyCheckScreenState
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'New Design',
+            label: l10n.actionNewDesign,
             icon: Icons.add,
             onPressed: () => context.go(AppRoutes.home),
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save Image',
+            label: l10n.actionSaveImage,
             icon: Icons.image_outlined,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -92,7 +98,7 @@ class _FootingSafetyCheckScreenState
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save PDF',
+            label: l10n.actionSavePdf,
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -111,7 +117,7 @@ class _FootingSafetyCheckScreenState
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -121,7 +127,7 @@ class _FootingSafetyCheckScreenState
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 6 of 6: Design Validation',
+              l10n.labelDesignValidation,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -145,7 +151,7 @@ class _FootingSafetyCheckScreenState
                   ),
                   const SizedBox(width: SbSpacing.lg),
                   Text(
-                    overallSafe ? 'DESIGN IS SAFE' : 'DESIGN UNSAFE',
+                    overallSafe ? l10n.labelDesignSafe : l10n.labelDesignUnsafe,
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
                 ],
@@ -155,19 +161,19 @@ class _FootingSafetyCheckScreenState
 
           // ── SOIL BEARING ──
           SbSection(
-            title: 'Soil Bearing',
+            title: l10n.labelSoilBearing,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isAreaSafe,
               items: [
                 DesignResultItem(
-                  label: 'Max Pressure (q_max)',
+                  label: l10n.labelMaxPressureQMax,
                   value: state.maxSoilPressure.toStringAsFixed(1),
                   unit: 'kN/m²',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Allowable SBC',
+                  label: l10n.labelAllowableSbc,
                   value: state.sbc.toStringAsFixed(0),
                   unit: 'kN/m²',
                 ),
@@ -177,23 +183,23 @@ class _FootingSafetyCheckScreenState
 
           // ── SHEAR VALIDATION ──
           SbSection(
-            title: 'Shear Validation',
+            title: l10n.labelShearValidation,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isOneWayShearSafe && state.isPunchingShearSafe,
               items: [
                 DesignResultItem(
-                  label: 'One-Way Shear (τv)',
+                  label: l10n.labelOneWayShearTauV,
                   value: state.tauV.toStringAsFixed(2),
                   unit: 'N/mm²',
-                  subtitle: 'Limit τc: ${state.tauC.toStringAsFixed(2)} N/mm²',
+                  subtitle: l10n.msgLimitTauC(state.tauC.toStringAsFixed(2)),
                 ),
                 DesignResultItem(
-                  label: 'Punching Shear (Vu)',
+                  label: l10n.labelPunchingShearVu,
                   value: state.vup.toStringAsFixed(1),
                   unit: 'kN',
                   subtitle:
-                      'Effective Depth: ${state.effDepth.toStringAsFixed(0)} mm',
+                      l10n.msgEffectiveDepth(state.effDepth.toStringAsFixed(0)),
                   isCritical: true,
                 ),
               ],
@@ -202,13 +208,13 @@ class _FootingSafetyCheckScreenState
 
           if (state.type == FootingType.pile)
             SbSection(
-              title: 'Pile Requirements',
+              title: l10n.labelPileRequirements,
               child: DesignResultCard(
-                title: 'Pile Check',
+                title: l10n.labelPileCheck,
                 isSafe: true,
                 items: [
                   DesignResultItem(
-                    label: 'Number of Piles',
+                    label: l10n.labelNumberOfPiles,
                     value: state.pileCount.toString(),
                   ),
                 ],
@@ -217,7 +223,7 @@ class _FootingSafetyCheckScreenState
 
           // ── REINFORCEMENT DRAWING ──
           SbSection(
-            title: 'Reinforcement Layout',
+            title: l10n.labelReinforcementLayout,
             child: SbCard(
               child: Column(
                 children: [
@@ -257,7 +263,7 @@ class _FootingSafetyCheckScreenState
                     const SizedBox(width: SbSpacing.lg),
                     Expanded(
                       child: Text(
-                        'Warning: Low SBC detected. Consider detailed settlement analysis.',
+                        l10n.msgSettlementWarning,
                         style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ),
@@ -269,22 +275,25 @@ class _FootingSafetyCheckScreenState
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Economical Alternatives',
+              title: l10n.labelEconomicalAlternatives,
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
-                  debugPrint('OPTION CLICKED: Select Option ($opt)');
-                  ref.read(footingSafetyControllerProvider.notifier).selectOption(opt);
-                  
+                  ref
+                      .read(footingSafetyControllerProvider.notifier)
+                      .selectOption(opt);
+
                   final length = opt.parameters['length'] as double;
                   final width = opt.parameters['width'] as double;
                   final thickness = opt.parameters['thickness'] as double;
-                  
-                  ref.read(footingDesignControllerProvider.notifier).updateGeometry(
-                    length: length,
-                    width: width,
-                    thickness: thickness,
-                  );
+
+                  ref
+                      .read(footingDesignControllerProvider.notifier)
+                      .updateGeometry(
+                        length: length,
+                        width: width,
+                        thickness: thickness,
+                      );
                 },
               ),
             ),

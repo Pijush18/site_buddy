@@ -34,7 +34,7 @@ class SecondaryButton extends StatelessWidget {
 
     return SizedBox(
       width: width,
-      height: 44,
+      height: 40,
       child: OutlinedButton(
         style: style,
         onPressed: (isLoading || onPressed == null) 

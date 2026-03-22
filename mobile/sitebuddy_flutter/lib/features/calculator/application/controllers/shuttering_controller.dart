@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/shuttering_state.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
@@ -79,8 +79,7 @@ class ShutteringController extends Notifier<ShutteringState> {
       await _saveToHistory(res);
 
     } catch (e, st) {
-      debugPrint("❌ Calculation failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Calculation failed', error: e, stackTrace: st);
       _onError(AppFailure(e.toString()));
     }
   }
@@ -113,7 +112,7 @@ class ShutteringController extends Notifier<ShutteringState> {
       state = state.copyWith(hasSaved: true);
 
     } catch (e) {
-      debugPrint("❌ Save failed: $e");
+      AppLogger.error('Save failed', error: e);
     }
   }
 

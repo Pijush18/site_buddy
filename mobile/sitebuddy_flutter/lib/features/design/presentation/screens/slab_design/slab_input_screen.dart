@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/shared/domain/models/design/slab_type.dart';
@@ -58,6 +58,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(slabDesignControllerProvider);
     final notifier = ref.read(slabDesignControllerProvider.notifier);
 
@@ -81,19 +82,19 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
     });
 
     return SbPage.form(
-      title: 'Slab',
+      title: l10n.titleSlab,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             onPressed: _onNext,
             icon: Icons.arrow_forward,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -105,20 +106,20 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 1: Geometry',
+                l10n.labelStep1Geometry,
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
 
             // ── GEOMETRY SECTION ──
             SbSection(
-              title: EngineeringTerms.geometry,
+              title: l10n.labelGeometry,
               child: SbCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Type',
+                      l10n.labelType,
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
                     const SizedBox(height: SbSpacing.sm),
@@ -135,7 +136,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         Expanded(
                           child: SbInput(
                             controller: _lxController,
-                            label: 'Lx (m)',
+                            label: l10n.labelSpanLx,
                             validator: (v) =>
                                 ValidationHelper.validatePositive(v, 'Lx'),
                           ),
@@ -144,7 +145,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         Expanded(
                           child: SbInput(
                             controller: _lyController,
-                            label: 'Ly (m)',
+                            label: l10n.labelSpanLy,
                             validator: (v) =>
                                 ValidationHelper.validatePositive(v, 'Ly'),
                           ),
@@ -154,7 +155,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                     const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _depthController,
-                      label: 'Thickness (D) (mm)',
+                      label: l10n.labelThicknessD,
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Thickness'),
                     ),
@@ -165,7 +166,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
 
             // ── MATERIAL PROPERTIES ──
             SbSection(
-              title: EngineeringTerms.materialProperties,
+              title: l10n.labelMaterials,
               child: SbCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -174,7 +175,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       children: [
                         Expanded(
                           child: _gradeDropdown(
-                            'Concrete',
+                            l10n.labelConcrete,
                             state.concreteGrade,
                             const ['M20', 'M25', 'M30', 'M35'],
                             notifier.updateConcreteGrade,
@@ -183,7 +184,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         const SizedBox(width: SbSpacing.md),
                         Expanded(
                           child: _gradeDropdown(
-                            'Steel',
+                            l10n.labelSteel,
                             state.steelGrade,
                             const ['Fe415', 'Fe500', 'Fe550'],
                             notifier.updateSteelGrade,
@@ -194,7 +195,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                     const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _coverController,
-                      label: 'Cover (mm)',
+                      label: l10n.labelCover,
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Cover'),
                     ),

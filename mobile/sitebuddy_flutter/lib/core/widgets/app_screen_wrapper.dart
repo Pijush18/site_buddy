@@ -117,7 +117,7 @@ class _BottomActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.md),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           border: Border(

@@ -90,7 +90,7 @@ class SbListItemTile extends StatelessWidget {
                     style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null && subtitle!.isNotEmpty) ...[

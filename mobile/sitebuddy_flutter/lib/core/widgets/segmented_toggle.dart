@@ -60,6 +60,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                 child: Text(
                   labelBuilder(item),
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isSelected 

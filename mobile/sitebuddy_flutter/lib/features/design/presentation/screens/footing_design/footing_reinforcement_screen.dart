@@ -2,6 +2,7 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,23 +21,24 @@ class FootingReinforcementScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(footingDesignControllerProvider);
     final notifier = ref.read(footingDesignControllerProvider.notifier);
     return SbPage.form(
-      title: 'Footing',
+      title: l10n.titleFootingDesign,
       appBarActions: const [EducationalToggle()],
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate',
+            label: l10n.actionCalculate,
             onPressed: () => context.push('/footing/safety'),
             icon: Icons.calculate_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -46,26 +48,26 @@ class FootingReinforcementScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 5 of 6: Steel Detailing',
+              l10n.labelStep5Reinforcement,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── REQUIREMENT CARD ──
           SbSection(
-            title: 'Steel Requirement',
+            title: l10n.labelSteelRequirement,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.astProvidedX >= state.astRequiredX,
               items: [
                 DesignResultItem(
-                  label: 'Min. Required Ast',
+                  label: l10n.labelMinRequiredAst,
                   value: state.astRequiredX.toStringAsFixed(0),
                   unit: 'mm²',
-                  subtitle: 'Based on Bending Moment analysis',
+                  subtitle: l10n.msgBendingMomentAnalysis,
                 ),
                 DesignResultItem(
-                  label: 'Provided Ast',
+                  label: l10n.labelProvidedAst,
                   value: state.astProvidedX.toStringAsFixed(0),
                   unit: 'mm²',
                   isCritical: true,
@@ -83,7 +85,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
 
           // ── VISUALIZATION ──
           SbSection(
-            title: 'Design Visualization',
+            title: l10n.labelDesignVisualization,
             child: FootingReinforcementDiagram(
               length: state.footingLength,
               width: state.footingWidth,
@@ -93,21 +95,21 @@ class FootingReinforcementScreen extends ConsumerWidget {
               sbc: state.sbc.toStringAsFixed(0),
               qu: state.maxSoilPressure.toStringAsFixed(1),
               rebarX:
-                  'T${state.mainBarDia.toInt()} @ ${state.mainBarSpacing.toInt()} c/c',
+                  'T${state.mainBarDia.toInt()} @ ${state.mainBarSpacing.toInt()} ${l10n.unitCC}',
               rebarY:
-                  'T${state.crossBarDia.toInt()} @ ${state.crossBarSpacing.toInt()} c/c',
+                  'T${state.crossBarDia.toInt()} @ ${state.crossBarSpacing.toInt()} ${l10n.unitCC}',
             ),
           ),
 
           // ── DETAILING ──
           SbSection(
-            title: 'Bar Detailing',
+            title: l10n.labelBarDetailing,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Main Reinforcement (X-Direction)',
+                    l10n.labelMainReinforcementX,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -138,7 +140,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                             225,
                             250,
                           ],
-                          itemLabelBuilder: (d) => '${d.toInt()} c/c',
+                          itemLabelBuilder: (d) => '${d.toInt()} ${l10n.unitCC}',
                           onChanged: (v) {
                             if (v != null) {
                               notifier.updateReinforcement(mainSpacing: v);
@@ -150,7 +152,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.xxl),
                   Text(
-                    'Distribution Steel (Y-Direction)',
+                    l10n.labelDistributionSteelY,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -181,7 +183,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                             225,
                             250,
                           ],
-                          itemLabelBuilder: (d) => '${d.toInt()} c/c',
+                          itemLabelBuilder: (d) => '${d.toInt()} ${l10n.unitCC}',
                           onChanged: (v) {
                             if (v != null) {
                               notifier.updateReinforcement(crossSpacing: v);

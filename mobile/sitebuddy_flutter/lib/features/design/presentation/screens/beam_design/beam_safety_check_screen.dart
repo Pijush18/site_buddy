@@ -8,6 +8,7 @@ import 'package:site_buddy/core/theme/app_border.dart';
 
 
 
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/core/constants/engineering_terms.dart';
@@ -43,6 +44,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final optimizationResult = ref.watch(beamOptimizationProvider);
     final colorScheme = Theme.of(context).colorScheme;
@@ -54,13 +56,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         : SafetyStatus.fail;
 
     return SbPage.form(
-      title: 'Verification',
+      title: l10n.titleBeamSafety,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Export PDF',
+            label: l10n.actionExportPdf,
             icon: SbIcons.pdf,
             onPressed: () async {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -77,18 +79,18 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'New Design',
+            label: l10n.actionNewDesign,
             icon: SbIcons.add,
             onPressed: () {
               ref.read(beamDesignControllerProvider.notifier).reset();
               context.go('/');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Save Image',
+            label: l10n.actionSaveImage,
             icon: SbIcons.image,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -101,9 +103,9 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Save Drawing',
+            label: l10n.actionSaveDrawing,
             icon: SbIcons.pdf,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -120,9 +122,9 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -132,7 +134,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 5: Validation',
+              l10n.labelStep5Safety,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -144,13 +146,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── FLEXURE CHECK ──
           SbSection(
-            title: 'Flexure',
+            title: l10n.labelFlexure,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isFlexureSafe,
               items: [
                 DesignResultItem(
-                  label: 'Moment (Mu)',
+                  label: l10n.labelMomentMu,
                   value: '${state.mu.toStringAsFixed(2)} kNm',
                 ),
                 DesignResultItem(
@@ -171,9 +173,9 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── SHEAR CHECK ──
           SbSection(
-            title: 'Shear',
+            title: l10n.labelShear,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isShearSafe,
               items: [
                 DesignResultItem(
@@ -192,9 +194,9 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
 
           // ── DEFLECTION CHECK ──
           SbSection(
-            title: 'Deflection',
+            title: l10n.labelDeflection,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isDeflectionSafe,
               items: [
                 DesignResultItem(
@@ -243,7 +245,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Optimization',
+              title: l10n.labelOptimization,
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {

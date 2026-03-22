@@ -10,29 +10,29 @@ class DiagramTextHelper {
 
   /// "Length (L)"
   static String length(BuildContext context) {
-    return '${context.l10n.length} (${EngineeringSymbols.length})';
+    return '${context.l10n.labelLength} (${EngineeringSymbols.length})';
   }
 
   /// "Width (B)"
   static String width(BuildContext context) {
-    return '${context.l10n.width} (${EngineeringSymbols.width})';
+    return '${context.l10n.labelWidth} (${EngineeringSymbols.width})';
   }
 
   /// "Depth (D)"
   static String depth(BuildContext context) {
-    return '${context.l10n.depth} (${EngineeringSymbols.depth})';
+    return '${context.l10n.labelDepth} (${EngineeringSymbols.depth})';
   }
 
   /// "Diameter Ø12 mm"
   static String diameterValue(BuildContext context, int value) {
-    return '${context.l10n.diameter} ${EngineeringFormatter.dia(value)} ${EngineeringUnits.mm}';
+    return '${context.l10n.labelDiameter} ${EngineeringFormatter.dia(value)} ${EngineeringUnits.mm}';
   }
 
   /// "Length: 500 mm"
   static String lengthValue(BuildContext context, double value) {
     // Format to 0 decimal places if it's a whole number for diagrams
     final displayValue = value == value.toInt() ? value.toInt().toString() : value.toStringAsFixed(1);
-    return '${context.l10n.length}: $displayValue ${EngineeringUnits.mm}';
+    return '${context.l10n.labelLength}: $displayValue ${EngineeringUnits.mm}';
   }
 
   /// Generic "Label (Symbol)"
@@ -47,16 +47,16 @@ class DiagramTextHelper {
 
   /// "Reinforcement (As)"
   static String reinforcement(BuildContext context) {
-    return '${context.l10n.reinforcement} (${EngineeringSymbols.reinforcement})';
+    return '${context.l10n.labelReinforcement} (${EngineeringSymbols.reinforcement})';
   }
 
   /// "Spacing (s)"
   static String spacing(BuildContext context) {
-    return '${context.l10n.spacing} (${EngineeringSymbols.spacing})';
+    return '${context.l10n.labelSpacing} (${EngineeringSymbols.spacing})';
   }
 
   /// "Load (P)"
   static String load(BuildContext context) {
-    return '${context.l10n.load} (${EngineeringSymbols.load})';
+    return '${context.l10n.labelLoad} (${EngineeringSymbols.load})';
   }
 }

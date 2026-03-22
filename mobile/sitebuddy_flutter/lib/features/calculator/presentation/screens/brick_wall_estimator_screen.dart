@@ -1,9 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-// import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -13,6 +11,7 @@ import 'package:site_buddy/shared/domain/models/brick_wall_result.dart';
 import 'package:site_buddy/shared/domain/models/mortar_ratio.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 import 'package:go_router/go_router.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 class BrickWallEstimatorScreen extends ConsumerWidget {
   const BrickWallEstimatorScreen({super.key});
@@ -23,6 +22,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
     final controller = ref.read(brickWallProvider.notifier);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = context.l10n;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,18 +39,18 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
     final isValid = state.lengthInput.isNotEmpty && state.heightInput.isNotEmpty && state.thicknessInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: 'Brick Wall',
+      title: l10n.titleBrickWallEstimator,
       body: SbSectionList(
         sections: [
           // ── SECTION 1: DIMENSIONS ─────────────────────────────────────────
           SbSection(
-            title: 'Dimensions',
+            title: l10n.labelDimensions,
             child: SbCard(
               child: Column(
                 children: [
                   SbInput(
-                    label: 'Length (m)',
-                    hint: EngineeringTerms.lengthHint,
+                    label: '${l10n.labelLength} (m)',
+                    hint: l10n.hintLength,
                     suffixIcon: Icon(SbIcons.ruler, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: controller.updateLength,
@@ -58,8 +58,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: 'Height (m)',
-                    hint: EngineeringTerms.heightHint,
+                    label: '${l10n.labelHeight} (m)',
+                    hint: l10n.hintLength, // Reuse length hint for m
                     suffixIcon: Icon(SbIcons.height, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: controller.updateHeight,
@@ -67,8 +67,8 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: 'Thickness (mm)',
-                    hint: EngineeringTerms.brickThicknessHint,
+                    label: '${l10n.labelWidth} (mm)', // Width/Thickness
+                    hint: 'e.g. 230',
                     suffixIcon: Icon(SbIcons.layers, size: 20, color: colorScheme.onSurfaceVariant),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: controller.updateThickness,
@@ -81,7 +81,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
           // ── SECTION 2: BRICK & MORTAR ─────────────────────────────────────
           SbSection(
-            title: 'Masonry',
+            title: l10n.labelMasonry,
             child: Column(
               children: [
                 SbCard(
@@ -94,7 +94,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Brick Size',
+                              l10n.labelBrickSize,
                               style: theme.textTheme.labelMedium?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                                 fontWeight: FontWeight.w600,
@@ -102,13 +102,13 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                             ),
                             const SizedBox(height: SbSpacing.xs),
                             Text(
-                              EngineeringTerms.standardBrickSize,
+                              l10n.msgStandardBrickSize,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              EngineeringTerms.brickWithJoint,
+                              l10n.msgBrickWithJoint,
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                               ),
@@ -118,11 +118,11 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                       ),
                       AppIconButton(
                         icon: SbIcons.info,
-                        tooltip: EngineeringTerms.brickStandardRef,
+                        tooltip: l10n.msgBrickStandardRef,
                         onPressed: () {
                           SbFeedback.showToast(
                             context: context,
-                            message: EngineeringTerms.brickInfo,
+                            message: l10n.msgBrickInfo,
                           );
                         },
                       ),
@@ -131,7 +131,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbDropdown<MortarRatio>(
-                  label: 'Ratio',
+                  label: l10n.labelMixRatio,
                   value: state.selectedRatio,
                   items: MortarRatio.values,
                   itemLabelBuilder: (r) => r.label,
@@ -149,12 +149,12 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
@@ -183,10 +183,10 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           if (state.result != null)
             SbSection(
               child: PrimaryCTA(
-                label: 'Export PDF',
+                label: l10n.actionExportPdf,
                 icon: Icons.picture_as_pdf,
                 onPressed: () {
-                  debugPrint("Export PDF clicked - TODO: implement");
+                  AppLogger.info('Export PDF clicked - implementation pending', tag: 'BrickWallUI');
                 },
               ),
             ),
@@ -195,7 +195,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
             child: Text(
-              EngineeringTerms.brickMasonryRef,
+              l10n.msgBrickMasonryRef,
               style: theme.textTheme.labelSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 fontStyle: FontStyle.italic,
@@ -217,16 +217,17 @@ class _ResultSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = context.l10n;
 
     return SbSection(
-      title: 'Summary',
+      title: l10n.labelEstimationResults,
       child: SbCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Bricks
             SbListItemTile(
-              title: 'Bricks',
+              title: l10n.labelBricks,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 result.numberOfBricks.toString(),
@@ -237,7 +238,7 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Brick Vol',
+              title: l10n.labelBrickVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.brickVolume.toStringAsFixed(3)} m³',
@@ -252,10 +253,10 @@ class _ResultSection extends StatelessWidget {
 
             // Cement & Sand
             SbListItemTile(
-              title: 'Cement',
+              title: l10n.labelCement,
               onTap: () {}, // Detail view entry
               trailing: Text(
-                '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
+                '${result.cementBags.toStringAsFixed(0)} ${l10n.labelBags}',
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.bold,
@@ -263,7 +264,7 @@ class _ResultSection extends StatelessWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Sand',
+              title: l10n.labelSand,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.sandVolume.toStringAsFixed(3)} m³',
@@ -278,7 +279,7 @@ class _ResultSection extends StatelessWidget {
 
             // Totals
             SbListItemTile(
-              title: 'Total Vol',
+              title: l10n.labelTotalVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${result.wallVolume.toStringAsFixed(3)} m³',
@@ -291,12 +292,17 @@ class _ResultSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    EngineeringTerms.mortarRatioLabel, 
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                  Expanded(
+                    child: Text(
+                      l10n.labelMortarRatio, 
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(width: SbSpacing.md),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: SbSpacing.sm,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/project_status.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 
 /// SCREEN: ProjectEditorScreen
@@ -51,7 +52,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Save failed: ${e.toString()}'),
+            content: Text(context.l10n.msgSaveFailed(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -75,7 +76,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return SbPage.form(
-      title: 'Project',
+      title: context.l10n.project,
       primaryAction: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
@@ -86,20 +87,20 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
                   width: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Save'),
+              : Text(context.l10n.actionSave),
         ),
       ),
 
       body: SbSectionList(
         sections: [
           SbSection(
-            title: 'Primary Details',
+            title: context.l10n.labelPrimaryDetails,
             child: Column(
               children: [
                 SbInput(
                   controller: _nameController,
                   hint: 'e.g. Skyline Apartments',
-                  label: 'Project Name',
+                  label: context.l10n.labelProjectName,
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
@@ -107,7 +108,7 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
                 SbInput(
                   controller: _locController,
                   hint: 'City, Region or Site ID',
-                  label: 'Location',
+                  label: context.l10n.labelLocation,
                   textInputAction: TextInputAction.next,
                   onChanged: (v) {},
                 ),
@@ -115,17 +116,17 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
             ),
           ),
           SbSection(
-            title: 'Stakeholders',
+            title: context.l10n.labelStakeholders,
             child: SbInput(
               controller: _clientController,
               hint: 'Contracting Authority / Client',
-              label: 'Client',
+              label: context.l10n.labelClient,
               textInputAction: TextInputAction.next,
               onChanged: (v) {},
             ),
           ),
           SbSection(
-            title: 'Project Status',
+            title: context.l10n.labelStatus,
             child: SbDropdown<ProjectStatus>(
               value: _selectedStatus,
               items: ProjectStatus.values,
@@ -138,12 +139,12 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
             ),
           ),
           SbSection(
-            title: 'Scope & Description',
+            title: context.l10n.labelDescription,
             child: SbInput(
               controller: _descController,
               maxLines: 5,
               hint: 'Enter detailed project scope...',
-              label: 'Description',
+              label: context.l10n.labelDescription,
               onChanged: (v) {},
             ),
           ),

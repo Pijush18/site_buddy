@@ -10,8 +10,8 @@
 /// ----------------------------------------------
 library;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/cement_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_cement_usecase.dart';
@@ -233,8 +233,7 @@ class CementController extends Notifier<CementState> {
       await _saveToHistory(res);
 
     } catch (e, st) {
-      debugPrint("❌ Calculation failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Calculation failed', error: e, stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         failure: Failure(e.toString().replaceAll('Exception: ', '')),
@@ -271,7 +270,7 @@ class CementController extends Notifier<CementState> {
       state = state.copyWith(hasSaved: true);
 
     } catch (e) {
-      debugPrint("❌ Save failed: $e");
+      AppLogger.error('Save failed', error: e);
     }
   }
 }

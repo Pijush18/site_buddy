@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/sand_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_sand_usecase.dart';
@@ -147,17 +147,8 @@ class SandController extends Notifier<SandState> {
 
       await _saveToHistory(result);
 
-    } on ArgumentError catch (e, st) {
-      debugPrint("❌ Calculation failed: $e");
-      debugPrintStack(stackTrace: st);
-      state = state.copyWith(
-        isLoading: false,
-        error: e.message ?? 'Invalid input',
-        clearResult: true,
-      );
     } catch (e, st) {
-      debugPrint("❌ Calculation failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Calculation failed', error: e, stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         error: 'An unexpected error occurred',
@@ -194,7 +185,7 @@ class SandController extends Notifier<SandState> {
       state = state.copyWith(hasSaved: true);
 
     } catch (e) {
-      debugPrint("❌ Save failed: $e");
+      AppLogger.error('Save failed', error: e);
     }
   }
 

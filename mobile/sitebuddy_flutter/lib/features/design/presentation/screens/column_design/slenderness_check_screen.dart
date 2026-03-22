@@ -1,12 +1,15 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
+
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
+import 'package:site_buddy/core/data/code_references/is_456_references.dart';
+import 'package:site_buddy/core/services/educational_mode_service.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/slenderness_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 
@@ -17,23 +20,25 @@ class SlendernessCheckScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(columnDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Slenderness',
+      title: l10n.titleSlenderness,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             onPressed: () {
               context.push('/column/design');
             },
+            icon: Icons.navigate_next,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -43,27 +48,27 @@ class SlendernessCheckScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3: Stability',
+              l10n.labelStep3Stability,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── CLASSIFICATION SECTION ──
           SbSection(
-            title: 'Classification',
+            title: l10n.labelClassification,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isShort,
               items: [
                 DesignResultItem(
-                  label: 'Status',
-                  value: state.isShort ? 'SHORT' : 'SLENDER',
+                  label: l10n.labelStatus,
+                  value: state.isShort ? l10n.labelShortColumn : l10n.labelSlenderColumn,
                   isCritical: true,
                 ),
                 DesignResultItem(
-                   label: 'Rule',
-                  value: state.isShort ? 'λ < 12' : 'λ ≥ 12',
-                  subtitle: 'Based on IS 456 Cl 39.7.1',
+                   label: l10n.labelRule,
+                  value: state.isShort ? 'λ < 12' : 'λ ≥ 12', // Symbols are usually not localized
+                   subtitle: l10n.msgCodeNoteSlenderness,
                 ),
               ],
             ),
@@ -71,7 +76,7 @@ class SlendernessCheckScreen extends ConsumerWidget {
 
           // ── VISUALIZATION SECTION ──
           SbSection(
-            title: 'Geometry',
+            title: l10n.labelGeometry,
             child: SlendernessDiagram(
               slendernessX: state.slendernessX,
               slendernessY: state.slendernessY,
@@ -82,28 +87,33 @@ class SlendernessCheckScreen extends ConsumerWidget {
               isCircular: state.type == ColumnType.circular,
             ),
           ),
+          if (ref.watch(educationalModeProvider))
+            const SbSection(
+              child: CodeReferenceCard(
+                reference: IS456References.slendernessRatio,
+              ),
+            ),
 
           // ── PARAMETERS SECTION ──
           SbSection(
-            title: 'Effective Length',
+            title: l10n.labelEffectiveLength,
             child: DesignResultCard(
-              title: 'Parameters',
+              title: l10n.labelParameters,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'lex (Major)',
+                  label: l10n.labelLexMajor,
                   value: state.lex.toInt().toString(),
                   unit: 'mm',
                 ),
                 DesignResultItem(
-                  label: 'ley (Minor)',
+                  label: l10n.labelLeyMinor,
                   value: state.ley.toInt().toString(),
                   unit: 'mm',
                 ),
                 DesignResultItem(
-                  label: 'Unsupported Length (L)',
+                  label: l10n.labelUnsupportedLengthLUnit,
                   value: state.length.toInt().toString(),
-                  unit: 'mm',
                 ),
               ],
             ),

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -82,22 +82,23 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
 
     return SbPage.form(
-      title: 'Loads',
+      title: l10n.titleLoads,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate',
+            label: l10n.actionCalculate,
             onPressed: _onNext,
             icon: SbIcons.analytics,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -109,35 +110,35 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 2: Loads',
+                l10n.labelStep2Loads,
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
 
             // ── LOADS SECTION ──
             SbSection(
-              title: 'Vertical Loads',
+              title: l10n.labelVerticalLoads,
               child: SbCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SbInput(
                       controller: _dlController,
-                      label: 'Dead Load (kN/m)',
+                      label: l10n.labelDeadLoad,
                       validator: (v) =>
-                          ValidationHelper.validatePositive(v, 'Dead Load'),
+                          ValidationHelper.validatePositive(v, l10n.labelDeadLoad),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _llController,
-                      label: 'Live Load (kN/m)',
+                      label: l10n.labelLiveLoad,
                       validator: (v) =>
-                          ValidationHelper.validatePositive(v, 'Live Load'),
+                          ValidationHelper.validatePositive(v, l10n.labelLiveLoad),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       controller: _plController,
-                      label: 'Point Load (kN)',
+                      label: l10n.labelPointLoad,
                     ),
                   ],
                 ),
@@ -146,7 +147,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
 
             // ── LIMIT STATE SECTION ──
             SbSection(
-              title: 'Limit State',
+              title: l10n.labelLimitState,
               child: SbCard(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +156,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state.isULS ? 'ULS' : 'SLS',
+                          state.isULS ? l10n.labelULS : l10n.labelSLS,
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ],

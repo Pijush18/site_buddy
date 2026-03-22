@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:site_buddy/app/bootstrap/app_initializer.dart';
 import 'package:site_buddy/core/providers/shared_prefs_provider.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:site_buddy/app/router.dart';
 import 'package:site_buddy/main.dart';
 
@@ -28,8 +29,8 @@ Future<void> bootstrap() async {
       };
     }
     }
-  } catch (e) {
-    debugPrint('Firebase Crashlytics setup failed: $e');
+  } catch (e, st) {
+    AppLogger.error('Firebase Crashlytics setup failed', error: e, stackTrace: st);
   }
 
   // 2. Pre-initialize dependencies needed for Provider overrides
@@ -95,6 +96,6 @@ Future<void> _initFirebaseNetworkServices() async {
     ));
     await remoteConfig.fetchAndActivate();
   } catch (e) {
-    debugPrint('Firebase network services init failed (non-fatal): $e');
+    AppLogger.warning('Firebase network services init failed (non-fatal): $e', tag: 'Bootstrap');
   }
 }

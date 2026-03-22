@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
@@ -55,7 +55,7 @@ class SlabSafetyController extends AutoDisposeNotifier<SlabSafetyState> {
 
     final project = ref.read(activeProjectProvider);
     if (project == null) {
-      debugPrint("❌ No active project — skipping save");
+      AppLogger.warning('No active project — skipping save', tag: 'SlabSafety');
       return;
     }
 
@@ -81,10 +81,9 @@ class SlabSafetyController extends AutoDisposeNotifier<SlabSafetyState> {
       );
 
       state = state.copyWith(hasSaved: true);
-      debugPrint("✅ Slab safety selection saved");
+      AppLogger.info('Slab safety selection saved', tag: 'SlabSafety');
     } catch (e, st) {
-      debugPrint("❌ Save failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Save failed', tag: 'SlabSafety', error: e, stackTrace: st);
     }
   }
 }

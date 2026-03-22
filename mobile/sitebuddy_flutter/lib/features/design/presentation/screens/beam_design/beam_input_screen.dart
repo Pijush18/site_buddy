@@ -1,5 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -89,6 +90,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final notifier = ref.read(beamDesignControllerProvider.notifier);
 
@@ -112,19 +114,19 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
     });
 
     return SbPage.form(
-      title: 'Beam',
+      title: l10n.titleBeamInput,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -136,19 +138,19 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             // ── STEP HEADER ──
             SbSection(
               child: Text(
-                'Step 1: Geometry',
+                l10n.labelStep1Geometry,
                 style: Theme.of(context).textTheme.titleLarge!,
               ),
             ),
 
             // ── GEOMETRY SECTION ──
             SbSection(
-              title: 'Geometry',
+              title: l10n.labelGeometry,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Type',
+                    l10n.labelType,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -165,9 +167,9 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
                     controller: _spanController,
-                    label: 'Span (L) (mm)',
+                    label: l10n.labelSpanL,
                     validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Span'),
+                        ValidationHelper.validatePositive(v, l10n.labelLength),
                   ),
                   const SizedBox(height: SbSpacing.md),
                   Row(
@@ -175,18 +177,18 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       Expanded(
                         child: SbInput(
                           controller: _widthController,
-                          label: 'Width (b) (mm)',
+                          label: l10n.labelWidthB,
                           validator: (v) =>
-                              ValidationHelper.validatePositive(v, 'Width'),
+                              ValidationHelper.validatePositive(v, l10n.labelWidth),
                         ),
                       ),
                       const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: SbInput(
                           controller: _depthController,
-                          label: 'Depth (D) (mm)',
+                          label: l10n.labelDepthD,
                           validator: (v) =>
-                              ValidationHelper.validatePositive(v, 'Depth'),
+                              ValidationHelper.validatePositive(v, l10n.labelDepth),
                         ),
                       ),
                     ],
@@ -198,7 +200,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
 
             // ── MATERIALS SECTION ──
             SbSection(
-              title: 'Materials',
+              title: l10n.labelMaterials,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -206,7 +208,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     children: [
                       Expanded(
                         child: _buildGradeDropdown(
-                          'Concrete',
+                          l10n.labelConcreteGrade,
                           state.concreteGrade,
                           ['M20', 'M25', 'M30', 'M35', 'M40'],
                           (v) => ref
@@ -217,7 +219,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                       const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: _buildGradeDropdown(
-                          'Steel',
+                          l10n.labelSteelGrade,
                           state.steelGrade,
                           ['Fe415', 'Fe500'],
                           (v) => ref
@@ -230,9 +232,9 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                   const SizedBox(height: SbSpacing.md),
                   SbInput(
                     controller: _coverController,
-                    label: 'Cover (mm)',
+                    label: l10n.labelCover,
                     validator: (v) =>
-                        ValidationHelper.validatePositive(v, 'Cover'),
+                        ValidationHelper.validatePositive(v, l10n.labelCover),
                   ),
                 ],
               ),

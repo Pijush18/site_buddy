@@ -1,12 +1,16 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:printing/printing.dart';
 
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
+import 'package:site_buddy/core/utils/widget_capture_helper.dart';
+import 'package:site_buddy/core/utils/share_helper.dart';
+import 'package:site_buddy/core/services/drawing_export_service.dart';
+
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/application/services/column_insight_service.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/column_interaction_diagram.dart';
@@ -15,10 +19,6 @@ import 'package:site_buddy/features/design/presentation/widgets/structural_drawi
 import 'package:site_buddy/features/design/application/controllers/column_safety_controller.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
-import 'package:site_buddy/core/services/drawing_export_service.dart';
-import 'package:site_buddy/core/utils/widget_capture_helper.dart';
-import 'package:site_buddy/core/utils/share_helper.dart';
-import 'package:printing/printing.dart';
 
 /// SCREEN: SafetyCheckScreen
 /// PURPOSE: Final summary and safety checks (Step 6).
@@ -31,41 +31,47 @@ class SafetyCheckScreen extends ConsumerStatefulWidget {
 
 class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
   final GlobalKey _drawingKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final state = ref.watch(columnDesignControllerProvider);
     final optimizationResult = ref.watch(columnOptimizationProvider);
 
     return SbPage.form(
-      title: 'Verification',
+      title: l10n.labelVerification,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Optimize',
+            label: l10n.actionOptimize,
             onPressed: () {
               ref
                   .read(columnDesignControllerProvider.notifier)
                   .optimizeDesign();
             },
+            icon: Icons.auto_awesome_outlined,
           ),
           const SizedBox(height: SbSpacing.sm),
           PrimaryCTA(
-            label: 'Export PDF',
+            label: l10n.actionExportPdf,
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () async {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Generating PDF Report...')),
+                SnackBar(content: Text(l10n.msgGeneratingReport)),
               );
               try {
                 await ref.read(columnDesignControllerProvider.notifier).generateReport();
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                    SnackBar(
+                      content: Text(l10n.msgErrorGeneratingReport(e.toString())), 
+                      backgroundColor: colorScheme.error,
+                    ),
                   );
                 }
               }
@@ -73,7 +79,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'New Design',
+            label: l10n.actionNewDesign,
             icon: Icons.add,
             onPressed: () {
               ref.read(columnDesignControllerProvider.notifier).reset();
@@ -82,7 +88,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save Image',
+            label: l10n.actionSaveImage,
             icon: Icons.image_outlined,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -97,7 +103,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Save Drawing',
+            label: l10n.actionSaveDrawing,
             icon: Icons.picture_as_pdf_outlined,
             onPressed: () async {
               final bytes = await WidgetCaptureHelper.capture(_drawingKey);
@@ -116,7 +122,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -126,7 +132,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 6: Validation',
+              l10n.labelStep6Validation,
               style: theme.textTheme.titleLarge!,
             ),
           ),
@@ -154,7 +160,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── INTERACTION VISUALIZATION ──
           SbSection(
-            title: 'Visualization',
+            title: l10n.labelVisualization,
             child: ColumnInteractionDiagram(
               pu: state.pu,
               mu: max(state.mx, state.my),
@@ -164,19 +170,19 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── CAPACITY VERIFICATION ──
           SbSection(
-            title: 'Capacity',
+            title: l10n.labelCapacity,
             child: DesignResultCard(
-              title: 'Demand vs Capacity',
+              title: l10n.labelDemandVsCapacity,
               isSafe: state.isCapacitySafe,
               items: [
                 DesignResultItem(
-                  label: 'Interaction Ratio',
+                  label: l10n.labelInteractionRatio,
                   value: state.interactionRatio.toStringAsFixed(2),
-                  subtitle: 'Demand / Capacity',
+                  subtitle: l10n.labelDemandCapacity,
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Failure Mode',
+                  label: l10n.labelFailureMode,
                   value: state.failureMode.label,
                 ),
               ],
@@ -186,27 +192,27 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── STABILITY & DETAILING ──
           SbSection(
-            title: 'Stability',
+            title: l10n.labelStability,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isSlendernessSafe && state.isReinforcementSafe,
               items: [
                 DesignResultItem(
-                    label: 'Slenderness',
+                    label: l10n.titleSlenderness,
                   value: max(
                     state.slendernessX,
                     state.slendernessY,
                   ).toStringAsFixed(2),
-                  subtitle: state.isShort ? 'Short Column' : 'Slender Column',
+                  subtitle: state.isShort ? l10n.labelShortColumn : l10n.labelSlenderColumn,
                 ),
                 DesignResultItem(
-                  label: 'Steel Percentage',
+                  label: l10n.labelSteelPercentage,
                   value: '${state.steelPercentage.toStringAsFixed(2)}%',
-                  subtitle: 'Range: 0.8% - 6.0%',
+                  subtitle: l10n.labelSteelRange,
                 ),
                 if (!state.isShort)
                   DesignResultItem(
-                    label: 'Magnified Moment',
+                    label: l10n.labelMagnifiedMoment,
                     value: state.magnifiedMx.toStringAsFixed(1),
                     unit: 'kNm',
                   ),
@@ -217,7 +223,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── REINFORCEMENT DETAIL ──
           SbSection(
-            title: 'Drawing',
+            title: l10n.labelDrawing,
             child: SbCard(
               child: Column(
                 children: [
@@ -246,7 +252,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
           // ── OPTIMIZATION ──
           if (optimizationResult.options.isNotEmpty)
             SbSection(
-              title: 'Optimization',
+              title: l10n.labelOptimization,
               child: OptimizationList(
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
@@ -265,10 +271,10 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
 
           // ── SMART INSIGHTS ──
           SbSection(
-            title: 'Insights',
+            title: l10n.labelInsights,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: ColumnInsightService.getSuggestions(state)
+              children: ColumnInsightService.getSuggestions(state, l10n)
                   .map(
                     (s) => Padding(
                       padding: const EdgeInsets.only(bottom: SbSpacing.sm),

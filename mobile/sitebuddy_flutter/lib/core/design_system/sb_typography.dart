@@ -6,26 +6,26 @@ class SbTypography {
   SbTypography._();
 
   static TextTheme get textTheme => const TextTheme(
-    // 🔹 Screen titles (Max 18)
-    displayLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: -0.5, height: 1.2),
-    headlineMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: -0.3, height: 1.2),
+    // 🔹 Screen titles (Max 16)
+    displayLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: -0.4, height: 1.2),
+    headlineMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: -0.2, height: 1.2),
 
     // 🔹 Screen titles
-    titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: -0.3, height: 1.2),
+    titleLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: -0.2, height: 1.2),
 
     // 🔹 Section headers
-    titleMedium: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, letterSpacing: -0.2, height: 1.2),
+    titleMedium: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: -0.1, height: 1.2),
 
     // 🔹 Body text
-    bodyLarge: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.3),
-    bodyMedium: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.3),
+    bodyLarge: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1.3),
+    bodyMedium: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, height: 1.3),
 
     // 🔹 Buttons
-    labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.2),
+    labelLarge: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, height: 1.2),
 
     // 🔹 Caption / Small text
-    labelMedium: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, height: 1.2),
-    labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, height: 1.2),
+    labelMedium: TextStyle(fontSize: 10, fontWeight: FontWeight.w400, height: 1.2),
+    labelSmall: TextStyle(fontSize: 9, fontWeight: FontWeight.w400, height: 1.2),
   );
 }
 

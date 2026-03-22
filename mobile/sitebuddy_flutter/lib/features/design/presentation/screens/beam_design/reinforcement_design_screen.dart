@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/beam_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/smart_suggestions_card.dart';
@@ -18,26 +19,27 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final notifier = ref.read(beamDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Reinforcement',
+      title: l10n.titleReinforcement,
       appBarActions: const [EducationalToggle()],
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate',
+            label: l10n.actionCalculate,
             onPressed: () {
               context.push('/beam/safety');
             },
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -47,14 +49,14 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4: Steel',
+              l10n.labelStep4Reinforcement,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── DETAILING PREVIEW ──
           SbSection(
-            title: 'Cross-Section',
+            title: l10n.labelCrossSection,
             child: BeamCrossSectionDiagram(
               width: state.width,
               depth: state.overallDepth,
@@ -67,7 +69,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
           // ── SMART SUGGESTIONS ──
           if (state.suggestions.isNotEmpty)
             SbSection(
-              title: 'Insights',
+              title: l10n.labelInsights,
               child: SmartSuggestionsCard(
                 suggestions: state.suggestions,
                 onOptimize: () => notifier.optimize(),
@@ -76,13 +78,13 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── STEEL SPECIFICATION ──
           SbSection(
-            title: 'Steel Specs',
+            title: l10n.labelSteelSpecs,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Bar Dia',
+                    l10n.labelBarDia,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -112,17 +114,17 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── RESULTS: FLEXURE ──
           SbSection(
-            title: 'Flexure',
+            title: l10n.labelFlexure,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isFlexureSafe,
               items: [
                 DesignResultItem(
-                  label: 'Ast Req',
+                  label: l10n.labelAstRequired,
                   value: '${state.astRequired.toInt()} mm²',
                 ),
                 DesignResultItem(
-                  label: 'Ast Prov',
+                  label: l10n.labelAstProvided,
                   value: '${state.astProvided.toInt()} mm²',
                   isCritical: true,
                 ),
@@ -137,13 +139,13 @@ class ReinforcementDesignScreen extends ConsumerWidget {
 
           // ── RESULTS: SHEAR ──
           SbSection(
-            title: 'Shear',
+            title: l10n.labelShear,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.isShearSafe,
               items: [
                 DesignResultItem(
-                  label: 'Shear Force (Vu)',
+                  label: l10n.labelShearVu,
                   value: '${state.vu.toStringAsFixed(1)} kN',
                 ),
                 DesignResultItem(
@@ -151,7 +153,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   value: '${state.tv.toStringAsFixed(2)} N/mm²',
                 ),
                 DesignResultItem(
-                  label: 'Stirrup Spacing',
+                  label: l10n.labelSpacing,
                   value: '${state.stirrupSpacing.toInt()} mm c/c',
                   isCritical: true,
                 ),
@@ -164,7 +166,3 @@ class ReinforcementDesignScreen extends ConsumerWidget {
     );
   }
 }
-
-
-
-

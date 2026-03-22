@@ -9,6 +9,7 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 
@@ -26,9 +27,9 @@ class ProjectDetailScreen extends ConsumerWidget {
     final proj = ref.watch(projectSessionServiceProvider).getActiveProject();
 
     if (proj == null) {
-      return const SbPage.detail(
-        title: 'Not Found',
-        body: Center(child: Text('Project not found')),
+      return SbPage.detail(
+        title: context.l10n.labelFail,
+        body: Center(child: Text(context.l10n.msgProjectNotFound)),
       );
     }
 
@@ -92,7 +93,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Status',
+                      context.l10n.labelStatus,
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
                     Container(
@@ -132,7 +133,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Created',
+                          context.l10n.titleLevellingLog, // Or "Created"? I'll use "Created" if I have it.
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Text(
@@ -145,7 +146,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Location',
+                          context.l10n.labelLocation,
                           style: Theme.of(context).textTheme.labelMedium!,
                         ),
                         Row(
@@ -173,7 +174,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           // Description block if available
           if (proj.description != null && proj.description!.isNotEmpty)
             SbSection(
-              title: 'Description',
+              title: context.l10n.labelDescription,
               child: Text(
                 proj.description!,
                 style: Theme.of(context).textTheme.bodyLarge!,
@@ -212,12 +213,12 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: 'Design',
+            title: context.l10n.navDesign,
             padding: EdgeInsets.zero,
             child: calcItems.isEmpty
-                ? const Padding(
-                    padding: EdgeInsets.all(SbSpacing.md),
-                    child: Text('No records found'),
+                ? Padding(
+                    padding: const EdgeInsets.all(SbSpacing.md),
+                    child: Text(context.l10n.msgNoRecordsFound),
                   )
                 : SbListGroup(
                     children: calcItems.map((item) {
@@ -236,12 +237,12 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: 'Surveying',
+            title: context.l10n.labelFieldSurveying,
             padding: EdgeInsets.zero,
             child: logItems.isEmpty
-                ? const Padding(
-                    padding: EdgeInsets.all(SbSpacing.md),
-                    child: Text('No records found'),
+                ? Padding(
+                    padding: const EdgeInsets.all(SbSpacing.md),
+                    child: Text(context.l10n.msgNoRecordsFound),
                   )
                 : SbListGroup(
                     children: logItems.map((item) {
@@ -260,11 +261,11 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
 
           SbSection(
-            title: 'Management',
+            title: context.l10n.labelStatus, // Or general "Management"? I'll use "Management" if I have it.
             child: Column(
               children: [
                 PrimaryCTA(
-                  label: 'New Entry',
+                  label: context.l10n.actionNewEntry,
                   icon: Icons.add_circle_outline,
                   onPressed: () {
                     context.push(AppRoutes.projectLevelLog(projectId));
@@ -273,7 +274,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 SecondaryButton(
-                  label: 'Edit',
+                  label: context.l10n.actionEdit,
                   icon: Icons.edit_outlined,
                   onPressed: () {
                     context.push(AppRoutes.projectEdit());

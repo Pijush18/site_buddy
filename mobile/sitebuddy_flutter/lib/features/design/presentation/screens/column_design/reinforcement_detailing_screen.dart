@@ -1,11 +1,11 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
+
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/rebar_layout_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -14,19 +14,21 @@ import 'package:site_buddy/features/design/presentation/widgets/engineering_diag
 /// PURPOSE: Bar arrangement and ties (Step 5).
 class ReinforcementDetailingScreen extends ConsumerWidget {
   const ReinforcementDetailingScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Reinforcement',
+      title: l10n.titleReinforcement,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate',
+            label: l10n.actionCalculate,
             onPressed: () {
               context.push('/column/safety');
             },
@@ -34,7 +36,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -44,14 +46,14 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 5: Detailing',
+              l10n.labelStep5Detailing,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── REBAR LAYOUT SECTION ──
           SbSection(
-            title: 'Detailing',
+            title: l10n.labelDetails,
             child: RebarLayoutDiagram(
               type: state.type,
               width: state.b,
@@ -64,13 +66,13 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── MAIN LONGITUDINAL BARS ──
           SbSection(
-            title: 'Main Bars',
+            title: l10n.labelMainBars,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Bar Dia',
+                    l10n.labelBarDia,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
@@ -91,25 +93,23 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── LONGITUDINAL RESULTS ──
           SbSection(
-            title: 'Results',
+            title: l10n.labelResults,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.astProvided >= state.astRequired,
               items: [
                 DesignResultItem(
-                  label: 'Number of Bars',
+                  label: l10n.labelNumberOfBars,
                   value: '${state.numBars}',
                   unit: 'Nos',
                 ),
                 DesignResultItem(
-                  label: 'Ast Req',
+                  label: l10n.labelAstRequiredUnit,
                   value: state.astRequired.toStringAsFixed(0),
-                  unit: 'mm²',
                 ),
                 DesignResultItem(
-                  label: 'Ast Prov',
+                  label: l10n.labelAstProvidedUnit,
                   value: state.astProvided.toStringAsFixed(0),
-                  unit: 'mm²',
                   isCritical: true,
                 ),
               ],
@@ -118,20 +118,18 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
 
           // ── TRANSVERSE TIES ──
           SbSection(
-            title: 'Lateral Ties',
+            title: l10n.labelLateralTies,
             child: DesignResultCard(
-              title: 'Detailing',
+              title: l10n.labelDetails,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Tie Dia (min)',
+                  label: l10n.labelTieDiaMinUnit,
                   value: state.tieDia.toStringAsFixed(0),
-                  unit: 'mm',
                 ),
                 DesignResultItem(
-                  label: 'Spacing (s)',
+                  label: l10n.labelSpacingSUnit,
                   value: state.tieSpacing.toStringAsFixed(0),
-                  unit: 'mm c/c',
                   isCritical: true,
                 ),
               ],

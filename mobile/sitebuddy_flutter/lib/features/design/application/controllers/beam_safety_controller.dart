@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
@@ -55,7 +55,7 @@ class BeamSafetyController extends AutoDisposeNotifier<BeamSafetyState> {
 
     final project = ref.read(activeProjectProvider);
     if (project == null) {
-      debugPrint("❌ No active project — skipping save");
+      AppLogger.warning('No active project — skipping save', tag: 'BeamSafety');
       return;
     }
 
@@ -83,10 +83,9 @@ class BeamSafetyController extends AutoDisposeNotifier<BeamSafetyState> {
       );
 
       state = state.copyWith(hasSaved: true);
-      debugPrint("✅ Beam safety selection saved");
+      AppLogger.info('Beam safety selection saved', tag: 'BeamSafety');
     } catch (e, st) {
-      debugPrint("❌ Save failed: $e");
-      debugPrintStack(stackTrace: st);
+      AppLogger.error('Save failed', tag: 'BeamSafety', error: e, stackTrace: st);
     }
   }
 }

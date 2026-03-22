@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -16,28 +17,30 @@ class SlabAnalysisScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     if (state.result == null) {
-      return const SbPage.scaffold(
-        title: 'Analysis',
-        body: Center(child: CircularProgressIndicator()),
+      return SbPage.scaffold(
+        title: context.l10n.titleAnalysis,
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     final totalLoad = (state.deadLoad + state.liveLoad) * 1.5;
 
+    final l10n = context.l10n;
+
     return SbPage.form(
-      title: 'Analysis',
+      title: l10n.titleAnalysis,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             onPressed: () => context.push('/slab/reinforcement'),
             icon: Icons.engineering_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -47,30 +50,30 @@ class SlabAnalysisScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 3: Analysis',
+              l10n.labelStep3Analysis,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── ANALYSIS RESULTS ──
           SbSection(
-            title: 'Results',
+            title: l10n.labelResults,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Total Load (wu)',
+                  label: l10n.labelTotalLoad,
                   value: '${totalLoad.toStringAsFixed(2)} kN/m²',
                 ),
                 DesignResultItem(
-                  label: 'Moment (Mu)',
+                  label: l10n.labelMomentMu,
                   value:
                       '${state.result!.bendingMoment.toStringAsFixed(2)} kNm/m',
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Type',
+                  label: l10n.labelType,
                   value: state.type.label,
                 ),
               ],
@@ -80,7 +83,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
 
           // ── INSIGHTS ──
           SbSection(
-            title: 'Insights',
+            title: l10n.labelInsights,
             child: SbCard(
               child: Column(
                 children: [
@@ -91,7 +94,7 @@ class SlabAnalysisScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.sm),
                   Text(
-                    'Maximum moment occurs at the midspan for a simply supported slab.',
+                    l10n.labelSlabMomentInsight,
                     style: Theme.of(context).textTheme.bodyLarge!,
                     textAlign: TextAlign.center,
                   ),

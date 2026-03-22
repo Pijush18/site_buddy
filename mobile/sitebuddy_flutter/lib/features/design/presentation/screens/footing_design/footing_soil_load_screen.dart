@@ -1,11 +1,11 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
@@ -79,23 +79,24 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(footingDesignControllerProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     return SbPage.form(
-      title: 'Footing',
+      title: l10n.titleFootingDesign,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             icon: Icons.square_foot,
             onPressed: _onNext,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -105,7 +106,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 2: Loads',
+              l10n.labelStep2Loads,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
@@ -114,14 +115,14 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
           SbSection(
             title: state.type == FootingType.combined ||
                     state.type == FootingType.strap
-                ? 'Column 1 Loadings'
-                : 'Column Loading',
+                ? l10n.labelColumn1Loading
+                : l10n.labelColumnLoading,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SbInput(
-                    label: 'Axial Load (P1) (kN)',
+                    label: l10n.labelAxialLoadP1Unit,
                     controller: _loadController,
                     suffixIcon: const Icon(SbIcons.arrowDown),
                   ),
@@ -130,14 +131,14 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     children: [
                       Expanded(
                         child: SbInput(
-                          label: 'Mx1 (kNm)',
+                          label: l10n.labelMx1Unit,
                           controller: _mxController,
                         ),
                       ),
                       const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: SbInput(
-                          label: 'My1 (kNm)',
+                          label: l10n.labelMy1Unit,
                           controller: _myController,
                         ),
                       ),
@@ -149,12 +150,12 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     Divider(color: colorScheme.outlineVariant),
                     const SizedBox(height: SbSpacing.xxl),
                     Text(
-                      'Column 2 Loadings',
+                      l10n.labelColumn2Loading,
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
                     const SizedBox(height: SbSpacing.lg),
                     SbInput(
-                      label: 'Axial Load (P2) (kN)',
+                      label: l10n.labelAxialLoadP2Unit,
                       controller: _load2Controller,
                     ),
                     const SizedBox(height: SbSpacing.lg),
@@ -162,14 +163,14 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                       children: [
                         Expanded(
                           child: SbInput(
-                            label: 'Mx2 (kNm)',
+                            label: l10n.labelMx2Unit,
                             controller: _mx2Controller,
                           ),
                         ),
                         const SizedBox(width: SbSpacing.lg),
                         Expanded(
                           child: SbInput(
-                            label: 'My2 (kNm)',
+                            label: l10n.labelMy2Unit,
                             controller: _my2Controller,
                           ),
                         ),
@@ -183,19 +184,19 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
 
           // ── SOIL PARAMETERS ──
           SbSection(
-            title: 'Soil Properties',
+            title: l10n.labelSoilProperties,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SbInput(
-                    label: 'Bearing Capacity (kN/m²)',
+                    label: l10n.labelBearingCapacityUnit,
                     controller: _sbcController,
                     suffixIcon: const Icon(SbIcons.terrain),
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Depth (m)',
+                    label: l10n.labelDepthUnit,
                     controller: _depthController,
                     suffixIcon: const Icon(SbIcons.arrowDown),
                   ),

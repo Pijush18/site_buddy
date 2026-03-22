@@ -25,7 +25,7 @@ class PrimaryCTA extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? double.infinity,
-      height: 48,
+      height: 44,
       child: ElevatedButton(
         onPressed: (isLoading || onPressed == null) 
             ? null 

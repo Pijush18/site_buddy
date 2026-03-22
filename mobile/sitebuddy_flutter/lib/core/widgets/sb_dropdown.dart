@@ -98,6 +98,8 @@ class SbDropdown<T> extends StatelessWidget {
                   Expanded(
                     child: Text(
                       value != null ? itemLabelBuilder(value as T) : 'Select Option',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: textTheme.bodyLarge?.copyWith(
                         color: value != null 
                             ? colorScheme.onSurface 

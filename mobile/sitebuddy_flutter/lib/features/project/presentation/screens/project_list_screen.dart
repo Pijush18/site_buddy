@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
@@ -19,7 +20,7 @@ class ProjectListScreen extends ConsumerWidget {
     final state = ref.watch(projectControllerProvider);
 
     return SbPage.list(
-      title: 'Projects',
+      title: context.l10n.navProject,
       appBarActions: [
         IconButton(
           icon: const Icon(SbIcons.add),
@@ -28,7 +29,7 @@ class ProjectListScreen extends ConsumerWidget {
       ],
       header: SBGridActionCard(
         icon: SbIcons.addCircle,
-        label: 'New Project',
+        label: context.l10n.actionNewProject,
         onTap: () => context.push(AppRoutes.projectCreate),
         isHighlighted: true,
       ),
@@ -42,14 +43,14 @@ class ProjectListScreen extends ConsumerWidget {
     }
 
     if (state.failure != null) {
-      return Center(child: Text('Error: ${state.failure}'));
+      return Center(child: Text(context.l10n.labelError(state.failure.toString())));
     }
 
     if (state.projects.isEmpty) {
-      return const SbEmptyState(
+      return SbEmptyState(
         icon: SbIcons.project,
-        title: 'No Projects Yet',
-        subtitle: 'Create a project to start.',
+        title: context.l10n.noProjectsYet,
+        subtitle: context.l10n.tapAddProjectToStart,
       );
     }
 

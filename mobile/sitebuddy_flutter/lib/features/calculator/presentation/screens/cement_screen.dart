@@ -1,13 +1,12 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-// import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
 import 'package:site_buddy/features/calculator/application/controllers/cement_controller.dart';
+import 'package:site_buddy/core/logging/app_logger.dart';
 
 class CementScreen extends ConsumerWidget {
   const CementScreen({super.key});
@@ -16,6 +15,7 @@ class CementScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(cementControllerProvider);
     final controller = ref.read(cementControllerProvider.notifier);
+    final l10n = context.l10n;
 
     final lError = state.failure?.message.contains('Length') == true ? state.failure?.message : null;
     final wError = state.failure?.message.contains('Width') == true ? state.failure?.message : null;
@@ -30,14 +30,14 @@ class CementScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Summary',
+              l10n.labelEstimationResults,
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
-              title: 'Wet Vol',
+              title: l10n.labelWetVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.wetVolume.toStringAsFixed(2)} m³',
@@ -45,7 +45,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Dry Vol',
+              title: l10n.labelDryVolume,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.dryVolume.toStringAsFixed(2)} m³',
@@ -53,7 +53,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Weight',
+              title: l10n.labelCementWeight,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 '${res.cementWeight.toStringAsFixed(0)} kg',
@@ -61,7 +61,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             SbListItemTile(
-              title: 'Bags',
+              title: l10n.labelBags,
               onTap: () {}, // Detail view entry
               trailing: Text(
                 res.numberOfBags.toStringAsFixed(1),
@@ -73,7 +73,7 @@ class CementScreen extends ConsumerWidget {
               const Divider(),
               const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
-                title: EngineeringTerms.estimatedCost,
+                title: l10n.labelEstimatedCost,
                 onTap: () {}, // Detail view entry
                 trailing: Text(
                   '\$ ${res.totalCost!.toStringAsFixed(2)}',
@@ -87,126 +87,120 @@ class CementScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: 'Cement',
+      title: l10n.titleCementEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Dimensions',
+            l10n.labelDimensions,
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           SbInput(
-            label: 'Length (m)',
+            label: '${l10n.labelLength} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Width (m)',
+            label: '${l10n.labelWidth} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
-            label: 'Depth (m)',
+            label: '${l10n.labelDepth} (m)',
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           Text(
-            'Ratio (C:S:A)',
+            '${l10n.labelMixRatio} (C:S:A)',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: SbSpacing.md),
-          Wrap(
-            spacing: SbSpacing.lg,
-            runSpacing: SbSpacing.lg,
+          Row(
             children: [
-              SizedBox(
-                width: 100,
+              Expanded(
                 child: SbInput(
-                  label: EngineeringTerms.cement,
+                  label: l10n.labelCement,
                   onChanged: controller.updateMixCement,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: EngineeringTerms.cementRatioInfo,
+                    message: l10n.msgCementRatioInfo,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 100,
+              const SizedBox(width: SbSpacing.md),
+              Expanded(
                 child: SbInput(
-                  label: EngineeringTerms.sand,
+                  label: l10n.labelSand,
                   onChanged: controller.updateMixSand,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: EngineeringTerms.sandRatioInfo,
+                    message: l10n.msgSandRatioInfo,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 100,
+              const SizedBox(width: SbSpacing.md),
+              Expanded(
                 child: SbInput(
-                  label: EngineeringTerms.aggregate,
+                  label: l10n.labelAggregate,
                   onChanged: controller.updateMixAggregate,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: EngineeringTerms.aggregateRatioInfo,
+                    message: l10n.msgAggregateRatioInfo,
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: SbSpacing.lg),
-          Wrap(
-            spacing: SbSpacing.lg,
-            runSpacing: SbSpacing.lg,
+          Row(
             children: [
-              SizedBox(
-                width: 160,
+              Expanded(
                 child: SbInput(
-                  label: EngineeringTerms.wastePercent,
+                  label: l10n.labelWastage,
                   suffixIcon: const Icon(SbIcons.percent),
                   onChanged: controller.updateWaste,
                   onInfoPressed: () => SbFeedback.showToast(
                     context: context,
-                    message: EngineeringTerms.wasteInfo,
+                    message: l10n.msgWastageInfo,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 160,
+              const SizedBox(width: SbSpacing.lg),
+              Expanded(
                 child: SbInput(
-                  label: EngineeringTerms.pricePerBag,
+                  label: l10n.labelPricePerBag,
                   suffixIcon: const Icon(SbIcons.payments),
                   onChanged: controller.updatePrice,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: 'Calculate',
+                label: l10n.actionCalculate,
                 icon: SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
@@ -215,19 +209,19 @@ class CementScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xl),
+            const SizedBox(height: SbSpacing.lg),
           ],
           if (state.result != null) ...[
             buildResultCard(),
             const SizedBox(height: SbSpacing.md),
             PrimaryCTA(
-              label: 'Export PDF',
+              label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
               onPressed: () {
-                debugPrint("Export PDF clicked - TODO: implement");
+                AppLogger.info('Export PDF clicked - implementation pending', tag: 'CementUI');
               },
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),

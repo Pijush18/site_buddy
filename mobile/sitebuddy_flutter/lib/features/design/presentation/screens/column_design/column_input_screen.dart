@@ -1,12 +1,10 @@
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 
 import 'package:site_buddy/features/design/application/controllers/column_design_controller.dart';
 import 'package:site_buddy/shared/domain/models/design/column_enums.dart';
@@ -51,20 +49,24 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
     final l = double.tryParse(_lengthController.text) ?? 3000.0;
     final cover = double.tryParse(_coverController.text) ?? 40.0;
 
-    ref
-        .read(columnDesignControllerProvider.notifier)
-        .updateInput(b: b, d: d, length: l, cover: cover);
+    ref.read(columnDesignControllerProvider.notifier).updateInput(
+          b: b,
+          d: d,
+          length: l,
+          cover: cover,
+        );
 
     context.push('/column/load');
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = ref.watch(columnDesignControllerProvider);
     final notifier = ref.read(columnDesignControllerProvider.notifier);
 
     return SbPage.form(
-      title: 'Column',
+      title: l10n.titleColumn,
       appBarActions: [
         IconButton(
           icon: const Icon(Icons.history),
@@ -76,12 +78,13 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Next',
+            label: l10n.actionNext,
             onPressed: _onNext,
+            icon: Icons.navigate_next,
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -91,102 +94,103 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 1: Geometry',
+              l10n.labelStep1Geometry,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
-          // ── GEOMETRY SECTION ──
+          // ── SECTION PROPERTIES ──
           SbSection(
-            title: EngineeringTerms.sectionProperties,
+            title: l10n.labelSectionProperties,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Type',
+                    l10n.labelType,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
                   SbDropdown<ColumnType>(
                     value: state.type,
                     items: ColumnType.values,
-                    itemLabelBuilder: (t) => t.label,
-                    onChanged: (v) =>
-                        v != null ? notifier.updateInput(type: v) : null,
+                    itemLabelBuilder: (v) => v.label,
+                    onChanged: (v) {
+                      if (v != null) {
+                        notifier.updateInput(type: v);
+                      }
+                    },
                   ),
                   const SizedBox(height: SbSpacing.lg),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SbInput(
-                          label: state.type == ColumnType.circular
-                              ? 'Dia (mm)'
-                              : 'Width (b) (mm)',
-                          controller: _widthController,
-                        ),
-                      ),
-                      if (state.type == ColumnType.rectangular) ...[
-                        const SizedBox(width: SbSpacing.lg),
-                        Expanded(
-                          child: SbInput(
-                            label: 'Depth (D) (mm)',
-                            controller: _depthController,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.lg),
+                  if (state.type == ColumnType.circular)
+                    SbInput(
+                      label: l10n.labelDiaUnit,
+                      controller: _widthController,
+                    )
+                  else ...[
+                    SbInput(
+                      label: l10n.labelWidthBUnit,
+                      controller: _widthController,
+                    ),
+                    const SizedBox(height: SbSpacing.md),
+                    SbInput(
+                      label: l10n.labelDepthDUnit,
+                      controller: _depthController,
+                    ),
+                  ],
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: 'Length (L) (mm)',
+                    label: l10n.labelLengthLUnit,
                     controller: _lengthController,
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   Text(
-                    'End Condition',
+                    l10n.labelEndCondition,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
                   const SizedBox(height: SbSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,
-                    itemLabelBuilder: (e) => e.label,
-                    onChanged: (v) => v != null
-                        ? notifier.updateInput(endCondition: v)
-                        : null,
+                    itemLabelBuilder: (v) => v.label,
+                    onChanged: (v) {
+                      if (v != null) {
+                        notifier.updateInput(endCondition: v);
+                      }
+                    },
                   ),
                 ],
               ),
             ),
           ),
 
-          // ── MATERIALS SECTION ──
+          // ── MATERIALS ──
           SbSection(
-            title: EngineeringTerms.materials,
+            title: l10n.labelMaterials,
             child: SbCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Concrete',
+                              l10n.labelConcrete,
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
                             const SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.concreteGrade,
                               items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
-                              itemLabelBuilder: (s) => s,
-                              onChanged: (v) => v != null
-                                  ? notifier.updateInput(concreteGrade: v)
-                                  : null,
+                              itemLabelBuilder: (v) => v,
+                              onChanged: (v) {
+                                if (v != null) {
+                                  notifier.updateInput(concreteGrade: v);
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -197,17 +201,19 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Steel',
+                              l10n.labelSteel,
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
                             const SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.steelGrade,
                               items: const ['Fe415', 'Fe500', 'Fe550'],
-                              itemLabelBuilder: (s) => s,
-                              onChanged: (v) => v != null
-                                  ? notifier.updateInput(steelGrade: v)
-                                  : null,
+                              itemLabelBuilder: (v) => v,
+                              onChanged: (v) {
+                                if (v != null) {
+                                  notifier.updateInput(steelGrade: v);
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -216,7 +222,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                   ),
                   const SizedBox(height: SbSpacing.lg),
                   SbInput(
-                    label: 'Cover (mm)',
+                    label: l10n.labelCoverUnit,
                     controller: _coverController,
                   ),
                 ],
@@ -228,13 +234,3 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-

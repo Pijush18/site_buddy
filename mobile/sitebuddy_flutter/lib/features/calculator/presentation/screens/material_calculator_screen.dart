@@ -1,13 +1,10 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-// import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/widgets/action_buttons_group.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/constants/concrete_mix_constants.dart';
 import 'package:site_buddy/features/calculator/application/controllers/calculator_controller.dart';
 import 'package:site_buddy/shared/domain/models/concrete_grade.dart';
@@ -22,6 +19,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(calculatorProvider);
     final controller = ref.read(calculatorProvider.notifier);
+    final l10n = context.l10n;
 
     // Prefill logic
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,11 +36,11 @@ class MaterialCalculatorScreen extends ConsumerWidget {
     final bool isValid = state.lengthInput.isNotEmpty && state.widthInput.isNotEmpty && state.depthInput.isNotEmpty;
 
     return SbPage.scaffold(
-      title: 'Materials',
+      title: l10n.titleConcreteEstimator,
       body: SbSectionList(
         sections: [
           SbSection(
-            title: 'Grade',
+            title: l10n.labelGrade,
             child: SbCard(
               child: SbDropdown<ConcreteGrade>(
                 value: state.grade,
@@ -55,26 +53,26 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             ),
           ),
           SbSection(
-            title: 'Dimensions',
+            title: l10n.labelDimensions,
             child: SbCard(
               child: Column(
                 children: [
                   SbInput(
-                    label: 'Length (m)',
+                    label: '${l10n.labelLength} (m)',
                     suffixIcon: const Icon(SbIcons.ruler),
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: 'Width (m)',
+                    label: '${l10n.labelWidth} (m)',
                     suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
-                    label: 'Thickness (m)',
+                    label: '${l10n.labelThickness} (m)',
                     suffixIcon: const Icon(SbIcons.layers),
                     onChanged: controller.updateDepth,
                     errorText: dError,
@@ -84,26 +82,23 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             ),
           ),
           SbSection(
-            title: 'Spec',
+            title: l10n.labelSpecification,
             child: SbCard(
-              child: Wrap(
-                spacing: SbSpacing.lg,
-                runSpacing: SbSpacing.lg,
+              child: Row(
                 children: [
-                  SizedBox(
-                    width: 160,
+                  Expanded(
                     child: SbInput(
-                      label: 'Steel (%)',
-                      hint: EngineeringTerms.steelRatioHint,
+                      label: '${l10n.labelSteel} (%)',
+                      hint: l10n.hintSteelRatio,
                       suffixIcon: const Icon(SbIcons.rebarVertical),
                       onChanged: controller.updateSteelRatio,
                     ),
                   ),
-                  SizedBox(
-                    width: 160,
+                  const SizedBox(width: SbSpacing.lg),
+                  Expanded(
                     child: SbInput(
-                      label: 'Waste (%)',
-                      hint: EngineeringTerms.wasteFactorHint,
+                      label: '${l10n.labelWastage} (%)',
+                      hint: l10n.hintWastage,
                       suffixIcon: const Icon(SbIcons.percent),
                       onChanged: controller.updateWasteFactor,
                     ),
@@ -116,12 +111,12 @@ class MaterialCalculatorScreen extends ConsumerWidget {
             child: ActionButtonsGroup(
               children: [
                 SecondaryButton(isOutlined: true, 
-                  label: AppStrings.clearAll,
+                  label: l10n.actionClearAll,
                   icon: SbIcons.refresh,
                   onPressed: controller.reset,
                 ),
                 PrimaryCTA(
-                  label: 'Calculate',
+                  label: l10n.actionCalculate,
                   icon: state.isLoading ? null : SbIcons.calculator,
                   isLoading: state.isLoading,
                   onPressed: isValid ? controller.calculate : null,
@@ -140,10 +135,14 @@ class MaterialCalculatorScreen extends ConsumerWidget {
               ),
             ),
           if (state.concreteResult != null) _ResultSection(result: state.concreteResult!),
-          const SbSection(
-            child: _IsCodeNote(),
+          SbSection(
+            child: Text(
+              l10n.msgIsCodeNote,
+              style: Theme.of(context).textTheme.labelMedium!,
+              textAlign: TextAlign.center,
+            ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );
@@ -165,73 +164,63 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+
     return SbSection(
-      title: 'Summary',
+      title: l10n.labelEstimationResults,
       child: SbListGroup(
         children: [
           SbListItemTile(
-            title: 'Volume',
+            title: l10n.labelVolume,
             onTap: () {},
             trailing: Text(
               '${result.concreteVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
             ),
           ),
           SbListItemTile(
-            title: 'Cement',
+            title: l10n.labelCement,
             onTap: () {},
             trailing: Text(
-              '${result.cementBags.toStringAsFixed(0)} ${AppStrings.bags}',
-              style: Theme.of(context).textTheme.labelLarge,
+              '${result.cementBags.toStringAsFixed(0)} ${l10n.labelBags}',
+              style: theme.textTheme.labelLarge,
             ),
           ),
           SbListItemTile(
-            title: 'Sand',
+            title: l10n.labelSand,
             onTap: () {},
             trailing: Text(
               '${result.sandVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
             ),
           ),
           SbListItemTile(
-            title: 'Aggregate',
+            title: l10n.labelAggregate,
             onTap: () {},
             trailing: Text(
               '${result.aggregateVolume.toStringAsFixed(3)} m³',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
             ),
           ),
           SbListItemTile(
-            title: 'Steel',
+            title: l10n.labelSteel,
             onTap: () {},
             trailing: Text(
               '${result.steelWeight.toStringAsFixed(1)} kg',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: theme.textTheme.labelLarge,
             ),
           ),
           SbListItemTile(
-            title: 'Wire',
+            title: l10n.labelBindingWire,
             onTap: () {},
             trailing: Text(
               '${result.bindingWire.toStringAsFixed(2)} kg',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _IsCodeNote extends StatelessWidget {
-  const _IsCodeNote();
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      EngineeringTerms.concreteCodeRef,
-      style: Theme.of(context).textTheme.labelMedium!,
-      textAlign: TextAlign.center,
     );
   }
 }

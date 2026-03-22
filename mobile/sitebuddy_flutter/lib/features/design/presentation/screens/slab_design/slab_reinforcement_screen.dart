@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
@@ -16,26 +17,28 @@ class SlabReinforcementScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     if (state.result == null) {
-      return const SbPage.scaffold(
-        title: 'Reinforcement',
-        body: Center(child: CircularProgressIndicator()),
+      return SbPage.scaffold(
+        title: context.l10n.titleReinforcement,
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
+    final l10n = context.l10n;
+
     return SbPage.form(
-      title: 'Reinforcement',
+      title: l10n.titleReinforcement,
       primaryAction: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: 'Calculate',
+            label: l10n.actionCalculate,
             onPressed: () => context.push('/slab/safety'),
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
-            label: 'Back',
+            label: l10n.actionBack,
             onPressed: () => context.pop(),
           ),
         ],
@@ -45,25 +48,25 @@ class SlabReinforcementScreen extends ConsumerWidget {
           // ── STEP HEADER ──
           SbSection(
             child: Text(
-              'Step 4 of 5: Steel Detailing',
+              l10n.labelStep4Reinforcement,
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ),
 
           // ── STEEL AREA CHECK ──
           SbSection(
-            title: 'Steel Area Check',
+            title: l10n.labelSteelAreaCheck,
             child: DesignResultCard(
-              title: 'Verification',
+              title: l10n.labelVerification,
               isSafe: state.result!.astProvided >= state.result!.astRequired,
               items: [
                 DesignResultItem(
-                  label: 'Required Ast',
+                  label: l10n.labelRequiredAstUnit,
                   value:
                       '${state.result!.astRequired.toStringAsFixed(0)} mm²/m',
                 ),
                 DesignResultItem(
-                  label: 'Provided Ast',
+                  label: l10n.labelProvidedAstUnit,
                   value:
                       '${state.result!.astProvided.toStringAsFixed(0)} mm²/m',
                 ),
@@ -74,18 +77,18 @@ class SlabReinforcementScreen extends ConsumerWidget {
 
           // ── PRACTICAL DETAILING ──
           SbSection(
-            title: 'Practical Detailing',
+            title: l10n.labelPracticalDetailing,
             child: DesignResultCard(
-              title: 'Layout Strategy',
+              title: l10n.labelLayoutStrategy,
               isSafe: true,
               items: [
                 DesignResultItem(
-                  label: 'Main Rebar',
+                  label: l10n.labelMainRebar,
                   value: state.result!.mainRebar,
                   isCritical: true,
                 ),
                 DesignResultItem(
-                  label: 'Distribution Steel',
+                  label: l10n.labelDistributionSteel,
                   value: state.result!.distributionSteel,
                 ),
               ],
@@ -94,7 +97,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
 
           // ── INSIGHTS ──
           SbSection(
-            title: 'Detailing Rules',
+            title: l10n.labelDetailingRules,
             child: SbCard(
               child: Column(
                 children: [
@@ -105,7 +108,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: SbSpacing.sm),
                   Text(
-                    'Rebar spacing should not exceed 3d or 300mm for main rebar.',
+                    l10n.labelSlabDetailingInsight,
                     style: Theme.of(context).textTheme.bodyLarge!,
                     textAlign: TextAlign.center,
                   ),

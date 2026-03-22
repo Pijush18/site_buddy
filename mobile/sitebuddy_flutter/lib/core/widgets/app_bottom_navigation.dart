@@ -37,7 +37,7 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/localization/generated/app_localizations.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 
 
 /// WIDGET: AppBottomNavigation
@@ -72,6 +72,7 @@ class AppBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Container(
       decoration: BoxDecoration(
@@ -114,25 +115,25 @@ class AppBottomNavigation extends StatelessWidget {
           BottomNavigationBarItem(
             icon: const Icon(SbIcons.homeOutlined),
             activeIcon: const Icon(SbIcons.home),
-            label: AppLocalizations.of(context)!.appName.toUpperCase(),
+            label: l10n.appName,
             tooltip: 'Home',
           ),
           BottomNavigationBarItem(
             icon: const Icon(SbIcons.calculator),
             activeIcon: const Icon(SbIcons.calculator),
-            label: AppLocalizations.of(context)!.calculator.toUpperCase(),
+            label: l10n.navCalculator,
             tooltip: 'Calculator',
           ),
           BottomNavigationBarItem(
             icon: const Icon(SbIcons.architectureOutlined),
             activeIcon: const Icon(SbIcons.architecture),
-            label: AppLocalizations.of(context)!.design.toUpperCase(),
+            label: l10n.navDesign,
             tooltip: 'Design',
           ),
           BottomNavigationBarItem(
             icon: const Icon(SbIcons.folderCopyOutlined),
             activeIcon: const Icon(SbIcons.folderCopy),
-            label: AppLocalizations.of(context)!.project.toUpperCase(),
+            label: l10n.navProject,
             tooltip: 'Projects',
           ),
         ],

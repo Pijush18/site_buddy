@@ -1,9 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/constants/app_strings.dart';
-import 'package:site_buddy/core/constants/engineering_terms.dart';
-import 'package:site_buddy/core/constants/screen_titles.dart';
+import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -22,6 +19,7 @@ class GradientScreen extends ConsumerWidget {
     final state = ref.watch(gradientControllerProvider);
     final controller = ref.read(gradientControllerProvider.notifier);
     final colorScheme = theme.colorScheme;
+    final l10n = context.l10n;
 
     final bool isValid = state.rise != null && state.run != null;
 
@@ -32,16 +30,16 @@ class GradientScreen extends ConsumerWidget {
       String classificationLabel;
       switch (result.classification) {
         case GradientClassification.flat:
-          classificationLabel = EngineeringTerms.flat;
+          classificationLabel = l10n.labelFlat;
           break;
         case GradientClassification.mild:
-          classificationLabel = EngineeringTerms.mild;
+          classificationLabel = l10n.labelMild;
           break;
         case GradientClassification.moderate:
-          classificationLabel = EngineeringTerms.moderate;
+          classificationLabel = l10n.labelModerate;
           break;
         case GradientClassification.steep:
-          classificationLabel = EngineeringTerms.steep;
+          classificationLabel = l10n.labelSteep;
           break;
       }
 
@@ -53,34 +51,34 @@ class GradientScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  EngineeringTerms.resultSummary,
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  l10n.labelEstimationResults,
+                  style: theme.textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 const Divider(),
                 SbListItemTile(
-                  title: EngineeringTerms.percentage,
+                  title: l10n.labelPercentage,
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.percentage.toStringAsFixed(2)}%',
-                    style: Theme.of(context).textTheme.labelLarge!,
+                    style: theme.textTheme.labelLarge!,
                   ),
                 ),
                 SbListItemTile(
-                  title: EngineeringTerms.ratio,
+                  title: l10n.labelRatio,
                   onTap: () {}, // Detail view entry
                   trailing: Text(
-                    result.ratio == double.infinity ? EngineeringTerms.vertical : '1 : ${result.ratio.toStringAsFixed(2)}',
-                    style: Theme.of(context).textTheme.bodyLarge!,
+                    result.ratio == double.infinity ? l10n.labelVertical : '1 : ${result.ratio.toStringAsFixed(2)}',
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 SbListItemTile(
-                  title: EngineeringTerms.angle,
+                  title: l10n.labelAngle,
                   onTap: () {}, // Detail view entry
                   trailing: Text(
                     '${result.angle.toStringAsFixed(2)}°',
-                    style: Theme.of(context).textTheme.bodyLarge!,
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ),
                 const Divider(),
@@ -90,13 +88,13 @@ class GradientScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        EngineeringTerms.classification,
-                        style: Theme.of(context).textTheme.labelMedium!,
+                        l10n.labelClassification,
+                        style: theme.textTheme.labelMedium!,
                       ),
                       const SizedBox(height: SbSpacing.sm / 2),
                       Text(
                         classificationLabel,
-                        style: Theme.of(context).textTheme.titleMedium!,
+                        style: theme.textTheme.titleMedium!,
                       ),
                     ],
                   ),
@@ -104,14 +102,14 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  EngineeringTerms.slopeVisualization,
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  l10n.labelSlopeVisualization,
+                  style: theme.textTheme.titleMedium!,
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 SizedBox(
@@ -133,7 +131,7 @@ class GradientScreen extends ConsumerWidget {
     }
 
     return SbPage.scaffold(
-      title: ScreenTitles.gradientTool,
+      title: l10n.titleGradientEstimator,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -144,62 +142,62 @@ class GradientScreen extends ConsumerWidget {
               const SizedBox(width: SbSpacing.sm),
               Flexible(
                 child: Text(
-                  EngineeringTerms.slopeCalculator,
-                  style: Theme.of(context).textTheme.titleMedium!,
+                  l10n.labelSlopeCalculator,
+                  style: theme.textTheme.titleMedium!,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           SbInput(
-            label: EngineeringTerms.verticalRise,
+            label: l10n.labelVerticalRise,
             suffixIcon: const Icon(SbIcons.arrowUp),
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
-            label: EngineeringTerms.horizontalRun,
+            label: l10n.labelHorizontalRun,
             suffixIcon: const Icon(SbIcons.arrowForward),
             onChanged: controller.updateRun,
             errorText: runError,
           ),
 
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
-                label: AppStrings.clearAll,
+                label: l10n.actionClearAll,
                 icon: SbIcons.refresh,
                 onPressed: controller.reset,
               ),
               PrimaryCTA(
-                label: state.isLoading ? AppStrings.calculating : AppStrings.calculate,
+                label: l10n.actionCalculate,
                 icon: state.isLoading ? null : SbIcons.calculator,
                 isLoading: state.isLoading,
                 onPressed: isValid ? controller.calculate : null,
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: SbSpacing.lg),
 
           if (state.failure != null) ...[
             SbCard(
               child: Text(
                 state.failure!.message,
-                style: Theme.of(context).textTheme.bodyLarge!,
+                style: theme.textTheme.bodyLarge!,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.xl),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.xl),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           const _FieldReference(),
@@ -214,30 +212,33 @@ class _FieldReference extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          EngineeringTerms.fieldReference,
-          style: Theme.of(context).textTheme.titleMedium!,
+          l10n.labelFieldReference,
+          style: theme.textTheme.titleMedium!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.md)
+        const SizedBox(height: SbSpacing.sm), 
         SbCard(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              SbListItemTile(title: EngineeringTerms.sewerPipes, onTap: () {}, trailing: const Text(EngineeringTerms.sewerPipesRef)),
+              SbListItemTile(title: l10n.labelSewerPipes, onTap: () {}, trailing: Text(l10n.valSewerPipesRef)),
               const Divider(height: 1),
-              SbListItemTile(title: EngineeringTerms.roadCrossFall, onTap: () {}, trailing: const Text(EngineeringTerms.roadCrossFallRef)),
+              SbListItemTile(title: l10n.labelRoadCrossFall, onTap: () {}, trailing: Text(l10n.valRoadCrossFallRef)),
               const Divider(height: 1),
-              SbListItemTile(title: EngineeringTerms.wheelchairRamp, onTap: () {}, trailing: const Text(EngineeringTerms.wheelchairRampRef)),
+              SbListItemTile(title: l10n.labelWheelchairRamp, onTap: () {}, trailing: Text(l10n.valWheelchairRampRef)),
               const Divider(height: 1),
-              SbListItemTile(title: EngineeringTerms.earthworksBatter, onTap: () {}, trailing: const Text(EngineeringTerms.earthworksBatterRef)),
+              SbListItemTile(title: l10n.labelEarthworksBatter, onTap: () {}, trailing: Text(l10n.valEarthworksBatterRef)),
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.xl),
+        const SizedBox(height: SbSpacing.lg),
       ],
     );
   }
@@ -303,14 +304,3 @@ class _SlopeTrianglePainter extends CustomPainter {
     return oldDelegate.rise != rise || oldDelegate.run != run || oldDelegate.color != color;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
