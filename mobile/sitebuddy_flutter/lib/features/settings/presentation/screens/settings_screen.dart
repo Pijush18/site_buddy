@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,9 +10,7 @@ import 'package:site_buddy/core/enums/unit_system.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/error_strings.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
-import 'package:site_buddy/features/auth/domain/auth_repository.dart';
-import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
-import 'package:site_buddy/core/branding/branding_provider.dart';
+import 'package:site_buddy/features/auth/application/user_provider.dart';
 import 'package:go_router/go_router.dart';
 
 /// SCREEN: SettingsScreen
@@ -240,32 +239,18 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildAccountSection(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final authAsync = ref.watch(authStateProvider);
-        final subscriptionAsync = ref.watch(subscriptionStatusProvider);
+        final accountAsync = ref.watch(accountDataProvider);
 
-        return authAsync.when(
-          data: (user) {
-            if (user == null) return const SizedBox.shrink();
-            return subscriptionAsync.when(
-              data: (subscription) {
-                // WATCH the branding provider to get reactive updates of the profile
-                final branding = ref.watch(brandingProvider);
-                
-                return _buildProfileCard(
-                  context,
-                  ref,
-                  user,
-                  branding.profile.engineerName, // USE the real name from branding system
-                  subscription.plan,
-                  subscription.isPremium,
-                );
-              },
-              loading: () => _buildSmallLoadingState(),
-              error: (e, _) => _buildSmallErrorState(context, ErrorStrings.syncError),
-            );
+        return accountAsync.when(
+          data: (accountData) {
+            if (accountData == null) return const SizedBox.shrink();
+            return _buildProfileCard(context, ref, accountData);
           },
-          loading: () => _buildSmallLoadingState(),
-          error: (e, _) => _buildSmallErrorState(context, "Sync error"),
+          loading: () => const _AccountSkeleton(),
+          error: (e, _) => _AccountError(
+            message: ErrorStrings.syncError,
+            onRetry: () => ref.invalidate(accountDataProvider),
+          ),
         );
       },
     );
@@ -274,107 +259,115 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildProfileCard(
     BuildContext context,
     WidgetRef ref,
-    SiteUser user,
-    String displayName, // REPLACED developer name with dynamic name
-    String plan,
-    bool isPremium,
+    AccountData data,
   ) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final user = data.profile;
 
-    return SbSection(
-      child: Column(
-        children: [
-          SbCard(
-            padding: const EdgeInsets.all(SbSpacing.lg),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: Icon(SbIcons.account, size: 30, color: Colors.grey),
+    return Column(
+      children: [
+        // 1. Primary Account Info Card
+        SbCard(
+          padding: const EdgeInsets.all(SbSpacing.md),
+          child: Row(
+            children: [
+              GestureDetector(
+                onDoubleTap: () =>
+                    ref.read(profileControllerProvider.notifier).pickImage(),
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                  backgroundImage: user.profileImage != null
+                      ? FileImage(File(user.profileImage!))
+                      : null,
+                  child: user.profileImage == null
+                      ? Icon(
+                          SbIcons.account,
+                          size: 30,
+                          color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                        )
+                      : null,
                 ),
-                const SizedBox(width: SbSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        displayName, // NOW displays either the saved name or "Er. Pijush Debbarma" (default)
-                        style: textTheme.titleMedium,
+              ),
+              const SizedBox(width: SbSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.name.isEmpty ? AppStrings.developerName : user.name,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        user.email.isEmpty
-                            ? AppStrings.noEmailRegistered
-                            : user.email,
-                        style: textTheme.bodyMedium,
+                    ),
+                    Text(
+                      user.email.isEmpty
+                          ? AppStrings.noEmailRegistered
+                          : user.email,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
-                      const SizedBox(height: SbSpacing.sm),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
-                        child: Text(
-                          (isPremium ? AppStrings.premiumPlan : AppStrings.freePlan)
-                              .toUpperCase(),
-                          style: textTheme.labelMedium,
+                    ),
+                    const SizedBox(height: SbSpacing.xs),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SbSpacing.sm,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        (data.subscription.isPremium
+                                ? AppStrings.premiumPlan
+                                : AppStrings.freePlan)
+                            .toUpperCase(),
+                        style: textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SizedBox(height: SbSpacing.md),
-          SbCard(
-            padding: EdgeInsets.zero,
-            child: Column(
-              children: [
-                SbSettingsTile(
-                  icon: SbIcons.profile,
-                  title: AppStrings.editProfile,
-                  onTap: () => context.push('/settings/branding'), // FIXED: Now navigates to edit screen
-                ),
-                const Divider(height: 1, indent: 56),
-                SbSettingsTile(
-                  icon: SbIcons.payments,
-                  title: AppStrings.subscriptionBilling,
-                  onTap: () => context.push('/subscription'),
-                ),
-                const Divider(height: 1, indent: 56),
-                SbSettingsTile(
-                  icon: SbIcons.logout,
-                  title: AppStrings.logout,
-                  onTap: () async {
-                    await ref.read(authRepositoryProvider).logout();
-                    if (context.mounted) context.go('/login');
-                  },
-                ),
-              ],
-            ),
+        ),
+        
+        const SizedBox(height: SbSpacing.md),
+
+        // 2. Action List Card
+        SbCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              SbSettingsTile(
+                icon: SbIcons.profile,
+                title: AppStrings.editProfile,
+                onTap: () => context.push('/settings/branding'),
+              ),
+              const Divider(height: 1, indent: 56, endIndent: SbSpacing.md),
+              SbSettingsTile(
+                icon: SbIcons.payments,
+                title: AppStrings.subscriptionBilling,
+                onTap: () => context.push('/subscription'),
+              ),
+              const Divider(height: 1, indent: 56, endIndent: SbSpacing.md),
+              SbSettingsTile(
+                icon: SbIcons.logout,
+                title: AppStrings.logout,
+                onTap: () async {
+                  await ref.read(authRepositoryProvider).logout();
+                  if (context.mounted) context.go('/login');
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSmallLoadingState() {
-    return Container(
-      padding: const EdgeInsets.all(SbSpacing.md),
-      child: const Center(child: CircularProgressIndicator()),
-    );
-  }
-
-  Widget _buildSmallErrorState(BuildContext context, String message) {
-    final textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.all(SbSpacing.md),
-      child: Row(
-        children: [
-          const Icon(Icons.error_outline, color: Colors.red, size: 20),
-          const SizedBox(width: SbSpacing.sm),
-          Text(message, style: textTheme.bodyMedium),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -421,5 +414,105 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
+/// PRIVATE WIDGET: _AccountSkeleton
+/// Provides a non-blocking placeholder for account loading.
+class _AccountSkeleton extends StatelessWidget {
+  const _AccountSkeleton();
 
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final greyColor = theme.colorScheme.surfaceContainerHighest;
 
+    return Column(
+      children: [
+        SbCard(
+          padding: const EdgeInsets.all(SbSpacing.md),
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: SbSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(height: 14, width: 120, color: greyColor),
+                    const SizedBox(height: 8),
+                    Container(height: 12, width: 180, color: greyColor),
+                    const SizedBox(height: 8),
+                    Container(height: 10, width: 60, color: greyColor),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: SbSpacing.md),
+        SbCard(
+          padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+          child: Column(
+            children: List.generate(3, (index) => Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SbSpacing.md,
+                vertical: SbSpacing.sm,
+              ),
+              child: Row(
+                children: [
+                  Container(width: 24, height: 24, color: greyColor),
+                  const SizedBox(width: 16),
+                  Container(height: 12, width: 100, color: greyColor),
+                ],
+              ),
+            )),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// PRIVATE WIDGET: _AccountError
+class _AccountError extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+
+  const _AccountError({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SbCard(
+      padding: const EdgeInsets.all(SbSpacing.md),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.error_outline, color: theme.colorScheme.error, size: 24),
+              const SizedBox(width: SbSpacing.sm),
+              Expanded(
+                child: Text(
+                  message,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: SbSpacing.sm),
+          TextButton(
+            onPressed: onRetry,
+            child: const Text(AppStrings.reset), 
+          ),
+        ],
+      ),
+    );
+  }
+}

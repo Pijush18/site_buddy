@@ -5,27 +5,19 @@
 /// Layer: application/controllers
 ///
 /// PURPOSE:
-/// Manages state for the Cement Bag Estimator.
-///
-/// RESPONSIBILITIES:
-/// - Store dimension inputs, mix ratio, waste, price
-/// - Invoke CalculateCementUseCase
-/// - Handle validation and errors
+/// Manages state for the Cement Bag Estimator with Save on Calculate behavior.
 ///
 /// ----------------------------------------------
 library;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/cement_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_cement_usecase.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/core/logging/app_logger.dart';
+import 'package:site_buddy/shared/application/services/history_saver.dart';
 
 class Failure {
   final String message;
@@ -44,6 +36,7 @@ class CementState {
   final CementResult? result;
   final Failure? failure;
   final bool isLoading;
+  final bool hasSaved;
 
   const CementState({
     this.length,
@@ -57,6 +50,7 @@ class CementState {
     this.result,
     this.failure,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   CementState copyWith({
@@ -71,6 +65,7 @@ class CementState {
     CementResult? result,
     Failure? failure,
     bool? isLoading,
+    bool? hasSaved,
     bool clearResult = false,
     bool clearFailure = false,
   }) {
@@ -86,6 +81,7 @@ class CementState {
       result: clearResult ? null : (result ?? this.result),
       failure: clearFailure ? null : (failure ?? this.failure),
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 }
@@ -103,68 +99,68 @@ class CementController extends Notifier<CementState> {
 
   void updateLength(String value) {
     if (value.isEmpty) {
-      state = state.copyWith(length: null, clearResult: true);
+      state = state.copyWith(length: null, clearResult: true, hasSaved: false);
       return;
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(length: v, clearFailure: true);
+      state = state.copyWith(length: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateWidth(String value) {
     if (value.isEmpty) {
-      state = state.copyWith(width: null, clearResult: true);
+      state = state.copyWith(width: null, clearResult: true, hasSaved: false);
       return;
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(width: v, clearFailure: true);
+      state = state.copyWith(width: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateDepth(String value) {
     if (value.isEmpty) {
-      state = state.copyWith(depth: null, clearResult: true);
+      state = state.copyWith(depth: null, clearResult: true, hasSaved: false);
       return;
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(depth: v, clearFailure: true);
+      state = state.copyWith(depth: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateMixCement(String value) {
     final v = int.tryParse(value);
     if (v != null) {
-      state = state.copyWith(mixCement: v, clearFailure: true);
+      state = state.copyWith(mixCement: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateMixSand(String value) {
     final v = int.tryParse(value);
     if (v != null) {
-      state = state.copyWith(mixSand: v, clearFailure: true);
+      state = state.copyWith(mixSand: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateMixAggregate(String value) {
     final v = int.tryParse(value);
     if (v != null) {
-      state = state.copyWith(mixAggregate: v, clearFailure: true);
+      state = state.copyWith(mixAggregate: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updateWaste(String value) {
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(wastePercent: v, clearFailure: true);
+      state = state.copyWith(wastePercent: v, clearFailure: true, hasSaved: false);
     }
   }
 
   void updatePrice(String value) {
     final v = double.tryParse(value);
-    state = state.copyWith(pricePerBag: v);
+    state = state.copyWith(pricePerBag: v, hasSaved: false);
   }
 
   void reset() {
@@ -179,6 +175,7 @@ class CementController extends Notifier<CementState> {
       wastePercent: params['waste'] as double?,
       clearResult: true,
       clearFailure: true,
+      hasSaved: false,
     );
 
     final mixString = params['mix'] as String?;
@@ -226,50 +223,55 @@ class CementController extends Notifier<CementState> {
         wastePercent: waste,
         pricePerBag: price ?? 0,
       );
-      state = state.copyWith(result: res, isLoading: false);
 
-      // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      // Session-based architecture: Watch the project session service for reactivity
-      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
-      final projectSession = ref.watch(projectSessionServiceProvider);
-      final projectId = projectSession.getActiveProjectId();
-
-      // DEBUG: Log data usage and save
-      debugPrint('[Usage] Using project: $projectId');
-      debugPrint('[History] Saving for project: $projectId');
-      AppLogger.debug('[History] Saving for project: $projectId', tag: 'CementController');
-
-      final entry = CalculationHistoryEntry(
-        id: const Uuid().v4(),
-        projectId: projectId,
-        calculationType: CalculationType.cement,
-        timestamp: DateTime.now(),
-        inputParameters: {
-          'length': length,
-          'width': width,
-          'depth': depth,
-          'mix': '$mixCement:$mixSand:$mixAggregate',
-          'waste': waste,
-        },
-        resultSummary:
-            '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
-        resultData: res.toMap(),
+      state = state.copyWith(
+        result: res, 
+        isLoading: false,
+        hasSaved: false,
       );
 
-      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      await _saveToHistory(res);
 
-      // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromCement(
-        res.toMap(),
-        entry.inputParameters,
-        projectId,
-      );
-      await ref.read(historyRepositoryProvider).save(report);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint("❌ Calculation failed: $e");
+      debugPrintStack(stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         failure: Failure(e.toString().replaceAll('Exception: ', '')),
       );
+    }
+  }
+
+  Future<void> _saveToHistory(CementResult result) async {
+    if (state.hasSaved) return;
+
+    final project = ref.read(activeProjectProvider);
+    if (project == null) return;
+
+    try {
+      final inputParams = {
+        'length': state.length,
+        'width': state.width,
+        'depth': state.depth,
+        'mix': '${state.mixCement}:${state.mixSand}:${state.mixAggregate}',
+        'waste': state.wastePercent,
+      };
+
+      final report = DesignReportMapper.fromCement(
+        result.toMap(),
+        inputParams,
+        project.id,
+      );
+
+      await HistorySaver.save(
+        ref: ref,
+        report: report,
+      );
+
+      state = state.copyWith(hasSaved: true);
+
+    } catch (e) {
+      debugPrint("❌ Save failed: $e");
     }
   }
 }

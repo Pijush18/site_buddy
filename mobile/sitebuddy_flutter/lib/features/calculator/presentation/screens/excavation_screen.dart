@@ -108,6 +108,14 @@ class ExcavationScreen extends ConsumerWidget {
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
             const SizedBox(height: SbSpacing.md),
+            PrimaryCTA(
+              label: 'Export PDF',
+              icon: Icons.picture_as_pdf,
+              onPressed: () {
+                debugPrint("Export PDF clicked - TODO: implement");
+              },
+            ),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

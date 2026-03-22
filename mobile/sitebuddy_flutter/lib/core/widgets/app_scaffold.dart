@@ -88,7 +88,7 @@ class AppScaffold extends ConsumerWidget {
       },
       body: SafeArea(
         top: title == null,
-        bottom: false,
+        bottom: true,
         child: Padding(
           padding: padding ?? EdgeInsets.zero,
           child: body,

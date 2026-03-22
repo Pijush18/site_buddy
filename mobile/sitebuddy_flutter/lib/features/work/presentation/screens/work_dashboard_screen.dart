@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/features/work/application/controllers/work_controller.dart';
 import 'package:site_buddy/features/work/domain/entities/task.dart';
 import 'package:site_buddy/features/work/domain/entities/meeting.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 class WorkDashboardScreen extends ConsumerWidget {
   const WorkDashboardScreen({super.key});
@@ -69,7 +70,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           title: t.title,
           subtitle: 'Project ${t.projectId} • Due ${t.dueDate.toLocal().toString().split(' ').first}',
           onTap: () {
-            context.push('/tasks/detail', extra: t);
+            context.push(AppRoutes.tasksDetail, extra: t);
           },
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -110,7 +111,7 @@ class WorkDashboardScreen extends ConsumerWidget {
         title: m.title,
         subtitle: '${m.meetingDate.toLocal().toString().split(' ').first} • ${m.mode.name}',
         onTap: () {
-          context.push('/meetings/detail', extra: m);
+          context.push(AppRoutes.meetingsDetail, extra: m);
         },
         trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
@@ -160,7 +161,7 @@ class WorkDashboardScreen extends ConsumerWidget {
 
                     onTap: () {
                       context.pop();
-                      context.push('/tasks/create');
+                      context.push(AppRoutes.tasksCreate);
                     },
                   ),
                   SbListItemTile(
@@ -169,7 +170,7 @@ class WorkDashboardScreen extends ConsumerWidget {
 
                     onTap: () {
                       context.pop();
-                      context.push('/meetings/create');
+                      context.push(AppRoutes.meetingsCreate);
                     },
                   ),
                   const SizedBox(height: SbSpacing.lg),

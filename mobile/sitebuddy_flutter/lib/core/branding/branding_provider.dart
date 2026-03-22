@@ -76,7 +76,9 @@ class BrandingNotifier extends Notifier<BrandingState> {
   Future<void> _fetchFromBackend() async {
     try {
       final backend = ref.read(backendClientProvider);
-      final rawData = await backend.fetchProfile();
+      final rawData = await backend
+          .fetchProfile()
+          .timeout(const Duration(seconds: 5));
       
       if (rawData.isNotEmpty) {
         final serverProfile = BrandingModel.fromMap(rawData);

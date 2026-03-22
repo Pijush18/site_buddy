@@ -26,15 +26,20 @@ class HiveCalculationRepository implements CalculationRepository {
         _connectivityService = connectivityService,
         _projectRepository = projectRepository;
 
-  /// Helper to access box (Safe fallback if not pre-opened).
-  Future<Box<CalculationHistoryEntry>> _getBox() async {
-    return await Hive.openBox<CalculationHistoryEntry>(_boxName);
+  /// Helper to access pre-opened box (consistent with other repositories).
+  Box<CalculationHistoryEntry> get _box {
+    if (!Hive.isBoxOpen(_boxName)) {
+      throw StateError(
+        'Hive box "$_boxName" must be opened during AppInitializer',
+      );
+    }
+    return Hive.box<CalculationHistoryEntry>(_boxName);
   }
 
   /// Ensures cache is populated and sorted.
   Future<List<CalculationHistoryEntry>> _getCache() async {
     if (_cache == null) {
-      final box = await _getBox();
+      final box = _box;
       _cache = box.values.toList();
       _cache!.sort((a, b) => b.timestamp.compareTo(a.timestamp));
     }
@@ -51,7 +56,7 @@ class HiveCalculationRepository implements CalculationRepository {
 
     try {
       // 2. Update Hive - await ensures write completes before logging success
-      final box = await _getBox();
+      final box = _box;
       await box.put(entry.id, entry);
       
       // 3. Update Cache - only after Hive write succeeds
@@ -104,7 +109,7 @@ class HiveCalculationRepository implements CalculationRepository {
   Future<void> deleteEntry(String id) async {
     try {
       // 1. Update Hive
-      final box = await _getBox();
+      final box = _box;
       await box.delete(id);
       
       // 2. Update Cache
@@ -130,7 +135,7 @@ class HiveCalculationRepository implements CalculationRepository {
       }
 
       // 2. Delete from Hive
-      final box = await _getBox();
+      final box = _box;
       for (final entry in entriesToDelete) {
         await box.delete(entry.id);
       }

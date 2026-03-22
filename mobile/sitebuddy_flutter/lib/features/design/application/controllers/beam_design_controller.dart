@@ -3,9 +3,9 @@ import 'package:site_buddy/shared/domain/models/design/beam_design_state.dart';
 import 'package:site_buddy/shared/domain/models/design/beam_type.dart';
 import 'package:site_buddy/features/design/domain/services/beam_design_domain_service.dart';
 import 'package:site_buddy/features/design/domain/usecases/save_beam_design_usecase.dart';
+import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/core/services/design_report_service.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
@@ -44,6 +44,9 @@ class BeamDesignController extends Notifier<BeamDesignState> {
   Future<void> saveToHistory(String name) async {
     final useCase = ref.read(saveBeamDesignUseCaseProvider);
     await useCase.execute(state);
+
+    // Invalidate history provider to trigger UI refresh
+    ref.invalidate(projectHistoryProvider);
   }
 
   void updateInputs({

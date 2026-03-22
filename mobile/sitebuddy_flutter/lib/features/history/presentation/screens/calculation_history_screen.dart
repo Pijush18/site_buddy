@@ -1,37 +1,16 @@
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:intl/intl.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 
 /// FIX: Get history entries from session - Session-based architecture
-/// Watches projectSessionServiceProvider for reactivity - auto-updates when project switches
-/// NOTE: Removed autoDispose to prevent provider disposal on navigation,
 /// which was causing inconsistent history when switching projects.
-final projectHistoryProvider =
-    FutureProvider<List<CalculationHistoryEntry>>((ref) {
-      // Session-based: Watch the project session service for reactivity
-      final projectSession = ref.watch(projectSessionServiceProvider);
-      final activeProject = projectSession.getActiveProject();
-      
-      // If no active project, return empty list
-      if (activeProject == null) {
-        return Future.value([]);
-      }
-      
-      final projectId = activeProject.id;
-      // DEBUG: Log when history is being fetched
-      debugPrint('[History] Fetch for project: $projectId');
-      return ref
-          .read(sharedHistoryRepositoryProvider)
-          .getEntriesByProject(projectId);
-    });
 
 class CalculationHistoryScreen extends ConsumerWidget {
   const CalculationHistoryScreen({super.key});
@@ -98,7 +77,7 @@ class _HistoryEntryCard extends StatelessWidget {
         subtitle: 'ID: ${entry.id.substring(0, 8)}...',
         trailing: dateStr,
         onTap: () {
-          context.push('/history-detail', extra: entry);
+          context.push(AppRoutes.historyDetail, extra: entry);
         },
       ),
     );

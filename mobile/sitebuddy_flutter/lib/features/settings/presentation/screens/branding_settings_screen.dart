@@ -1,10 +1,8 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-
 import 'package:site_buddy/core/branding/branding_provider.dart';
-
+import 'package:site_buddy/features/auth/application/user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,8 +23,15 @@ class _BrandingSettingsScreenState
   void initState() {
     super.initState();
     final branding = ref.read(brandingProvider).profile;
+    final user = ref.read(userProvider).value;
+    
     _companyController = TextEditingController(text: branding.companyName);
-    _engineerController = TextEditingController(text: branding.engineerName);
+    // Prefer name from User model for the "Engineer Name" field
+    _engineerController = TextEditingController(
+      text: (user?.name != null && user!.name.isNotEmpty) 
+          ? user.name 
+          : branding.engineerName
+    );
   }
 
   @override
@@ -43,27 +48,36 @@ class _BrandingSettingsScreenState
     if (company.isEmpty || engineer.isEmpty) {
       SbFeedback.showToast(
         context: context,
-        message: 'Company and Engineer names cannot be securely blank.',
+        message: 'Company and Engineer names cannot be blank.',
       );
       return;
     }
 
     try {
+      // 1. Update Profile Controller (User model - name and persistence)
+      await ref.read(profileControllerProvider.notifier).updateName(engineer);
+      
+      // 2. Update Branding Provider (Report branding - company and engineer name)
       await ref.read(brandingProvider.notifier).updateProfile(
             companyName: company,
             engineerName: engineer,
           );
-      if (mounted) context.pop();
-    } catch (_) {
-      // Error handled by provider listener
-    }
-
-    if (mounted) {
-      SbFeedback.showToast(
-        context: context,
-        message: 'Settings saved successfully!',
-      );
-      context.pop();
+      
+      if (mounted) {
+        SbFeedback.showToast(
+          context: context,
+          message: 'Profile updated successfully!',
+        );
+        context.pop();
+      }
+    } catch (e) {
+      if (mounted) {
+        SbFeedback.showToast(
+          context: context,
+          message: 'Update failed: $e',
+          isError: true,
+        );
+      }
     }
   }
 

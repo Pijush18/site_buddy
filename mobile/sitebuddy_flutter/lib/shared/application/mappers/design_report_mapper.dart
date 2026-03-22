@@ -305,8 +305,8 @@ class DesignReportMapper {
     );
   }
 
-  /// Converts Brick Wall results to a unified [DesignReport].
-  static DesignReport fromBrick(dynamic result, Map<String, dynamic> inputs, String projectId) {
+  /// Converts [BrickWallResult] to a unified [DesignReport].
+  static DesignReport fromBrickWall(dynamic result, Map<String, dynamic> inputs, String projectId) {
     AppLogger.debug('Mapping Brick estimation to DesignReport (Project: $projectId)', tag: 'Mapper');
     final resultsMap = result is Map<String, dynamic> ? result : (result is Map ? result.cast<String, dynamic>() : <String, dynamic>{});
     return DesignReport(
@@ -337,6 +337,28 @@ class DesignReportMapper {
       summary: summary,
       inputs: _normalize(inputs),
       results: _normalize(results),
+    );
+  }
+
+  /// NEW: Converts a Safety Check selection to a unified [DesignReport].
+  static DesignReport fromSafetyCheck({
+    required DesignType type,
+    required Map<String, dynamic> option,
+    required Map<String, dynamic> params,
+    required String projectId,
+  }) {
+    final id = _uuid.v4();
+    AppLogger.debug('Mapping Safety Check selection to DesignReport (Project: $projectId)', tag: 'Mapper');
+    
+    return DesignReport(
+      id: id,
+      designType: type,
+      timestamp: DateTime.now(),
+      projectId: projectId,
+      isSafe: true, // Selected options from optimization are assumed safe
+      summary: '${type.name.toUpperCase()} Selection: ${option['title'] ?? 'Optimized Variant'}',
+      inputs: _normalize(params),
+      results: _normalize(option),
     );
   }
 

@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:site_buddy/features/calculator/domain/entities/sand_result.dart';
 import 'package:site_buddy/features/calculator/domain/usecases/calculate_sand_usecase.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/shared/application/services/history_saver.dart';
 
 final sandControllerProvider = NotifierProvider<SandController, SandState>(
   SandController.new,
@@ -21,6 +19,7 @@ class SandState {
   final SandResult? result;
   final String? error;
   final bool isLoading;
+  final bool hasSaved;
 
   const SandState({
     this.length,
@@ -30,6 +29,7 @@ class SandState {
     this.result,
     this.error,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   SandState copyWith({
@@ -40,6 +40,7 @@ class SandState {
     SandResult? result,
     String? error,
     bool? isLoading,
+    bool? hasSaved,
     bool clearResult = false,
     bool clearError = false,
   }) {
@@ -51,6 +52,7 @@ class SandState {
       result: clearResult ? null : (result ?? this.result),
       error: clearError ? null : error,
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 }
@@ -68,7 +70,7 @@ class SandController extends Notifier<SandState> {
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(length: v, clearError: true);
+      state = state.copyWith(length: v, clearError: true, hasSaved: false);
     }
   }
 
@@ -79,7 +81,7 @@ class SandController extends Notifier<SandState> {
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(width: v, clearError: true);
+      state = state.copyWith(width: v, clearError: true, hasSaved: false);
     }
   }
 
@@ -90,7 +92,7 @@ class SandController extends Notifier<SandState> {
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(depth: v, clearError: true);
+      state = state.copyWith(depth: v, clearError: true, hasSaved: false);
     }
   }
 
@@ -101,7 +103,7 @@ class SandController extends Notifier<SandState> {
     }
     final v = double.tryParse(value);
     if (v != null) {
-      state = state.copyWith(ratePerCubicMeter: v, clearError: true);
+      state = state.copyWith(ratePerCubicMeter: v, clearError: true, hasSaved: false);
     }
   }
 
@@ -110,8 +112,6 @@ class SandController extends Notifier<SandState> {
   }
 
   Future<void> calculate() async {
-    state = state.copyWith(isLoading: true, clearError: true);
-
     final length = state.length;
     final width = state.width;
     final depth = state.depth;
@@ -124,6 +124,8 @@ class SandController extends Notifier<SandState> {
       );
       return;
     }
+
+    state = state.copyWith(isLoading: true, clearError: true);
 
     // Small delay for UX consistency
     await Future.delayed(const Duration(milliseconds: 300));
@@ -140,55 +142,59 @@ class SandController extends Notifier<SandState> {
         result: result,
         isLoading: false,
         clearError: true,
+        hasSaved: false,
       );
 
-      // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      // Session-based architecture: Watch the project session service for reactivity
-      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
-      final projectSession = ref.watch(projectSessionServiceProvider);
-      final projectId = projectSession.getActiveProjectId();
+      await _saveToHistory(result);
 
-      // DEBUG: Log data usage and save
-      debugPrint('[Usage] Using project: $projectId');
-      debugPrint('[History] Saving for project: $projectId');
-
-      final entry = CalculationHistoryEntry(
-        id: const Uuid().v4(),
-        projectId: projectId,
-        calculationType: CalculationType.sand,
-        timestamp: DateTime.now(),
-        inputParameters: {
-          'length': length,
-          'width': width,
-          'depth': depth,
-          'rate': state.ratePerCubicMeter,
-        },
-        resultSummary:
-            '${result.dryVolume.toStringAsFixed(1)} m³ Sand Estimated',
-        resultData: result.toMap(),
-      );
-
-      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
-
-      // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromSand(
-        result.toMap(),
-        entry.inputParameters,
-        projectId,
-      );
-      await ref.read(historyRepositoryProvider).save(report);
-    } on ArgumentError catch (e) {
+    } on ArgumentError catch (e, st) {
+      debugPrint("❌ Calculation failed: $e");
+      debugPrintStack(stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         error: e.message ?? 'Invalid input',
         clearResult: true,
       );
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint("❌ Calculation failed: $e");
+      debugPrintStack(stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         error: 'An unexpected error occurred',
         clearResult: true,
       );
+    }
+  }
+
+  Future<void> _saveToHistory(SandResult result) async {
+    if (state.hasSaved) return;
+
+    final project = ref.read(activeProjectProvider);
+    if (project == null) return;
+
+    try {
+      final inputParams = {
+        'length': state.length,
+        'width': state.width,
+        'depth': state.depth,
+        'rate': state.ratePerCubicMeter,
+      };
+
+      final report = DesignReportMapper.fromSand(
+        result.toMap(),
+        inputParams,
+        project.id,
+      );
+
+      await HistorySaver.save(
+        ref: ref,
+        report: report,
+      );
+
+      state = state.copyWith(hasSaved: true);
+
+    } catch (e) {
+      debugPrint("❌ Save failed: $e");
     }
   }
 
@@ -200,6 +206,7 @@ class SandController extends Notifier<SandState> {
       ratePerCubicMeter: (params['rate'] as num?)?.toDouble(),
       clearResult: true,
       clearError: true,
+      hasSaved: false,
     );
     calculate();
   }

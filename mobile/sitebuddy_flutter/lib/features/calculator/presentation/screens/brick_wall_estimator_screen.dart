@@ -180,6 +180,16 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           // ── SECTION 5: RESULTS ─────────────────────────────────────────
           if (state.result != null)
             _ResultSection(result: state.result!),
+          if (state.result != null)
+            SbSection(
+              child: PrimaryCTA(
+                label: 'Export PDF',
+                icon: Icons.picture_as_pdf,
+                onPressed: () {
+                  debugPrint("Export PDF clicked - TODO: implement");
+                },
+              ),
+            ),
 
           // ── SECTION 6: COMPLIANCE FOOTNOTE ──────────────────────────────
           Padding(

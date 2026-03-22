@@ -5,13 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/design/application/controllers/slab_design_controller.dart';
+import 'package:site_buddy/features/design/application/controllers/slab_safety_controller.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/design_advisor/design_advisor_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
 import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
 import 'package:site_buddy/core/services/design_advisor_service.dart';
 
-import 'package:site_buddy/core/optimization/optimization_option.dart';
 
 class SlabSafetyScreen extends ConsumerStatefulWidget {
   const SlabSafetyScreen({super.key});
@@ -21,7 +21,6 @@ class SlabSafetyScreen extends ConsumerStatefulWidget {
 }
 
 class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
-  OptimizationOption? _selectedOption;
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +50,8 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
             onPressed: () async {
               debugPrint('CTA CLICKED: Export PDF');
               
-              final optimizationResult = ref.read(slabOptimizationProvider);
-              if (optimizationResult.options.isNotEmpty && _selectedOption == null) {
+              final safetyState = ref.read(slabSafetyControllerProvider);
+              if (optimizationResult.options.isNotEmpty && safetyState.selectedOption == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Please select an option first')),
                 );
@@ -86,8 +85,8 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
           icon: const Icon(Icons.share_outlined),
           tooltip: 'Share Report',
           onPressed: () async {
-            final optimizationResult = ref.read(slabOptimizationProvider);
-            if (optimizationResult.options.isNotEmpty && _selectedOption == null) {
+            final safetyState = ref.read(slabSafetyControllerProvider);
+            if (optimizationResult.options.isNotEmpty && safetyState.selectedOption == null) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Please select an option first')),
               );
@@ -157,9 +156,8 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
                 options: optimizationResult.options,
                 onOptionSelected: (opt) {
                   debugPrint('OPTION CLICKED: Select Option ($opt)');
-                  setState(() {
-                    _selectedOption = opt;
-                  });
+                  ref.read(slabSafetyControllerProvider.notifier).selectOption(opt);
+                  
                   final thickness = opt.parameters['thickness'] as double;
                   ref
                       .read(slabDesignControllerProvider.notifier)

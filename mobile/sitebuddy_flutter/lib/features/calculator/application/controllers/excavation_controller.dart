@@ -1,15 +1,27 @@
+/// FILE HEADER
+/// ----------------------------------------------
+/// File: excavation_controller.dart
+/// Feature: calculator
+/// Layer: application/controllers
+///
+/// PURPOSE:
+/// Manages state for the Excavation Volume Estimator with Save on Calculate behavior.
+///
+/// ----------------------------------------------
+library;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
+
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/excavation_state.dart';
-import 'package:site_buddy/shared/domain/models/prefill_data.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/shared/application/services/history_saver.dart';
+import 'package:site_buddy/shared/domain/models/excavation_result.dart';
+import 'package:site_buddy/shared/domain/models/prefill_data.dart';
 
 final excavationProvider =
     NotifierProvider<ExcavationController, ExcavationState>(
@@ -29,6 +41,7 @@ class ExcavationController extends Notifier<ExcavationState> {
       depthInput: data.depth?.toString() ?? state.depthInput,
       clearFailure: true,
       clearResult: true,
+      hasSaved: false,
     );
 
     if (data.length != null && data.width != null && data.depth != null) {
@@ -37,23 +50,17 @@ class ExcavationController extends Notifier<ExcavationState> {
   }
 
   void updateLength(String value) =>
-      state = state.copyWith(lengthInput: value, clearFailure: true);
+      state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
   void updateWidth(String value) =>
-      state = state.copyWith(widthInput: value, clearFailure: true);
+      state = state.copyWith(widthInput: value, clearFailure: true, hasSaved: false);
   void updateDepth(String value) =>
-      state = state.copyWith(depthInput: value, clearFailure: true);
+      state = state.copyWith(depthInput: value, clearFailure: true, hasSaved: false);
   void updateClearance(String value) =>
-      state = state.copyWith(clearanceInput: value, clearFailure: true);
+      state = state.copyWith(clearanceInput: value, clearFailure: true, hasSaved: false);
   void updateSwellFactor(String value) =>
-      state = state.copyWith(swellFactorInput: value, clearFailure: true);
+      state = state.copyWith(swellFactorInput: value, clearFailure: true, hasSaved: false);
 
   Future<void> calculate() async {
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-      clearResult: true,
-    );
-
     final l = Validators.parsePositiveNumber(state.lengthInput, 'Length');
     final w = Validators.parsePositiveNumber(state.widthInput, 'Width');
     final d = Validators.parsePositiveNumber(state.depthInput, 'Depth');
@@ -67,6 +74,11 @@ class ExcavationController extends Notifier<ExcavationState> {
     if (w.failure != null) return _onError(w.failure!);
     if (d.failure != null) return _onError(d.failure!);
 
+    state = state.copyWith(
+      isLoading: true,
+      clearFailure: true,
+    );
+
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
@@ -77,45 +89,52 @@ class ExcavationController extends Notifier<ExcavationState> {
         clearance: c.value ?? 0.3,
         swellFactor: s.value ?? 1.25,
       );
-      state = state.copyWith(isLoading: false, result: res);
 
-      // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      // Session-based architecture: Watch the project session service for reactivity
-      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
-      final projectSession = ref.watch(projectSessionServiceProvider);
-      final projectId = projectSession.getActiveProjectId();
-
-      // DEBUG: Log data usage and save
-      debugPrint('[Usage] Using project: $projectId');
-      debugPrint('[History] Saving for project: $projectId');
-
-      final entry = CalculationHistoryEntry(
-        id: const Uuid().v4(),
-        projectId: projectId,
-        calculationType: CalculationType.excavation,
-        timestamp: DateTime.now(),
-        inputParameters: {
-          'length': l.value,
-          'width': w.value,
-          'depth': d.value,
-          'clearance': c.value,
-          'swell': s.value,
-        },
-        resultSummary: '${res.volumeM3.toStringAsFixed(1)} m³ Volume Estimated',
-        resultData: res.toMap(),
+      state = state.copyWith(
+        isLoading: false, 
+        result: res,
+        hasSaved: false,
       );
 
-      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      await _saveToHistory(res);
 
-      // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromExcavation(
-        res.toMap(),
-        entry.inputParameters,
-        projectId,
-      );
-      await ref.read(historyRepositoryProvider).save(report);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint("❌ Calculation failed: $e");
+      debugPrintStack(stackTrace: st);
       _onError(AppFailure(e.toString()));
+    }
+  }
+
+  Future<void> _saveToHistory(ExcavationResult result) async {
+    if (state.hasSaved) return;
+
+    final project = ref.read(activeProjectProvider);
+    if (project == null) return;
+
+    try {
+      final inputParams = {
+        'length': state.lengthInput,
+        'width': state.widthInput,
+        'depth': state.depthInput,
+        'clearance': state.clearanceInput,
+        'swell': state.swellFactorInput,
+      };
+
+      final report = DesignReportMapper.fromExcavation(
+        result.toMap(),
+        inputParams,
+        project.id,
+      );
+
+      await HistorySaver.save(
+        ref: ref,
+        report: report,
+      );
+
+      state = state.copyWith(hasSaved: true);
+
+    } catch (e) {
+      debugPrint("❌ Save failed: $e");
     }
   }
 
@@ -128,6 +147,7 @@ class ExcavationController extends Notifier<ExcavationState> {
       swellFactorInput: params['swell']?.toString() ?? '',
       clearResult: true,
       clearFailure: true,
+      hasSaved: false,
     );
     calculate();
   }

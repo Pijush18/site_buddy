@@ -9,6 +9,7 @@ class ShutteringState {
   final ShutteringResult? result;
   final AppFailure? failure;
   final bool isLoading;
+  final bool hasSaved;
 
   const ShutteringState({
     this.lengthInput = '',
@@ -18,6 +19,7 @@ class ShutteringState {
     this.result,
     this.failure,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   ShutteringState copyWith({
@@ -28,6 +30,7 @@ class ShutteringState {
     ShutteringResult? result,
     AppFailure? failure,
     bool? isLoading,
+    bool? hasSaved,
     bool clearResult = false,
     bool clearFailure = false,
   }) {
@@ -39,6 +42,7 @@ class ShutteringState {
       result: clearResult ? null : (result ?? this.result),
       failure: clearFailure ? null : (failure ?? this.failure),
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 

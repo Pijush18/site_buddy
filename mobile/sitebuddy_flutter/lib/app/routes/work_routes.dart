@@ -16,44 +16,46 @@ final workRoutes = [
           state: state,
           child: const WorkDashboardScreen(),
         ),
-      ),
-      GoRoute(
-        path: '/tasks/detail',
-        name: 'taskDetail',
-        pageBuilder: (context, state) {
-          final task = state.extra as Task;
-          return AppTransitions.fadeSlide(
-            state: state,
-            child: TaskDetailScreen(task: task),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/tasks/create',
-        name: 'createTask',
-        pageBuilder: (context, state) => AppTransitions.fadeSlide(
-          state: state,
-          child: const CreateTaskScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/meetings/detail',
-        name: 'meetingDetail',
-        pageBuilder: (context, state) {
-          final meeting = state.extra as Meeting;
-          return AppTransitions.fadeSlide(
-            state: state,
-            child: MeetingDetailScreen(meeting: meeting),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/meetings/create',
-        name: 'createMeeting',
-        pageBuilder: (context, state) => AppTransitions.fadeSlide(
-          state: state,
-          child: const CreateMeetingScreen(),
-        ),
+        routes: [
+          GoRoute(
+            path: 'detail',
+            name: 'taskDetail',
+            pageBuilder: (context, state) {
+              final task = state.extra as Task;
+              return AppTransitions.fadeSlide(
+                state: state,
+                child: TaskDetailScreen(task: task),
+              );
+            },
+          ),
+          GoRoute(
+            path: 'create',
+            name: 'createTask',
+            pageBuilder: (context, state) => AppTransitions.fadeSlide(
+              state: state,
+              child: const CreateTaskScreen(),
+            ),
+          ),
+          GoRoute(
+            path: 'meetings/detail',
+            name: 'meetingDetail',
+            pageBuilder: (context, state) {
+              final meeting = state.extra as Meeting;
+              return AppTransitions.fadeSlide(
+                state: state,
+                child: MeetingDetailScreen(meeting: meeting),
+              );
+            },
+          ),
+          GoRoute(
+            path: 'meetings/create',
+            name: 'createMeeting',
+            pageBuilder: (context, state) => AppTransitions.fadeSlide(
+              state: state,
+              child: const CreateMeetingScreen(),
+            ),
+          ),
+        ],
       ),
 ];
 

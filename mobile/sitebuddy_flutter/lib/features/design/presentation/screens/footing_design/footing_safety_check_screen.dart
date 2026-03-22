@@ -9,6 +9,9 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/footing_type.dart';
 import 'package:site_buddy/features/design/application/controllers/footing_design_controller.dart';
 
+import 'package:site_buddy/features/design/application/controllers/footing_safety_controller.dart';
+import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
+import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/structural_drawings/footing_rebar_drawing.dart';
 import 'package:site_buddy/core/services/drawing_export_service.dart';
@@ -35,6 +38,7 @@ class _FootingSafetyCheckScreenState
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final state = ref.watch(footingDesignControllerProvider);
+    final optimizationResult = ref.watch(footingOptimizationProvider);
     final overallSafe =
         state.isBendingSafe &&
         state.isAreaSafe &&
@@ -64,12 +68,6 @@ class _FootingSafetyCheckScreenState
                 }
               }
             },
-          ),
-          const SizedBox(height: SbSpacing.sm),
-          PrimaryCTA(
-            label: 'Save Design',
-            icon: Icons.save_outlined,
-            onPressed: () => context.go(AppRoutes.design),
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
@@ -265,6 +263,29 @@ class _FootingSafetyCheckScreenState
                     ),
                   ],
                 ),
+              ),
+            ),
+
+          // ── OPTIMIZATION ──
+          if (optimizationResult.options.isNotEmpty)
+            SbSection(
+              title: 'Economical Alternatives',
+              child: OptimizationList(
+                options: optimizationResult.options,
+                onOptionSelected: (opt) {
+                  debugPrint('OPTION CLICKED: Select Option ($opt)');
+                  ref.read(footingSafetyControllerProvider.notifier).selectOption(opt);
+                  
+                  final length = opt.parameters['length'] as double;
+                  final width = opt.parameters['width'] as double;
+                  final thickness = opt.parameters['thickness'] as double;
+                  
+                  ref.read(footingDesignControllerProvider.notifier).updateGeometry(
+                    length: length,
+                    width: width,
+                    thickness: thickness,
+                  );
+                },
               ),
             ),
         ],

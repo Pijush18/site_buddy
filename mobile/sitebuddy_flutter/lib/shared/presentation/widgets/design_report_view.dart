@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/design/design_report.dart';
 
@@ -60,7 +61,7 @@ class _ReportHeader extends StatelessWidget {
     final dateStr = DateFormat('MMM dd, yyyy • HH:mm').format(report.timestamp);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
+      padding: EdgeInsets.zero,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -74,7 +75,7 @@ class _ReportHeader extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: SbSpacing.xs),
               Text(
                 dateStr,
                 style: theme.textTheme.labelSmall?.copyWith(
@@ -160,7 +161,7 @@ class _ReportSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: SbSpacing.xs, bottom: SbSpacing.sm),
+          padding: const EdgeInsets.only(bottom: SbSpacing.sm),
           child: Text(
             title,
             style: theme.textTheme.labelSmall?.copyWith(
@@ -224,7 +225,7 @@ class _ReportRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: SbSpacing.md,
-            vertical: SbSpacing.sm + 2,
+            vertical: SbSpacing.md,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,21 +271,25 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final color = isSafe ? Colors.green : Colors.red;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(SbRadius.standard),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         isSafe ? 'SAFE' : 'UNSAFE',
-        style: TextStyle(
+        style: theme.textTheme.labelSmall?.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: FontWeight.w800,
           letterSpacing: 0.5,
+          fontSize: 8,
         ),
       ),
     );

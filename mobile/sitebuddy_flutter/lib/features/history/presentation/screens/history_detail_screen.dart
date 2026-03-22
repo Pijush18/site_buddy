@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
 import 'package:site_buddy/shared/presentation/widgets/design_report_view.dart';
@@ -43,28 +42,15 @@ class HistoryDetailScreen extends ConsumerWidget {
     // Convert entry to standardized report for rendering
     final report = DesignReportMapper.fromHistoryEntry(entry);
 
-    return SbPage.detail(
+    return SbPage.scaffold(
       title: 'History Detail',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(SbSpacing.md),
-        child: Column(
-          children: [
-            // Standardized Report View
-            DesignReportView(report: report),
-            
-            const SizedBox(height: SbSpacing.lg),
-            
-            // Interaction Section (Restore)
-            PrimaryCTA(
-              onPressed: () => _handleRestore(context, ref),
-              label: 'Restore this Version',
-              width: double.infinity,
-              icon: Icons.restore_rounded,
-            ),
-            const SizedBox(height: SbSpacing.xl),
-          ],
-        ),
+      bottomAction: PrimaryCTA(
+        onPressed: () => _handleRestore(context, ref),
+        label: 'Restore this Version',
+        width: double.infinity,
+        icon: Icons.restore_rounded,
       ),
+      body: DesignReportView(report: report),
     );
   }
 

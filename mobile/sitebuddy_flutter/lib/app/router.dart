@@ -23,9 +23,6 @@ import 'package:site_buddy/shared/domain/models/site_report.dart';
 import 'package:site_buddy/features/settings/presentation/screens/settings_screen.dart';
 import 'package:site_buddy/features/settings/presentation/screens/privacy_policy_screen.dart';
 import 'package:site_buddy/features/settings/presentation/screens/terms_conditions_screen.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
-import 'package:site_buddy/features/history/presentation/screens/calculation_history_screen.dart';
-import 'package:site_buddy/features/history/presentation/screens/history_detail_screen.dart';
 import 'package:site_buddy/features/splash/presentation/screens/splash_screen.dart';
 import 'package:site_buddy/features/subscription/presentation/screens/subscription_screen.dart';
 import 'package:site_buddy/features/auth/presentation/screens/login_screen.dart';
@@ -197,50 +194,8 @@ final appRouter = GoRouter(
         ),
         StatefulShellBranch(routes: [...calculatorRoutes]),
         StatefulShellBranch(routes: [...designRoutes]),
-        StatefulShellBranch(
-          routes: [...projectRoutes.where((r) => r.path == '/projects')],
-        ),
+        StatefulShellBranch(routes: [...projectRoutes.where((r) => r.path == '/projects')]),
       ],
-    ),
-    // GLOBAL ROUTES
-    GoRoute(
-      path: '/history-detail',
-      pageBuilder: (context, state) {
-        final entry = state.extra as CalculationHistoryEntry;
-        return AppTransitions.fadeSlide(
-          state: state,
-          child: HistoryDetailScreen(entry: entry),
-        );
-      },
-    ),
-    // FIX: Removed projectId from route - must use session
-    GoRoute(
-      path: '/projects/:id/level-log',
-      name: 'levelLog',
-      pageBuilder: (context, state) {
-        final logId = state.extra as String?;
-        return AppTransitions.fadeSlide(
-          state: state,
-          child: LevelLogScreen(logId: logId),
-        );
-      },
-    ),
-    // FIX: Removed projectId from route - must use session
-    GoRoute(
-      path: '/projects/:id/history',
-      pageBuilder: (context, state) {
-        return AppTransitions.fadeSlide(
-          state: state,
-          child: const CalculationHistoryScreen(),
-        );
-      },
-    ),
-    ...designRedirects,
-    ...projectRoutes.where(
-      (r) => r.path.startsWith('/projects') && r.path != '/projects',
-    ),
-    ...workRoutes.where(
-      (r) => r.path.startsWith('/tasks/') && r.path != '/tasks',
     ),
     if (kDebugMode)
       GoRoute(

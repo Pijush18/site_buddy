@@ -20,6 +20,9 @@ import 'package:site_buddy/core/enums/safety_status.dart';
 import 'package:site_buddy/core/utils/safety_utils.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/structural_drawings/beam_rebar_drawing.dart';
+import 'package:site_buddy/features/design/application/controllers/beam_safety_controller.dart';
+import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
+import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
 import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
@@ -41,6 +44,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(beamDesignControllerProvider);
+    final optimizationResult = ref.watch(beamOptimizationProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     // Derive overall status
@@ -72,12 +76,6 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                 }
               }
             },
-          ),
-          const SizedBox(height: SbSpacing.sm),
-          PrimaryCTA(
-            label: 'Save to Design History',
-            icon: SbIcons.history,
-            onPressed: () => _saveDesign(context, ref),
           ),
           const SizedBox(height: SbSpacing.sm),
           GhostButton(
@@ -241,38 +239,33 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               ),
             ),
           ),
+          
+          // ── OPTIMIZATION ──
+          if (optimizationResult.options.isNotEmpty)
+            SbSection(
+              title: 'Economical Alternatives',
+              child: OptimizationList(
+                options: optimizationResult.options,
+                onOptionSelected: (opt) {
+                  debugPrint('OPTION CLICKED: Select Option ($opt)');
+                  ref.read(beamSafetyControllerProvider.notifier).selectOption(opt);
+                  
+                  final width = opt.parameters['width'] as double;
+                  final depth = opt.parameters['depth'] as double;
+                  ref.read(beamDesignControllerProvider.notifier).updateInputs(
+                    width: width,
+                    depth: depth,
+                  );
+                  ref.read(beamDesignControllerProvider.notifier).calculateAnalysis();
+                  ref.read(beamDesignControllerProvider.notifier).calculateReinforcement();
+                },
+              ),
+            ),
         ],
       ),
     );
   }
 
-  void _saveDesign(BuildContext context, WidgetRef ref) {
-    final nameController = TextEditingController();
-    SbFeedback.showDialog(
-      context: context,
-      title: 'Save Design',
-      content: SbInput(
-        controller: nameController,
-        hint: 'Enter Project/Beam Name',
-        label: 'Design Name',
-      ),
-      confirmLabel: 'SAVE',
-      onConfirm: () async {
-        if (nameController.text.isNotEmpty) {
-          await ref
-              .read(beamDesignControllerProvider.notifier)
-              .saveToHistory(nameController.text);
-          if (context.mounted) {
-            context.pop(); // Pop the feedback dialog
-            SbFeedback.showToast(
-              context: context,
-              message: 'Design saved to history',
-            );
-          }
-        }
-      },
-    );
-  }
 }
 
 class _OverallStatusBadge extends StatelessWidget {

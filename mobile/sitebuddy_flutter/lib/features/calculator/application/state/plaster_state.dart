@@ -9,6 +9,7 @@ class PlasterState {
   final PlasterMaterialResult? result;
   final AppFailure? failure;
   final bool isLoading;
+  final bool hasSaved;
 
   const PlasterState({
     required this.areaInput,
@@ -17,6 +18,7 @@ class PlasterState {
     this.result,
     this.failure,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   factory PlasterState.initial() {
@@ -25,6 +27,7 @@ class PlasterState {
       thicknessInput: '',
       selectedRatio: PlasterRatio.oneToFour,
       isLoading: false,
+      hasSaved: false,
     );
   }
 
@@ -35,6 +38,7 @@ class PlasterState {
     PlasterMaterialResult? result,
     AppFailure? failure,
     bool? isLoading,
+    bool? hasSaved,
     bool clearFailure = false,
     bool clearResult = false,
   }) {
@@ -45,6 +49,7 @@ class PlasterState {
       result: clearResult ? null : (result ?? this.result),
       failure: clearFailure ? null : (failure ?? this.failure),
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 }

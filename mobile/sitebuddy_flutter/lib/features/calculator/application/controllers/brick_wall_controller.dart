@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
 import 'package:site_buddy/core/errors/app_failure.dart';
 import 'package:site_buddy/core/utils/validators.dart';
 import 'package:site_buddy/features/calculator/application/state/brick_wall_state.dart';
 import 'package:site_buddy/shared/domain/models/mortar_ratio.dart';
 import 'package:site_buddy/shared/domain/models/prefill_data.dart';
-import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/application/mappers/design_report_mapper.dart';
-import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
-import 'package:site_buddy/core/logging/app_logger.dart';
+import 'package:site_buddy/shared/domain/models/brick_wall_result.dart';
+import 'package:site_buddy/shared/application/services/history_saver.dart';
 
 final brickWallProvider = NotifierProvider<BrickWallController, BrickWallState>(
   BrickWallController.new,
@@ -30,6 +28,7 @@ class BrickWallController extends Notifier<BrickWallState> {
       thicknessInput: data.thickness?.toString() ?? state.thicknessInput,
       clearFailure: true,
       clearResult: true,
+      hasSaved: false,
     );
 
     if (data.length != null && data.height != null && data.thickness != null) {
@@ -38,28 +37,22 @@ class BrickWallController extends Notifier<BrickWallState> {
   }
 
   void updateLength(String value) {
-    state = state.copyWith(lengthInput: value, clearFailure: true);
+    state = state.copyWith(lengthInput: value, clearFailure: true, hasSaved: false);
   }
 
   void updateHeight(String value) {
-    state = state.copyWith(heightInput: value, clearFailure: true);
+    state = state.copyWith(heightInput: value, clearFailure: true, hasSaved: false);
   }
 
   void updateThickness(String value) {
-    state = state.copyWith(thicknessInput: value, clearFailure: true);
+    state = state.copyWith(thicknessInput: value, clearFailure: true, hasSaved: false);
   }
 
   void updateRatio(MortarRatio value) {
-    state = state.copyWith(selectedRatio: value, clearFailure: true);
+    state = state.copyWith(selectedRatio: value, clearFailure: true, hasSaved: false);
   }
 
   Future<void> calculate() async {
-    state = state.copyWith(
-      isLoading: true,
-      clearFailure: true,
-      clearResult: true,
-    );
-
     final lParse = Validators.parsePositiveNumber(
       state.lengthInput,
       'Wall Length',
@@ -87,6 +80,11 @@ class BrickWallController extends Notifier<BrickWallState> {
       return;
     }
 
+    state = state.copyWith(
+      isLoading: true,
+      clearFailure: true,
+    );
+
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
@@ -97,48 +95,53 @@ class BrickWallController extends Notifier<BrickWallState> {
         mortarRatioString: state.selectedRatio.ratioString,
       );
 
-      state = state.copyWith(isLoading: false, result: result);
-
-      // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      // Session-based architecture: Watch the project session service for reactivity
-      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
-      final projectSession = ref.watch(projectSessionServiceProvider);
-      final projectId = projectSession.getActiveProjectId();
-
-      // DEBUG: Log data usage and save
-      debugPrint('[Usage] Using project: $projectId');
-      debugPrint('[History] Saving for project: $projectId');
-      AppLogger.debug('[History] Saving for project: $projectId', tag: 'BrickWallController');
-
-      final entry = CalculationHistoryEntry(
-        id: const Uuid().v4(),
-        projectId: projectId,
-        calculationType: CalculationType.brick,
-        timestamp: DateTime.now(),
-        inputParameters: {
-          'length': lParse.value,
-          'height': hParse.value,
-          'thickness': tParse.value,
-          'mortarRatio': state.selectedRatio.ratioString,
-        },
-        resultSummary: '${result.numberOfBricks} Bricks Estimated',
-        resultData: result.toMap(),
+      state = state.copyWith(
+        isLoading: false, 
+        result: result,
+        hasSaved: false,
       );
 
-      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      await _saveToHistory(result);
 
-      // --- SYNC: Save to Unified Design Report System ---
-      final report = DesignReportMapper.fromBrick(
-        result.toMap(),
-        entry.inputParameters,
-        projectId,
-      );
-      await ref.read(historyRepositoryProvider).save(report);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint("❌ Calculation failed: $e");
+      debugPrintStack(stackTrace: st);
       state = state.copyWith(
         isLoading: false,
         failure: AppFailure('Calculation error: ${e.toString()}'),
       );
+    }
+  }
+
+  Future<void> _saveToHistory(BrickWallResult result) async {
+    if (state.hasSaved) return;
+
+    final project = ref.read(activeProjectProvider);
+    if (project == null) return;
+
+    try {
+      final inputParams = {
+        'length': state.lengthInput,
+        'height': state.heightInput,
+        'thickness': state.thicknessInput,
+        'mortarRatio': state.selectedRatio.ratioString,
+      };
+
+      final report = DesignReportMapper.fromBrickWall(
+        result.toMap(),
+        inputParams,
+        project.id,
+      );
+
+      await HistorySaver.save(
+        ref: ref,
+        report: report,
+      );
+
+      state = state.copyWith(hasSaved: true);
+
+    } catch (e) {
+      debugPrint("❌ Save failed: $e");
     }
   }
 
@@ -152,6 +155,7 @@ class BrickWallController extends Notifier<BrickWallState> {
       thicknessInput: params['thickness']?.toString() ?? '',
       selectedRatio: ratio,
       clearResult: true,
+      hasSaved: false,
     );
     calculate();
   }

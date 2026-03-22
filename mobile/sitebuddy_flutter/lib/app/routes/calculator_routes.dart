@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/navigation/app_transitions.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/calculator_hub_screen.dart';
@@ -11,13 +12,17 @@ import 'package:site_buddy/features/calculator/presentation/screens/brick_wall_e
 import 'package:site_buddy/features/calculator/presentation/screens/plaster_material_estimator_screen.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/excavation_screen.dart';
 import 'package:site_buddy/features/calculator/presentation/screens/shuttering_screen.dart';
+import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
+import 'package:site_buddy/features/history/presentation/screens/history_detail_screen.dart';
 
 final calculatorRoutes = [
   GoRoute(
     path: '/calculator',
     pageBuilder: (context, state) => AppTransitions.fadeSlide(
       state: state,
-      child: const CalculatorHubScreen(),
+      // Using uri.toString() is more sensitive to navigation events
+      // than matchedLocation which is just a static pattern string.
+      child: CalculatorHubScreen(key: ValueKey(state.uri.toString())),
     ),
     routes: [
       GoRoute(
@@ -89,6 +94,16 @@ final calculatorRoutes = [
           state: state,
           child: const ShutteringScreen(),
         ),
+      ),
+      GoRoute(
+        path: 'history-detail',
+        pageBuilder: (context, state) {
+          final entry = state.extra as CalculationHistoryEntry;
+          return AppTransitions.fadeSlide(
+            state: state,
+            child: HistoryDetailScreen(entry: entry),
+          );
+        },
       ),
     ],
   ),

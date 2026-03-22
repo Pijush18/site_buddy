@@ -12,6 +12,9 @@ import 'package:site_buddy/features/design/application/services/column_insight_s
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/column_interaction_diagram.dart';
 import 'package:site_buddy/features/design/presentation/widgets/engineering_diagrams/design_result_card.dart';
 import 'package:site_buddy/features/design/presentation/widgets/structural_drawings/column_rebar_drawing.dart';
+import 'package:site_buddy/features/design/application/controllers/column_safety_controller.dart';
+import 'package:site_buddy/features/design/presentation/providers/design_providers.dart';
+import 'package:site_buddy/features/design/presentation/widgets/optimization/optimization_list.dart';
 import 'package:site_buddy/core/services/drawing_export_service.dart';
 import 'package:site_buddy/core/utils/widget_capture_helper.dart';
 import 'package:site_buddy/core/utils/share_helper.dart';
@@ -33,6 +36,7 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final state = ref.watch(columnDesignControllerProvider);
+    final optimizationResult = ref.watch(columnOptimizationProvider);
 
     return SbPage.form(
       title: 'Safety Check',
@@ -65,20 +69,6 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
                   );
                 }
               }
-            },
-          ),
-          const SizedBox(height: SbSpacing.sm),
-          PrimaryCTA(
-            label: 'Save to History',
-            icon: Icons.history,
-            onPressed: () {
-              ref
-                  .read(columnDesignControllerProvider.notifier)
-                  .saveToHistory('Column ${state.b}x${state.d}');
-              SbFeedback.showToast(
-                context: context,
-                message: 'Design Saved to History',
-              );
             },
           ),
           const SizedBox(height: SbSpacing.sm),
@@ -252,6 +242,26 @@ class _SafetyCheckScreenState extends ConsumerState<SafetyCheckScreen> {
               ),
             ),
           ),
+
+          // ── OPTIMIZATION ──
+          if (optimizationResult.options.isNotEmpty)
+            SbSection(
+              title: 'Economical Alternatives',
+              child: OptimizationList(
+                options: optimizationResult.options,
+                onOptionSelected: (opt) {
+                  debugPrint('OPTION CLICKED: Select Option ($opt)');
+                  ref.read(columnSafetyControllerProvider.notifier).selectOption(opt);
+                  
+                  final b = opt.parameters['b'] as double;
+                  final d = opt.parameters['d'] as double;
+                  ref.read(columnDesignControllerProvider.notifier).updateInput(
+                    b: b,
+                    d: d,
+                  );
+                },
+              ),
+            ),
 
           // ── SMART INSIGHTS ──
           SbSection(

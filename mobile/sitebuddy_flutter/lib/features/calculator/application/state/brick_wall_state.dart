@@ -10,6 +10,7 @@ class BrickWallState {
   final BrickWallResult? result;
   final AppFailure? failure;
   final bool isLoading;
+  final bool hasSaved;
 
   const BrickWallState({
     required this.lengthInput,
@@ -19,6 +20,7 @@ class BrickWallState {
     this.result,
     this.failure,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   factory BrickWallState.initial() {
@@ -28,6 +30,7 @@ class BrickWallState {
       thicknessInput: '',
       selectedRatio: MortarRatio.oneToSix,
       isLoading: false,
+      hasSaved: false,
     );
   }
 
@@ -39,6 +42,7 @@ class BrickWallState {
     BrickWallResult? result,
     AppFailure? failure,
     bool? isLoading,
+    bool? hasSaved,
     bool clearFailure = false,
     bool clearResult = false,
   }) {
@@ -50,6 +54,7 @@ class BrickWallState {
       result: clearResult ? null : (result ?? this.result),
       failure: clearFailure ? null : (failure ?? this.failure),
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 }

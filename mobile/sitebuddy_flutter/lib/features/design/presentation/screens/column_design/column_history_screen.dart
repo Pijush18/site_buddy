@@ -11,6 +11,8 @@ import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
+import 'package:site_buddy/core/navigation/app_routes.dart';
+
 /// SCREEN: ColumnHistoryScreen
 /// PURPOSE: History of all column designs and checks.
 class ColumnHistoryScreen extends ConsumerWidget {
@@ -94,7 +96,7 @@ class _HistoryCard extends StatelessWidget {
       subtitle: 'ID: ${entry.id.substring(0, 8)}...',
       trailing: dateStr,
       onTap: () {
-        context.push('/history-detail', extra: entry);
+        context.push(AppRoutes.historyDetail, extra: entry);
       },
     );
   }

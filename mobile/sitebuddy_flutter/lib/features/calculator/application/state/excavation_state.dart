@@ -10,6 +10,7 @@ class ExcavationState {
   final ExcavationResult? result;
   final AppFailure? failure;
   final bool isLoading;
+  final bool hasSaved;
 
   const ExcavationState({
     this.lengthInput = '',
@@ -20,6 +21,7 @@ class ExcavationState {
     this.result,
     this.failure,
     this.isLoading = false,
+    this.hasSaved = false,
   });
 
   ExcavationState copyWith({
@@ -31,6 +33,7 @@ class ExcavationState {
     ExcavationResult? result,
     AppFailure? failure,
     bool? isLoading,
+    bool? hasSaved,
     bool clearResult = false,
     bool clearFailure = false,
   }) {
@@ -43,6 +46,7 @@ class ExcavationState {
       result: clearResult ? null : (result ?? this.result),
       failure: clearFailure ? null : (failure ?? this.failure),
       isLoading: isLoading ?? this.isLoading,
+      hasSaved: hasSaved ?? this.hasSaved,
     );
   }
 

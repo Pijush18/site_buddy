@@ -79,18 +79,19 @@ class AppRoutes {
   static const homeProjectCreate = '/project/create'; // Branch 0 version
 
   // FIX: Session-based routes - projectId comes from active session
+  // FIX: Session-based routes - projectId comes from active session
   static String projectDetail() => '/projects/detail';
   static String projectEdit() => '/projects/edit';
-  static String projectShare(String id) => '/projects/$id/share';
-  static String projectLevelLog(String id) => '/projects/$id/level-log';
-  static String projectHistory(String id) => '/projects/$id/history';
+  static String projectShare(String id) => '/projects/share'; // Removed :id from path segment
+  static String projectLevelLog(String id) => '/projects/level-log';
+  static String projectHistory(String id) => '/projects/history';
 
   // --- WORK MODULE ---
   static const tasks = '/tasks';
   static const tasksDetail = '/tasks/detail';
   static const tasksCreate = '/tasks/create';
-  static const meetingsDetail = '/meetings/detail';
-  static const meetingsCreate = '/meetings/create';
+  static const meetingsDetail = '/tasks/meetings/detail';
+  static const meetingsCreate = '/tasks/meetings/create';
 
   // --- AI MODULE ---
   static const aiInteraction = '/ai/interaction';
@@ -104,7 +105,7 @@ class AppRoutes {
   static const currencyConverter = '/currency';
 
   // --- MISC ---
-  static const historyDetail = '/history-detail';
-  static const levelLog = '/level'; // Branch 0 version?
+  static const historyDetail = '/calculator/history-detail';
+  static const levelLog = '/level'; // Branch 0 version
   // router.dart line 138 has path 'level' under Home '/', so '/level'
 }

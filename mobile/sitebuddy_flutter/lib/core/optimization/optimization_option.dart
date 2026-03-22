@@ -14,6 +14,16 @@ class OptimizationOption {
     required this.utilization,
     required this.parameters,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'steelArea': steelArea,
+      'utilization': utilization,
+      'parameters': parameters,
+    };
+  }
 }
 
 

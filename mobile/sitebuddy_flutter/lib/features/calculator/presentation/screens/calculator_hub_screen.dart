@@ -49,50 +49,42 @@ class CalculatorHubScreen extends StatelessWidget {
                   onTap: () => context.push('/calculator/brick-wall'),
                 ),
                 SBGridActionCard(
-                  label: AppStrings.steelWeightEstimatorTitle,
-                  icon: SbIcons.rebar,
-                  onTap: () => context.push('/calculator/rebar'),
-                ),
-                SBGridActionCard(
                   label: AppStrings.excavationEstimatorTitle,
                   icon: SbIcons.terrain,
                   onTap: () => context.push('/calculator/excavation'),
                 ),
                 SBGridActionCard(
-                  label: AppStrings.shutteringAreaTitle,
+                  label: EngineeringTerms.sandQuantityEstimator,
+                  icon: SbIcons.terrain,
+                  onTap: () => context.push('/calculator/sand'),
+                ),
+                SBGridActionCard(
+                  label: EngineeringTerms.plasterEstimator,
                   icon: SbIcons.layers,
-                  onTap: () => context.push('/calculator/shuttering'),
+                  onTap: () => context.push('/calculator/plaster'),
                 ),
               ],
             ),
           ),
-
-          // ── SECTION 2: FIELD SURVEYING (GRID) ──
+ 
+          // ── SECTION 2: OTHER TOOLS ──
           SbSection(
-            title: AppStrings.fieldSurveying,
-            subtitle: 'Levelling and measurement conversions.',
+            title: 'Other Tools',
+            subtitle: 'Quick material and geometry calculations.',
             child: SbGrid(
               children: [
+                // Steel Weight
                 SBGridActionCard(
-                  label: EngineeringTerms.levelCalculator,
-                  icon: SbIcons.height,
-                  onTap: () => context.push('/level'),
-                  isHighlighted: true,
+                  label: AppStrings.steelWeightEstimatorTitle,
+                  icon: SbIcons.rebar,
+                  onTap: () => context.push('/calculator/rebar'),
                 ),
+ 
+                // Shuttering Area
                 SBGridActionCard(
-                  label: EngineeringTerms.gradientTool,
-                  icon: SbIcons.trendingUp,
-                  onTap: () => context.push('/calculator/gradient'),
-                ),
-                SBGridActionCard(
-                  label: AppStrings.unitConverter,
-                  icon: SbIcons.compareArrows,
-                  onTap: () => context.push('/converter'),
-                ),
-                SBGridActionCard(
-                  label: AppStrings.currencyConverter,
-                  icon: SbIcons.currencyExchange,
-                  onTap: () => context.push('/currency'),
+                  label: AppStrings.shutteringAreaTitle,
+                  icon: SbIcons.layers,
+                  onTap: () => context.push('/calculator/shuttering'),
                 ),
               ],
             ),
@@ -102,4 +94,3 @@ class CalculatorHubScreen extends StatelessWidget {
     );
   }
 }
-

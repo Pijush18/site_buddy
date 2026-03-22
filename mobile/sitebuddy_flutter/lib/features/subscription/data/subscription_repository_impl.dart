@@ -14,7 +14,9 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   @override
   Future<SubscriptionStatus> getSubscriptionStatus() async {
     try {
-      final response = await _backendClient.getSubscriptionStatus();
+      final response = await _backendClient
+          .getSubscriptionStatus()
+          .timeout(const Duration(seconds: 5));
       return SubscriptionStatus.fromJson(response);
     } catch (e) {
       developer.log('Failed to fetch subscription status: $e', name: 'SubscriptionRepo');

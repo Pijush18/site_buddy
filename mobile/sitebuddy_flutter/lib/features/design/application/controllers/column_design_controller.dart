@@ -118,6 +118,9 @@ class ColumnDesignController extends Notifier<ColumnDesignState> {
   Future<void> saveToHistory(String name) async {
     final useCase = ref.read(saveColumnDesignUseCaseProvider);
     await useCase.execute(state);
+
+    // Invalidate history provider to trigger UI refresh
+    ref.invalidate(projectHistoryProvider);
   }
 
   Future<void> generateReport() async {
