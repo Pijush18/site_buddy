@@ -147,18 +147,40 @@ class ProjectController extends Notifier<ProjectState> {
 
   /// METHOD: deleteProject
   /// PURPOSE: Removal from local storage and state.
+  /// FIX: Ensure session never holds deleted project.
   Future<void> deleteProject(String id) async {
-    state = state.copyWith(isLoading: true);
+    // 1. Check if this is the active project in session (fail-safe)
+    final sessionService = ref.read(projectSessionServiceProvider);
+    bool wasActiveProject = false;
+    try {
+      wasActiveProject = sessionService.getActiveProjectId() == id;
+    } catch (_) {
+      wasActiveProject = false;
+    }
 
+    // 2. Delete from storage
+    state = state.copyWith(isLoading: true);
     final useCase = ref.read(deleteProjectUseCaseProvider);
     await useCase.execute(id);
 
+    // 3. Filter out deleted project from local state
+    final remainingProjects = state.projects.where((p) => p.id != id).toList();
+
+    // 4. FIX: Handle session - never keep deleted project in session
+    if (wasActiveProject) {
+      if (remainingProjects.isNotEmpty) {
+        // Set next project as active (first one = most recently accessed)
+        await sessionService.setActiveProject(remainingProjects.first);
+      } else {
+        // No projects left - clear session entirely
+        sessionService.clearActiveProject();
+      }
+    }
+
     state = state.copyWith(
       isLoading: false,
-      projects: state.projects.where((p) => p.id != id).toList(),
-      selectedProject: state.selectedProject?.id == id
-          ? null
-          : state.selectedProject,
+      projects: remainingProjects,
+      selectedProject: wasActiveProject ? null : state.selectedProject,
     );
   }
 
