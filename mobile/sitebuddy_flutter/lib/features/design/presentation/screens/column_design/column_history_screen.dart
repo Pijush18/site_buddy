@@ -6,6 +6,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/services/project_session_service.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
 import 'package:site_buddy/core/constants/screen_titles.dart';
@@ -18,8 +19,10 @@ class ColumnHistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Watch projectSessionServiceProvider for reactivity - auto-updates when project switches
+    final projectSession = ref.watch(projectSessionServiceProvider);
+    final selectedProject = projectSession.getActiveProject();
     final historyRepo = ref.watch(sharedHistoryRepositoryProvider);
-    final selectedProject = ref.watch(activeProjectProvider);
 
     if (selectedProject == null) {
       return const SbPage.scaffold(
@@ -31,6 +34,9 @@ class ColumnHistoryScreen extends ConsumerWidget {
         ),
       );
     }
+
+    // DEBUG: Log history fetch
+    debugPrint('[History] Fetch for project: ${selectedProject.id}');
 
     return SbPage.list(
       title: ScreenTitles.columnHistory,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -142,7 +143,13 @@ class SandController extends Notifier<SandState> {
       );
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref.watch(activeProjectIdProvider);
+      // Session-based architecture: Watch the project session service for reactivity
+      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
+      final projectSession = ref.watch(projectSessionServiceProvider);
+      final projectId = projectSession.getActiveProjectId();
+
+      // DEBUG: Log history save
+      debugPrint('[History] Saving for project: $projectId');
 
       final entry = CalculationHistoryEntry(
         id: const Uuid().v4(),

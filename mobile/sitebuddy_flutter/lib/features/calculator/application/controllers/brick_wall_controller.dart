@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:site_buddy/core/calculations/material_estimation_service.dart';
@@ -99,42 +100,39 @@ class BrickWallController extends Notifier<BrickWallState> {
       state = state.copyWith(isLoading: false, result: result);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref
-          .read(projectSessionServiceProvider)
-          .getActiveProjectId();
+      // Session-based architecture: Watch the project session service for reactivity
+      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
+      final projectSession = ref.watch(projectSessionServiceProvider);
+      final projectId = projectSession.getActiveProjectId();
 
-      // Validate projectId before saving - skip if no active project
-      if (projectId.isEmpty) {
-        AppLogger.warning(
-          'No active project selected, skipping brick calculation save',
-          tag: 'BrickWallController',
-        );
-      } else {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: projectId,
-          calculationType: CalculationType.brick,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'length': lParse.value,
-            'height': hParse.value,
-            'thickness': tParse.value,
-            'mortarRatio': state.selectedRatio.ratioString,
-          },
-          resultSummary: '${result.numberOfBricks} Bricks Estimated',
-          resultData: result.toMap(),
-        );
+      // DEBUG: Log history save
+      debugPrint('[History] Saving for project: $projectId');
+      AppLogger.debug('[History] Saving for project: $projectId', tag: 'BrickWallController');
 
-        await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.brick,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'length': lParse.value,
+          'height': hParse.value,
+          'thickness': tParse.value,
+          'mortarRatio': state.selectedRatio.ratioString,
+        },
+        resultSummary: '${result.numberOfBricks} Bricks Estimated',
+        resultData: result.toMap(),
+      );
 
-        // --- SYNC: Save to Unified Design Report System ---
-        final report = DesignReportMapper.fromBrick(
-          result.toMap(),
-          entry.inputParameters,
-          projectId,
-        );
-        await ref.read(historyRepositoryProvider).save(report);
-      }
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromBrick(
+        result.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
+      await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

@@ -15,6 +15,7 @@
 /// ----------------------------------------------
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -228,44 +229,41 @@ class CementController extends Notifier<CementState> {
       state = state.copyWith(result: res, isLoading: false);
 
       // --- PERSISTENCE: Save to Unified Calculation Repository ---
-      final projectId = ref
-          .read(projectSessionServiceProvider)
-          .getActiveProjectId();
+      // Session-based architecture: Watch the project session service for reactivity
+      // FAIL-FAST: getActiveProjectId() throws StateError if no project - must have active project
+      final projectSession = ref.watch(projectSessionServiceProvider);
+      final projectId = projectSession.getActiveProjectId();
 
-      // Validate projectId before saving - skip if no active project
-      if (projectId.isEmpty) {
-        AppLogger.warning(
-          'No active project selected, skipping cement calculation save',
-          tag: 'CementController',
-        );
-      } else {
-        final entry = CalculationHistoryEntry(
-          id: const Uuid().v4(),
-          projectId: projectId,
-          calculationType: CalculationType.cement,
-          timestamp: DateTime.now(),
-          inputParameters: {
-            'length': length,
-            'width': width,
-            'depth': depth,
-            'mix': '$mixCement:$mixSand:$mixAggregate',
-            'waste': waste,
-          },
-          resultSummary:
-              '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
-          resultData: res.toMap(),
-        );
+      // DEBUG: Log history save
+      debugPrint('[History] Saving for project: $projectId');
+      AppLogger.debug('[History] Saving for project: $projectId', tag: 'CementController');
 
-        await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+      final entry = CalculationHistoryEntry(
+        id: const Uuid().v4(),
+        projectId: projectId,
+        calculationType: CalculationType.cement,
+        timestamp: DateTime.now(),
+        inputParameters: {
+          'length': length,
+          'width': width,
+          'depth': depth,
+          'mix': '$mixCement:$mixSand:$mixAggregate',
+          'waste': waste,
+        },
+        resultSummary:
+            '${res.numberOfBags.toStringAsFixed(1)} Bags Estimated',
+        resultData: res.toMap(),
+      );
 
-        // --- SYNC: Save to Unified Design Report System ---
-        final report = DesignReportMapper.fromCement(
-          res.toMap(),
-          entry.inputParameters,
-          projectId,
-        );
-        await ref.read(historyRepositoryProvider).save(report);
-      }
+      await ref.read(sharedHistoryRepositoryProvider).addEntry(entry);
+
+      // --- SYNC: Save to Unified Design Report System ---
+      final report = DesignReportMapper.fromCement(
+        res.toMap(),
+        entry.inputParameters,
+        projectId,
+      );
+      await ref.read(historyRepositoryProvider).save(report);
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

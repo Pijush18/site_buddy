@@ -50,7 +50,9 @@ class HiveCalculationRepository implements CalculationRepository {
     }
 
     try {
-      AppLogger.debug('Adding calculation entry: ${entry.id} (${entry.calculationType})', tag: 'CalcRepo');
+      // DEBUG: Trace history save with project ID
+      developer.log('[History] Saving for project: ${entry.projectId}', name: 'HiveCalculationRepository');
+      AppLogger.debug('[History] Saving for project: ${entry.projectId} - entry: ${entry.id} (${entry.calculationType})', tag: 'CalcRepo');
       
       // 2. Update Hive
       final box = await _getBox();
@@ -70,7 +72,7 @@ class HiveCalculationRepository implements CalculationRepository {
       // 4. Update Project Activity
       await _projectRepository?.setLastAccessed(entry.projectId);
 
-      AppLogger.info('Calculation entry saved: ${entry.id}', tag: 'CalcRepo');
+      AppLogger.info('[History] Saved entry: ${entry.id} for project: ${entry.projectId}', tag: 'CalcRepo');
     } catch (e, stack) {
       AppLogger.error('Failed to add calculation entry: ${entry.id}', tag: 'CalcRepo', error: e, stackTrace: stack);
       rethrow;
@@ -81,9 +83,13 @@ class HiveCalculationRepository implements CalculationRepository {
   Future<List<CalculationHistoryEntry>> getEntriesByProject(
     String projectId,
   ) async {
-    AppLogger.debug('Fetching entries for project: $projectId', tag: 'CalcRepo');
+    // DEBUG: Trace history fetch with project ID
+    developer.log('[History] Fetch for project: $projectId', name: 'HiveCalculationRepository');
+    AppLogger.debug('[History] Fetch for project: $projectId', tag: 'CalcRepo');
     final cache = await _getCache();
-    return cache.where((e) => e.projectId == projectId).toList();
+    final filteredEntries = cache.where((e) => e.projectId == projectId).toList();
+    AppLogger.debug('[History] Found ${filteredEntries.length} entries for project: $projectId', tag: 'CalcRepo');
+    return filteredEntries;
   }
 
   @override

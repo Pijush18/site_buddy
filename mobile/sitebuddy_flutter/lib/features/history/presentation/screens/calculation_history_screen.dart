@@ -10,12 +10,24 @@ import 'package:site_buddy/shared/presentation/providers/history_providers.dart'
 import 'package:site_buddy/shared/application/providers/project_providers.dart';
 import 'package:site_buddy/shared/domain/models/calculation_history_entry.dart';
 
-/// FIX: Get history entries from session - no projectId parameter
-/// Uses activeProjectIdProvider for reactivity - auto-updates when project switches
+/// FIX: Get history entries from session - Session-based architecture
+/// Watches projectSessionServiceProvider for reactivity - auto-updates when project switches
+/// NOTE: Removed autoDispose to prevent provider disposal on navigation,
+/// which was causing inconsistent history when switching projects.
 final projectHistoryProvider =
-    FutureProvider.autoDispose<List<CalculationHistoryEntry>>((ref) {
-      // Watch session for reactivity - rebuilds when project changes
-      final projectId = ref.watch(activeProjectIdProvider);
+    FutureProvider<List<CalculationHistoryEntry>>((ref) {
+      // Session-based: Watch the project session service for reactivity
+      final projectSession = ref.watch(projectSessionServiceProvider);
+      final activeProject = projectSession.getActiveProject();
+      
+      // If no active project, return empty list
+      if (activeProject == null) {
+        return Future.value([]);
+      }
+      
+      final projectId = activeProject.id;
+      // DEBUG: Log when history is being fetched
+      debugPrint('[History] Fetch for project: $projectId');
       return ref
           .read(sharedHistoryRepositoryProvider)
           .getEntriesByProject(projectId);
