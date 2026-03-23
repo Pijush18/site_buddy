@@ -210,68 +210,51 @@ class _DiagramCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return SbCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    Text(
-                      subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SbSpacing.sm,
-                  vertical: SbSpacing.xs,
-                ),
-                decoration: BoxDecoration(
-                  color: (isBMD ? colorScheme.primary : colorScheme.tertiary)
-                      .withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  isBMD ? 'M' : 'V',
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: isBMD ? colorScheme.primary : colorScheme.tertiary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+    return SbDiagramCard(
+      title: label,
+      subtitle: subtitle,
+      footer: _buildTypeBadge(context, colorScheme),
+      showDivider: true,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.md,
+        vertical: SbSpacing.sm,
+      ),
+      child: SizedBox(
+        height: 140,
+        child: CustomPaint(
+          painter: BeamDiagramPainter(
+            points: points,
+            isBMD: isBMD,
+            label: label,
+            axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
+            labelColor: colorScheme.onSurfaceVariant,
+            labelStyle: Theme.of(context).textTheme.labelMedium!,
+            primaryColor: isBMD ? colorScheme.primary : colorScheme.tertiary,
+            warningColor: AppColors.warning(context),
           ),
-          const SizedBox(height: SbSpacing.md),
-          SizedBox(
-            height: 140,
-            child: CustomPaint(
-              painter: BeamDiagramPainter(
-                points: points,
-                isBMD: isBMD,
-                label: label,
-                axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
-                labelColor: colorScheme.onSurfaceVariant,
-                labelStyle: Theme.of(context).textTheme.labelMedium!,
-                primaryColor: isBMD ? colorScheme.primary : colorScheme.tertiary,
-                warningColor: AppColors.warning(context),
-              ),
-              size: Size.infinite,
-            ),
-          ),
-        ],
+          size: Size.infinite,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTypeBadge(BuildContext context, ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: (isBMD ? colorScheme.primary : colorScheme.tertiary)
+            .withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        isBMD ? 'M' : 'V',
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: isBMD ? colorScheme.primary : colorScheme.tertiary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

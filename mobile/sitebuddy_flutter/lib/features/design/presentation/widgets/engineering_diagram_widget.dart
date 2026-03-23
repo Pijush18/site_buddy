@@ -238,21 +238,37 @@ class BeamDiagramCard extends StatelessWidget {
   final DiagramType diagramType;
   final dynamic beamState;
   final String? title;
+  final String? subtitle;
   final bool expanded;
+  final double? height;
+  final VoidCallback? onExpand;
+  final VoidCallback? onExport;
 
   const BeamDiagramCard({
     super.key,
     required this.diagramType,
     required this.beamState,
     this.title,
+    this.subtitle,
     this.expanded = false,
+    this.height,
+    this.onExpand,
+    this.onExport,
   });
 
   @override
   Widget build(BuildContext context) {
     return SbDiagramCard(
       title: title,
+      subtitle: subtitle,
       expanded: expanded,
+      height: height,
+      actions: [
+        if (onExpand != null) DiagramAction.expand,
+        if (onExport != null) DiagramAction.export,
+      ],
+      onExpand: onExpand,
+      onExport: onExport,
       child: EngineeringDiagramWidget(
         diagramType: diagramType,
         beamState: beamState,
@@ -267,19 +283,32 @@ class ColumnDiagramCard extends StatelessWidget {
   final DiagramType diagramType;
   final dynamic columnState;
   final String? title;
+  final String? subtitle;
+  final VoidCallback? onExpand;
+  final VoidCallback? onExport;
 
   const ColumnDiagramCard({
     super.key,
     required this.diagramType,
     required this.columnState,
     this.title,
+    this.subtitle,
+    this.onExpand,
+    this.onExport,
   });
 
   @override
   Widget build(BuildContext context) {
     return SbDiagramCard(
       title: title,
+      subtitle: subtitle,
       expanded: true,
+      actions: [
+        if (onExpand != null) DiagramAction.expand,
+        if (onExport != null) DiagramAction.export,
+      ],
+      onExpand: onExpand,
+      onExport: onExport,
       child: EngineeringDiagramWidget(
         diagramType: diagramType,
         columnState: columnState,
@@ -294,19 +323,32 @@ class FootingDiagramCard extends StatelessWidget {
   final DiagramType diagramType;
   final dynamic footingState;
   final String? title;
+  final String? subtitle;
+  final VoidCallback? onExpand;
+  final VoidCallback? onExport;
 
   const FootingDiagramCard({
     super.key,
     required this.diagramType,
     required this.footingState,
     this.title,
+    this.subtitle,
+    this.onExpand,
+    this.onExport,
   });
 
   @override
   Widget build(BuildContext context) {
     return SbDiagramCard(
       title: title,
+      subtitle: subtitle,
       expanded: true,
+      actions: [
+        if (onExpand != null) DiagramAction.expand,
+        if (onExport != null) DiagramAction.export,
+      ],
+      onExpand: onExpand,
+      onExport: onExport,
       child: EngineeringDiagramWidget(
         diagramType: diagramType,
         footingState: footingState,
@@ -321,19 +363,32 @@ class SlabDiagramCard extends StatelessWidget {
   final DiagramType diagramType;
   final dynamic slabState;
   final String? title;
+  final String? subtitle;
+  final VoidCallback? onExpand;
+  final VoidCallback? onExport;
 
   const SlabDiagramCard({
     super.key,
     required this.diagramType,
     required this.slabState,
     this.title,
+    this.subtitle,
+    this.onExpand,
+    this.onExport,
   });
 
   @override
   Widget build(BuildContext context) {
     return SbDiagramCard(
       title: title,
+      subtitle: subtitle,
       expanded: true,
+      actions: [
+        if (onExpand != null) DiagramAction.expand,
+        if (onExport != null) DiagramAction.export,
+      ],
+      onExpand: onExpand,
+      onExport: onExport,
       child: EngineeringDiagramWidget(
         diagramType: diagramType,
         slabState: slabState,
