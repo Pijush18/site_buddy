@@ -7,7 +7,7 @@ import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: DesignScreen
 /// PURPOSE: Professional engineering dashboard rebuilt with data-driven tool registry
-/// Uses ToolRegistry - UI reads from registry, not hardcoded lists
+/// REFINED: Compact layout, tight spacing, strong visual hierarchy
 class DesignScreen extends StatelessWidget {
   const DesignScreen({super.key});
 
@@ -31,18 +31,18 @@ class DesignScreen extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
-            vertical: AppSpacing.lg,
+            vertical: AppSpacing.md, // Tighter than lg
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Display each category from registry
+              // Display each category from registry - compact spacing
               for (int i = 0; i < categories.length; i++) ...[
                 _buildCategorySection(categories[i]),
                 if (i < categories.length - 1)
-                  const SizedBox(height: AppSpacing.xl),
+                  const SizedBox(height: AppSpacing.lg), // Not xl
               ],
-              const SizedBox(height: AppSpacing.xxxl),
+              const SizedBox(height: AppSpacing.xl), // Extra bottom padding
             ],
           ),
         ),
@@ -50,13 +50,13 @@ class DesignScreen extends StatelessWidget {
     );
   }
 
-  /// Build a category section using SBSectionHeader + SBToolGrid from registry
+  /// Build a category section using SbSectionHeader + SBToolGrid from registry
   Widget _buildCategorySection(ToolCategory category) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SbSectionHeader(title: category.title),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.sm), // Compact - not md
         SBToolGrid(
           children: category.tools.map((tool) {
             return SBToolCard(

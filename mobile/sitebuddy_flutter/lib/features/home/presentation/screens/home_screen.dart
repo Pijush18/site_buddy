@@ -12,6 +12,7 @@ import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: HomeScreen
 /// PURPOSE: Main dashboard rebuilt using SiteBuddy UI System (Phase 1)
+/// REFINED: Compact layout, tight spacing, strong visual hierarchy
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -37,7 +38,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // DATA (Would come from providers in real app)
     // ═══════════════════════════════════════════════════════════════════════
 
-    // Recent Activity data
     final List<_ActivityItem> recentActivities = [
       _ActivityItem(
         title: 'Slab Design - Project A',
@@ -53,12 +53,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     ];
 
-    // History data
     final List<_ActivityItem> historyItems = [
       _ActivityItem(
         title: 'Level Calculator used',
         subtitle: '3 days ago',
-        icon: SbIcons.calculator,
+        icon: SbIcons.ruler,
         iconColor: colorScheme.outline,
         onTap: () => context.push(AppRoutes.levelLog),
       ),
@@ -98,22 +97,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
-            vertical: AppSpacing.lg,
+            vertical: AppSpacing.md, // Tighter than lg
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // SECTION 1: QUICK ACTIONS
+              // SECTION 1: QUICK ACTIONS - Compact grid
               _buildQuickActions(),
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: AppSpacing.lg), // Not xl
 
               // SECTION 2: RECENT ACTIVITY
               _buildRecentActivity(recentActivities),
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: AppSpacing.lg), // Not xl
 
               // SECTION 3: HISTORY
               _buildHistory(historyItems, colorScheme),
-              const SizedBox(height: AppSpacing.xxxl),
+              const SizedBox(height: AppSpacing.xl), // Extra bottom padding
             ],
           ),
         ),
@@ -122,21 +121,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SECTION 1: QUICK ACTIONS (Grid)
+  // SECTION 1: QUICK ACTIONS (Compact Grid)
   // ═══════════════════════════════════════════════════════════════════════
   Widget _buildQuickActions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SbSectionHeader(title: 'Quick Actions'),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.sm), // Compact - not md
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: AppSpacing.md,
-          crossAxisSpacing: AppSpacing.md,
-          childAspectRatio: 1,
+          mainAxisSpacing: AppSpacing.sm, // Tight
+          crossAxisSpacing: AppSpacing.sm, // Tight
+          childAspectRatio: 1.2,
           children: [
             // Calculator
             SBGridActionCard(
@@ -153,9 +152,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               subtitle: 'Structural Tools',
               onTap: _navigateToDesign,
             ),
-            // Level Calculator (IMPORTANT: navigates to Field Leveling)
+            // Level Calculator - Correct route to Field Leveling
             SBGridActionCard(
-              icon: SbIcons.height,
+              icon: SbIcons.ruler,
               label: 'Level Calculator',
               subtitle: 'Field Tools',
               onTap: _navigateToLevelCalculator,
@@ -174,14 +173,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SECTION 2: RECENT ACTIVITY
+  // SECTION 2: RECENT ACTIVITY (Compact List)
   // ═══════════════════════════════════════════════════════════════════════
   Widget _buildRecentActivity(List<_ActivityItem> activities) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SbSectionHeader(title: 'Recent Activity'),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.sm), // Compact
         if (activities.isEmpty)
           _buildEmptyState('No recent activity')
         else
@@ -206,7 +205,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SECTION 3: HISTORY
+  // SECTION 3: HISTORY (Compact List)
   // ═══════════════════════════════════════════════════════════════════════
   Widget _buildHistory(List<_ActivityItem> items, ColorScheme colorScheme) {
     return Column(
@@ -214,14 +213,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         SbSectionHeader(
           title: 'History',
-          onTap: () {}, // View All - placeholder
+          onTap: () {},
           trailing: Icon(
             SbIcons.chevronRight,
             size: 18,
             color: colorScheme.primary,
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.sm), // Compact
         if (items.isEmpty)
           _buildEmptyState('No history yet')
         else
@@ -247,11 +246,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════
-  // EMPTY STATE HELPER
+  // EMPTY STATE HELPER (Compact)
   // ═══════════════════════════════════════════════════════════════════════
   Widget _buildEmptyState(String message) {
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.xl),
+      padding: const EdgeInsets.all(AppSpacing.lg), // Tighter than xl
       child: Center(
         child: SBText(
           message,

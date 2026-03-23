@@ -5,7 +5,7 @@ import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// WIDGET: SBToolCard
 /// PURPOSE: Reusable card component for a single tool in the grid
-/// Uses AppSpacing and AppTypography - no hardcoded styles
+/// REFINED: Compact layout, strong visual hierarchy, tight spacing
 class SBToolCard extends StatelessWidget {
   /// Tool icon
   final IconData icon;
@@ -41,17 +41,18 @@ class SBToolCard extends StatelessWidget {
       child: InkWell(
         onTap: () => context.push(route),
         borderRadius: BorderRadius.circular(AppSpacing.sm),
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.all(AppSpacing.sm),
           decoration: BoxDecoration(
             color: isPrimary
-                ? colorScheme.primaryContainer.withValues(alpha: 0.3)
+                ? colorScheme.primaryContainer.withValues(alpha: 0.4)
                 : colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(AppSpacing.sm),
             border: Border.all(
               color: isPrimary
-                  ? colorScheme.primary.withValues(alpha: 0.5)
-                  : colorScheme.outlineVariant,
+                  ? colorScheme.primary.withValues(alpha: 0.4)
+                  : colorScheme.outlineVariant.withValues(alpha: 0.5),
               width: 1,
             ),
           ),
@@ -59,36 +60,36 @@ class SBToolCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Icon
+              // Icon - compact with subtle emphasis for primary
               Container(
                 padding: const EdgeInsets.all(AppSpacing.sm),
                 decoration: BoxDecoration(
                   color: isPrimary
-                      ? colorScheme.primary.withValues(alpha: 0.15)
-                      : colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(AppSpacing.sm),
+                      ? colorScheme.primary.withValues(alpha: 0.12)
+                      : colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(AppSpacing.xs),
                 ),
                 child: Icon(
                   icon,
-                  size: 24,
+                  size: 20,
                   color: isPrimary
                       ? colorScheme.primary
                       : colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: AppSpacing.md),
-              // Title
+              const SizedBox(height: AppSpacing.sm),
+              // Title - tight, important
               SBText(
                 title,
                 variant: SBTextVariant.title,
                 maxLines: 1,
               ),
-              const SizedBox(height: AppSpacing.xs),
-              // Subtitle
+              const SizedBox(height: 2), // Tighter than xs
+              // Subtitle - reduced prominence
               SBText(
                 subtitle,
                 variant: SBTextVariant.label,
-                color: colorScheme.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                 maxLines: 1,
               ),
             ],
@@ -101,7 +102,7 @@ class SBToolCard extends StatelessWidget {
 
 /// WIDGET: SBToolGrid
 /// PURPOSE: Reusable grid system for tool cards
-/// Uses 2-column layout with consistent AppSpacing
+/// REFINED: 2-column with tight, consistent spacing
 class SBToolGrid extends StatelessWidget {
   /// List of tools to display
   final List<Widget> children;
@@ -117,9 +118,9 @@ class SBToolGrid extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: AppSpacing.md,
-      crossAxisSpacing: AppSpacing.md,
-      childAspectRatio: 0.95,
+      mainAxisSpacing: AppSpacing.sm, // Tight - not md
+      crossAxisSpacing: AppSpacing.sm, // Tight - not md
+      childAspectRatio: 1.1, // Slightly taller for content
       children: children,
     );
   }
