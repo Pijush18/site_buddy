@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
@@ -39,12 +39,12 @@ class SbListItem extends StatelessWidget {
             width: 1.0,
           ),
         ),
-        padding: const EdgeInsets.all(SbSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(
           children: [
             if (leading != null) ...[
               leading!,
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
             ],
             Expanded(
               child: Column(
@@ -60,7 +60,7 @@ class SbListItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null) ...[
-                    const SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       subtitle!,
                       style: textTheme.bodyMedium,
@@ -72,7 +72,7 @@ class SbListItem extends StatelessWidget {
               ),
             ),
             if (trailing != null) ...[
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               trailing!,
             ],
           ],

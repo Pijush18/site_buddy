@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -29,11 +29,11 @@ class UnitConverterScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           const _SegmentedToggleSection(),
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: AppSpacing.xl),
           const _ConverterBodySection(),
-          const SizedBox(height: SbSpacing.xl), // Bottom padding
+          const SizedBox(height: AppSpacing.xl), // Bottom padding
         ],
       ),
     );
@@ -114,7 +114,7 @@ class _ConverterBodySection extends ConsumerWidget {
           'Category',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
         SbDropdown<UnitType>(
           value: state.selectedType,
           items: UnitType.values,
@@ -123,7 +123,7 @@ class _ConverterBodySection extends ConsumerWidget {
           },
           itemLabelBuilder: (t) => t.name.toUpperCase(),
         ),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
         Row(
           children: [
             Expanded(
@@ -132,7 +132,7 @@ class _ConverterBodySection extends ConsumerWidget {
                 onChanged: (val) => controller.updateManualValue(context, val),
               ),
             ),
-            const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
+            const SizedBox(width: AppSpacing.lg), // Replaced const SizedBox(width: AppSpacing.lg)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +141,7 @@ class _ConverterBodySection extends ConsumerWidget {
                     'From',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+                  const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.fromUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -153,7 +153,7 @@ class _ConverterBodySection extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
         Row(
           children: [
             const Spacer(),
@@ -171,7 +171,7 @@ class _ConverterBodySection extends ConsumerWidget {
                     'To',
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+                  const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
                   SbDropdown<UnitDefinition>(
                     value: state.toUnit,
                     items: EngineeringUnits.getUnitsForType(state.selectedType),
@@ -189,7 +189,7 @@ class _ConverterBodySection extends ConsumerWidget {
 
   Widget _buildErrorDisplay(String error, BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: SbSpacing.xl),
+      padding: const EdgeInsets.only(top: AppSpacing.xl),
       child: SbCard(
         child: Text(
           error,
@@ -218,7 +218,7 @@ class _ConverterBodySection extends ConsumerWidget {
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.md),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -227,12 +227,12 @@ class _ConverterBodySection extends ConsumerWidget {
             size: 48,
             color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           Text(
             'Try:',
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
           Text(
             '"50 kg to lbs"\n"10x12x0.5 ft m25"\n"100 sqm sqft"',
             textAlign: TextAlign.center,
@@ -255,7 +255,7 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xl),
+        const SizedBox(height: AppSpacing.xl),
         SbCard(
           child: Column(
             children: [
@@ -273,18 +273,18 @@ class _ConverterBodySection extends ConsumerWidget {
           ),
         ),
         if (secondaries.isNotEmpty) ...[
-          const SizedBox(height: SbSpacing.xl),
+          const SizedBox(height: AppSpacing.xl),
           Text(
             'Equals',
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+          const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
           Wrap(
-            spacing: SbSpacing.md,
-            runSpacing: SbSpacing.md,
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
             children: secondaries.entries.map((e) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
                   color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
                   borderRadius: SbRadius.borderSmall,
@@ -309,12 +309,12 @@ class _ConverterBodySection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SbSpacing.xl),
+        const SizedBox(height: AppSpacing.xl),
         Text(
           'Estimate',
           style: Theme.of(context).textTheme.labelMedium!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: AppSpacing.sm), // Replaced SizedBox(height: AppSpacing.sm)
         SbCard(
           child: Column(
             children: [

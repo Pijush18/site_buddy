@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -64,14 +64,14 @@ class SbModuleHero extends StatelessWidget {
           // Content with Premium Vertical Flow
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: SbSpacing.lg,
-              vertical: SbSpacing.xl,
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.lg, // Capped from xl (16px)
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(SbSpacing.md),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: colorScheme.primary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(8),
@@ -82,7 +82,7 @@ class SbModuleHero extends StatelessWidget {
                     size: 28,
                   ),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   title,
                   style: theme.textTheme.headlineSmall?.copyWith(
@@ -90,7 +90,7 @@ class SbModuleHero extends StatelessWidget {
                     letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   subtitle,
                   style: theme.textTheme.bodyLarge?.copyWith(
@@ -102,7 +102,7 @@ class SbModuleHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (child != null) ...[
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   child!,
                 ],
               ],

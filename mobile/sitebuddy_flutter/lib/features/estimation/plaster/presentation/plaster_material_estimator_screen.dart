@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class _PlasterContent extends ConsumerWidget {
                   onChanged: controller.updateArea,
                   errorText: aError,
                 ),
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 SbInput(
                   label: '${l10n.labelThickness} (mm)',
                   hint: l10n.hintDiameter,
@@ -52,7 +52,7 @@ class _PlasterContent extends ConsumerWidget {
                   onChanged: controller.updateThickness,
                   errorText: tError,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   l10n.msgPlasterThicknessNote,
                   style: Theme.of(context).textTheme.labelMedium!,
@@ -147,7 +147,7 @@ class _ResultSection extends StatelessWidget {
             style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           const Divider(),
 
           SbListItemTile(
@@ -167,7 +167,7 @@ class _ResultSection extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbListItemTile(
             title: l10n.labelDryVolume,
             onTap: () {},
@@ -187,14 +187,14 @@ class _ResultSection extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Text(
                 result.mortarRatio,
                 style: theme.textTheme.labelMedium!,
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: AppSpacing.xs),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -206,7 +206,7 @@ class _ResultSection extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Text(
                 '${(result.thickness * 1000).toStringAsFixed(0)} mm',
                 style: theme.textTheme.labelMedium!,

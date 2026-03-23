@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
@@ -62,7 +62,7 @@ class _DesignCalculationScreenState
             },
             icon: Icons.navigate_next,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -109,7 +109,7 @@ class _DesignCalculationScreenState
                     l10n.labelDesignMethod,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   SbDropdown<DesignMethod>(
                     value: state.designMethod,
                     items: DesignMethod.values,
@@ -117,7 +117,7 @@ class _DesignCalculationScreenState
                     onChanged: (v) =>
                         v != null ? notifier.updateDesignMethod(v) : null,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -143,7 +143,7 @@ class _DesignCalculationScreenState
                     ],
                   ),
                   if (!state.isAutoSteel) ...[
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                     SbInput(
                       label: l10n.labelManualSteelUnit,
                       hint: l10n.hintSteelRatio,

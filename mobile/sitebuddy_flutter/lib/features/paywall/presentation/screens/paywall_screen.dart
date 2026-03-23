@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/subscription/subscription_tier.dart';
 import 'package:site_buddy/core/subscription/subscription_provider.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -29,12 +29,12 @@ class PaywallScreen extends ConsumerWidget {
             // Header
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(SbSpacing.lg),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   children: [
-                    const SizedBox(height: SbSpacing.xl),
+                    const SizedBox(height: AppSpacing.xl),
                     Container(
-                      padding: const EdgeInsets.all(SbSpacing.lg),
+                      padding: const EdgeInsets.all(AppSpacing.lg),
                       decoration: BoxDecoration(
                         color: colorScheme.primaryContainer,
                         shape: BoxShape.circle,
@@ -45,7 +45,7 @@ class PaywallScreen extends ConsumerWidget {
                         color: colorScheme.onPrimaryContainer,
                       ),
                     ),
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                     Text(
                       featureName != null 
                           ? 'Unlock $featureName'
@@ -55,7 +55,7 @@ class PaywallScreen extends ConsumerWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
                       featureName != null
                           ? 'Get unlimited access to all features'
@@ -73,9 +73,9 @@ class PaywallScreen extends ConsumerWidget {
             // Current tier indicator
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Container(
-                  padding: const EdgeInsets.all(SbSpacing.md),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
@@ -88,7 +88,7 @@ class PaywallScreen extends ConsumerWidget {
                         size: 20,
                         color: colorScheme.onSurfaceVariant,
                       ),
-                      const SizedBox(width: SbSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Text(
                         'Current: ${subscription.tierBadge}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -101,12 +101,12 @@ class PaywallScreen extends ConsumerWidget {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: SbSpacing.xl)),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xl)),
 
             // Pro Plan
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: _PricingCard(
                   tier: SubscriptionTier.pro,
                   title: 'Pro',
@@ -127,12 +127,12 @@ class PaywallScreen extends ConsumerWidget {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: SbSpacing.md)),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
 
             // Premium Plan
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: _PricingCard(
                   tier: SubscriptionTier.premium,
                   title: 'Premium',
@@ -152,12 +152,12 @@ class PaywallScreen extends ConsumerWidget {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: SbSpacing.xl)),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xl)),
 
             // Comparison link
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Center(
                   child: TextButton(
                     onPressed: () => _showComparison(context),
@@ -167,12 +167,12 @@ class PaywallScreen extends ConsumerWidget {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: SbSpacing.lg)),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
 
             // Close button
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: GhostButton(
                   label: 'Maybe Later',
                   onPressed: () => Navigator.pop(context),
@@ -180,7 +180,7 @@ class PaywallScreen extends ConsumerWidget {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: SbSpacing.xl)),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xl)),
           ],
         ),
       ),
@@ -265,7 +265,7 @@ class _PricingCard extends StatelessWidget {
         children: [
           if (isRecommended)
             Container(
-              padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
               decoration: BoxDecoration(
                 color: colorScheme.primary,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
@@ -279,7 +279,7 @@ class _PricingCard extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -291,10 +291,10 @@ class _PricingCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: SbSpacing.sm),
+                    const SizedBox(width: AppSpacing.sm),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.sm,
+                        horizontal: AppSpacing.sm,
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
@@ -315,20 +315,20 @@ class _PricingCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 
                 // Pricing options
                 _PriceOption(label: 'Monthly', price: price),
                 _PriceOption(label: 'Yearly', price: yearlyPrice, isHighlighted: true),
                 _PriceOption(label: 'Lifetime', price: lifetimePrice),
                 
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 const Divider(),
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 
                 // Features list
                 ...features.map((feature) => Padding(
-                  padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: Row(
                     children: [
                       Icon(
@@ -336,7 +336,7 @@ class _PricingCard extends StatelessWidget {
                         size: 20,
                         color: isPro ? colorScheme.primary : colorScheme.tertiary,
                       ),
-                      const SizedBox(width: SbSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: Text(
                           feature,
@@ -347,7 +347,7 @@ class _PricingCard extends StatelessWidget {
                   ),
                 )),
                 
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 SizedBox(
                   width: double.infinity,
                   child: isRecommended
@@ -382,7 +382,7 @@ class _PriceOption extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.xs),
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Row(
         children: [
           Radio<String>(
@@ -398,7 +398,7 @@ class _PriceOption extends StatelessWidget {
           const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: SbSpacing.sm,
+              horizontal: AppSpacing.sm,
               vertical: 2,
             ),
             decoration: isHighlighted
@@ -438,7 +438,7 @@ class _ComparisonSheet extends StatelessWidget {
           // Handle
           Center(
             child: Container(
-              margin: const EdgeInsets.symmetric(vertical: SbSpacing.md),
+              margin: const EdgeInsets.symmetric(vertical: AppSpacing.md),
               width: 40,
               height: 4,
               decoration: BoxDecoration(
@@ -451,11 +451,11 @@ class _ComparisonSheet extends StatelessWidget {
             'Feature Comparison',
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Expanded(
             child: ListView(
               controller: scrollController,
-              padding: const EdgeInsets.all(SbSpacing.lg),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
                 _ComparisonRow(
                   feature: 'Projects',
@@ -538,7 +538,7 @@ class _ComparisonRow extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.md),
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Row(
         children: [
           Expanded(

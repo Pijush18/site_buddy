@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/safety_check_models.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -27,12 +27,12 @@ class InsightCard extends StatelessWidget {
               ),
 
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         ...insights.map(
           (insight) => Padding(
-            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: SbCard(
-              padding: const EdgeInsets.all(SbSpacing.sm),
+              padding: const EdgeInsets.all(AppSpacing.sm),
 
               child: Row(
                 children: [
@@ -43,7 +43,7 @@ class InsightCard extends StatelessWidget {
                     color: insight.isWarning ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.primary,
                     size: 20,
                   ),
-                  const SizedBox(width: SbSpacing.sm),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       insight.message,

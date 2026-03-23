@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -36,9 +36,9 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.md),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
               child: RepaintBoundary(key: previewKey, child: child),
             ),
           ),
@@ -50,7 +50,7 @@ class PreviewableCard extends StatelessWidget {
 
   Widget _buildActionRow(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -102,7 +102,7 @@ class _ActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
           shape: RoundedRectangleBorder(
             borderRadius: SbRadius.borderMedium,
           ),
@@ -121,7 +121,7 @@ class _ActionButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: action.onPressed,
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.all(SbSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.md),
         side: BorderSide(color: primaryColor),
         shape: RoundedRectangleBorder(
           borderRadius: SbRadius.borderMd,

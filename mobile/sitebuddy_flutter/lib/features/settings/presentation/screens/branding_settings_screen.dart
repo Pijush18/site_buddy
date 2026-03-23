@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/branding/branding_provider.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
@@ -122,7 +122,7 @@ class _BrandingSettingsScreenState
                   )
                 : Text(context.l10n.actionSave),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           TextButton(
             onPressed: isSyncing ? null : () => ref.read(brandingProvider.notifier).resetToDefault(),
             child: Text(context.l10n.actionResetDefaults),
@@ -139,14 +139,14 @@ class _BrandingSettingsScreenState
                   'Profile',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   'Customize report identity.',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                const SizedBox(height: SbSpacing.xl),
+                const SizedBox(height: AppSpacing.xl),
                 _buildInputLabel(context, 'Company Name'),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 SbInput(
                   controller: _companyController,
                   hint: 'e.g., ABC Infra Pvt Ltd',
@@ -154,9 +154,9 @@ class _BrandingSettingsScreenState
                   label: 'Company',
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 _buildInputLabel(context, 'Lead Engineer'),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 SbInput(
                   controller: _engineerController,
                   hint: 'e.g., Er. Pijush Debbarma',

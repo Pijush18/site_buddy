@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 /// WIDGET: GhostButton
 /// PURPOSE: Standardized text-only button.
@@ -46,7 +46,7 @@ class GhostButton extends StatelessWidget {
                 children: [
                   if (icon != null) ...[
                     Icon(icon, size: 20),
-                    const SizedBox(width: SbSpacing.sm),
+                    const SizedBox(width: AppSpacing.sm),
                   ],
                   Text(label),
                 ],

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
@@ -44,7 +44,7 @@ class LevelProfileGraph extends StatelessWidget {
 
     return Container(
       height: height,
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg, vertical: SbSpacing.xxl),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xxl),
       child: CustomPaint(
         size: Size.infinite,
         painter: _ProfilePainter(

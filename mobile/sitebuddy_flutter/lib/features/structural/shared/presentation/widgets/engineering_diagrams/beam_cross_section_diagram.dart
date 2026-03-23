@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class BeamCrossSectionDiagram extends StatelessWidget {
     final rebarColor = isDark ? Colors.blue.shade300 : Colors.blue.shade600;
 
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -56,15 +56,15 @@ class BeamCrossSectionDiagram extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _Label(label: 'Width', value: '${width.toInt()} mm'),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   _Label(label: 'Depth', value: '${depth.toInt()} mm'),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   _Label(
                     label: 'Main Steel',
                     value: '$numBars bars Ø${barDia.toInt()}',
                     isBold: true,
                   ),
-                  const SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   _Label(
                     label: 'Stirrups',
                     value: '@ ${stirrupSpacing.toInt()} mm c/c',

@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                   value: _isLoading,
                   onChanged: (v) => setState(() => _isLoading = v),
                 ),
-                const SizedBox(width: SbSpacing.sm),
+                const SizedBox(width: AppSpacing.sm),
                 const Text('Enabled', style: TextStyle(fontSize: 10)),
                 Switch.adaptive(
                   value: _isEnabled,
@@ -44,14 +44,14 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
 
         // --- BUTTONS ---
         Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         Wrap(
-          spacing: SbSpacing.lg,
-          runSpacing: SbSpacing.lg,
+          spacing: AppSpacing.lg,
+          runSpacing: AppSpacing.lg,
           children: [
             PrimaryCTA(
               label: 'Primary Button',
@@ -74,11 +74,11 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.xxl),
+        const SizedBox(height: AppSpacing.xxl),
 
         // --- CARDS ---
         Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         Row(
           children: [
             Expanded(
@@ -90,7 +90,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'SbCard',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     const Text(
                       'This is the standard SiteBuddy card component.',
                     ),
@@ -98,10 +98,10 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                 ),
               ),
             ),
-            const SizedBox(width: SbSpacing.lg),
+            const SizedBox(width: AppSpacing.lg),
             Expanded(
               child: SbCard(
-                padding: const EdgeInsets.all(SbSpacing.lg),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -109,7 +109,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'Common Decoration',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     const Text('Standard card usage from SbCard.'),
                   ],
                 ),
@@ -117,17 +117,17 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.xxl),
+        const SizedBox(height: AppSpacing.xxl),
 
         // --- FORMS ---
         Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         SbInput(
           label: 'Standard Input',
           hint: 'Type something...',
           enabled: _isEnabled,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         const SbInput(label: 'Input with Helper', hint: 'Example helper text'),
       ],
     );

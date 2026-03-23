@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 
@@ -37,7 +37,7 @@ class SBGridActionCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.all(SbSpacing.md),
+            padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(SbRadius.standard),
@@ -58,7 +58,7 @@ class SBGridActionCard extends StatelessWidget {
                       ? colorScheme.primary
                       : colorScheme.onSurfaceVariant,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   label,
                   style: theme.textTheme.titleMedium?.copyWith(

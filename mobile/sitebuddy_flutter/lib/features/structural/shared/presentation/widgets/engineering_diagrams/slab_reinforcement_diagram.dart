@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,7 +27,7 @@ class SlabReinforcementDiagram extends StatelessWidget {
     final diagramColor = colorScheme.primary;
 
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -52,11 +52,11 @@ class SlabReinforcementDiagram extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _InfoTile(label: 'Lx', value: '${lx.toStringAsFixed(2)} m'),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   _InfoTile(label: 'Ly', value: '${ly.toStringAsFixed(2)} m'),
-                  const SizedBox(height: SbSpacing.md),
+                  const SizedBox(height: AppSpacing.md),
                   _InfoTile(label: 'Main', value: mainRebar, isBold: true),
-                  const SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   _InfoTile(label: 'Dist', value: distRebar),
                 ],
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 
@@ -43,7 +43,7 @@ class SbEmptyState extends StatelessWidget {
               ),
               child: Icon(icon, size: 28, color: colorScheme.onSurfaceVariant),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
 
             // Title
             Text(
@@ -54,9 +54,9 @@ class SbEmptyState extends StatelessWidget {
 
             // Subtitle
             if (subtitle != null) ...[
-              const SizedBox(height: SbSpacing.xs),
+              const SizedBox(height: AppSpacing.xs),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Text(
                   subtitle!,
                   style: textTheme.bodyMedium,
@@ -67,7 +67,7 @@ class SbEmptyState extends StatelessWidget {
 
             // Action
             if (actionLabel != null && onAction != null) ...[
-              const SizedBox(height: SbSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
               PrimaryCTA(
                 label: actionLabel!,
                 onPressed: onAction,

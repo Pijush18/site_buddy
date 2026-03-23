@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
@@ -27,18 +27,18 @@ class DesignReportView extends StatelessWidget {
       children: [
         // 1. Header Section
         _ReportHeader(report: report),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
 
         // 2. Calculation Summary Card
         _ReportSummaryCard(summary: report.summary, isSafe: report.isSafe),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
 
         // 3. Dynamic Data Sections
         _ReportSection(
           title: 'INPUT PARAMETERS',
           data: report.inputs,
         ),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
 
         _ReportSection(
           title: 'TECHNICAL RESULTS',
@@ -75,7 +75,7 @@ class _ReportHeader extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: SbSpacing.xs),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 dateStr,
                 style: theme.textTheme.labelSmall?.copyWith(
@@ -106,11 +106,11 @@ class _ReportSummaryCard extends StatelessWidget {
     final color = isSafe ? Colors.green : Colors.red;
 
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.md),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(SbSpacing.sm),
+            padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
@@ -121,7 +121,7 @@ class _ReportSummaryCard extends StatelessWidget {
               size: 20,
             ),
           ),
-          const SizedBox(width: SbSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               summary,
@@ -159,7 +159,7 @@ class _ReportSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: SbSpacing.sm),
+          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: Text(
             title,
             style: theme.textTheme.labelSmall?.copyWith(
@@ -222,8 +222,8 @@ class _ReportRow extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: SbSpacing.md,
-            vertical: SbSpacing.md,
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.md,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +236,7 @@ class _ReportRow extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Flexible(
                 child: Text(
                   value,
@@ -254,7 +254,7 @@ class _ReportRow extends StatelessWidget {
           Divider(
             height: 1,
             thickness: 0.5,
-            indent: SbSpacing.md,
+            indent: AppSpacing.md,
             color: theme.dividerColor.withValues(alpha: 0.05),
           ),
       ],
@@ -273,8 +273,8 @@ class _StatusBadge extends StatelessWidget {
     final color = isSafe ? Colors.green : Colors.red;
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),

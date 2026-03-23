@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: ReportsScreen
@@ -32,7 +32,7 @@ class ReportsScreen extends StatelessWidget {
           SbSection(
             title: 'How it works',
             child: SbCard(
-              padding: const EdgeInsets.all(SbSpacing.lg),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Text(
                 'Use Export PDF in any module.',
                 style: textTheme.bodyMedium,

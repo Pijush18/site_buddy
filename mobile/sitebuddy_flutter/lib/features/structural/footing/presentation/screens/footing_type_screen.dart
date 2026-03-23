@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 
@@ -33,7 +33,7 @@ class FootingTypeScreen extends ConsumerWidget {
               context.push('/footing/soil-load');
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -59,8 +59,8 @@ class FootingTypeScreen extends ConsumerWidget {
               padding: EdgeInsets.zero,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: SbSpacing.lg,
-                mainAxisSpacing: SbSpacing.lg,
+                crossAxisSpacing: AppSpacing.lg,
+                mainAxisSpacing: AppSpacing.lg,
                 childAspectRatio: 0.95,
               ),
               itemCount: FootingType.values.length,

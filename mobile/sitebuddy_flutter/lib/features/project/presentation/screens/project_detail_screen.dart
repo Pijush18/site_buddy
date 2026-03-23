@@ -5,7 +5,7 @@ import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/presentation/controllers/project_detail_controller.dart';
 import 'package:site_buddy/core/network/connectivity_service.dart';
@@ -71,7 +71,7 @@ class ProjectDetailScreen extends ConsumerWidget {
             final isOnline = ref.watch(connectivityProvider).value ?? true;
             return Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: SbSpacing.lg,
+                horizontal: AppSpacing.lg,
               ).copyWith(left: 0),
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
@@ -98,7 +98,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.lg,
+                        horizontal: AppSpacing.lg,
                       ),
                       child: Text(
                         proj.status.label,
@@ -107,12 +107,12 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   proj.name,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 // Cover Image Mock
                 SizedBox(
                   height: 120,
@@ -125,7 +125,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -156,7 +156,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                               size: 20,
                               color: colorScheme.primary,
                             ),
-                            const SizedBox(width: SbSpacing.sm),
+                            const SizedBox(width: AppSpacing.sm),
                             Text(
                               proj.location,
                               style: Theme.of(context).textTheme.bodyLarge!,
@@ -195,7 +195,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     ),
                   ),
                   VerticalDivider(
-                    width: SbSpacing.xl,
+                    width: AppSpacing.xl,
                     thickness: 1,
                     color: context.colors.outline,
                   ),
@@ -217,7 +217,7 @@ class ProjectDetailScreen extends ConsumerWidget {
             padding: EdgeInsets.zero,
             child: calcItems.isEmpty
                 ? Padding(
-                    padding: const EdgeInsets.all(SbSpacing.md),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(context.l10n.msgNoRecordsFound),
                   )
                 : SbListGroup(
@@ -241,7 +241,7 @@ class ProjectDetailScreen extends ConsumerWidget {
             padding: EdgeInsets.zero,
             child: logItems.isEmpty
                 ? Padding(
-                    padding: const EdgeInsets.all(SbSpacing.md),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(context.l10n.msgNoRecordsFound),
                   )
                 : SbListGroup(
@@ -272,7 +272,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   },
                   width: double.infinity,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 SecondaryButton(
                   label: context.l10n.actionEdit,
                   icon: Icons.edit_outlined,
@@ -320,9 +320,9 @@ class _StatItem extends StatelessWidget {
               Text(label, style: Theme.of(context).textTheme.labelMedium!),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(value, style: Theme.of(context).textTheme.titleLarge!),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Text(subtext, style: Theme.of(context).textTheme.labelMedium!),
         ],
       ),

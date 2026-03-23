@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
@@ -24,7 +24,7 @@ class SafetyStatusHeader extends StatelessWidget {
     final icon = isSafe ? Icons.check_circle : Icons.warning;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: SbRadius.borderMd,
@@ -33,7 +33,7 @@ class SafetyStatusHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 14, color: color),
-          const SizedBox(width: SbSpacing.xs),
+          const SizedBox(width: AppSpacing.xs),
           Text(
             label.isNotEmpty ? label : (isSafe ? 'SAFE' : 'UNSAFE'),
             style: Theme.of(context).textTheme.titleMedium!,
@@ -60,7 +60,7 @@ class SafetyInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -137,7 +137,7 @@ class PlaceholderCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return SbCard(
       color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-      padding: const EdgeInsets.all(SbSpacing.xxl),
+      padding: const EdgeInsets.all(AppSpacing.xxl),
       child: Column(
         children: [
           Icon(
@@ -145,7 +145,7 @@ class PlaceholderCard extends StatelessWidget {
             size: 48,
             color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             message,
             textAlign: TextAlign.center,

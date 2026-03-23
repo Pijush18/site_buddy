@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 
@@ -27,8 +27,8 @@ class DesignResultCard extends StatelessWidget {
       title: title,
       trailing: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: SbSpacing.sm,
-          vertical: SbSpacing.sm / 2,
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.sm / 2,
         ),
         decoration: BoxDecoration(
           color: statusColor.withValues(alpha: 0.1),
@@ -47,7 +47,7 @@ class DesignResultCard extends StatelessWidget {
         children: [
           ...items.map(
             (item) => Padding(
-              padding: const EdgeInsets.only(bottom: SbSpacing.md),
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,7 +60,7 @@ class DesignResultCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
-                      const SizedBox(width: SbSpacing.lg),
+                      const SizedBox(width: AppSpacing.lg),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -72,7 +72,7 @@ class DesignResultCard extends StatelessWidget {
                                 ),
                           ),
                           if (item.unit != null) ...[
-                            const SizedBox(width: SbSpacing.xs),
+                            const SizedBox(width: AppSpacing.xs),
                             Text(
                               item.unit!,
                               style: Theme.of(context).textTheme.labelMedium!,
@@ -83,7 +83,7 @@ class DesignResultCard extends StatelessWidget {
                     ],
                   ),
                   if (item.subtitle != null) ...[
-                    const SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       item.subtitle!,
                       style: Theme.of(context).textTheme.labelMedium!,
@@ -95,7 +95,7 @@ class DesignResultCard extends StatelessWidget {
           ),
           if (codeReference != null) ...[
             const Divider(),
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
                 Icon(
@@ -103,7 +103,7 @@ class DesignResultCard extends StatelessWidget {
                   size: 14,
                   color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 ),
-                const SizedBox(width: SbSpacing.sm),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   codeReference!,
                   style: Theme.of(context).textTheme.labelMedium!,

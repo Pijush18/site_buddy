@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +34,7 @@ class CementScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: l10n.labelWetVolume,
@@ -69,9 +69,9 @@ class CementScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: AppSpacing.sm),
               const Divider(),
-              const SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: AppSpacing.sm),
               SbListItemTile(
                 title: l10n.labelEstimatedCost,
                 onTap: () {}, // Detail view entry
@@ -96,34 +96,34 @@ class CementScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbInput(
             label: '${l10n.labelLength} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           SbInput(
             label: '${l10n.labelWidth} (m)',
             suffixIcon: const Icon(SbIcons.ruler),
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           SbInput(
             label: '${l10n.labelDepth} (m)',
             suffixIcon: const Icon(SbIcons.height),
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             '${l10n.labelMixRatio} (C:S:A)',
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           Row(
             children: [
               Expanded(
@@ -136,7 +136,7 @@ class CementScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: SbInput(
                   label: l10n.labelSand,
@@ -147,7 +147,7 @@ class CementScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: SbInput(
                   label: l10n.labelAggregate,
@@ -160,7 +160,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -174,7 +174,7 @@ class CementScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: SbSpacing.lg),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: SbInput(
                   label: l10n.labelPricePerBag,
@@ -184,7 +184,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
@@ -200,7 +200,7 @@ class CementScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           if (state.failure != null) ...[
             SbCard(
               child: Text(
@@ -209,11 +209,11 @@ class CementScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: SbSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PrimaryCTA(
               label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
@@ -221,7 +221,7 @@ class CementScreen extends ConsumerWidget {
                 AppLogger.info('Export PDF clicked - implementation pending', tag: 'CementUI');
               },
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
         ],
       ),

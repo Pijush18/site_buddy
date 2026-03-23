@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -66,7 +66,7 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
             onPressed: _onCalculate,
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -98,14 +98,14 @@ class _SlabLoadScreenState extends ConsumerState<SlabLoadScreen> {
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Dead Load'),
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     SbInput(
                       controller: _llController,
                       label: l10n.labelLiveLoad,
                       validator: (v) =>
                           ValidationHelper.validatePositive(v, 'Live Load'),
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
                       l10n.labelFactorApplied,
                       style: Theme.of(context).textTheme.labelMedium!,

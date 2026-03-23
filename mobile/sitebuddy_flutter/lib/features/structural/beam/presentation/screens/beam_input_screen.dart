@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -148,7 +148,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
             onPressed: _onNext,
             icon: SbIcons.arrowForward,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -168,7 +168,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                     l10n.labelStep1Geometry,
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     'IS 456:2000 Clause 5.5.1',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -196,7 +196,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                         }
                       },
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
                       _getBeamTypeDescription(state.type),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -227,7 +227,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                             ValidationHelper.validatePositive(v, l10n.labelLength),
                       ),
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     // Width and Depth in a row
                     Row(
                       children: [
@@ -244,7 +244,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
+                        const SizedBox(width: AppSpacing.lg),
                         Expanded(
                           child: Semantics(
                             label: '${l10n.labelDepthD} in millimeters',
@@ -260,7 +260,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     // IS 456 hint
                     _buildCodeHint(
                       context,
@@ -290,7 +290,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                                 .updateInputs(concrete: v),
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.lg),
+                        const SizedBox(width: AppSpacing.lg),
                         Expanded(
                           child: _buildGradeDropdown(
                             l10n.labelSteelGrade,
@@ -303,7 +303,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     Semantics(
                       label: '${l10n.labelCover} in millimeters',
                       hint: 'Enter concrete cover in millimeters, typically 25-40mm',
@@ -315,7 +315,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
                             ValidationHelper.validatePositive(v, l10n.labelCover),
                       ),
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     _buildCodeHint(
                       context,
                       'ℹ️ Cover depends on exposure condition (IS 456 Table 16)',
@@ -347,8 +347,8 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
   Widget _buildCodeHint(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -377,7 +377,7 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

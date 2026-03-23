@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -59,7 +59,7 @@ class BeamRebarDrawing extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             child: Text(
               'Beam Section: ${width.toInt()}x${depth.toInt()} mm',
               style: Theme.of(context).textTheme.labelMedium!,

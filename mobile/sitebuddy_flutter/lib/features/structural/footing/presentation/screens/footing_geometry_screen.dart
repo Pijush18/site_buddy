@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -91,7 +91,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
             icon: Icons.analytics_outlined,
             onPressed: _onNext,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -123,7 +123,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                           controller: _colAController,
                         ),
                       ),
-                      const SizedBox(width: SbSpacing.lg),
+                      const SizedBox(width: AppSpacing.lg),
                       Expanded(
                         child: SbInput(
                           label: l10n.labelColumnBUnit,
@@ -132,7 +132,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     l10n.msgCriticalShearBending,
                     style: theme.textTheme.labelMedium!,
@@ -157,7 +157,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                           controller: _lengthController,
                         ),
                       ),
-                      const SizedBox(width: SbSpacing.lg),
+                      const SizedBox(width: AppSpacing.lg),
                       Expanded(
                         child: SbInput(
                           label: l10n.labelWidthBUnit,
@@ -166,7 +166,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   SbInput(
                     label: l10n.labelThicknessDUnit,
                     controller: _thicknessController,
@@ -174,7 +174,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
                   ),
                   if (state.type == FootingType.combined ||
                       state.type == FootingType.strap) ...[
-                    const SizedBox(height: SbSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                     SbInput(
                       label: l10n.labelColumnSpacingUnit,
                       controller: _spacingController,
@@ -192,7 +192,7 @@ class _FootingGeometryScreenState extends ConsumerState<FootingGeometryScreen> {
               child: Row(
                 children: [
                   Icon(SbIcons.info, color: colorScheme.primary, size: 20),
-                  const SizedBox(width: SbSpacing.lg),
+                  const SizedBox(width: AppSpacing.lg),
                   Expanded(
                     child: Text(
                       l10n.msgFootingAreaCapture(

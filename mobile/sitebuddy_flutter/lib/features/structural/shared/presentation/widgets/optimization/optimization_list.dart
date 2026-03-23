@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/constants/app_strings.dart';
@@ -38,7 +38,7 @@ class _OptimizationListState extends State<OptimizationList> {
         final isSelected = _selectedIndex == index;
 
         return Padding(
-          padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+          padding: const EdgeInsets.only(bottom: AppSpacing.lg),
           child: SbCard(
             onTap: widget.onOptionSelected != null
                 ? () {
@@ -48,7 +48,7 @@ class _OptimizationListState extends State<OptimizationList> {
                     widget.onOptionSelected!(option);
                   }
                 : null,
-            padding: const EdgeInsets.all(SbSpacing.md),
+            padding: const EdgeInsets.all(AppSpacing.md),
             color: isSelected ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3) : null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,14 +57,14 @@ class _OptimizationListState extends State<OptimizationList> {
                   option.title,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   option.description,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 const Divider(height: 1),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 PrimaryCTA(
                   label: isSelected ? 'Selected' : AppStrings.selectOption,
                   icon: isSelected ? Icons.check_circle : null,

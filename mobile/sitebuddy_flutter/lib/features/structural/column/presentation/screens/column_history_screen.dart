@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
 import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
@@ -71,7 +71,7 @@ class ColumnHistoryScreen extends ConsumerWidget {
           return Column(
             children: columnHistory
                 .map((entry) => Padding(
-                      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+                      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
                       child: _HistoryCard(entry: entry),
                     ))
                 .toList(),

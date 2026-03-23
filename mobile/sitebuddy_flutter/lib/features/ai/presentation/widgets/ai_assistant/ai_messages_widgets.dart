@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,11 +16,11 @@ class UserMessageWidget extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: Container(
         margin: const EdgeInsets.only(
-          bottom: SbSpacing.lg,
-          left: SbSpacing.xxl,
-          right: SbSpacing.lg,
+          bottom: AppSpacing.lg,
+          left: AppSpacing.xxl,
+          right: AppSpacing.lg,
         ),
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
           color: colorScheme.primary,
           borderRadius: const BorderRadius.only(
@@ -47,7 +47,7 @@ class AiErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl, horizontal: SbSpacing.lg),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl, horizontal: AppSpacing.lg),
       child: Center(
         child: Text(
           error,

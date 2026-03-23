@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/features/structural/footing/domain/footing_type.dart';
@@ -30,7 +30,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
             icon: Icons.grid_view_outlined,
             onPressed: () => context.push('/footing/reinforcement'),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -114,7 +114,7 @@ class FootingAnalysisScreen extends ConsumerWidget {
                     ),
                   ),
                   if (state.type == FootingType.pile) ...[
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     SbListItemTile(
                       title: l10n.labelPilesRequired,
                       onTap: () {}, // Detail view entry

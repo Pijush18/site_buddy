@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -20,12 +20,12 @@ class LayoutLabSection extends StatelessWidget {
           'Layout & Grid System',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         Text(
           'The SiteBuddy grid system enforces a maximum content width of 800px on all primary screens to ensure readability and professional presentation.',
           style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey),
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
 
         // Visualizer
         Container(
@@ -103,10 +103,10 @@ class LayoutLabSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         Text('Layout Rules:', style: Theme.of(context).textTheme.bodyLarge!),
         Padding(
-          padding: const EdgeInsets.all(SbSpacing.sm),
+          padding: const EdgeInsets.all(AppSpacing.sm),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

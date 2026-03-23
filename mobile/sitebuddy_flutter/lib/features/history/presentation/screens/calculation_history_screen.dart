@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -46,38 +46,20 @@ class CalculationHistoryScreen extends ConsumerWidget {
           return Column(
             children: [
               for (var i = 0; i < sortedEntries.length; i++) ...[
-                _HistoryEntryCard(entry: sortedEntries[i]),
+                SbListItemTile.compact(
+                  icon: _getTypeIcon(sortedEntries[i].calculationType),
+                  title: sortedEntries[i].resultSummary,
+                  subtitle: 'ID: ${sortedEntries[i].id.substring(0, 8)}...',
+                  trailing: DateFormat('MMM dd, hh:mm a').format(sortedEntries[i].timestamp),
+                  onTap: () {
+                    context.push(AppRoutes.historyDetail, extra: sortedEntries[i]);
+                  },
+                ),
                 if (i < sortedEntries.length - 1)
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
               ],
             ],
           );
-        },
-      ),
-    );
-  }
-}
-
-class _HistoryEntryCard extends StatelessWidget {
-  final CalculationHistoryEntry entry;
-
-  const _HistoryEntryCard({required this.entry});
-
-  @override
-  Widget build(BuildContext context) {
-    final dateStr = DateFormat('MMM dd, hh:mm a').format(entry.timestamp);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: SbSpacing.sm,
-      ).copyWith(top: 0),
-      child: SbListItemTile(
-        icon: _getTypeIcon(entry.calculationType),
-        title: entry.resultSummary,
-        subtitle: 'ID: ${entry.id.substring(0, 8)}...',
-        trailing: dateStr,
-        onTap: () {
-          context.push(AppRoutes.historyDetail, extra: entry);
         },
       ),
     );

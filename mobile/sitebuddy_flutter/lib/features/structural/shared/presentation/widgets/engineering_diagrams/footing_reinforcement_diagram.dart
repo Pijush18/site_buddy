@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -34,7 +34,7 @@ class FootingReinforcementDiagram extends StatelessWidget {
     final colColor = isDark ? Colors.white24 : Colors.black12;
 
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 1.8, // Slightly taller for footing details
@@ -57,7 +57,7 @@ class FootingReinforcementDiagram extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.only(left: SbSpacing.sm),
+                padding: const EdgeInsets.only(left: AppSpacing.sm),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,20 +67,20 @@ class FootingReinforcementDiagram extends StatelessWidget {
                       value:
                           '${(length / 1000).toStringAsFixed(2)}x${(width / 1000).toStringAsFixed(2)} m',
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     _ValueTile(
                       label: 'Thickness',
                       value: '${thickness.toInt()} mm',
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     _ValueTile(
                       label: 'Net Soil Pr.',
                       value: '$qu kN/m²',
                       color: Colors.blue,
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     _ValueTile(label: 'Steel X-X', value: rebarX, isBold: true),
-                    const SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     _ValueTile(label: 'Steel Y-Y', value: rebarY, isBold: true),
                   ],
                 ),

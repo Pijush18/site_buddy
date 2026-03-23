@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class AppScaffold extends ConsumerWidget {
               automaticallyImplyLeading: automaticallyImplyLeading,
               leading: automaticallyImplyLeading && context.canPop()
                   ? Padding(
-                      padding: const EdgeInsets.only(left: SbSpacing.sm),
+                      padding: const EdgeInsets.only(left: AppSpacing.sm),
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => context.pop(),

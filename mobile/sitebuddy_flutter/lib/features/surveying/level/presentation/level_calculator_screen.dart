@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,19 +49,19 @@ class LevelCalculatorScreen extends ConsumerWidget {
               style: theme.textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             const Divider(),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             Text(
               '${result.difference.toStringAsFixed(2)} m',
               style: theme.textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: SbSpacing.lg,
-                vertical: SbSpacing.sm / 2,
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.sm / 2,
               ),
               child: Text(
                 directionLabel,
@@ -69,7 +69,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             SbListItemTile(
               title: l10n.labelDifference,
               onTap: () {}, // Detail view entry
@@ -89,13 +89,13 @@ class LevelCalculatorScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Icon(SbIcons.ruler, size: 72, color: colorScheme.primary),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             l10n.labelComparison,
             style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           SbInput(
             label: '${l10n.labelStart} (m)',
@@ -103,7 +103,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             onChanged: controller.updateStartLevel,
             errorText: sError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
 
           SbInput(
             label: '${l10n.labelEnd} (m)',
@@ -112,7 +112,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             errorText: eError,
           ),
 
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           ActionButtonsGroup(
             children: [
@@ -130,7 +130,7 @@ class LevelCalculatorScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           if (state.failure != null) ...[
             SbCard(
@@ -140,12 +140,12 @@ class LevelCalculatorScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
         ],
       ),

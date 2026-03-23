@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -75,13 +75,13 @@ class _FootingSafetyCheckScreenState
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionNewDesign,
             icon: Icons.add,
             onPressed: () => context.go(AppRoutes.home),
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionSaveImage,
             icon: Icons.image_outlined,
@@ -96,7 +96,7 @@ class _FootingSafetyCheckScreenState
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionSavePdf,
             icon: Icons.picture_as_pdf_outlined,
@@ -115,7 +115,7 @@ class _FootingSafetyCheckScreenState
               }
             },
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -149,7 +149,7 @@ class _FootingSafetyCheckScreenState
                         overallSafe ? colorScheme.primary : colorScheme.error,
                     size: 32,
                   ),
-                  const SizedBox(width: SbSpacing.lg),
+                  const SizedBox(width: AppSpacing.lg),
                   Text(
                     overallSafe ? l10n.labelDesignSafe : l10n.labelDesignUnsafe,
                     style: Theme.of(context).textTheme.titleLarge!,
@@ -231,7 +231,7 @@ class _FootingSafetyCheckScreenState
                     key: _drawingKey,
                     child: Container(
                       color: theme.cardColor,
-                      padding: const EdgeInsets.all(SbSpacing.xxl),
+                      padding: const EdgeInsets.all(AppSpacing.xxl),
                       child: FootingRebarDrawing(
                         length: state.footingLength,
                         width: state.footingWidth,
@@ -260,7 +260,7 @@ class _FootingSafetyCheckScreenState
                       color: colorScheme.tertiary,
                       size: 20,
                     ),
-                    const SizedBox(width: SbSpacing.lg),
+                    const SizedBox(width: AppSpacing.lg),
                     Expanded(
                       child: Text(
                         l10n.msgSettlementWarning,

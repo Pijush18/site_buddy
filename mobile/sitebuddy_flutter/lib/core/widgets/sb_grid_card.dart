@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
@@ -40,7 +40,7 @@ class _SbGridCardState extends State<SbGridCard> {
       borderRadius: BorderRadius.circular(SbRadius.standard),
       child: AnimatedContainer(
         margin: widget.margin ?? EdgeInsets.zero,
-        padding: const EdgeInsets.all(SbSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.md),
         duration: const Duration(milliseconds: 150),
         curve: Curves.easeOut,
         decoration: BoxDecoration(
@@ -70,7 +70,7 @@ class _SbGridCardState extends State<SbGridCard> {
               color: widget.isVibrant ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
               size: _iconSize, 
             ),
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             SizedBox(
               height: _labelHeight,
               child: Center(

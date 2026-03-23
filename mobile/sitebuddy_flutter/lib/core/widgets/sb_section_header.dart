@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 /// CLASS: SbSectionHeader
 /// PURPOSE: Standardized section header with strong hierarchy and interaction.
@@ -30,7 +30,7 @@ class SbSectionHeader extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Padding(
-      padding: padding ?? const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,7 @@ class SbSectionHeader extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null) ...[
-                    const SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       subtitle!,
                       style: textTheme.bodySmall?.copyWith(
@@ -78,8 +78,8 @@ class SbSectionHeader extends StatelessWidget {
                     borderRadius: SbRadius.borderSmall,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.sm,
-                        vertical: SbSpacing.xs,
+                        horizontal: AppSpacing.sm,
+                        vertical: AppSpacing.xs,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -91,7 +91,7 @@ class SbSectionHeader extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(width: SbSpacing.xs),
+                          const SizedBox(width: AppSpacing.xs),
                           Icon(
                             icon ?? SbIcons.chevronRight,
                             size: 18,
@@ -104,7 +104,7 @@ class SbSectionHeader extends StatelessWidget {
                 ),
 
               if (trailing != null) ...[
-                if (onTap != null) const SizedBox(width: SbSpacing.sm),
+                if (onTap != null) const SizedBox(width: AppSpacing.sm),
                 trailing!,
               ],
             ],

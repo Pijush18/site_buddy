@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +35,7 @@ class AppReportDialog extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(borderRadius: SbRadius.borderMedium),
       child: Container(
-        padding: const EdgeInsets.all(SbSpacing.xxl),
+        padding: const EdgeInsets.all(AppSpacing.xxl),
         constraints: const BoxConstraints(maxWidth: 600),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -51,7 +51,7 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             Flexible(
               child: SingleChildScrollView(
                 child: SelectableText(
@@ -60,7 +60,7 @@ class AppReportDialog extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: SbSpacing.xxl),
+            const SizedBox(height: AppSpacing.xxl),
             PrimaryCTA(label: 'Close', onPressed: () => context.pop()),
           ],
         ),

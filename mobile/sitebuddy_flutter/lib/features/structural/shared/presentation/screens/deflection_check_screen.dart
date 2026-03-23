@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/structural/shared/application/controllers/deflection_check_controller.dart';
@@ -49,12 +49,12 @@ class DeflectionCheckScreen extends ConsumerWidget {
             isLoading: state.isLoading,
           ),
           if (state.result != null) ...[
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             GhostButton(
               label: 'Share Report',
               onPressed: notifier.shareResult,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             GhostButton(
               label: 'Reset Form',
               onPressed: notifier.reset,
@@ -91,7 +91,7 @@ class DeflectionCheckScreen extends ConsumerWidget {
           if (state.error != null)
             SbSection(
               child: Container(
-                padding: const EdgeInsets.all(SbSpacing.md),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
@@ -166,7 +166,7 @@ class _PlaceholderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.xl),
+      padding: const EdgeInsets.all(AppSpacing.xl),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
@@ -179,7 +179,7 @@ class _PlaceholderCard extends StatelessWidget {
             size: 48,
             color: Theme.of(context).colorScheme.outline,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           Text(
             message,
             textAlign: TextAlign.center,

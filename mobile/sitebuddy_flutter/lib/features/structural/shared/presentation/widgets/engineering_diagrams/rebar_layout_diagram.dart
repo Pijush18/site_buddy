@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
@@ -27,7 +27,7 @@ class RebarLayoutDiagram extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
 
       child: AspectRatio(
         aspectRatio: 2.0, // Standard responsive ratio
@@ -64,7 +64,7 @@ class RebarLayoutDiagram extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   Flexible(
                     child: Text(
                       '$numBars bars Ø${mainBarDia.toInt()}',
@@ -73,14 +73,14 @@ class RebarLayoutDiagram extends StatelessWidget {
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   Text(
                     'Total Steel Area',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   Flexible(
                     child: Text(
                       'Ast = ${ast.toInt()} mm²',

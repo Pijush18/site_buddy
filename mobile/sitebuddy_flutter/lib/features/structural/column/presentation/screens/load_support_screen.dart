@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 
@@ -57,7 +57,7 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
             onPressed: _onNext,
             icon: Icons.analytics_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -89,12 +89,12 @@ class _LoadSupportScreenState extends ConsumerState<LoadSupportScreen> {
                       if (val != null) notifier.updateLoads(pu: val);
                     },
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   Text(
                     l10n.labelEndSupportCondition,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,

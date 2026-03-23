@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,8 +35,8 @@ class AppHeader extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.xxl,
-        vertical: SbSpacing.xxl,
+        horizontal: AppSpacing.lg, // Capped from xxl
+        vertical: AppSpacing.lg,   // Capped from xxl
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,7 @@ class AppHeader extends ConsumerWidget {
                     }
                   },
             ),
-            const SizedBox(width: SbSpacing.sm),
+            const SizedBox(width: AppSpacing.sm),
           ],
           Expanded(
             child: Column(
@@ -63,7 +63,7 @@ class AppHeader extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
                 if ((subtitle ?? branding.profile.engineerName).isNotEmpty) ...[
-                  const SizedBox(height: SbSpacing.xs),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     subtitle ?? branding.profile.engineerName,
                     style: Theme.of(context).textTheme.bodyMedium!,

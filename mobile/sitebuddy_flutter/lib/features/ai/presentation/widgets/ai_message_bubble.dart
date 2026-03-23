@@ -16,7 +16,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/features/ai/domain/entities/ai_message.dart';
 
 /// CLASS: AiMessageBubble
@@ -32,7 +32,7 @@ class AiMessageBubble extends StatelessWidget {
     final align = isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: SbSpacing.lg),
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Column(
         crossAxisAlignment: align,
         children: [
@@ -41,8 +41,8 @@ class AiMessageBubble extends StatelessWidget {
               maxWidth: MediaQuery.of(context).size.width * 0.8,
             ),
             padding: const EdgeInsets.symmetric(
-              horizontal: SbSpacing.lg,
-              vertical: SbSpacing.sm,
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.sm,
             ),
             
 
@@ -51,7 +51,7 @@ class AiMessageBubble extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
           ),
-          const SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             _formatTime(message.timestamp),
             style: Theme.of(context).textTheme.labelMedium!,

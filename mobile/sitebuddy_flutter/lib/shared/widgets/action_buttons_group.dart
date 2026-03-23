@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 class ActionButtonsGroup extends StatelessWidget {
   final List<Widget> children;
@@ -12,8 +12,8 @@ class ActionButtonsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: SbSpacing.lg,
-      runSpacing: SbSpacing.lg,
+      spacing: AppSpacing.lg,
+      runSpacing: AppSpacing.lg,
       children: children.map((child) {
         return ConstrainedBox(
           constraints: const BoxConstraints(

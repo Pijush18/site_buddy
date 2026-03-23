@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,15 +41,15 @@ class ColorsLabSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Color System', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 2.5,
-            crossAxisSpacing: SbSpacing.sm,
-            mainAxisSpacing: SbSpacing.sm,
+            crossAxisSpacing: AppSpacing.sm,
+            mainAxisSpacing: AppSpacing.sm,
           ),
           itemCount: colors.length,
           itemBuilder: (context, index) => _ColorCard(data: colors[index]),
@@ -99,7 +99,7 @@ class _ColorCard extends StatelessWidget {
           ),
 
         ),
-        padding: const EdgeInsets.all(SbSpacing.sm),
+        padding: const EdgeInsets.all(AppSpacing.sm),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,

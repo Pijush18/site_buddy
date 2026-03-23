@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/features/auth/presentation/providers/auth_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
@@ -85,7 +86,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
         actions: [
           PrimaryCTA(
             label: AppStrings.backToLogin,
-            onPressed: () => context.go('/login'),
+            onPressed: () => context.go(AppRoutes.login),
             width: double.infinity,
           ),
         ],
@@ -107,18 +108,18 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           SbSection(
             child: Column(
               children: [
-                const SizedBox(height: SbSpacing.xxl),
+                const SizedBox(height: AppSpacing.xxl),
                 Icon(
                   SbIcons.engineering,
                   size: 64,
                   color: colorScheme.primary,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   AppStrings.siteBuddy,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: SbSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -138,7 +139,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     AppStrings.enterEmailToReset,
                     style: theme.textTheme.bodyMedium,
                   ),
-                  const SizedBox(height: SbSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
                   SbInput(
                     controller: _emailController,
                     focusNode: _emailFocusNode,
@@ -150,7 +151,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: SbSpacing.xl),
+                  const SizedBox(height: AppSpacing.xl),
                   PrimaryCTA(
                     label: AppStrings.sendResetLink,
                     onPressed:
@@ -173,7 +174,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               width: double.infinity,
             ),
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: AppSpacing.xxl),
         ],
       ),
     );

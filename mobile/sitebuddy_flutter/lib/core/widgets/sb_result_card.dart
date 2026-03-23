@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
@@ -187,27 +187,27 @@ class SbResultCard extends StatelessWidget {
         children: [
           // Title section with safety indicator
           if (showTitle && resolvedTitle.isNotEmpty) ...[
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             _buildHeaderSection(context, isResultSafe, safetyColor),
           ] else if (showTitle) ...[
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Comparison bar (primary content)
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           _buildComparisonBar(context, safetyColor),
 
           // Detail rows (secondary content)
           if (details.isNotEmpty) ...[
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             const Divider(height: 1),
-            const SizedBox(height: SbSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             ...details.map(
               (detail) => _buildDetailRow(context, detail, colorScheme),
             ),
           ],
 
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );
@@ -270,7 +270,7 @@ class SbResultCard extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
 
         // Comparison bar visualization
         _ComparisonBarVisual(
@@ -280,7 +280,7 @@ class SbResultCard extends StatelessWidget {
           isSafe: computedIsSafe,
         ),
 
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
 
         // Ratio display
         Row(
@@ -315,8 +315,8 @@ class SbResultCard extends StatelessWidget {
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.md,
-        vertical: SbSpacing.sm,
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -331,7 +331,7 @@ class SbResultCard extends StatelessWidget {
                   color: color,
                 ),
           ),
-          const SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: AppSpacing.xs),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -345,7 +345,7 @@ class SbResultCard extends StatelessWidget {
                     ),
               ),
               if (unit.isNotEmpty) ...[
-                const SizedBox(width: SbSpacing.xs),
+                const SizedBox(width: AppSpacing.xs),
                 Text(
                   unit,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -412,7 +412,7 @@ class SbResultCard extends StatelessWidget {
     ColorScheme colorScheme,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -424,7 +424,7 @@ class SbResultCard extends StatelessWidget {
                   ),
             ),
           ),
-          const SizedBox(width: SbSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           _buildDetailValue(context, detail, colorScheme),
         ],
       ),
@@ -484,8 +484,8 @@ class _SafetyIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.lg, // Capped from xl to maintain compact UI
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -500,7 +500,7 @@ class _SafetyIndicator extends StatelessWidget {
             size: 16,
             color: color,
           ),
-          const SizedBox(width: SbSpacing.xs),
+          const SizedBox(width: AppSpacing.xs),
           Text(
             isSafe ? 'SAFE' : 'UNSAFE',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(

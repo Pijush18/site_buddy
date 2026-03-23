@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:site_buddy/core/enums/unit_system.dart';
@@ -281,7 +281,7 @@ class SettingsScreen extends StatelessWidget {
       children: [
         // 1. Primary Account Info Card
         SbCard(
-          padding: const EdgeInsets.all(SbSpacing.md),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: Row(
             children: [
               GestureDetector(
@@ -302,7 +302,7 @@ class SettingsScreen extends StatelessWidget {
                       : null,
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,10 +321,10 @@ class SettingsScreen extends StatelessWidget {
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    const SizedBox(height: SbSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: SbSpacing.sm,
+                        horizontal: AppSpacing.sm,
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
@@ -349,7 +349,7 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
 
         // 2. Action List Card
         SbCard(
@@ -361,13 +361,13 @@ class SettingsScreen extends StatelessWidget {
                 title: l10n.editProfile,
                 onTap: () => context.push('/settings/branding'),
               ),
-              const Divider(height: 1, indent: 56, endIndent: SbSpacing.md),
+              const Divider(height: 1, indent: 56, endIndent: AppSpacing.md),
               SbSettingsTile(
                 icon: SbIcons.payments,
                 title: l10n.subscriptionBilling,
                 onTap: () => context.push('/subscription'),
               ),
-              const Divider(height: 1, indent: 56, endIndent: SbSpacing.md),
+              const Divider(height: 1, indent: 56, endIndent: AppSpacing.md),
               SbSettingsTile(
                 icon: SbIcons.logout,
                 title: l10n.logout,
@@ -440,7 +440,7 @@ class _AccountSkeleton extends StatelessWidget {
     return Column(
       children: [
         SbCard(
-          padding: const EdgeInsets.all(SbSpacing.md),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: Row(
             children: [
               Container(
@@ -451,7 +451,7 @@ class _AccountSkeleton extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,14 +467,14 @@ class _AccountSkeleton extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.md),
+        const SizedBox(height: AppSpacing.md),
         SbCard(
-          padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
           child: Column(
             children: List.generate(3, (index) => Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: SbSpacing.md,
-                vertical: SbSpacing.sm,
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
               ),
               child: Row(
                 children: [
@@ -504,13 +504,13 @@ class _AccountError extends StatelessWidget {
     final l10n = context.l10n;
     
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.md),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         children: [
           Row(
             children: [
               Icon(Icons.error_outline, color: theme.colorScheme.error, size: 24),
-              const SizedBox(width: SbSpacing.sm),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   message,
@@ -521,7 +521,7 @@ class _AccountError extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           TextButton(
             onPressed: onRetry,
             child: Text(l10n.actionReset), 

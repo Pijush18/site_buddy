@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/structural/shared/application/controllers/safety_check_controller.dart';
 
@@ -26,7 +26,7 @@ class ShearHistorySection extends ConsumerWidget {
         children: history.take(3).map((check) {
     final isSafe = check['isSafe'] as bool;
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             child: SbCard(
               child: Row(
                 children: [
@@ -35,7 +35,7 @@ class ShearHistorySection extends ConsumerWidget {
                     color: isSafe ? colorScheme.primary : colorScheme.error,
                     size: 20,
                   ),
-                  const SizedBox(width: SbSpacing.lg),
+                  const SizedBox(width: AppSpacing.lg),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

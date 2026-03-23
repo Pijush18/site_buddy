@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/providers/settings_provider.dart';
@@ -30,13 +30,13 @@ class CalculationCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             child: Row(
               children: [
                 Icon(SbIcons.architecture, color: colorScheme.onSurfaceVariant, size: 24),
 
-                const SizedBox(width: SbSpacing.md),
+                const SizedBox(width: AppSpacing.md),
                 Text(
                   'Material Estimate',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -48,7 +48,7 @@ class CalculationCard extends ConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SbSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -56,7 +56,7 @@ class CalculationCard extends ConsumerWidget {
                   'Input: $dimensionsTitle',
                   style: Theme.of(context).textTheme.bodyMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Row(
                   children: [
                     Expanded(
@@ -66,7 +66,7 @@ class CalculationCard extends ConsumerWidget {
                         icon: SbIcons.layers,
                       ),
                     ),
-                    const SizedBox(width: SbSpacing.lg),
+                    const SizedBox(width: AppSpacing.lg),
                     Expanded(
                       child: _StatBox(
                         label: 'Dry Materials',
@@ -77,9 +77,9 @@ class CalculationCard extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 Container(
-                  padding: const EdgeInsets.all(SbSpacing.lg),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,7 +122,7 @@ class _StatBox extends StatelessWidget {
 //     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +131,7 @@ class _StatBox extends StatelessWidget {
             children: [
               Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
 
-              const SizedBox(width: SbSpacing.sm),
+              const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
                   label,
@@ -142,7 +142,7 @@ class _StatBox extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             value,
             style: Theme.of(context).textTheme.titleMedium!,

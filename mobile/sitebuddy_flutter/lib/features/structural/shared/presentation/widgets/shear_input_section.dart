@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -47,7 +47,7 @@ class ShearInputSection extends StatelessWidget {
                       ValidationHelper.validatePositive(v, 'Depth'),
                 ),
               ),
-              const SizedBox(width: SbSpacing.lg),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: SbInput(
                   controller: bController,
@@ -59,7 +59,7 @@ class ShearInputSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -71,7 +71,7 @@ class ShearInputSection extends StatelessWidget {
                   onConcreteChanged,
                 ),
               ),
-              const SizedBox(width: SbSpacing.lg),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: _buildLabelledDropdown(
                   context,
@@ -83,7 +83,7 @@ class ShearInputSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbInput(
             controller: vuController,
             label: 'Shear Force (Vu) [kN]',
@@ -91,7 +91,7 @@ class ShearInputSection extends StatelessWidget {
             validator: (v) =>
                 ValidationHelper.validatePositive(v, 'Shear Force'),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbInput(
             controller: ptController,
             label: 'Steel Per. (pt) [%]',
@@ -118,7 +118,7 @@ class ShearInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

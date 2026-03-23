@@ -3,7 +3,7 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -55,10 +55,10 @@ class SlabIllustrationWidget extends StatelessWidget {
 
             // Label Overlay
             Positioned(
-              bottom: SbSpacing.md,
-              right: SbSpacing.md,
+              bottom: AppSpacing.md,
+              right: AppSpacing.md,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
 
                 child: Text(
                   type.label.toUpperCase(),

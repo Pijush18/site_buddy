@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -35,7 +35,7 @@ class OptimizationGraph extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: options.length,
-              separatorBuilder: (context, index) => const SizedBox(height: SbSpacing.xxl),
+              separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.xxl),
               itemBuilder: (context, index) {
                 final option = options[index];
                 return _OptimizationRow(
@@ -45,7 +45,7 @@ class OptimizationGraph extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             _buildLegend(context),
           ],
         ),
@@ -65,7 +65,7 @@ class OptimizationGraph extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         _LegendItem(color: colorScheme.primary, label: 'Utilization'),
-        const SizedBox(width: SbSpacing.lg),
+        const SizedBox(width: AppSpacing.lg),
         _LegendItem(color: AppColors.warning(context), label: 'Steel Area'),
       ],
     );
@@ -105,13 +105,13 @@ class _OptimizationRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         _Bar(
           label: 'Util: ${(utilPercentage * 100).toInt()}%',
           percentage: utilPercentage,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(height: SbSpacing.xs),
+        const SizedBox(height: AppSpacing.xs),
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
@@ -160,7 +160,7 @@ class _Bar extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(SbSpacing.xs),
+            padding: const EdgeInsets.all(AppSpacing.xs),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -193,7 +193,7 @@ class _LegendItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-        const SizedBox(width: SbSpacing.xs),
+        const SizedBox(width: AppSpacing.xs),
         Text(
           label,
           style: Theme.of(context).textTheme.labelMedium!,

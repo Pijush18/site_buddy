@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/optimization/optimization_option.dart';
 
 class OptimizationCard extends StatelessWidget {
@@ -18,7 +18,7 @@ class OptimizationCard extends StatelessWidget {
         : (option.utilization > 0.8 ? colorScheme.tertiary : colorScheme.primary);
 
     return SbCard(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,12 +37,12 @@ class OptimizationCard extends StatelessWidget {
                 Icon(Icons.warning, color: colorScheme.error, size: 16),
             ],
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             option.description,
             style: Theme.of(context).textTheme.labelMedium!,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
               _StatItem(
@@ -50,7 +50,7 @@ class OptimizationCard extends StatelessWidget {
                 value: '${option.steelArea.toInt()} mm²',
                 color: colorScheme.primary,
               ),
-              const SizedBox(width: SbSpacing.xxl),
+              const SizedBox(width: AppSpacing.xxl),
               _StatItem(
                 label: 'Utilization',
                 value: '${(option.utilization * 100).toInt()}%',

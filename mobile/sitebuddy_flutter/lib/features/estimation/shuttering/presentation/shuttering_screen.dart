@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,28 +41,28 @@ class ShutteringScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _SectionLabel(label: l10n.labelDimensions),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           SbInput(
             label: '${l10n.labelLength} (m)',
             hint: l10n.hintLength,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           SbInput(
             label: '${l10n.labelWidth} (m)',
             hint: l10n.hintWidth,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           SbInput(
             label: '${l10n.labelDepth} (m)',
             hint: l10n.hintDepth,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           SbListItemTile(
             title: l10n.labelIncludeBottom,
             onTap: () => controller.updateIncludeBottom(!state.includeBottom),
@@ -72,7 +72,7 @@ class ShutteringScreen extends ConsumerWidget {
               activeThumbColor: colorScheme.primary,
             ),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
@@ -88,12 +88,12 @@ class ShutteringScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           if (state.failure != null)
              _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: SbSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PrimaryCTA(
               label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
@@ -101,14 +101,14 @@ class ShutteringScreen extends ConsumerWidget {
                 AppLogger.info('Export PDF clicked - implementation pending', tag: 'ShutteringUI');
               },
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
           Text(
             l10n.msgShutteringNote,
             style: Theme.of(context).textTheme.labelMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.xxl),
+          const SizedBox(height: AppSpacing.xxl),
         ],
       ),
     );
@@ -139,7 +139,7 @@ class _ErrorBanner extends StatelessWidget {
     return SbCard(
       color: colorScheme.errorContainer.withValues(alpha: 0.1),
       child: Padding(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Text(
           message,
           style: Theme.of(context).textTheme.bodyLarge!,
@@ -168,7 +168,7 @@ class _ResultCard extends StatelessWidget {
             style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           const Divider(),
           SbListItemTile(
             title: l10n.labelTotalArea,

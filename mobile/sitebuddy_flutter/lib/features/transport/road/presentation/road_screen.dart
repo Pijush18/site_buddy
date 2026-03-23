@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/transport/road/application/road_calculator.dart';
 
@@ -32,7 +32,7 @@ class RoadScreen extends ConsumerWidget {
                     onChanged: controller.updateCBR,
                     hint: 'e.g. 5.0',
                   ),
-                  const SizedBox(height: SbSpacing.md),
+                  const SizedBox(height: AppSpacing.md),
                   SbInput(
                     label: 'Design Traffic (msa)',
                     suffixIcon: const Icon(SbIcons.truck),
@@ -54,7 +54,7 @@ class RoadScreen extends ConsumerWidget {
                     isOutlined: true,
                   ),
                 ),
-                const SizedBox(width: SbSpacing.md),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: PrimaryCTA(
                     label: 'Design Pavement',

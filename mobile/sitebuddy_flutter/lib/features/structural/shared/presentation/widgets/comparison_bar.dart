@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 
 /// WIDGET: ComparisonBar
@@ -37,7 +37,7 @@ class ComparisonBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         Stack(
           children: [
             Container(height: 8),

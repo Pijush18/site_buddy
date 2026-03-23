@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
@@ -54,7 +54,7 @@ class ProjectEditorScreen extends ConsumerWidget {
           if (state.error != null)
             SbSection(
               child: Container(
-                padding: const EdgeInsets.all(SbSpacing.md),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
@@ -77,7 +77,7 @@ class ProjectEditorScreen extends ConsumerWidget {
                   hint: 'e.g. Skyline Apartments',
                   onChanged: notifier.updateName,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 SbInput(
                   label: context.l10n.labelLocation,
                   hint: 'City, Region or Site ID',

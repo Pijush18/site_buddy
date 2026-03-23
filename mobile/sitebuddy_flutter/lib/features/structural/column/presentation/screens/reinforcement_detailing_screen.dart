@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 
@@ -34,7 +34,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
             },
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -75,7 +75,7 @@ class ReinforcementDetailingScreen extends ConsumerWidget {
                     l10n.labelBarDia,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: SbSpacing.sm),
+                  const SizedBox(height: AppSpacing.sm),
                   SbDropdown<double>(
                     value: state.mainBarDia,
                     items: const [12, 16, 20, 25, 32],

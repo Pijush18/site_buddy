@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
@@ -92,7 +92,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
             onPressed: _onNext,
             icon: Icons.arrow_forward,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -122,7 +122,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       l10n.labelType,
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: SbSpacing.sm),
+                    const SizedBox(height: AppSpacing.sm),
                     SbDropdown<SlabType>(
                       value: state.type,
                       items: SlabType.values,
@@ -130,7 +130,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                       onChanged: (v) =>
                           v != null ? notifier.updateType(v) : null,
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     Row(
                       children: [
                         Expanded(
@@ -141,7 +141,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                                 ValidationHelper.validatePositive(v, 'Lx'),
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.md),
+                        const SizedBox(width: AppSpacing.md),
                         Expanded(
                           child: SbInput(
                             controller: _lyController,
@@ -152,7 +152,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     SbInput(
                       controller: _depthController,
                       label: l10n.labelThicknessD,
@@ -181,7 +181,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                             notifier.updateConcreteGrade,
                           ),
                         ),
-                        const SizedBox(width: SbSpacing.md),
+                        const SizedBox(width: AppSpacing.md),
                         Expanded(
                           child: _gradeDropdown(
                             l10n.labelSteel,
@@ -192,7 +192,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SbSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     SbInput(
                       controller: _coverController,
                       label: l10n.labelCover,
@@ -218,7 +218,7 @@ class _SlabInputScreenState extends ConsumerState<SlabInputScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm),
+        const SizedBox(height: AppSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/project_controller.dart';
@@ -47,7 +47,7 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(SbSpacing.md),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: SbInput(
               controller: _searchController,
               hint: 'Search projects...',
@@ -61,7 +61,7 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
           // Stats row
           if (state.projects.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: _StatsRow(state: state),
             ),
 
@@ -75,9 +75,9 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-                            const SizedBox(height: SbSpacing.md),
+                            const SizedBox(height: AppSpacing.md),
                             Text(state.error!, style: TextStyle(color: colorScheme.error)),
-                            const SizedBox(height: SbSpacing.md),
+                            const SizedBox(height: AppSpacing.md),
                             GhostButton(
                               label: 'Retry',
                               onPressed: () => ref.read(projectListControllerProvider.notifier).refresh(),
@@ -93,12 +93,12 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                         : RefreshIndicator(
                             onRefresh: () => ref.read(projectListControllerProvider.notifier).refresh(),
                             child: ListView.builder(
-                              padding: const EdgeInsets.all(SbSpacing.md),
+                              padding: const EdgeInsets.all(AppSpacing.md),
                               itemCount: state.filteredProjects.length,
                               itemBuilder: (context, index) {
                                 final project = state.filteredProjects[index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(bottom: SbSpacing.md),
+                                  padding: const EdgeInsets.only(bottom: AppSpacing.md),
                                   child: _ProjectCard(
                                     project: project,
                                     onTap: () => _openProject(context, project),
@@ -180,13 +180,13 @@ class _StatsRow extends StatelessWidget {
           value: state.totalProjects.toString(),
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(width: SbSpacing.sm),
+        const SizedBox(width: AppSpacing.sm),
         _StatChip(
           label: 'In Progress',
           value: state.inProgressCount.toString(),
           color: AppColors.warning(context),
         ),
-        const SizedBox(width: SbSpacing.sm),
+        const SizedBox(width: AppSpacing.sm),
         _StatChip(
           label: 'Completed',
           value: state.completedCount.toString(),
@@ -212,8 +212,8 @@ class _StatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -256,16 +256,17 @@ class _ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return SbCard(
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header with icon, title, and actions
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(SbSpacing.sm),
+                padding: const EdgeInsets.all(AppSpacing.sm),
                 decoration: BoxDecoration(
                   color: colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(8),
@@ -276,7 +277,7 @@ class _ProjectCard extends StatelessWidget {
                   size: 24,
                 ),
               ),
-              const SizedBox(width: SbSpacing.md),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,8 +316,9 @@ class _ProjectCard extends StatelessWidget {
               ),
             ],
           ),
+          // Description
           if (project.description != null && project.description!.isNotEmpty) ...[
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               project.description!,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -326,7 +328,8 @@ class _ProjectCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ],
-          const SizedBox(height: SbSpacing.md),
+          // Footer with status and stats
+          const SizedBox(height: AppSpacing.md),
           Row(
             children: [
               _StatusBadge(status: project.status),
@@ -376,8 +379,8 @@ class _StatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: SbSpacing.sm,
-        vertical: SbSpacing.xs,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -407,7 +410,7 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(SbSpacing.xl),
+        padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -416,12 +419,12 @@ class _EmptyState extends StatelessWidget {
               size: 64,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            const SizedBox(height: SbSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Text(
               hasSearch ? 'No projects found' : 'No projects yet',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: SbSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               hasSearch 
                   ? 'Try a different search term'
@@ -432,7 +435,7 @@ class _EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             if (!hasSearch) ...[
-              const SizedBox(height: SbSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
               PrimaryCTA(
                 label: 'Create Project',
                 onPressed: onCreateProject,
@@ -479,7 +482,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
-        padding: const EdgeInsets.all(SbSpacing.lg),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Form(
           key: _formKey,
           child: Column(
@@ -490,27 +493,27 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                 'Create New Project',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: SbSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
               SbInput(
                 controller: _nameController,
                 label: 'Project Name',
                 hint: 'e.g., Residential Building A',
               ),
-              const SizedBox(height: SbSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               SbInput(
                 controller: _descriptionController,
                 label: 'Description (Optional)',
                 hint: 'Brief project description',
                 maxLines: 2,
               ),
-              const SizedBox(height: SbSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 'Project Type',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
-              const SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: AppSpacing.sm),
               Wrap(
-                spacing: SbSpacing.sm,
+                spacing: AppSpacing.sm,
                 children: ProjectType.values.map((type) {
                   final isSelected = type == _selectedType;
                   return ChoiceChip(
@@ -522,7 +525,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: SbSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -532,7 +535,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                       hint: 'City/Area',
                     ),
                   ),
-                  const SizedBox(width: SbSpacing.md),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: SbInput(
                       controller: _clientController,
@@ -542,12 +545,12 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: SbSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
               PrimaryCTA(
                 label: 'Create Project',
                 onPressed: _createProject,
               ),
-              const SizedBox(height: SbSpacing.sm),
+              const SizedBox(height: AppSpacing.sm),
               GhostButton(
                 label: 'Cancel',
                 onPressed: () => Navigator.pop(context),
@@ -591,7 +594,7 @@ class _FilterSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -600,14 +603,14 @@ class _FilterSheet extends ConsumerWidget {
             'Filter Projects',
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             'By Status',
             style: Theme.of(context).textTheme.labelLarge,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Wrap(
-            spacing: SbSpacing.sm,
+            spacing: AppSpacing.sm,
             children: ProjectStatus.values.map((status) {
               return FilterChip(
                 label: Text(status.label),
@@ -618,14 +621,14 @@ class _FilterSheet extends ConsumerWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             'By Type',
             style: Theme.of(context).textTheme.labelLarge,
           ),
-          const SizedBox(height: SbSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Wrap(
-            spacing: SbSpacing.sm,
+            spacing: AppSpacing.sm,
             children: ProjectType.values.map((type) {
               return FilterChip(
                 label: Text(type.label),
@@ -636,7 +639,7 @@ class _FilterSheet extends ConsumerWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
         ],
       ),
     );

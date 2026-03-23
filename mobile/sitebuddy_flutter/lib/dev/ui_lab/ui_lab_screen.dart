@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -73,14 +73,14 @@ class _DesignTokensTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       children: const [
         ColorsLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
+        SizedBox(height: AppSpacing.xxl), // Replaced SizedBox(height: AppSpacing.xxl)
         TypographyLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
+        SizedBox(height: AppSpacing.xxl), // Replaced SizedBox(height: AppSpacing.xxl)
         SpacingLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
+        SizedBox(height: AppSpacing.xxl), // Replaced SizedBox(height: AppSpacing.xxl)
         RadiusLabSection(),
       ],
     );
@@ -91,10 +91,10 @@ class _ComponentsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       children: const [
         ComponentLabSection(),
-        SizedBox(height: SbSpacing.xxl), // Replaced SizedBox(height: SbSpacing.xxl)
+        SizedBox(height: AppSpacing.xxl), // Replaced SizedBox(height: AppSpacing.xxl)
         EngineeringWidgetsSection(),
       ],
     );
@@ -105,7 +105,7 @@ class _LayoutTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SbSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       children: const [LayoutLabSection()],
     );
   }

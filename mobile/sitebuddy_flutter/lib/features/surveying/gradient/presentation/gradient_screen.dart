@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,7 +55,7 @@ class GradientScreen extends ConsumerWidget {
                   style: theme.textTheme.titleMedium!,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 const Divider(),
                 SbListItemTile(
                   title: l10n.labelPercentage,
@@ -82,16 +82,16 @@ class GradientScreen extends ConsumerWidget {
                   ),
                 ),
                 const Divider(),
-                const SizedBox(height: SbSpacing.md),
+                const SizedBox(height: AppSpacing.md),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Column(
                     children: [
                       Text(
                         l10n.labelClassification,
                         style: theme.textTheme.labelMedium!,
                       ),
-                      const SizedBox(height: SbSpacing.sm / 2),
+                      const SizedBox(height: AppSpacing.sm / 2),
                       Text(
                         classificationLabel,
                         style: theme.textTheme.titleMedium!,
@@ -102,7 +102,7 @@ class GradientScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
           SbCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,7 +111,7 @@ class GradientScreen extends ConsumerWidget {
                   l10n.labelSlopeVisualization,
                   style: theme.textTheme.titleMedium!,
                 ),
-                const SizedBox(height: SbSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
                 SizedBox(
                   height: 120,
                   width: double.infinity,
@@ -139,7 +139,7 @@ class GradientScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(SbIcons.trendingUp, size: 48, color: colorScheme.primary),
-              const SizedBox(width: SbSpacing.sm),
+              const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
                   l10n.labelSlopeCalculator,
@@ -148,7 +148,7 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           SbInput(
             label: l10n.labelVerticalRise,
@@ -156,7 +156,7 @@ class GradientScreen extends ConsumerWidget {
             onChanged: controller.updateRise,
             errorText: rError,
           ),
-          const SizedBox(height: SbSpacing.md),
+          const SizedBox(height: AppSpacing.md),
 
           SbInput(
             label: l10n.labelHorizontalRun,
@@ -165,7 +165,7 @@ class GradientScreen extends ConsumerWidget {
             errorText: runError,
           ),
 
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           ActionButtonsGroup(
             children: [
@@ -182,7 +182,7 @@ class GradientScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: SbSpacing.lg),
+          const SizedBox(height: AppSpacing.lg),
 
           if (state.failure != null) ...[
             SbCard(
@@ -192,12 +192,12 @@ class GradientScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(state.result!),
-            const SizedBox(height: SbSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           const _FieldReference(),
@@ -223,7 +223,7 @@ class _FieldReference extends StatelessWidget {
           style: theme.textTheme.titleMedium!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: SbSpacing.sm), 
+        const SizedBox(height: AppSpacing.sm), 
         SbCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -238,7 +238,7 @@ class _FieldReference extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SbSpacing.lg),
+        const SizedBox(height: AppSpacing.lg),
       ],
     );
   }

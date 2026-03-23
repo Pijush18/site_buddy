@@ -1,6 +1,6 @@
 
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/app_icon_button.dart';
 
@@ -84,12 +84,12 @@ class SbInput extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: SbSpacing.xs), // Compact
+          const SizedBox(height: AppSpacing.xs), // Compact
         ],
         Container(
           height: maxLines == 1 ? 40.0 : null, // Compact height
 
-          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(SbRadius.standard),
@@ -105,8 +105,8 @@ class SbInput extends StatelessWidget {
               if (prefixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    right: SbSpacing.xs,
-                    top: maxLines == 1 ? 0 : SbSpacing.xs,
+                    right: AppSpacing.xs,
+                    top: maxLines == 1 ? 0 : AppSpacing.xs,
                   ),
                   child: prefixIcon,
                 ),
@@ -114,7 +114,7 @@ class SbInput extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: maxLines == 1 ? 0 : SbSpacing.xs,
+                    vertical: maxLines == 1 ? 0 : AppSpacing.xs,
                   ),
                   child: Stack(
                     alignment: Alignment.centerLeft,
@@ -150,8 +150,8 @@ class SbInput extends StatelessWidget {
               if (suffixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    left: SbSpacing.xs,
-                    top: maxLines == 1 ? 0 : SbSpacing.xs,
+                    left: AppSpacing.xs,
+                    top: maxLines == 1 ? 0 : AppSpacing.xs,
                   ),
                   child: suffixIcon,
                 ),
@@ -160,7 +160,7 @@ class SbInput extends StatelessWidget {
           ),
         ),
         if (errorText != null) ...[
-          const SizedBox(height: SbSpacing.xs),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             errorText!,
             style: textTheme.labelSmall?.copyWith(
