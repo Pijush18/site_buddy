@@ -14,6 +14,11 @@ import 'package:site_buddy/core/services/educational_mode_service.dart';
 
 /// SCREEN: ReinforcementDesignScreen
 /// PURPOSE: Reinforcement calculation and arrangement (Step 4).
+/// 
+/// IS 456:2000 Requirements:
+/// - Tension reinforcement design (Clause 38.1)
+/// - Shear reinforcement design (Clause 40.0)
+/// - Minimum & maximum reinforcement limits (Clause 26.5.2)
 class ReinforcementDesignScreen extends ConsumerWidget {
   const ReinforcementDesignScreen({super.key});
 
@@ -22,6 +27,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final notifier = ref.read(beamDesignControllerProvider.notifier);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SbPage.form(
       title: l10n.titleReinforcement,
@@ -48,9 +54,21 @@ class ReinforcementDesignScreen extends ConsumerWidget {
         sections: [
           // ── STEP HEADER ──
           SbSection(
-            child: Text(
-              l10n.labelStep4Reinforcement,
-              style: Theme.of(context).textTheme.titleLarge!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.labelStep4Reinforcement,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.xs),
+                Text(
+                  'IS 456:2000 Clause 38.1 & 40',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
             ),
           ),
 
@@ -65,16 +83,6 @@ class ReinforcementDesignScreen extends ConsumerWidget {
               stirrupSpacing: state.stirrupSpacing,
             ),
           ),
-
-          // ── SMART SUGGESTIONS ──
-          if (state.suggestions.isNotEmpty)
-            SbSection(
-              title: l10n.labelInsights,
-              child: SmartSuggestionsCard(
-                suggestions: state.suggestions,
-                onOptimize: () => notifier.optimize(),
-              ),
-            ),
 
           // ── STEEL SPECIFICATION ──
           SbSection(
@@ -99,10 +107,25 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                       }
                     },
                   ),
+                  const SizedBox(height: SbSpacing.sm),
+                  _buildCodeHint(
+                    context,
+                    'ℹ️ ${state.numBars} bars of ${state.mainBarDia.toInt()} mm = ${state.astProvided.toInt()} mm²',
+                  ),
                 ],
               ),
             ),
           ),
+
+          // ── SMART SUGGESTIONS ──
+          if (state.suggestions.isNotEmpty)
+            SbSection(
+              title: l10n.labelInsights,
+              child: SmartSuggestionsCard(
+                suggestions: state.suggestions,
+                onOptimize: () => notifier.optimize(),
+              ),
+            ),
 
           // ── CODE REFERENCE ──
           if (ref.watch(educationalModeProvider))
@@ -132,8 +155,12 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   label: 'xu / xu,max',
                   value: '${state.xu.toInt()} / ${state.xuMax.toInt()} mm',
                 ),
+                DesignResultItem(
+                  label: 'Min Ast',
+                  value: '${state.astMin.toInt()} mm²',
+                ),
               ],
-              codeReference: 'IS 456 Annex G',
+              codeReference: 'IS 456 Cl. 38.1',
             ),
           ),
 
@@ -149,8 +176,12 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   value: '${state.vu.toStringAsFixed(1)} kN',
                 ),
                 DesignResultItem(
-                  label: 'Shear Stress',
+                  label: 'τv (Shear Stress)',
                   value: '${state.tv.toStringAsFixed(2)} N/mm²',
+                ),
+                DesignResultItem(
+                  label: 'τc (Concrete)',
+                  value: '${state.tc.toStringAsFixed(2)} N/mm²',
                 ),
                 DesignResultItem(
                   label: l10n.labelSpacing,
@@ -158,11 +189,106 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   isCritical: true,
                 ),
               ],
-              codeReference: 'IS 456 Cl. 40',
+              codeReference: 'IS 456 Cl. 40.0',
+            ),
+          ),
+
+          // ── STEEL SUMMARY ──
+          SbSection(
+            title: 'Steel Summary',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _SummaryRow(
+                    icon: Icons.circle,
+                    label: 'Main Bars',
+                    value: '${state.numBars} × Ø${state.mainBarDia.toInt()}',
+                    color: colorScheme.primary,
+                  ),
+                  const Divider(height: SbSpacing.lg),
+                  _SummaryRow(
+                    icon: Icons.lens_outlined,
+                    label: 'Stirrups',
+                    value: 'Ø${state.stirrupDia.toInt()} @ ${state.stirrupSpacing.toInt()} mm c/c',
+                    color: colorScheme.tertiary,
+                  ),
+                  const Divider(height: SbSpacing.lg),
+                  _SummaryRow(
+                    icon: Icons.layers,
+                    label: 'Ast Provided',
+                    value: '${state.astProvided.toInt()} mm²',
+                    color: colorScheme.secondary,
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  _buildCodeHint(
+                    context,
+                    'ℹ️ Steel % = ${((state.astProvided * 100) / (state.b * state.d)).toStringAsFixed(2)}% (Min 0.85/fy)',
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  /// Build a small hint text styled as a code reference
+  Widget _buildCodeHint(BuildContext context, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontFamily: 'monospace',
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+
+  const _SummaryRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 16),
+        const SizedBox(width: SbSpacing.sm),
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

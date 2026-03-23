@@ -5,9 +5,12 @@ import 'package:flutter/foundation.dart';
 import '../coordinate_system/diagram_space.dart';
 
 /// Base class for all drawable primitives
+/// 
+/// All primitives are immutable with version tracking for efficient diff-based rendering.
+/// Use [copyWith] to create modified versions - this increments the version.
 @immutable
 abstract class DiagramPrimitive {
-  /// Unique identifier
+  /// Unique identifier (stable across versions)
   final String id;
 
   /// Layer order (higher = on top)
@@ -19,23 +22,43 @@ abstract class DiagramPrimitive {
   /// Semantic label for accessibility/selection
   final String? label;
 
+  /// Version counter - increments each time the primitive is modified
+  /// Used for diff detection in partial re-rendering
+  final int version;
+
   const DiagramPrimitive({
     required this.id,
     this.zIndex = 0,
     this.visible = true,
     this.label,
+    this.version = 0,
   });
 
-  /// Clone with modifications
+  /// Clone with modifications - subclasses should increment version
   DiagramPrimitive copyWith({
     String? id,
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
   });
 
   /// Render this primitive to canvas
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper);
+
+  /// Bounding box for spatial indexing and hit testing
+  Rect get bounds;
+
+  /// Hit test this primitive at the given point (in world coordinates)
+  bool hitTest(Offset point);
+
+  /// Check if this primitive has changed compared to another version
+  bool hasChangedFrom(DiagramPrimitive? other) {
+    if (other == null) return true;
+    if (id != other.id) return true;
+    if (version != other.version) return true;
+    return false;
+  }
 }
 
 /// A line segment between two points
@@ -57,6 +80,7 @@ class DiagramLine extends DiagramPrimitive {
     super.zIndex,
     super.visible,
     super.label,
+    super.version,
   });
 
   @override
@@ -65,6 +89,7 @@ class DiagramLine extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     Offset? start,
     Offset? end,
     double? strokeWidth,
@@ -76,6 +101,7 @@ class DiagramLine extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
       start: start ?? this.start,
       end: end ?? this.end,
       strokeWidth: strokeWidth ?? this.strokeWidth,
@@ -83,6 +109,18 @@ class DiagramLine extends DiagramPrimitive {
       dashed: dashed ?? this.dashed,
     );
   }
+
+  @override
+  Rect get bounds {
+    final minX = start.dx < end.dx ? start.dx : end.dx;
+    final minY = start.dy < end.dy ? start.dy : end.dy;
+    final maxX = start.dx > end.dx ? start.dx : end.dx;
+    final maxY = start.dy > end.dy ? start.dy : end.dy;
+    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {
@@ -175,6 +213,7 @@ class DiagramRect extends DiagramPrimitive {
     super.zIndex,
     super.visible,
     super.label,
+    super.version,
   });
 
   @override
@@ -183,6 +222,7 @@ class DiagramRect extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     Offset? position,
     double? width,
     double? height,
@@ -205,6 +245,15 @@ class DiagramRect extends DiagramPrimitive {
       cornerRadius: cornerRadius ?? this.cornerRadius,
     );
   }
+
+  @override
+  Rect get bounds {
+    return Rect.fromLTWH(position.dx, position.dy, width, height)
+        .inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {
@@ -315,6 +364,7 @@ class DiagramText extends DiagramPrimitive {
     super.zIndex,
     super.visible = true,
     super.label,
+    super.version,
   });
 
   @override
@@ -323,6 +373,7 @@ class DiagramText extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     Offset? position,
     String? text,
     double? fontSize,
@@ -353,6 +404,22 @@ class DiagramText extends DiagramPrimitive {
       rotation: rotation ?? this.rotation,
     );
   }
+
+  @override
+  Rect get bounds {
+    // Estimate text bounds based on fontSize and text length
+    final textWidth = text.length * fontSize * 0.6;
+    final textHeight = fontSize * 1.4;
+    return Rect.fromLTWH(
+      position.dx + offset.dx,
+      position.dy + offset.dy,
+      textWidth,
+      textHeight,
+    );
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {
@@ -584,6 +651,7 @@ class DiagramGroup extends DiagramPrimitive {
     super.zIndex,
     super.visible,
     super.label,
+    super.version,
   });
 
   @override
@@ -592,6 +660,7 @@ class DiagramGroup extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     List<DiagramPrimitive>? children,
     Offset? translation,
     double? rotation,
@@ -602,12 +671,39 @@ class DiagramGroup extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
       children: children ?? this.children,
       translation: translation ?? this.translation,
       rotation: rotation ?? this.rotation,
       scale: scale ?? this.scale,
     );
   }
+
+  @override
+  Rect get bounds {
+    if (children.isEmpty) {
+      return Rect.fromLTWH(translation.dx, translation.dy, 0, 0);
+    }
+
+    Rect result = children.first.bounds;
+    for (final child in children.skip(1)) {
+      result = result.expandToInclude(child.bounds);
+    }
+
+    // Apply scale to bounds
+    final center = result.center;
+    final scaledWidth = result.width * scale;
+    final scaledHeight = result.height * scale;
+
+    return Rect.fromCenter(
+      center: center,
+      width: scaledWidth,
+      height: scaledHeight,
+    ).translate(translation.dx, translation.dy);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {

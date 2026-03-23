@@ -15,6 +15,10 @@ import 'package:site_buddy/features/structural/beam/domain/beam_validator.dart';
 
 /// SCREEN: LoadDefinitionScreen
 /// PURPOSE: Input for Dead, Live, and Point loads (Step 2).
+/// 
+/// IS 456:2000 Requirements:
+/// - Load factors for ULS: γd = 1.5 (DL+LL), γd = 1.0 (DL only)
+/// - Live load reduction factors may apply for larger spans
 class LoadDefinitionScreen extends ConsumerStatefulWidget {
   const LoadDefinitionScreen({super.key});
 
@@ -109,9 +113,21 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
           sections: [
             // ── STEP HEADER ──
             SbSection(
-              child: Text(
-                l10n.labelStep2Loads,
-                style: Theme.of(context).textTheme.titleLarge!,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.labelStep2Loads,
+                    style: Theme.of(context).textTheme.titleLarge!,
+                  ),
+                  const SizedBox(height: SbSpacing.xs),
+                  Text(
+                    'IS 456:2000 Clause 20 & 36',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -122,23 +138,47 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SbInput(
-                      controller: _dlController,
-                      label: l10n.labelDeadLoad,
-                      validator: (v) =>
-                          ValidationHelper.validatePositive(v, l10n.labelDeadLoad),
+                    // Dead Load input with unit hint
+                    Semantics(
+                      label: '${l10n.labelDeadLoad} in kilonewtons per meter',
+                      hint: 'Enter self-weight plus permanent loads',
+                      child: SbInput(
+                        controller: _dlController,
+                        label: l10n.labelDeadLoad,
+                        hint: 'Self-weight + Permanent',
+                        validator: (v) =>
+                            ValidationHelper.validatePositive(v, l10n.labelDeadLoad),
+                      ),
                     ),
                     const SizedBox(height: SbSpacing.md),
-                    SbInput(
-                      controller: _llController,
-                      label: l10n.labelLiveLoad,
-                      validator: (v) =>
-                          ValidationHelper.validatePositive(v, l10n.labelLiveLoad),
+                    // Live Load input with unit hint
+                    Semantics(
+                      label: '${l10n.labelLiveLoad} in kilonewtons per meter',
+                      hint: 'Enter imposed or live load',
+                      child: SbInput(
+                        controller: _llController,
+                        label: l10n.labelLiveLoad,
+                        hint: 'Imposed Load',
+                        validator: (v) =>
+                            ValidationHelper.validatePositive(v, l10n.labelLiveLoad),
+                      ),
                     ),
                     const SizedBox(height: SbSpacing.md),
-                    SbInput(
-                      controller: _plController,
-                      label: l10n.labelPointLoad,
+                    // Point Load input with unit hint
+                    Semantics(
+                      label: '${l10n.labelPointLoad} in kilonewtons, optional',
+                      hint: 'Enter concentrated load if any',
+                      child: SbInput(
+                        controller: _plController,
+                        label: l10n.labelPointLoad,
+                        hint: 'Optional (kN)',
+                      ),
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    // Load hint
+                    _buildCodeHint(
+                      context,
+                      'ℹ️ Load Factor γf = 1.5 for ULS (IS 456 Cl. 36.4)',
                     ),
                   ],
                 ),
@@ -149,31 +189,72 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             SbSection(
               title: l10n.labelLimitState,
               child: SbCard(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          state.isULS ? l10n.labelULS : l10n.labelSLS,
-                          style: Theme.of(context).textTheme.labelMedium!,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                state.isULS ? 'ULS' : 'SLS',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                state.isULS 
+                                    ? 'Ultimate Limit State - Safety'
+                                    : 'Serviceability Limit State - Deflection',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SbSwitch(
+                          value: state.isULS,
+                          onChanged: (v) {
+                            ref
+                                .read(beamDesignControllerProvider.notifier)
+                                .updateLoads(isULS: v);
+                          },
                         ),
                       ],
                     ),
-                    SbSwitch(
-                      value: state.isULS,
-                      onChanged: (v) {
-                        ref
-                            .read(beamDesignControllerProvider.notifier)
-                            .updateLoads(isULS: v);
-                      },
+                    const SizedBox(height: SbSpacing.sm),
+                    _buildCodeHint(
+                      context,
+                      'ℹ️ ULS: γf = 1.5 | SLS: γf = 1.0 (IS 456 Cl. 36.4)',
                     ),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Build a small hint text styled as a code reference
+  Widget _buildCodeHint(BuildContext context, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontFamily: 'monospace',
         ),
       ),
     );

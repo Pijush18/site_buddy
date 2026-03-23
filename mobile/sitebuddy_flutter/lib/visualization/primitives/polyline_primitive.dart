@@ -65,7 +65,8 @@ class DiagramPolyline extends DiagramPrimitive {
     int zIndex = 0,
     bool visible = true,
     String? label,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label);
+    int version = 0,
+  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
 
   @override
   DiagramPolyline copyWith({
@@ -73,6 +74,7 @@ class DiagramPolyline extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     List<Offset>? points,
     Color? strokeColor,
     double? strokeWidth,
@@ -91,8 +93,33 @@ class DiagramPolyline extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
     );
   }
+
+  @override
+  Rect get bounds {
+    if (points.isEmpty) {
+      return Rect.zero;
+    }
+
+    double minX = points.first.dx;
+    double minY = points.first.dy;
+    double maxX = minX;
+    double maxY = minY;
+
+    for (final point in points) {
+      if (point.dx < minX) minX = point.dx;
+      if (point.dy < minY) minY = point.dy;
+      if (point.dx > maxX) maxX = point.dx;
+      if (point.dy > maxY) maxY = point.dy;
+    }
+
+    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {

@@ -21,31 +21,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Trigger initialization - this starts the async initialization chain
-    _triggerInitialization();
-  }
-
-  /// Trigger initialization by watching the provider.
-  /// The provider is lazy, so watching it starts the initialization.
-  void _triggerInitialization() {
-    // By watching the provider, we trigger its lazy initialization
-    // The FutureProvider will execute and complete when all async work is done
-    ref.listen(appInitializerProvider, (previous, next) {
-      next.when(
-        data: (_) => _navigateToHome(),
-        loading: () {},
-        error: (e, st) {
-          // Handle initialization error - still navigate but could show error
-          debugPrint('Initialization error: $e');
-          _navigateToHome();
-        },
-      );
-    });
-  }
-
   void _navigateToHome() {
     // Small delay to ensure smooth transition
     Future.delayed(const Duration(milliseconds: 500), () {
@@ -60,6 +35,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     // Watch the initialization provider
     // This triggers the async initialization and rebuilds when complete
     final initAsync = ref.watch(appInitializerProvider);
+
+    // Listen for initialization completion to trigger navigation
+    // ref.listen is valid here in build() method
+    ref.listen(appInitializerProvider, (previous, next) {
+      next.when(
+        data: (_) => _navigateToHome(),
+        loading: () {},
+        error: (e, st) {
+          // Handle initialization error - still navigate but could show error
+          debugPrint('Initialization error: $e');
+          _navigateToHome();
+        },
+      );
+    });
 
     return SbPage.scaffold(
       title: null,

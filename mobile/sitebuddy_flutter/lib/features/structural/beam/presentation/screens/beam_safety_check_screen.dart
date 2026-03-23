@@ -31,6 +31,11 @@ import 'package:printing/printing.dart';
 
 /// SCREEN: BeamSafetyCheckScreen
 /// PURPOSE: Final safety status and report generation (Step 5).
+/// 
+/// IS 456:2000 Safety Checks:
+/// - Flexural capacity check (Clause 38.1)
+/// - Shear capacity check (Clause 40.0)
+/// - Deflection check (Clause 23.2.1)
 class BeamSafetyCheckScreen extends ConsumerStatefulWidget {
   const BeamSafetyCheckScreen({super.key});
 
@@ -133,15 +138,55 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
         sections: [
           // ── STEP HEADER ──
           SbSection(
-            child: Text(
-              l10n.labelStep5Safety,
-              style: Theme.of(context).textTheme.titleLarge!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.labelStep5Safety,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.xs),
+                Text(
+                  'IS 456:2000 Safety Verification',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
             ),
           ),
 
           // ── OVERALL STATUS ──
           SbSection(
             child: _OverallStatusBadge(status: overallStatus),
+          ),
+
+          // ── CHECK SUMMARY ──
+          SbSection(
+            title: 'Safety Checks Summary',
+            child: SbCard(
+              child: Column(
+                children: [
+                  _CheckRow(
+                    label: l10n.labelFlexure,
+                    isSafe: state.isFlexureSafe,
+                    detail: 'xu/xu,max = ${(state.xu / state.xuMax).toStringAsFixed(3)}',
+                  ),
+                  const Divider(height: 1),
+                  _CheckRow(
+                    label: l10n.labelShear,
+                    isSafe: state.isShearSafe,
+                    detail: 'τv = ${state.tv.toStringAsFixed(2)} MPa',
+                  ),
+                  const Divider(height: 1),
+                  _CheckRow(
+                    label: l10n.labelDeflection,
+                    isSafe: state.isDeflectionSafe,
+                    detail: 'L/d = ${(state.span / state.overallDepth).toStringAsFixed(2)}',
+                  ),
+                ],
+              ),
+            ),
           ),
 
           // ── FLEXURE CHECK ──
@@ -156,15 +201,20 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   value: '${state.mu.toStringAsFixed(2)} kNm',
                 ),
                 DesignResultItem(
-                  label: 'Neutral Axis Ratio',
-                  value: (state.xu / state.xuMax).toStringAsFixed(3),
+                  label: 'xu / xu,max',
+                  value: '${state.xu.toInt()} / ${state.xuMax.toInt()} mm',
                   isCritical: true,
+                ),
+                DesignResultItem(
+                  label: 'Ast Provided',
+                  value: '${state.astProvided.toInt()} mm²',
                 ),
                 DesignResultItem(
                   label: 'Status',
                   value: state.isFlexureSafe
-                      ? 'Under-reinforced'
-                      : 'Over-reinforced',
+                      ? 'Under-reinforced ✓'
+                      : 'Over-reinforced ✗',
+                  isCritical: true,
                 ),
               ],
               codeReference: 'IS 456 Cl. 38.1',
@@ -179,11 +229,15 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               isSafe: state.isShearSafe,
               items: [
                 DesignResultItem(
-                  label: 'Nominal Stress (τv)',
-                  value: '${state.tv.toStringAsFixed(2)} MPa',
+                  label: 'Shear Force (Vu)',
+                  value: '${state.vu.toStringAsFixed(1)} kN',
                 ),
                 DesignResultItem(
-                  label: 'Stirrup Capacity',
+                  label: 'τv (Nominal)',
+                  value: '${state.tv.toStringAsFixed(2)} N/mm²',
+                ),
+                DesignResultItem(
+                  label: 'Stirrup Spacing',
                   value: '${state.stirrupSpacing.toInt()} mm c/c',
                   isCritical: true,
                 ),
@@ -204,9 +258,13 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   value: (state.span / state.overallDepth).toStringAsFixed(2),
                 ),
                 DesignResultItem(
+                  label: 'Steel %',
+                  value: '${((state.astProvided * 100) / (state.b * state.d)).toStringAsFixed(2)}%',
+                ),
+                DesignResultItem(
                   label: 'Status',
                   value:
-                      state.isDeflectionSafe ? 'PERMISSIBLE' : 'EXCEEDS LIMIT',
+                      state.isDeflectionSafe ? 'PASS ✓' : 'FAIL ✗',
                   isCritical: true,
                 ),
               ],
@@ -220,6 +278,32 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
             child: SbCard(
               child: Column(
                 children: [
+                  // Drawing caption
+                  Container(
+                    padding: const EdgeInsets.all(SbSpacing.sm),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerHighest,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.straighten,
+                          size: 16,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        const SizedBox(width: SbSpacing.xs),
+                        Text(
+                          '${state.width.toInt()} × ${state.overallDepth.toInt()} mm',
+                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: SbSpacing.md),
                   RepaintBoundary(
                     key: _drawingKey,
                     child: Container(
@@ -312,11 +396,93 @@ class _OverallStatusBadge extends StatelessWidget {
                 ),
                 Text(
                   status == SafetyStatus.safe
-                      ? 'IS 456 verified'
-                      : 'Requirements failed',
+                      ? 'IS 456:2000 Verified'
+                      : 'Requirements Failed',
                   style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ],
+            ),
+          ),
+          // Status icon
+          Icon(
+            status == SafetyStatus.safe 
+                ? Icons.verified 
+                : Icons.warning,
+            color: color,
+            size: 32,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CheckRow extends StatelessWidget {
+  final String label;
+  final bool isSafe;
+  final String detail;
+
+  const _CheckRow({
+    required this.label,
+    required this.isSafe,
+    required this.detail,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isSafe ? Colors.green : Colors.red;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              isSafe ? Icons.check : Icons.close,
+              color: color,
+              size: 16,
+            ),
+          ),
+          const SizedBox(width: SbSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  detail,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SbSpacing.sm,
+              vertical: SbSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              isSafe ? 'PASS' : 'FAIL',
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

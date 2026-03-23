@@ -15,6 +15,11 @@ import 'package:site_buddy/core/models/prefill_data.dart';
 
 /// SCREEN: BeamInputScreen
 /// PURPOSE: Initial parameters for Beam Design (Step 1).
+/// 
+/// IS 456:2000 Requirements:
+/// - Minimum beam width: 200mm (Clause 5.5.1)
+/// - Maximum span/depth ratio for deflection control
+/// - Clear cover typically 25-40mm depending on exposure
 class BeamInputScreen extends ConsumerStatefulWidget {
   const BeamInputScreen({super.key});
 
@@ -29,6 +34,15 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
   late final TextEditingController _widthController;
   late final TextEditingController _depthController;
   late final TextEditingController _coverController;
+
+  /// IS 456 minimum beam width in mm
+  static const double _minBeamWidth = 200.0;
+  
+  /// IS 456 recommended minimum beam depth based on span (L/d = 20 for simply supported)
+  double get _recommendedMinDepth {
+    final span = double.tryParse(_spanController.text) ?? 0;
+    return span > 0 ? span / 20 : 300;
+  }
 
   @override
   void initState() {
@@ -70,6 +84,16 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
 
     if (error != null) {
       SbFeedback.showToast(context: context, message: error);
+      return;
+    }
+
+    // Additional IS 456 validation
+    if (width < _minBeamWidth) {
+      SbFeedback.showToast(
+        context: context,
+        message: 'Beam width should be ≥ ${_minBeamWidth.toInt()} mm per IS 456 Cl. 5.5.1',
+        isError: true,
+      );
       return;
     }
 
@@ -137,110 +161,204 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
           sections: [
             // ── STEP HEADER ──
             SbSection(
-              child: Text(
-                l10n.labelStep1Geometry,
-                style: Theme.of(context).textTheme.titleLarge!,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.labelStep1Geometry,
+                    style: Theme.of(context).textTheme.titleLarge!,
+                  ),
+                  const SizedBox(height: SbSpacing.xs),
+                  Text(
+                    'IS 456:2000 Clause 5.5.1',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // ── BEAM TYPE SECTION ──
+            SbSection(
+              title: l10n.labelType,
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SbDropdown<BeamType>(
+                      value: state.type,
+                      items: BeamType.values,
+                      itemLabelBuilder: (t) => t.label,
+                      onChanged: (v) {
+                        if (v != null) {
+                          notifier.updateInputs(type: v);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    Text(
+                      _getBeamTypeDescription(state.type),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
             // ── GEOMETRY SECTION ──
             SbSection(
               title: l10n.labelGeometry,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    l10n.labelType,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                  ),
-                  const SizedBox(height: SbSpacing.sm),
-                  SbDropdown<BeamType>(
-                    value: state.type,
-                    items: BeamType.values,
-                    itemLabelBuilder: (t) => t.label,
-                    onChanged: (v) {
-                      if (v != null) {
-                        notifier.updateInputs(type: v);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: SbSpacing.md),
-                  SbInput(
-                    controller: _spanController,
-                    label: l10n.labelSpanL,
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, l10n.labelLength),
-                  ),
-                  const SizedBox(height: SbSpacing.md),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SbInput(
-                          controller: _widthController,
-                          label: l10n.labelWidthB,
-                          validator: (v) =>
-                              ValidationHelper.validatePositive(v, l10n.labelWidth),
-                        ),
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Span input with unit hint
+                    Semantics(
+                      label: '${l10n.labelSpanL} in millimeters',
+                      hint: 'Enter beam span in millimeters',
+                      child: SbInput(
+                        controller: _spanController,
+                        label: l10n.labelSpanL,
+                        hint: 'e.g., 5000 mm',
+                        validator: (v) =>
+                            ValidationHelper.validatePositive(v, l10n.labelLength),
                       ),
-                      const SizedBox(width: SbSpacing.lg),
-                      Expanded(
-                        child: SbInput(
-                          controller: _depthController,
-                          label: l10n.labelDepthD,
-                          validator: (v) =>
-                              ValidationHelper.validatePositive(v, l10n.labelDepth),
+                    ),
+                    const SizedBox(height: SbSpacing.md),
+                    // Width and Depth in a row
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Semantics(
+                            label: '${l10n.labelWidthB} in millimeters, minimum ${_minBeamWidth.toInt()} mm',
+                            hint: 'Enter beam width, minimum ${_minBeamWidth.toInt()} mm per IS 456',
+                            child: SbInput(
+                              controller: _widthController,
+                              label: l10n.labelWidthB,
+                              hint: '≥ ${_minBeamWidth.toInt()} mm',
+                              validator: (v) =>
+                                  ValidationHelper.validatePositive(v, l10n.labelWidth),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: Semantics(
+                            label: '${l10n.labelDepthD} in millimeters',
+                            hint: 'Enter overall beam depth',
+                            child: SbInput(
+                              controller: _depthController,
+                              label: l10n.labelDepthD,
+                              hint: 'e.g., 450 mm',
+                              validator: (v) =>
+                                  ValidationHelper.validatePositive(v, l10n.labelDepth),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    // IS 456 hint
+                    _buildCodeHint(
+                      context,
+                      'ℹ️ L/d ratio should be ≤ 20 for simply supported beams (IS 456 Cl. 23.2.1)',
+                    ),
+                  ],
+                ),
               ),
             ),
-
 
             // ── MATERIALS SECTION ──
             SbSection(
               title: l10n.labelMaterials,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildGradeDropdown(
-                          l10n.labelConcreteGrade,
-                          state.concreteGrade,
-                          ['M20', 'M25', 'M30', 'M35', 'M40'],
-                          (v) => ref
-                              .read(beamDesignControllerProvider.notifier)
-                              .updateInputs(concrete: v),
+              child: SbCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildGradeDropdown(
+                            l10n.labelConcreteGrade,
+                            state.concreteGrade,
+                            ['M20', 'M25', 'M30', 'M35', 'M40'],
+                            (v) => ref
+                                .read(beamDesignControllerProvider.notifier)
+                                .updateInputs(concrete: v),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: SbSpacing.lg),
-                      Expanded(
-                        child: _buildGradeDropdown(
-                          l10n.labelSteelGrade,
-                          state.steelGrade,
-                          ['Fe415', 'Fe500'],
-                          (v) => ref
-                              .read(beamDesignControllerProvider.notifier)
-                              .updateInputs(steel: v),
+                        const SizedBox(width: SbSpacing.lg),
+                        Expanded(
+                          child: _buildGradeDropdown(
+                            l10n.labelSteelGrade,
+                            state.steelGrade,
+                            ['Fe415', 'Fe500'],
+                            (v) => ref
+                                .read(beamDesignControllerProvider.notifier)
+                                .updateInputs(steel: v),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: SbSpacing.md),
+                    Semantics(
+                      label: '${l10n.labelCover} in millimeters',
+                      hint: 'Enter concrete cover in millimeters, typically 25-40mm',
+                      child: SbInput(
+                        controller: _coverController,
+                        label: l10n.labelCover,
+                        hint: '25-40 mm',
+                        validator: (v) =>
+                            ValidationHelper.validatePositive(v, l10n.labelCover),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: SbSpacing.md),
-                  SbInput(
-                    controller: _coverController,
-                    label: l10n.labelCover,
-                    validator: (v) =>
-                        ValidationHelper.validatePositive(v, l10n.labelCover),
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: SbSpacing.sm),
+                    _buildCodeHint(
+                      context,
+                      'ℹ️ Cover depends on exposure condition (IS 456 Table 16)',
+                    ),
+                  ],
+                ),
               ),
             ),
 
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Helper to get beam type description for accessibility
+  String _getBeamTypeDescription(BeamType type) {
+    switch (type) {
+      case BeamType.simplySupported:
+        return 'Simply supported beam - ends rest freely on supports';
+      case BeamType.cantilever:
+        return 'Cantilever beam - fixed at one end, free at other';
+      case BeamType.continuous:
+        return 'Continuous beam - extends over multiple supports';
+    }
+  }
+
+  /// Build a small hint text styled as a code reference
+  Widget _buildCodeHint(BuildContext context, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontFamily: 'monospace',
         ),
       ),
     );

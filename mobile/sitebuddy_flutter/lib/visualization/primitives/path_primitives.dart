@@ -89,7 +89,8 @@ class DiagramPath extends DiagramPrimitive {
     int zIndex = 0,
     bool visible = true,
     String? label,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label);
+    int version = 0,
+  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
 
   @override
   DiagramPath copyWith({
@@ -97,6 +98,7 @@ class DiagramPath extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     Path? path,
     Color? fillColor,
     Color? strokeColor,
@@ -109,6 +111,7 @@ class DiagramPath extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
       path: path ?? this.path,
       fillColor: fillColor ?? this.fillColor,
       strokeColor: strokeColor ?? this.strokeColor,
@@ -117,6 +120,15 @@ class DiagramPath extends DiagramPrimitive {
       closed: closed ?? this.closed,
     );
   }
+
+  @override
+  Rect get bounds {
+    final rect = path.getBounds();
+    return rect.inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {
@@ -281,7 +293,8 @@ class DiagramPolygon extends DiagramPrimitive {
     int zIndex = 0,
     bool visible = true,
     String? label,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label);
+    int version = 0,
+  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
 
   @override
   DiagramPolygon copyWith({
@@ -289,6 +302,7 @@ class DiagramPolygon extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     List<Offset>? points,
     Color? fillColor,
     Color? strokeColor,
@@ -305,8 +319,31 @@ class DiagramPolygon extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
     );
   }
+
+  @override
+  Rect get bounds {
+    if (points.isEmpty) return Rect.zero;
+    
+    double minX = points.first.dx;
+    double minY = points.first.dy;
+    double maxX = minX;
+    double maxY = minY;
+
+    for (final point in points) {
+      if (point.dx < minX) minX = point.dx;
+      if (point.dy < minY) minY = point.dy;
+      if (point.dx > maxX) maxX = point.dx;
+      if (point.dy > maxY) maxY = point.dy;
+    }
+
+    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {
@@ -424,7 +461,8 @@ class DiagramTrapezoid extends DiagramPrimitive {
     int zIndex = 0,
     bool visible = true,
     String? label,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label);
+    int version = 0,
+  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
 
   @override
   DiagramTrapezoid copyWith({
@@ -432,6 +470,7 @@ class DiagramTrapezoid extends DiagramPrimitive {
     int? zIndex,
     bool? visible,
     String? label,
+    int? version,
     Offset? bottomLeft,
     Offset? bottomRight,
     Offset? topLeft,
@@ -454,8 +493,29 @@ class DiagramTrapezoid extends DiagramPrimitive {
       zIndex: zIndex ?? this.zIndex,
       visible: visible ?? this.visible,
       label: label ?? this.label,
+      version: version ?? this.version + 1,
     );
   }
+
+  @override
+  Rect get bounds {
+    double minX = bottomLeft.dx;
+    double minY = bottomLeft.dy;
+    double maxX = minX;
+    double maxY = minY;
+
+    for (final point in [bottomRight, topLeft, topRight]) {
+      if (point.dx < minX) minX = point.dx;
+      if (point.dy < minY) minY = point.dy;
+      if (point.dx > maxX) maxX = point.dx;
+      if (point.dy > maxY) maxY = point.dy;
+    }
+
+    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(strokeWidth);
+  }
+
+  @override
+  bool hitTest(Offset point) => bounds.contains(point);
 
   @override
   void render(Canvas canvas, Paint paint, CoordinateMapper mapper) {

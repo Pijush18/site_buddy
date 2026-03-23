@@ -16,6 +16,10 @@ import 'package:site_buddy/features/structural/shared/presentation/widgets/engin
 
 /// SCREEN: AnalysisSummaryScreen
 /// PURPOSE: Displays analysis results with BMD and SFD (Step 3).
+/// 
+/// IS 456:2000 Requirements:
+/// - Maximum moment calculation for design (Clause 38)
+/// - Shear force envelope for shear reinforcement design (Clause 40)
 class AnalysisSummaryScreen extends ConsumerWidget {
   const AnalysisSummaryScreen({super.key});
 
@@ -24,6 +28,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final state = ref.watch(beamDesignControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SbPage.form(
       title: l10n.titleAnalysis,
@@ -52,9 +57,21 @@ class AnalysisSummaryScreen extends ConsumerWidget {
         sections: [
           // ── STEP HEADER ──
           SbSection(
-            child: Text(
-              l10n.labelStep3Analysis,
-              style: Theme.of(context).textTheme.titleLarge!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.labelStep3Analysis,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                const SizedBox(height: SbSpacing.xs),
+                Text(
+                  'IS 456:2000 Clause 38',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
             ),
           ),
 
@@ -90,15 +107,19 @@ class AnalysisSummaryScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // SFD Card
                 _DiagramCard(
-                  label: 'SFD (Shear)',
+                  label: 'SFD (Shear Force Diagram)',
+                  subtitle: 'Maximum shear at supports',
                   points: state.sfdPoints,
                   isBMD: false,
                   isDark: isDark,
                 ),
                 const SizedBox(height: SbSpacing.lg),
+                // BMD Card
                 _DiagramCard(
-                  label: 'BMD (Moment)',
+                  label: 'BMD (Bending Moment Diagram)',
+                  subtitle: 'Maximum moment at midspan',
                   points: state.bmdPoints,
                   isBMD: true,
                   isDark: isDark,
@@ -106,7 +127,65 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               ],
             ),
           ),
+
+          // ── KEY INSIGHTS ──
+          SbSection(
+            title: 'Design Insights',
+            child: SbCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _InsightRow(
+                    icon: Icons.architecture,
+                    label: 'Span',
+                    value: '${(state.span / 1000).toStringAsFixed(2)} m',
+                    color: colorScheme.primary,
+                  ),
+                  const Divider(height: SbSpacing.lg),
+                  _InsightRow(
+                    icon: Icons.straighten,
+                    label: 'L/d Ratio',
+                    value: (state.span / state.overallDepth).toStringAsFixed(2),
+                    color: _getLdRatioColor(state.span / state.overallDepth),
+                  ),
+                  const SizedBox(height: SbSpacing.sm),
+                  _buildCodeHint(
+                    context,
+                    'ℹ️ L/d ≤ 20 for simply supported (IS 456 Cl. 23.2.1)',
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  /// Get color for L/d ratio indicator
+  Color _getLdRatioColor(double ldRatio) {
+    if (ldRatio <= 20) return Colors.green;
+    if (ldRatio <= 26) return Colors.orange;
+    return Colors.red;
+  }
+
+  /// Build a small hint text styled as a code reference
+  Widget _buildCodeHint(BuildContext context, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontFamily: 'monospace',
+        ),
       ),
     );
   }
@@ -114,12 +193,14 @@ class AnalysisSummaryScreen extends ConsumerWidget {
 
 class _DiagramCard extends StatelessWidget {
   final String label;
+  final String subtitle;
   final List<DiagramPoint> points;
   final bool isBMD;
   final bool isDark;
 
   const _DiagramCard({
     required this.label,
+    required this.subtitle,
     required this.points,
     required this.isBMD,
     required this.isDark,
@@ -130,22 +211,112 @@ class _DiagramCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SbCard(
-      child: SizedBox(
-        height: 140,
-        child: CustomPaint(
-          painter: BeamDiagramPainter(
-            points: points,
-            isBMD: isBMD,
-            label: label,
-            axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
-            labelColor: colorScheme.onSurfaceVariant,
-            labelStyle: Theme.of(context).textTheme.labelMedium!,
-            primaryColor: colorScheme.primary,
-            warningColor: AppColors.warning(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SbSpacing.sm,
+                  vertical: SbSpacing.xs,
+                ),
+                decoration: BoxDecoration(
+                  color: (isBMD ? colorScheme.primary : colorScheme.tertiary)
+                      .withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  isBMD ? 'M' : 'V',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: isBMD ? colorScheme.primary : colorScheme.tertiary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
-          size: Size.infinite,
-        ),
+          const SizedBox(height: SbSpacing.md),
+          SizedBox(
+            height: 140,
+            child: CustomPaint(
+              painter: BeamDiagramPainter(
+                points: points,
+                isBMD: isBMD,
+                label: label,
+                axisColor: isDark ? colorScheme.onSurface.withValues(alpha: 0.12) : colorScheme.outline,
+                labelColor: colorScheme.onSurfaceVariant,
+                labelStyle: Theme.of(context).textTheme.labelMedium!,
+                primaryColor: isBMD ? colorScheme.primary : colorScheme.tertiary,
+                warningColor: AppColors.warning(context),
+              ),
+              size: Size.infinite,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class _InsightRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+
+  const _InsightRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(SbSpacing.sm),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        const SizedBox(width: SbSpacing.md),
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }
