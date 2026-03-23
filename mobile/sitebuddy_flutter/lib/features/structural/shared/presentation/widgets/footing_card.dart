@@ -3,7 +3,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// WIDGET: FootingCard
 /// A premium-styled card used on the footing type selection screen.
-/// DESIGN: Standardized with AppCard and circular icon background.
+/// DESIGN: Standardized with SBGridActionCard and circular icon background.
 // Footing Card component ...
 
 class FootingCard extends StatelessWidget {

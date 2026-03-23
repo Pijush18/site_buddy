@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/features/design/mappers/mappers.dart';
 import 'package:site_buddy/features/design/presentation/widgets/diagram_renderer.dart';
+import 'package:site_buddy/core/widgets/sb_diagram_card.dart';
 
 /// ENUM: DiagramType
 /// Defines the types of engineering diagrams available.
@@ -249,26 +250,12 @@ class BeamDiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                title!,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-          Expanded(
-            child: EngineeringDiagramWidget(
-              diagramType: diagramType,
-              beamState: beamState,
-            ),
-          ),
-        ],
+    return SbDiagramCard(
+      title: title,
+      expanded: expanded,
+      child: EngineeringDiagramWidget(
+        diagramType: diagramType,
+        beamState: beamState,
       ),
     );
   }
@@ -290,26 +277,12 @@ class ColumnDiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                title!,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-          Expanded(
-            child: EngineeringDiagramWidget(
-              diagramType: diagramType,
-              columnState: columnState,
-            ),
-          ),
-        ],
+    return SbDiagramCard(
+      title: title,
+      expanded: true,
+      child: EngineeringDiagramWidget(
+        diagramType: diagramType,
+        columnState: columnState,
       ),
     );
   }
@@ -331,26 +304,12 @@ class FootingDiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                title!,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-          Expanded(
-            child: EngineeringDiagramWidget(
-              diagramType: diagramType,
-              footingState: footingState,
-            ),
-          ),
-        ],
+    return SbDiagramCard(
+      title: title,
+      expanded: true,
+      child: EngineeringDiagramWidget(
+        diagramType: diagramType,
+        footingState: footingState,
       ),
     );
   }
@@ -372,26 +331,12 @@ class SlabDiagramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                title!,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-          Expanded(
-            child: EngineeringDiagramWidget(
-              diagramType: diagramType,
-              slabState: slabState,
-            ),
-          ),
-        ],
+    return SbDiagramCard(
+      title: title,
+      expanded: true,
+      child: EngineeringDiagramWidget(
+        diagramType: diagramType,
+        slabState: slabState,
       ),
     );
   }

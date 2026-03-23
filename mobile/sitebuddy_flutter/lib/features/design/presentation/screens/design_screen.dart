@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/registry/tool_registry.dart';
 import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_section_header.dart';
-import 'package:site_buddy/core/widgets/sb_tool_grid.dart';
+import 'package:site_buddy/core/widgets/sb_grid.dart';
+import 'package:site_buddy/core/widgets/sb_grid_action_card.dart';
+import 'package:site_buddy/core/widgets/sb_section.dart';
 import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: DesignScreen
 /// PURPOSE: Professional engineering dashboard rebuilt with data-driven tool registry
-/// REFINED: Compact layout, tight spacing, strong visual hierarchy
+/// REFINED: Uses SbSection + SBGridActionCard for standardized components
 class DesignScreen extends StatelessWidget {
   const DesignScreen({super.key});
 
@@ -31,18 +33,18 @@ class DesignScreen extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md, // Tighter than lg
+            vertical: AppSpacing.md,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Display each category from registry - compact spacing
+              // Display each category from registry
               for (int i = 0; i < categories.length; i++) ...[
-                _buildCategorySection(categories[i]),
+                _buildCategorySection(context, categories[i]),
                 if (i < categories.length - 1)
-                  const SizedBox(height: AppSpacing.lg), // Not xl
+                  const SizedBox(height: AppSpacing.lg),
               ],
-              const SizedBox(height: AppSpacing.xl), // Extra bottom padding
+              const SizedBox(height: AppSpacing.xl),
             ],
           ),
         ),
@@ -50,25 +52,21 @@ class DesignScreen extends StatelessWidget {
     );
   }
 
-  /// Build a category section using SbSectionHeader + SBToolGrid from registry
-  Widget _buildCategorySection(ToolCategory category) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SbSectionHeader(title: category.title),
-        const SizedBox(height: AppSpacing.sm), // Compact - not md
-        SBToolGrid(
-          children: category.tools.map((tool) {
-            return SBToolCard(
-              icon: tool.icon,
-              title: tool.title,
-              subtitle: tool.subtitle,
-              route: tool.route,
-              isPrimary: tool.isPrimary,
-            );
-          }).toList(),
-        ),
-      ],
+  /// Build a category section using SbSection + SbGrid + SBGridActionCard
+  Widget _buildCategorySection(BuildContext context, ToolCategory category) {
+    return SbSection(
+      title: category.title,
+      child: SbGrid(
+        children: category.tools.map((tool) {
+          return SBGridActionCard(
+            icon: tool.icon,
+            label: tool.title,
+            subtitle: tool.subtitle,
+            isPrimary: tool.isPrimary,
+            onTap: () => context.push(tool.route),
+          );
+        }).toList(),
+      ),
     );
   }
 }

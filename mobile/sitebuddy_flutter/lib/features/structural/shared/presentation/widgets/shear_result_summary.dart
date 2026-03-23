@@ -1,9 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/widgets/sb_result_card.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/safety_check_models.dart';
-import 'package:site_buddy/features/structural/shared/presentation/widgets/comparison_bar.dart';
-import 'package:site_buddy/features/structural/shared/presentation/widgets/shared_safety_widgets.dart';
 
 class ShearResultSummary extends StatelessWidget {
   final ShearResult result;
@@ -12,27 +9,21 @@ class ShearResultSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SbCard(
-      child: Column(
-        children: [
-          const SizedBox(height: SbSpacing.lg),
-          ComparisonBar(
-            actual: result.tv,
-            allowable: result.tc,
-            label: 'Shear Stress (τv vs τc)',
-            unit: 'N/mm²',
-          ),
-          const SizedBox(height: SbSpacing.lg),
-          ResultDetailRow(
-            label: 'Nominal Stress (τv)',
-            value: '${result.tv.toStringAsFixed(3)} N/mm²',
-          ),
-          ResultDetailRow(
-            label: 'Design Strength (τc)',
-            value: '${result.tc.toStringAsFixed(3)} N/mm²',
-          ),
-        ],
-      ),
+    return SbResultCard(
+      actual: result.tv,
+      allowable: result.tc,
+      label: 'Shear Stress (τv vs τc)',
+      unit: 'N/mm²',
+      details: [
+        ResultDetailItem(
+          label: 'Nominal Stress (τv)',
+          value: '${result.tv.toStringAsFixed(3)} N/mm²',
+        ),
+        ResultDetailItem(
+          label: 'Design Strength (τc)',
+          value: '${result.tc.toStringAsFixed(3)} N/mm²',
+        ),
+      ],
     );
   }
 }

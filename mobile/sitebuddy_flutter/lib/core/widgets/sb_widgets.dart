@@ -18,6 +18,8 @@ export 'screen_padding.dart';
 export 'sb_card.dart';
 export 'sb_grid_card.dart';
 export 'sb_grid_action_card.dart'; // Standardized grid actions
+export 'sb_diagram_card.dart'; // Standardized diagram cards
+export 'sb_result_card.dart'; // Unified result summary cards
 export 'sb_module_hero.dart';
 
 
@@ -27,7 +29,6 @@ export 'sb_smart_assistant_card.dart';
 export 'code_reference_card.dart';
 export 'previewable_card.dart';
 export 'info_card.dart';
-export 'action_card.dart';
 
 // ⌨️ Inputs & Controls
 export 'primary_cta.dart';
@@ -59,9 +60,9 @@ export 'app_screen_wrapper.dart';
 @Deprecated('Use SbSectionList instead')
 export 'app_scaffold.dart';
 @Deprecated('Use SbCard or SbGridCard instead')
-export 'app_card.dart';
+// export 'app_card.dart'; // DELETED - Use SbCard instead
 @Deprecated('Use SbGridCard instead')
-export 'app_stat_card.dart';
+// export 'app_stat_card.dart'; // DELETED - Use SBGridActionCard instead
 @Deprecated('Replacement pending')
 export 'app_header.dart';
 @Deprecated('Replacement pending')

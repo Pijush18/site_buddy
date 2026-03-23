@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
-import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/widgets/sb_card.dart';
 
 
 /// A header widget that displays whether a check is safe or unsafe.
@@ -135,33 +135,23 @@ class PlaceholderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Card(
-      elevation: 0,
+    return SbCard(
       color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-      shape: RoundedRectangleBorder(
-        borderRadius: SbRadius.borderMd,
-        side: BorderSide(
-          color: context.colors.outline,
-          width: AppBorder.width,
-        ),
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(SbSpacing.xxl),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              size: 48,
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
-            ),
-            const SizedBox(height: SbSpacing.lg),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.all(SbSpacing.xxl),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            size: 48,
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: SbSpacing.lg),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge!,
+          ),
+        ],
       ),
     );
   }
