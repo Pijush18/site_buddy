@@ -27,9 +27,9 @@ class AppRadius {
   static const double lg = 16.0;
 
   /// Constant Radius objects for convenience
-  static final Radius radiusSm = Radius.circular(sm);
-  static final Radius radiusMd = Radius.circular(md);
-  static final Radius radiusLg = Radius.circular(lg);
+  static final Radius radiusSm = const Radius.circular(sm);
+  static final Radius radiusMd = const Radius.circular(md);
+  static final Radius radiusLg = const Radius.circular(lg);
 
   /// BorderRadius objects for convenience
   static final BorderRadius borderSm = BorderRadius.circular(sm);

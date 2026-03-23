@@ -4,84 +4,41 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/domain/models/project_status.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
-import 'package:site_buddy/features/project/application/controllers/project_controller.dart';
+import 'package:site_buddy/features/project/application/controllers/project_editor_controller.dart';
 
 /// SCREEN: ProjectEditorScreen
-class ProjectEditorScreen extends ConsumerStatefulWidget {
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to ProjectEditorNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for saving state (now in Notifier)
+/// - ✅ Removed setState for dropdown (now in Notifier)
+/// - ✅ Removed business logic from UI (now in Notifier)
+/// - ✅ UI converted from ConsumerStatefulWidget to ConsumerWidget
+class ProjectEditorScreen extends ConsumerWidget {
   final String? projectId;
   const ProjectEditorScreen({super.key, this.projectId});
 
   @override
-  ConsumerState<ProjectEditorScreen> createState() => _ProjectEditorScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(projectEditorControllerProvider);
+    final notifier = ref.read(projectEditorControllerProvider.notifier);
 
-class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
-  final _nameController = TextEditingController();
-  final _locController = TextEditingController();
-  final _clientController = TextEditingController();
-  final _descController = TextEditingController();
-  ProjectStatus _selectedStatus = ProjectStatus.active;
-  bool _isSaving = false;
-
-  bool get _isFormValid =>
-      _nameController.text.trim().isNotEmpty &&
-      _locController.text.trim().isNotEmpty;
-
-  Future<void> _saveProject() async {
-    if (!_isFormValid || _isSaving) return;
-
-    setState(() => _isSaving = true);
-
-    try {
-      await ref.read(projectControllerProvider.notifier).createProject(
-            name: _nameController.text.trim(),
-            location: _locController.text.trim(),
-            clientName: _clientController.text.trim().isNotEmpty
-                ? _clientController.text.trim()
-                : null,
-            description: _descController.text.trim().isNotEmpty
-                ? _descController.text.trim()
-                : null,
-            status: _selectedStatus,
-          );
-
-      if (mounted && Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(context.l10n.msgSaveFailed(e.toString())),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSaving = false);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _locController.dispose();
-    _clientController.dispose();
-    _descController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SbPage.form(
       title: context.l10n.project,
       primaryAction: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: _isSaving ? null : _saveProject,
-          child: _isSaving
+          onPressed: state.isSaving || !state.isValid
+              ? null
+              : () async {
+                  final success = await notifier.submit(ref);
+                  if (success && context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+          child: state.isSaving
               ? const SizedBox(
                   height: 20,
                   width: 20,
@@ -93,24 +50,38 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
 
       body: SbSectionList(
         sections: [
+          // Error message
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
+              ),
+            ),
+
           SbSection(
             title: context.l10n.labelPrimaryDetails,
             child: Column(
               children: [
                 SbInput(
-                  controller: _nameController,
-                  hint: 'e.g. Skyline Apartments',
                   label: context.l10n.labelProjectName,
-                  textInputAction: TextInputAction.next,
-                  onChanged: (v) {},
+                  hint: 'e.g. Skyline Apartments',
+                  onChanged: notifier.updateName,
                 ),
                 const SizedBox(height: SbSpacing.lg),
                 SbInput(
-                  controller: _locController,
-                  hint: 'City, Region or Site ID',
                   label: context.l10n.labelLocation,
-                  textInputAction: TextInputAction.next,
-                  onChanged: (v) {},
+                  hint: 'City, Region or Site ID',
+                  onChanged: notifier.updateLocation,
                 ),
               ],
             ),
@@ -118,34 +89,29 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
           SbSection(
             title: context.l10n.labelStakeholders,
             child: SbInput(
-              controller: _clientController,
-              hint: 'Contracting Authority / Client',
               label: context.l10n.labelClient,
-              textInputAction: TextInputAction.next,
-              onChanged: (v) {},
+              hint: 'Contracting Authority / Client',
+              onChanged: notifier.updateClientName,
             ),
           ),
           SbSection(
             title: context.l10n.labelStatus,
             child: SbDropdown<ProjectStatus>(
-              value: _selectedStatus,
+              value: state.status,
               items: ProjectStatus.values,
               itemLabelBuilder: (status) => status.label,
               onChanged: (val) {
-                if (val != null) {
-                  setState(() => _selectedStatus = val);
-                }
+                if (val != null) notifier.updateStatus(val);
               },
             ),
           ),
           SbSection(
             title: context.l10n.labelDescription,
             child: SbInput(
-              controller: _descController,
+              label: context.l10n.labelDescription,
               maxLines: 5,
               hint: 'Enter detailed project scope...',
-              label: context.l10n.labelDescription,
-              onChanged: (v) {},
+              onChanged: notifier.updateDescription,
             ),
           ),
         ],
@@ -153,11 +119,3 @@ class _ProjectEditorScreenState extends ConsumerState<ProjectEditorScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-

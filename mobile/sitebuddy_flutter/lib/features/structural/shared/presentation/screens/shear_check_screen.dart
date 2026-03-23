@@ -1,119 +1,38 @@
-import 'package:site_buddy/core/design_system/sb_icons.dart';
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/features/structural/shared/domain/models/safety_check_models.dart';
-import 'package:site_buddy/features/structural/shared/application/services/calculation_service.dart';
-import 'package:site_buddy/features/structural/shared/application/controllers/safety_check_controller.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
+import 'package:site_buddy/features/structural/shared/application/controllers/shear_check_controller.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/insight_card.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shear_input_section.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shear_result_summary.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shear_history_section.dart';
 
-class ShearCheckScreen extends ConsumerStatefulWidget {
+/// SCREEN: ShearCheckScreen
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to ShearCheckNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for loading state (now in Notifier)
+/// - ✅ Removed setState for result (now in Notifier)
+/// - ✅ Removed direct CalculationService call (now in Notifier)
+/// - ✅ Removed manual form validation logic (now in Notifier)
+/// - ✅ UI is now purely declarative, watching state from Notifier
+class ShearCheckScreen extends ConsumerWidget {
   const ShearCheckScreen({super.key});
 
   @override
-  ConsumerState<ShearCheckScreen> createState() => _ShearCheckScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch state from Notifier - UI reacts automatically
+    final state = ref.watch(shearCheckControllerProvider);
+    final notifier = ref.read(shearCheckControllerProvider.notifier);
 
-class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController _dController = TextEditingController();
-  final TextEditingController _bController = TextEditingController();
-  final TextEditingController _vuController = TextEditingController();
-  final TextEditingController _ptController = TextEditingController();
-
-  String _selectedConcrete = 'M25';
-  String _selectedSteel = 'Fe500';
-  bool _isLoading = false;
-
-  ShearResult? _result;
-
-  @override
-  void dispose() {
-    _dController.dispose();
-    _bController.dispose();
-    _vuController.dispose();
-    _ptController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _calculate() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isLoading = true);
-    HapticFeedback.mediumImpact();
-
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    final double d = double.parse(_dController.text);
-    final double b = double.parse(_bController.text);
-    final double vu = double.parse(_vuController.text);
-    final double pt = double.parse(_ptController.text);
-
-    final result = CalculationService.calculateShear(
-      vu: vu,
-      b: b,
-      d: d,
-      pt: pt,
-      concreteGrade: _selectedConcrete,
-    );
-
-    ref.read(safetyCheckControllerProvider.notifier).saveCheck({
-      'type': 'Shear',
-      'date': DateTime.now().toIso8601String(),
-      'isSafe': result.isSafe,
-      'tv': result.tv,
-      'tc': result.tc,
-    });
-
-    setState(() {
-      _result = result;
-      _isLoading = false;
-    });
-  }
-
-  void _reset() {
-    setState(() {
-      _dController.clear();
-      _bController.clear();
-      _vuController.clear();
-      _ptController.clear();
-      _selectedConcrete = 'M25';
-      _result = null;
-    });
-  }
-
-  void _shareResult() {
-    if (_result == null) return;
-    ref
-        .read(safetyCheckControllerProvider.notifier)
-        .shareResult(
-          title: 'Shear Check Report',
-          inputs: {
-            'Depth (d)': '${_dController.text} mm',
-            'Width (b)': '${_bController.text} mm',
-            'Vu': '${_vuController.text} kN',
-            'Steel (pt)': '${_ptController.text} %',
-            'Concrete': _selectedConcrete,
-          },
-          results: {
-            'τv': '${_result!.tv.toStringAsFixed(3)} N/mm²',
-            'τc': '${_result!.tc.toStringAsFixed(3)} N/mm²',
-          },
-          isSafe: _result!.isSafe,
-        );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SbPage.form(
       title: 'Shear Check',
       primaryAction: Column(
@@ -122,94 +41,159 @@ class _ShearCheckScreenState extends ConsumerState<ShearCheckScreen> {
         children: [
           PrimaryCTA(
             label: 'Calculate',
-            onPressed: _calculate,
-            isLoading: _isLoading,
+            onPressed: state.isLoading
+                ? null
+                : () {
+                    HapticFeedback.mediumImpact();
+                    notifier.calculate();
+                  },
+            isLoading: state.isLoading,
           ),
-          if (_result != null) ...[
+          if (state.result != null) ...[
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Report',
-              onPressed: _shareResult,
+              onPressed: notifier.shareResult,
             ),
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Reset',
-              onPressed: _reset,
+              onPressed: notifier.reset,
             ),
           ],
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: SbSectionList(
-          sections: [
-            // ── HEADER ──
-            SbSection(
-              child: Text(
-                'Assessment',
-                style: Theme.of(context).textTheme.titleLarge!,
-              ),
+      body: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Text(
+              'Assessment',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
+          ),
 
-            // ── INPUTS ──
-            SbSection(
-              title: 'Input Parameters',
-              child: ShearInputSection(
-                dController: _dController,
-                bController: _bController,
-                vuController: _vuController,
-                ptController: _ptController,
-                selectedConcrete: _selectedConcrete,
-                selectedSteel: _selectedSteel,
-                onConcreteChanged: (v) {
-                  if (v != null) setState(() => _selectedConcrete = v);
-                },
-                onSteelChanged: (v) {
-                  if (v != null) setState(() => _selectedSteel = v);
-                },
-              ),
+          // ── INPUTS ──
+          SbSection(
+            title: 'Input Parameters',
+            child: ShearInputSection(
+              dController: _createTextController(state.depth, notifier.updateDepth),
+              bController: _createTextController(state.width, notifier.updateWidth),
+              vuController: _createTextController(state.shearForce, notifier.updateShearForce),
+              ptController: _createTextController(state.steelPercentage, notifier.updateSteelPercentage),
+              selectedConcrete: state.selectedConcrete,
+              selectedSteel: state.selectedSteel,
+              onConcreteChanged: (v) {
+                if (v != null) notifier.updateConcreteGrade(v);
+              },
+              onSteelChanged: (v) {
+                if (v != null) notifier.updateSteelGrade(v);
+              },
             ),
+          ),
 
-            // ── RESULTS ──
-            if (_result != null) ...[
-              SbSection(
-                title: 'Design Status',
-                trailing: StatusBadge(isSafe: _result!.isSafe),
-                child: ShearResultSummary(result: _result!),
-              ),
-              SbSection(
-                title: 'Engineering Insight',
-                child: InsightCard(insights: _result!.insights),
-              ),
-            ] else
-              const SbSection(
-                title: 'Design Status',
-                child: PlaceholderCard(
-                  icon: SbIcons.analytics,
-                  message: 'Enter parameters to generate report',
+          // ── ERROR MESSAGE ──
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
                 ),
               ),
-
-            // ── HISTORY ──
-            const SbSection(
-              title: 'Recent Checks',
-              child: ShearHistorySection(),
             ),
-          ],
-        ),
+
+          // ── RESULTS ──
+          if (state.result != null) ...[
+            SbSection(
+              title: 'Design Status',
+              trailing: StatusBadge(isSafe: state.result!.isSafe),
+              child: ShearResultSummary(result: state.result!),
+            ),
+            SbSection(
+              title: 'Engineering Insight',
+              child: InsightCard(insights: state.result!.insights),
+            ),
+          ] else
+            const SbSection(
+              title: 'Design Status',
+              child: _PlaceholderCard(
+                icon: SbIcons.analytics,
+                message: 'Enter parameters to generate report',
+              ),
+            ),
+
+          // ── HISTORY ──
+          const SbSection(
+            title: 'Recent Checks',
+            child: ShearHistorySection(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Creates a TextEditingController that syncs with the provider state
+  TextEditingController _createTextController(
+    String initialValue,
+    void Function(String) onChanged,
+  ) {
+    final controller = TextEditingController(text: initialValue);
+    
+    // Listen to controller changes and update Notifier
+    controller.addListener(() {
+      if (controller.text != initialValue) {
+        onChanged(controller.text);
+      }
+    });
+    
+    return controller;
+  }
+}
+
+/// PLACEHOLDER CARD: Used when no calculation has been performed yet
+class _PlaceholderCard extends StatelessWidget {
+  final IconData icon;
+  final String message;
+
+  const _PlaceholderCard({
+    required this.icon,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(SbSpacing.xl),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 48,
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          const SizedBox(height: SbSpacing.md),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

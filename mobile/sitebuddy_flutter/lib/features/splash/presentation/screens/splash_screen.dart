@@ -10,6 +10,9 @@ import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 /// SCREEN: SplashScreen
 /// PURPOSE: Initial loading screen that waits for application bootstrap.
+/// 
+/// [REFACTORED] - Now uses appInitializerProvider for proper async initialization.
+/// The old AppInitializer class is deprecated.
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
@@ -21,22 +24,32 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkInitialization();
+    // Trigger initialization - this starts the async initialization chain
+    _triggerInitialization();
   }
 
-  void _checkInitialization() {
-    // We check if initialization is already done
-    // and listen for changes.
-    final initialized = ref.read(initializationProvider);
-    if (initialized) {
-      _navigateToHome();
-    }
+  /// Trigger initialization by watching the provider.
+  /// The provider is lazy, so watching it starts the initialization.
+  void _triggerInitialization() {
+    // By watching the provider, we trigger its lazy initialization
+    // The FutureProvider will execute and complete when all async work is done
+    ref.listen(appInitializerProvider, (previous, next) {
+      next.when(
+        data: (_) => _navigateToHome(),
+        loading: () {},
+        error: (e, st) {
+          // Handle initialization error - still navigate but could show error
+          debugPrint('Initialization error: $e');
+          _navigateToHome();
+        },
+      );
+    });
   }
 
   void _navigateToHome() {
     // Small delay to ensure smooth transition
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted && context.mounted) {
         context.go(AppRoutes.home);
       }
     });
@@ -44,13 +57,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Listen for initialization completion
-    ref.listen(initializationProvider, (previous, next) {
-      if (next == true) {
-        _navigateToHome();
-      }
-    });
-
+    // Watch the initialization provider
+    // This triggers the async initialization and rebuilds when complete
+    final initAsync = ref.watch(appInitializerProvider);
 
     return SbPage.scaffold(
       title: null,
@@ -62,7 +71,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             // Logo
             Icon(
               SbIcons.engineering,
-              size: 64, // Standard large icon size
+              size: 64,
               color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: SbSpacing.xxl), 
@@ -72,7 +81,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               'SiteBuddy',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: SbSpacing.lg), // Replaced SizedBox(height: SbSpacing.lg)
+            const SizedBox(height: SbSpacing.lg),
 
             // Tagline
             Text(
@@ -82,8 +91,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             const SizedBox(height: SbSpacing.xxl), 
 
             // Loading Indicator
-            CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.primary,
+            // Show progress based on initialization state
+            initAsync.when(
+              data: (_) => Icon(
+                Icons.check_circle,
+                size: 32,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              loading: () => CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              error: (e, st) => Icon(
+                Icons.warning,
+                size: 32,
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
             
             const SizedBox(height: SbSpacing.xxl * 2), 
@@ -100,14 +122,3 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

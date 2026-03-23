@@ -10,112 +10,84 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-import 'package:site_buddy/features/work/application/controllers/work_controller.dart';
+import 'package:site_buddy/features/work/application/controllers/create_meeting_controller.dart';
 import 'package:site_buddy/features/work/domain/entities/meeting.dart';
 
-class CreateMeetingScreen extends ConsumerStatefulWidget {
+/// SCREEN: CreateMeetingScreen
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to CreateMeetingNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for form state (now in Notifier)
+/// - ✅ Removed setState for saving state (now in Notifier)
+/// - ✅ Removed business logic from UI (now in Notifier)
+/// - ✅ UI converted from ConsumerStatefulWidget to ConsumerWidget
+class CreateMeetingScreen extends ConsumerWidget {
   const CreateMeetingScreen({super.key});
 
   @override
-  ConsumerState<CreateMeetingScreen> createState() =>
-      _CreateMeetingScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(createMeetingControllerProvider);
+    final notifier = ref.read(createMeetingControllerProvider.notifier);
 
-class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _projectController = TextEditingController();
-  final _locationController = TextEditingController();
-  final _participantsController = TextEditingController();
-  MeetingType _type = MeetingType.other;
-  MeetingMode _mode = MeetingMode.physical;
-  DateTime? _date;
-  TimeOfDay? _start;
-  TimeOfDay? _end;
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    _projectController.dispose();
-    _locationController.dispose();
-    _participantsController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _submit(BuildContext context) async {
-    if (_titleController.text.isEmpty) {
-      SbFeedback.showToast(context: context, message: 'Please enter a title');
-      return;
-    }
-    final controller = ref.read(workControllerProvider.notifier);
-    final id = DateTime.now().millisecondsSinceEpoch.toString();
-    final now = DateTime.now();
-    final meeting = Meeting(
-      id: id,
-      projectId: _projectController.text,
-      title: _titleController.text,
-      description: _descriptionController.text,
-      meetingType: _type,
-      mode: _mode,
-      locationOrLink: _locationController.text,
-      participants: _participantsController.text
-          .split(',')
-          .map((s) => s.trim())
-          .where((s) => s.isNotEmpty)
-          .toList(),
-      meetingDate: _date ?? now,
-      startTime: _start != null
-          ? DateTime(now.year, now.month, now.day, _start!.hour, _start!.minute)
-          : now,
-      endTime: _end != null
-          ? DateTime(now.year, now.month, now.day, _end!.hour, _end!.minute)
-          : now,
-      status: MeetingStatus.scheduled,
-      createdAt: now,
-      updatedAt: now,
-    );
-    await controller.createMeeting(meeting);
-    if (!context.mounted) return;
-    context.pop();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SbPage.form(
       title: 'New Meeting',
       primaryAction: PrimaryCTA(
         label: 'Schedule',
         icon: SbIcons.calendar,
-        onPressed: () => _submit(context),
+        onPressed: state.isSaving
+            ? null
+            : () async {
+                final success = await notifier.submit(ref);
+                if (success && context.mounted) {
+                  context.pop();
+                }
+              },
+        isLoading: state.isSaving,
         width: double.infinity,
       ),
       body: SbSectionList(
         sections: [
+          // Error message
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
+              ),
+            ),
+
           SbSection(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SbInput(
-                  controller: _titleController,
                   label: 'Title',
                   hint: 'Meeting title',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateTitle,
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
-                  controller: _descriptionController,
                   label: 'Description',
                   hint: 'Brief agenda or summary',
                   maxLines: 3,
-                  onChanged: (v) {},
+                  onChanged: notifier.updateDescription,
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
-                  controller: _projectController,
                   label: 'Project',
                   hint: 'Associated project',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateProjectId,
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Text(
@@ -124,11 +96,11 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 ),
                 const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MeetingType>(
-                  value: _type,
+                  value: state.type,
                   items: MeetingType.values,
                   itemLabelBuilder: (e) => e.name.toUpperCase(),
                   onChanged: (v) {
-                    if (v != null) setState(() => _type = v);
+                    if (v != null) notifier.updateType(v);
                   },
                 ),
                 const SizedBox(height: SbSpacing.xl),
@@ -138,26 +110,24 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 ),
                 const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MeetingMode>(
-                  value: _mode,
+                  value: state.mode,
                   items: MeetingMode.values,
                   itemLabelBuilder: (e) => e.name.toUpperCase(),
                   onChanged: (v) {
-                    if (v != null) setState(() => _mode = v);
+                    if (v != null) notifier.updateMode(v);
                   },
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 SbInput(
-                  controller: _locationController,
                   label: 'Location',
                   hint: 'Where is it happening?',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateLocation,
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
-                  controller: _participantsController,
                   label: 'Participants',
                   hint: 'Comma separated names',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateParticipants,
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 // Date Picker
@@ -173,9 +143,9 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                           ),
                           const SizedBox(height: SbSpacing.sm),
                           Text(
-                            _date == null
+                            state.date == null
                                 ? 'Not set'
-                                : _date!.toLocal().toString().split(' ').first,
+                                : state.date!.toLocal().toString().split(' ').first,
                             style: Theme.of(context).textTheme.bodyLarge!,
                           ),
                         ],
@@ -191,8 +161,9 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
-                        if (!mounted) return;
-                        if (picked != null) setState(() => _date = picked);
+                        if (picked != null) {
+                          notifier.updateDate(picked);
+                        }
                       },
                     ),
                   ],
@@ -202,33 +173,33 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: _buildTimePicker(
-                        context,
-                        'Start',
-                        _start == null ? 'Not set' : _start!.format(context),
-                        () async {
+                      child: _TimePickerField(
+                        label: 'Start',
+                        value: state.startTime,
+                        onTap: () async {
                           final t = await showTimePicker(
                             context: context,
                             initialTime: TimeOfDay.now(),
                           );
-                          if (!mounted) return;
-                          if (t != null) setState(() => _start = t);
+                          if (t != null) {
+                            notifier.updateStartTime(t);
+                          }
                         },
                       ),
                     ),
                     const SizedBox(width: SbSpacing.md),
                     Expanded(
-                      child: _buildTimePicker(
-                        context,
-                        'End',
-                        _end == null ? 'Not set' : _end!.format(context),
-                        () async {
+                      child: _TimePickerField(
+                        label: 'End',
+                        value: state.endTime,
+                        onTap: () async {
                           final t = await showTimePicker(
                             context: context,
                             initialTime: TimeOfDay.now(),
                           );
-                          if (!mounted) return;
-                          if (t != null) setState(() => _end = t);
+                          if (t != null) {
+                            notifier.updateEndTime(t);
+                          }
                         },
                       ),
                     ),
@@ -241,15 +212,23 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
       ),
     );
   }
+}
 
-  Widget _buildTimePicker(
-    BuildContext context,
-    String label,
-    String value,
-    VoidCallback onTap,
-  ) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+/// Internal widget for time picker field
+class _TimePickerField extends StatelessWidget {
+  final String label;
+  final TimeOfDay? value;
+  final VoidCallback onTap;
+
+  const _TimePickerField({
+    required this.label,
+    required this.value,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -257,12 +236,15 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: SbSpacing.sm), // Replaced SizedBox(height: SbSpacing.sm)
+        const SizedBox(height: SbSpacing.sm),
         InkWell(
           onTap: onTap,
           borderRadius: SbRadius.borderSmall,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md, vertical: SbSpacing.sm),
+            padding: const EdgeInsets.symmetric(
+              horizontal: SbSpacing.md,
+              vertical: SbSpacing.sm,
+            ),
             decoration: BoxDecoration(
               border: Border.all(
                 color: context.colors.outline,
@@ -277,10 +259,10 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
                   size: 20,
                   color: colorScheme.onSurfaceVariant,
                 ),
-                const SizedBox(width: SbSpacing.sm), // Replaced const SizedBox(width: SbSpacing.sm)
+                const SizedBox(width: SbSpacing.sm),
                 Expanded(
                   child: Text(
-                    value,
+                    value == null ? 'Not set' : value!.format(context),
                     style: Theme.of(context).textTheme.bodyLarge!,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -293,14 +275,3 @@ class _CreateMeetingScreenState extends ConsumerState<CreateMeetingScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

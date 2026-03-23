@@ -1,111 +1,37 @@
-
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/features/structural/shared/domain/models/safety_check_models.dart';
-import 'package:site_buddy/features/structural/shared/application/services/calculation_service.dart';
-import 'package:site_buddy/features/structural/shared/application/controllers/safety_check_controller.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
+import 'package:site_buddy/features/structural/shared/application/controllers/deflection_check_controller.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/insight_card.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/deflection_input_section.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/deflection_result_summary.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/deflection_history_section.dart';
 
-class DeflectionCheckScreen extends ConsumerStatefulWidget {
+/// SCREEN: DeflectionCheckScreen
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to DeflectionCheckNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for loading state (now in Notifier)
+/// - ✅ Removed setState for result (now in Notifier)
+/// - ✅ Removed direct CalculationService call (now in Notifier)
+/// - ✅ Removed manual form validation logic (now in Notifier)
+/// - ✅ UI is now purely declarative, watching state from Notifier
+class DeflectionCheckScreen extends ConsumerWidget {
   const DeflectionCheckScreen({super.key});
 
   @override
-  ConsumerState<DeflectionCheckScreen> createState() =>
-      _DeflectionCheckScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch state from Notifier - UI reacts automatically
+    final state = ref.watch(deflectionCheckControllerProvider);
+    final notifier = ref.read(deflectionCheckControllerProvider.notifier);
 
-class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _dController = TextEditingController();
-  final TextEditingController _spanController = TextEditingController();
-  final TextEditingController _ptController = TextEditingController();
-  final TextEditingController _pcController = TextEditingController();
-
-  String _selectedSpanType = 'Simply Supported';
-  bool _isLoading = false;
-
-  DeflectionResult? _result;
-
-  @override
-  void dispose() {
-    _dController.dispose();
-    _spanController.dispose();
-    _ptController.dispose();
-    _pcController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _calculate() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isLoading = true);
-    HapticFeedback.lightImpact();
-
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    final double d = double.parse(_dController.text);
-    final double span = double.parse(_spanController.text);
-
-    final result = CalculationService.calculateDeflection(
-      span: span,
-      d: d,
-      isContinuous: _selectedSpanType == 'Continuous',
-    );
-
-    ref.read(safetyCheckControllerProvider.notifier).saveCheck({
-      'type': 'Deflection',
-      'date': DateTime.now().toIso8601String(),
-      'isSafe': result.isSafe,
-      'actual': result.actualRatio,
-      'allowable': result.allowableRatio,
-    });
-
-    setState(() {
-      _result = result;
-      _isLoading = false;
-    });
-  }
-
-  void _reset() {
-    setState(() {
-      _dController.clear();
-      _spanController.clear();
-      _ptController.clear();
-      _pcController.clear();
-      _selectedSpanType = 'Simply Supported';
-      _result = null;
-    });
-  }
-
-  void _shareResult() {
-    if (_result == null) return;
-    ref
-        .read(safetyCheckControllerProvider.notifier)
-        .shareResult(
-          title: 'Deflection Check Report',
-          inputs: {
-            'Depth (d)': '${_dController.text} mm',
-            'Span (L)': '${_spanController.text} mm',
-            'Type': _selectedSpanType,
-          },
-          results: {
-            'Actual L/d': _result!.actualRatio.toStringAsFixed(2),
-            'Allowable L/d': _result!.allowableRatio.toStringAsFixed(2),
-          },
-          isSafe: _result!.isSafe,
-        );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SbPage.form(
       title: 'Deflection Check',
       primaryAction: Column(
@@ -113,91 +39,156 @@ class _DeflectionCheckScreenState extends ConsumerState<DeflectionCheckScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: _result != null ? 'Check Again' : 'Check Deflection',
-            onPressed: _calculate,
-            isLoading: _isLoading,
+            label: state.result != null ? 'Check Again' : 'Check Deflection',
+            onPressed: state.isLoading
+                ? null
+                : () {
+                    HapticFeedback.lightImpact();
+                    notifier.calculate();
+                  },
+            isLoading: state.isLoading,
           ),
-          if (_result != null) ...[
+          if (state.result != null) ...[
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Share Report',
-              onPressed: _shareResult,
+              onPressed: notifier.shareResult,
             ),
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Reset Form',
-              onPressed: _reset,
+              onPressed: notifier.reset,
             ),
           ],
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: SbSectionList(
-          sections: [
-            // ── HEADER ──
-            SbSection(
-              child: Text(
-                'Span-to-Depth Ratio Analysis',
-                style: Theme.of(context).textTheme.titleLarge!,
-              ),
+      body: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Text(
+              'Span-to-Depth Ratio Analysis',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
+          ),
 
-            // ── INPUTS ──
-            SbSection(
-              title: 'Input Parameters',
-              child: DeflectionInputSection(
-                dController: _dController,
-                spanController: _spanController,
-                ptController: _ptController,
-                pcController: _pcController,
-                selectedSpanType: _selectedSpanType,
-                onSpanTypeChanged: (v) {
-                  if (v != null) setState(() => _selectedSpanType = v);
-                },
-              ),
+          // ── INPUTS ──
+          SbSection(
+            title: 'Input Parameters',
+            child: DeflectionInputSection(
+              dController: _createTextController(state.depth, notifier.updateDepth),
+              spanController: _createTextController(state.span, notifier.updateSpan),
+              ptController: _createTextController(state.pt, notifier.updatePt),
+              pcController: _createTextController(state.pc, notifier.updatePc),
+              selectedSpanType: state.selectedSpanType,
+              onSpanTypeChanged: (v) {
+                if (v != null) notifier.updateSpanType(v);
+              },
             ),
+          ),
 
-            // ── RESULTS ──
-            if (_result != null) ...[
-              SbSection(
-                title: 'Design Status',
-                trailing: StatusBadge(isSafe: _result!.isSafe),
-                child: DeflectionResultSummary(result: _result!),
-              ),
-              SbSection(
-                title: 'Engineering Insight',
-                child: InsightCard(insights: _result!.insights),
-              ),
-            ] else
-              const SbSection(
-                title: 'Design Status',
-                child: PlaceholderCard(
-                  icon: Icons.query_stats,
-                  message: 'Calculate ratio to check safety',
+          // ── ERROR MESSAGE ──
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
                 ),
               ),
-
-            // ── HISTORY ──
-            const SbSection(
-              title: 'Recent Checks',
-              child: DeflectionHistorySection(),
             ),
-          ],
-        ),
+
+          // ── RESULTS ──
+          if (state.result != null) ...[
+            SbSection(
+              title: 'Design Status',
+              trailing: StatusBadge(isSafe: state.result!.isSafe),
+              child: DeflectionResultSummary(result: state.result!),
+            ),
+            SbSection(
+              title: 'Engineering Insight',
+              child: InsightCard(insights: state.result!.insights),
+            ),
+          ] else
+            const SbSection(
+              title: 'Design Status',
+              child: _PlaceholderCard(
+                icon: Icons.query_stats,
+                message: 'Calculate ratio to check safety',
+              ),
+            ),
+
+          // ── HISTORY ──
+          const SbSection(
+            title: 'Recent Checks',
+            child: DeflectionHistorySection(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Creates a TextEditingController that syncs with the provider state
+  TextEditingController _createTextController(
+    String initialValue,
+    void Function(String) onChanged,
+  ) {
+    final controller = TextEditingController(text: initialValue);
+    
+    // Listen to controller changes and update Notifier
+    controller.addListener(() {
+      if (controller.text != initialValue) {
+        onChanged(controller.text);
+      }
+    });
+    
+    return controller;
+  }
+}
+
+/// PLACEHOLDER CARD: Used when no calculation has been performed yet
+class _PlaceholderCard extends StatelessWidget {
+  final IconData icon;
+  final String message;
+
+  const _PlaceholderCard({
+    required this.icon,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(SbSpacing.xl),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 48,
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          const SizedBox(height: SbSpacing.md),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,97 +8,84 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/features/work/application/controllers/work_controller.dart';
+import 'package:site_buddy/features/work/application/controllers/create_task_controller.dart';
 import 'package:site_buddy/features/work/domain/entities/task.dart';
 
-class CreateTaskScreen extends ConsumerStatefulWidget {
+/// SCREEN: CreateTaskScreen
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to CreateTaskNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for form state (now in Notifier)
+/// - ✅ Removed setState for saving state (now in Notifier)
+/// - ✅ Removed business logic from UI (now in Notifier)
+/// - ✅ UI converted from ConsumerStatefulWidget to ConsumerWidget
+class CreateTaskScreen extends ConsumerWidget {
   const CreateTaskScreen({super.key});
 
   @override
-  ConsumerState<CreateTaskScreen> createState() => _CreateTaskScreenState();
-}
-
-class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _projectController = TextEditingController();
-  final _assignedController = TextEditingController();
-  TaskPriority _priority = TaskPriority.low;
-  DateTime? _dueDate;
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    _projectController.dispose();
-    _assignedController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = ref.read(workControllerProvider.notifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(createTaskControllerProvider);
+    final notifier = ref.read(createTaskControllerProvider.notifier);
 
     return SbPage.form(
       title: 'New Task',
       primaryAction: PrimaryCTA(
         label: 'Create',
         icon: SbIcons.addTask,
-        onPressed: () async {
-          if (_titleController.text.isEmpty) {
-            SbFeedback.showToast(
-              context: context,
-              message: 'Please enter a title',
-            );
-            return;
-          }
-          final id = DateTime.now().millisecondsSinceEpoch.toString();
-          final now = DateTime.now();
-          final task = Task(
-            id: id,
-            projectId: _projectController.text,
-            title: _titleController.text,
-            description: _descriptionController.text,
-            priority: _priority,
-            status: TaskStatus.pending,
-            assignedTo: _assignedController.text,
-            startDate: now,
-            dueDate: _dueDate ?? now,
-            createdAt: now,
-            updatedAt: now,
-          );
-          await controller.createTask(task);
-          if (!context.mounted) return;
-          context.pop();
-        },
+        onPressed: state.isSaving
+            ? null
+            : () async {
+                final success = await notifier.submit(ref);
+                if (success && context.mounted) {
+                  context.pop();
+                }
+              },
+        isLoading: state.isSaving,
         width: double.infinity,
       ),
       body: SbSectionList(
         sections: [
+          // Error message
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
+              ),
+            ),
+
           SbSection(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SbInput(
-                  controller: _titleController,
                   label: 'Title',
                   hint: 'Task title',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateTitle,
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
-                  controller: _descriptionController,
                   label: 'Description',
                   hint: 'Brief description of the task',
                   maxLines: 3,
-                  onChanged: (v) {},
+                  onChanged: notifier.updateDescription,
                 ),
                 const SizedBox(height: SbSpacing.md),
                 SbInput(
-                  controller: _projectController,
                   label: 'Project',
                   hint: 'e.g., PRJ-001',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateProjectId,
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Text(
@@ -107,19 +94,18 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                 ),
                 const SizedBox(height: SbSpacing.sm),
                 SbDropdown<TaskPriority>(
-                  value: _priority,
+                  value: state.priority,
                   items: TaskPriority.values,
                   itemLabelBuilder: (p) => p.name.toUpperCase(),
                   onChanged: (v) {
-                    if (v != null) setState(() => _priority = v);
+                    if (v != null) notifier.updatePriority(v);
                   },
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 SbInput(
-                  controller: _assignedController,
                   label: 'Assigned To',
                   hint: 'User name or ID',
-                  onChanged: (v) {},
+                  onChanged: notifier.updateAssignedTo,
                 ),
                 const SizedBox(height: SbSpacing.xl),
                 Row(
@@ -134,9 +120,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                           ),
                           const SizedBox(height: SbSpacing.sm),
                           Text(
-                            _dueDate == null
+                            state.dueDate == null
                                 ? 'Not set'
-                                : _dueDate!.toLocal().toString().split(' ').first,
+                                : state.dueDate!.toLocal().toString().split(' ').first,
                             style: Theme.of(context).textTheme.bodyLarge!,
                           ),
                         ],
@@ -152,8 +138,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2100),
                         );
-                        if (!mounted) return;
-                        if (picked != null) setState(() => _dueDate = picked);
+                        if (picked != null) {
+                          notifier.updateDueDate(picked);
+                        }
                       },
                     ),
                   ],
@@ -166,14 +153,3 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

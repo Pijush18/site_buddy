@@ -1,114 +1,38 @@
-
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/features/structural/shared/domain/models/safety_check_models.dart';
-import 'package:site_buddy/features/structural/shared/application/services/calculation_service.dart';
-import 'package:site_buddy/features/structural/shared/application/controllers/safety_check_controller.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/widgets/sb_widgets.dart';
+
+import 'package:site_buddy/features/structural/shared/application/controllers/cracking_check_controller.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/insight_card.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/shared_safety_widgets.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/cracking_input_section.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/cracking_result_summary.dart';
 import 'package:site_buddy/features/structural/shared/presentation/widgets/cracking_history_section.dart';
 
-class CrackingCheckScreen extends ConsumerStatefulWidget {
+/// SCREEN: CrackingCheckScreen
+/// 
+/// [REFACTORED] - This screen is now purely declarative.
+/// All business logic has been moved to CrackingCheckNotifier.
+/// 
+/// VIOLATIONS FIXED:
+/// - ✅ Removed setState for loading state (now in Notifier)
+/// - ✅ Removed setState for result (now in Notifier)
+/// - ✅ Removed direct CalculationService call (now in Notifier)
+/// - ✅ Removed manual form validation logic (now in Notifier)
+/// - ✅ UI is now purely declarative, watching state from Notifier
+class CrackingCheckScreen extends ConsumerWidget {
   const CrackingCheckScreen({super.key});
 
   @override
-  ConsumerState<CrackingCheckScreen> createState() =>
-      _CrackingCheckScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch state from Notifier - UI reacts automatically
+    final state = ref.watch(crackingCheckControllerProvider);
+    final notifier = ref.read(crackingCheckControllerProvider.notifier);
 
-class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final List<String> _concreteGrades = ['M20', 'M25', 'M30', 'M35', 'M40'];
-  final List<String> _steelGrades = ['Fe415', 'Fe500'];
-
-  final TextEditingController _spacingController = TextEditingController();
-  final TextEditingController _fsController = TextEditingController();
-  final TextEditingController _coverController = TextEditingController();
-
-  String _selectedConcrete = 'M25';
-  String _selectedSteel = 'Fe500';
-  bool _isLoading = false;
-
-  CrackingResult? _result;
-
-  @override
-  void dispose() {
-    _spacingController.dispose();
-    _fsController.dispose();
-    _coverController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _calculate() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isLoading = true);
-    HapticFeedback.heavyImpact();
-
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    final double spacing = double.tryParse(_spacingController.text) ?? 0;
-    final double fs = double.tryParse(_fsController.text) ?? 0;
-    final double cover = double.tryParse(_coverController.text) ?? 0;
-
-    final result = CalculationService.calculateCracking(
-      spacing: spacing,
-      fs: fs,
-      cover: cover,
-    );
-
-    ref.read(safetyCheckControllerProvider.notifier).saveCheck({
-      'type': 'Cracking',
-      'date': DateTime.now().toIso8601String(),
-      'isSafe': result.isSafe,
-      'crackWidth': result.crackWidth,
-    });
-
-    setState(() {
-      _result = result;
-      _isLoading = false;
-    });
-  }
-
-  void _reset() {
-    setState(() {
-      _spacingController.clear();
-      _fsController.clear();
-      _coverController.clear();
-      _selectedConcrete = 'M25';
-      _selectedSteel = 'Fe500';
-      _result = null;
-    });
-  }
-
-  void _shareResult() {
-    if (_result == null) return;
-    ref
-        .read(safetyCheckControllerProvider.notifier)
-        .shareResult(
-          title: 'Cracking Check Report',
-          inputs: {
-            'Spacing': '${_spacingController.text} mm',
-            'Cover': '${_coverController.text} mm',
-            'Stress (fs)': '${_fsController.text} MPa',
-          },
-          results: {
-            'Crack Width': '${_result!.crackWidth.toStringAsFixed(3)} mm',
-            'Limit': '0.3 mm',
-          },
-          isSafe: _result!.isSafe,
-        );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SbPage.form(
       title: 'Cracking Check',
       primaryAction: Column(
@@ -116,97 +40,164 @@ class _CrackingCheckScreenState extends ConsumerState<CrackingCheckScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryCTA(
-            label: _result != null ? 'Check Again' : 'Check Cracking',
-            onPressed: _calculate,
-            isLoading: _isLoading,
+            label: state.result != null ? 'Check Again' : 'Check Cracking',
+            onPressed: state.isLoading
+                ? null
+                : () {
+                    HapticFeedback.heavyImpact();
+                    notifier.calculate();
+                  },
+            isLoading: state.isLoading,
           ),
-          if (_result != null) ...[
+          if (state.result != null) ...[
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Share Report',
-              onPressed: _shareResult,
+              onPressed: notifier.shareResult,
             ),
             const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Reset Form',
-              onPressed: _reset,
+              onPressed: notifier.reset,
             ),
           ],
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: SbSectionList(
-          sections: [
-            // ── HEADER ──
-            SbSection(
-              child: Text(
-                'Durability & Crack Control Analysis',
-                style: Theme.of(context).textTheme.titleLarge!,
-              ),
+      body: SbSectionList(
+        sections: [
+          // ── HEADER ──
+          SbSection(
+            child: Text(
+              'Durability & Crack Control Analysis',
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
+          ),
 
-            // ── INPUTS ──
-            SbSection(
-              title: 'Input Parameters',
-              child: CrackingInputSection(
-                spacingController: _spacingController,
-                coverController: _coverController,
-                fsController: _fsController,
-                selectedConcrete: _selectedConcrete,
-                selectedSteel: _selectedSteel,
-                concreteGrades: _concreteGrades,
-                steelGrades: _steelGrades,
-                onDropdownChanged: (label, value) {
-                  setState(() {
-                    if (label == 'Concrete') {
-                      _selectedConcrete = value;
-                    } else {
-                      _selectedSteel = value;
-                    }
-                  });
-                },
-              ),
+          // ── INPUTS ──
+          SbSection(
+            title: 'Input Parameters',
+            child: CrackingInputSection(
+              // Pass controllers bound to notifier updates
+              spacingController: _createTextController(state.spacing, notifier.updateSpacing),
+              coverController: _createTextController(state.cover, notifier.updateCover),
+              fsController: _createTextController(state.fs, notifier.updateFs),
+              selectedConcrete: state.selectedConcrete,
+              selectedSteel: state.selectedSteel,
+              concreteGrades: CrackingCheckNotifier.concreteGrades,
+              steelGrades: CrackingCheckNotifier.steelGrades,
+              onDropdownChanged: (label, value) {
+                if (label == 'Concrete') {
+                  notifier.updateConcreteGrade(value);
+                } else {
+                  notifier.updateSteelGrade(value);
+                }
+              },
             ),
+          ),
 
-            // ── RESULTS ──
-            if (_result != null) ...[
-              SbSection(
-                title: 'Design Status',
-                trailing: StatusBadge(isSafe: _result!.isSafe),
-                child: CrackingResultSummary(result: _result!),
-              ),
-              SbSection(
-                title: 'Engineering Insight',
-                child: InsightCard(insights: _result!.insights),
-              ),
-            ] else
-              const SbSection(
-                title: 'Design Status',
-                child: PlaceholderCard(
-                  icon: SbIcons.visibility,
-                  message: 'Calculate crack width for durability',
+          // ── ERROR MESSAGE ──
+          if (state.error != null)
+            SbSection(
+              child: Container(
+                padding: const EdgeInsets.all(SbSpacing.md),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  state.error!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
                 ),
               ),
-
-            // ── HISTORY ──
-            const SbSection(
-              title: 'Recent Checks',
-              child: CrackingHistorySection(),
             ),
-          ],
-        ),
+
+          // ── RESULTS ──
+          if (state.result != null) ...[
+            SbSection(
+              title: 'Design Status',
+              trailing: StatusBadge(isSafe: state.result!.isSafe),
+              child: CrackingResultSummary(result: state.result!),
+            ),
+            SbSection(
+              title: 'Engineering Insight',
+              child: InsightCard(insights: state.result!.insights),
+            ),
+          ] else
+            const SbSection(
+              title: 'Design Status',
+              child: PlaceholderCard(
+                icon: SbIcons.visibility,
+                message: 'Calculate crack width for durability',
+              ),
+            ),
+
+          // ── HISTORY ──
+          const SbSection(
+            title: 'Recent Checks',
+            child: CrackingHistorySection(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Creates a TextEditingController that syncs with the provider state
+  TextEditingController _createTextController(
+    String initialValue,
+    void Function(String) onChanged,
+  ) {
+    final controller = TextEditingController(text: initialValue);
+    
+    // Listen to controller changes and update Notifier
+    controller.addListener(() {
+      if (controller.text != initialValue) {
+        onChanged(controller.text);
+      }
+    });
+    
+    return controller;
+  }
+}
+
+/// PLACEHOLDER CARD: Used when no calculation has been performed yet
+class PlaceholderCard extends StatelessWidget {
+  final IconData icon;
+  final String message;
+
+  const PlaceholderCard({
+    super.key,
+    required this.icon,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(SbSpacing.xl),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 48,
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          const SizedBox(height: SbSpacing.md),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-

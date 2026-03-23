@@ -1,0 +1,96 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'project_item.dart';
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class ProjectAdapter extends TypeAdapter<Project> {
+  @override
+  final int typeId = 1;
+
+  @override
+  Project read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Project(
+      id: fields[0] as String,
+      name: fields[1] as String,
+      description: fields[2] as String?,
+      createdAt: fields[3] as DateTime,
+      updatedAt: fields[4] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Project obj) {
+    writer
+      ..writeByte(5)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.description)
+      ..writeByte(3)
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.updatedAt);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProjectAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ProjectItemAdapter extends TypeAdapter<ProjectItem> {
+  @override
+  final int typeId = 2;
+
+  @override
+  ProjectItem read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ProjectItem(
+      id: fields[0] as String,
+      projectId: fields[1] as String,
+      historyItemId: fields[2] as String,
+      addedAt: fields[3] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, ProjectItem obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.projectId)
+      ..writeByte(2)
+      ..write(obj.historyItemId)
+      ..writeByte(3)
+      ..write(obj.addedAt);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProjectItemAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
