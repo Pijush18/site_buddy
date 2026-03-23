@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
@@ -251,7 +252,6 @@ class SbListItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     // Build trailing widget
     Widget? trailingContent;
@@ -262,7 +262,7 @@ class SbListItemTile extends StatelessWidget {
     } else if (trailing is String) {
       trailingContent = Text(
         trailing as String,
-        style: textTheme.labelMedium?.copyWith(
+        style: SbTypography.caption.copyWith(
           color: isSubtle
               ? colorScheme.onSurfaceVariant.withValues(alpha: 0.7)
               : colorScheme.onSurfaceVariant,
@@ -300,7 +300,6 @@ class SbListItemTile extends StatelessWidget {
     return _buildContainer(
       context,
       colorScheme,
-      textTheme,
       leadingContent,
       trailingContent,
       statusIndicator,
@@ -310,7 +309,6 @@ class SbListItemTile extends StatelessWidget {
   Widget _buildContainer(
     BuildContext context,
     ColorScheme colorScheme,
-    TextTheme textTheme,
     Widget? leading,
     Widget? trailing,
     Widget? statusIndicator,
@@ -319,12 +317,12 @@ class SbListItemTile extends StatelessWidget {
     final isCompact = variant == SbListItemVariant.compact;
     final padding = isCompact
         ? const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
+            horizontal: SbSpacing.md,
+            vertical: SbSpacing.sm,
           )
         : const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.md,
+            horizontal: SbSpacing.md,
+            vertical: SbSpacing.md,
           );
 
     return SbInteractiveCard(
@@ -341,23 +339,23 @@ class SbListItemTile extends StatelessWidget {
             // Status indicator on far left
             if (statusIndicator != null) ...[
               statusIndicator,
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.sm),
             ],
 
             // Leading widget
             if (leading != null) ...[
               leading,
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
             ],
 
             // Content
             Expanded(
-              child: _buildContent(textTheme, colorScheme),
+              child: _buildContent(context, colorScheme),
             ),
 
             // Trailing
             if (trailing != null) ...[
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
               trailing,
             ],
           ],
@@ -379,27 +377,27 @@ class SbListItemTile extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(TextTheme textTheme, ColorScheme colorScheme) {
+  Widget _buildContent(BuildContext context, ColorScheme colorScheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           title,
-          style: textTheme.bodyMedium?.copyWith(
+          style: SbTypography.body.copyWith(
             fontWeight: FontWeight.w500,
             color: isDisabled
                 ? colorScheme.onSurface.withValues(alpha: 0.38)
-                : null,
+                : colorScheme.onSurface,
           ),
           maxLines: titleLines,
           overflow: TextOverflow.ellipsis,
         ),
         if (subtitle != null && subtitle!.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             subtitle!,
-            style: textTheme.bodySmall?.copyWith(
+            style: SbTypography.bodySmall.copyWith(
               color: isSubtle
                   ? colorScheme.onSurfaceVariant.withValues(alpha: 0.7)
                   : colorScheme.onSurfaceVariant,
@@ -409,10 +407,10 @@ class SbListItemTile extends StatelessWidget {
           ),
         ],
         if (supportingText != null && supportingText!.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             supportingText!,
-            style: textTheme.labelSmall?.copyWith(
+            style: SbTypography.caption.copyWith(
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
             maxLines: 1,
@@ -533,8 +531,8 @@ class SbListItemTile extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: chipColor,
@@ -542,7 +540,7 @@ class SbListItemTile extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+        style: SbTypography.caption.copyWith(
               color: textColor,
               fontWeight: FontWeight.w600,
             ),

@@ -2,7 +2,7 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/subscription/application/subscription_providers.dart';
@@ -39,7 +39,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodyLarge!,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: AppSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     _buildPremiumCard(context, ref),
                   ],
                 ),
@@ -55,12 +55,12 @@ class SubscriptionScreen extends ConsumerWidget {
                         color: AppColors.success(context),
                         size: 48,
                       ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: SbSpacing.lg),
                       Text(
                         AppStrings.premiumUserStatus,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
-                      const SizedBox(height: AppSpacing.sm),
+                      const SizedBox(height: SbSpacing.sm),
                       Text(
                         AppStrings.allToolsUnlocked,
                         textAlign: TextAlign.center,
@@ -105,7 +105,7 @@ class SubscriptionScreen extends ConsumerWidget {
       subtitle: status.plan.toUpperCase(),
       onTap: () {}, 
       trailing: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+        padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
         decoration: BoxDecoration(
           color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
           borderRadius: SbRadius.borderSmall,
@@ -126,7 +126,7 @@ class SubscriptionScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainer, // Standard Slate 100 for premium header
               borderRadius: const BorderRadius.vertical(top: SbRadius.radiusMd),
@@ -137,7 +137,7 @@ class SubscriptionScreen extends ConsumerWidget {
                   AppStrings.premiumLogic,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm), 
+                const SizedBox(height: SbSpacing.sm), 
                 Text(
                   AppStrings.monthlyPrice,
                   style: Theme.of(context).textTheme.titleLarge!,
@@ -146,14 +146,14 @@ class SubscriptionScreen extends ConsumerWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               children: [
                 _buildBenefitItem(context, AppStrings.fullAIAssistant),
                 _buildBenefitItem(context, AppStrings.cloudSync),
                 _buildBenefitItem(context, AppStrings.advancedSteelDesign),
                 _buildBenefitItem(context, AppStrings.multiProjectManagement),
-                const SizedBox(height: AppSpacing.md), 
+                const SizedBox(height: SbSpacing.md), 
                 PrimaryCTA(
                   label: AppStrings.subscribeNow,
                   onPressed: () => ref.read(subscriptionRepositoryProvider).purchasePremium(),
@@ -168,11 +168,11 @@ class SubscriptionScreen extends ConsumerWidget {
 
   Widget _buildBenefitItem(BuildContext context, String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Icon(SbIcons.check, color: AppColors.success(context), size: 20),
-          const SizedBox(width: AppSpacing.sm), 
+          const SizedBox(width: SbSpacing.sm), 
           Expanded(
             child: Text(
               text,
@@ -202,7 +202,7 @@ class SubscriptionScreen extends ConsumerWidget {
   Widget _buildComparisonRow(BuildContext context, String feature, bool free, bool premium) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Expanded(
@@ -216,7 +216,7 @@ class SubscriptionScreen extends ConsumerWidget {
             color: free ? AppColors.success(context) : colorScheme.onSurfaceVariant,
             size: 20,
           ),
-          const SizedBox(width: AppSpacing.lg), 
+          const SizedBox(width: SbSpacing.lg), 
           Icon(
             premium ? Icons.check_circle : Icons.cancel,
             color: premium ? AppColors.premium(context) : colorScheme.onSurfaceVariant,

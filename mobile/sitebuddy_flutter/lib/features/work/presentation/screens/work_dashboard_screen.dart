@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -58,7 +58,7 @@ class WorkDashboardScreen extends ConsumerWidget {
         },
         background: Container(
           alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(AppSpacing.xxl),
+          padding: const EdgeInsets.all(SbSpacing.xxl),
           decoration: BoxDecoration(
             color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: SbRadius.borderMd,
@@ -76,7 +76,7 @@ class WorkDashboardScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
                   borderRadius: SbRadius.borderSmall,
@@ -86,7 +86,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.labelMedium!,
                 ),
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.sm),
               Container(width: 4, height: 40, color: priorityColor),
             ],
           ),
@@ -114,7 +114,7 @@ class WorkDashboardScreen extends ConsumerWidget {
           context.push(AppRoutes.meetingsDetail, extra: m);
         },
         trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
           decoration: BoxDecoration(
             color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
             borderRadius: SbRadius.borderSmall,
@@ -173,7 +173,7 @@ class WorkDashboardScreen extends ConsumerWidget {
                       context.push(AppRoutes.meetingsCreate);
                     },
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                 ],
               ),
             );

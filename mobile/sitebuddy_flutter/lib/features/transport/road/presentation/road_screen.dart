@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/transport/road/application/road_calculator.dart';
 
@@ -32,7 +33,7 @@ class RoadScreen extends ConsumerWidget {
                     onChanged: controller.updateCBR,
                     hint: 'e.g. 5.0',
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: 'Design Traffic (msa)',
                     suffixIcon: const Icon(SbIcons.truck),
@@ -54,7 +55,7 @@ class RoadScreen extends ConsumerWidget {
                     isOutlined: true,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.md),
                 Expanded(
                   child: PrimaryCTA(
                     label: 'Design Pavement',
@@ -71,7 +72,7 @@ class RoadScreen extends ConsumerWidget {
               child: SbCard(
                 child: Text(
                   state.errorMessage!,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
+                  style: SbTypography.body.copyWith(color: theme.colorScheme.error),
                 ),
               ),
             ),
@@ -83,7 +84,7 @@ class RoadScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'Safety: ${state.result!.safetyClassification}',
-                      style: theme.textTheme.titleSmall?.copyWith(
+                      style: SbTypography.title.copyWith(
                         color: state.result!.safetyClassification.contains('SAFE') 
                           ? Colors.green 
                           : Colors.orange,
@@ -96,7 +97,7 @@ class RoadScreen extends ConsumerWidget {
                       onTap: () {},
                       trailing: Text(
                         '${l.thickness.toStringAsFixed(0)} mm',
-                        style: TextStyle(
+                        style: SbTypography.caption.copyWith(
                           color: l.isLocked ? theme.colorScheme.outline : null,
                           fontStyle: l.isLocked ? FontStyle.italic : null,
                         ),

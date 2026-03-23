@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/structural/slab/application/slab_design_controller.dart';
@@ -36,7 +36,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
             onPressed: () => context.push('/slab/safety'),
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -106,7 +106,7 @@ class SlabReinforcementScreen extends ConsumerWidget {
                     size: 64,
                     color: colorScheme.secondary.withValues(alpha: 0.5),
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Text(
                     l10n.labelSlabDetailingInsight,
                     style: Theme.of(context).textTheme.bodyLarge!,

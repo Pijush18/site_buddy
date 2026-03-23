@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
@@ -36,13 +36,13 @@ class SmartAssistantInput extends StatelessWidget {
           width: AppBorder.width,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
               child: Stack(
                 alignment: Alignment.centerLeft,
                 children: [

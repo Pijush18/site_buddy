@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -43,7 +43,7 @@ class CrackingInputSection extends StatelessWidget {
                       ValidationHelper.validatePositive(v, 'Spacing'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: SbInput(
                   controller: coverController,
@@ -55,14 +55,14 @@ class CrackingInputSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           SbInput(
             controller: fsController,
             label: 'Steel Stress (fs) [MPa]',
             suffixIcon: const Icon(Icons.speed),
             validator: (v) => ValidationHelper.validatePositive(v, 'Stress'),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -73,7 +73,7 @@ class CrackingInputSection extends StatelessWidget {
                   concreteGrades,
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: _buildLabelledDropdown(
                   context,
@@ -102,7 +102,7 @@ class CrackingInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

@@ -7,13 +7,13 @@
 //
 // THEME IMPORTS:
 // - AppColors: Semantic color system
-// - AppTypography: Typographic scale
-// - AppSpacing: Spacing scale
+// - SbTypography: Typographic scale
+// - SbSpacing: Spacing scale
 // - AppRadius: Border radius scale
 // - AppTheme: ThemeData configuration
 
-export 'app_colors.dart';
-export 'app_typography.dart';
-export 'app_spacing.dart';
-export 'app_radius.dart';
+export '../design_system/sb_colors.dart';
+export '../design_system/sb_typography.dart';
+export '../design_system/sb_spacing.dart';
+export '../design_system/sb_radius.dart';
 export 'app_theme.dart';

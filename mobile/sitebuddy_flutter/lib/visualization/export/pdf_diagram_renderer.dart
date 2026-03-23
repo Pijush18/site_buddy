@@ -7,6 +7,7 @@ import '../primitives/primitives.dart';
 import '../coordinate_system/diagram_space.dart';
 import '../coordinate_system/coordinate_mapper.dart';
 import '../config/diagram_config.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// Vector PDF renderer for structural diagrams
 ///
@@ -221,10 +222,7 @@ class PdfDiagramRenderer {
                     child: pw.Center(
                       child: pw.Text(
                         'Tile ${tx + 1},${ty + 1} of $tilesX x $tilesY${title != null ? ' - $title' : ''}',
-                        style: const pw.TextStyle(
-                          fontSize: 10,
-                          color: PdfColors.grey600,
-                        ),
+                        style: const pw.SbTypography.caption,
                       ),
                     ),
                   ),

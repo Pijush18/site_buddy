@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -71,7 +71,7 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl)
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl)
 .copyWith(top: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

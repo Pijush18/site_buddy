@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:site_buddy/core/widgets/app_scaffold.dart';
 import 'package:site_buddy/core/widgets/app_screen_wrapper.dart';
@@ -19,7 +19,7 @@ enum _SbPageType { form, list, detail, scaffold }
 ///   [SbPage.detail]   — Read-only scrollable detail view, no bottom bar.
 ///   [SbPage.scaffold] — Generic scaffold with padding but no automatic scrolling.
 ///
-/// Rule: All variants use AppSpacing.lg (16px) for edge insets.
+/// Rule: All variants use SbSpacing.lg (16px) for edge insets.
 class SbPage extends StatelessWidget {
   // ── Common ────────────────────────────────────────────────────────────────
   final String? title;
@@ -146,8 +146,8 @@ class SbPage extends StatelessWidget {
   // ── List ──────────────────────────────────────────────────────────────────
   Widget _buildListPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? AppSpacing.lg : 0.0;
-    final horizontalPadding = usePadding ? AppSpacing.lg : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,
@@ -165,9 +165,9 @@ class SbPage extends StatelessWidget {
         children: [
           if (listHeader != null) ...[
             listHeader!,
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(height: 1),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
           listBody!,
         ],
@@ -178,8 +178,8 @@ class SbPage extends StatelessWidget {
   // ── Detail ────────────────────────────────────────────────────────────────
   Widget _buildDetailPage(BuildContext context) {
     // MASTER SYMMETRY: 16px edge padding on all 4 sides.
-    final edgePadding = usePadding ? AppSpacing.lg : 0.0;
-    final horizontalPadding = usePadding ? AppSpacing.lg : 0.0;
+    final edgePadding = usePadding ? SbSpacing.lg : 0.0;
+    final horizontalPadding = usePadding ? SbSpacing.lg : 0.0;
 
     return AppScaffold(
       title: title,

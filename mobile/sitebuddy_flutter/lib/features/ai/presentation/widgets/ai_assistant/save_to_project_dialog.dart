@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 /// FILE HEADER
@@ -51,7 +51,7 @@ class SaveToProjectDialog extends ConsumerWidget {
             const Center(child: CircularProgressIndicator())
           else if (projectState.projects.isEmpty)
             Container(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               child: Center(
                 child: Text(
                   'No projects available.\nCreate a project first!',

@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -53,14 +54,14 @@ class CreateMeetingScreen extends ConsumerWidget {
           if (state.error != null)
             SbSection(
               child: Container(
-                padding: const EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   state.error!,
-                  style: TextStyle(
+                  style: SbTypography.body.copyWith(
                     color: Theme.of(context).colorScheme.onErrorContainer,
                   ),
                 ),
@@ -76,25 +77,25 @@ class CreateMeetingScreen extends ConsumerWidget {
                   hint: 'Meeting title',
                   onChanged: notifier.updateTitle,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   label: 'Description',
                   hint: 'Brief agenda or summary',
                   maxLines: 3,
                   onChanged: notifier.updateDescription,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   label: 'Project',
                   hint: 'Associated project',
                   onChanged: notifier.updateProjectId,
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'Type',
-                  style: Theme.of(context).textTheme.labelLarge!,
+                  style: SbTypography.label,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MeetingType>(
                   value: state.type,
                   items: MeetingType.values,
@@ -103,12 +104,12 @@ class CreateMeetingScreen extends ConsumerWidget {
                     if (v != null) notifier.updateType(v);
                   },
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'Mode',
-                  style: Theme.of(context).textTheme.labelLarge!,
+                  style: SbTypography.label,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<MeetingMode>(
                   value: state.mode,
                   items: MeetingMode.values,
@@ -117,19 +118,19 @@ class CreateMeetingScreen extends ConsumerWidget {
                     if (v != null) notifier.updateMode(v);
                   },
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 SbInput(
                   label: 'Location',
                   hint: 'Where is it happening?',
                   onChanged: notifier.updateLocation,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   label: 'Participants',
                   hint: 'Comma separated names',
                   onChanged: notifier.updateParticipants,
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 // Date Picker
                 Row(
                   children: [
@@ -139,14 +140,14 @@ class CreateMeetingScreen extends ConsumerWidget {
                         children: [
                           Text(
                             'Date',
-                            style: Theme.of(context).textTheme.labelLarge!,
+                            style: SbTypography.label,
                           ),
-                          const SizedBox(height: AppSpacing.sm),
+                          const SizedBox(height: SbSpacing.sm),
                           Text(
                             state.date == null
                                 ? 'Not set'
                                 : state.date!.toLocal().toString().split(' ').first,
-                            style: Theme.of(context).textTheme.bodyLarge!,
+                            style: SbTypography.body,
                           ),
                         ],
                       ),
@@ -168,7 +169,7 @@ class CreateMeetingScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 // Time Pickers
                 Row(
                   children: [
@@ -187,7 +188,7 @@ class CreateMeetingScreen extends ConsumerWidget {
                         },
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md),
+                    const SizedBox(width: SbSpacing.md),
                     Expanded(
                       child: _TimePickerField(
                         label: 'End',
@@ -234,16 +235,16 @@ class _TimePickerField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelLarge!,
+          style: SbTypography.label,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         InkWell(
           onTap: onTap,
           borderRadius: SbRadius.borderSmall,
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
+              horizontal: SbSpacing.md,
+              vertical: SbSpacing.sm,
             ),
             decoration: BoxDecoration(
               border: Border.all(
@@ -259,11 +260,11 @@ class _TimePickerField extends StatelessWidget {
                   size: 20,
                   color: colorScheme.onSurfaceVariant,
                 ),
-                const SizedBox(width: AppSpacing.sm),
+                const SizedBox(width: SbSpacing.sm),
                 Expanded(
                   child: Text(
                     value == null ? 'Not set' : value!.format(context),
-                    style: Theme.of(context).textTheme.bodyLarge!,
+                    style: SbTypography.body,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

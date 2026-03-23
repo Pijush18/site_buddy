@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_page.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbPageLayout
 /// PURPOSE: Standardized page layout wrapper for SiteBuddy screens.
@@ -8,7 +8,7 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 /// FEATURES:
 /// - Uses [SbPage.detail] for consistent scroll behavior.
 /// - SINGLE AUTHORITY: Manages exact vertical spacing between all sections.
-/// - RHYTHM: Enforces exactly AppSpacing.xxl (24px) between sections.
+/// - RHYTHM: Enforces exactly SbSpacing.xxl (24px) between sections.
 class SbPageLayout extends StatelessWidget {
   /// The title displayed in the AppBar.
   final String title;
@@ -39,7 +39,7 @@ class SbPageLayout extends StatelessWidget {
             // ── SINGLE SPACING AUTHORITY ──
             // Exactly 24px (lg) between all children sections.
             if (i < sections.length - 1) 
-              const SizedBox(height: AppSpacing.xxl),
+              const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_section_header.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 
 
@@ -45,7 +45,7 @@ class SbSection extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: padding ?? const EdgeInsets.all(AppSpacing.md),
+            padding: padding ?? const EdgeInsets.all(SbSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
@@ -58,7 +58,7 @@ class SbSection extends StatelessWidget {
                     onTap: null, // Header onTap is removed as whole section is clickable
                     padding: EdgeInsets.zero,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                 ],
                 child,
               ],

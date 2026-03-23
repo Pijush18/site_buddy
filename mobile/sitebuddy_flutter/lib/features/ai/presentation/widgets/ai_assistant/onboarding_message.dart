@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingMessage extends StatelessWidget {
@@ -9,15 +9,15 @@ class OnboardingMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppSpacing.xxl),
+        const SizedBox(height: SbSpacing.xxl),
         Icon(SbIcons.engineering, size: 64, color: Theme.of(context).colorScheme.outlineVariant),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: SbSpacing.md),
         Text(
           'How can I assist your site today?',
           style: Theme.of(context).textTheme.titleLarge!,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Text(
           'Try asking:\n\n'
           '• "What is a retaining wall?"\n'

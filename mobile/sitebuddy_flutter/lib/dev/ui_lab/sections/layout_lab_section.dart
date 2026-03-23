@@ -1,8 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 
 const double _maxContentWidth = 800.0;
@@ -20,12 +21,12 @@ class LayoutLabSection extends StatelessWidget {
           'Layout & Grid System',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Text(
           'The SiteBuddy grid system enforces a maximum content width of 800px on all primary screens to ensure readability and professional presentation.',
           style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.grey),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
 
         // Visualizer
         Container(
@@ -103,10 +104,10 @@ class LayoutLabSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Text('Layout Rules:', style: Theme.of(context).textTheme.bodyLarge!),
         Padding(
-          padding: const EdgeInsets.all(AppSpacing.sm),
+          padding: const EdgeInsets.all(SbSpacing.sm),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -116,7 +117,7 @@ class LayoutLabSection extends StatelessWidget {
               ),
               const Text(
                 '• Sidebar navigation must remain fixed (not part of content width).',
-                style: TextStyle(fontSize: 12),
+                style: SbTypography.body,
               ),
               Text(
                 '• Use ConstrainedBox with $_maxContentWidth.',

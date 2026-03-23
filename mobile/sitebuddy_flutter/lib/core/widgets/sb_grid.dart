@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbGrid
 /// PURPOSE: Standard 2-column grid layout for SiteBuddy.
@@ -24,8 +24,8 @@ class SbGrid extends StatelessWidget {
       padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: AppSpacing.md, // ENFORCED: md (12px) per new semantic rules
-      mainAxisSpacing: AppSpacing.md, // ENFORCED: md (12px) per new semantic rules
+      crossAxisSpacing: SbSpacing.md, // ENFORCED: md (12px) per new semantic rules
+      mainAxisSpacing: SbSpacing.md, // ENFORCED: md (12px) per new semantic rules
       childAspectRatio: childAspectRatio,
       children: children,
     );

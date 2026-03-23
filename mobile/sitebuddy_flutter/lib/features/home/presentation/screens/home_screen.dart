@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
 import 'package:site_buddy/core/widgets/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
@@ -96,23 +96,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md, // Tighter than lg
+            horizontal: SbSpacing.lg,
+            vertical: SbSpacing.md, // Tighter than lg
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // SECTION 1: QUICK ACTIONS - Compact grid
               _buildQuickActions(),
-              const SizedBox(height: AppSpacing.lg), // Not xl
+              const SizedBox(height: SbSpacing.lg), // Not xl
 
               // SECTION 2: RECENT ACTIVITY
               _buildRecentActivity(recentActivities),
-              const SizedBox(height: AppSpacing.lg), // Not xl
+              const SizedBox(height: SbSpacing.lg), // Not xl
 
               // SECTION 3: HISTORY
               _buildHistory(historyItems, colorScheme),
-              const SizedBox(height: AppSpacing.xl), // Extra bottom padding
+              const SizedBox(height: SbSpacing.xl), // Extra bottom padding
             ],
           ),
         ),
@@ -128,13 +128,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SbSectionHeader(title: 'Quick Actions'),
-        const SizedBox(height: AppSpacing.sm), // Compact - not md
+        const SizedBox(height: SbSpacing.sm), // Compact - not md
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: AppSpacing.sm, // Tight
-          crossAxisSpacing: AppSpacing.sm, // Tight
+          mainAxisSpacing: SbSpacing.sm, // Tight
+          crossAxisSpacing: SbSpacing.sm, // Tight
           childAspectRatio: 1.2,
           children: [
             // Calculator
@@ -180,7 +180,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SbSectionHeader(title: 'Recent Activity'),
-        const SizedBox(height: AppSpacing.sm), // Compact
+        const SizedBox(height: SbSpacing.sm), // Compact
         if (activities.isEmpty)
           _buildEmptyState('No recent activity')
         else
@@ -220,7 +220,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             color: colorScheme.primary,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm), // Compact
+        const SizedBox(height: SbSpacing.sm), // Compact
         if (items.isEmpty)
           _buildEmptyState('No history yet')
         else
@@ -250,7 +250,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   // ═══════════════════════════════════════════════════════════════════════
   Widget _buildEmptyState(String message) {
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.lg), // Tighter than xl
+      padding: const EdgeInsets.all(SbSpacing.lg), // Tighter than xl
       child: Center(
         child: SBText(
           message,

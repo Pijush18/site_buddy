@@ -1,8 +1,9 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 class ComponentLabSection extends StatefulWidget {
   const ComponentLabSection({super.key});
@@ -29,13 +30,13 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
             Row(
               children: [
-                const Text('Loading', style: TextStyle(fontSize: 10)),
+                const Text('Loading', style: SbTypography.caption),
                 Switch.adaptive(
                   value: _isLoading,
                   onChanged: (v) => setState(() => _isLoading = v),
                 ),
-                const SizedBox(width: AppSpacing.sm),
-                const Text('Enabled', style: TextStyle(fontSize: 10)),
+                const SizedBox(width: SbSpacing.sm),
+                const Text('Enabled', style: SbTypography.caption),
                 Switch.adaptive(
                   value: _isEnabled,
                   onChanged: (v) => setState(() => _isEnabled = v),
@@ -44,14 +45,14 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
 
         // --- BUTTONS ---
         Text('Buttons', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Wrap(
-          spacing: AppSpacing.lg,
-          runSpacing: AppSpacing.lg,
+          spacing: SbSpacing.lg,
+          runSpacing: SbSpacing.lg,
           children: [
             PrimaryCTA(
               label: 'Primary Button',
@@ -74,11 +75,11 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        const SizedBox(height: SbSpacing.xxl),
 
         // --- CARDS ---
         Text('Containers', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Row(
           children: [
             Expanded(
@@ -90,7 +91,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'SbCard',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     const Text(
                       'This is the standard SiteBuddy card component.',
                     ),
@@ -98,10 +99,10 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.lg),
+            const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: SbCard(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -109,7 +110,7 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
                       'Common Decoration',
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     const Text('Standard card usage from SbCard.'),
                   ],
                 ),
@@ -117,17 +118,17 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        const SizedBox(height: SbSpacing.xxl),
 
         // --- FORMS ---
         Text('Form Inputs', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         SbInput(
           label: 'Standard Input',
           hint: 'Type something...',
           enabled: _isEnabled,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         const SbInput(label: 'Input with Helper', hint: 'Example helper text'),
       ],
     );

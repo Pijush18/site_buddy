@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 import 'package:site_buddy/features/design/domain/models/design_tool.dart';
@@ -33,7 +33,7 @@ class DesignCard extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(SbRadius.standard),
       child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.md),
         decoration: BoxDecoration(
           color: colorScheme.surface,
           borderRadius: BorderRadius.circular(SbRadius.standard),
@@ -55,7 +55,7 @@ class DesignCard extends StatelessWidget {
                 color: tool.isEnabled ? colorScheme.primary : colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               tool.title,
               textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class DesignCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             if (!tool.isEnabled) ...[
-              const SizedBox(height: AppSpacing.xs),
+              const SizedBox(height: SbSpacing.xs),
               Text(
                 'Coming Soon',
                 style: textTheme.labelSmall?.copyWith(

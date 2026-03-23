@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_typography.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// WIDGET: SBText
 /// PURPOSE: Single unified text component. Replaces ALL direct Text usage.
@@ -13,7 +13,7 @@ import 'package:site_buddy/core/theme/app_typography.dart';
 /// - label: Captions/metadata
 ///
 /// RULES:
-/// - MUST use AppTypography only - NO inline TextStyle allowed
+/// - MUST use SbTypography only - NO inline TextStyle allowed
 /// - Color is overridden from AppColors only via color parameter
 /// - All text in app must use this component
 enum SBTextVariant {
@@ -31,7 +31,7 @@ class SBText extends StatelessWidget {
   /// The text content
   final String data;
 
-  /// Text variant (maps to AppTypography)
+  /// Text variant (maps to SbTypography)
   final SBTextVariant variant;
 
   /// Override text color from AppColors (optional)
@@ -88,17 +88,17 @@ class SBText extends StatelessWidget {
   TextStyle _getStyle() {
     switch (variant) {
       case SBTextVariant.headingLarge:
-        return AppTypography.headingLarge;
+        return SbTypography.headingLarge;
       case SBTextVariant.headingMedium:
-        return AppTypography.headingMedium;
+        return SbTypography.headingMedium;
       case SBTextVariant.title:
-        return AppTypography.title;
+        return SbTypography.title;
       case SBTextVariant.body:
-        return AppTypography.body;
+        return SbTypography.body;
       case SBTextVariant.bodySmall:
-        return AppTypography.bodySmall;
+        return SbTypography.bodySmall;
       case SBTextVariant.label:
-        return AppTypography.label;
+        return SbTypography.label;
     }
   }
 

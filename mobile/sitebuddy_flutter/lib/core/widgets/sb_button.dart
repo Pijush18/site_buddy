@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_typography.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// WIDGET: SBButton
 /// PURPOSE: Single unified button system replacing all button implementations.
@@ -14,8 +14,8 @@ import 'package:site_buddy/core/theme/app_typography.dart';
 ///
 /// RULES:
 /// - Fixed height (48px for primary/secondary/danger, 44px for outlined)
-/// - Consistent padding (horizontal AppSpacing.lg = 16px)
-/// - Uses AppSpacing for all spacing values
+/// - Consistent padding (horizontal SbSpacing.lg = 16px)
+/// - Uses SbSpacing for spacing values
 /// - Uses Theme colors (no hardcoded colors)
 /// - Every button must have onPressed (no dead buttons)
 enum SBButtonVariant {
@@ -120,17 +120,17 @@ class SBButton extends StatelessWidget {
             size: 20,
             color: _getContentColor(colorScheme, isEnabled),
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: SbSpacing.sm),
         ],
         Text(
           label,
-          style: AppTypography.label.copyWith(
+          style: SbTypography.label.copyWith(
             color: _getContentColor(colorScheme, isEnabled),
             fontWeight: FontWeight.w600,
           ),
         ),
         if (trailingIcon != null) ...[
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: SbSpacing.sm),
           Icon(
             trailingIcon,
             size: 20,
@@ -158,7 +158,7 @@ class SBButton extends StatelessWidget {
             minimumSize: Size(0, height),
             elevation: isEnabled ? 2 : 0,
             shadowColor: colorScheme.primary.withValues(alpha: 0.3),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -174,7 +174,7 @@ class SBButton extends StatelessWidget {
             foregroundColor: colorScheme.onSurface,
             minimumSize: Size(0, height),
             elevation: 0,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -188,7 +188,7 @@ class SBButton extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             foregroundColor: colorScheme.onSurface,
             minimumSize: Size(0, height),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -206,7 +206,7 @@ class SBButton extends StatelessWidget {
             minimumSize: Size(0, height),
             elevation: isEnabled ? 2 : 0,
             shadowColor: colorScheme.error.withValues(alpha: 0.3),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// CLASS: SbSectionHeader
 /// PURPOSE: Standardized section header with strong hierarchy and interaction.
@@ -26,11 +27,10 @@ class SbSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
     return Padding(
-      padding: padding ?? const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,18 +44,17 @@ class SbSectionHeader extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: textTheme.titleLarge?.copyWith(
+                    style: SbTypography.title.copyWith(
                       color: colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null) ...[
-                    const SizedBox(height: AppSpacing.xs),
+                    const SizedBox(height: SbSpacing.xs),
                     Text(
                       subtitle!,
-                      style: textTheme.bodySmall?.copyWith(
+                      style: SbTypography.bodySmall.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
@@ -78,20 +77,20 @@ class SbSectionHeader extends StatelessWidget {
                     borderRadius: SbRadius.borderSmall,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xs,
+                        horizontal: SbSpacing.sm,
+                        vertical: SbSpacing.xs,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             "View All",
-                            style: textTheme.labelLarge?.copyWith(
+                            style: SbTypography.label.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(width: AppSpacing.xs),
+                          const SizedBox(width: SbSpacing.xs),
                           Icon(
                             icon ?? SbIcons.chevronRight,
                             size: 18,
@@ -104,7 +103,7 @@ class SbSectionHeader extends StatelessWidget {
                 ),
 
               if (trailing != null) ...[
-                if (onTap != null) const SizedBox(width: AppSpacing.sm),
+                if (onTap != null) const SizedBox(width: SbSpacing.sm),
                 trailing!,
               ],
             ],

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,15 +35,15 @@ class SandScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               '${res.dryVolume.toStringAsFixed(2)} m³',
               style: Theme.of(context).textTheme.titleLarge!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             SbListItemTile(
               title: l10n.labelWetVolume,
               onTap: () {}, // Detail view entry
@@ -61,9 +61,9 @@ class SandScreen extends ConsumerWidget {
               ),
             ),
             if (res.totalCost != null) ...[
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               const Divider(),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               SbListItemTile(
                 title: l10n.labelEstimatedCost,
                 onTap: () {}, // Detail view entry
@@ -88,7 +88,7 @@ class SandScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
             label: '${l10n.labelLength} (m)',
@@ -96,7 +96,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
             label: '${l10n.labelWidth} (m)',
@@ -104,7 +104,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
             label: '${l10n.labelDepth} (m)',
@@ -112,7 +112,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
             label: '${l10n.labelRate} (opt)',
@@ -120,7 +120,7 @@ class SandScreen extends ConsumerWidget {
             onChanged: controller.updateRate,
           ),
 
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           ActionButtonsGroup(
             children: [
@@ -138,12 +138,12 @@ class SandScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           if (state.error != null && lError == null && wError == null && dError == null) ...[
             SbCard(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Text(
                   state.error!,
                   style: Theme.of(context).textTheme.bodyLarge!,
@@ -151,12 +151,12 @@ class SandScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),

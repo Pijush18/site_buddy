@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
 /// WIDGET: SbDiagramCard
@@ -146,8 +146,8 @@ class SbDiagramCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: SbSpacing.md,
+        vertical: SbSpacing.sm,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +163,7 @@ class SbDiagramCard extends StatelessWidget {
                     style: theme.textTheme.titleSmall,
                   ),
                 if (subtitle != null) ...[
-                  if (title != null) const SizedBox(height: AppSpacing.xs),
+                  if (title != null) const SizedBox(height: SbSpacing.xs),
                   Text(
                     subtitle!,
                     style: theme.textTheme.bodySmall?.copyWith(
@@ -177,7 +177,7 @@ class SbDiagramCard extends StatelessWidget {
 
           // Action buttons
           if (hasActions) ...[
-            const SizedBox(width: AppSpacing.sm),
+            const SizedBox(width: SbSpacing.sm),
             _buildActionButtons(context),
           ],
         ],
@@ -191,7 +191,7 @@ class SbDiagramCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: actions.map((action) {
         return Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.xs),
+          padding: const EdgeInsets.only(left: SbSpacing.xs),
           child: _DiagramActionButton(
             action: action,
             onTap: () => _handleAction(action),
@@ -221,8 +221,8 @@ class SbDiagramCard extends StatelessWidget {
   Widget _buildContent(BuildContext context, Color bgColor) {
     final padding = contentPadding ??
         const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
+          horizontal: SbSpacing.md,
+          vertical: SbSpacing.sm,
         );
 
     Widget content = Padding(
@@ -259,8 +259,8 @@ class SbDiagramCard extends StatelessWidget {
   Widget _buildFooter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: SbSpacing.md,
+        vertical: SbSpacing.sm,
       ),
       child: footer!,
     );
@@ -321,7 +321,7 @@ class _DiagramActionButton extends StatelessWidget {
         child: Tooltip(
           message: tooltip,
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.xs),
+            padding: const EdgeInsets.all(SbSpacing.xs),
             child: Icon(
               icon,
               size: 20,

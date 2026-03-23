@@ -31,7 +31,7 @@ import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/features/design/mappers/mappers.dart';
 import 'package:site_buddy/features/design/presentation/widgets/diagram_renderer.dart';
 import 'package:site_buddy/core/widgets/sb_diagram_card.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// ENUM: DiagramType
 /// Defines the types of engineering diagrams available.
@@ -111,7 +111,7 @@ class EngineeringDiagramWidget extends StatelessWidget {
         children: [
           if (title != null)
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               child: Text(
                 title!,
                 style: Theme.of(context).textTheme.titleMedium,
@@ -209,7 +209,7 @@ class EngineeringDiagramWidget extends StatelessWidget {
               size: 48,
               color: Colors.grey[400],
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               'No diagram data available',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -218,7 +218,7 @@ class EngineeringDiagramWidget extends StatelessWidget {
             ),
             if (title != null)
               Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                padding: const EdgeInsets.only(top: SbSpacing.xs),
                 child: Text(
                   title!,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(

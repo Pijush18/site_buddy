@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,14 +63,14 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: '${l10n.labelWidth} (m)',
                     suffixIcon: const Icon(SbIcons.width),
                     onChanged: controller.updateWidth,
                     errorText: wError,
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: '${l10n.labelThickness} (m)',
                     suffixIcon: const Icon(SbIcons.layers),
@@ -94,7 +94,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
                       onChanged: controller.updateSteelRatio,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.lg),
+                  const SizedBox(width: SbSpacing.lg),
                   Expanded(
                     child: SbInput(
                       label: '${l10n.labelWastage} (%)',
@@ -142,7 +142,7 @@ class MaterialCalculatorScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );

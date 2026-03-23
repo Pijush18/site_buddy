@@ -1,7 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -84,7 +84,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionNewDesign,
             icon: SbIcons.add,
@@ -93,7 +93,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               context.go('/');
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionSaveImage,
             icon: SbIcons.image,
@@ -108,7 +108,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionSaveDrawing,
             icon: SbIcons.pdf,
@@ -127,7 +127,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               }
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -145,7 +145,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                   l10n.labelStep5Safety,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Text(
                   'IS 456:2000 Safety Verification',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -280,7 +280,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                 children: [
                   // Drawing caption
                   Container(
-                    padding: const EdgeInsets.all(AppSpacing.sm),
+                    padding: const EdgeInsets.all(SbSpacing.sm),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(4),
@@ -293,7 +293,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                           size: 16,
                           color: colorScheme.onSurfaceVariant,
                         ),
-                        const SizedBox(width: AppSpacing.xs),
+                        const SizedBox(width: SbSpacing.xs),
                         Text(
                           '${state.width.toInt()} × ${state.overallDepth.toInt()} mm',
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -303,12 +303,12 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   RepaintBoundary(
                     key: _drawingKey,
                     child: Container(
                       color: colorScheme.surfaceContainerHighest,
-                      padding: const EdgeInsets.all(AppSpacing.lg),
+                      padding: const EdgeInsets.all(SbSpacing.lg),
                       child: BeamRebarDrawing(
                         width: state.width,
                         depth: state.overallDepth,
@@ -364,7 +364,7 @@ class _OverallStatusBadge extends StatelessWidget {
     final color = SafetyUtils.getColor(context, status);
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: SbRadius.borderMd,
@@ -378,14 +378,14 @@ class _OverallStatusBadge extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(SafetyUtils.getIcon(status), color: color, size: 24),
           ),
-          const SizedBox(width: AppSpacing.lg),
+          const SizedBox(width: SbSpacing.lg),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -433,7 +433,7 @@ class _CheckRow extends StatelessWidget {
     final color = isSafe ? Colors.green : Colors.red;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Container(
@@ -448,7 +448,7 @@ class _CheckRow extends StatelessWidget {
               size: 16,
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: SbSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,8 +470,8 @@ class _CheckRow extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.sm,
-              vertical: AppSpacing.xs,
+              horizontal: SbSpacing.sm,
+              vertical: SbSpacing.xs,
             ),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),

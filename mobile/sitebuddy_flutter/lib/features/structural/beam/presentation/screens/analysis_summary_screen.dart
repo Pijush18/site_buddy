@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
@@ -46,7 +46,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
               context.push(AppRoutes.beamReinforcement);
             },
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -64,7 +64,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   l10n.labelStep3Analysis,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Text(
                   'IS 456:2000 Clause 38',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -115,7 +115,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                   isBMD: false,
                   isDark: isDark,
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 // BMD Card
                 _DiagramCard(
                   label: 'BMD (Bending Moment Diagram)',
@@ -141,14 +141,14 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                     value: '${(state.span / 1000).toStringAsFixed(2)} m',
                     color: colorScheme.primary,
                   ),
-                  const Divider(height: AppSpacing.lg),
+                  const Divider(height: SbSpacing.lg),
                   _InsightRow(
                     icon: Icons.straighten,
                     label: 'L/d Ratio',
                     value: (state.span / state.overallDepth).toStringAsFixed(2),
                     color: _getLdRatioColor(state.span / state.overallDepth),
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   _buildCodeHint(
                     context,
                     'ℹ️ L/d ≤ 20 for simply supported (IS 456 Cl. 23.2.1)',
@@ -173,8 +173,8 @@ class AnalysisSummaryScreen extends ConsumerWidget {
   Widget _buildCodeHint(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -216,8 +216,8 @@ class _DiagramCard extends StatelessWidget {
       footer: _buildTypeBadge(context, colorScheme),
       showDivider: true,
       contentPadding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: SbSpacing.md,
+        vertical: SbSpacing.sm,
       ),
       child: SizedBox(
         height: 140,
@@ -241,8 +241,8 @@ class _DiagramCard extends StatelessWidget {
   Widget _buildTypeBadge(BuildContext context, ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: (isBMD ? colorScheme.primary : colorScheme.tertiary)
@@ -278,14 +278,14 @@ class _InsightRow extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(AppSpacing.sm),
+          padding: const EdgeInsets.all(SbSpacing.sm),
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 20),
         ),
-        const SizedBox(width: AppSpacing.md),
+        const SizedBox(width: SbSpacing.md),
         Expanded(
           child: Text(
             label,

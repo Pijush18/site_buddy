@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/models/design_advisor_result.dart';
 
@@ -17,7 +17,7 @@ class DesignAdvisorCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,7 +32,7 @@ class DesignAdvisorCard extends StatelessWidget {
                   : colorScheme.error,
                 size: 20,
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.sm),
               Text(
                 advisorResult.recommendedOption != null 
                   ? 'ENGINEERING ADVISOR' 
@@ -44,22 +44,22 @@ class DesignAdvisorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             advisorResult.explanation,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
           if (advisorResult.warnings.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             ...advisorResult.warnings.map((warning) => _AdvisoryItem(
                   text: warning,
                   isWarning: true,
                 )),
           ],
           if (advisorResult.suggestions.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             ...advisorResult.suggestions.map((suggestion) => _AdvisoryItem(
                   text: suggestion,
                   isWarning: false,
@@ -85,7 +85,7 @@ class _AdvisoryItem extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      padding: const EdgeInsets.only(bottom: SbSpacing.xs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,7 +100,7 @@ class _AdvisoryItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: SbSpacing.sm),
           Expanded(
             child: Text(
               text,

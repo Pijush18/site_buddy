@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SBDivider
 /// PURPOSE: Standardized divider to replace all Divider usage.
@@ -10,7 +10,7 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 /// - vertical: Vertical divider for row layouts
 ///
 /// RULES:
-/// - Uses AppSpacing for spacing values
+/// - Uses SbSpacing for spacing values
 /// - Uses theme colors (no hardcoded colors)
 /// - Controlled thickness via variant
 enum SBDividerVariant {
@@ -46,7 +46,7 @@ class SBDivider extends StatelessWidget {
       case SBDividerVariant.defaultVariant:
         return Padding(
           padding: EdgeInsets.symmetric(
-            vertical: spacing ?? AppSpacing.md,
+            vertical: spacing ?? SbSpacing.md,
           ),
           child: Divider(
             height: 1,
@@ -58,8 +58,8 @@ class SBDivider extends StatelessWidget {
       case SBDividerVariant.compact:
         return Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: spacing ?? AppSpacing.md,
+            horizontal: SbSpacing.lg,
+            vertical: spacing ?? SbSpacing.md,
           ),
           child: Divider(
             height: 1,

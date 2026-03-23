@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +12,15 @@ class SiteReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SbCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: const EdgeInsets.all(SbSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           ..._buildSections(context),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _buildFooter(context),
         ],
       ),
@@ -32,7 +32,7 @@ class SiteReportCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,7 +40,7 @@ class SiteReportCard extends StatelessWidget {
             Container(
               height: 48,
               width: 48,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md).copyWith(left: 0),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md).copyWith(left: 0),
               child: Icon(SbIcons.site, color: colorScheme.onSurfaceVariant),
 
             ),
@@ -56,7 +56,7 @@ class SiteReportCard extends StatelessWidget {
                       ),
                 ),
 
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 _buildMetaText(
                   context,
                   'Company: ',
@@ -83,7 +83,7 @@ class SiteReportCard extends StatelessWidget {
 
   Widget _buildMetaText(BuildContext context, String label, String value) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      padding: const EdgeInsets.all(SbSpacing.sm),
       child: RichText(
         text: TextSpan(
           text: label,
@@ -102,12 +102,12 @@ class SiteReportCard extends StatelessWidget {
   List<Widget> _buildSections(BuildContext context) {
     return report.sections.map((section) {
       return Container(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md).copyWith(top: 0),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.md).copyWith(top: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(AppSpacing.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               child: Row(
                 children: [
                   Expanded(
@@ -119,10 +119,10 @@ class SiteReportCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             ...section.content.map(
               (text) => Container(
-                        padding: const EdgeInsets.all(AppSpacing.xs).copyWith(right: 0, top: 0),
+                        padding: const EdgeInsets.all(SbSpacing.xs).copyWith(right: 0, top: 0),
                 child: Text(
                   text,
                   style: Theme.of(context).textTheme.bodyLarge!,
@@ -137,7 +137,7 @@ class SiteReportCard extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm).copyWith(bottom: 0),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm).copyWith(bottom: 0),
       child: Text(
         'Generated natively by Site Buddy',
         style: Theme.of(context).textTheme.bodyMedium!,

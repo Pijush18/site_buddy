@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: SbCheckbox
 /// PURPOSE: Standardized checkbox with consistent spacing, radius, and typography.
@@ -38,14 +38,14 @@ class SbCheckbox extends StatelessWidget {
       borderRadius: SbRadius.borderMedium,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.xs,
-          horizontal: AppSpacing.lg,
+          vertical: SbSpacing.xs,
+          horizontal: SbSpacing.lg,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             checkbox,
-            const SizedBox(width: AppSpacing.sm),
+            const SizedBox(width: SbSpacing.sm),
 
             /// 🔥 Better semantic typography
             Text(label!, style: textTheme.labelLarge!),
@@ -85,8 +85,8 @@ class SbSwitch extends StatelessWidget {
       borderRadius: SbRadius.borderMedium,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.xs,
-          horizontal: AppSpacing.lg,
+          vertical: SbSpacing.xs,
+          horizontal: SbSpacing.lg,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

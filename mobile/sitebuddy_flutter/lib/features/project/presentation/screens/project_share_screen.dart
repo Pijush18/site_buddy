@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -55,7 +55,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Generate a formatted daily report',
                   onTap: () => debugPrint('Sharing PDF for ${proj.name}'),
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.message,
@@ -63,7 +63,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Send a quick text summary link',
                   onTap: () => debugPrint('Sharing Text for ${proj.name}'),
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.copy,
@@ -71,7 +71,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Copy project stats to clipboard',
                   onTap: () => debugPrint('Copying data for ${proj.name}'),
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 _buildShareOption(
                   context,
                   icon: SbIcons.table,
@@ -79,7 +79,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   subtitle: 'Download raw calculations and logs',
                   onTap: () => debugPrint('Exporting CSV for ${proj.name}'),
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
               ],
             ),
           ),
@@ -100,15 +100,15 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
 
     return SbCard(
       onTap: onTap,
-          padding: const EdgeInsets.all(AppSpacing.xxl),
+          padding: const EdgeInsets.all(SbSpacing.xxl),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Icon(icon, color: colorScheme.onSurfaceVariant),
 
           ),
-          const SizedBox(width: AppSpacing.lg), // Replaced const SizedBox(width: AppSpacing.lg)
+          const SizedBox(width: SbSpacing.lg), // Replaced const SizedBox(width: SbSpacing.lg)
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +117,7 @@ class _ProjectShareScreenState extends ConsumerState<ProjectShareScreen> {
                   title,
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.labelMedium!,

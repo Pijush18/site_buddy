@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/conversion_result.dart';
@@ -27,13 +27,13 @@ class ConversionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             child: Row(
               children: [
                 Icon(SbIcons.swap, color: colorScheme.onSurfaceVariant, size: 24),
 
-                const SizedBox(width: AppSpacing.lg),
+                const SizedBox(width: SbSpacing.lg),
                 Text(
                   'Unit Conversion',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -45,7 +45,7 @@ class ConversionCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -53,7 +53,7 @@ class ConversionCard extends StatelessWidget {
                   inputTitle,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -61,7 +61,7 @@ class ConversionCard extends StatelessWidget {
                       '=',
                       style: Theme.of(context).textTheme.titleLarge!,
                     ),
-                    const SizedBox(width: AppSpacing.lg),
+                    const SizedBox(width: SbSpacing.lg),
                     Expanded(
                       child: Text(
                         '${result.mainValue.toStringAsFixed(4)} $outputUnit',
@@ -72,21 +72,21 @@ class ConversionCard extends StatelessWidget {
                 ),
                 if (result.secondaryValues.isNotEmpty) ...[
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
                     child: const Divider(),
                   ),
                   Text(
                     'ALSO EQUIVALENT TO',
                     style: Theme.of(context).textTheme.bodyMedium!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
+                    spacing: SbSpacing.sm,
+                    runSpacing: SbSpacing.sm,
                     children: result.secondaryValues.entries
                         .map(
                           (entry) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+                            padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
                             
                             child: Text(
                               '${entry.value.toStringAsFixed(3)} ${entry.key}',

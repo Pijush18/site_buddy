@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/structural/beam/application/beam_design_controller.dart';
@@ -43,7 +43,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
             },
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -61,7 +61,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                   l10n.labelStep4Reinforcement,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: SbSpacing.xs),
                 Text(
                   'IS 456:2000 Clause 38.1 & 40',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -95,7 +95,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                     l10n.labelBarDia,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<double>(
                     value: state.mainBarDia,
                     items: const [12, 16, 20, 25, 32],
@@ -107,7 +107,7 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                       }
                     },
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   _buildCodeHint(
                     context,
                     'ℹ️ ${state.numBars} bars of ${state.mainBarDia.toInt()} mm = ${state.astProvided.toInt()} mm²',
@@ -206,21 +206,21 @@ class ReinforcementDesignScreen extends ConsumerWidget {
                     value: '${state.numBars} × Ø${state.mainBarDia.toInt()}',
                     color: colorScheme.primary,
                   ),
-                  const Divider(height: AppSpacing.lg),
+                  const Divider(height: SbSpacing.lg),
                   _SummaryRow(
                     icon: Icons.lens_outlined,
                     label: 'Stirrups',
                     value: 'Ø${state.stirrupDia.toInt()} @ ${state.stirrupSpacing.toInt()} mm c/c',
                     color: colorScheme.tertiary,
                   ),
-                  const Divider(height: AppSpacing.lg),
+                  const Divider(height: SbSpacing.lg),
                   _SummaryRow(
                     icon: Icons.layers,
                     label: 'Ast Provided',
                     value: '${state.astProvided.toInt()} mm²',
                     color: colorScheme.secondary,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   _buildCodeHint(
                     context,
                     'ℹ️ Steel % = ${((state.astProvided * 100) / (state.b * state.d)).toStringAsFixed(2)}% (Min 0.85/fy)',
@@ -238,8 +238,8 @@ class ReinforcementDesignScreen extends ConsumerWidget {
   Widget _buildCodeHint(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -274,7 +274,7 @@ class _SummaryRow extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: color, size: 16),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
         Expanded(
           child: Text(
             label,

@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
@@ -36,7 +36,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
             onPressed: () => context.push('/footing/safety'),
             icon: Icons.calculate_outlined,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -112,7 +112,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                     l10n.labelMainReinforcementX,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Row(
                     children: [
                       Expanded(
@@ -127,7 +127,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.lg),
+                      const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: SbDropdown<double>(
                           value: state.mainBarSpacing,
@@ -150,12 +150,12 @@ class FootingReinforcementScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.xxl),
+                  const SizedBox(height: SbSpacing.xxl),
                   Text(
                     l10n.labelDistributionSteelY,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   Row(
                     children: [
                       Expanded(
@@ -170,7 +170,7 @@ class FootingReinforcementScreen extends ConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.lg),
+                      const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: SbDropdown<double>(
                           value: state.crossBarSpacing,

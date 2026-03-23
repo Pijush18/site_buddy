@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/registry/tool_registry.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_grid.dart';
 import 'package:site_buddy/core/widgets/sb_grid_action_card.dart';
 import 'package:site_buddy/core/widgets/sb_section.dart';
@@ -32,8 +32,8 @@ class DesignScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+            horizontal: SbSpacing.lg,
+            vertical: SbSpacing.md,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,9 +42,9 @@ class DesignScreen extends StatelessWidget {
               for (int i = 0; i < categories.length; i++) ...[
                 _buildCategorySection(context, categories[i]),
                 if (i < categories.length - 1)
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
               ],
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: SbSpacing.xl),
             ],
           ),
         ),

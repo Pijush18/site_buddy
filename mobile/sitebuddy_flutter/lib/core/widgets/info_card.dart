@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: InfoCard
 /// PURPOSE: Standard reusable component for displaying a summary of an entity (like a past log).
@@ -33,19 +33,19 @@ class InfoCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.xxl),
+          padding: const EdgeInsets.all(SbSpacing.xxl),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 decoration: BoxDecoration(
                   color: colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, color: colorScheme.onPrimary, size: 24),
               ),
-              const SizedBox(width: AppSpacing.xxl),
+              const SizedBox(width: SbSpacing.xxl),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +68,7 @@ class InfoCard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

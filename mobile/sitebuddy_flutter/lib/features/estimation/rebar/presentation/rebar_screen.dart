@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class RebarScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(),
             SbListItemTile(
               title: l10n.labelBars,
@@ -87,7 +87,7 @@ class RebarScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
 
           SbInput(
             label: '${l10n.labelLength} (m)',
@@ -95,7 +95,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateMemberLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           SbInput(
             label: '${l10n.labelSpacing} (m)',
@@ -103,7 +103,7 @@ class RebarScreen extends ConsumerWidget {
             onChanged: controller.updateSpacing,
             errorText: sError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
 
           Row(
             children: [
@@ -115,7 +115,7 @@ class RebarScreen extends ConsumerWidget {
                   errorText: dError,
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: SbInput(
                   label: '${l10n.labelWastage} (%)',
@@ -126,7 +126,7 @@ class RebarScreen extends ConsumerWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           ActionButtonsGroup(
             children: [
@@ -143,7 +143,7 @@ class RebarScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           if (state.failure != null) ...[
             SbCard(
@@ -153,12 +153,12 @@ class RebarScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           if (state.result != null) ...[
             buildResultCard(),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.md),
             PrimaryCTA(
               label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
@@ -166,7 +166,7 @@ class RebarScreen extends ConsumerWidget {
                 AppLogger.info('Export PDF clicked - implementation pending', tag: 'RebarUI');
               },
             ),
-            const SizedBox(height: AppSpacing.xxl),
+            const SizedBox(height: SbSpacing.xxl),
           ],
         ],
       ),

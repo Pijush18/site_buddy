@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:flutter/material.dart';
@@ -101,12 +101,12 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
             ),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
               physics: const BouncingScrollPhysics(),
               children: [
                 if (state.isLoading)
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.xxl),
                     child: const Center(
                       child: CircularProgressIndicator(strokeWidth: 2),
                     ),
@@ -115,7 +115,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   UserMessageWidget(query: state.query),
                   if (state.assistantResponse != null) ...[
                     AssistantGuidanceWidget(response: state.assistantResponse!),
-                    const SizedBox(height: AppSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                   ],
                   AiResponseCard(
                     response: state.response!,
@@ -147,14 +147,14 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   AiErrorWidget(error: state.error!)
                 else
                   Container(
-                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    padding: const EdgeInsets.all(SbSpacing.lg),
                     child: const OnboardingMessage(),
                   ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(SbSpacing.lg),
             child: AiInputBar(
               onChanged: controller.updateInput,
               onSubmit: () => controller.processInput(context),

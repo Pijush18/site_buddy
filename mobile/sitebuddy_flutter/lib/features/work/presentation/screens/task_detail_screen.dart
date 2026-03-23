@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -52,7 +52,7 @@ class TaskDetailScreen extends ConsumerWidget {
                   task.title,
                   style: theme.textTheme.titleLarge!,
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 SbCard(
                   child: Column(
                     children: [
@@ -99,19 +99,19 @@ class TaskDetailScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Text(
                   'DESCRIPTION',
                   style: theme.textTheme.labelMedium!,
                 ),
-                const SizedBox(height: AppSpacing.sm / 2),
+                const SizedBox(height: SbSpacing.sm / 2),
                 Text(
                   task.description.isEmpty
                       ? 'No description provided.'
                       : task.description,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 if (isCompleted)
                   SbCard(
                     color: colorScheme.primary.withValues(alpha: 0.1),
@@ -119,7 +119,7 @@ class TaskDetailScreen extends ConsumerWidget {
                       children: [
                         Icon(SbIcons.checkFilled, color: colorScheme.onSurfaceVariant),
 
-                        const SizedBox(width: AppSpacing.lg),
+                        const SizedBox(width: SbSpacing.lg),
                         Text(
                           'Task Completed',
                           style: theme.textTheme.bodyLarge!,

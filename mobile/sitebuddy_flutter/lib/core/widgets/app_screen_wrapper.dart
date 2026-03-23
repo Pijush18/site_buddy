@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: AppScreenWrapper
 /// PURPOSE: Per-screen layout shell. Each screen gets its own [Scaffold].
@@ -15,7 +15,7 @@ import 'package:site_buddy/core/theme/app_spacing.dart';
 ///   [actions]      — AppBar trailing actions.
 ///   [bottomAction] — Pinned CTA via [Scaffold.bottomNavigationBar].
 ///   [isScrollable] — Wraps child in [SingleChildScrollView] when true.
-///   [usePadding]   — Applies standard edge insets (AppSpacing.lg).
+///   [usePadding]   — Applies standard edge insets (SbSpacing.lg).
 class AppScreenWrapper extends StatelessWidget {
   final Widget? child;
   final List<Widget>? sections;
@@ -84,8 +84,8 @@ class AppScreenWrapper extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 padding: usePadding
                     ? const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg,
-                        vertical: AppSpacing.lg,
+                        horizontal: SbSpacing.lg,
+                        vertical: SbSpacing.lg,
                       )
                     : EdgeInsets.zero,
                 child: sections != null
@@ -95,8 +95,8 @@ class AppScreenWrapper extends StatelessWidget {
             : Padding(
                 padding: usePadding
                     ? const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg,
-                        vertical: AppSpacing.lg,
+                        horizontal: SbSpacing.lg,
+                        vertical: SbSpacing.lg,
                       )
                     : EdgeInsets.zero,
                 child: sections != null
@@ -117,7 +117,7 @@ class _BottomActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.md),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           border: Border(

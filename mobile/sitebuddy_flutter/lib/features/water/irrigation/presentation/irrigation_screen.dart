@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/water/irrigation/application/irrigation_calculator.dart';
 
@@ -32,7 +32,7 @@ class IrrigationScreen extends ConsumerWidget {
                     onChanged: controller.updateArea,
                     hint: 'e.g. 2.5',
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: 'Mean Velocity (m/s)',
                     suffixIcon: const Icon(SbIcons.trendingUp),
@@ -54,7 +54,7 @@ class IrrigationScreen extends ConsumerWidget {
                     isOutlined: true,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                const SizedBox(width: SbSpacing.md),
                 Expanded(
                   child: PrimaryCTA(
                     label: 'Compute Discharge',

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 import 'package:site_buddy/features/structural/shared/application/controllers/deflection_check_controller.dart';
@@ -49,12 +50,12 @@ class DeflectionCheckScreen extends ConsumerWidget {
             isLoading: state.isLoading,
           ),
           if (state.result != null) ...[
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Share Report',
               onPressed: notifier.shareResult,
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             GhostButton(
               label: 'Reset Form',
               onPressed: notifier.reset,
@@ -68,7 +69,7 @@ class DeflectionCheckScreen extends ConsumerWidget {
           SbSection(
             child: Text(
               'Span-to-Depth Ratio Analysis',
-              style: Theme.of(context).textTheme.titleLarge!,
+              style: SbTypography.headline,
             ),
           ),
 
@@ -91,14 +92,14 @@ class DeflectionCheckScreen extends ConsumerWidget {
           if (state.error != null)
             SbSection(
               child: Container(
-                padding: const EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   state.error!,
-                  style: TextStyle(
+                  style: SbTypography.body.copyWith(
                     color: Theme.of(context).colorScheme.onErrorContainer,
                   ),
                 ),
@@ -166,7 +167,7 @@ class _PlaceholderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.xl),
+      padding: const EdgeInsets.all(SbSpacing.xl),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
@@ -179,11 +180,11 @@ class _PlaceholderCard extends StatelessWidget {
             size: 48,
             color: Theme.of(context).colorScheme.outline,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            style: SbTypography.body.copyWith(
                   color: Theme.of(context).colorScheme.outline,
                 ),
           ),

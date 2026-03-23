@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:site_buddy/core/design_system/sb_colors.dart';
-import 'package:site_buddy/core/theme/app_typography.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// CLASS: AppTheme
 /// PURPOSE: Centralized theme definitions for Site Buddy.
@@ -30,7 +30,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colorScheme.surface,
-      textTheme: GoogleFonts.interTextTheme(AppTypography.textTheme),
+      textTheme: GoogleFonts.interTextTheme(SbTypography.textTheme),
 
       // AppBar
       appBarTheme: AppBarTheme(
@@ -47,7 +47,7 @@ class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: BorderRadius.circular(SbSpacing.sm),
           side: BorderSide(
             color: colorScheme.outline,
             width: 1.0,
@@ -72,9 +72,9 @@ class AppTheme {
           minimumSize: const Size(0, 48),
           elevation: 2,
           shadowColor: colorScheme.primary.withValues(alpha: 0.3),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
+            borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
           textStyle: GoogleFonts.inter(
             fontSize: 14,
@@ -89,9 +89,9 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.onSurface,
           minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
+            borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
           side: BorderSide(color: colorScheme.outline),
           textStyle: GoogleFonts.inter(
@@ -106,9 +106,9 @@ class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: colorScheme.onSurface,
           minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
+            borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
           textStyle: GoogleFonts.inter(
             fontSize: 14,
@@ -122,23 +122,23 @@ class AppTheme {
         filled: true,
         fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: AppSpacing.md,
+          horizontal: SbSpacing.sm,
+          vertical: SbSpacing.md,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: BorderRadius.circular(SbSpacing.sm),
           borderSide: BorderSide(color: colorScheme.outlineVariant),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: BorderRadius.circular(SbSpacing.sm),
           borderSide: BorderSide(color: colorScheme.outlineVariant),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: BorderRadius.circular(SbSpacing.sm),
           borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: BorderRadius.circular(SbSpacing.sm),
           borderSide: BorderSide(color: colorScheme.error),
         ),
       ),
@@ -147,7 +147,7 @@ class AppTheme {
       dividerTheme: DividerThemeData(
         color: colorScheme.outlineVariant,
         thickness: 1,
-        space: AppSpacing.md,
+        space: SbSpacing.md,
       ),
     );
   }

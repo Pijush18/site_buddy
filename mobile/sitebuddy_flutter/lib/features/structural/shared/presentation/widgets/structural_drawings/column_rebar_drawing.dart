@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
@@ -59,7 +59,7 @@ class ColumnRebarDrawing extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
             child: Text(
               '${type.label} Section: ${width.toInt()}x${depth.toInt()} mm',
               style: Theme.of(context).textTheme.labelMedium!,

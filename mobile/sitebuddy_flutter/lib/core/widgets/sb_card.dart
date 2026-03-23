@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
@@ -44,7 +44,7 @@ class SbCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(SbRadius.standard),
       child: Container(
         margin: margin ?? EdgeInsets.zero,
-        padding: padding ?? const EdgeInsets.all(AppSpacing.md),
+        padding: padding ?? const EdgeInsets.all(SbSpacing.md),
         decoration: BoxDecoration(
           color: surfaceColor,
           borderRadius: BorderRadius.circular(SbRadius.standard),

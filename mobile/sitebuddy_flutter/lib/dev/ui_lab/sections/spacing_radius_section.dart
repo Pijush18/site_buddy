@@ -1,8 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 
 class SpacingLabSection extends StatelessWidget {
@@ -11,22 +12,22 @@ class SpacingLabSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = [
-      _TokenData('xs', AppSpacing.xs),
-      _TokenData('sm', AppSpacing.sm),
-      _TokenData('md', AppSpacing.md),
-      _TokenData('lg', AppSpacing.lg),
-      _TokenData('xl', AppSpacing.xl),
-      _TokenData('xxl', AppSpacing.xxl),
+      _TokenData('xs', SbSpacing.xs),
+      _TokenData('sm', SbSpacing.sm),
+      _TokenData('md', SbSpacing.md),
+      _TokenData('lg', SbSpacing.lg),
+      _TokenData('xl', SbSpacing.xl),
+      _TokenData('xxl', SbSpacing.xxl),
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Spacing Tokens', style: Theme.of(context).textTheme.titleMedium!),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         ...tokens.map(
           (t) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            padding: const EdgeInsets.only(bottom: SbSpacing.sm),
             child: Row(
               children: [
                 SizedBox(
@@ -76,7 +77,7 @@ class RadiusLabSection extends StatelessWidget {
           'Radius & Elevation',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         const _RadiusBox(name: 'Standard', radius: SbRadius.standard),
       ],
     );
@@ -116,8 +117,8 @@ class _RadiusBox extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.xs),
-        Text(name, style: const TextStyle(fontSize: 10)),
+        const SizedBox(height: SbSpacing.xs),
+        Text(name, style: const SbTypography.caption),
       ],
     );
   }

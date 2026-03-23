@@ -27,6 +27,14 @@ class SbTypography {
     labelMedium: TextStyle(fontSize: 10, fontWeight: FontWeight.w400, height: 1.2),
     labelSmall: TextStyle(fontSize: 9, fontWeight: FontWeight.w400, height: 1.2),
   );
+
+  // 🔹 Static getters for direct access
+  static TextStyle get headline => textTheme.titleLarge!;
+  static TextStyle get title => textTheme.titleMedium!;
+  static TextStyle get body => textTheme.bodyLarge!;
+  static TextStyle get bodySmall => textTheme.bodyMedium!;
+  static TextStyle get label => textTheme.labelLarge!;
+  static TextStyle get caption => textTheme.labelMedium!;
 }
 
 

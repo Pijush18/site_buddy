@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
-import 'package:site_buddy/core/theme/app_typography.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// WIDGET: SBTextField
 /// PURPOSE: Standardized text input field component.
@@ -13,7 +13,7 @@ import 'package:site_buddy/core/theme/app_typography.dart';
 /// - Consistent padding, border, radius
 ///
 /// RULES:
-/// - Uses AppSpacing for padding
+/// - Uses SbSpacing for padding
 /// - Uses AppRadius for border radius
 /// - Uses theme colors for states
 class SBTextField extends StatelessWidget {
@@ -111,7 +111,7 @@ class SBTextField extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: AppTypography.label.copyWith(
+            style: SbTypography.label.copyWith(
               color: hasError
                   ? colorScheme.error
                   : colorScheme.onSurfaceVariant,
@@ -120,13 +120,13 @@ class SBTextField extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
         ],
 
         // Input container
         Container(
           height: maxLines == 1 ? 44.0 : null,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
           decoration: BoxDecoration(
             color: enabled
                 ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
@@ -148,8 +148,8 @@ class SBTextField extends StatelessWidget {
               if (prefixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    right: AppSpacing.xs,
-                    top: maxLines == 1 ? 0 : AppSpacing.xs,
+                    right: SbSpacing.xs,
+                    top: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: prefixIcon,
                 ),
@@ -159,7 +159,7 @@ class SBTextField extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: maxLines == 1 ? 0 : AppSpacing.xs,
+                    vertical: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: Stack(
                     alignment: Alignment.centerLeft,
@@ -169,7 +169,7 @@ class SBTextField extends StatelessWidget {
                           (controller?.text.isEmpty ?? initialValue == null))
                         Text(
                           hint!,
-                          style: AppTypography.body.copyWith(
+                          style: SbTypography.body.copyWith(
                             color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                           ),
                           maxLines: 1,
@@ -189,7 +189,7 @@ class SBTextField extends StatelessWidget {
                         minLines: minLines,
                         enabled: enabled,
                         autofocus: autofocus,
-                        style: AppTypography.body.copyWith(
+                        style: SbTypography.body.copyWith(
                           color: colorScheme.onSurface,
                         ),
                         decoration: const InputDecoration(
@@ -211,8 +211,8 @@ class SBTextField extends StatelessWidget {
               if (suffixIcon != null) ...[
                 Padding(
                   padding: EdgeInsets.only(
-                    left: AppSpacing.xs,
-                    top: maxLines == 1 ? 0 : AppSpacing.xs,
+                    left: SbSpacing.xs,
+                    top: maxLines == 1 ? 0 : SbSpacing.xs,
                   ),
                   child: suffixIcon,
                 ),
@@ -223,10 +223,10 @@ class SBTextField extends StatelessWidget {
 
         // Error or helper text
         if (errorText != null || helperText != null) ...[
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             errorText ?? helperText!,
-            style: AppTypography.label.copyWith(
+            style: SbTypography.label.copyWith(
               color: hasError ? colorScheme.error : colorScheme.onSurfaceVariant,
               fontWeight: hasError ? FontWeight.w500 : FontWeight.w400,
             ),

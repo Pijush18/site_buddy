@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 
 import 'dart:math';
@@ -28,7 +28,7 @@ class BeamDetailingWidget extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.5,
       child: Container(
-        padding: const EdgeInsets.all(AppSpacing.xxl),
+        padding: const EdgeInsets.all(SbSpacing.xxl),
 
         child: CustomPaint(
           painter: _DetailingPainter(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 
 /// WidGET: SbSettingsTile
@@ -37,7 +37,7 @@ class SbSettingsTile extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -45,7 +45,7 @@ class SbSettingsTile extends StatelessWidget {
                   children: [
                     if (icon != null) ...[
                       Icon(icon, color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant, size: 24),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                     ],
                     Expanded(
                       child: Text(
@@ -59,14 +59,14 @@ class SbSettingsTile extends StatelessWidget {
                   ],
                 ),
                 if (subtitle != null) ...[
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     subtitle!,
                     style: textTheme.bodyMedium,
                   ),
                 ],
                 if (trailing != null) ...[
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   trailing!,
                 ],
               ],

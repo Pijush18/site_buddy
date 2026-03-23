@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/features/auth/application/auth_providers.dart';
@@ -157,11 +157,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SbSection(
             child: Column(
               children: [
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Icon(SbIcons.engineering, size: 64, color: colorScheme.primary),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 Text(AppStrings.siteBuddy, style: theme.textTheme.titleLarge),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 Text(
                   AppStrings.structuralDesignSuite,
                   style: theme.textTheme.bodyMedium,
@@ -187,7 +187,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon:
                         Icon(SbIcons.account, color: colorScheme.primary),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
@@ -212,7 +212,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
 
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SizedBox(
                     width: double.infinity,
                     height: 48,
@@ -241,14 +241,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const Expanded(child: Divider()),
                     Padding(
                       padding:
-                          const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                          const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
                       child: Text(AppStrings.orContinueWith,
                           style: theme.textTheme.labelMedium),
                     ),
                     const Expanded(child: Divider()),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 SizedBox(
                   width: double.infinity,
                   height: 44,
@@ -259,7 +259,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 if (Platform.isIOS) ...[
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SizedBox(
                     width: double.infinity,
                     height: 44,
@@ -283,7 +283,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 Text(AppStrings.dontHaveAccount,
                     style: theme.textTheme.bodyLarge),
-                const SizedBox(width: AppSpacing.sm),
+                const SizedBox(width: SbSpacing.sm),
                 GestureDetector(
                   onTap: () => context.go('/register'),
                   child: Text(
@@ -297,7 +297,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
         ],
       ),
     );

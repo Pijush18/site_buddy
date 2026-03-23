@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -49,7 +49,7 @@ class LevelLogScreen extends ConsumerWidget {
             onPressed: notifier.addEntry,
             width: double.infinity,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           SecondaryButton(
             isOutlined: true,
             label: l10n.exportPdfReport,
@@ -63,7 +63,7 @@ class LevelLogScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _MethodSelectorCard(state: state, notifier: notifier),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           if (state.entries.isEmpty)
             const _EmptyState()
           else
@@ -89,9 +89,9 @@ class LevelLogScreen extends ConsumerWidget {
                     ),
                   ),
                   if (i < state.entries.length - 1)
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                 ],
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
               ],
             ),
         ],
@@ -134,7 +134,7 @@ class LevelLogScreen extends ConsumerWidget {
                     controller: stationController,
                     hint: 'e.g. STN 1',
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: 'Chainage (m)',
                     controller: chainageController,
@@ -143,7 +143,7 @@ class LevelLogScreen extends ConsumerWidget {
                     ),
                     hint: '0.00',
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   Row(
                     children: [
                       Expanded(
@@ -156,7 +156,7 @@ class LevelLogScreen extends ConsumerWidget {
                           hint: '0.000',
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.md),
+                      const SizedBox(width: SbSpacing.md),
                       Expanded(
                         child: SbInput(
                           label: 'I.S.',
@@ -169,7 +169,7 @@ class LevelLogScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: 'F.S.',
                     controller: fsController,
@@ -178,7 +178,7 @@ class LevelLogScreen extends ConsumerWidget {
                     ),
                     hint: '0.000',
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: 'Remark',
                     controller: remarkController,
@@ -225,14 +225,14 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: AppSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
           Icon(SbIcons.list, size: 64, color: colorScheme.outlineVariant),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           Text(
             l10n.noLevelingLogsYet,
             style: Theme.of(context).textTheme.titleLarge!,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             l10n.tapAddStationToStart,
             style: Theme.of(context).textTheme.bodyLarge!,
@@ -260,7 +260,7 @@ class _MethodSelectorCard extends StatelessWidget {
             l10n.calculationMethod.toUpperCase(),
             style: Theme.of(context).textTheme.titleMedium!,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -271,7 +271,7 @@ class _MethodSelectorCard extends StatelessWidget {
                       notifier.setMethod(LevelMethod.heightOfInstrument),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: _MethodToggle(
                   label: l10n.riseFall,
@@ -306,7 +306,7 @@ class _MethodToggle extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+        padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
         decoration: BoxDecoration(
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: SbRadius.borderSmall,
@@ -362,7 +362,7 @@ class _StationCardContent extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.lg),
+            const SizedBox(width: SbSpacing.lg),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,9 +386,9 @@ class _StationCardContent extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         Divider(color: colorScheme.outlineVariant),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
 
         Row(
           children: [
@@ -423,7 +423,7 @@ class _StationCardContent extends StatelessWidget {
         ),
 
         if (entry.remark != null && entry.remark!.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(entry.remark!, style: Theme.of(context).textTheme.labelMedium!),
         ],
       ],
@@ -450,7 +450,7 @@ class _ReadingPill extends StatelessWidget {
       child: Column(
         children: [
           Text(label, style: Theme.of(context).textTheme.labelMedium!),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             UiFormatters.decimal(value, fractionDigits: 3, fallback: '—'),
             style: Theme.of(context).textTheme.labelMedium!,

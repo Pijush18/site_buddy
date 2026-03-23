@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/shared/domain/models/ai_chat.dart';
@@ -64,7 +64,7 @@ class ChatCard extends StatelessWidget {
         children: [
           // Header: User Query + Timestamp
           Container(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +77,7 @@ class ChatCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.sm),
+                const SizedBox(width: SbSpacing.sm),
                 Text(
                   _formatTime(),
                   style: Theme.of(context).textTheme.bodyMedium!,
@@ -88,7 +88,7 @@ class ChatCard extends StatelessWidget {
 
           // Body: Response snippet
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Text(
               _getPreviewText(),
               style: Theme.of(context).textTheme.bodyLarge!,
@@ -100,8 +100,8 @@ class ChatCard extends StatelessWidget {
           // Actions
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-              vertical: AppSpacing.sm,
+              horizontal: SbSpacing.lg,
+              vertical: SbSpacing.sm,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -114,7 +114,7 @@ class ChatCard extends StatelessWidget {
                         size: 20,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                       Text(
                         'Saved to Project',
                         style: Theme.of(context).textTheme.labelMedium!,

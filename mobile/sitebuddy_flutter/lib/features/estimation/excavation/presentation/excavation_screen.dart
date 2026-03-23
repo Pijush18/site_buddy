@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,30 +40,30 @@ class ExcavationScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _SectionLabel(label: l10n.labelDimensions),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: '${l10n.labelLength} (m)',
             hint: l10n.hintPitLength,
             onChanged: controller.updateLength,
             errorText: lError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
             label: '${l10n.labelWidth} (m)',
             hint: l10n.hintPitLength,
             onChanged: controller.updateWidth,
             errorText: wError,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
             label: '${l10n.labelDepth} (m)',
             hint: l10n.hintPitDepth,
             onChanged: controller.updateDepth,
             errorText: dError,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _SectionLabel(label: l10n.labelParameters),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           SbInput(
             label: '${l10n.labelClearance} (m)',
             hint: l10n.hintWidth,
@@ -74,7 +74,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: l10n.msgClearanceInfo,
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           SbInput(
             label: l10n.labelSwellFactor,
             hint: l10n.hintSwellFactor,
@@ -85,7 +85,7 @@ class ExcavationScreen extends ConsumerWidget {
               message: l10n.msgSwellFactorInfo,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ActionButtonsGroup(
             children: [
               SecondaryButton(isOutlined: true, 
@@ -101,12 +101,12 @@ class ExcavationScreen extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           if (state.failure != null)
             _ErrorBanner(message: state.failure!.message),
           if (state.result != null) ...[
             _ResultCard(result: state.result!),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.md),
             PrimaryCTA(
               label: l10n.actionExportPdf,
               icon: Icons.picture_as_pdf,
@@ -114,7 +114,7 @@ class ExcavationScreen extends ConsumerWidget {
                 AppLogger.info('Export PDF clicked - implementation pending', tag: 'ExcavationUI');
               },
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
         ],
       ),
@@ -146,7 +146,7 @@ class _ErrorBanner extends StatelessWidget {
     return SbCard(
       color: colorScheme.errorContainer.withValues(alpha: 0.1),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Text(
           message,
           style: Theme.of(context).textTheme.bodyLarge!,
@@ -175,7 +175,7 @@ class _ResultCard extends StatelessWidget {
             style: theme.textTheme.titleMedium!,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           const Divider(),
           SbListItemTile(
             title: l10n.labelTotalVolume,
@@ -194,7 +194,7 @@ class _ResultCard extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           Row(
             children: [
               Expanded(
@@ -205,7 +205,7 @@ class _ResultCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
               Text(
                 '${result.clearance} m',
                 style: theme.textTheme.labelMedium!,
@@ -222,7 +222,7 @@ class _ResultCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
               Text(
                 '${result.swellFactor}',
                 style: theme.textTheme.labelMedium!,

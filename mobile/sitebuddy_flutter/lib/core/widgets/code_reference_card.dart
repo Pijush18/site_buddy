@@ -1,7 +1,7 @@
 
 
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
@@ -23,7 +23,7 @@ class CodeReferenceCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return SbCard(
-      margin: const EdgeInsets.only(top: AppSpacing.lg),
+      margin: const EdgeInsets.only(top: SbSpacing.lg),
       color: colorScheme.primaryContainer.withValues(alpha: 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,28 +32,28 @@ class CodeReferenceCard extends StatelessWidget {
             children: [
               Icon(Icons.menu_book, size: 16, color: colorScheme.onSurfaceVariant),
 
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: SbSpacing.sm),
               Text(
                 'IS 456:2000 REFERENCE',
                 style: textTheme.labelMedium,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Text(
             reference.title,
             style: textTheme.labelMedium,
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Text(
             reference.description,
             style: textTheme.bodyMedium,
           ),
           if (reference.formula != null) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(AppSpacing.sm),
+              padding: const EdgeInsets.all(SbSpacing.sm),
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
                 borderRadius: SbRadius.borderSmall,

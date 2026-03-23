@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -100,7 +100,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
             onPressed: _onNext,
             icon: SbIcons.analytics,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -120,7 +120,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                     l10n.labelStep2Loads,
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     'IS 456:2000 Clause 20 & 36',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -150,7 +150,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                             ValidationHelper.validatePositive(v, l10n.labelDeadLoad),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: SbSpacing.md),
                     // Live Load input with unit hint
                     Semantics(
                       label: '${l10n.labelLiveLoad} in kilonewtons per meter',
@@ -163,7 +163,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                             ValidationHelper.validatePositive(v, l10n.labelLiveLoad),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: SbSpacing.md),
                     // Point Load input with unit hint
                     Semantics(
                       label: '${l10n.labelPointLoad} in kilonewtons, optional',
@@ -174,7 +174,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                         hint: 'Optional (kN)',
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     // Load hint
                     _buildCodeHint(
                       context,
@@ -224,7 +224,7 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.sm),
+                    const SizedBox(height: SbSpacing.sm),
                     _buildCodeHint(
                       context,
                       'ℹ️ ULS: γf = 1.5 | SLS: γf = 1.0 (IS 456 Cl. 36.4)',
@@ -243,8 +243,8 @@ class _LoadDefinitionScreenState extends ConsumerState<LoadDefinitionScreen> {
   Widget _buildCodeHint(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,

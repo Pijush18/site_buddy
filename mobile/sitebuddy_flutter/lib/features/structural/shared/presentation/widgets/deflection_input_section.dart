@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/utils/validation_helper.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
@@ -41,7 +41,7 @@ class DeflectionInputSection extends StatelessWidget {
                       ValidationHelper.validatePositive(v, 'Depth'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: SbInput(
                   controller: spanController,
@@ -53,7 +53,7 @@ class DeflectionInputSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _buildLabelledDropdown(
             context,
             'Span Type',
@@ -61,7 +61,7 @@ class DeflectionInputSection extends StatelessWidget {
             spanTypes,
             onSpanTypeChanged,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Row(
             children: [
               Expanded(
@@ -73,7 +73,7 @@ class DeflectionInputSection extends StatelessWidget {
                       ValidationHelper.validatePercentage(v, 'Tension Steel'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: SbInput(
                   controller: pcController,
@@ -109,7 +109,7 @@ class DeflectionInputSection extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
         SbDropdown<String>(
           value: value,
           items: items,

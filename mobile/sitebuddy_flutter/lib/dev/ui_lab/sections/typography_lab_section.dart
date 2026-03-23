@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 class TypographyLabSection extends StatelessWidget {
@@ -25,10 +25,10 @@ class TypographyLabSection extends StatelessWidget {
           'Typography System',
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: SbSpacing.lg),
         ...styles.map(
           (style) => Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

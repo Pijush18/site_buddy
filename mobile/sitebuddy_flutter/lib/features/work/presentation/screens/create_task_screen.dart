@@ -1,6 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,14 +52,14 @@ class CreateTaskScreen extends ConsumerWidget {
           if (state.error != null)
             SbSection(
               child: Container(
-                padding: const EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   state.error!,
-                  style: TextStyle(
+                  style: SbTypography.body.copyWith(
                     color: Theme.of(context).colorScheme.onErrorContainer,
                   ),
                 ),
@@ -74,25 +75,25 @@ class CreateTaskScreen extends ConsumerWidget {
                   hint: 'Task title',
                   onChanged: notifier.updateTitle,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   label: 'Description',
                   hint: 'Brief description of the task',
                   maxLines: 3,
                   onChanged: notifier.updateDescription,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbInput(
                   label: 'Project',
                   hint: 'e.g., PRJ-001',
                   onChanged: notifier.updateProjectId,
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 Text(
                   'Priority',
-                  style: Theme.of(context).textTheme.labelLarge!,
+                  style: SbTypography.label,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: SbSpacing.sm),
                 SbDropdown<TaskPriority>(
                   value: state.priority,
                   items: TaskPriority.values,
@@ -101,13 +102,13 @@ class CreateTaskScreen extends ConsumerWidget {
                     if (v != null) notifier.updatePriority(v);
                   },
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 SbInput(
                   label: 'Assigned To',
                   hint: 'User name or ID',
                   onChanged: notifier.updateAssignedTo,
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: SbSpacing.xl),
                 Row(
                   children: [
                     Expanded(
@@ -116,14 +117,14 @@ class CreateTaskScreen extends ConsumerWidget {
                         children: [
                           Text(
                             'Due Date',
-                            style: Theme.of(context).textTheme.labelLarge!,
+                            style: SbTypography.label,
                           ),
-                          const SizedBox(height: AppSpacing.sm),
+                          const SizedBox(height: SbSpacing.sm),
                           Text(
                             state.dueDate == null
                                 ? 'Not set'
                                 : state.dueDate!.toLocal().toString().split(' ').first,
-                            style: Theme.of(context).textTheme.bodyLarge!,
+                            style: SbTypography.body,
                           ),
                         ],
                       ),

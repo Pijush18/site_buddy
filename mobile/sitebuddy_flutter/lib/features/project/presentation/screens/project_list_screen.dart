@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/project_controller.dart';
@@ -47,7 +48,7 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.all(SbSpacing.md),
             child: SbInput(
               controller: _searchController,
               hint: 'Search projects...',
@@ -61,7 +62,7 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
           // Stats row
           if (state.projects.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
               child: _StatsRow(state: state),
             ),
 
@@ -75,9 +76,9 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-                            const SizedBox(height: AppSpacing.md),
-                            Text(state.error!, style: TextStyle(color: colorScheme.error)),
-                            const SizedBox(height: AppSpacing.md),
+                            const SizedBox(height: SbSpacing.md),
+                            Text(state.error!, style: SbTypography.body.copyWith(color: colorScheme.error)),
+                            const SizedBox(height: SbSpacing.md),
                             GhostButton(
                               label: 'Retry',
                               onPressed: () => ref.read(projectListControllerProvider.notifier).refresh(),
@@ -93,12 +94,12 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                         : RefreshIndicator(
                             onRefresh: () => ref.read(projectListControllerProvider.notifier).refresh(),
                             child: ListView.builder(
-                              padding: const EdgeInsets.all(AppSpacing.md),
+                              padding: const EdgeInsets.all(SbSpacing.md),
                               itemCount: state.filteredProjects.length,
                               itemBuilder: (context, index) {
                                 final project = state.filteredProjects[index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                                  padding: const EdgeInsets.only(bottom: SbSpacing.md),
                                   child: _ProjectCard(
                                     project: project,
                                     onTap: () => _openProject(context, project),
@@ -157,7 +158,7 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
             },
             child: Text(
               'Delete',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: SbTypography.label.copyWith(color: Theme.of(context).colorScheme.error),
             ),
           ),
         ],
@@ -180,13 +181,13 @@ class _StatsRow extends StatelessWidget {
           value: state.totalProjects.toString(),
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
         _StatChip(
           label: 'In Progress',
           value: state.inProgressCount.toString(),
           color: AppColors.warning(context),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: SbSpacing.sm),
         _StatChip(
           label: 'Completed',
           value: state.completedCount.toString(),
@@ -212,8 +213,8 @@ class _StatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -224,7 +225,7 @@ class _StatChip extends StatelessWidget {
         children: [
           Text(
             value,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: SbTypography.title.copyWith(
               color: color,
               fontWeight: FontWeight.bold,
             ),
@@ -232,7 +233,7 @@ class _StatChip extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            style: SbTypography.caption.copyWith(
               color: color,
             ),
           ),
@@ -266,7 +267,7 @@ class _ProjectCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(AppSpacing.sm),
+                padding: const EdgeInsets.all(SbSpacing.sm),
                 decoration: BoxDecoration(
                   color: colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(8),
@@ -277,20 +278,20 @@ class _ProjectCard extends StatelessWidget {
                   size: 24,
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       project.name,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: SbTypography.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       project.type.label,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: SbTypography.bodySmall.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -318,10 +319,10 @@ class _ProjectCard extends StatelessWidget {
           ),
           // Description
           if (project.description != null && project.description!.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               project.description!,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: SbTypography.body.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
               maxLines: 2,
@@ -329,7 +330,7 @@ class _ProjectCard extends StatelessWidget {
             ),
           ],
           // Footer with status and stats
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SbSpacing.md),
           Row(
             children: [
               _StatusBadge(status: project.status),
@@ -342,7 +343,7 @@ class _ProjectCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '${project.totalCalculations} calculations',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                style: SbTypography.caption.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -379,8 +380,8 @@ class _StatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: SbSpacing.sm,
+        vertical: SbSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -388,7 +389,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status.label,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+        style: SbTypography.caption.copyWith(
           color: color,
           fontWeight: FontWeight.w600,
         ),
@@ -410,7 +411,7 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.xl),
+        padding: const EdgeInsets.all(SbSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -419,23 +420,23 @@ class _EmptyState extends StatelessWidget {
               size: 64,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.md),
             Text(
               hasSearch ? 'No projects found' : 'No projects yet',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(
               hasSearch 
                   ? 'Try a different search term'
                   : 'Create your first project to get started',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: SbTypography.body.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
             if (!hasSearch) ...[
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: SbSpacing.lg),
               PrimaryCTA(
                 label: 'Create Project',
                 onPressed: onCreateProject,
@@ -482,7 +483,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Form(
           key: _formKey,
           child: Column(
@@ -491,29 +492,29 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
             children: [
               Text(
                 'Create New Project',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: SbTypography.headline,
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: SbSpacing.lg),
               SbInput(
                 controller: _nameController,
                 label: 'Project Name',
                 hint: 'e.g., Residential Building A',
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: SbSpacing.md),
               SbInput(
                 controller: _descriptionController,
                 label: 'Description (Optional)',
                 hint: 'Brief project description',
                 maxLines: 2,
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: SbSpacing.md),
               Text(
                 'Project Type',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: SbTypography.label,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               Wrap(
-                spacing: AppSpacing.sm,
+                spacing: SbSpacing.sm,
                 children: ProjectType.values.map((type) {
                   final isSelected = type == _selectedType;
                   return ChoiceChip(
@@ -525,7 +526,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: SbSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -535,7 +536,7 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                       hint: 'City/Area',
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: SbSpacing.md),
                   Expanded(
                     child: SbInput(
                       controller: _clientController,
@@ -545,12 +546,12 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: SbSpacing.lg),
               PrimaryCTA(
                 label: 'Create Project',
                 onPressed: _createProject,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: SbSpacing.sm),
               GhostButton(
                 label: 'Cancel',
                 onPressed: () => Navigator.pop(context),
@@ -594,23 +595,23 @@ class _FilterSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Filter Projects',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: SbTypography.headline,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             'By Status',
-            style: Theme.of(context).textTheme.labelLarge,
+            style: SbTypography.label,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Wrap(
-            spacing: AppSpacing.sm,
+            spacing: SbSpacing.sm,
             children: ProjectStatus.values.map((status) {
               return FilterChip(
                 label: Text(status.label),
@@ -621,14 +622,14 @@ class _FilterSheet extends ConsumerWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           Text(
             'By Type',
-            style: Theme.of(context).textTheme.labelLarge,
+            style: SbTypography.label,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           Wrap(
-            spacing: AppSpacing.sm,
+            spacing: SbSpacing.sm,
             children: ProjectType.values.map((type) {
               return FilterChip(
                 label: Text(type.label),
@@ -639,7 +640,7 @@ class _FilterSheet extends ConsumerWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,7 +94,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
             icon: Icons.square_foot,
             onPressed: _onNext,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -126,7 +126,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     controller: _loadController,
                     suffixIcon: const Icon(SbIcons.arrowDown),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Row(
                     children: [
                       Expanded(
@@ -135,7 +135,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                           controller: _mxController,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.lg),
+                      const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: SbInput(
                           label: l10n.labelMy1Unit,
@@ -146,19 +146,19 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                   ),
                   if (state.type == FootingType.combined ||
                       state.type == FootingType.strap) ...[
-                    const SizedBox(height: AppSpacing.xxl),
+                    const SizedBox(height: SbSpacing.xxl),
                     Divider(color: colorScheme.outlineVariant),
-                    const SizedBox(height: AppSpacing.xxl),
+                    const SizedBox(height: SbSpacing.xxl),
                     Text(
                       l10n.labelColumn2Loading,
                       style: Theme.of(context).textTheme.labelLarge!,
                     ),
-                    const SizedBox(height: AppSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     SbInput(
                       label: l10n.labelAxialLoadP2Unit,
                       controller: _load2Controller,
                     ),
-                    const SizedBox(height: AppSpacing.lg),
+                    const SizedBox(height: SbSpacing.lg),
                     Row(
                       children: [
                         Expanded(
@@ -167,7 +167,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                             controller: _mx2Controller,
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.lg),
+                        const SizedBox(width: SbSpacing.lg),
                         Expanded(
                           child: SbInput(
                             label: l10n.labelMy2Unit,
@@ -194,7 +194,7 @@ class _FootingSoilLoadScreenState extends ConsumerState<FootingSoilLoadScreen> {
                     controller: _sbcController,
                     suffixIcon: const Icon(SbIcons.terrain),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: l10n.labelDepthUnit,
                     controller: _depthController,

@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
@@ -24,7 +24,7 @@ class TermsConditionsScreen extends StatelessWidget {
                       'By using Site Buddy, you agree to these terms and conditions. '
                       'If you do not agree, please discontinue use of the application.',
                 ),
-                SizedBox(height: AppSpacing.xxl * 1.5),
+                SizedBox(height: SbSpacing.xxl * 1.5),
                 _Section(
                   title: 'Engineering Disclaimer',
                   content:
@@ -33,7 +33,7 @@ class TermsConditionsScreen extends StatelessWidget {
                       'before implementation. We are not responsible for structural failures '
                       'resulting from use of this software.',
                 ),
-                SizedBox(height: AppSpacing.xxl * 1.5),
+                SizedBox(height: SbSpacing.xxl * 1.5),
                 _Section(
                   title: 'License',
                   content:
@@ -41,7 +41,7 @@ class TermsConditionsScreen extends StatelessWidget {
                       'professional use. Reverse engineering or unauthorized distribution '
                       'is strictly prohibited.',
                 ),
-                SizedBox(height: AppSpacing.xxl * 1.5),
+                SizedBox(height: SbSpacing.xxl * 1.5),
                 _Section(
                   title: 'Limitation of Liability',
                   content:
@@ -49,7 +49,7 @@ class TermsConditionsScreen extends StatelessWidget {
                       'incidental, or consequential damages resulting from the use or '
                       'inability to use the software.',
                 ),
-                SizedBox(height: AppSpacing.xxl * 1.5),
+                SizedBox(height: SbSpacing.xxl * 1.5),
                 _Section(
                   title: 'Changes to Terms',
                   content:

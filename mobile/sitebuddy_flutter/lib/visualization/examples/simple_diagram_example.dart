@@ -4,6 +4,7 @@ import '../primitives/primitives.dart' show
     DiagramPrimitive, DiagramLine, DiagramRect, DiagramText, DiagramGroup;
 import '../coordinate_system/coordinate_mapper.dart';
 import '../core/diagram_renderer.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// Simple example demonstrating the core visualization engine
 class SimpleDiagramExample extends StatefulWidget {
@@ -240,7 +241,7 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
                         return Chip(
                           label: Text(
                             p.label ?? p.id,
-                            style: const TextStyle(fontSize: 12),
+                            style: const SbTypography.body,
                           ),
                           avatar: CircleAvatar(
                             backgroundColor: _getPrimitiveColor(p),

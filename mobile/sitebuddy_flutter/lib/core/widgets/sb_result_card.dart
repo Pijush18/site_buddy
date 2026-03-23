@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 
@@ -187,27 +188,27 @@ class SbResultCard extends StatelessWidget {
         children: [
           // Title section with safety indicator
           if (showTitle && resolvedTitle.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             _buildHeaderSection(context, isResultSafe, safetyColor),
           ] else if (showTitle) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
           ],
 
           // Comparison bar (primary content)
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           _buildComparisonBar(context, safetyColor),
 
           // Detail rows (secondary content)
           if (details.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
             const Divider(height: 1),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SbSpacing.md),
             ...details.map(
               (detail) => _buildDetailRow(context, detail, colorScheme),
             ),
           ],
 
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );
@@ -225,8 +226,9 @@ class SbResultCard extends StatelessWidget {
         Expanded(
           child: Text(
             resolvedTitle,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: SbTypography.title.copyWith(
                   fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
         ),
@@ -270,7 +272,7 @@ class SbResultCard extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: SbSpacing.md),
 
         // Comparison bar visualization
         _ComparisonBarVisual(
@@ -280,7 +282,7 @@ class SbResultCard extends StatelessWidget {
           isSafe: computedIsSafe,
         ),
 
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SbSpacing.sm),
 
         // Ratio display
         Row(
@@ -288,13 +290,13 @@ class SbResultCard extends StatelessWidget {
           children: [
             Text(
               'Ratio: ',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colorScheme.outline,
+              style: SbTypography.caption.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                   ),
             ),
             Text(
               '$formattedActual / $formattedAllowable = $formattedRatio',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: SbTypography.caption.copyWith(
                     color: ratioColor,
                     fontWeight: FontWeight.w600,
                   ),
@@ -315,8 +317,8 @@ class SbResultCard extends StatelessWidget {
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: SbSpacing.md,
+        vertical: SbSpacing.sm,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -327,11 +329,12 @@ class SbResultCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            style: SbTypography.caption.copyWith(
                   color: color,
+                  fontWeight: FontWeight.w500,
                 ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SbSpacing.xs),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -339,16 +342,16 @@ class SbResultCard extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: SbTypography.title.copyWith(
                       color: color,
                       fontWeight: FontWeight.bold,
                     ),
               ),
               if (unit.isNotEmpty) ...[
-                const SizedBox(width: AppSpacing.xs),
+                const SizedBox(width: SbSpacing.xs),
                 Text(
                   unit,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: SbTypography.caption.copyWith(
                         color: color,
                       ),
                 ),
@@ -376,8 +379,8 @@ class SbResultCard extends StatelessWidget {
   Widget _buildComparisonOperator(BuildContext context) {
     return Text(
       _getComparisonOperator(),
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: Theme.of(context).colorScheme.outline,
+      style: SbTypography.title.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
     );
   }
@@ -412,19 +415,19 @@ class SbResultCard extends StatelessWidget {
     ColorScheme colorScheme,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(vertical: SbSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Text(
               detail.label,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: SbTypography.body.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
             ),
           ),
-          const SizedBox(width: AppSpacing.md),
+          const SizedBox(width: SbSpacing.md),
           _buildDetailValue(context, detail, colorScheme),
         ],
       ),
@@ -462,7 +465,7 @@ class SbResultCard extends StatelessWidget {
 
     return Text(
       displayValue,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+      style: SbTypography.body.copyWith(
             color: textColor,
             fontWeight: fontWeight,
           ),
@@ -484,8 +487,8 @@ class _SafetyIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.lg, // Capped from xl to maintain compact UI
+        horizontal: SbSpacing.lg,
+        vertical: SbSpacing.lg, // Capped from xl to maintain compact UI
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -500,10 +503,10 @@ class _SafetyIndicator extends StatelessWidget {
             size: 16,
             color: color,
           ),
-          const SizedBox(width: AppSpacing.xs),
+          const SizedBox(width: SbSpacing.xs),
           Text(
             isSafe ? 'SAFE' : 'UNSAFE',
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            style: SbTypography.caption.copyWith(
                   color: color,
                   fontWeight: FontWeight.bold,
                 ),

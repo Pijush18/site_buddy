@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 
@@ -25,7 +26,6 @@ class SbListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     return SbInteractiveCard(
       onTap: onTap ?? () => debugPrint('TODO: action not implemented'),
@@ -39,12 +39,12 @@ class SbListItem extends StatelessWidget {
             width: 1.0,
           ),
         ),
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(SbSpacing.md),
         child: Row(
           children: [
             if (leading != null) ...[
               leading!,
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
             ],
             Expanded(
               child: Column(
@@ -53,17 +53,20 @@ class SbListItem extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: textTheme.bodyMedium?.copyWith(
+                    style: SbTypography.body.copyWith(
                       fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (subtitle != null) ...[
-                    const SizedBox(height: AppSpacing.xs),
+                    const SizedBox(height: SbSpacing.xs),
                     Text(
                       subtitle!,
-                      style: textTheme.bodyMedium,
+                      style: SbTypography.bodySmall.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -72,7 +75,7 @@ class SbListItem extends StatelessWidget {
               ),
             ),
             if (trailing != null) ...[
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: SbSpacing.md),
               trailing!,
             ],
           ],

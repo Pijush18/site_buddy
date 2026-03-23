@@ -2,7 +2,7 @@
 
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -42,16 +42,16 @@ class AiShareReportCard extends StatelessWidget {
     final theme = Theme.of(context);
     
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
       child: SbCard(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.all(SbSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min, // Keep card wrapped safely around text
           children: [
             // HEADER
             Container(
-              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              padding: const EdgeInsets.only(bottom: SbSpacing.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,7 +62,7 @@ class AiShareReportCard extends StatelessWidget {
                         ),
 
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     'Project: $projectName',
                     style: theme.textTheme.labelMedium!,
@@ -74,7 +74,7 @@ class AiShareReportCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // BODY: Question
             Text(
@@ -84,10 +84,10 @@ class AiShareReportCard extends StatelessWidget {
                   ),
 
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(question, style: theme.textTheme.bodyLarge!),
 
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // BODY: Answer
             Text(
@@ -97,14 +97,14 @@ class AiShareReportCard extends StatelessWidget {
                   ),
 
             ),
-            const SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: SbSpacing.sm),
             Text(answer, style: theme.textTheme.bodyLarge!),
 
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // FOOTER BRANDING
             Container(
-              padding: const EdgeInsets.only(top: AppSpacing.sm),
+              padding: const EdgeInsets.only(top: SbSpacing.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

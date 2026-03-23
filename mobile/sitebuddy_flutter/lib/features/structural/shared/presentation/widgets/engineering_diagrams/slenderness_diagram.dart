@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class SlendernessDiagram extends StatelessWidget {
     final labelStyle = Theme.of(context).textTheme.labelMedium!;
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: AspectRatio(
         aspectRatio: 2.5,
         child: Row(
@@ -61,7 +61,7 @@ class SlendernessDiagram extends StatelessWidget {
                     value: slendernessX.toStringAsFixed(2),
                     color: diagramColor,
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   if (!isCircular)
                     _ValueLabel(
                       label: 'λy = ley / b',

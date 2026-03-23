@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,7 +56,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateLength,
                     errorText: lError,
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: '${l10n.labelHeight} (m)',
                     hint: l10n.hintLength, // Reuse length hint for m
@@ -65,7 +65,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     onChanged: controller.updateHeight,
                     errorText: hError,
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: '${l10n.labelWidth} (mm)', // Width/Thickness
                     hint: 'e.g. 230',
@@ -88,7 +88,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                   child: Row(
                     children: [
                       Icon(SbIcons.crop, size: 20, color: colorScheme.onSurfaceVariant),
-                      const SizedBox(width: AppSpacing.sm),
+                      const SizedBox(width: SbSpacing.sm),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +100,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.xs),
+                            const SizedBox(height: SbSpacing.xs),
                             Text(
                               l10n.msgStandardBrickSize,
                               style: theme.textTheme.bodyLarge?.copyWith(
@@ -129,7 +129,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
                 SbDropdown<MortarRatio>(
                   label: l10n.labelMixRatio,
                   value: state.selectedRatio,
@@ -166,7 +166,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
           if (state.failure != null)
             SbCard(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                padding: const EdgeInsets.all(SbSpacing.lg),
                 child: Text(
                   state.failure!.message,
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -193,7 +193,7 @@ class BrickWallEstimatorScreen extends ConsumerWidget {
 
           // ── SECTION 6: COMPLIANCE FOOTNOTE ──────────────────────────────
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg),
             child: Text(
               l10n.msgBrickMasonryRef,
               style: theme.textTheme.labelSmall?.copyWith(
@@ -247,7 +247,7 @@ class _ResultSection extends StatelessWidget {
             ),
 
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              padding: EdgeInsets.symmetric(vertical: SbSpacing.sm),
               child: Divider(height: 1),
             ),
 
@@ -273,7 +273,7 @@ class _ResultSection extends StatelessWidget {
             ),
 
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              padding: EdgeInsets.symmetric(vertical: SbSpacing.sm),
               child: Divider(height: 1),
             ),
 
@@ -288,7 +288,7 @@ class _ResultSection extends StatelessWidget {
             ),
             
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(SbSpacing.md),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -302,11 +302,11 @@ class _ResultSection extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: SbSpacing.md),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm,
-                      vertical: AppSpacing.xs,
+                      horizontal: SbSpacing.sm,
+                      vertical: SbSpacing.xs,
                     ),
                     decoration: BoxDecoration(
                       color: colorScheme.primaryContainer.withValues(alpha: 0.3),

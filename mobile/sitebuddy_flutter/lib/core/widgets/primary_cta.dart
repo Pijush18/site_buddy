@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 /// WIDGET: PrimaryCTA
 /// PURPOSE: Standardized high-dominance button for SiteBuddy.
@@ -48,7 +48,7 @@ class PrimaryCTA extends StatelessWidget {
                 children: [
                   if (icon != null) ...[
                     Icon(icon, size: 20),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(width: SbSpacing.sm),
                   ],
                   Text(label),
                 ],

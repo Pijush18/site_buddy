@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +31,7 @@ class RccInfoBottomSheet extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(SbSpacing.lg),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,17 +43,17 @@ class RccInfoBottomSheet extends StatelessWidget {
               height: 4,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           // Header
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(AppSpacing.sm),
+                padding: const EdgeInsets.all(SbSpacing.sm),
                 
                 child: Icon(item.icon, color: colorScheme.primary, size: 24),
               ),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,13 +78,13 @@ class RccInfoBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           Text(
             item.description,
             style: Theme.of(context).textTheme.bodyLarge!,
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
 
           // Specs List
           ...item.rccSpecs.map(
@@ -98,7 +98,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: AppSpacing.xxl),
+          const SizedBox(height: SbSpacing.xxl),
 
           // Action Buttons
           Column(
@@ -130,7 +130,7 @@ class RccInfoBottomSheet extends StatelessWidget {
                     label: 'DESIGN NOW',
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: SbSpacing.md),
               ],
               SizedBox(
                 width: double.infinity,
@@ -147,7 +147,7 @@ class RccInfoBottomSheet extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
         ],
       ),
     );

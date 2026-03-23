@@ -1,4 +1,4 @@
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -29,7 +29,7 @@ class SmartSuggestionsCard extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.tips_and_updates, color: warningColor, size: 20),
-              const SizedBox(width: AppSpacing.lg),
+              const SizedBox(width: SbSpacing.lg),
               Text(
                 'Design Insights',
                 style: Theme.of(context).textTheme.bodyLarge!,
@@ -42,10 +42,10 @@ class SmartSuggestionsCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: SbSpacing.lg),
           ...suggestions.map(
             (s) => Container(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg).copyWith(top: 0),
+              padding: const EdgeInsets.symmetric(vertical: SbSpacing.lg).copyWith(top: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,14 +53,14 @@ class SmartSuggestionsCard extends StatelessWidget {
                     s.title,
                     style: Theme.of(context).textTheme.labelMedium!,
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: SbSpacing.xs),
                   Text(
                     s.description,
                     style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                   if (s.action.isNotEmpty)
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm).copyWith(bottom: 0),
+                      padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm).copyWith(bottom: 0),
                       child: Text(
                         '➔ ${s.action}',
                         style: Theme.of(context).textTheme.labelMedium!,

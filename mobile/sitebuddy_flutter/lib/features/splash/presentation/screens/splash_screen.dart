@@ -1,5 +1,5 @@
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,28 +56,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: AppSpacing.xxl * 2), 
+            const SizedBox(height: SbSpacing.xxl * 2), 
             // Logo
             Icon(
               SbIcons.engineering,
               size: 64,
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: AppSpacing.xxl), 
+            const SizedBox(height: SbSpacing.xxl), 
 
             // App Name
             Text(
               'SiteBuddy',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: SbSpacing.lg),
 
             // Tagline
             Text(
               'Civil Engineering Intelligence',
               style: Theme.of(context).textTheme.bodyLarge!,
             ),
-            const SizedBox(height: AppSpacing.xxl), 
+            const SizedBox(height: SbSpacing.xxl), 
 
             // Loading Indicator
             // Show progress based on initialization state
@@ -97,14 +97,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
             ),
             
-            const SizedBox(height: AppSpacing.xxl * 2), 
+            const SizedBox(height: SbSpacing.xxl * 2), 
 
             // Footer
             Text(
               '© Pijush Debbarma',
               style: Theme.of(context).textTheme.labelMedium!,
             ),
-            const SizedBox(height: AppSpacing.xxl), 
+            const SizedBox(height: SbSpacing.xxl), 
           ],
         ),
       ),

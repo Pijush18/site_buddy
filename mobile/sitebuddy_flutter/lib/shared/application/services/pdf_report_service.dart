@@ -4,6 +4,7 @@ import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: PdfReportService
 /// PURPOSE: Standardized PDF generation for all engineer reports.
@@ -83,11 +84,7 @@ class PdfReportService {
             children: [
               pw.Text(
                 'SITEBUDDY ENGINEERING REPORT',
-                style: pw.TextStyle(
-                  fontSize: 10,
-                  color: PdfColors.blue700,
-                  fontWeight: pw.FontWeight.bold,
-                ),
+                style: pw.SbTypography.caption,
               ),
               pw.Text(
                 report.typeLabel.toUpperCase(),
@@ -194,7 +191,7 @@ class PdfReportService {
       children: [
         pw.Padding(
           padding: const pw.EdgeInsets.symmetric(vertical: 2),
-          child: pw.Text(label, style: const pw.TextStyle(fontSize: 10)),
+          child: pw.Text(label, style: const pw.SbTypography.caption),
         ),
         pw.Padding(
           padding: const pw.EdgeInsets.symmetric(vertical: 2),
@@ -224,15 +221,12 @@ class PdfReportService {
         children: [
           pw.Text(
             'SUMMARY',
-            style: pw.TextStyle(
-              fontSize: 12,
-              fontWeight: pw.FontWeight.bold,
-            ),
+            style: pw.SbTypography.body,
           ),
           pw.SizedBox(height: 4),
           pw.Text(
             report.summary,
-            style: const pw.TextStyle(fontSize: 11),
+            style: const pw.SbTypography.bodySmall,
           ),
         ],
       ),
@@ -267,9 +261,9 @@ class PdfReportService {
       padding: const pw.EdgeInsets.symmetric(vertical: 2),
       child: pw.Row(
         children: [
-          pw.Text(label, style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+          pw.Text(label, style: pw.SbTypography.caption),
           pw.SizedBox(width: 8),
-          pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
+          pw.Text(value, style: const pw.SbTypography.caption),
         ],
       ),
     );

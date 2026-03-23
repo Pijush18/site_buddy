@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -69,7 +69,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   m.title,
                   style: Theme.of(context).textTheme.titleLarge!,
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: SbSpacing.lg),
                 SbCard(
                   child: Column(
                     children: [
@@ -124,19 +124,19 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 Text(
                   'DESCRIPTION',
                   style: Theme.of(context).textTheme.labelLarge!,
                 ),
-                const SizedBox(height: AppSpacing.sm / 2),
+                const SizedBox(height: SbSpacing.sm / 2),
                 Text(
                   m.description.isEmpty
                       ? 'No description provided.'
                       : m.description,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
                 SbInput(
                   controller: _minutesController,
                   label: 'Minutes of Meeting',
@@ -144,7 +144,7 @@ class _MeetingDetailScreenState extends ConsumerState<MeetingDetailScreen> {
                   maxLines: 5,
                   onChanged: (v) {},
                 ),
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: SbSpacing.xxl),
               ],
             ),
           ),

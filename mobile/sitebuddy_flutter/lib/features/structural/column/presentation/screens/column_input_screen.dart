@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 
@@ -82,7 +82,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
             onPressed: _onNext,
             icon: Icons.navigate_next,
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SbSpacing.sm),
           GhostButton(
             label: l10n.actionBack,
             onPressed: () => context.pop(),
@@ -110,7 +110,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                     l10n.labelType,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<ColumnType>(
                     value: state.type,
                     items: ColumnType.values,
@@ -121,7 +121,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       }
                     },
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   if (state.type == ColumnType.circular)
                     SbInput(
                       label: l10n.labelDiaUnit,
@@ -132,23 +132,23 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       label: l10n.labelWidthBUnit,
                       controller: _widthController,
                     ),
-                    const SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: SbSpacing.md),
                     SbInput(
                       label: l10n.labelDepthDUnit,
                       controller: _depthController,
                     ),
                   ],
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SbSpacing.md),
                   SbInput(
                     label: l10n.labelLengthLUnit,
                     controller: _lengthController,
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   Text(
                     l10n.labelEndCondition,
                     style: Theme.of(context).textTheme.labelLarge!,
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SbSpacing.sm),
                   SbDropdown<EndCondition>(
                     value: state.endCondition,
                     items: EndCondition.values,
@@ -181,7 +181,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                               l10n.labelConcrete,
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
-                            const SizedBox(height: AppSpacing.sm),
+                            const SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.concreteGrade,
                               items: const ['M20', 'M25', 'M30', 'M35', 'M40'],
@@ -195,7 +195,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.lg),
+                      const SizedBox(width: SbSpacing.lg),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +204,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                               l10n.labelSteel,
                               style: Theme.of(context).textTheme.labelLarge!,
                             ),
-                            const SizedBox(height: AppSpacing.sm),
+                            const SizedBox(height: SbSpacing.sm),
                             SbDropdown<String>(
                               value: state.steelGrade,
                               items: const ['Fe415', 'Fe500', 'Fe550'],
@@ -220,7 +220,7 @@ class _ColumnInputScreenState extends ConsumerState<ColumnInputScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: SbSpacing.lg),
                   SbInput(
                     label: l10n.labelCoverUnit,
                     controller: _coverController,

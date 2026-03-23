@@ -1,6 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
-import 'package:site_buddy/core/theme/app_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -56,7 +56,7 @@ class AiHistoryScreen extends ConsumerWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: state.chats.length,
       separatorBuilder: (context, index) =>
-          const SizedBox(height: AppSpacing.lg), // Replaced AppSpacing.lg
+          const SizedBox(height: SbSpacing.lg), // Replaced SbSpacing.lg
       itemBuilder: (context, index) {
         final chat = state.chats[index];
         return ChatCard(
