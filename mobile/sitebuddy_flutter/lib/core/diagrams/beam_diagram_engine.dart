@@ -10,8 +10,22 @@ class BeamDiagramEngine {
     final cy = height / 2;
     final padding = 40.0;
     
+    // Guard against zero or negative dimensions
+    final maxDim = max(state.width, state.overallDepth);
+    final availableSpace = min(width, height) - padding;
+    
+    if (maxDim <= 0 || availableSpace <= 0) {
+      // Return minimal valid geometry for invalid input
+      return BeamDiagramGeom(
+        outline: DiagramRect(cx - 20, cy - 20, 40, 40),
+        stirrup: DiagramRect(cx - 15, cy - 15, 30, 30),
+        mainBars: [],
+        hangerBars: [],
+      );
+    }
+    
     // Scale based on beam dimensions
-    final scale = (min(width, height) - padding) / max(state.width, state.overallDepth);
+    final scale = availableSpace / maxDim;
     final beamWidth = state.width * scale;
     final beamHeight = state.overallDepth * scale;
     
@@ -34,6 +48,16 @@ class BeamDiagramEngine {
     final mainBars = <DiagramEllipse>[];
     final numBars = state.numBars;
     final barRadius = 4.0;
+    
+    // Guard against zero bars
+    if (numBars <= 0) {
+      return BeamDiagramGeom(
+        outline: outline,
+        stirrup: stirrup,
+        mainBars: [],
+        hangerBars: [],
+      );
+    }
     
     // Bottom bars (Main Tension Reinforcement)
     final mainBarY = stirrup.y + stirrup.height - barRadius - 2;

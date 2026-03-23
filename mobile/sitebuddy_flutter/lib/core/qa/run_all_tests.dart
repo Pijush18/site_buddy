@@ -21,6 +21,15 @@ import 'test_cases/steel_estimator_test_cases.dart';
 import 'test_cases/excavation_estimator_test_cases.dart';
 import 'test_cases/shuttering_estimator_test_cases.dart';
 
+// Road & Irrigation test imports
+import 'test_cases/road_pavement_test_cases.dart';
+import 'test_cases/irrigation_fao_test_cases.dart';
+import 'test_cases/soil_moisture_test_cases.dart';
+import 'test_cases/scenario_consistency_test_cases.dart';
+import 'test_cases/notifier_state_test_cases.dart';
+import 'test_cases/regression_baselines.dart';
+import 'test_cases/integration_tests.dart';
+
 void main() {
   print('=========================================');
   print('🚀 INITIALIZING ENGINEERING QA HARNESS');
@@ -131,6 +140,60 @@ void main() {
   );
   _report('Shuttering Estimator', shutteringResults);
 
+  // ========================================================================
+  // ROAD & IRRIGATION MODULE TESTS
+  // ========================================================================
+
+  // 10. Road Pavement (IRC 37-2018)
+  print('\n--- Road & Irrigation Module Tests ---');
+  final roadPavementResults = runRoadPavementTests();
+  _reportRaw('Road Pavement', roadPavementResults);
+
+  // 11. Irrigation FAO-56
+  final irrigationFAOResults = runIrrigationFAOTests();
+  _reportRaw('Irrigation FAO-56', irrigationFAOResults);
+
+  // 12. Soil Moisture
+  final soilMoistureResults = runSoilMoistureTests();
+  _reportRaw('Soil Moisture', soilMoistureResults);
+
+  // 13. Scenario Consistency (P0-Critical)
+  final scenarioConsistencyResults = runScenarioConsistencyTests();
+  _reportRaw('Scenario Consistency', scenarioConsistencyResults);
+
+  // 14. Cross-Module Isolation
+  final crossModuleResults = runCrossModuleIsolationTests();
+  _reportRaw('Cross-Module Isolation', crossModuleResults);
+
+  // 15. Road Notifier State Machine
+  final roadNotifierResults = runRoadNotifierTests();
+  _reportRaw('Road Notifier', roadNotifierResults);
+
+  // 16. Irrigation Notifier State Machine
+  final irrigationNotifierResults = runIrrigationNotifierTests();
+  _reportRaw('Irrigation Notifier', irrigationNotifierResults);
+
+  // 17. Input Validation Edge Cases
+  final validationResults = runValidationTests();
+  _reportRaw('Input Validation', validationResults);
+
+  // ========================================================================
+  // REGRESSION BASELINES (CRITICAL - Detect silent formula changes)
+  // ========================================================================
+  print('\n--- Regression Baselines (CRITICAL) ---');
+  final regressionResults = runRegressionBaselines();
+  _reportRaw('Regression Baselines', regressionResults);
+
+  // ========================================================================
+  // INTEGRATION TESTS (End-to-End Pipeline)
+  // ========================================================================
+  print('\n--- Integration Tests (End-to-End) ---');
+  final roadIntegrationResults = convertIntegrationResults(runRoadIntegrationTests());
+  _reportRaw('Road Integration', roadIntegrationResults);
+
+  final irrigationIntegrationResults = convertIntegrationResults(runIrrigationIntegrationTests());
+  _reportRaw('Irrigation Integration', irrigationIntegrationResults);
+
   // SUMMARY
   final total = levelResults.length + 
                 gradientResults.length + 
@@ -140,7 +203,18 @@ void main() {
                 brickResults.length + 
                 steelResults.length + 
                 excavationResults.length + 
-                shutteringResults.length;
+                shutteringResults.length +
+                roadPavementResults.length +
+                irrigationFAOResults.length +
+                soilMoistureResults.length +
+                scenarioConsistencyResults.length +
+                crossModuleResults.length +
+                roadNotifierResults.length +
+                irrigationNotifierResults.length +
+                validationResults.length +
+                regressionResults.length +
+                roadIntegrationResults.length +
+                irrigationIntegrationResults.length;
 
   final failedCount = _getFailedCount(levelResults) + 
                       _getFailedCount(gradientResults) +
@@ -150,7 +224,18 @@ void main() {
                       _getFailedCount(brickResults) +
                       _getFailedCount(steelResults) +
                       _getFailedCount(excavationResults) +
-                      _getFailedCount(shutteringResults);
+                      _getFailedCount(shutteringResults) +
+                      _getFailedCountRaw(roadPavementResults) +
+                      _getFailedCountRaw(irrigationFAOResults) +
+                      _getFailedCountRaw(soilMoistureResults) +
+                      _getFailedCountRaw(scenarioConsistencyResults) +
+                      _getFailedCountRaw(crossModuleResults) +
+                      _getFailedCountRaw(roadNotifierResults) +
+                      _getFailedCountRaw(irrigationNotifierResults) +
+                      _getFailedCountRaw(validationResults) +
+                      _getFailedCountRaw(regressionResults) +
+                      _getFailedCountRaw(roadIntegrationResults) +
+                      _getFailedCountRaw(irrigationIntegrationResults);
 
   print('\n=========================================');
   print('📊 FINAL QA SUMMARY');
@@ -179,4 +264,22 @@ void _report(String name, List<QATestResult> results) {
 
 int _getFailedCount(List<QATestResult> results) {
   return results.where((r) => !r.passed).length;
+}
+
+/// Report helper for raw Map-based results (Road/Irrigation tests)
+void _reportRaw(String name, List<Map<String, dynamic>> results) {
+  final passCount = results.where((r) => r['passed'] == true).length;
+  final status = passCount == results.length ? '✅ OK' : '❌ FAIL';
+  print('$status $name: $passCount/${results.length} passed');
+  
+  for (final res in results.where((r) => r['passed'] != true)) {
+    final id = res['id'] ?? 'UNKNOWN';
+    final error = res['error'] ?? res['description'] ?? 'Unknown error';
+    print('   - [$id] ${res['description'] ?? ''}: $error');
+  }
+}
+
+/// Count failures for raw Map-based results
+int _getFailedCountRaw(List<Map<String, dynamic>> results) {
+  return results.where((r) => r['passed'] != true).length;
 }

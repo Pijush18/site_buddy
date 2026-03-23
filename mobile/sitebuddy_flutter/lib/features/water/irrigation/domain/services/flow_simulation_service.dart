@@ -5,13 +5,17 @@ import 'package:site_buddy/features/water/irrigation/domain/models/flow_result.d
 
 /// SERVICE: FlowSimulationService
 /// PURPOSE: Simulates water flow variation and energy loss along a channel.
+/// 
+/// DOMAIN PURITY: This service contains ONLY business logic.
+/// No user plan, subscription status, or policy decisions.
+/// Policy decisions are handled in the Application layer (Notifiers).
 class FlowSimulationService {
   
+  /// Simulates water flow and returns COMPLETE results.
+  /// 
+  /// The domain layer ALWAYS returns full, unbiased engineering results.
+  /// Pro/premium features are computed but not gated here.
   FlowResult simulate(FlowInput input) {
-    if (!input.isProUser) {
-      return _generateBasicResult(input);
-    }
-
     final double dx = input.totalLength / input.segments;
     final List<double> distances = [];
     final List<double> velocities = [];
@@ -71,18 +75,6 @@ class FlowSimulationService {
       simulationSummary: "Simulation complete over ${input.totalLength}m. " 
                          "Net Head Loss: ${totalLoss.toStringAsFixed(3)}m. "
                          "Flow Type: ${totalLoss > (input.slope * input.totalLength) ? 'Subcritical/Friction Dominant' : 'Supercritical/Slope Dominant'}.",
-    );
-  }
-
-  FlowResult _generateBasicResult(FlowInput input) {
-    // Basic service for free users (no profile)
-    return FlowResult(
-      distancePoints: [0.0, input.totalLength],
-      velocityProfile: [input.initialVelocity, input.initialVelocity],
-      dischargeProfile: [0.0, 0.0],
-      depthProfile: [input.initialDepth, input.initialDepth],
-      totalHeadLoss: 0.0,
-      simulationSummary: "[PRO FEATURE] Longitudinal velocity profile and friction analysis locked.",
     );
   }
 }

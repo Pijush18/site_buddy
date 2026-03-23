@@ -21,12 +21,19 @@ import 'package:site_buddy/core/engineering/standards/transport/irc_37_2018.dart
 import 'package:site_buddy/features/transport/road/domain/services/traffic_analysis_service.dart';
 import 'package:site_buddy/features/transport/road/domain/services/pavement_design_service.dart';
 import 'package:site_buddy/features/transport/road/domain/services/camber_design_service.dart';
+import 'package:site_buddy/features/transport/road/domain/services/traffic_growth_service.dart';
+import 'package:site_buddy/features/transport/road/domain/services/material_optimization_service.dart';
 import 'package:site_buddy/core/engineering/standards/hydrology/hydrology_standard.dart';
 import 'package:site_buddy/core/engineering/standards/hydrology/basic_hydrology_standard.dart';
 import 'package:site_buddy/features/water/irrigation/domain/services/irrigation_design_service.dart';
 import 'package:site_buddy/features/water/irrigation/domain/services/manning_service.dart';
 import 'package:site_buddy/features/water/irrigation/domain/services/canal_design_service.dart';
 import 'package:site_buddy/features/water/irrigation/domain/services/flow_simulation_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/crop_water_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/soil_irrigation_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/irrigation_flow_service.dart';
+import 'package:site_buddy/features/water/irrigation/domain/services/irrigation_optimization_service.dart';
+import 'package:site_buddy/core/engineering/standards/irrigation/fao_56_standard.dart';
 import 'package:site_buddy/features/report/application/report_generator.dart';
 
 /// Provider for current DesignCode
@@ -181,4 +188,72 @@ final reportGeneratorProvider = Provider<ReportGenerator>((ref) {
 });
 final flowSimulationServiceProvider = Provider<FlowSimulationService>((ref) {
   return FlowSimulationService();
+});
+
+/// Traffic Growth Service (Road module - split from ProfessionalPavementService)
+/// 
+/// Handles:
+/// - Multi-year traffic projection
+/// - Year-by-year traffic breakdown
+/// - Cumulative ESAL and MSA calculation
+final trafficGrowthServiceProvider = Provider<TrafficGrowthService>((ref) {
+  final standard = ref.watch(roadStandardProvider);
+  return TrafficGrowthService(standard);
+});
+
+/// Material Optimization Service (Road module - split from ProfessionalPavementService)
+/// 
+/// Handles:
+/// - Base course material comparison
+/// - Lifecycle cost analysis
+/// - Material recommendations
+final materialOptimizationServiceProvider = Provider<MaterialOptimizationService>((ref) {
+  return MaterialOptimizationService();
+});
+
+/// FAO-56 Irrigation Standard
+final fao56StandardProvider = Provider<FAO56Standard>((ref) {
+  return FAO56Standard();
+});
+
+/// Crop Water Service (Irrigation module)
+/// 
+/// Handles:
+/// - Crop evapotranspiration calculations
+/// - Water requirement calculations
+/// - FAO-56 based analysis
+final cropWaterServiceProvider = Provider<CropWaterService>((ref) {
+  final standard = ref.watch(fao56StandardProvider);
+  return CropWaterService(standard);
+});
+
+/// Soil Irrigation Service (Irrigation module)
+/// 
+/// Handles:
+/// - Soil water modeling
+/// - Irrigation scheduling
+/// - Infiltration calculations
+final soilIrrigationServiceProvider = Provider<SoilIrrigationService>((ref) {
+  return SoilIrrigationService();
+});
+
+/// Irrigation Flow Service (Irrigation module)
+/// 
+/// Handles:
+/// - Flow distribution in canal networks
+/// - Scenario-based irrigation design
+/// - Canal dimension calculations
+final irrigationFlowServiceProvider = Provider<IrrigationFlowService>((ref) {
+  final hydrologyStandard = ref.watch(hydrologyStandardProvider);
+  return IrrigationFlowService(hydrologyStandard);
+});
+
+/// Irrigation Optimization Service (Irrigation module - PRO feature)
+/// 
+/// Handles:
+/// - Irrigation method comparison
+/// - Lifecycle cost analysis
+/// - Water and cost savings calculation
+final irrigationOptimizationServiceProvider = Provider<IrrigationOptimizationService>((ref) {
+  return IrrigationOptimizationService();
 });

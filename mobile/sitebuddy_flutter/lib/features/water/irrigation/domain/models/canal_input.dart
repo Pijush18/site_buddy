@@ -3,6 +3,9 @@ enum CanalShape { rectangular, trapezoidal }
 
 /// MODEL: CanalInput
 /// PURPOSE: Captures input parameters for Manning's based canal design.
+/// 
+/// DOMAIN PURITY: This model contains ONLY business parameters.
+/// No user plan or subscription information.
 class CanalInput {
   final CanalShape shape;
   final double bedWidth;    // b (m)
@@ -10,7 +13,6 @@ class CanalInput {
   final double flowDepth;    // y (m)
   final double longitudinalSlope; // S (e.g. 0.001)
   final String material;     // e.g. "Concrete", "Earth"
-  final bool isProUser;
 
   const CanalInput({
     required this.shape,
@@ -19,7 +21,6 @@ class CanalInput {
     required this.flowDepth,
     required this.longitudinalSlope,
     required this.material,
-    this.isProUser = false,
   });
 
   Map<String, dynamic> toMap() => {
@@ -29,6 +30,5 @@ class CanalInput {
     'flowDepth': flowDepth,
     'longitudinalSlope': longitudinalSlope,
     'material': material,
-    'isProUser': isProUser,
   };
 }

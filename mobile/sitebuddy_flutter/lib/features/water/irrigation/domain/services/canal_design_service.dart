@@ -7,12 +7,20 @@ import 'package:site_buddy/features/water/irrigation/domain/services/manning_ser
 
 /// SERVICE: CanalDesignService
 /// PURPOSE: Orchestrates irrigation design for Rectangular and Trapezoidal shapes.
+/// 
+/// DOMAIN PURITY: This service contains ONLY business logic.
+/// No user plan, subscription status, or policy decisions.
+/// Policy decisions are handled in the Application layer (Notifiers).
 class CanalDesignService {
   final HydrologyStandard standard;
   final ManningService manning;
 
   CanalDesignService(this.standard, this.manning);
 
+  /// Designs canal and returns COMPLETE results.
+  /// 
+  /// The domain layer ALWAYS returns full, unbiased engineering results.
+  /// Pro/premium features are computed but not gated here.
   CanalResult designCanal(CanalInput input) {
     final double n = standard.manningCoefficient(input.material);
     final double s = input.longitudinalSlope;
@@ -39,13 +47,15 @@ class CanalDesignService {
     // Efficiency Calculation
     final double efficiency = _calculateEfficiency(input, a, p);
     
-    // Pro features and guidance
+    // Safety evaluation
     String note = _evaluateVelocity(v);
     note += " | ${standard.slopeGuidance(input.material)}";
 
-    if (input.isProUser && efficiency < 90) {
-      final double optWidth = (a / y) - (z * y);
-      note += " | PRO TIP: Optimize Bed Width to ${optWidth.toStringAsFixed(2)}m.";
+    // Compute optimization suggestion (domain computes, application shows conditionally)
+    double? optimizationSuggestion;
+    if (efficiency < 90) {
+      optimizationSuggestion = (a / y) - (z * y);
+      note += " | TIP: Optimize Bed Width to ${optimizationSuggestion.toStringAsFixed(2)}m.";
     }
 
     return CanalResult(
@@ -55,8 +65,8 @@ class CanalDesignService {
       wettedPerimeter: p,
       hydraulicRadius: r,
       efficiency: efficiency,
-      isOptimized: input.isProUser && efficiency >= 95,
       safetyNote: note,
+      optimizationSuggestion: optimizationSuggestion,
     );
   }
 

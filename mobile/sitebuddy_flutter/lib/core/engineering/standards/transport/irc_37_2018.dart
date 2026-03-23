@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:site_buddy/features/transport/road/domain/models/pavement_layer.dart';
+import 'package:site_buddy/features/transport/road/domain/models/traffic_growth.dart';
 import 'package:site_buddy/core/engineering/standards/transport/road_standard.dart';
 
 /// STANDARD: IRC:37-2018
@@ -101,5 +102,33 @@ class IRC37Standard extends RoadStandard {
       PavementLayer(name: 'Wet Mix Macadam (WMM)', thickness: dist[2], materialType: 'Granular'),
       PavementLayer(name: 'Granular Sub-base (GSB)', thickness: dist[3], materialType: 'Granular'),
     ];
+  }
+
+  @override
+  String evaluateSafety({required double cbr, required double thickness}) {
+    // IRC 37-2018 safety thresholds
+    if (cbr < poorSubgradeThreshold && thickness < 600.0) {
+      return 'CRITICAL (Subgrade too weak for current thickness)';
+    }
+    if (thickness > 800.0) {
+      return 'OVER-DESIGNED (Consider optimization)';
+    }
+    return 'SAFE (As per IRC 37-2018)';
+  }
+
+  @override
+  double getScenarioTrafficFactor(DesignScenario scenario) {
+    // IRC 37-2018 scenario factors:
+    // - Conservative: +20% traffic buffer for heavy commercial corridors
+    // - Standard: Base IRC 37-2018 requirements
+    // - Optimized: -10% traffic (requires material upgrade per IRC guidelines)
+    switch (scenario) {
+      case DesignScenario.conservative:
+        return 1.2; // +20% traffic
+      case DesignScenario.standard:
+        return 1.0; // Standard
+      case DesignScenario.optimized:
+        return 0.9; // -10% traffic (but may need material upgrade)
+    }
   }
 }

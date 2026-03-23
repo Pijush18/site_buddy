@@ -1,6 +1,10 @@
 
 /// MODEL: CanalResult
 /// PURPOSE: Calculation results for canal design using Manning's formula.
+/// 
+/// DOMAIN PURITY: This model contains ONLY computed engineering results.
+/// No user plan or subscription information.
+/// Policy decisions are handled in the Application layer.
 class CanalResult {
   final double discharge;       // Q (m³/s)
   final double velocity;        // V (m/s)
@@ -8,8 +12,8 @@ class CanalResult {
   final double wettedPerimeter; // P (m)
   final double hydraulicRadius; // R (m)
   final double efficiency;      // Section efficiency (%)
-  final bool isOptimized;       // Pro feature flag
   final String safetyNote;
+  final double? optimizationSuggestion; // Computed but shown conditionally
 
   const CanalResult({
     required this.discharge,
@@ -18,8 +22,8 @@ class CanalResult {
     required this.wettedPerimeter,
     required this.hydraulicRadius,
     required this.efficiency,
-    this.isOptimized = false,
     required this.safetyNote,
+    this.optimizationSuggestion,
   });
 
   Map<String, dynamic> toMap() => {
@@ -29,7 +33,7 @@ class CanalResult {
     'wettedPerimeter': wettedPerimeter,
     'hydraulicRadius': hydraulicRadius,
     'efficiency': efficiency,
-    'isOptimized': isOptimized,
     'safetyNote': safetyNote,
+    'optimizationSuggestion': optimizationSuggestion,
   };
 }

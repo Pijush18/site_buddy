@@ -5,49 +5,47 @@ import 'package:site_buddy/features/transport/road/domain/models/pavement_design
 
 /// SERVICE: PavementDesignService
 /// PURPOSE: Performs professional-level flexible pavement design (IRC).
+/// 
+/// DOMAIN PURITY: This service contains ONLY business logic.
+/// No user plan, subscription status, or policy decisions.
+/// Policy decisions are handled in the Application layer (Notifiers).
 class PavementDesignService {
   final RoadStandard standard;
 
   PavementDesignService(this.standard);
 
+  /// Designs pavement and returns COMPLETE results.
+  /// 
+  /// The domain layer ALWAYS returns full, unbiased engineering results.
+  /// Pro/premium features are computed but not gated here.
   PavementDesignResult designPavement({
     required double cbr,
     required double msa,
-    required bool isProUser,
   }) {
+    // 1. Compute total thickness from standard
     final double totalT = standard.thicknessFromCBR(cbr: cbr, traffic: msa);
     
-    List<PavementLayer> allLayers = standard.designLayers(cbr: cbr, msa: msa);
+    // 2. Get all layers from standard (always full results)
+    final List<PavementLayer> allLayers = standard.designLayers(cbr: cbr, msa: msa);
     
-    // Pro User restrictions:
-    if (!isProUser) {
-      // Lock all but the most basic layer (GSB) or obscure details
-      allLayers = allLayers.map((l) {
-        if (l.name.contains('GSB')) return l;
-        return PavementLayer(
-          name: 'Restricted Layer',
-          thickness: l.thickness,
-          materialType: 'Pro Feature Only',
-          isLocked: true,
-        );
-      }).toList();
+    // 3. Evaluate safety classification
+    final String safety = standard.evaluateSafety(cbr: cbr, thickness: totalT);
+    
+    // 4. Compute optimization suggestion (if applicable)
+    double? suggestedOptimization;
+    if (totalT > 800.0) {
+      // Suggest reduction if over-designed (domain computes, application shows)
+      suggestedOptimization = totalT * 0.9; // Suggest 10% reduction
     }
 
-    final String safety = _evaluateSafety(cbr, totalT);
-
+    // 5. Return complete result (no gating)
     return PavementDesignResult(
       totalThickness: totalT,
       layers: allLayers,
       safetyClassification: safety,
-      isProUser: isProUser,
       cbrProvided: cbr,
       msaDesign: msa,
+      suggestedOptimization: suggestedOptimization,
     );
-  }
-
-  String _evaluateSafety(double cbr, double thickness) {
-    if (cbr < 3.0 && thickness < 600.0) return 'CRITICAL (Subgrade too weak for current thickness)';
-    if (thickness > 800.0) return 'OVER-DESIGNED (Consider optimization)';
-    return 'SAFE (As per IRC 37-2018)';
   }
 }

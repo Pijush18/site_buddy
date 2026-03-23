@@ -6,9 +6,18 @@ import 'package:site_buddy/features/water/irrigation/domain/models/canal_input.d
 
 /// BUILDER: IrrigationReportBuilder
 /// PURPOSE: Maps Canal Design results to an EngineeringReport.
+/// 
+/// APPLICATION LAYER: Receives Pro status as parameter (not from domain model).
+/// The domain model is pure; policy decisions are made at this layer.
 class IrrigationReportBuilder {
   
-  static EngineeringReport build(CanalResult result, CanalInput input, {required String projectTitle, required String engineerName}) {
+  static EngineeringReport build(
+    CanalResult result, 
+    CanalInput input, {
+    required String projectTitle, 
+    required String engineerName,
+    required bool isPro,
+  }) {
     return EngineeringReport(
       id: "IRRI-${DateTime.now().millisecondsSinceEpoch}",
       title: "Irrigation Canal Design Report",
@@ -16,7 +25,7 @@ class IrrigationReportBuilder {
       engineerName: engineerName,
       date: DateTime.now(),
       codeReference: "Manning's Method | IS:10430",
-      isPro: input.isProUser,
+      isPro: isPro,
       sections: [
         ReportSection(
           title: "Canal Geometry",
@@ -37,7 +46,7 @@ class IrrigationReportBuilder {
             "Hydraulic Radius (R)": "${result.hydraulicRadius.toStringAsFixed(3)} m",
             "Section Efficiency": "${result.efficiency.toStringAsFixed(1)}%",
           },
-          steps: input.isProUser ? [
+          steps: isPro ? [
             "Compute Area (A) and Wetted Perimeter (P).",
             "Compute Hydraulic Radius (R = A/P).",
             "Apply Manning's Equation: Q = (1/n) * A * R^(2/3) * S^(1/2).",

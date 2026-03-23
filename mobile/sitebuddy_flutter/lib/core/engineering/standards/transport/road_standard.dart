@@ -1,6 +1,7 @@
 // Abstract interface defining the standard requirements for Road pavement design.
 // This is isolated from Structural (RCC) standards to maintain domain separation.
 import 'package:site_buddy/features/transport/road/domain/models/pavement_layer.dart';
+import 'package:site_buddy/features/transport/road/domain/models/traffic_growth.dart';
 
 abstract class RoadStandard {
   /// Unique identifier for the design code (e.g., "IRC:37-2018").
@@ -44,4 +45,16 @@ abstract class RoadStandard {
 
   /// Returns raw layer breakup as a list of thicknesses.
   List<double> layerDistribution(double totalThickness);
+
+  /// Evaluates safety classification based on subgrade strength and pavement thickness.
+  /// This is standard-specific (IRC thresholds vs AASHTO thresholds).
+  String evaluateSafety({required double cbr, required double thickness});
+
+  /// Returns the traffic safety factor for a given design scenario.
+  /// 
+  /// This centralizes scenario factors in the Standards layer:
+  /// - conservative: Higher factor (+20% traffic buffer)
+  /// - standard: Base factor (1.0)
+  /// - optimized: Lower factor (allows -10% traffic with material upgrade)
+  double getScenarioTrafficFactor(DesignScenario scenario);
 }
