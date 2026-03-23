@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/design_system/sb_colors.dart';
+import 'package:site_buddy/core/theme/app_typography.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 
 /// CLASS: AppTheme
 /// PURPOSE: Centralized theme definitions for Site Buddy.
-/// REFACTOR: Professional Color System (Surface/Background inversion).
+/// Combines all design system values into ThemeData.
 class AppTheme {
   AppTheme._();
 
@@ -18,20 +19,20 @@ class AppTheme {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: SbColors.primarySeed,
       brightness: brightness,
-      // 🎨 Hierarchy Overrides
+      // Surface Overrides
       surface: isLight ? SbColors.lightSurface : SbColors.darkSurface,
       surfaceContainer: isLight ? SbColors.lightContainer : SbColors.darkContainer,
       surfaceContainerHigh: isLight ? SbColors.lightContainerHigh : SbColors.darkContainerHigh,
-      outline: isLight ? const Color(0xFF94A3B8) : const Color(0xFF475569), // 🔳 Structured Borders
+      outline: isLight ? const Color(0xFF94A3B8) : const Color(0xFF475569),
     );
-
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colorScheme.surface,
-      textTheme: GoogleFonts.interTextTheme(SbTypography.textTheme),
+      textTheme: GoogleFonts.interTextTheme(AppTypography.textTheme),
 
+      // AppBar
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
@@ -40,23 +41,21 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
       ),
 
-      // 🔳 Global Card Architecture
+      // Cards
       cardTheme: CardThemeData(
         color: colorScheme.surfaceContainerHigh,
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8), // Global Standard Radius
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
           side: BorderSide(
-
             color: colorScheme.outline,
             width: 1.0,
           ),
-
         ),
       ),
 
-      // 🧭 Navigation Hierarchy
+      // Navigation
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
@@ -65,7 +64,7 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
       ),
 
-
+      // Buttons - Primary
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
@@ -73,9 +72,10 @@ class AppTheme {
           minimumSize: const Size(0, 48),
           elevation: 2,
           shadowColor: colorScheme.primary.withValues(alpha: 0.3),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0), // SbSpacing.lg
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+          ),
           textStyle: GoogleFonts.inter(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -84,13 +84,14 @@ class AppTheme {
         ),
       ),
 
+      // Buttons - Outlined
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.onSurface,
           minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
           ),
           side: BorderSide(color: colorScheme.outline),
           textStyle: GoogleFonts.inter(
@@ -100,12 +101,15 @@ class AppTheme {
         ),
       ),
 
+      // Buttons - Text
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: colorScheme.onSurface,
           minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+          ),
           textStyle: GoogleFonts.inter(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -113,7 +117,38 @@ class AppTheme {
         ),
       ),
 
+      // Input Fields
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.md,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderSide: BorderSide(color: colorScheme.error),
+        ),
+      ),
 
+      // Divider
+      dividerTheme: DividerThemeData(
+        color: colorScheme.outlineVariant,
+        thickness: 1,
+        space: AppSpacing.md,
+      ),
     );
   }
 }

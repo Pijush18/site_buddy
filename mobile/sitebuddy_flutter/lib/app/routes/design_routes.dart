@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/navigation/app_transitions.dart';
-import 'package:site_buddy/features/home/presentation/screens/home_screen.dart';
+import 'package:site_buddy/features/design/presentation/screens/design_screen.dart';
 import 'package:site_buddy/features/structural/shared/presentation/screens/design_report_screen.dart';
 import 'package:site_buddy/features/structural/slab/presentation/screens/slab_input_screen.dart';
 import 'package:site_buddy/features/structural/slab/presentation/screens/slab_load_screen.dart';
@@ -28,6 +29,8 @@ import 'package:site_buddy/features/structural/footing/presentation/screens/foot
 import 'package:site_buddy/features/structural/shared/presentation/screens/shear_check_screen.dart';
 import 'package:site_buddy/features/structural/shared/presentation/screens/deflection_check_screen.dart';
 import 'package:site_buddy/features/structural/shared/presentation/screens/cracking_check_screen.dart';
+import 'package:site_buddy/features/transport/road/presentation/road_screen.dart';
+import 'package:site_buddy/features/water/irrigation/presentation/irrigation_screen.dart';
 import 'package:site_buddy/shared/domain/models/report_data.dart';
 
 final designRoutes = [
@@ -35,7 +38,7 @@ final designRoutes = [
     path: '/design',
     pageBuilder: (context, state) => AppTransitions.fadeSlide(
       state: state,
-      child: const HomeScreen(),
+      child: const DesignScreen(),
     ),
     routes: [
       // Slab Design flow
@@ -237,6 +240,77 @@ final designRoutes = [
           child: const CrackingCheckScreen(),
         ),
       ),
+      GoRoute(
+        path: 'road',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const RoadScreen(),
+        ),
+      ),
+      GoRoute(
+        path: 'irrigation',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const IrrigationScreen(),
+        ),
+      ),
+      // Placeholder routes for new features
+      GoRoute(
+        path: 'traffic',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Traffic Analysis'))),
+        ),
+      ),
+      GoRoute(
+        path: 'canal',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Canal Design'))),
+        ),
+      ),
+      GoRoute(
+        path: 'flow',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Flow Simulation'))),
+        ),
+      ),
+      GoRoute(
+        path: 'reports',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Reports'))),
+        ),
+      ),
+      GoRoute(
+        path: 'stair',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Stair Design'))),
+        ),
+      ),
+      GoRoute(
+        path: 'retaining-wall',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Retaining Wall'))),
+        ),
+      ),
+      GoRoute(
+        path: 'steel',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Steel Design'))),
+        ),
+      ),
+      GoRoute(
+        path: 'bridge',
+        pageBuilder: (context, state) => AppTransitions.fadeSlide(
+          state: state,
+          child: const Scaffold(body: Center(child: Text('Bridge Design'))),
+        ),
+      ),
     ],
   ),
 ];
@@ -319,6 +393,14 @@ final designRedirects = [
   GoRoute(
     path: '/footing/design',
     redirect: (context, state) => '/design/footing/type',
+  ),
+  GoRoute(
+    path: '/road',
+    redirect: (context, state) => '/design/road',
+  ),
+  GoRoute(
+    path: '/irrigation',
+    redirect: (context, state) => '/design/irrigation',
   ),
 ];
 

@@ -59,45 +59,156 @@ class LevelLogScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: SbSectionList(
-        sections: [
-          SbSection(
-            child: _MethodSelectorCard(state: state, notifier: notifier),
-          ),
-          SbSection(
-            child: Column(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _MethodSelectorCard(state: state, notifier: notifier),
+          const SizedBox(height: SbSpacing.lg),
+          if (state.entries.isEmpty)
+            const _EmptyState()
+          else
+            Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (state.entries.isEmpty)
-                  const _EmptyState()
-                else
-                  ListView.separated(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: SbSpacing.lg,
-                      horizontal: SbSpacing.md,
+                for (int i = 0; i < state.entries.length; i++) ...[
+                  SbCard(
+                    onTap: () => _showEditStationDialog(
+                      context,
+                      ref,
+                      i,
+                      state.entries[i],
                     ),
-                    itemCount: state.entries.length,
-                    separatorBuilder: (_, index) =>
-                        const SizedBox(height: SbSpacing.sm),
-                    itemBuilder: (context, i) => SbCard(
-                      child: _StationCardContent(
-                        entry: state.entries[i],
-                        index: i,
-                        method: state.method,
-                        colorScheme: colorScheme,
-                        onDelete: state.entries.length > 1
-                            ? () => notifier.removeEntry(i)
-                            : null,
-                      ),
+                    child: _StationCardContent(
+                      entry: state.entries[i],
+                      index: i,
+                      method: state.method,
+                      colorScheme: colorScheme,
+                      onDelete: state.entries.length > 1
+                          ? () => notifier.removeEntry(i)
+                          : null,
                     ),
                   ),
+                  if (i < state.entries.length - 1)
+                    const SizedBox(height: SbSpacing.sm),
+                ],
                 const SizedBox(height: SbSpacing.xl),
               ],
             ),
-          ),
         ],
       ),
+    );
+  }
+
+  void _showEditStationDialog(
+    BuildContext context,
+    WidgetRef ref,
+    int index,
+    LevelEntry entry,
+  ) {
+    final l10n = AppLocalizations.of(context)!;
+    final notifier = ref.read(levelLogControllerProvider.notifier);
+
+    // Controllers for the dialog fields
+    final stationController = TextEditingController(text: entry.station);
+    final chainageController = TextEditingController(
+      text: entry.chainage?.toString() ?? '',
+    );
+    final bsController = TextEditingController(text: entry.bs?.toString() ?? '');
+    final isController = TextEditingController(
+      text: entry.isReading?.toString() ?? '',
+    );
+    final fsController = TextEditingController(text: entry.fs?.toString() ?? '');
+    final remarkController = TextEditingController(text: entry.remark ?? '');
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.levelLogSession), // Reusing label for edit
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SbInput(
+                    label: 'Station Name',
+                    controller: stationController,
+                    hint: 'e.g. STN 1',
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  SbInput(
+                    label: 'Chainage (m)',
+                    controller: chainageController,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    hint: '0.00',
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SbInput(
+                          label: 'B.S.',
+                          controller: bsController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          hint: '0.000',
+                        ),
+                      ),
+                      const SizedBox(width: SbSpacing.md),
+                      Expanded(
+                        child: SbInput(
+                          label: 'I.S.',
+                          controller: isController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          hint: '0.000',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  SbInput(
+                    label: 'F.S.',
+                    controller: fsController,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    hint: '0.000',
+                  ),
+                  const SizedBox(height: SbSpacing.md),
+                  SbInput(
+                    label: 'Remark',
+                    controller: remarkController,
+                    hint: 'Optional notes',
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final updated = entry.copyWith(
+                    station: stationController.text,
+                    chainage: double.tryParse(chainageController.text),
+                    bs: double.tryParse(bsController.text),
+                    isReading: double.tryParse(isController.text),
+                    fs: double.tryParse(fsController.text),
+                    remark: remarkController.text,
+                  );
+                  notifier.updateEntry(index, updated);
+                  Navigator.pop(context);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
     );
   }
 }
@@ -191,6 +302,7 @@ class _MethodToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

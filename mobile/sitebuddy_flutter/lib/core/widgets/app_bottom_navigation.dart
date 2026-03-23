@@ -55,8 +55,16 @@ import 'package:site_buddy/core/localization/l10n_extension.dart';
 ///   ),
 /// );
 /// ```
+/// ENUM: AppTab
+/// Represents the four primary navigation branches.
+enum AppTab { home, calculator, design, projects }
+
+/// WIDGET: AppBottomNavigation
+///
+/// A fully theme-aware bottom navigation bar. Drop this widget directly into
+/// the [Scaffold.bottomNavigationBar] slot.
 class AppBottomNavigation extends StatelessWidget {
-  /// Index of the currently visible tab (0 = Home … 3 = Project).
+  /// Index of the currently visible tab (maps to [AppTab] index).
   final int currentIndex;
 
   /// Called with the index of the tab the user tapped.
@@ -84,61 +92,53 @@ class AppBottomNavigation extends StatelessWidget {
         ),
       ),
       child: BottomNavigationBar(
-        // ── Colour theming ─────────────────────────────────────────────────────
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: colorScheme.onSurfaceVariant,
-
-        // ── Elevation / shadow ────────────────────────────────────────────────
         elevation: 0,
-
-        // ── State ────────────────────────────────────────────────────────────
         currentIndex: currentIndex,
         onTap: onTap,
-
-        // ── Layout ───────────────────────────────────────────────────────────
-        // 'fixed' keeps all labels visible at all times, matching the
-        // previous custom implementation's always-visible labels.
         type: BottomNavigationBarType.fixed,
-
-        // Always show labels (matches the previous always-visible text style).
         showSelectedLabels: true,
         showUnselectedLabels: true,
-
-        // ── Typography ────────────────────────────────────────────────────────
         selectedLabelStyle: Theme.of(context).textTheme.labelMedium!,
         unselectedLabelStyle: Theme.of(context).textTheme.labelMedium!,
-
-        // ── Navigation items ──────────────────────────────────────────────────
-        // Order and icons are identical to the original BottomNavBar.
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(SbIcons.homeOutlined),
-            activeIcon: const Icon(SbIcons.home),
-            label: l10n.appName,
-            tooltip: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(SbIcons.calculator),
-            activeIcon: const Icon(SbIcons.calculator),
-            label: l10n.navCalculator,
-            tooltip: 'Calculator',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(SbIcons.architectureOutlined),
-            activeIcon: const Icon(SbIcons.architecture),
-            label: l10n.navDesign,
-            tooltip: 'Design',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(SbIcons.folderCopyOutlined),
-            activeIcon: const Icon(SbIcons.folderCopy),
-            label: l10n.navProject,
-            tooltip: 'Projects',
-          ),
-        ],
+        items: AppTab.values.map((tab) => _buildItem(tab, l10n)).toList(),
       ),
     );
+  }
+
+  BottomNavigationBarItem _buildItem(AppTab tab, dynamic l10n) {
+    switch (tab) {
+      case AppTab.home:
+        return BottomNavigationBarItem(
+          icon: const Icon(SbIcons.homeOutlined),
+          activeIcon: const Icon(SbIcons.home),
+          label: l10n.appName,
+          tooltip: 'Home',
+        );
+      case AppTab.calculator:
+        return BottomNavigationBarItem(
+          icon: const Icon(SbIcons.calculator),
+          activeIcon: const Icon(SbIcons.calculator),
+          label: l10n.navCalculator,
+          tooltip: 'Calculator',
+        );
+      case AppTab.design:
+        return BottomNavigationBarItem(
+          icon: const Icon(SbIcons.architectureOutlined),
+          activeIcon: const Icon(SbIcons.architecture),
+          label: l10n.navDesign,
+          tooltip: 'Design',
+        );
+      case AppTab.projects:
+        return BottomNavigationBarItem(
+          icon: const Icon(SbIcons.folderCopyOutlined),
+          activeIcon: const Icon(SbIcons.folderCopy),
+          label: l10n.navProject,
+          tooltip: 'Projects',
+        );
+    }
   }
 }
 

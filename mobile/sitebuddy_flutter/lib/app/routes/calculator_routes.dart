@@ -33,7 +33,7 @@ final calculatorRoutes = [
         ),
       ),
       GoRoute(
-        path: 'level',
+        path: 'level-comparator',
         pageBuilder: (context, state) => AppTransitions.fadeSlide(
           state: state,
           child: const LevelCalculatorScreen(),

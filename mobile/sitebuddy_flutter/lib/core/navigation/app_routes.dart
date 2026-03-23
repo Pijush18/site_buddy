@@ -23,7 +23,7 @@ class AppRoutes {
   // --- CALCULATOR MODULE ---
   static const calculator = '/calculator';
   static const materialCalc = '/calculator/material';
-  static const levelCalc = '/calculator/level';
+  static const levelComparator = '/calculator/level-comparator';
   static const gradientCalc = '/calculator/gradient';
   static const cementCalc = '/calculator/cement';
   static const sandCalc = '/calculator/sand';
@@ -35,6 +35,8 @@ class AppRoutes {
 
   // --- DESIGN MODULE ---
   static const design = '/design';
+  static const roadDesign = '/design/road';
+  static const irrigationDesign = '/design/irrigation';
 
   // Slab Design
   static const slabInput = '/design/slab/input';

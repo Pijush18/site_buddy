@@ -46,7 +46,7 @@ class ReportGenerator {
             ),
             pw.Text(
               report.codeReference,
-              style: pw.TextStyle(
+              style: const pw.TextStyle(
                 fontSize: 12,
                 color: PdfColors.grey700,
               ),
@@ -92,7 +92,7 @@ class ReportGenerator {
       return pw.Container(
         margin: const pw.EdgeInsets.symmetric(vertical: 10),
         padding: const pw.EdgeInsets.all(10),
-        decoration: pw.BoxDecoration(color: PdfColors.grey200),
+        decoration: const pw.BoxDecoration(color: PdfColors.grey200),
         child: pw.Text("[PRO FEATURE] Detailed calculation steps locked."),
       );
     }

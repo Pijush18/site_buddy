@@ -1,234 +1,283 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
-import 'package:site_buddy/core/widgets/sb_widgets.dart';
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_spacing.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
-import 'package:site_buddy/features/home/application/controllers/home_controller.dart';
-import 'package:site_buddy/features/home/domain/models/activity_type.dart';
-import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
-import 'package:site_buddy/features/history/domain/models/calculation_history_entry.dart';
-import 'package:site_buddy/shared/presentation/providers/history_providers.dart';
+import 'package:site_buddy/core/widgets/sb_section_header.dart';
+import 'package:site_buddy/core/widgets/sb_card.dart';
+import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
+import 'package:site_buddy/core/widgets/sb_grid_action_card.dart';
+import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: HomeScreen
-/// PURPOSE: Root dashboard with refined visual rhythm
-class HomeScreen extends ConsumerWidget {
+/// PURPOSE: Main dashboard rebuilt using SiteBuddy UI System (Phase 1)
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final activities = ref.watch(homeProvider).recentActivities;
-    final reportsAsync = ref.watch(recentReportsProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
-    return SbPage.scaffold(
-      title: 'SiteBuddy',
-      appBarActions: [
-        IconButton(
-          icon: const Icon(SbIcons.settings),
-          onPressed: () => context.push(AppRoutes.settings),
-          tooltip: 'Settings',
-        ),
-      ],
-      body: SbSectionList(
-        sections: [
-          const SbSection(
-            padding: EdgeInsets.zero,
-            child: SbSmartAssistantCard(),
-          ),
-          SbSection(
-            title: 'Tools',
-            subtitle: 'Calculators and survey tools.',
-            child: SbGrid(
-              children: [
-                SBGridActionCard(
-                  icon: SbIcons.calculator,
-                  label: 'Levels',
-                  onTap: () => context.push(AppRoutes.calculator),
-                ),
-                SBGridActionCard(
-                  icon: SbIcons.trendingUp,
-                  label: 'Gradient',
-                  onTap: () => context.push(AppRoutes.gradientCalc),
-                ),
-                SBGridActionCard(
-                  icon: SbIcons.sync,
-                  label: 'Units',
-                  onTap: () => context.push(AppRoutes.unitConverter),
-                ),
-                SBGridActionCard(
-                  icon: SbIcons.currencyExchange,
-                  label: 'Currency',
-                  onTap: () => context.push(AppRoutes.currencyConverter),
-                ),
-              ],
-            ),
-          ),
-          SbSection(
-            title: 'Actions',
-            subtitle: 'Site workflows.',
-            child: SbGrid(
-              children: [
-                SBGridActionCard(
-                  icon: SbIcons.addCircle,
-                  label: 'New Project',
-                  onTap: () => context.push(AppRoutes.projectCreate),
-                  isHighlighted: true,
-                ),
-                SBGridActionCard(
-                  icon: SbIcons.iosShare,
-                  label: 'Report',
-                  onTap: () => context.push(AppRoutes.reports),
-                  isHighlighted: true,
-                ),
-              ],
-            ),
-          ),
-          SbSection(
-            title: 'Activity',
-            subtitle: 'Recent updates.',
-            onTap: () => context.push(AppRoutes.projects),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: SbSpacing.sm),
-                SbListGroup(
-                  isSubtle: true,
-                  children: activities.map((activity) {
-                    return SbListItemTile(
-                      title: activity.title,
-                      subtitle: activity.subtitle,
-                      icon: _getActivityIcon(activity.type),
-                      trailing: _formatTimestamp(activity.timestamp),
-                      onTap: () => context.push(AppRoutes.projectDetail()),
-                      isSubtle: true,
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-          SbSection(
-            title: 'History',
-            subtitle: 'Engineering reports.',
-            child: reportsAsync.when(
-              data: (reports) {
-                if (reports.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: SbSpacing.md),
-                    child: Text(
-                      'No history yet',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  );
-                }
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // ═══════════════════════════════════════════════════════════════════════
+  // NAVIGATION HANDLERS
+  // ═══════════════════════════════════════════════════════════════════════
 
-                return Column(
-                  children: [
-                    const SizedBox(height: SbSpacing.sm),
-                    SbListGroup(
-                      isSubtle: true,
-                      children: reports.map((report) {
-                        return SbListItemTile(
-                          title: report.typeLabel,
-                          subtitle: _formatDetailedTimestamp(report.timestamp),
-                          icon: _getReportIcon(report.designType),
-                          onTap: () => _navigateToReport(context, report),
-                          isSubtle: true,
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                );
-              },
-              loading: () => const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(SbSpacing.lg),
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              ),
-              error: (_, _) => const SizedBox.shrink(),
-            ),
+  void _navigateToCalculator() => context.push(AppRoutes.calculator);
+  void _navigateToDesign() => context.push(AppRoutes.design);
+  void _navigateToLevelCalculator() => context.push(AppRoutes.levelLog);
+  void _navigateToEngineeringTools() => context.push(AppRoutes.gradientCalc);
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // DATA (Would come from providers in real app)
+    // ═══════════════════════════════════════════════════════════════════════
+
+    // Recent Activity data
+    final List<_ActivityItem> recentActivities = [
+      _ActivityItem(
+        title: 'Slab Design - Project A',
+        subtitle: '2 hours ago',
+        icon: SbIcons.layers,
+        onTap: () => context.push(AppRoutes.slabInput),
+      ),
+      _ActivityItem(
+        title: 'Beam Calculation - Site B',
+        subtitle: 'Yesterday',
+        icon: SbIcons.architectureOutlined,
+        onTap: () => context.push(AppRoutes.beamInput),
+      ),
+    ];
+
+    // History data
+    final List<_ActivityItem> historyItems = [
+      _ActivityItem(
+        title: 'Level Calculator used',
+        subtitle: '3 days ago',
+        icon: SbIcons.calculator,
+        iconColor: colorScheme.outline,
+        onTap: () => context.push(AppRoutes.levelLog),
+      ),
+      _ActivityItem(
+        title: 'Gradient calculated',
+        subtitle: '4 days ago',
+        icon: SbIcons.trendingUp,
+        iconColor: colorScheme.outline,
+        onTap: () => context.push(AppRoutes.gradientCalc),
+      ),
+      _ActivityItem(
+        title: 'Unit conversion performed',
+        subtitle: 'Last week',
+        icon: SbIcons.sync,
+        iconColor: colorScheme.outline,
+        onTap: () => context.push(AppRoutes.unitConverter),
+      ),
+    ];
+
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(
+        title: SBText.heading('SiteBuddy'),
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(SbIcons.settings, color: colorScheme.onSurface),
+            onPressed: () => context.push(AppRoutes.settings),
+            tooltip: 'Settings',
           ),
         ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.lg,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // SECTION 1: QUICK ACTIONS
+              _buildQuickActions(),
+              const SizedBox(height: AppSpacing.xl),
+
+              // SECTION 2: RECENT ACTIVITY
+              _buildRecentActivity(recentActivities),
+              const SizedBox(height: AppSpacing.xl),
+
+              // SECTION 3: HISTORY
+              _buildHistory(historyItems, colorScheme),
+              const SizedBox(height: AppSpacing.xxxl),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  void _navigateToReport(BuildContext context, DesignReport report) {
-    final entry = CalculationHistoryEntry(
-      id: report.id,
-      projectId: report.projectId,
-      calculationType: _mapDesignToCalculationType(report.designType),
-      timestamp: report.timestamp,
-      inputParameters: report.inputs,
-      resultSummary: report.summary,
-      resultData: report.results,
+  // ═══════════════════════════════════════════════════════════════════════
+  // SECTION 1: QUICK ACTIONS (Grid)
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildQuickActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SbSectionHeader(title: 'Quick Actions'),
+        const SizedBox(height: AppSpacing.md),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: AppSpacing.md,
+          crossAxisSpacing: AppSpacing.md,
+          childAspectRatio: 1,
+          children: [
+            // Calculator
+            SBGridActionCard(
+              icon: SbIcons.calculator,
+              label: 'Calculator',
+              subtitle: 'Material & Costs',
+              onTap: _navigateToCalculator,
+              isPrimary: true,
+            ),
+            // Design
+            SBGridActionCard(
+              icon: SbIcons.architecture,
+              label: 'Design',
+              subtitle: 'Structural Tools',
+              onTap: _navigateToDesign,
+            ),
+            // Level Calculator (IMPORTANT: navigates to Field Leveling)
+            SBGridActionCard(
+              icon: SbIcons.height,
+              label: 'Level Calculator',
+              subtitle: 'Field Tools',
+              onTap: _navigateToLevelCalculator,
+            ),
+            // Engineering Tools
+            SBGridActionCard(
+              icon: SbIcons.engineering,
+              label: 'Engineering',
+              subtitle: 'Calculations',
+              onTap: _navigateToEngineeringTools,
+            ),
+          ],
+        ),
+      ],
     );
-
-    context.push(AppRoutes.historyDetail, extra: entry);
   }
 
-  CalculationType _mapDesignToCalculationType(DesignType type) {
-    switch (type) {
-      case DesignType.beam: return CalculationType.beam;
-      case DesignType.slab: return CalculationType.slab;
-      case DesignType.column: return CalculationType.column;
-      case DesignType.footing: return CalculationType.footing;
-      case DesignType.concrete: return CalculationType.cement;
-      case DesignType.steel: return CalculationType.rebar;
-      case DesignType.brick: return CalculationType.brick;
-      case DesignType.plaster: return CalculationType.plaster;
-      case DesignType.excavation: return CalculationType.excavation;
-      case DesignType.shuttering: return CalculationType.shuttering;
-      case DesignType.siteLeveling: return CalculationType.levelLog;
-      case DesignType.siteGradient: return CalculationType.gradient;
-      case DesignType.currency: return CalculationType.currencyConverter;
-      case DesignType.road: return CalculationType.road;
-      case DesignType.irrigation: return CalculationType.irrigation;
-    }
+  // ═══════════════════════════════════════════════════════════════════════
+  // SECTION 2: RECENT ACTIVITY
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildRecentActivity(List<_ActivityItem> activities) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SbSectionHeader(title: 'Recent Activity'),
+        const SizedBox(height: AppSpacing.md),
+        if (activities.isEmpty)
+          _buildEmptyState('No recent activity')
+        else
+          SbCard(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                for (int i = 0; i < activities.length; i++) ...[
+                  if (i > 0) const Divider(height: 1),
+                  SbListItemTile(
+                    icon: activities[i].icon,
+                    title: activities[i].title,
+                    subtitle: activities[i].subtitle,
+                    onTap: activities[i].onTap,
+                  ),
+                ],
+              ],
+            ),
+          ),
+      ],
+    );
   }
 
-  IconData _getActivityIcon(ActivityType type) {
-    switch (type) {
-      case ActivityType.calculator: return SbIcons.calculator;
-      case ActivityType.leveling: return SbIcons.ruler;
-      case ActivityType.project: return SbIcons.project;
-    }
+  // ═══════════════════════════════════════════════════════════════════════
+  // SECTION 3: HISTORY
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildHistory(List<_ActivityItem> items, ColorScheme colorScheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SbSectionHeader(
+          title: 'History',
+          onTap: () {}, // View All - placeholder
+          trailing: Icon(
+            SbIcons.chevronRight,
+            size: 18,
+            color: colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        if (items.isEmpty)
+          _buildEmptyState('No history yet')
+        else
+          SbCard(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                for (int i = 0; i < items.length; i++) ...[
+                  if (i > 0) const Divider(height: 1),
+                  SbListItemTile(
+                    icon: items[i].icon,
+                    iconColor: items[i].iconColor,
+                    title: items[i].title,
+                    subtitle: items[i].subtitle,
+                    onTap: items[i].onTap,
+                  ),
+                ],
+              ],
+            ),
+          ),
+      ],
+    );
   }
 
-  IconData _getReportIcon(DesignType type) {
-    switch (type) {
-      case DesignType.beam:
-      case DesignType.slab:
-      case DesignType.column:
-      case DesignType.footing:
-      case DesignType.road:
-      case DesignType.irrigation:
-        return SbIcons.architecture;
-      case DesignType.siteLeveling:
-        return SbIcons.ruler;
-      case DesignType.concrete:
-      case DesignType.steel:
-      case DesignType.brick:
-      case DesignType.plaster:
-      case DesignType.excavation:
-      case DesignType.shuttering:
-      case DesignType.siteGradient:
-      case DesignType.currency:
-        return SbIcons.calculator;
-    }
+  // ═══════════════════════════════════════════════════════════════════════
+  // EMPTY STATE HELPER
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildEmptyState(String message) {
+    return SbCard(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Center(
+        child: SBText(
+          message,
+          variant: SBTextVariant.bodySmall,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+        ),
+      ),
+    );
   }
+}
 
-  String _formatTimestamp(DateTime timestamp) {
-    return DateFormat('MMM dd').format(timestamp);
-  }
+// ═══════════════════════════════════════════════════════════════════════
+// DATA MODEL: Activity Item
+// ═══════════════════════════════════════════════════════════════════════
+class _ActivityItem {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Color? iconColor;
+  final VoidCallback onTap;
 
-  String _formatDetailedTimestamp(DateTime timestamp) {
-    return DateFormat('MMM dd, yyyy • HH:mm').format(timestamp);
-  }
+  _ActivityItem({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    this.iconColor,
+    required this.onTap,
+  });
 }

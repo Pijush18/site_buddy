@@ -27,30 +27,22 @@ class SmartAssistantInput extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      height: 48, // Standard Large (Rule 48)
-
+      height: 40, // Compact (Rule 40)
       decoration: BoxDecoration(
-        color: colorScheme.surface, // Pop against Hero background
+        color: colorScheme.surface,
         borderRadius: SbRadius.borderMedium,
         border: Border.all(
           color: context.colors.outline,
           width: AppBorder.width,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.primary.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm), 
+      padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.md),
+              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm),
               child: Stack(
                 alignment: Alignment.centerLeft,
                 children: [
@@ -60,7 +52,7 @@ class SmartAssistantInput extends StatelessWidget {
                       if (value.text.isEmpty) {
                         return Text(
                           hintText,
-                          style: theme.textTheme.bodyLarge?.copyWith(
+                          style: theme.textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                           ),
                         );
@@ -72,7 +64,7 @@ class SmartAssistantInput extends StatelessWidget {
                     controller: controller,
                     onSubmitted: (_) => onSend(),
                     textInputAction: TextInputAction.send,
-                    style: theme.textTheme.bodyLarge?.copyWith(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
                     decoration: null, // BARE ENGINE
@@ -84,7 +76,7 @@ class SmartAssistantInput extends StatelessWidget {
           ),
           // Premium action button anchoring
           Padding(
-            padding: const EdgeInsets.only(right: SbSpacing.xs),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Material(
               color: colorScheme.primary,
               borderRadius: SbRadius.borderMd,
@@ -92,13 +84,13 @@ class SmartAssistantInput extends StatelessWidget {
                 onTap: onSend,
                 borderRadius: SbRadius.borderMd,
                 child: Container(
-                  width: 44,
-                  height: 44,
+                  width: 32,
+                  height: 32,
                   alignment: Alignment.center,
                   child: Icon(
-                    SbIcons.send, 
-                    color: colorScheme.onPrimary, 
-                    size: 20,
+                    SbIcons.send,
+                    color: colorScheme.onPrimary,
+                    size: 18,
                   ),
                 ),
               ),

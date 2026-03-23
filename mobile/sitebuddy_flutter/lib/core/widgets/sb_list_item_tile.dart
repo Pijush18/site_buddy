@@ -13,6 +13,7 @@ class SbListItemTile extends StatelessWidget {
   final dynamic trailing;
   final VoidCallback onTap;
   final Color? color;
+  final Color? iconColor;
   final bool isSubtle;
   final bool isPrimary;
 
@@ -24,6 +25,7 @@ class SbListItemTile extends StatelessWidget {
     this.trailing,
     required this.onTap,
     this.color,
+    this.iconColor,
     this.isSubtle = false,
     this.isPrimary = false,
   });
@@ -73,7 +75,7 @@ class SbListItemTile extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     icon,
-                    color: isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant,
+                    color: iconColor ?? (isPrimary ? colorScheme.primary : colorScheme.onSurfaceVariant),
                     size: isSubtle ? 18 : 20,
                   ),
                 ),
