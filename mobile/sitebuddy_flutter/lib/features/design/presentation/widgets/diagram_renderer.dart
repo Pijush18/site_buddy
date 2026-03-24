@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
 
@@ -146,11 +147,10 @@ class _DiagramPainter extends CustomPainter {
 
     // Draw placeholder text
     final textPainter = TextPainter(
-      text: const TextSpan(
+      text: TextSpan(
         text: 'No diagram data available',
-        style: TextStyle(
-          color: Color(0xFF9E9E9E),
-          fontSize: 12,
+        style: SbTypography.textTheme.bodySmall?.copyWith(
+          color: const Color(0xFF9E9E9E),
         ),
       ),
       textDirection: TextDirection.ltr,

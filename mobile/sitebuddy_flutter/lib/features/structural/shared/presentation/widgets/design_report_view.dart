@@ -288,7 +288,6 @@ class _StatusBadge extends StatelessWidget {
           color: color,
           fontWeight: FontWeight.w800,
           letterSpacing: 0.5,
-          fontSize: 8,
         ),
       ),
     );

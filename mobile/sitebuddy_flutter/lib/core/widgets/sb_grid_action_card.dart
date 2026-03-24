@@ -75,9 +75,8 @@ class SBGridActionCard extends StatelessWidget {
                   const SizedBox(height: SbSpacing.xs),
                   Text(
                     subtitle!,
-                    style: theme.textTheme.bodySmall?.copyWith(
+                    style: theme.textTheme.labelSmall?.copyWith(
                           color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-                          fontSize: 11,
                         ),
                     textAlign: TextAlign.center,
                     maxLines: 1,

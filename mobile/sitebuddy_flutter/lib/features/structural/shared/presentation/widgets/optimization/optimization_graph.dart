@@ -100,7 +100,6 @@ class _OptimizationRow extends StatelessWidget {
               style: Theme.of(context).textTheme.labelSmall!.copyWith(
                     fontWeight: FontWeight.bold,
                     color: _getRankColor(context, rankLabel),
-                    fontSize: 10,
                   ),
             ),
           ],

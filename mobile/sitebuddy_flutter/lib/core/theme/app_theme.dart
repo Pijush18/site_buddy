@@ -76,11 +76,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.1,
-          ),
+          textStyle: SbTypography.textTheme.labelLarge,
         ),
       ),
 
@@ -94,10 +90,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
           side: BorderSide(color: colorScheme.outline),
-          textStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: SbTypography.textTheme.labelLarge,
         ),
       ),
 
@@ -110,10 +103,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(SbSpacing.sm),
           ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: SbTypography.textTheme.labelLarge,
         ),
       ),
 
