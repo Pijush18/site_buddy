@@ -34,7 +34,7 @@ class ScenarioConsistencyTestExpected {
 
 /// Golden test cases for scenario factor consistency.
 /// 
-/// Test IDs: SC_<NNN>
+/// Test IDs: SC_`NNN`
 /// Priority: P0-Critical
 /// 
 /// CRITICAL CONSTRAINT:
@@ -106,7 +106,7 @@ class EdgeCaseScenarioExpected {
 
 /// Golden test cases for scenario edge cases.
 /// 
-/// Test IDs: EC_<NNN>
+/// Test IDs: EC_`NNN`
 final scenarioEdgeCaseTestCases = [
   const GoldenTestCase<EdgeCaseScenarioInput, EdgeCaseScenarioExpected>(
     id: 'EC_001',
@@ -200,7 +200,7 @@ class WaterAdequacyTestExpected {
 /// - ratio >= 0.6: INADEQUATE
 /// - ratio < 0.6: CRITICAL
 /// 
-/// Test IDs: WA_<NNN>
+/// Test IDs: WA_`NNN`
 final waterAdequacyTestCases = [
   const GoldenTestCase<WaterAdequacyTestInput, WaterAdequacyTestExpected>(
     id: 'WA_001',

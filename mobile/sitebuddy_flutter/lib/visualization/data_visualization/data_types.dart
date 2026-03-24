@@ -1,5 +1,5 @@
 import 'dart:ui';
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Data series for visualization
 class DataSeries<T> {

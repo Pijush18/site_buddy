@@ -22,7 +22,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:site_buddy/shared/domain/models/site_report.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 class SiteReportPdfGenerator {
   /// METHOD: generateAndShare
@@ -90,7 +89,7 @@ class SiteReportPdfGenerator {
             ),
             pw.Text(
               'Confidential',
-              style: pw.SbTypography.caption,
+              style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
             ),
           ],
         ),
@@ -137,12 +136,12 @@ class SiteReportPdfGenerator {
       children: [
         pw.Text(
           label,
-          style: pw.SbTypography.bodySmall,
+          style: const pw.TextStyle(fontSize: 8),
         ),
         pw.SizedBox(width: SbSpacing.sm),
         pw.Text(
           value,
-          style: const pw.SbTypography.bodySmall,
+          style: const pw.TextStyle(fontSize: 8),
         ),
       ],
     );
@@ -185,7 +184,7 @@ class SiteReportPdfGenerator {
                   padding: const pw.EdgeInsets.only(bottom: SbSpacing.sm),
                   child: pw.Text(
                     text,
-                    style: const pw.SbTypography.bodySmall,
+                    style: const pw.TextStyle(fontSize: 8),
                   ),
                 ),
               ),
@@ -222,6 +221,7 @@ class SiteReportPdfGenerator {
     );
   }
 }
+
 
 
 

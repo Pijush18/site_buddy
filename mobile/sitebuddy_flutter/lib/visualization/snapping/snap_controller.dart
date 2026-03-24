@@ -1,9 +1,9 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../primitives/primitives.dart';
-import 'snap_engine.dart';
-import 'snap_result.dart';
-import 'snap_target.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/snapping/snap_engine.dart';
+import 'package:site_buddy/visualization/snapping/snap_result.dart';
+import 'package:site_buddy/visualization/snapping/snap_target.dart';
 
 /// Provider for the snap engine
 final snapEngineProvider = StateNotifierProvider<SnapController, SnapState>((ref) {

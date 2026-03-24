@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart';
-import 'snap_result.dart';
-import 'snap_target.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/snapping/snap_result.dart';
+import 'package:site_buddy/visualization/snapping/snap_target.dart';
 
 /// Core snapping engine that finds the best snap point for a given position
 /// 
@@ -13,8 +13,6 @@ import 'snap_target.dart';
 class SnapEngine {
   SnapConfig _config;
   List<SnapTarget> _cachedTargets = [];
-  Rect? _lastBounds;
-  bool _needsUpdate = true;
 
   SnapEngine({SnapConfig? config}) : _config = config ?? const SnapConfig();
 
@@ -49,14 +47,11 @@ class SnapEngine {
       includeMidpoints: _config.midpointEnabled,
       includeCenters: true, // Always include for better UX
     );
-
-    _lastBounds = worldBounds ?? _calculateBounds(primitives);
-    _needsUpdate = false;
   }
 
   /// Invalidate cached targets (call when primitives change)
   void invalidate() {
-    _needsUpdate = true;
+    // Target invalidation handled by caller
   }
 
   /// Find the best snap result for a given point
@@ -296,8 +291,8 @@ class SnapEngine {
 
       return SnapResult(
         snappedPoint: Offset(
-          resultX ? snappedX! : point.dx,
-          resultY ? snappedY! : point.dy,
+          resultX ? snappedX : point.dx,
+          resultY ? snappedY : point.dy,
         ),
         type: SnapType.alignment,
         distance: resultX ? nearestDistX : nearestDistY,
@@ -305,17 +300,6 @@ class SnapEngine {
     }
 
     return null;
-  }
-
-  /// Calculate the bounding box of all primitives
-  Rect _calculateBounds(List<DiagramPrimitive> primitives) {
-    if (primitives.isEmpty) return Rect.zero;
-
-    Rect result = primitives.first.bounds;
-    for (final primitive in primitives.skip(1)) {
-      result = result.expandToInclude(primitive.bounds);
-    }
-    return result;
   }
 
   /// Euclidean distance between two points
@@ -339,6 +323,5 @@ class SnapEngine {
   /// Clear cached targets
   void clear() {
     _cachedTargets = [];
-    _needsUpdate = true;
   }
 }

@@ -18,9 +18,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
-import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
 import 'package:site_buddy/features/structural/beam/domain/beam_design_state.dart';
 
 /// MAPPER: BeamToDiagramMapper
@@ -175,7 +173,7 @@ class BeamToDiagramMapper {
     const diagramHeight = 100.0;
 
     // 1. Draw axis
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'sfd_axis',
       start: Offset(originX, originY),
       end: Offset(originX + diagramWidth, originY),
@@ -223,7 +221,7 @@ class BeamToDiagramMapper {
       children: [
         DiagramRect(
           id: 'sfd_fill_area',
-          position: Offset(originX, originY),
+          position: const Offset(originX, originY),
           width: diagramWidth,
           height: 0,
           fillColor: warningColor.withValues(alpha: 0.1),
@@ -236,7 +234,7 @@ class BeamToDiagramMapper {
     ));
 
     // 5. Labels
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'sfd_title',
       position: Offset(originX, originY - diagramHeight - 15),
       text: 'SFD (Shear Force Diagram)',
@@ -250,7 +248,7 @@ class BeamToDiagramMapper {
     final maxVu = state.vu;
     primitives.add(DiagramText(
       id: 'sfd_max',
-      position: Offset(originX + diagramWidth - 60, originY - diagramHeight / 2),
+      position: const Offset(originX + diagramWidth - 60, originY - diagramHeight / 2),
       text: 'Vu = ${maxVu.toStringAsFixed(1)} kN',
       fontSize: 9,
       color: warningColor,
@@ -281,7 +279,7 @@ class BeamToDiagramMapper {
     const diagramHeight = 150.0;
 
     // 1. Draw axis
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'bmd_axis',
       start: Offset(originX, originY),
       end: Offset(originX + diagramWidth, originY),
@@ -322,7 +320,7 @@ class BeamToDiagramMapper {
     }
 
     // 4. Labels
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'bmd_title',
       position: Offset(originX, originY - diagramHeight - 15),
       text: 'BMD (Bending Moment Diagram)',
@@ -336,7 +334,7 @@ class BeamToDiagramMapper {
     final maxMu = state.mu;
     primitives.add(DiagramText(
       id: 'bmd_max',
-      position: Offset(originX + diagramWidth / 2, originY - diagramHeight + 10),
+      position: const Offset(originX + diagramWidth / 2, originY - diagramHeight + 10),
       text: 'Mu = ${maxMu.toStringAsFixed(1)} kNm',
       fontSize: 9,
       color: rebarColor,
@@ -376,8 +374,6 @@ class BeamToDiagramMapper {
 
     // 2. Draw stirrups at regular intervals
     final coverOffset = state.cover * beamScale;
-    final stirrupWidth = beamWidth - 2 * coverOffset;
-    final stirrupDepth = beamDepth - 2 * coverOffset;
     final spacing = state.stirrupSpacing * beamScale;
 
     // Draw 5 stirrups to show pattern
@@ -468,7 +464,7 @@ class BeamToDiagramMapper {
     // Add section title
     primitives.add(DiagramText(
       id: 'beam_section_title',
-      position: Offset(50, 30),
+      position: const Offset(50, 30),
       text: 'Beam Design: ${state.width.toInt()}x${state.overallDepth.toInt()} mm',
       fontSize: 14,
       color: labelColor,
@@ -587,7 +583,7 @@ class BeamToDiagramMapper {
     // Draw placeholder rectangle
     primitives.add(DiagramRect(
       id: '${abbrev.toLowerCase()}_placeholder',
-      position: Offset(originX, originY - height),
+      position: const Offset(originX, originY - height),
       width: width,
       height: height,
       fillColor: const Color(0xFFF5F5F5),
@@ -599,7 +595,7 @@ class BeamToDiagramMapper {
     // Add title
     primitives.add(DiagramText(
       id: '${abbrev.toLowerCase()}_placeholder_title',
-      position: Offset(originX + width / 2, originY - height / 2),
+      position: const Offset(originX + width / 2, originY - height / 2),
       text: message,
       fontSize: 11,
       color: const Color(0xFF9E9E9E),

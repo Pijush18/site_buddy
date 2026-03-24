@@ -115,7 +115,7 @@ class LayoutLabSection extends StatelessWidget {
                 '• All feature screen content must be centered.',
                 style: Theme.of(context).textTheme.bodySmall!,
               ),
-              const Text(
+              Text(
                 '• Sidebar navigation must remain fixed (not part of content width).',
                 style: SbTypography.body,
               ),

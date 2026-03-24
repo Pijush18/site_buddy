@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
-import 'primitives.dart' show DiagramPrimitive, CoordinateMapper;
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, CoordinateMapper;
 
 /// Polyline primitive - for open shapes without forced closure
 /// 
@@ -55,18 +55,18 @@ class DiagramPolyline extends DiagramPrimitive {
   final StrokeJoin strokeJoin;
 
   const DiagramPolyline({
-    required String id,
+    required super.id,
     required this.points,
     this.strokeColor = const Color(0xFF000000),
     this.strokeWidth = 1.0,
     this.dashed = false,
     this.strokeCap = StrokeCap.butt,
     this.strokeJoin = StrokeJoin.miter,
-    int zIndex = 0,
-    bool visible = true,
-    String? label,
-    int version = 0,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
+    super.zIndex,
+    super.visible,
+    super.label,
+    super.version,
+  });
 
   @override
   DiagramPolyline copyWith({

@@ -453,7 +453,6 @@ class SbDiagramCardBuilder {
     return SbDiagramCard(
       title: _title,
       subtitle: _subtitle,
-      child: _child!,
       footer: _footer,
       expanded: _expanded,
       height: _height,
@@ -466,6 +465,7 @@ class SbDiagramCardBuilder {
       showDivider: _showDivider,
       clipContent: _clipContent,
       contentPadding: _contentPadding,
+      child: _child!,
     );
   }
 }

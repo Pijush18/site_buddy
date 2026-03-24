@@ -19,7 +19,6 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
 import 'package:site_buddy/features/structural/footing/domain/footing_design_state.dart';
 import 'package:site_buddy/features/structural/footing/domain/footing_type.dart';
@@ -378,7 +377,6 @@ class FootingToDiagramMapper {
     }
 
     // Bottom layer (Y direction)
-    final bottomY = originY - 5;
     final numBarsY = math.min(10, (width / (state.crossBarSpacing * scale)).floor());
     for (int i = 1; i <= numBarsY; i++) {
       final y = originY - thickness + thickness * (i / (numBarsY + 1));
@@ -432,7 +430,7 @@ class FootingToDiagramMapper {
     const height = 80.0;
 
     // 1. Draw base line
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'pressure_base',
       start: Offset(originX, originY),
       end: Offset(originX + width, originY),
@@ -517,7 +515,7 @@ class FootingToDiagramMapper {
     ));
 
     // Title
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'pressure_title',
       position: Offset(originX + width / 2, originY - height - 15),
       text: 'Soil Pressure Distribution',
@@ -532,7 +530,7 @@ class FootingToDiagramMapper {
     final isSafe = maxPressure <= state.sbc;
     primitives.add(DiagramText(
       id: 'sbc_comparison',
-      position: Offset(originX + width / 2, originY + 20),
+      position: const Offset(originX + width / 2, originY + 20),
       text: 'qmax (${maxPressure.toStringAsFixed(1)}) ${isSafe ? '≤' : '>'} SBC (${state.sbc.toStringAsFixed(0)})',
       fontSize: 9,
       color: isSafe ? safeColor : warningColor,
@@ -552,7 +550,7 @@ class FootingToDiagramMapper {
     // Add title
     primitives.add(DiagramText(
       id: 'footing_title',
-      position: Offset(50, 30),
+      position: const Offset(50, 30),
       text: '${_getFootingTypeLabel(state.type)} Footing: ${(state.footingLength / 1000).toStringAsFixed(2)}x${(state.footingWidth / 1000).toStringAsFixed(2)} m',
       fontSize: 14,
       color: labelColor,

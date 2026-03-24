@@ -19,10 +19,8 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
 import 'package:site_buddy/features/structural/slab/domain/slab_design_state.dart';
-import 'package:site_buddy/features/structural/slab/domain/slab_design_result.dart';
 import 'package:site_buddy/features/structural/slab/domain/slab_type.dart';
 
 /// MAPPER: SlabToDiagramMapper
@@ -66,7 +64,6 @@ class SlabToDiagramMapper {
       slabWidth = slabHeight * aspectRatio;
     }
 
-    final scale = slabWidth / state.lx; // Scale in mm/meter context (Lx is in meters)
     // Adjust scale: Lx and Ly are in meters, convert to mm for consistency
     final mmScale = slabWidth / (state.lx * 1000);
 
@@ -438,7 +435,7 @@ class SlabToDiagramMapper {
     const height = 80.0;
 
     // 1. Draw axis
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'moment_axis',
       start: Offset(originX, originY),
       end: Offset(originX + width, originY),
@@ -474,7 +471,7 @@ class SlabToDiagramMapper {
     }
 
     // 3. Labels
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'moment_title',
       position: Offset(originX + width / 2, originY - height - 15),
       text: 'Bending Moment Distribution (kNm/m)',
@@ -509,20 +506,20 @@ class SlabToDiagramMapper {
     const width = 500.0;
     const height = 80.0;
 
-    primitives.add(DiagramRect(
+    primitives.add(const DiagramRect(
       id: 'placeholder',
       position: Offset(originX, originY - height),
       width: width,
       height: height,
-      fillColor: const Color(0xFFF5F5F5),
-      strokeColor: const Color(0xFFBDBDBD),
+      fillColor: Color(0xFFF5F5F5),
+      strokeColor: Color(0xFFBDBDBD),
       strokeWidth: 1.0,
       zIndex: 1,
     ));
 
     primitives.add(DiagramText(
       id: 'placeholder_title',
-      position: Offset(originX + width / 2, originY - height / 2),
+      position: const Offset(originX + width / 2, originY - height / 2),
       text: message,
       fontSize: 11,
       color: const Color(0xFF9E9E9E),
@@ -542,7 +539,7 @@ class SlabToDiagramMapper {
     final slabTypeLabel = state.type == SlabType.oneWay ? 'One-Way' : 'Two-Way';
     primitives.add(DiagramText(
       id: 'slab_title',
-      position: Offset(50, 30),
+      position: const Offset(50, 30),
       text: '$slabTypeLabel Slab: ${state.lx.toStringAsFixed(2)} x ${state.ly.toStringAsFixed(2)} m',
       fontSize: 14,
       color: labelColor,

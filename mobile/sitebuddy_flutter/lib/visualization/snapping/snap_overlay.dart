@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../primitives/primitives.dart' show CoordinateMapper;
-import 'snap_engine.dart';
-import 'snap_result.dart';
-import 'snap_target.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show CoordinateMapper;
+import 'package:site_buddy/visualization/snapping/snap_result.dart';
+import 'package:site_buddy/visualization/snapping/snap_target.dart';
 
 /// Visual overlay for snap indicators
 /// Shows snap points and guides during interactions
@@ -75,16 +74,16 @@ class _SnapOverlayPainter extends CustomPainter {
       // Color based on type
       switch (target.type) {
         case SnapType.vertex:
-          paint.color = const Color(0xFF4CAF50).withOpacity(0.6);
+          paint.color = const Color(0xFF4CAF50).withValues(alpha: 0.6);
           break;
         case SnapType.midpoint:
-          paint.color = const Color(0xFF2196F3).withOpacity(0.6);
+          paint.color = const Color(0xFF2196F3).withValues(alpha: 0.6);
           break;
         case SnapType.center:
-          paint.color = const Color(0xFFFF9800).withOpacity(0.6);
+          paint.color = const Color(0xFFFF9800).withValues(alpha: 0.6);
           break;
         default:
-          paint.color = Colors.grey.withOpacity(0.4);
+          paint.color = Colors.grey.withValues(alpha: 0.4);
       }
 
       // Draw crosshair
@@ -112,7 +111,7 @@ class _SnapOverlayPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final ringPaint = Paint()
-      ..color = _getSnapColor(snap.type).withOpacity(0.3)
+      ..color = _getSnapColor(snap.type).withValues(alpha: 0.3)
       ..style = PaintingStyle.fill;
 
     // Outer ring
@@ -128,7 +127,7 @@ class _SnapOverlayPainter extends CustomPainter {
 
   void _drawAlignmentGuides(Canvas canvas, Offset canvasPos, Offset worldPos) {
     final guidePaint = Paint()
-      ..color = const Color(0xFF00BCD4).withOpacity(0.5)
+      ..color = const Color(0xFF00BCD4).withValues(alpha: 0.5)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 

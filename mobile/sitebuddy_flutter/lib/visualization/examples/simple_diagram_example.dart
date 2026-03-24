@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../config/diagram_config.dart';
-import '../primitives/primitives.dart' show 
+import 'package:site_buddy/visualization/config/diagram_config.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show 
     DiagramPrimitive, DiagramLine, DiagramRect, DiagramText, DiagramGroup;
-import '../coordinate_system/coordinate_mapper.dart';
-import '../core/diagram_renderer.dart';
+import 'package:site_buddy/visualization/core/diagram_renderer.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// Simple example demonstrating the core visualization engine
@@ -101,12 +100,12 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
       ),
 
       // Dimension line - span
-      DiagramLine(
+      const DiagramLine(
         id: 'span_dim',
-        start: const Offset(100, 220),
-        end: const Offset(900, 220),
+        start: Offset(100, 220),
+        end: Offset(900, 220),
         strokeWidth: 1.0,
-        color: const Color(0xFF757575),
+        color: Color(0xFF757575),
         dashed: true,
         label: 'Span Dimension',
         zIndex: 1,
@@ -125,12 +124,12 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
       ),
 
       // Load indicator
-      DiagramLine(
+      const DiagramLine(
         id: 'load_arrow',
-        start: const Offset(500, 50),
-        end: const Offset(500, 100),
+        start: Offset(500, 50),
+        end: Offset(500, 100),
         strokeWidth: 2.0,
-        color: const Color(0xFFF44336),
+        color: Color(0xFFF44336),
         label: 'Point Load',
         zIndex: 1,
       ),
@@ -148,10 +147,10 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
       ),
 
       // Grouped annotation
-      DiagramGroup(
+      const DiagramGroup(
         id: 'annotation_group',
         children: [
-          const DiagramRect(
+          DiagramRect(
             id: 'note_bg',
             position: Offset(700, 250),
             width: 200,
@@ -162,7 +161,7 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
             cornerRadius: 4.0,
             zIndex: 1,
           ),
-          const DiagramText(
+          DiagramText(
             id: 'note_text',
             position: Offset(710, 280),
             text: 'M+ at mid-span',
@@ -171,7 +170,7 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
             label: 'Note',
             zIndex: 2,
           ),
-          const DiagramText(
+          DiagramText(
             id: 'note_text2',
             position: Offset(710, 300),
             text: 'Vmax at supports',
@@ -241,7 +240,7 @@ class _SimpleDiagramExampleState extends State<SimpleDiagramExample> {
                         return Chip(
                           label: Text(
                             p.label ?? p.id,
-                            style: const SbTypography.body,
+                            style: SbTypography.body,
                           ),
                           avatar: CircleAvatar(
                             backgroundColor: _getPrimitiveColor(p),
@@ -334,3 +333,4 @@ class MinimalDiagramExample extends StatelessWidget {
     );
   }
 }
+

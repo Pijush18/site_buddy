@@ -5,7 +5,6 @@ import 'package:printing/printing.dart';
 import 'package:site_buddy/core/utils/ui_formatters.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_entry.dart';
 import 'package:site_buddy/features/level_log/domain/entities/level_method.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: LevelLogReportService
 /// PURPOSE: Generates a professional PDF report for leveling survey data.
@@ -67,7 +66,7 @@ class LevelLogReportService {
             ),
             pw.Text(
               'Project: $projectName',
-              style: const pw.SbTypography.body,
+              style: const pw.TextStyle(fontSize: 10),
             ),
           ],
         ),
@@ -76,11 +75,11 @@ class LevelLogReportService {
           children: [
             pw.Text(
               'Date: ${DateTime.now().toString().split(' ')[0]}',
-              style: const pw.SbTypography.caption,
+              style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
             ),
             pw.Text(
               'Reference: SB-LVL-${DateTime.now().year}',
-              style: const pw.SbTypography.caption,
+              style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
             ),
           ],
         ),
@@ -104,7 +103,7 @@ class LevelLogReportService {
           ),
           pw.Text(
             'Unit of Measurement: Meters (m)',
-            style: const pw.SbTypography.caption,
+            style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
           ),
         ],
       ),
@@ -269,7 +268,7 @@ class LevelLogReportService {
         ),
         pw.Text(
           UiFormatters.decimal(value, fractionDigits: 3),
-          style: pw.SbTypography.caption,
+          style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
         ),
       ],
     );
@@ -385,6 +384,7 @@ class _CustomPdfProfilePainter extends pw.StatelessWidget {
     );
   }
 }
+
 
 
 

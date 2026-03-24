@@ -4,7 +4,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:site_buddy/features/report/domain/report_model.dart';
 import 'package:site_buddy/features/report/domain/report_section.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: ReportGenerator
 /// PURPOSE: Converts EngineeringReport models into PDF documents.
@@ -47,7 +46,7 @@ class ReportGenerator {
             ),
             pw.Text(
               report.codeReference,
-              style: const pw.SbTypography.body,
+              style: const pw.TextStyle(fontSize: 10),
             ),
           ],
         ),
@@ -113,14 +112,14 @@ class ReportGenerator {
           child: pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
-              pw.Text(e.key, style: const pw.SbTypography.caption),
-              pw.Text(e.value, style: pw.SbTypography.caption),
+              pw.Text(e.key, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
+              pw.Text(e.value, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
             ],
           ),
         )),
         if (isPro && section.steps != null) ...[
           pw.SizedBox(height: 5),
-          pw.Text("Calculation Steps:", style: pw.SbTypography.caption),
+          pw.Text("Calculation Steps:", style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
           ...section.steps!.map((step) => pw.Text("- $step", style: const pw.TextStyle(fontSize: 9))),
         ],
       ],
@@ -142,3 +141,4 @@ class ReportGenerator {
     );
   }
 }
+

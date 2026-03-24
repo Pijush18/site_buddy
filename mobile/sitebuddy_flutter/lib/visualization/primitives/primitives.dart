@@ -1,8 +1,7 @@
 import 'dart:math' as math;
-import 'dart:ui';
 import 'package:flutter/painting.dart';
 import 'package:flutter/foundation.dart';
-import '../coordinate_system/diagram_space.dart';
+import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
 
 /// Base class for all drawable primitives
 /// 
@@ -263,7 +262,7 @@ class DiagramRect extends DiagramPrimitive {
     final canvasSize = mapper.worldToCanvasSize(Size(width, height));
 
     // Fill
-    if (fillColor.alpha > 0) {
+    if (fillColor.a > 0) {
       paint
         ..color = fillColor
         ..style = PaintingStyle.fill;
@@ -277,7 +276,7 @@ class DiagramRect extends DiagramPrimitive {
     }
 
     // Stroke
-    if (strokeWidth > 0 && strokeColor.alpha > 0) {
+    if (strokeWidth > 0 && strokeColor.a > 0) {
       paint
         ..color = strokeColor
         ..style = PaintingStyle.stroke

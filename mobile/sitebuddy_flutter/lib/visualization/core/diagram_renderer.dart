@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../config/diagram_config.dart';
-import '../primitives/primitives.dart' show DiagramPrimitive, DiagramRect, DiagramLine, CoordinateMapper;
-import '../coordinate_system/coordinate_mapper.dart';
-import '../coordinate_system/diagram_space.dart' show DiagramSpace;
-import 'viewport_controller.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, DiagramRect, DiagramLine, CoordinateMapper;
+import 'package:site_buddy/visualization/coordinate_system/coordinate_mapper.dart';
+import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart' show DiagramSpace;
 
 /// Main diagram renderer widget
 /// 
@@ -115,7 +114,7 @@ class DiagramWidgetState extends State<DiagramWidget> {
   }
 
   /// Zoom to a specific scale
-  void zoomTo(double targetScale, {Offset? focalPoint = null}) {
+  void zoomTo(double targetScale, {Offset? focalPoint}) {
     setState(() {
       if (_space != null) {
         final factor = targetScale / _space!.scale;

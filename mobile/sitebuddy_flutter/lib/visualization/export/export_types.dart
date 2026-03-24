@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
-import '../primitives/primitives.dart';
-import '../config/diagram_config.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
 
 /// Export format types
 enum ExportFormat {

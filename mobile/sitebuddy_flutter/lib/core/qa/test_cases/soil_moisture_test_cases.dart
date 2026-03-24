@@ -42,7 +42,7 @@ class SoilMoistureTestExpected {
 
 /// Golden test cases for soil moisture calculations.
 /// 
-/// Test IDs: SM_<NNN>
+/// Test IDs: SM_`NNN`
 /// Priority: P1-High
 final soilMoistureTestCases = [
   const GoldenTestCase<SoilMoistureTestInput, SoilMoistureTestExpected>(
@@ -148,7 +148,7 @@ class SoilPropertyTestExpected {
 
 /// Golden test cases for soil type properties.
 /// 
-/// Test IDs: SP_<NNN>
+/// Test IDs: SP_`NNN`
 final soilPropertyTestCases = [
   const GoldenTestCase<SoilPropertyTestInput, SoilPropertyTestExpected>(
     id: 'SP_001',
@@ -227,7 +227,7 @@ class IrrigationMethodTestExpected {
 
 /// Golden test cases for irrigation method properties.
 /// 
-/// Test IDs: IM_<NNN>
+/// Test IDs: IM_`NNN`
 final irrigationMethodTestCases = [
   const GoldenTestCase<IrrigationMethodTestInput, IrrigationMethodTestExpected>(
     id: 'IM_001',
@@ -300,7 +300,7 @@ class GrossIrrigationTestExpected {
 /// 
 /// Gross = Net / (Efficiency / 100)
 /// 
-/// Test IDs: GI_<NNN>
+/// Test IDs: GI_`NNN`
 final grossIrrigationTestCases = [
   const GoldenTestCase<GrossIrrigationTestInput, GrossIrrigationTestExpected>(
     id: 'GI_001',

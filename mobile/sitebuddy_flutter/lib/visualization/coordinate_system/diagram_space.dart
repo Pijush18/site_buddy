@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/painting.dart';
-import '../core/viewport_controller.dart';
+import 'package:site_buddy/visualization/core/viewport_controller.dart';
 
 /// DiagramSpace - Engineering coordinate system abstraction layer
 /// 

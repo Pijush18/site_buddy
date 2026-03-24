@@ -1,4 +1,4 @@
-import '../config/diagram_config.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
 
 /// Viewport configuration
 class ViewportConfig {

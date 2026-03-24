@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Cache entry for a rendered primitive picture
 class CachedPrimitive {

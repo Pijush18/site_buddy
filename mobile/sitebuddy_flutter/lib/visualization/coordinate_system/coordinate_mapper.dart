@@ -1,7 +1,7 @@
 import 'dart:ui';
-import '../config/diagram_config.dart';
-import '../primitives/primitives.dart' show CoordinateMapper;
-import 'diagram_space.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show CoordinateMapper;
+import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
 
 /// Default coordinate mapper implementation
 /// Handles world-to-canvas and canvas-to-world transformations
@@ -21,7 +21,7 @@ class DefaultCoordinateMapper implements CoordinateMapper {
   /// Factory constructor with DiagramSpace
   factory DefaultCoordinateMapper.withSpace(DiagramSpace diagramSpace) {
     return DefaultCoordinateMapper(
-      DiagramConfig(
+      const DiagramConfig(
         worldWidth: 1000.0,
         worldHeight: 800.0,
         canvasWidth: 800.0,

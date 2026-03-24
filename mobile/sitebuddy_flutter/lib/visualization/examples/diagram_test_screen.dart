@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../adapters/road_pavement_diagram.dart';
-import '../adapters/canal_cross_section_diagram.dart';
-import '../config/diagram_config.dart';
-import '../primitives/primitives.dart' show DiagramPrimitive;
-import '../core/diagram_renderer.dart';
+import 'package:site_buddy/visualization/adapters/road_pavement_diagram.dart';
+import 'package:site_buddy/visualization/adapters/canal_cross_section_diagram.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive;
+import 'package:site_buddy/visualization/core/diagram_renderer.dart';
 
 /// Test screen demonstrating real-world diagram adapters
 class DiagramTestScreen extends StatefulWidget {

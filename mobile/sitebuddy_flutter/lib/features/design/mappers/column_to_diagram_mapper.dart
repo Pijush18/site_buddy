@@ -19,7 +19,6 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
 import 'package:site_buddy/features/structural/column/domain/column_design_state.dart';
 import 'package:site_buddy/features/structural/column/domain/column_enums.dart';
@@ -165,7 +164,6 @@ class ColumnToDiagramMapper {
       final remainingBars = numBars - 4;
       final sideBars = (remainingBars / 2).floor();
       final innerWidth = b - 2 * cover - 2 * barRadius;
-      final innerHeight = d - 2 * cover - 2 * barRadius;
 
       for (int i = 1; i <= sideBars; i++) {
         final t = i / (sideBars + 1);
@@ -372,7 +370,7 @@ class ColumnToDiagramMapper {
     const height = 160.0;
 
     // 1. Draw axes
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'pm_axis_x',
       start: Offset(originX, originY),
       end: Offset(originX + width, originY),
@@ -380,7 +378,7 @@ class ColumnToDiagramMapper {
       color: dimensionColor,
       zIndex: 1,
     ));
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'pm_axis_y',
       start: Offset(originX, originY),
       end: Offset(originX, originY - height),
@@ -431,7 +429,7 @@ class ColumnToDiagramMapper {
     ));
 
     // 4. Axis labels
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'pm_x_label',
       position: Offset(originX + width / 2, originY + 20),
       text: 'Mu (kNm)',
@@ -440,7 +438,7 @@ class ColumnToDiagramMapper {
       alignMode: TextAlignMode.center,
       zIndex: 10,
     ));
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'pm_y_label',
       position: Offset(originX - 25, originY - height / 2),
       text: 'Pu (kN)',
@@ -451,7 +449,7 @@ class ColumnToDiagramMapper {
     ));
 
     // 5. Title
-    primitives.add(DiagramText(
+    primitives.add(const DiagramText(
       id: 'pm_title',
       position: Offset(originX + width / 2, originY - height - 20),
       text: 'P-M Interaction',
@@ -521,7 +519,6 @@ class ColumnToDiagramMapper {
     const height = 100.0;
 
     // 1. Draw column representation
-    final columnWidth = 30.0;
     final columnHeight = height - 20;
 
     // Left support
@@ -561,7 +558,7 @@ class ColumnToDiagramMapper {
     ));
 
     // 2. Effective length indicators
-    primitives.add(DiagramLine(
+    primitives.add(const DiagramLine(
       id: 'effective_length_line',
       start: Offset(originX + 10, originY + 15),
       end: Offset(originX + width - 10, originY + 15),
@@ -574,7 +571,7 @@ class ColumnToDiagramMapper {
     // Effective length label
     primitives.add(DiagramText(
       id: 'effective_length_label',
-      position: Offset(originX + width / 2, originY + 25),
+      position: const Offset(originX + width / 2, originY + 25),
       text: 'Le = ${state.lex.toInt()} mm',
       fontSize: 10,
       color: labelColor,
@@ -618,7 +615,7 @@ class ColumnToDiagramMapper {
     // Add title
     primitives.add(DiagramText(
       id: 'column_title',
-      position: Offset(50, 30),
+      position: const Offset(50, 30),
       text: '${state.type.label} Column: ${state.b.toInt()}x${state.d.toInt()} mm',
       fontSize: 14,
       color: labelColor,

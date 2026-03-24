@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
-import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/project/application/project_controller.dart';
 import 'package:site_buddy/features/project/domain/models/project_model.dart';
@@ -30,13 +29,12 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final state = ref.watch(projectListControllerProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Projects'),
+        title: const Text('Projects'),
         actions: [
           IconButton(
             icon: const Icon(SbIcons.filter),
@@ -476,8 +474,6 @@ class _CreateProjectSheetState extends ConsumerState<_CreateProjectSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,

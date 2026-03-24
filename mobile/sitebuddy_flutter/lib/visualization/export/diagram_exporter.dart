@@ -1,13 +1,12 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../primitives/primitives.dart';
-import '../config/diagram_config.dart';
-import '../coordinate_system/diagram_space.dart';
-import '../coordinate_system/coordinate_mapper.dart';
-import '../core/viewport_controller.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
+import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
+import 'package:site_buddy/visualization/coordinate_system/coordinate_mapper.dart';
+import 'package:site_buddy/visualization/core/viewport_controller.dart';
 
 /// Configuration for diagram export
 class ExportConfig {
@@ -118,12 +117,10 @@ void renderDiagram({
   double viewportScale = 1.0,
 }) {
   // Draw background
-  if (config.backgroundColor != null) {
-    final bgPaint = Paint()
-      ..color = config.backgroundColor!
-      ..style = PaintingStyle.fill;
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), bgPaint);
-  }
+  final bgPaint = Paint()
+    ..color = config.backgroundColor
+    ..style = PaintingStyle.fill;
+  canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), bgPaint);
 
   // Draw grid if needed
   if (config.showGrid) {
@@ -175,7 +172,7 @@ void _drawGrid(
 
   Offset origin;
   if (mapper is DefaultCoordinateMapper) {
-    origin = (mapper as DefaultCoordinateMapper).worldToCanvas(Offset.zero);
+    origin = (mapper).worldToCanvas(Offset.zero);
   } else if (mapper != null) {
     origin = mapper.worldToCanvas(Offset.zero);
   } else {

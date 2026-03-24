@@ -1,6 +1,6 @@
 import 'dart:ui';
-import '../primitives/primitives.dart';
-import '../data_visualization/data_types.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/data_visualization/data_types.dart';
 
 /// Chart types
 enum ChartType {

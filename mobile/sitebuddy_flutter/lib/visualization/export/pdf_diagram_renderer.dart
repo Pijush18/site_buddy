@@ -3,11 +3,10 @@ import 'dart:ui' show Color, Offset, Size;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:vector_math/vector_math_64.dart' show Matrix4;
-import '../primitives/primitives.dart';
-import '../coordinate_system/diagram_space.dart';
-import '../coordinate_system/coordinate_mapper.dart';
-import '../config/diagram_config.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
+import 'package:site_buddy/visualization/coordinate_system/coordinate_mapper.dart';
+import 'package:site_buddy/visualization/config/diagram_config.dart';
 
 /// Vector PDF renderer for structural diagrams
 ///
@@ -222,7 +221,7 @@ class PdfDiagramRenderer {
                     child: pw.Center(
                       child: pw.Text(
                         'Tile ${tx + 1},${ty + 1} of $tilesX x $tilesY${title != null ? ' - $title' : ''}',
-                        style: const pw.SbTypography.caption,
+                        style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
                       ),
                     ),
                   ),
@@ -375,7 +374,7 @@ class PdfDiagramRenderer {
     final pdfStrokeColor = _toPdfColor(rect.strokeColor);
 
     // Draw fill if opaque
-    if (rect.fillColor.alpha > 0) {
+    if (rect.fillColor.a > 0) {
       canvas.setFillColor(pdfFillColor);
       if (rect.cornerRadius > 0) {
         canvas.drawRoundedRect(pdfX, pdfY, pdfW, pdfH, rect.cornerRadius * mapper.scale);
@@ -386,7 +385,7 @@ class PdfDiagramRenderer {
     }
 
     // Draw stroke if visible
-    if (rect.strokeWidth > 0 && rect.strokeColor.alpha > 0) {
+    if (rect.strokeWidth > 0 && rect.strokeColor.a > 0) {
       canvas.setStrokeColor(pdfStrokeColor);
       canvas.setLineWidth(rect.strokeWidth * mapper.scale);
       if (rect.cornerRadius > 0) {
@@ -503,7 +502,7 @@ class PdfDiagramRenderer {
 
   /// Convert Flutter Color to PDF Color
   static PdfColor _toPdfColor(Color color) {
-    return PdfColor.fromInt(color.value);
+    return PdfColor.fromInt(color.toARGB32());
   }
 
   /// Get PDF font by name
@@ -563,3 +562,4 @@ class DiagramPdfPageFormat {
         marginRight: margin,
       );
 }
+

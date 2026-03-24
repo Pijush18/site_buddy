@@ -38,7 +38,7 @@ class IrrigationFAOTestExpected {
 
 /// Golden test cases for FAO-56 calculations.
 /// 
-/// Test IDs: IR_<NNN>
+/// Test IDs: IR_`NNN`
 /// Priority: P0-Critical
 final irrigationFAOTestCases = [
   const GoldenTestCase<IrrigationFAOTestInput, IrrigationFAOTestExpected>(
@@ -177,7 +177,7 @@ class KcTestExpected {
 
 /// Golden test cases for crop coefficients (Kc).
 /// 
-/// Test IDs: KC_<NNN>
+/// Test IDs: KC_`NNN`
 final kcTestCases = [
   const GoldenTestCase<KcTestInput, KcTestExpected>(
     id: 'KC_001',
@@ -251,7 +251,7 @@ class EffectiveRainfallTestExpected {
 /// - 250-500mm: 150 + 25% of excess
 /// - >500mm: 212.5 + 10% of excess
 /// 
-/// Test IDs: RF_<NNN>
+/// Test IDs: RF_`NNN`
 final effectiveRainfallTestCases = [
   const GoldenTestCase<EffectiveRainfallTestInput, EffectiveRainfallTestExpected>(
     id: 'RF_001',

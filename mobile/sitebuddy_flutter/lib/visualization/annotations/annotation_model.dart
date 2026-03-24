@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../primitives/primitives.dart';
-import 'annotation_primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/annotations/annotation_primitives.dart';
 
 /// Types of annotations available in the system
 enum AnnotationType {
@@ -142,7 +142,7 @@ class TextAnnotation extends Annotation {
     'isLocked': isLocked,
     'isVisible': isVisible,
     'style': {
-      'color': style.color.value,
+      'color': style.color.toARGB32(),
       'fontSize': style.fontSize,
     },
   };
@@ -214,7 +214,7 @@ class MarkerAnnotation extends Annotation {
     'zIndex': zIndex,
     'isLocked': isLocked,
     'isVisible': isVisible,
-    'style': {'color': style.color.value, 'strokeWidth': style.strokeWidth},
+    'style': {'color': style.color.toARGB32(), 'strokeWidth': style.strokeWidth},
   };
 
   @override
@@ -286,7 +286,7 @@ class HighlightAnnotation extends Annotation {
     'zIndex': zIndex,
     'isLocked': isLocked,
     'isVisible': isVisible,
-    'style': {'color': style.color.value, 'fillColor': style.fillColor.value, 'opacity': style.opacity},
+    'style': {'color': style.color.toARGB32(), 'fillColor': style.fillColor.toARGB32(), 'opacity': style.opacity},
   };
 
   @override
@@ -361,7 +361,7 @@ class DimensionAnnotation extends Annotation {
     'zIndex': zIndex,
     'isLocked': isLocked,
     'isVisible': isVisible,
-    'style': {'color': style.color.value, 'strokeWidth': style.strokeWidth},
+    'style': {'color': style.color.toARGB32(), 'strokeWidth': style.strokeWidth},
   };
 
   @override
@@ -436,7 +436,7 @@ class CalloutAnnotation extends Annotation {
     'zIndex': zIndex,
     'isLocked': isLocked,
     'isVisible': isVisible,
-    'style': {'color': style.color.value, 'fillColor': style.fillColor.value},
+    'style': {'color': style.color.toARGB32(), 'fillColor': style.fillColor.toARGB32()},
   };
 
   @override

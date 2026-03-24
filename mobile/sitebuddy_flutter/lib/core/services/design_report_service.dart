@@ -18,7 +18,6 @@ import 'package:site_buddy/features/structural/beam/domain/beam_design_service.d
 import 'package:site_buddy/features/structural/slab/domain/slab_design_service.dart';
 import 'package:site_buddy/features/structural/column/domain/column_design_service.dart';
 import 'package:site_buddy/features/structural/footing/domain/footing_design_service.dart' as domain;
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: DesignReportService
 /// PURPOSE: Professional PDF report generation for structural design modules.
@@ -93,7 +92,7 @@ class DesignReportService {
               children: [
                 pw.Text(
                   'SITEBUDDY STRUCTURAL DESIGN',
-                  style: pw.SbTypography.caption,
+                  style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
                 ),
                 pw.SizedBox(height: 4),
                 pw.Text(
@@ -106,7 +105,7 @@ class DesignReportService {
                 ),
                 pw.Text(
                   subtitle,
-                  style: pw.SbTypography.body,
+                  style: const pw.TextStyle(fontSize: 10),
                 ),
               ],
             ),
@@ -115,12 +114,12 @@ class DesignReportService {
               children: [
                 pw.Text(
                   'Date: ${DateTime.now().toString().split(' ')[0]}',
-                  style: const pw.SbTypography.caption,
+                  style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
                 ),
                 if (reference != null)
                   pw.Text(
                     'Ref: $reference',
-                    style: const pw.SbTypography.caption,
+                    style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
                   ),
               ],
             ),
@@ -177,7 +176,7 @@ class DesignReportService {
         children: [
           pw.Text(
             title.toUpperCase(),
-            style: pw.SbTypography.body,
+            style: const pw.TextStyle(fontSize: 10),
           ),
           pw.SizedBox(height: 2),
           pw.Container(height: 1, color: PdfColors.blue100),
@@ -190,7 +189,7 @@ class DesignReportService {
     return pw.TableHelper.fromTextArray(
       data: data,
       cellAlignment: pw.Alignment.centerLeft,
-      cellStyle: const pw.SbTypography.caption,
+      cellStyle: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
       headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
       border: pw.TableBorder.all(color: PdfColors.grey200, width: 0.5),
       cellPadding: const pw.EdgeInsets.all(5),
@@ -758,6 +757,7 @@ class DesignReportService {
     );
   }
 }
+
 
 
 

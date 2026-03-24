@@ -76,8 +76,8 @@ class DiagramConfig {
         'zoom': zoom,
         'showGrid': showGrid,
         'gridSpacing': gridSpacing,
-        'gridColor': gridColor.value,
-        'backgroundColor': backgroundColor.value,
+        'gridColor': gridColor.toARGB32(),
+        'backgroundColor': backgroundColor.toARGB32(),
       };
 
   /// Create from JSON

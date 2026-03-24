@@ -2,6 +2,7 @@
 /// 
 /// This is the main entry point for the engineering visualization engine.
 /// Import this file to get access to all core functionality.
+library;
 
 /// Config
 export 'config/diagram_config.dart';

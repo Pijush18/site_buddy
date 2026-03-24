@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'annotation_model.dart';
-import '../primitives/primitives.dart';
-import '../spatial/spatial_index.dart';
+import 'package:site_buddy/visualization/annotations/annotation_model.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/spatial/spatial_index.dart';
 
 /// Manages the state and operations for diagram annotations
 class AnnotationController extends ChangeNotifier {
@@ -161,7 +161,7 @@ class AnnotationController extends ChangeNotifier {
   void toggleVisibility(String id) {
     final annotation = _annotations[id];
     if (annotation != null) {
-      updateAnnotation(annotation.copyWith(isVisible: !annotation.isVisible) as Annotation);
+      updateAnnotation(annotation.copyWith(isVisible: !annotation.isVisible));
     }
   }
 
@@ -169,7 +169,7 @@ class AnnotationController extends ChangeNotifier {
   void toggleLock(String id) {
     final annotation = _annotations[id];
     if (annotation != null) {
-      updateAnnotation(annotation.copyWith(isLocked: !annotation.isLocked) as Annotation);
+      updateAnnotation(annotation.copyWith(isLocked: !annotation.isLocked));
     }
   }
 
@@ -178,7 +178,7 @@ class AnnotationController extends ChangeNotifier {
     final annotation = _annotations[id];
     if (annotation != null) {
       final maxZ = _annotations.values.fold<int>(0, (max, a) => a.zIndex > max ? a.zIndex : max);
-      updateAnnotation(annotation.copyWith(zIndex: maxZ + 1) as Annotation);
+      updateAnnotation(annotation.copyWith(zIndex: maxZ + 1));
     }
   }
 
@@ -187,7 +187,7 @@ class AnnotationController extends ChangeNotifier {
     final annotation = _annotations[id];
     if (annotation != null) {
       final minZ = _annotations.values.fold<int>(0, (min, a) => a.zIndex < min ? a.zIndex : min);
-      updateAnnotation(annotation.copyWith(zIndex: minZ - 1) as Annotation);
+      updateAnnotation(annotation.copyWith(zIndex: minZ - 1));
     }
   }
 

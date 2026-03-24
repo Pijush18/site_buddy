@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart';
-import '../primitives/polyline_primitive.dart';
-import 'snap_result.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/polyline_primitive.dart';
+import 'package:site_buddy/visualization/snapping/snap_result.dart';
 
 /// A snap target point extracted from a primitive
 /// These are cached for performance
@@ -316,8 +316,12 @@ class SnapTargetExtractor {
 
   static double _taylorCos(double x) {
     // Normalize to -pi to pi
-    while (x > 3.14159265359) x -= 6.28318530718;
-    while (x < -3.14159265359) x += 6.28318530718;
+    while (x > 3.14159265359) {
+      x -= 6.28318530718;
+    }
+    while (x < -3.14159265359) {
+      x += 6.28318530718;
+    }
     double result = 1.0;
     double term = 1.0;
     for (int i = 1; i <= 10; i++) {
@@ -329,8 +333,12 @@ class SnapTargetExtractor {
 
   static double _taylorSin(double x) {
     // Normalize to -pi to pi
-    while (x > 3.14159265359) x -= 6.28318530718;
-    while (x < -3.14159265359) x += 6.28318530718;
+    while (x > 3.14159265359) {
+      x -= 6.28318530718;
+    }
+    while (x < -3.14159265359) {
+      x += 6.28318530718;
+    }
     double result = x;
     double term = x;
     for (int i = 1; i <= 10; i++) {

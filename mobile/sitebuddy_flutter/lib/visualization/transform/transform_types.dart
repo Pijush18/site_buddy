@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Transform types for primitives
 enum TransformType {

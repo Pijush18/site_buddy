@@ -1,7 +1,7 @@
 import 'dart:ui';
-import '../primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine, DiagramRect;
-import '../primitives/path_primitives.dart' show DiagramPath, HatchPattern;
-import '../dimension/dimension_annotation.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine, DiagramRect;
+import 'package:site_buddy/visualization/primitives/path_primitives.dart' show DiagramPath, HatchPattern;
+import 'package:site_buddy/visualization/dimension/dimension_annotation.dart';
 import 'package:flutter/material.dart';
 
 /// Pavement layer data model with hatch support
@@ -110,7 +110,7 @@ class PavementDiagramAdapter {
   }
 
   Color _getContrastingTextColor(Color bgColor) {
-    final luminance = (0.299 * bgColor.red + 0.587 * bgColor.green + 0.114 * bgColor.blue) / 255;
+    final luminance = 0.299 * bgColor.r + 0.587 * bgColor.g + 0.114 * bgColor.b;
     return luminance > 0.5 ? const Color(0xFF212121) : const Color(0xFFFFFFFF);
   }
 }

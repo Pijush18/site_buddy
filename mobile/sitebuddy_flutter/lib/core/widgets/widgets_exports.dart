@@ -6,7 +6,6 @@
 // Import from here instead of individual files.
 //
 // ATOMIC COMPONENTS:
-// - SBText: Unified text component (replaces all Text usage)
 // - SBButton: Unified button component (replaces all button usage)
 // - SBTextField: Unified text input component
 // - SBIconButton: Unified icon button component
@@ -17,7 +16,6 @@
 // - SbSectionHeader: Section header component
 // - AppScreenWrapper: Screen layout wrapper
 
-export 'sb_text.dart';
 export 'sb_button.dart';
 export 'sb_text_field.dart';
 export 'sb_icon_button.dart';

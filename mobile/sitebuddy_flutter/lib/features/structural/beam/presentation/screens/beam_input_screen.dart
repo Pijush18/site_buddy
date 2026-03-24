@@ -37,12 +37,6 @@ class _BeamInputScreenState extends ConsumerState<BeamInputScreen> {
 
   /// IS 456 minimum beam width in mm
   static const double _minBeamWidth = 200.0;
-  
-  /// IS 456 recommended minimum beam depth based on span (L/d = 20 for simply supported)
-  double get _recommendedMinDepth {
-    final span = double.tryParse(_spanController.text) ?? 0;
-    return span > 0 ? span / 20 : 300;
-  }
 
   @override
   void initState() {

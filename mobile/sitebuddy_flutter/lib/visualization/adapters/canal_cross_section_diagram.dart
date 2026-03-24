@@ -1,7 +1,7 @@
 import 'dart:ui';
-import '../primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine, DiagramRect;
-import '../primitives/path_primitives.dart' show DiagramTrapezoid, HatchPattern;
-import '../dimension/dimension_annotation.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine, DiagramRect;
+import 'package:site_buddy/visualization/primitives/path_primitives.dart' show DiagramTrapezoid, HatchPattern;
+import 'package:site_buddy/visualization/dimension/dimension_annotation.dart';
 import 'package:flutter/material.dart';
 
 /// Canal cross-section data model

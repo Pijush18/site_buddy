@@ -385,11 +385,10 @@ class _PriceOption extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: SbSpacing.xs),
       child: Row(
         children: [
-          Radio<String>(
-            value: price,
-            groupValue: price,
-            onChanged: (_) {},
-            visualDensity: VisualDensity.compact,
+          Icon(
+            Icons.radio_button_checked,
+            size: 20,
+            color: colorScheme.primary,
           ),
           Text(
             label,
@@ -457,55 +456,55 @@ class _ComparisonSheet extends StatelessWidget {
               controller: scrollController,
               padding: const EdgeInsets.all(SbSpacing.lg),
               children: [
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Projects',
                   free: '3',
                   pro: 'Unlimited',
                   premium: 'Unlimited',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Calculations',
                   free: 'Basic',
                   pro: 'Unlimited',
                   premium: 'Unlimited',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Diagram Features',
                   free: 'Basic',
                   pro: 'Full',
                   premium: 'Full',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Export Quality',
                   free: 'Low-Res',
                   pro: 'High-Res',
                   premium: 'Ultra HD',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'PDF Export',
                   free: 'Basic',
                   pro: 'High-Qity',
                   premium: 'Multi-Page',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Annotations',
                   free: '❌',
                   pro: '✓',
                   premium: '✓',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'History',
                   free: 'Recent',
                   pro: 'Full',
                   premium: 'Full',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Advanced Snapping',
                   free: '❌',
                   pro: '❌',
                   premium: '✓',
                 ),
-                _ComparisonRow(
+                const _ComparisonRow(
                   feature: 'Measurement Tools',
                   free: '❌',
                   pro: '❌',

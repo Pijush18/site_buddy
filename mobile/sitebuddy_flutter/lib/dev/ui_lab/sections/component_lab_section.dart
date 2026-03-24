@@ -30,13 +30,13 @@ class _ComponentLabSectionState extends State<ComponentLabSection> {
             ),
             Row(
               children: [
-                const Text('Loading', style: SbTypography.caption),
+                Text('Loading', style: SbTypography.caption),
                 Switch.adaptive(
                   value: _isLoading,
                   onChanged: (v) => setState(() => _isLoading = v),
                 ),
                 const SizedBox(width: SbSpacing.sm),
-                const Text('Enabled', style: SbTypography.caption),
+                Text('Enabled', style: SbTypography.caption),
                 Switch.adaptive(
                   value: _isEnabled,
                   onChanged: (v) => setState(() => _isEnabled = v),

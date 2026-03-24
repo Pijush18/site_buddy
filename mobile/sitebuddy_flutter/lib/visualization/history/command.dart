@@ -2,10 +2,11 @@
 /// 
 /// This provides a scalable, testable, and extensible undo/redo system
 /// that supports future time-travel debugging capabilities.
+library;
 
 import 'package:flutter/material.dart';
-import '../annotations/annotation_model.dart';
-import '../annotations/annotation_controller.dart';
+import 'package:site_buddy/visualization/annotations/annotation_model.dart';
+import 'package:site_buddy/visualization/annotations/annotation_controller.dart';
 
 /// Base class for all commands in the history system
 /// 
@@ -187,13 +188,10 @@ class UpdateAnnotationCommand extends Command with ControllerAware {
 /// Command for changing annotation visibility
 class ToggleVisibilityCommand extends Command with ControllerAware {
   final String _annotationId;
-  final bool _wasVisible;
   
   ToggleVisibilityCommand({
     required String annotationId,
-    required bool wasVisible,
-  }) : _annotationId = annotationId,
-       _wasVisible = wasVisible;
+  }) : _annotationId = annotationId;
   
   @override
   String get description => 'Toggle visibility';
@@ -219,13 +217,10 @@ class ToggleVisibilityCommand extends Command with ControllerAware {
 /// Command for changing annotation lock state
 class ToggleLockCommand extends Command with ControllerAware {
   final String _annotationId;
-  final bool _wasLocked;
   
   ToggleLockCommand({
     required String annotationId,
-    required bool wasLocked,
-  }) : _annotationId = annotationId,
-       _wasLocked = wasLocked;
+  }) : _annotationId = annotationId;
   
   @override
   String get description => 'Toggle lock';

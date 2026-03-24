@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
-import 'primitives.dart' show DiagramPrimitive, CoordinateMapper;
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, CoordinateMapper;
 
 /// Hatch pattern types for material representation
 enum HatchType {
@@ -79,18 +79,18 @@ class DiagramPath extends DiagramPrimitive {
   final bool closed;
 
   const DiagramPath({
-    required String id,
+    required super.id,
     required this.path,
     this.fillColor,
     this.strokeColor,
     this.strokeWidth = 1.0,
     this.hatch,
     this.closed = true,
-    int zIndex = 0,
-    bool visible = true,
-    String? label,
-    int version = 0,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
+    super.zIndex,
+    super.visible,
+    super.label,
+    super.version,
+  });
 
   @override
   DiagramPath copyWith({
@@ -138,7 +138,7 @@ class DiagramPath extends DiagramPrimitive {
     final transformedPath = _transformPath(mapper);
 
     // Fill with color or hatch pattern
-    if (fillColor != null && fillColor!.alpha > 0) {
+    if (fillColor != null && fillColor!.a > 0) {
       if (hatch != null && hatch!.type != HatchType.solid) {
         _renderWithHatch(canvas, paint, transformedPath, mapper);
       } else {
@@ -164,7 +164,6 @@ class DiagramPath extends DiagramPrimitive {
     final metrics = path.computeMetrics();
 
     for (final metric in metrics) {
-      final extractedPath = metric.extractPath(0, metric.length);
       final points = <Offset>[];
 
       // Sample points along the path
@@ -284,17 +283,17 @@ class DiagramPolygon extends DiagramPrimitive {
   final HatchPattern? hatch;
 
   const DiagramPolygon({
-    required String id,
+    required super.id,
     required this.points,
     this.fillColor,
     this.strokeColor,
     this.strokeWidth = 1.0,
     this.hatch,
-    int zIndex = 0,
-    bool visible = true,
-    String? label,
-    int version = 0,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
+    super.zIndex,
+    super.visible,
+    super.label,
+    super.version,
+  });
 
   @override
   DiagramPolygon copyWith({
@@ -353,7 +352,7 @@ class DiagramPolygon extends DiagramPrimitive {
     final path = Path()..addPolygon(canvasPoints, true);
 
     // Fill
-    if (fillColor != null && fillColor!.alpha > 0) {
+    if (fillColor != null && fillColor!.a > 0) {
       if (hatch != null && hatch!.type != HatchType.solid) {
         _renderWithHatch(canvas, paint, path, mapper);
       } else {
@@ -449,7 +448,7 @@ class DiagramTrapezoid extends DiagramPrimitive {
   final HatchPattern? hatch;
 
   const DiagramTrapezoid({
-    required String id,
+    required super.id,
     required this.bottomLeft,
     required this.bottomRight,
     required this.topLeft,
@@ -458,11 +457,11 @@ class DiagramTrapezoid extends DiagramPrimitive {
     this.strokeColor,
     this.strokeWidth = 1.0,
     this.hatch,
-    int zIndex = 0,
-    bool visible = true,
-    String? label,
-    int version = 0,
-  }) : super(id: id, zIndex: zIndex, visible: visible, label: label, version: version);
+    super.zIndex,
+    super.visible,
+    super.label,
+    super.version,
+  });
 
   @override
   DiagramTrapezoid copyWith({
@@ -534,7 +533,7 @@ class DiagramTrapezoid extends DiagramPrimitive {
       ..close();
 
     // Fill
-    if (fillColor != null && fillColor!.alpha > 0) {
+    if (fillColor != null && fillColor!.a > 0) {
       paint
         ..color = fillColor!
         ..style = PaintingStyle.fill;

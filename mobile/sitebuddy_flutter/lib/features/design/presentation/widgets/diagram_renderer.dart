@@ -13,13 +13,11 @@
 //
 // ----------------------------------------------
 
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
 import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
-import 'package:site_buddy/visualization/coordinate_system/diagram_space.dart';
 
 /// WIDGET: DiagramRenderer
 /// PURPOSE: Renders a list of DiagramPrimitives using the DiagramEngine.

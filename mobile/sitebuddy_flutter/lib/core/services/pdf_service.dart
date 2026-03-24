@@ -3,7 +3,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:site_buddy/shared/domain/models/report_data.dart';
 import 'package:intl/intl.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: PdfService
 /// PURPOSE: Handles PDF generation from calculation data. (Pure Logic)
@@ -54,7 +53,7 @@ class PdfService {
                 ),
                 pw.Text(
                   'ENGINEERING COMPUTATION SHEET',
-                  style: const pw.SbTypography.caption,
+                  style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700),
                 ),
               ],
             ),
@@ -162,7 +161,7 @@ class PdfService {
             children: [
               pw.Text(
                 item.label,
-                style: const pw.SbTypography.caption,
+                style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey800),
               ),
               pw.Row(
                 children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'annotation_model.dart';
-import 'annotation_controller.dart';
+import 'package:site_buddy/visualization/annotations/annotation_model.dart';
+import 'package:site_buddy/visualization/annotations/annotation_controller.dart';
 
 /// Interactive annotation layer widget
 /// 

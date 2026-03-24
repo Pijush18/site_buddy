@@ -53,7 +53,7 @@ class RoadDesignTestExpected {
 
 /// Golden test cases for road design state machine.
 /// 
-/// Test IDs: NC_RD_<NNN>
+/// Test IDs: NC_RD_`NNN`
 /// Priority: P1-High
 final roadNotifierTestCases = [
   const GoldenTestCase<RoadDesignTestInput, RoadDesignTestExpected>(
@@ -203,7 +203,7 @@ class IrrigationDesignTestExpected {
 
 /// Golden test cases for irrigation design state machine.
 /// 
-/// Test IDs: NC_IR_<NNN>
+/// Test IDs: NC_IR_`NNN`
 /// Priority: P1-High
 final irrigationNotifierTestCases = [
   const GoldenTestCase<IrrigationDesignTestInput, IrrigationDesignTestExpected>(
@@ -337,7 +337,7 @@ class ValidationEdgeCaseExpected {
 
 /// Golden test cases for input validation edge cases.
 /// 
-/// Test IDs: VA_<NNN>
+/// Test IDs: VA_`NNN`
 final validationEdgeCaseTestCases = [
   const GoldenTestCase<ValidationEdgeCaseInput, ValidationEdgeCaseExpected>(
     id: 'VA_001',

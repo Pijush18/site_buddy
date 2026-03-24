@@ -118,8 +118,9 @@ class _RadiusBox extends StatelessWidget {
           ),
         ),
         const SizedBox(height: SbSpacing.xs),
-        Text(name, style: const SbTypography.caption),
+        Text(name, style: SbTypography.caption),
       ],
     );
   }
 }
+

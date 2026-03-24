@@ -4,7 +4,6 @@ import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 import 'package:site_buddy/core/logging/app_logger.dart';
-import 'package:site_buddy/core/design_system/sb_typography.dart';
 
 /// SERVICE: PdfReportService
 /// PURPOSE: Standardized PDF generation for all engineer reports.
@@ -84,7 +83,7 @@ class PdfReportService {
             children: [
               pw.Text(
                 'SITEBUDDY ENGINEERING REPORT',
-                style: pw.SbTypography.caption,
+                style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
               ),
               pw.Text(
                 report.typeLabel.toUpperCase(),
@@ -191,7 +190,7 @@ class PdfReportService {
       children: [
         pw.Padding(
           padding: const pw.EdgeInsets.symmetric(vertical: 2),
-          child: pw.Text(label, style: const pw.SbTypography.caption),
+          child: pw.Text(label, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
         ),
         pw.Padding(
           padding: const pw.EdgeInsets.symmetric(vertical: 2),
@@ -221,12 +220,12 @@ class PdfReportService {
         children: [
           pw.Text(
             'SUMMARY',
-            style: pw.SbTypography.body,
+            style: const pw.TextStyle(fontSize: 10),
           ),
           pw.SizedBox(height: 4),
           pw.Text(
             report.summary,
-            style: const pw.SbTypography.bodySmall,
+            style: const pw.TextStyle(fontSize: 8),
           ),
         ],
       ),
@@ -261,12 +260,13 @@ class PdfReportService {
       padding: const pw.EdgeInsets.symmetric(vertical: 2),
       child: pw.Row(
         children: [
-          pw.Text(label, style: pw.SbTypography.caption),
+          pw.Text(label, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
           pw.SizedBox(width: 8),
-          pw.Text(value, style: const pw.SbTypography.caption),
+          pw.Text(value, style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700)),
         ],
       ),
     );
   }
 }
+
 

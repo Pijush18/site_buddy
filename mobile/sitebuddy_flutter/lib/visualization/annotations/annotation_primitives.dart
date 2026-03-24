@@ -1,7 +1,6 @@
 import 'dart:math' as math;
-import 'dart:ui';
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Annotation types matching the original model
 enum AnnotationType {

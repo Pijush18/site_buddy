@@ -1,5 +1,4 @@
 import 'dart:ui';
-import '../primitives/primitives.dart';
 
 /// Annotation anchor point
 enum AnchorPoint {

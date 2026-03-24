@@ -2,6 +2,7 @@
 /// 
 /// Provides O(log n) hit testing for large numbers of primitives
 /// by dividing space into quadrants recursively.
+library;
 
 import 'dart:math' as math;
 import 'dart:ui';

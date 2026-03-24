@@ -44,7 +44,7 @@ class RoadPavementTestExpected {
 
 /// Golden test cases for road pavement calculations.
 /// 
-/// Test IDs: RD_<NNN>
+/// Test IDs: RD_`NNN`
 /// Priority: P0-Critical
 final roadPavementTestCases = [
   const GoldenTestCase<RoadPavementTestInput, RoadPavementTestExpected>(
@@ -151,7 +151,7 @@ class EsalTestExpected {
 
 /// Golden test cases for ESAL calculations.
 /// 
-/// Test IDs: ES_<NNN>
+/// Test IDs: ES_`NNN`
 final esalTestCases = [
   const GoldenTestCase<EsalTestInput, EsalTestExpected>(
     id: 'ES_001',
@@ -200,7 +200,7 @@ class TrafficClassTestExpected {
 
 /// Golden test cases for traffic classification.
 /// 
-/// Test IDs: TC_<NNN>
+/// Test IDs: TC_`NNN`
 final trafficClassificationTestCases = [
   const GoldenTestCase<TrafficClassTestInput, TrafficClassTestExpected>(
     id: 'TC_001',
@@ -257,7 +257,7 @@ class LayerDistributionTestExpected {
 /// 
 /// IRC 37-2018 proportions: BC 7%, DBM 18%, WMM 35%, GSB 40%
 /// 
-/// Test IDs: LD_<NNN>
+/// Test IDs: LD_`NNN`
 final layerDistributionTestCases = [
   const GoldenTestCase<LayerDistributionTestInput, LayerDistributionTestExpected>(
     id: 'LD_001',

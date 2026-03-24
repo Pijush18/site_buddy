@@ -1,6 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Layout algorithm types
 enum LayoutType {

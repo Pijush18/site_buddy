@@ -1,7 +1,7 @@
-import '../primitives/primitives.dart';
 
 /// Semantic layer interface for domain-specific meaning
 /// Allows primitives to carry engineering/structural semantics
+library;
 
 /// Semantic type categories
 enum SemanticType {

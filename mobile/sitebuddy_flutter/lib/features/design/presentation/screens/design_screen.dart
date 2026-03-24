@@ -5,7 +5,6 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/widgets/sb_grid.dart';
 import 'package:site_buddy/core/widgets/sb_grid_action_card.dart';
 import 'package:site_buddy/core/widgets/sb_section.dart';
-import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: DesignScreen
 /// PURPOSE: Professional engineering dashboard rebuilt with data-driven tool registry
@@ -23,7 +22,7 @@ class DesignScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: SBText.heading('Design Tools'),
+        title: const Text('Design Tools'),
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,

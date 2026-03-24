@@ -340,7 +340,7 @@ final irrigationIntegrationTests = [
       final fao56 = FAO56Standard();
       
       // Step 1: Calculate ET₀
-      final climate = ClimateData(
+      final climate = const ClimateData(
         temperature: 25.0,
         humidity: 60.0,
         windSpeed: 2.0,
@@ -458,7 +458,7 @@ final irrigationIntegrationTests = [
     run: () {
       final fao56 = FAO56Standard();
       
-      final climate = ClimateData(
+      final climate = const ClimateData(
         temperature: 30.0,
         humidity: 80.0,
         windSpeed: 1.5,
@@ -524,7 +524,7 @@ final irrigationIntegrationTests = [
     run: () {
       final fao56 = FAO56Standard();
       
-      final climate = ClimateData(
+      final climate = const ClimateData(
         temperature: 28.0,
         humidity: 55.0,
         windSpeed: 2.5,

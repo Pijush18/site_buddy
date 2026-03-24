@@ -1,5 +1,4 @@
 import 'dart:ui';
-import '../primitives/primitives.dart';
 
 /// Parametric parameter definition
 class Parameter {

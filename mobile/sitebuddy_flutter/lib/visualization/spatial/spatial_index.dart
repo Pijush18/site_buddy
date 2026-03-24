@@ -1,5 +1,5 @@
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart';
+import 'package:site_buddy/visualization/primitives/primitives.dart';
 
 /// Spatial index wrapper for fast hit testing using QuadTree
 /// 

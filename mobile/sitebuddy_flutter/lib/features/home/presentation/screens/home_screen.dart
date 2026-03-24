@@ -8,7 +8,6 @@ import 'package:site_buddy/core/widgets/sb_section_header.dart';
 import 'package:site_buddy/core/widgets/sb_card.dart';
 import 'package:site_buddy/core/widgets/sb_list_item_tile.dart';
 import 'package:site_buddy/core/widgets/sb_grid_action_card.dart';
-import 'package:site_buddy/core/widgets/sb_text.dart';
 
 /// SCREEN: HomeScreen
 /// PURPOSE: Main dashboard rebuilt using SiteBuddy UI System (Phase 1)
@@ -80,7 +79,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: SBText.heading('SiteBuddy'),
+        title: const Text('SiteBuddy'),
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,
@@ -252,10 +251,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return SbCard(
       padding: const EdgeInsets.all(SbSpacing.lg), // Tighter than xl
       child: Center(
-        child: SBText(
+        child: Text(
           message,
-          variant: SBTextVariant.bodySmall,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
         ),
       ),
     );

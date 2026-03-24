@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/painting.dart';
-import '../primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine;
-import '../primitives/path_primitives.dart' show HatchType;
+import 'package:site_buddy/visualization/primitives/primitives.dart' show DiagramPrimitive, DiagramText, DiagramLine;
 
 /// Dimension style for engineering drawings
 enum DimensionStyle {
@@ -134,7 +133,6 @@ class DimensionAnnotation {
     // Tick marks at ends
     if (style == DimensionStyle.architectural) {
       // Architectural style - ticks at 45°
-      final tickAngle = 0.785; // 45 degrees
       final cosA = tickLength * 0.707;
       final sinA = tickLength * 0.707;
 

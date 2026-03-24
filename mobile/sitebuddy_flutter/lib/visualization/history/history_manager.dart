@@ -4,10 +4,11 @@
 /// - Maximum history limit
 /// - History state change notifications
 /// - Future time-travel debugging
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'command.dart';
+import 'package:site_buddy/visualization/history/command.dart';
 
 /// Configuration for history management
 class HistoryConfig {
