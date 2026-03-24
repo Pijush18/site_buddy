@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/subscription/subscription_tier.dart';
 import 'package:site_buddy/core/subscription/subscription_provider.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 
 /// SCREEN: PaywallScreen
@@ -78,7 +80,7 @@ class PaywallScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(SbSpacing.md),
                   decoration: BoxDecoration(
                     color: colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(SbRadius.standard),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -199,7 +201,7 @@ class PaywallScreen extends ConsumerWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Upgraded to ${tier.displayName}!'),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.success,
       ),
     );
     

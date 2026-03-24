@@ -478,10 +478,10 @@ class SbListItemTile extends StatelessWidget {
       case SbListItemStatus.none:
         return const SizedBox.shrink();
       case SbListItemStatus.success:
-        indicatorColor = AppColors.success(context);
+        indicatorColor = AppColors.success;
         break;
       case SbListItemStatus.warning:
-        indicatorColor = AppColors.warning(context);
+        indicatorColor = AppColors.warning;
         break;
       case SbListItemStatus.error:
         indicatorColor = colorScheme.error;
@@ -512,12 +512,12 @@ class SbListItemTile extends StatelessWidget {
         textColor = colorScheme.onSurfaceVariant;
         break;
       case SbListItemStatus.success:
-        chipColor = AppColors.success(context).withValues(alpha: 0.1);
-        textColor = AppColors.success(context);
+        chipColor = AppColors.success.withValues(alpha: 0.1);
+        textColor = AppColors.success;
         break;
       case SbListItemStatus.warning:
-        chipColor = AppColors.warning(context).withValues(alpha: 0.1);
-        textColor = AppColors.warning(context);
+        chipColor = AppColors.warning.withValues(alpha: 0.1);
+        textColor = AppColors.warning;
         break;
       case SbListItemStatus.error:
         chipColor = colorScheme.error.withValues(alpha: 0.1);

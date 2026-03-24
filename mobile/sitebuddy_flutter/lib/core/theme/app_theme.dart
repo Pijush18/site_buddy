@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:site_buddy/core/design_system/sb_colors.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// CLASS: AppTheme
 /// PURPOSE: Centralized theme definitions for Site Buddy.
@@ -17,12 +17,12 @@ class AppTheme {
     final bool isLight = brightness == Brightness.light;
 
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: SbColors.primarySeed,
+      seedColor: AppColors.primarySeed,
       brightness: brightness,
       // Surface Overrides
-      surface: isLight ? SbColors.lightSurface : SbColors.darkSurface,
-      surfaceContainer: isLight ? SbColors.lightContainer : SbColors.darkContainer,
-      surfaceContainerHigh: isLight ? SbColors.lightContainerHigh : SbColors.darkContainerHigh,
+      surface: isLight ? AppColors.lightSurface : AppColors.darkSurface,
+      surfaceContainer: isLight ? AppColors.lightContainer : AppColors.darkContainer,
+      surfaceContainerHigh: isLight ? AppColors.lightContainerHigh : AppColors.darkContainerHigh,
       outline: isLight ? const Color(0xFF94A3B8) : const Color(0xFF475569),
     );
 

@@ -1,3 +1,4 @@
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/localization/l10n_extension.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +147,7 @@ class AnalysisSummaryScreen extends ConsumerWidget {
                     icon: Icons.straighten,
                     label: 'L/d Ratio',
                     value: (state.span / state.overallDepth).toStringAsFixed(2),
-                    color: _getLdRatioColor(state.span / state.overallDepth),
+                    color: _getLdRatioColor(context, state.span / state.overallDepth),
                   ),
                   const SizedBox(height: SbSpacing.sm),
                   _buildCodeHint(
@@ -163,10 +164,10 @@ class AnalysisSummaryScreen extends ConsumerWidget {
   }
 
   /// Get color for L/d ratio indicator
-  Color _getLdRatioColor(double ldRatio) {
-    if (ldRatio <= 20) return Colors.green;
-    if (ldRatio <= 26) return Colors.orange;
-    return Colors.red;
+  Color _getLdRatioColor(BuildContext context, double ldRatio) {
+    if (ldRatio <= 20) return AppColors.success;
+    if (ldRatio <= 26) return AppColors.warning;
+    return AppColors.error;
   }
 
   /// Build a small hint text styled as a code reference
@@ -230,7 +231,7 @@ class _DiagramCard extends StatelessWidget {
             labelColor: colorScheme.onSurfaceVariant,
             labelStyle: Theme.of(context).textTheme.labelMedium!,
             primaryColor: isBMD ? colorScheme.primary : colorScheme.tertiary,
-            warningColor: AppColors.warning(context),
+            warningColor: AppColors.warning,
           ),
           size: Size.infinite,
         ),
@@ -281,7 +282,7 @@ class _InsightRow extends StatelessWidget {
           padding: const EdgeInsets.all(SbSpacing.sm),
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(SbRadius.standard),
           ),
           child: Icon(icon, color: color, size: 20),
         ),

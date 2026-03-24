@@ -2,7 +2,6 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -311,7 +310,7 @@ class _MethodToggle extends StatelessWidget {
           color: isActive ? colorScheme.primary : colorScheme.surface,
           borderRadius: SbRadius.borderSmall,
           border: Border.all(
-            color: context.colors.outline,
+            color: Theme.of(context).colorScheme.outline,
             width: AppBorder.width,
           ),
         ),

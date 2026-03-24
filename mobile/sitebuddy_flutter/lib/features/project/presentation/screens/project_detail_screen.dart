@@ -76,7 +76,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               child: Icon(
                 isOnline ? SbIcons.checkFilled : SbIcons.warning,
                 size: 16,
-                color: isOnline ? Colors.green : Colors.orange,
+                color: isOnline ? AppColors.success : AppColors.warning,
               ),
             );
           },
@@ -197,7 +197,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                   VerticalDivider(
                     width: SbSpacing.xl,
                     thickness: 1,
-                    color: context.colors.outline,
+                    color: colorScheme.outline,
                   ),
                   Expanded(
                     child: _StatItem(

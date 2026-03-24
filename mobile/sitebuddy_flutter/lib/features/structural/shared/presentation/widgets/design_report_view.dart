@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/features/structural/shared/domain/models/design_report.dart';
 
@@ -103,7 +104,7 @@ class _ReportSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = isSafe ? Colors.green : Colors.red;
+    final color = isSafe ? AppColors.success : AppColors.error;
 
     return SbCard(
       padding: const EdgeInsets.all(SbSpacing.md),
@@ -270,7 +271,7 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = isSafe ? Colors.green : Colors.red;
+    final color = isSafe ? AppColors.success : AppColors.error;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: SbSpacing.sm,

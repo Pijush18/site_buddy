@@ -3,7 +3,6 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 
 
 class ColorsLabSection extends StatelessWidget {
@@ -94,7 +93,7 @@ class _ColorCard extends StatelessWidget {
           color: data.color,
           borderRadius: SbRadius.borderMd,
           border: Border.all(
-            color: context.colors.outline,
+            color: Theme.of(context).colorScheme.outline,
             width: 1,
           ),
 

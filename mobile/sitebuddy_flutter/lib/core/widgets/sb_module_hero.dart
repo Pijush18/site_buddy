@@ -1,5 +1,6 @@
-import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
 
 /// WIDGET: SbModuleHero
@@ -47,7 +48,7 @@ class SbModuleHero extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(SbRadius.standard),
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
@@ -74,7 +75,7 @@ class SbModuleHero extends StatelessWidget {
                   padding: const EdgeInsets.all(SbSpacing.md),
                   decoration: BoxDecoration(
                     color: colorScheme.primary.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(SbRadius.standard),
                   ),
                   child: Icon(
                     icon,

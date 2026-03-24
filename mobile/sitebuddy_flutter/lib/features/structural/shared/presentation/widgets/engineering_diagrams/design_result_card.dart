@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -33,7 +34,7 @@ class DesignResultCard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: statusColor.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(SbRadius.standard),
         ),
         child: Text(
           isSafe ? 'SAFE' : 'UNSAFE',

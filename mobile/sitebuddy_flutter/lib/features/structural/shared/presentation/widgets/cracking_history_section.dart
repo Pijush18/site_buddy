@@ -33,7 +33,7 @@ class CrackingHistorySection extends ConsumerWidget {
                 children: [
                   Icon(
                     isSafe ? SbIcons.checkFilled : SbIcons.error,
-                    color: isSafe ? AppColors.success(context) : Theme.of(context).colorScheme.error,
+                    color: isSafe ? AppColors.success : Theme.of(context).colorScheme.error,
                     size: 20,
                   ),
                   const SizedBox(width: SbSpacing.lg),
@@ -58,7 +58,7 @@ class CrackingHistorySection extends ConsumerWidget {
                     isSafe ? 'SAFE' : 'FAIL',
                     style: theme.textTheme.labelMedium!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isSafe ? AppColors.success(context) : theme.colorScheme.error,
+                      color: isSafe ? AppColors.success : theme.colorScheme.error,
                     ),
                   ),
                 ],

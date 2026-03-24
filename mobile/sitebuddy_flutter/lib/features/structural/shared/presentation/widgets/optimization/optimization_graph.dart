@@ -66,7 +66,7 @@ class OptimizationGraph extends StatelessWidget {
       children: [
         _LegendItem(color: colorScheme.primary, label: 'Utilization'),
         const SizedBox(width: SbSpacing.lg),
-        _LegendItem(color: AppColors.warning(context), label: 'Steel Area'),
+        const _LegendItem(color: AppColors.warning, label: 'Steel Area'),
       ],
     );
   }
@@ -115,16 +115,16 @@ class _OptimizationRow extends StatelessWidget {
         _Bar(
           label: 'Steel: ${option.steelArea.toInt()} mm²',
           percentage: steelPercentage,
-          color: AppColors.warning(context),
+          color: AppColors.warning,
         ),
       ],
     );
   }
 
   Color _getRankColor(BuildContext context, String label) {
-    if (label == 'ECONOMICAL') return AppColors.success(context);
+    if (label == 'ECONOMICAL') return AppColors.success;
     if (label == 'BALANCED') return Theme.of(context).colorScheme.primary;
-    return Colors.purple; // Semantic for "Safe" rank
+    return AppColors.info; // Semantic for "Safe" rank
   }
 }
 

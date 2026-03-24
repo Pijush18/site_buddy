@@ -136,7 +136,7 @@ class SbResultCard extends StatelessWidget {
   Color _getSafetyColor(BuildContext context) {
     if (safetyColor != null) return safetyColor!;
     return computedIsSafe
-        ? AppColors.success(context)
+        ? AppColors.success
         : Theme.of(context).colorScheme.error;
   }
 
@@ -170,8 +170,8 @@ class SbResultCard extends StatelessWidget {
 
   /// Gets the ratio color based on utilization.
   Color _getRatioColor(BuildContext context, double ratio) {
-    if (ratio <= 0.5) return AppColors.success(context);
-    if (ratio <= 0.8) return AppColors.warning(context);
+    if (ratio <= 0.5) return AppColors.success;
+    if (ratio <= 0.8) return AppColors.warning;
     if (ratio <= 1.0) return Theme.of(context).colorScheme.error;
     return Theme.of(context).colorScheme.error;
   }
@@ -448,9 +448,9 @@ class SbResultCard extends StatelessWidget {
       displayValue = '${detail.numericValue!.toStringAsFixed(decimalPlaces)}x';
       final ratio = detail.numericValue!;
       if (ratio <= 0.5) {
-        textColor = AppColors.success(context);
+        textColor = AppColors.success;
       } else if (ratio <= 0.8) {
-        textColor = AppColors.warning(context);
+        textColor = AppColors.warning;
       } else if (ratio <= 1.0) {
         textColor = colorScheme.error;
       } else {

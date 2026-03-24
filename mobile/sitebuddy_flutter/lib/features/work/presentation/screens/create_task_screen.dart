@@ -1,5 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class CreateTaskScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(SbRadius.standard),
                 ),
                 child: Text(
                   state.error!,

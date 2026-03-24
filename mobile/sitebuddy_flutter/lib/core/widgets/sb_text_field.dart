@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 
@@ -131,7 +132,7 @@ class SBTextField extends StatelessWidget {
             color: enabled
                 ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
                 : colorScheme.surfaceContainerHighest.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(SbRadius.standard),
             border: Border.all(
               color: hasError
                   ? colorScheme.error

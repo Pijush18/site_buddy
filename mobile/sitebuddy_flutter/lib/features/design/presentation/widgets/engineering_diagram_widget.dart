@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/features/design/mappers/mappers.dart';
 import 'package:site_buddy/features/design/presentation/widgets/diagram_renderer.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/widgets/sb_diagram_card.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 
@@ -198,7 +199,7 @@ class EngineeringDiagramWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(SbRadius.standard),
       ),
       child: Center(
         child: Column(

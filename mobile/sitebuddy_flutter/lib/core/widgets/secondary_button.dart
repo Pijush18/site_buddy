@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 
 /// WIDGET: SecondaryButton
 /// PURPOSE: Standardized secondary or outlined button.
@@ -25,11 +24,12 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final style = isOutlined 
         ? OutlinedButton.styleFrom() 
         : OutlinedButton.styleFrom(
-            backgroundColor: context.colors.surface,
-            foregroundColor: context.colors.onSurface,
+            backgroundColor: colorScheme.surface,
+            foregroundColor: colorScheme.onSurface,
           );
 
     return SizedBox(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:site_buddy/core/theme/app_colors.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 
 /// CLASS: SegmentedToggle
@@ -32,9 +32,9 @@ class SegmentedToggle<T> extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer, // Solid unselected base
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(SbRadius.standard),
         border: Border.all(
-          color: context.colors.outline,
+          color: colorScheme.outline,
           width: AppBorder.width,
         ),
       ),
@@ -55,7 +55,7 @@ class SegmentedToggle<T> extends StatelessWidget {
                 curve: Curves.easeInOut,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected ? context.colors.primary : context.colors.surface,
+                  color: isSelected ? colorScheme.primary : colorScheme.surface,
                 ),
                 child: Text(
                   labelBuilder(item),
@@ -64,8 +64,8 @@ class SegmentedToggle<T> extends StatelessWidget {
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isSelected 
-                        ? context.colors.onPrimary 
-                        : context.colors.onSurface,
+                        ? colorScheme.onPrimary 
+                        : colorScheme.onSurface,
                   ),
                 ),
 

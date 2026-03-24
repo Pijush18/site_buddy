@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
 
 /// CLASS: AppColors
-/// PURPOSE: Centralized semantic color system for SiteBuddy.
+/// PURPOSE: SINGLE SOURCE OF TRUTH for all color tokens in SiteBuddy.
 ///
 /// STRUCTURE:
-/// - Material colors (from ColorScheme)
-/// - Semantic colors (success, warning, error)
-/// - Surface colors (background, surface, container)
+/// - Brand colors (fixed seed values)
+/// - Surface colors (light/dark mode variants)
+/// - Semantic colors (success, warning, error, info)
 ///
-/// RULES:
-/// - No widget should define its own color
-/// - All colors must use theme's color scheme when possible
-/// - Hardcoded colors only allowed for brand-specific values
+/// USAGE RULES:
+/// - UI LAYER: Use Theme.of(context).colorScheme.* for all theme-aware colors
+/// - SEMANTIC: Use AppColors.success / AppColors.warning / AppColors.error / AppColors.info
+/// - FORBIDDEN: Colors.*, Color(0x...) in UI code (use Theme or AppColors instead)
+///
+/// MIGRATION:
+/// - AppColors.success(context) → AppColors.success
+/// - AppColors.warning(context) → AppColors.warning
+/// - AppColors.error(context) → Theme.of(context).colorScheme.error
+/// - AppColors.info(context) → AppColors.info
+/// - AppColors.primary(context) → Theme.of(context).colorScheme.primary
+/// - etc.
 class AppColors {
   AppColors._();
 
   // ═══════════════════════════════════════════════════════════════════════
-  // PRIMARY COLORS
-  // Brand-specific primary seed color
+  // BRAND COLORS (Fixed seed values for ColorScheme generation)
   // ═══════════════════════════════════════════════════════════════════════
 
-  /// Primary seed color for generating Material color scheme
+  /// Primary seed color for generating Material ColorScheme
   static const Color primarySeed = Color(0xFF1E3A8A);
 
-  /// Sky blue accent color
+  /// Sky blue accent color (brand specific)
   static const Color skyBlue = Color(0xFF38BDF8);
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SURFACE COLORS (LIGHT MODE)
+  // SURFACE COLORS (Light Mode)
   // ═══════════════════════════════════════════════════════════════════════
 
   /// Light mode surface color
@@ -40,7 +47,7 @@ class AppColors {
   static const Color lightContainerHigh = Color(0xFFF1F5F9);
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SURFACE COLORS (DARK MODE)
+  // SURFACE COLORS (Dark Mode)
   // ═══════════════════════════════════════════════════════════════════════
 
   /// Dark mode surface color
@@ -53,93 +60,54 @@ class AppColors {
   static const Color darkContainerHigh = Color(0xFF334155);
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SEMANTIC COLORS
+  // SEMANTIC COLORS (Fixed values for consistent status indicators)
+  // These return fixed colors regardless of theme for consistent status indication
   // ═══════════════════════════════════════════════════════════════════════
 
-  /// Success color (green) - mapped to theme primary by default
-  static const Color successGreen = Color(0xFF10B981);
+  /// Success/Safe color (green) - Use for positive/safe status
+  static const Color success = Color(0xFF10B981);
 
-  /// Warning color (amber)
-  static const Color warningAmber = Color(0xFFF59E0B);
+  /// Warning color (amber) - Use for caution/warning status
+  static const Color warning = Color(0xFFF59E0B);
 
-  /// Premium/gold color
-  static const Color premiumGold = Color(0xFFF59E0B);
+  /// Error/Failure color (red) - Use for error/failure status
+  static const Color error = Color(0xFFEF4444);
 
-  /// Error color - will use theme's error color
-  static Color error(BuildContext context) => Theme.of(context).colorScheme.error;
+  /// Info color (blue) - Use for informational status
+  static const Color info = Color(0xFF3B82F6);
 
-  /// Primary color - will use theme's primary color
-  static Color primary(BuildContext context) => Theme.of(context).colorScheme.primary;
-
-  /// On primary color - will use theme's onPrimary color
-  static Color onPrimary(BuildContext context) => Theme.of(context).colorScheme.onPrimary;
+  /// Premium/Gold color - Brand specific
+  static const Color premium = Color(0xFFF59E0B);
 
   // ═══════════════════════════════════════════════════════════════════════
-  // CONTEXT-AWARE COLORS
-  // These methods automatically adapt to light/dark mode
+  // LEGACY ALIASES (For backward compatibility during migration)
+  // Prefer the short names above (success, warning, error, info, premium)
   // ═══════════════════════════════════════════════════════════════════════
 
-  /// Returns the surface color from the automated ColorScheme
-  static Color surface(BuildContext context) => Theme.of(context).colorScheme.surface;
+  /// @deprecated Use success instead
+  static const Color successColor = success;
 
-  /// Returns the background color from the automated ColorScheme
-  static Color background(BuildContext context) => Theme.of(context).colorScheme.surface;
+  /// @deprecated Use warning instead
+  static const Color warningColor = warning;
 
-  /// Returns the outline color from the automated ColorScheme
-  static Color outline(BuildContext context) => Theme.of(context).colorScheme.outline;
+  /// @deprecated Use error instead
+  static const Color errorColor = error;
 
-  /// Returns the on-surface color from the automated ColorScheme
-  static Color onSurface(BuildContext context) => Theme.of(context).colorScheme.onSurface;
+  /// @deprecated Use info instead
+  static const Color infoColor = info;
 
-  /// Returns the on-surface-variant color from the automated ColorScheme
-  static Color onSurfaceVariant(BuildContext context) =>
-      Theme.of(context).colorScheme.onSurfaceVariant;
+  /// @deprecated Use premium instead
+  static const Color premiumColor = premium;
 
-  /// Returns success color (context-aware)
-  static Color successColor(BuildContext context) => Theme.of(context).colorScheme.primary;
+  /// @deprecated Use success instead
+  static const Color successGreen = success;
 
-  /// Returns warning color (fixed amber for semantic clarity)
-  static Color warningColor(BuildContext context) => warningAmber;
+  /// @deprecated Use warning instead
+  static const Color warningAmber = warning;
 
-  /// Returns premium color (fixed amber for brand consistency)
-  static Color premiumColor(BuildContext context) => premiumGold;
+  /// @deprecated Use premium instead
+  static const Color premiumGold = premium;
 
-  // ═══════════════════════════════════════════════════════════════════════
-  // BACKWARD COMPATIBILITY METHODS (for existing code)
-  // These match the old API: AppColors.success(context), AppColors.warning(context)
-  // ═══════════════════════════════════════════════════════════════════════
-
-  /// Backward compatible: Returns success color based on context
-  static Color success(BuildContext context) => successColor(context);
-
-  /// Backward compatible: Returns warning color based on context
-  static Color warning(BuildContext context) => warningColor(context);
-
-  /// Backward compatible: Returns premium color based on context
-  static Color premium(BuildContext context) => premiumColor(context);
-}
-
-/// Extension to provide easy access to colors from BuildContext
-extension AppContextColors on BuildContext {
-  /// Access AppColors data through context
-  AppColorsData get colors => AppColorsData(this);
-}
-
-/// Data class for context-based color access
-class AppColorsData {
-  final BuildContext _context;
-  AppColorsData(this._context);
-
-  // Theme colors
-  Color get primary => AppColors.primary(_context);
-  Color get onPrimary => AppColors.onPrimary(_context);
-  Color get surface => AppColors.surface(_context);
-  Color get background => AppColors.background(_context);
-  Color get outline => AppColors.outline(_context);
-  Color get onSurface => AppColors.onSurface(_context);
-  Color get onSurfaceVariant => AppColors.onSurfaceVariant(_context);
-  Color get error => AppColors.error(_context);
-  Color get success => AppColors.successColor(_context);
-  Color get warning => AppColors.warningColor(_context);
-  Color get premium => AppColors.premiumColor(_context);
+  /// @deprecated Use error instead
+  static const Color semanticError = error;
 }

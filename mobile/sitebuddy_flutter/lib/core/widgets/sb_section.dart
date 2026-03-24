@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/widgets/sb_section_header.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-
+import 'package:site_buddy/core/widgets/sb_section_header.dart';
 
 /// CLASS: SbSection
 /// PURPOSE: Standardized section wrapper with header + content.
@@ -25,17 +24,17 @@ class SbSection extends StatelessWidget {
     this.padding,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final bool hasHeader = title != null || trailing != null || onTap != null;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(8),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(SbRadius.standard),
         border: Border.all(
-          color: context.colors.outline,
+          color: colorScheme.outline,
           width: 1,
         ),
       ),

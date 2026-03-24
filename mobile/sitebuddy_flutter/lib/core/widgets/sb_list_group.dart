@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
-
-
-
 
 /// WIDGET: SbListGroup
 /// PURPOSE: Standardized container for a vertical list of items.
@@ -30,7 +26,7 @@ class SbListGroup extends StatelessWidget {
             Divider(
               height: 1,
               thickness: 1,
-              color: context.colors.outline,
+              color: Theme.of(context).colorScheme.outline,
             ),
         ],
       ],

@@ -1,9 +1,7 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
-
 
 /// FILE HEADER
 /// ----------------------------------------------
@@ -55,7 +53,7 @@ class PreviewableCard extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: context.colors.outline,
+            color: Theme.of(context).colorScheme.outline,
             width: AppBorder.width,
           ),
         ),

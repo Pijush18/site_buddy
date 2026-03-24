@@ -20,8 +20,8 @@ class ColumnInteractionDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final axisColor = colorScheme.onSurfaceVariant;
-    final color = interactionRatio <= 1.0 
-        ? AppColors.success(context) 
+    final color = interactionRatio <= 1.0
+        ? AppColors.success
         : colorScheme.error;
 
     return Container(

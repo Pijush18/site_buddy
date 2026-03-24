@@ -1,11 +1,9 @@
 import 'package:site_buddy/core/design_system/sb_icons.dart';
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 
 import 'package:flutter/material.dart';
-
 
 class SbDropdown<T> extends StatelessWidget {
   final T? value;
@@ -65,7 +63,7 @@ class SbDropdown<T> extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: SbRadius.borderMd,
                   side: BorderSide(
-                    color: context.colors.outline,
+                    color: colorScheme.outline,
                     width: AppBorder.width,
                   ),
                 ),
@@ -89,7 +87,7 @@ class SbDropdown<T> extends StatelessWidget {
                 color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                 borderRadius: SbRadius.borderMd,
                 border: Border.all(
-                  color: context.colors.outline,
+                  color: colorScheme.outline,
                   width: AppBorder.width,
                 ),
               ),

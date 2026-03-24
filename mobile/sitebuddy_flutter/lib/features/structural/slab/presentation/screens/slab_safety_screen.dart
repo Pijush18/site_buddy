@@ -69,7 +69,7 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Theme.of(context).colorScheme.error),
                   );
                 }
               }
@@ -95,15 +95,15 @@ class _SlabSafetyScreenState extends ConsumerState<SlabSafetyScreen> {
               );
               return;
             }
-            try {
-              await ref.read(slabDesignControllerProvider.notifier).generateReport();
-            } catch (e) {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
-                );
+              try {
+                await ref.read(slabDesignControllerProvider.notifier).generateReport();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Theme.of(context).colorScheme.error),
+                  );
+                }
               }
-            }
           },
         ),
       ],

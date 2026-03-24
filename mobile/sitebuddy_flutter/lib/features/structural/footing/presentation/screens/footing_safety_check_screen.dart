@@ -68,7 +68,7 @@ class _FootingSafetyCheckScreenState
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(l10n.errorGeneratingReport(e.toString())),
-                      backgroundColor: Colors.red,
+                      backgroundColor: Theme.of(context).colorScheme.error,
                     ),
                   );
                 }

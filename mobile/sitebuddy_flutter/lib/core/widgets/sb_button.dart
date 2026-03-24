@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 
@@ -160,7 +161,7 @@ class SBButton extends StatelessWidget {
             shadowColor: colorScheme.primary.withValues(alpha: 0.3),
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(SbRadius.standard),
             ),
           ),
           child: content,
@@ -176,7 +177,7 @@ class SBButton extends StatelessWidget {
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(SbRadius.standard),
             ),
           ),
           child: content,
@@ -190,7 +191,7 @@ class SBButton extends StatelessWidget {
             minimumSize: Size(0, height),
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(SbRadius.standard),
             ),
             side: BorderSide(color: colorScheme.outline),
           ),
@@ -208,7 +209,7 @@ class SBButton extends StatelessWidget {
             shadowColor: colorScheme.error.withValues(alpha: 0.3),
             padding: const EdgeInsets.symmetric(horizontal: SbSpacing.lg),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(SbRadius.standard),
             ),
           ),
           child: content,

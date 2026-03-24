@@ -3,7 +3,6 @@ import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 
 import 'package:go_router/go_router.dart';
@@ -57,7 +56,7 @@ class CreateMeetingScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(SbRadius.standard),
                 ),
                 child: Text(
                   state.error!,
@@ -248,7 +247,7 @@ class _TimePickerField extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: context.colors.outline,
+                color: Theme.of(context).colorScheme.outline,
                 width: AppBorder.width,
               ),
               borderRadius: SbRadius.borderMd,

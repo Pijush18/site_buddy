@@ -457,9 +457,9 @@ class _AccountSkeleton extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(height: 14, width: 120, color: greyColor),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SbSpacing.sm),
                     Container(height: 12, width: 180, color: greyColor),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SbSpacing.sm),
                     Container(height: 10, width: 60, color: greyColor),
                   ],
                 ),

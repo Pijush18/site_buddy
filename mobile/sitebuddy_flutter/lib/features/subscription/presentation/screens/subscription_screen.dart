@@ -50,9 +50,9 @@ class SubscriptionScreen extends ConsumerWidget {
                 child: SbCard(
                   child: Column(
                     children: [
-                      Icon(
+                      const Icon(
                         SbIcons.checkFilled,
-                        color: AppColors.success(context),
+                        color: AppColors.success,
                         size: 48,
                       ),
                       const SizedBox(height: SbSpacing.lg),
@@ -107,7 +107,7 @@ class SubscriptionScreen extends ConsumerWidget {
       trailing: Container(
         padding: const EdgeInsets.symmetric(horizontal: SbSpacing.sm, vertical: SbSpacing.xs),
         decoration: BoxDecoration(
-          color: (isActive ? AppColors.success(context) : AppColors.warning(context)).withValues(alpha: 0.1),
+          color: (isActive ? AppColors.success : AppColors.warning).withValues(alpha: 0.1),
           borderRadius: SbRadius.borderSmall,
         ),
         child: Text(
@@ -171,7 +171,7 @@ class SubscriptionScreen extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
-          Icon(SbIcons.check, color: AppColors.success(context), size: 20),
+          const Icon(SbIcons.check, color: AppColors.success, size: 20),
           const SizedBox(width: SbSpacing.sm), 
           Expanded(
             child: Text(
@@ -213,13 +213,13 @@ class SubscriptionScreen extends ConsumerWidget {
           ),
           Icon(
             free ? Icons.check_circle : Icons.cancel,
-            color: free ? AppColors.success(context) : colorScheme.onSurfaceVariant,
+            color: free ? AppColors.success : colorScheme.onSurfaceVariant,
             size: 20,
           ),
           const SizedBox(width: SbSpacing.lg), 
           Icon(
             premium ? Icons.check_circle : Icons.cancel,
-            color: premium ? AppColors.premium(context) : colorScheme.onSurfaceVariant,
+            color: premium ? AppColors.premium : colorScheme.onSurfaceVariant,
             size: 20,
           ),
         ],
@@ -227,6 +227,7 @@ class SubscriptionScreen extends ConsumerWidget {
     );
   }
 }
+
 
 
 

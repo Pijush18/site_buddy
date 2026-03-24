@@ -78,7 +78,7 @@ class _BeamSafetyCheckScreenState extends ConsumerState<BeamSafetyCheckScreen> {
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Colors.red),
+                    SnackBar(content: Text('Error generating report: $e'), backgroundColor: Theme.of(context).colorScheme.error),
                   );
                 }
               }
@@ -369,7 +369,7 @@ class _OverallStatusBadge extends StatelessWidget {
         color: color.withValues(alpha: 0.1),
         borderRadius: SbRadius.borderMd,
         border: Border.all(
-          color: context.colors.outline,
+          color: Theme.of(context).colorScheme.outline,
           width: AppBorder.width,
         ),
 
@@ -430,14 +430,14 @@ class _CheckRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSafe ? Colors.green : Colors.red;
+    final color = isSafe ? AppColors.success : AppColors.error;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: SbSpacing.sm),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(SbSpacing.xs),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,

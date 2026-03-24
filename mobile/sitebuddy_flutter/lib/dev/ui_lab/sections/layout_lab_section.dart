@@ -1,7 +1,6 @@
 import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/core/theme/app_border.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 
@@ -37,7 +36,7 @@ class LayoutLabSection extends StatelessWidget {
               context,
             ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
             borderRadius: SbRadius.borderMd,
-            border: Border.all(color: context.colors.outline, width: AppBorder.width),
+            border: Border.all(color: Theme.of(context).colorScheme.outline, width: AppBorder.width),
 
 
           ),

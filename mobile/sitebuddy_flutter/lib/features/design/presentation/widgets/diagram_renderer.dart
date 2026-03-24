@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/visualization/engine_interface.dart';
 import 'package:site_buddy/visualization/primitives/primitives.dart';
 
@@ -343,7 +344,7 @@ class _DiagramRendererWithExportState extends State<DiagramRendererWithExport> {
           const LinearProgressIndicator()
         else
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(SbSpacing.sm),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

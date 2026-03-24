@@ -4,6 +4,7 @@ import 'package:site_buddy/core/widgets/sb_widgets.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/theme/app_colors.dart';
 import 'package:site_buddy/features/transport/road/application/road_calculator.dart';
 
 /// lib/features/transport/road/presentation/road_screen.dart
@@ -86,8 +87,8 @@ class RoadScreen extends ConsumerWidget {
                       'Safety: ${state.result!.safetyClassification}',
                       style: SbTypography.title.copyWith(
                         color: state.result!.safetyClassification.contains('SAFE') 
-                          ? Colors.green 
-                          : Colors.orange,
+                          ? AppColors.success
+                          : AppColors.warning,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

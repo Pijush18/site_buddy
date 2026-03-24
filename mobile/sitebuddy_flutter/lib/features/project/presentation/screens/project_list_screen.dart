@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -183,13 +184,13 @@ class _StatsRow extends StatelessWidget {
         _StatChip(
           label: 'In Progress',
           value: state.inProgressCount.toString(),
-          color: AppColors.warning(context),
+          color: AppColors.warning,
         ),
         const SizedBox(width: SbSpacing.sm),
         _StatChip(
           label: 'Completed',
           value: state.completedCount.toString(),
-          color: Colors.green,
+          color: AppColors.success,
         ),
       ],
     );
@@ -268,7 +269,7 @@ class _ProjectCard extends StatelessWidget {
                 padding: const EdgeInsets.all(SbSpacing.sm),
                 decoration: BoxDecoration(
                   color: colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(SbRadius.standard),
                 ),
                 child: Icon(
                   Icons.folder_outlined,
@@ -363,16 +364,16 @@ class _StatusBadge extends StatelessWidget {
     Color color;
     switch (status) {
       case ProjectStatus.draft:
-        color = Colors.grey;
+        color = Theme.of(context).colorScheme.outline;
         break;
       case ProjectStatus.inProgress:
-        color = AppColors.warning(context);
+        color = AppColors.warning;
         break;
       case ProjectStatus.completed:
-        color = Colors.green;
+        color = AppColors.success;
         break;
       case ProjectStatus.archived:
-        color = Colors.brown;
+        color = Theme.of(context).colorScheme.outlineVariant;
         break;
     }
 

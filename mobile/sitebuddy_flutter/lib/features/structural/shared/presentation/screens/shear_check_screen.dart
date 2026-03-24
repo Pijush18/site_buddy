@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:site_buddy/core/design_system/sb_icons.dart';
+import 'package:site_buddy/core/design_system/sb_radius.dart';
 import 'package:site_buddy/core/design_system/sb_spacing.dart';
 import 'package:site_buddy/core/design_system/sb_typography.dart';
 import 'package:site_buddy/core/widgets/sb_widgets.dart';
@@ -100,7 +101,7 @@ class ShearCheckScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(SbSpacing.md),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(SbRadius.standard),
                 ),
                 child: Text(
                   state.error!,
