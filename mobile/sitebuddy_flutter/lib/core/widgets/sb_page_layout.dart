@@ -5,10 +5,15 @@ import 'package:site_buddy/core/design_system/sb_spacing.dart';
 /// WIDGET: SbPageLayout
 /// PURPOSE: Standardized page layout wrapper for SiteBuddy screens.
 /// 
-/// FEATURES:
+/// DESIGN RULES:
 /// - Uses [SbPage.detail] for consistent scroll behavior.
 /// - SINGLE AUTHORITY: Manages exact vertical spacing between all sections.
+/// - SCREENS control OUTER spacing - widgets do NOT.
 /// - RHYTHM: Enforces exactly SbSpacing.xxl (24px) between sections.
+///
+/// USE WHEN:
+/// - You have multiple distinct sections that need consistent gaps
+/// - For simpler layouts with 2-3 sections, use [SbSectionList] instead
 class SbPageLayout extends StatelessWidget {
   /// The title displayed in the AppBar.
   final String title;
@@ -37,7 +42,7 @@ class SbPageLayout extends StatelessWidget {
           for (var i = 0; i < sections.length; i++) ...[
             sections[i],
             // ── SINGLE SPACING AUTHORITY ──
-            // Exactly 24px (lg) between all children sections.
+            // Exactly 24px (xxl) between all children sections.
             if (i < sections.length - 1) 
               const SizedBox(height: SbSpacing.xxl),
           ],

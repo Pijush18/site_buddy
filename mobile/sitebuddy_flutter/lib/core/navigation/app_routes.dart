@@ -77,6 +77,7 @@ class AppRoutes {
 
   // --- PROJECT MODULE ---
   static const projects = '/projects';
+  static const projectList = '/projects'; // Project list / selection screen
   static const projectCreate = '/projects/create';
   static const homeProjectCreate = '/project/create'; // Branch 0 version
 

@@ -34,11 +34,7 @@ class PreviewableCard extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: SbSpacing.md),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SbSpacing.xs),
-              child: RepaintBoundary(key: previewKey, child: child),
-            ),
+            child: RepaintBoundary(key: previewKey, child: child),
           ),
         ),
         _buildActionRow(context),

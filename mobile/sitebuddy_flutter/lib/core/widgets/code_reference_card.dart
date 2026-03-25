@@ -20,7 +20,6 @@ class CodeReferenceCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return SbCard(
-      margin: const EdgeInsets.only(top: SbSpacing.lg),
       color: colorScheme.primaryContainer.withValues(alpha: 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

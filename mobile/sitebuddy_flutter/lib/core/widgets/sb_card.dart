@@ -6,13 +6,18 @@ import 'package:site_buddy/core/widgets/sb_interactive_card.dart';
 
 /// WIDGET: SbCard
 /// PURPOSE: Standardized surface-based card container.
-/// FEATURES:
-/// - Three-tier hierarchy (Elevated, Standard, Subtle).
-/// - Adaptive padding logic.
+/// 
+/// DESIGN RULES:
+/// - Cards control INTERNAL padding only (SbSpacing.md by default)
+/// - Cards do NOT control OUTER/MARGIN spacing (screens control this)
+/// - Use [padding] parameter for internal content spacing
+/// - Three-tier hierarchy: Elevated, Standard, Subtle
 class SbCard extends StatelessWidget {
   final Widget child;
+  
+  /// Internal padding for card content (NOT outer spacing)
   final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
+  
   final Color? color;
   final VoidCallback? onTap;
   final bool isElevated;
@@ -22,7 +27,6 @@ class SbCard extends StatelessWidget {
     super.key,
     required this.child,
     this.padding,
-    this.margin,
     this.color,
     this.onTap,
     this.isElevated = false,
@@ -43,7 +47,7 @@ class SbCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(SbRadius.standard),
       child: Container(
-        margin: margin ?? EdgeInsets.zero,
+        // NO MARGIN - screens control outer spacing
         padding: padding ?? const EdgeInsets.all(SbSpacing.md),
         decoration: BoxDecoration(
           color: surfaceColor,

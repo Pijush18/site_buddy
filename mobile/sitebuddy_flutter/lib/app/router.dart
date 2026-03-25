@@ -12,6 +12,8 @@ import 'package:site_buddy/core/providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:site_buddy/core/navigation/app_transitions.dart';
 import 'package:site_buddy/core/navigation/app_routes.dart';
+import 'package:site_buddy/shared/application/providers/project_providers.dart';
+import 'package:site_buddy/shared/application/services/project_session_service.dart';
 
 // Screens
 import 'package:site_buddy/features/home/presentation/screens/home_screen.dart';
@@ -21,13 +23,12 @@ import 'package:site_buddy/features/settings/presentation/screens/branding_setti
 import 'package:site_buddy/features/reports/presentation/screens/site_report_preview_screen.dart';
 import 'package:site_buddy/shared/domain/models/site_report.dart';
 import 'package:site_buddy/features/settings/presentation/screens/settings_screen.dart';
-import 'package:site_buddy/features/settings/presentation/screens/privacy_policy_screen.dart';
-import 'package:site_buddy/features/settings/presentation/screens/terms_conditions_screen.dart';
 import 'package:site_buddy/features/splash/presentation/screens/splash_screen.dart';
 import 'package:site_buddy/features/subscription/presentation/screens/subscription_screen.dart';
 import 'package:site_buddy/features/auth/presentation/screens/login_screen.dart';
 import 'package:site_buddy/features/auth/presentation/screens/register_screen.dart';
 import 'package:site_buddy/features/auth/presentation/screens/reset_password_screen.dart';
+
 // Route Modules
 import 'package:site_buddy/app/routes/design_routes.dart';
 import 'package:site_buddy/app/routes/calculator_routes.dart';
@@ -35,55 +36,80 @@ import 'package:site_buddy/app/routes/ai_routes.dart';
 import 'package:site_buddy/app/routes/work_routes.dart';
 import 'package:site_buddy/app/routes/project_routes.dart';
 
-// PAGE TRANSITIONS
-
 final appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
+
   redirect: (context, state) {
-    // 0. Ensure Firebase is initialized before accessing Auth
-    if (Firebase.apps.isEmpty) {
-      return null; // or '/splash' if you want to force staying on splash
-    }
+    if (Firebase.apps.isEmpty) return null;
 
     final user = FirebaseAuth.instance.currentUser;
-    final container = ProviderScope.containerOf(context);
+    final container = ProviderScope.containerOf(context, listen: false);
     final settings = container.read(settingsProvider);
 
-    final isAuthRoute =
-        state.matchedLocation == AppRoutes.login ||
-        state.matchedLocation == AppRoutes.register ||
-        state.matchedLocation == AppRoutes.resetPassword;
-    final isSplashRoute = state.matchedLocation == AppRoutes.splash;
-    final isRootRoute = state.matchedLocation == AppRoutes.home;
+    final location = state.matchedLocation;
 
-    // 1. If not authenticated and not on an auth/splash route, go to login
+    // Get project session safely
+    ProjectSessionService? session;
+    try {
+      session = container.read(projectSessionServiceProvider);
+    } catch (_) {
+      session = null;
+    }
+
+    /// =========================
+    /// 1. AUTH GUARD
+    /// =========================
+    final isAuthRoute =
+        location == AppRoutes.login ||
+        location == AppRoutes.register ||
+        location == AppRoutes.resetPassword;
+
+    final isSplashRoute = location == AppRoutes.splash;
+
     if (user == null && !isAuthRoute && !isSplashRoute) {
       return AppRoutes.login;
     }
 
-    // 2. If authenticated and on an auth/splash/root route, check for restoration
-    if (user != null && (isAuthRoute || isSplashRoute || isRootRoute)) {
-      if (settings.restoreLastScreen) {
-        final lastRoute = container
-            .read(settingsProvider.notifier)
-            .getLastRoute();
-        // Only redirect if lastRoute is different from current and not basic routes
-        if (lastRoute != null &&
-            lastRoute != state.matchedLocation &&
-            lastRoute != AppRoutes.login &&
-            lastRoute != AppRoutes.splash &&
-            lastRoute != AppRoutes.resetPassword &&
-            lastRoute != AppRoutes.register) {
-          return lastRoute;
-        }
-      }
+    /// =========================
+    /// 2. RESTORE LAST SCREEN (FIXED)
+    /// ONLY runs from splash
+    /// =========================
+    if (user != null &&
+        settings.restoreLastScreen &&
+        location == AppRoutes.splash) {
+      final lastRoute =
+          container.read(settingsProvider.notifier).getLastRoute();
 
-      // If on auth route but authenticated, always go home (if not restored)
-      if (isAuthRoute) return AppRoutes.home;
+      if (lastRoute != null &&
+          lastRoute != AppRoutes.login &&
+          lastRoute != AppRoutes.splash &&
+          lastRoute != AppRoutes.register) {
+        return lastRoute;
+      }
+    }
+
+    /// =========================
+    /// 3. PROJECT GUARD (SCOPED)
+    /// =========================
+    final requiresProject =
+        location.startsWith('/design') ||
+        location.startsWith('/reports') ||
+        location == '/level';
+
+    if (requiresProject && session?.hasActiveProject != true) {
+      return AppRoutes.projects;
+    }
+
+    /// =========================
+    /// 4. AUTH REDIRECT
+    /// =========================
+    if (user != null && isAuthRoute) {
+      return AppRoutes.home;
     }
 
     return null;
   },
+
   routes: [
     GoRoute(
       path: '/splash',
@@ -114,11 +140,11 @@ final appRouter = GoRouter(
         child: const SubscriptionScreen(),
       ),
     ),
+
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           NavigationShell(navigationShell: navigationShell),
       branches: [
-        // BRANCH 0: HOME
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -132,9 +158,6 @@ final appRouter = GoRouter(
                   path: 'level',
                   pageBuilder: (context, state) => AppTransitions.fadeSlide(
                     state: state,
-                    // FIX: Removed hardcoded fallback 'default' projectId
-                    // LevelLogScreen requires a valid projectId - navigation should only occur
-                    // after user selects a project from the project list
                     child: const LevelLogScreen(),
                   ),
                 ),
@@ -171,22 +194,6 @@ final appRouter = GoRouter(
                     state: state,
                     child: const SettingsScreen(),
                   ),
-                  routes: [
-                    GoRoute(
-                      path: 'privacy',
-                      pageBuilder: (context, state) => AppTransitions.fadeSlide(
-                        state: state,
-                        child: const PrivacyPolicyScreen(),
-                      ),
-                    ),
-                    GoRoute(
-                      path: 'terms',
-                      pageBuilder: (context, state) => AppTransitions.fadeSlide(
-                        state: state,
-                        child: const TermsConditionsScreen(),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -194,9 +201,12 @@ final appRouter = GoRouter(
         ),
         StatefulShellBranch(routes: [...calculatorRoutes]),
         StatefulShellBranch(routes: [...designRoutes]),
-        StatefulShellBranch(routes: [...projectRoutes.where((r) => r.path == '/projects')]),
+        StatefulShellBranch(
+          routes: [...projectRoutes.where((r) => r.path == '/projects')],
+        ),
       ],
     ),
+
     if (kDebugMode)
       GoRoute(
         path: '/dev/ui-lab',

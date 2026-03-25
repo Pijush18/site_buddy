@@ -13,6 +13,10 @@ final homeProvider = NotifierProvider<HomeController, HomeState>(
 /// CLASS: HomeController
 /// PURPOSE: StateNotifier managing the aggregation of application activity.
 /// Refreshes automatically when the active project switches.
+/// 
+/// SAFE PROJECT HANDLING:
+/// - Returns empty activities when no project is active
+/// - Does NOT throw StateError when project is missing
 class HomeController extends Notifier<HomeState> {
   
   @override
@@ -20,8 +24,17 @@ class HomeController extends Notifier<HomeState> {
     // 1. Listen to ProjectSessionService for changes
     // This ensures HomeController rebuilds whenever setActiveProject is called
     final session = ref.watch(projectSessionServiceProvider);
-    final projectId = session.getActiveProjectId();
     
+    // SAFE: Get active project - returns null if no project exists
+    final project = session.getActiveProject();
+    
+    // If no project is active, return empty state (no crash)
+    if (project == null) {
+      AppLogger.info('HomeController: No active project, returning empty state', tag: 'HomeCtrl');
+      return const HomeState(recentActivities: []);
+    }
+    
+    final projectId = project.id;
     AppLogger.info('HomeController building for Project: $projectId', tag: 'HomeCtrl');
 
     // 2. Initial Activities
@@ -54,6 +67,11 @@ class HomeController extends Notifier<HomeState> {
   /// REFRESH: Manual refresh trigger (e.g., Pull-to-refresh)
   Future<void> refresh() async {
     final session = ref.read(projectSessionServiceProvider);
-    await _loadActivities(session.getActiveProjectId());
+    final project = session.getActiveProject();
+    
+    // SAFE: Only refresh if project exists
+    if (project != null) {
+      await _loadActivities(project.id);
+    }
   }
 }
